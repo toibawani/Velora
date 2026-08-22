@@ -39,6 +39,12 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
           <button className="uh-logout" onClick={onLogout}>Exit</button>
         </div>
       </header>
+      import DailySpark from '../components/DailySpark';
+
+// Inside main, before subjects section:
+<section className="uh-daily-spark">
+  <DailySpark />
+</section>
 
       {/* Main Content */}
       <main className="uh-main">
