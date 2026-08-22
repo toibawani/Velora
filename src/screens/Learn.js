@@ -1,515 +1,373 @@
 import React, { useState } from 'react';
-import '../styles/Learn.css';
-import StudyMood from '../components/StudyMood';
-import TeachAI from '../components/TeachAI';
-import KnowledgeGraph from '../components/KnowledgeGraph';
-import ContextDoubtSolver from '../components/ContextDoubtSolver';
-import ProjectLearning from '../components/ProjectLearning';
-import RevisionPlanner from '../components/RevisionPlanner';
+import MasteryPath from '../components/MasteryPath';
+import BlackHolesElite from '../components/BlackHolesElite';
 import AIWhiteboard from '../components/AIWhiteboard';
 import CreatorStudio from '../components/CreatorStudio';
-import DopamineDebt from '../components/DopamineDebt';
 import SensoryRooms from '../components/SensoryRooms';
-import ShadowLearning from '../components/ShadowLearning';
 import WhatIfSimulator from '../components/WhatIfSimulator';
 import UniverseBuilder from '../components/UniverseBuilder';
-import MasteryPath from '../components/MasteryPath';
+import ShadowLearning from '../components/ShadowLearning';
+import SketchbookCard from '../components/SketchbookCard';
+import '../styles/Learn.css';
 
-// In Learn screen, after selecting subject:
-{selectedSubject && (
-  <section>
-    <MasteryPath selectedSubject={selectedSubject} />
-  </section>
-)}
-
-const SUBJECT_STRUCTURE = {
-  physics: {
-    name: 'Physics',
-    icon: '⚛️',
-    description: 'Master the laws of motion and energy',
-    modules: [
-      {
-        id: 'classical',
-        name: 'Classical Mechanics',
-        icon: '🔄',
-        difficulty: 'Beginner',
-        topics: [
-          { id: 'newtons-laws', name: "Newton's Laws of Motion", duration: '45 min', status: 'completed' },
-          { id: 'forces', name: 'Forces & Equilibrium', duration: '50 min', status: 'in-progress' },
-          { id: 'work-energy', name: 'Work & Energy', duration: '55 min', status: 'locked' },
-          { id: 'momentum', name: 'Momentum & Collisions', duration: '50 min', status: 'locked' },
-        ],
-      },
-      {
-        id: 'waves',
-        name: 'Waves & Oscillations',
-        icon: '〰️',
-        difficulty: 'Intermediate',
-        topics: [
-          { id: 'simple-harmonic', name: 'Simple Harmonic Motion', duration: '60 min', status: 'locked' },
-          { id: 'sound-waves', name: 'Sound Waves', duration: '55 min', status: 'locked' },
-          { id: 'light-waves', name: 'Light as Waves', duration: '60 min', status: 'locked' },
-        ],
-      },
-      {
-        id: 'modern',
-        name: 'Modern Physics',
-        icon: '🌌',
-        difficulty: 'Advanced',
-        topics: [
-          { id: 'quantum', name: 'Quantum Mechanics', duration: '90 min', status: 'locked' },
-          { id: 'relativity', name: 'Relativity Theory', duration: '85 min', status: 'locked' },
-          { id: 'nuclear', name: 'Nuclear Physics', duration: '70 min', status: 'locked' },
-        ],
-      },
-    ],
-  },
-  philosophy: {
-    name: 'Philosophy',
-    icon: '🤔',
-    description: 'Explore the nature of knowledge and existence',
-    modules: [
-      {
-        id: 'ancient',
-        name: 'Ancient Philosophy',
-        icon: '🏛️',
-        difficulty: 'Beginner',
-        topics: [
-          { id: 'socrates', name: 'Socratic Method', duration: '40 min', status: 'completed' },
-          { id: 'plato', name: "Plato's Theory of Forms", duration: '50 min', status: 'in-progress' },
-          { id: 'aristotle', name: 'Aristotle & Logic', duration: '55 min', status: 'locked' },
-        ],
-      },
-      {
-        id: 'medieval',
-        name: 'Medieval Philosophy',
-        icon: '📖',
-        difficulty: 'Intermediate',
-        topics: [
-          { id: 'aquinas', name: 'Aquinas & Theology', duration: '60 min', status: 'locked' },
-          { id: 'scholasticism', name: 'Scholasticism', duration: '50 min', status: 'locked' },
-        ],
-      },
-      {
-        id: 'modern',
-        name: 'Modern Philosophy',
-        icon: '💡',
-        difficulty: 'Advanced',
-        topics: [
-          { id: 'descartes', name: 'Descartes & Rationalism', duration: '65 min', status: 'locked' },
-          { id: 'kant', name: "Kant's Critique", duration: '75 min', status: 'locked' },
-          { id: 'existentialism', name: 'Existentialism', duration: '70 min', status: 'locked' },
-        ],
-      },
-    ],
-  },
-  chemistry: {
-    name: 'Chemistry',
-    icon: '🧪',
-    description: 'Understanding matter and reactions',
-    modules: [
-      {
-        id: 'general',
-        name: 'General Chemistry',
-        icon: '⚗️',
-        difficulty: 'Beginner',
-        topics: [
-          { id: 'atoms', name: 'Atomic Structure', duration: '50 min', status: 'completed' },
-          { id: 'bonding', name: 'Chemical Bonding', duration: '55 min', status: 'in-progress' },
-          { id: 'reactions', name: 'Chemical Reactions', duration: '60 min', status: 'locked' },
-        ],
-      },
-      {
-        id: 'organic',
-        name: 'Organic Chemistry',
-        icon: '🧬',
-        difficulty: 'Advanced',
-        topics: [
-          { id: 'hydrocarbons', name: 'Hydrocarbons', duration: '70 min', status: 'locked' },
-          { id: 'mechanisms', name: 'Reaction Mechanisms', duration: '80 min', status: 'locked' },
-        ],
-      },
-    ],
-  },
-};
-
-function Learn({ setScreen, selectedSubject }) {
-  const [currentView, setCurrentView] = useState(selectedSubject ? 'modules' : 'subjects');
-  const [localSelectedSubject, setLocalSelectedSubject] = useState(selectedSubject);
-  const [selectedModule, setSelectedModule] = useState(null);
+function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
+  const [currentView, setCurrentView] = useState('overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
-  const [showStudyMood, setShowStudyMood] = useState(false);
-  const [studyMood, setStudyMood] = useState(null);
-  const [studentLevel] = useState('intermediate');
 
-  const subject = localSelectedSubject ? SUBJECT_STRUCTURE[localSelectedSubject] : null;
-
-  const handleSelectSubject = (subjectKey) => {
-    setLocalSelectedSubject(subjectKey);
-    setCurrentView('modules');
+  const subjectData = {
+    physics: {
+      name: 'Physics',
+      icon: '⚛️',
+      color: '#667eea',
+      description: 'Explore the fundamental laws of the universe',
+      modules: [
+        {
+          id: 'classical-mechanics',
+          name: 'Classical Mechanics',
+          status: 'in-progress',
+          progress: 65,
+          topics: [
+            { id: 'newtons-laws', name: "Newton's Laws", lessons: 5 },
+            { id: 'forces', name: 'Forces & Equilibrium', lessons: 4 },
+            { id: 'work-energy', name: 'Work & Energy', lessons: 6 },
+          ],
+        },
+        {
+          id: 'modern-physics',
+          name: 'Modern Physics',
+          status: 'locked',
+          progress: 0,
+          topics: [
+            { id: 'relativity', name: 'Relativity', lessons: 7 },
+            { id: 'quantum', name: 'Quantum Mechanics', lessons: 8 },
+          ],
+        },
+      ],
+    },
+    philosophy: {
+      name: 'Philosophy',
+      icon: '🤔',
+      color: '#2E7D32',
+      description: 'Dive into the big questions of existence',
+      modules: [
+        {
+          id: 'ancient-philosophy',
+          name: 'Ancient Philosophy',
+          status: 'in-progress',
+          progress: 45,
+          topics: [
+            { id: 'socrates', name: 'Socrates & Plato', lessons: 4 },
+            { id: 'aristotle', name: 'Aristotle', lessons: 5 },
+          ],
+        },
+        {
+          id: 'modern-philosophy',
+          name: 'Modern Philosophy',
+          status: 'not-started',
+          progress: 0,
+          topics: [
+            { id: 'descartes', name: 'Descartes', lessons: 3 },
+            { id: 'kant', name: 'Kant', lessons: 4 },
+          ],
+        },
+      ],
+    },
+    history: {
+      name: 'History',
+      icon: '📜',
+      color: '#F39C12',
+      description: 'Understand how humanity evolved',
+      modules: [
+        {
+          id: 'ancient-history',
+          name: 'Ancient Civilizations',
+          status: 'completed',
+          progress: 100,
+          topics: [
+            { id: 'egypt', name: 'Ancient Egypt', lessons: 6 },
+            { id: 'rome', name: 'Roman Empire', lessons: 7 },
+          ],
+        },
+        {
+          id: 'medieval',
+          name: 'Medieval Era',
+          status: 'in-progress',
+          progress: 35,
+          topics: [
+            { id: 'dark-ages', name: 'Dark Ages', lessons: 5 },
+            { id: 'renaissance', name: 'Renaissance', lessons: 6 },
+          ],
+        },
+      ],
+    },
   };
 
-  const handleSelectModule = (module) => {
-    setSelectedModule(module);
-    setCurrentView('topics');
-  };
-
-  const handleSelectTopic = (topic) => {
-    setSelectedTopic(topic);
-    setShowStudyMood(true);
-  };
-
-  const handleMoodSelected = (mood) => {
-    setStudyMood(mood);
-    setShowStudyMood(false);
-    setCurrentView('topic-detail');
-  };
+  const subject = subjectData[selectedSubject];
+  if (!subject) return null;
 
   const handleBack = () => {
-    if (currentView === 'topics') {
-      setCurrentView('modules');
-      setSelectedModule(null);
-    } else if (currentView === 'topic-detail') {
-      setCurrentView('topics');
+    if (selectedTopic) {
       setSelectedTopic(null);
-      setStudyMood(null);
-    } else if (currentView === 'modules') {
-      setCurrentView('subjects');
-      setLocalSelectedSubject(null);
+    } else if (currentView !== 'overview') {
+      setCurrentView('overview');
     } else {
-      setScreen('dashboard');
+      setScreen('universe');
     }
   };
 
-  // Subjects View
-  if (currentView === 'subjects') {
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'completed':
+        return '✓';
+      case 'in-progress':
+        return '⏳';
+      case 'not-started':
+        return '•';
+      case 'locked':
+        return '🔒';
+      default:
+        return '•';
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed':
+        return '#2E7D32';
+      case 'in-progress':
+        return '#F39C12';
+      case 'not-started':
+        return '#6f6f6f';
+      case 'locked':
+        return '#999';
+      default:
+        return '#6f6f6f';
+    }
+  };
+
+  // View: Whiteboard
+  if (currentView === 'whiteboard') {
+    return (
+      <AIWhiteboard
+        topic={selectedTopic}
+        onBack={handleBack}
+      />
+    );
+  }
+
+  // View: Creator Studio
+  if (currentView === 'creator') {
+    return (
+      <CreatorStudio
+        topic={selectedTopic}
+        onBack={handleBack}
+      />
+    );
+  }
+
+  // View: Sensory Rooms
+  if (currentView === 'sensory-rooms') {
+    return (
+      <SensoryRooms
+        topic={selectedTopic}
+        onBack={handleBack}
+      />
+    );
+  }
+
+  // View: What-If Simulator
+  if (currentView === 'what-if') {
+    return (
+      <WhatIfSimulator
+        topic={selectedTopic}
+        onBack={handleBack}
+      />
+    );
+  }
+
+  // View: Universe Builder
+  if (currentView === 'universe') {
+    return (
+      <UniverseBuilder
+        topic={selectedTopic}
+        onBack={handleBack}
+      />
+    );
+  }
+
+  // View: Shadow Learning
+  if (currentView === 'shadow-learning') {
+    return (
+      <ShadowLearning
+        topic={selectedTopic}
+        onBack={handleBack}
+      />
+    );
+  }
+
+  // View: Sketchbook
+  if (currentView === 'sketchbook') {
     return (
       <div className="learn-container">
-        <div className="learn-header">
-          <button className="learn-back-btn" onClick={() => setScreen('dashboard')}>
+        <header className="learn-header">
+          <button className="learn-back-btn" onClick={handleBack}>
             ← Back
           </button>
-          <h1>📚 Choose Subject</h1>
+          <h1>Dictionary</h1>
           <div style={{ width: '60px' }}></div>
-        </div>
-
-        <div className="subjects-list">
-          {Object.entries(SUBJECT_STRUCTURE).map(([key, subj]) => (
-            <div
-              key={key}
-              className="subject-card-select"
-              onClick={() => handleSelectSubject(key)}
-            >
-              <div className="subj-icon">{subj.icon}</div>
-              <h3>{subj.name}</h3>
-              <p>{subj.description}</p>
-              <span className="subj-arrow">→</span>
-            </div>
-          ))}
-        </div>
+        </header>
+        <SketchbookCard term="capillary-action" />
       </div>
     );
   }
 
-  // Modules View
-  if (currentView === 'modules' && subject) {
-    return (
-      <div className="learn-container">
-        <div className="learn-header">
-          <button className="learn-back-btn" onClick={handleBack}>
-            ← Back
-          </button>
-          <h1>{subject.icon} {subject.name}</h1>
-          <div style={{ width: '60px' }}></div>
-        </div>
+  // Main Overview
+  return (
+    <div className="learn-container">
+      {/* Header */}
+      <header className="learn-header">
+        <button className="learn-back-btn" onClick={() => setScreen('universe')}>
+          ← Back
+        </button>
+        <h1 className="learn-title">{subject.name}</h1>
+        <div style={{ width: '60px' }}></div>
+      </header>
 
-        <div className="modules-list">
-          {subject.modules.map((module) => (
-            <div key={module.id} className="module-card" onClick={() => handleSelectModule(module)}>
-              <div className="module-header">
-                <span className="module-icon">{module.icon}</span>
-                <div className="module-info">
-                  <h3>{module.name}</h3>
-                  <p>{module.difficulty}</p>
+      <main className="learn-main">
+        {/* Mastery Path */}
+        <MasteryPath selectedSubject={selectedSubject} />
+
+        {/* Black Holes Special (for Physics) */}
+        {selectedSubject === 'physics' && (
+          <section className="learn-section">
+            <h2 className="section-title">Featured: Black Holes Masterclass</h2>
+            <BlackHolesElite />
+          </section>
+        )}
+
+        {/* Modules */}
+        <section className="learn-section">
+          <h2 className="section-title">Modules</h2>
+          <div className="modules-list">
+            {subject.modules.map((module) => (
+              <div
+                key={module.id}
+                className={`module-card ${module.status}`}
+              >
+                <div className="module-header">
+                  <div className="module-info">
+                    <h3 className="module-name">{module.name}</h3>
+                    <span
+                      className="module-status"
+                      style={{ color: getStatusColor(module.status) }}
+                    >
+                      {getStatusIcon(module.status)} {module.status.replace('-', ' ')}
+                    </span>
+                  </div>
+                  <div className="module-progress">
+                    <div className="progress-bar">
+                      <div
+                        className="progress-fill"
+                        style={{ width: `${module.progress}%` }}
+                      ></div>
+                    </div>
+                    <span className="progress-text">{module.progress}%</span>
+                  </div>
+                </div>
+
+                <div className="module-topics">
+                  {module.topics.map((topic) => (
+                    <button
+                      key={topic.id}
+                      className="topic-btn"
+                      onClick={() => {
+                        setSelectedTopic(topic);
+                        setCurrentView('topic-detail');
+                      }}
+                    >
+                      <span className="topic-name">{topic.name}</span>
+                      <span className="topic-lessons">
+                        {topic.lessons} lessons
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
-              <div className="module-topics-count">
-                {module.topics.length} topics
-              </div>
-              <span className="module-arrow">→</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+            ))}
+          </div>
+        </section>
 
-  // Topics View
-  if (currentView === 'topics' && selectedModule && subject) {
-    return (
-      <div className="learn-container">
-        <div className="learn-header">
-          <button className="learn-back-btn" onClick={handleBack}>
-            ← Back
-          </button>
-          <h1>{selectedModule.icon} {selectedModule.name}</h1>
-          <div style={{ width: '60px' }}></div>
-        </div>
-
-        <div className="topics-list">
-          {selectedModule.topics.map((topic) => (
+        {/* Learning Tools */}
+        <section className="learn-section">
+          <h2 className="section-title">Learning Tools</h2>
+          <div className="tools-grid">
             <div
-              key={topic.id}
-              className={`topic-card ${topic.status}`}
-              onClick={() => topic.status !== 'locked' && handleSelectTopic(topic)}
+              className="tool-card"
+              onClick={() => setCurrentView('whiteboard')}
             >
-              <div className="topic-status">
-                {topic.status === 'completed' && '✅'}
-                {topic.status === 'in-progress' && '⏳'}
-                {topic.status === 'locked' && '🔒'}
-              </div>
-              <div className="topic-content">
-                <h4>{topic.name}</h4>
-                <p>⏱️ {topic.duration}</p>
-              </div>
-              {topic.status !== 'locked' && <span className="topic-arrow">→</span>}
+              <span className="tool-icon">✏️</span>
+              <h4 className="tool-title">AI Whiteboard</h4>
+              <p className="tool-desc">Draw & visualize concepts</p>
             </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
-  // Study Mood Modal
-  if (showStudyMood) {
-    return (
-      <>
-        <StudyMood
-          onMoodSelected={handleMoodSelected}
-          onClose={() => setShowStudyMood(false)}
-        />
-      </>
-    );
-  }
-
-  // Topic Detail View
-  if (currentView === 'topic-detail' && selectedTopic && subject) {
-    return (
-      <div className="learn-container">
-        <div className="learn-header">
-          <button className="learn-back-btn" onClick={handleBack}>
-            ← Back
-          </button>
-          <h1>📖 {selectedTopic.name}</h1>
-          <div style={{ width: '60px' }}></div>
-        </div>
-
-        <div className="topic-detail-content">
-          {studyMood && (
-            <div className="mood-indicator">
-              <p>Study Mode: <strong>{studyMood}</strong></p>
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('creator')}
+            >
+              <span className="tool-icon">🎨</span>
+              <h4 className="tool-title">Creator Studio</h4>
+              <p className="tool-desc">Make notes & flashcards</p>
             </div>
-          )}
 
-          <div className="lesson-section">
-            <h2>Lesson Content</h2>
-            <div className="lesson-card">
-              <h3>{selectedTopic.name}</h3>
-              <p>
-                This lesson covers the fundamentals of {selectedTopic.name.toLowerCase()}. 
-                You'll learn key concepts, formulas, and real-world applications.
-              </p>
-              <div className="lesson-outline">
-                <h4>What You'll Learn:</h4>
-                <ul>
-                  <li>Core concepts and definitions</li>
-                  <li>Key formulas and principles</li>
-                  <li>Real-world applications</li>
-                  <li>Practice problems</li>
-                </ul>
-              </div>
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('sensory-rooms')}
+            >
+              <span className="tool-icon">🏛️</span>
+              <h4 className="tool-title">Sensory Rooms</h4>
+              <p className="tool-desc">Multi-sensory learning</p>
+            </div>
+
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('what-if')}
+            >
+              <span className="tool-icon">🔮</span>
+              <h4 className="tool-title">What-If Simulator</h4>
+              <p className="tool-desc">Explore scenarios</p>
+            </div>
+
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('universe')}
+            >
+              <span className="tool-icon">🌌</span>
+              <h4 className="tool-title">Universe Builder</h4>
+              <p className="tool-desc">Map your knowledge</p>
+            </div>
+
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('shadow-learning')}
+            >
+              <span className="tool-icon">👥</span>
+              <h4 className="tool-title">Shadow Learning</h4>
+              <p className="tool-desc">Learn from community</p>
+            </div>
+
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('sketchbook')}
+            >
+              <span className="tool-icon">📚</span>
+              <h4 className="tool-title">Dictionary</h4>
+              <p className="tool-desc">Sketchbook cards</p>
             </div>
           </div>
-
-          <div className="learning-tools">
-            <h2>Learning Tools</h2>
-            <div className="tools-grid">
-              <div className="tool-card" onClick={() => setCurrentView('teach-ai')}>
-                <span className="tool-icon">🤖</span>
-                <h4>Teach AI</h4>
-                <p>You teach, AI learns</p>
-              </div>
-
-              <div className="tool-card" onClick={() => setCurrentView('knowledge-graph')}>
-                <span className="tool-icon">🗺️</span>
-                <h4>Knowledge Map</h4>
-                <p>See connections</p>
-              </div>
-
-              <div className="tool-card" onClick={() => setCurrentView('doubt-solver')}>
-                <span className="tool-icon">💡</span>
-                <h4>Ask Doubts</h4>
-                <p>Context-aware AI</p>
-              </div>
-
-              <div className="tool-card" onClick={() => setCurrentView('projects')}>
-                <span className="tool-icon">🎯</span>
-                <h4>Projects</h4>
-                <p>Learn by doing</p>
-              </div>
-              <div className="tool-card" onClick={() => setCurrentView('whiteboard')}>
-  <span className="tool-icon">✨</span>
-  <h4>AI Whiteboard</h4>
-  <p>Visual explanations</p>
-</div>
-
-<div className="tool-card" onClick={() => setCurrentView('sensory-rooms')}>
-  <span className="tool-icon">🏛️</span>
-  <h4>Memory Palace</h4>
-  <p>Sensory encoding</p>
-</div>
-
-<div className="tool-card" onClick={() => setCurrentView('shadow-learning')}>
-  <span className="tool-icon">👥</span>
-  <h4>Community Notes</h4>
-  <p>Teach & learn</p>
-</div>
-
-<div className="tool-card" onClick={() => setCurrentView('what-if')}>
-  <span className="tool-icon">🔮</span>
-  <h4>What-If</h4>
-  <p>Explore scenarios</p>
-</div>
-
-<div className="tool-card" onClick={() => setCurrentView('universe')}>
-  <span className="tool-icon">🌌</span>
-  <h4>Universe Builder</h4>
-  <p>Your knowledge map</p>
-</div>
-
-              <div className="tool-card" onClick={() => setCurrentView('revision')}>
-                <span className="tool-icon">🔄</span>
-                <h4>Revision</h4>
-                <p>Spaced repetition</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Teach AI View
-  if (currentView === 'teach-ai') {
-    return (
-      <TeachAI
-        topic={selectedTopic}
-        subject={subject}
-        onBack={handleBack}
-        studentLevel={studentLevel}
-      />
-    );
-  }
-
-  // Knowledge Graph View
-  if (currentView === 'knowledge-graph') {
-    return (
-      <KnowledgeGraph
-        subject={subject}
-        module={selectedModule}
-        onBack={handleBack}
-      />
-    );
-  }
-
-  // Doubt Solver View
-  if (currentView === 'doubt-solver') {
-    return (
-      <ContextDoubtSolver
-        topic={selectedTopic}
-        subject={subject}
-        studentLevel={studentLevel}
-        onBack={handleBack}
-      />
-    );
-  }
-
-  // Projects View
-  if (currentView === 'projects') {
-    return (
-      <ProjectLearning
-        topic={selectedTopic}
-        subject={subject}
-        onBack={handleBack}
-      />
-    );
-  }
-  // In the topic-detail section, add:
-{currentView === 'whiteboard' && (
-  <AIWhiteboard
-    topic={selectedTopic}
-    onBack={handleBack}
-  />
-)}
-
-{currentView === 'creator' && (
-  <CreatorStudio
-    topic={selectedTopic}
-    onBack={handleBack}
-  />
-)}
-// Sensory Rooms
-if (currentView === 'sensory-rooms') {
-  return (
-    <SensoryRooms
-      topic={selectedTopic}
-      onBack={handleBack}
-    />
+        </section>
+      </main>
+    </div>
   );
-}
-
-// Shadow Learning
-if (currentView === 'shadow-learning') {
-  return (
-    <ShadowLearning
-      topic={selectedTopic}
-      onBack={handleBack}
-    />
-  );
-}
-
-// What-If Simulator
-if (currentView === 'what-if') {
-  return (
-    <WhatIfSimulator
-      topic={selectedTopic}
-      onBack={handleBack}
-    />
-  );
-}
-
-// Universe Builder
-if (currentView === 'universe') {
-  return (
-    <UniverseBuilder
-      topic={selectedTopic}
-      onBack={handleBack}
-    />
-  );
-}
-  // Revision View
-  if (currentView === 'revision') {
-    return (
-      <RevisionPlanner
-        topic={selectedTopic}
-        subject={subject}
-        onBack={handleBack}
-      />
-    );
-    
-  }
-
-  return null;
 }
 
 export default Learn;

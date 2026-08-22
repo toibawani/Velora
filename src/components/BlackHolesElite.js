@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/BlackHolesElite.css';
 
 function BlackHolesElite() {
@@ -6,7 +6,8 @@ function BlackHolesElite() {
     {
       title: 'The Story of How We Discovered Black Holes',
       expert: 'Based on Einstein\'s General Relativity (1915)',
-      content: 'Karl Schwarzschild predicted black holes mathematically in 1916, but we didn\'t actually observe one until 2019 with the Event Horizon Telescope.',
+      content:
+        'Karl Schwarzschild predicted black holes mathematically in 1916, but we didn\'t actually observe one until 2019 with the Event Horizon Telescope.',
       facts: [
         'First real image: M87, 55 million light-years away',
         'Mass: 6.5 billion suns',
@@ -16,7 +17,8 @@ function BlackHolesElite() {
     {
       title: 'Why This Matters for Your Future',
       expert: 'Career connection',
-      content: 'Understanding black holes leads to careers in astrophysics, theoretical physics, and space agencies like NASA, ESA, and ISRO.',
+      content:
+        'Understanding black holes leads to careers in astrophysics, theoretical physics, and space agencies like NASA, ESA, and ISRO.',
       facts: [
         'Astrophysicist salary: $100K-$200K+',
         'Research opportunities at top universities',
