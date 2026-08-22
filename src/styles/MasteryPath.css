@@ -1,0 +1,187 @@
+.mastery-path {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.path-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.path-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.path-duration {
+  font-size: 1rem;
+  color: #6f6f6f;
+  font-weight: 500;
+}
+
+/* Progress Bar */
+.path-progress {
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #667eea;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6f6f6f;
+}
+
+/* Lessons */
+.path-lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.lesson-item {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: #f8f8f8;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.lesson-item:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.lesson-item.completed {
+  background: #f0f8f4;
+  border-color: #c8e6c9;
+}
+
+.lesson-check {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #d0d0d0;
+  font-weight: 700;
+  color: #6f6f6f;
+  font-size: 1rem;
+}
+
+.lesson-item.completed .lesson-check {
+  background: #2E7D32;
+  border-color: #2E7D32;
+  color: white;
+}
+
+.lesson-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lesson-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.lesson-time {
+  font-size: 0.85rem;
+  color: #8a8a8a;
+}
+
+.lesson-btn {
+  padding: 8px 16px;
+  border: 1px solid #d0d0d0;
+  background: white;
+  color: #667eea;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.lesson-btn:hover {
+  border-color: #667eea;
+  background: #f8fbff;
+}
+
+.lesson-btn.start {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.lesson-btn.start:hover {
+  background: #5568d3;
+  border-color: #5568d3;
+}
+
+/* Achievement */
+.path-achievement {
+  background: #f0f8f4;
+  border: 1px solid #c8e6c9;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.achievement-icon {
+  font-size: 1.5rem;
+}
+
+.achievement-text {
+  margin: 0;
+  color: #2E7D32;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .path-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+  }
+
+  .lesson-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .lesson-btn {
+    width: 100%;
+  }
+}

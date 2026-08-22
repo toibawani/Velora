@@ -13,7 +13,14 @@ import SensoryRooms from '../components/SensoryRooms';
 import ShadowLearning from '../components/ShadowLearning';
 import WhatIfSimulator from '../components/WhatIfSimulator';
 import UniverseBuilder from '../components/UniverseBuilder';
+import MasteryPath from '../components/MasteryPath';
 
+// In Learn screen, after selecting subject:
+{selectedSubject && (
+  <section>
+    <MasteryPath selectedSubject={selectedSubject} />
+  </section>
+)}
 
 const SUBJECT_STRUCTURE = {
   physics: {
