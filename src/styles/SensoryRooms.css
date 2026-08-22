@@ -1,0 +1,218 @@
+.sensory-rooms-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sensory-rooms-container h2 {
+  margin: 0 0 1rem;
+  color: #042C53;
+}
+
+.rooms-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.memory-room {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 2px solid #D3D1C7;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.room-info {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.room-label {
+  margin: 0;
+  color: #042C53;
+  font-weight: 600;
+}
+
+.room-sensory {
+  margin: 0.5rem 0 0;
+  color: #888780;
+  font-size: 0.9rem;
+}
+
+.placed-objects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 1rem;
+}
+
+.object-placed {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid #D3D1C7;
+  font-size: 2rem;
+  cursor: grab;
+  transition: all 0.3s ease;
+}
+
+.object-placed:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.object-placed p {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: #042C53;
+}
+
+.objects-palette {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 2px solid #D3D1C7;
+  height: fit-content;
+}
+
+.objects-palette h3 {
+  margin: 0 0 1rem;
+  color: #042C53;
+}
+
+.objects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.object-card {
+  padding: 1rem;
+  background: #F8F8F8;
+  border-radius: 8px;
+  text-align: center;
+  cursor: grab;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.object-card:hover {
+  border-color: #667eea;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.2);
+}
+
+.object-emoji {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.object-card h4 {
+  margin: 0 0 0.25rem;
+  color: #042C53;
+  font-size: 0.95rem;
+}
+
+.object-desc {
+  margin: 0;
+  color: #888780;
+  font-size: 0.8rem;
+}
+
+.sensory-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 4px;
+}
+
+.sensory-effects-panel {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 2px solid #D3D1C7;
+  margin-bottom: 2rem;
+}
+
+.sensory-effects-panel h3 {
+  margin: 0 0 1.5rem;
+  color: #042C53;
+}
+
+.sensory-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.sensory-item {
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.sensory-item.light {
+  background: #FFFAF0;
+  border-left-color: #FFD700;
+}
+
+.sensory-item.audio {
+  background: #F0F8FF;
+  border-left-color: #4169E1;
+}
+
+.sensory-item.haptic {
+  background: #F5F0FF;
+  border-left-color: #9370DB;
+}
+
+.sensory-item.thermal {
+  background: #FFF0F5;
+  border-left-color: #FF6B6B;
+}
+
+.sensory-item span {
+  display: block;
+  font-weight: 600;
+  color: #042C53;
+  margin-bottom: 0.5rem;
+}
+
+.sensory-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #5F5E5A;
+}
+
+.rooms-note {
+  padding: 1rem;
+  background: linear-gradient(135deg, #F8FBFF 0%, #FFF8F5 100%);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.rooms-note p {
+  margin: 0;
+  color: #042C53;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}

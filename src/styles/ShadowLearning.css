@@ -1,0 +1,199 @@
+.shadow-learning-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.shadow-learning-container h2 {
+  margin: 0 0 1rem;
+  color: #042C53;
+}
+
+.my-note-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 2px solid #D3D1C7;
+  margin-bottom: 2rem;
+}
+
+.my-note-section h3 {
+  margin: 0 0 0.5rem;
+  color: #042C53;
+}
+
+.challenge {
+  margin: 0 0 1.5rem;
+  color: #5F5E5A;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.note-input-shadow {
+  width: 100%;
+  min-height: 100px;
+  padding: 1rem;
+  border: 2px solid #D3D1C7;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #042C53;
+  resize: vertical;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.note-input-shadow:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.note-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.char-count {
+  color: #888780;
+  font-size: 0.9rem;
+}
+
+.btn-submit-note {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-submit-note:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+}
+
+.btn-submit-note.submitted {
+  background: linear-gradient(135deg, #2E7D32 0%, #1D9E75 100%);
+}
+
+.community-notes {
+  margin-bottom: 2rem;
+}
+
+.community-notes h3 {
+  margin: 0 0 1.5rem;
+  color: #042C53;
+}
+
+.top-note {
+  background: linear-gradient(135deg, #FFFAF0 0%, #FFF3E0 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #FFB74D;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 1rem;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.note-text {
+  margin: 1rem 0;
+  color: #042C53;
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.note-votes {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.vote-count {
+  font-weight: 600;
+  color: #E65100;
+  font-size: 0.95rem;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.note-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.note-item:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateX(4px);
+}
+
+.note-voting {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.vote-btn {
+  flex: 1;
+  padding: 8px 12px;
+  background: #F8F8F8;
+  border: 1px solid #D3D1C7;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.vote-btn.clear:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.vote-btn.funny:hover {
+  border-color: #FFB74D;
+  color: #E65100;
+}
+
+.vote-btn.memorable:hover {
+  border-color: #2E7D32;
+  color: #2E7D32;
+}
+
+.shadow-note {
+  padding: 1rem;
+  background: linear-gradient(135deg, #F8FBFF 0%, #FFF8F5 100%);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.shadow-note p {
+  margin: 0;
+  color: #042C53;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}

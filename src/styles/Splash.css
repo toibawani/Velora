@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Splash Screen — Premium Welcome Gate
+   --------------------------------------------------------------------------
+   Minimal, confident, premium. Dark background, clean typography.
+   No pastel gradients, no emojis, no clutter.
+   ========================================================================== */
+
+.splash {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: var(--space-8);
+}
+
+.splash-content {
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn var(--duration-slow) var(--ease-out);
+}
+
+/* ---- Brand ---- */
+.splash-brand {
+  margin-bottom: var(--space-10);
+}
+
+.splash-wordmark {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-black);
+  font-size: 3rem;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.splash-tagline {
+  font-size: 1.125rem;
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+/* ---- Description ---- */
+.splash-description {
+  font-size: 0.9375rem;
+  color: var(--text-tertiary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-10);
+}
+
+/* ---- Action Buttons ---- */
+.splash-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.splash-btn {
+  width: 100%;
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  border: none;
+}
+
+.splash-btn-primary {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.splash-btn-primary:hover {
+  background: var(--accent-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.splash-btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.splash-btn-secondary:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+/* ---- Footer ---- */
+.splash-footer {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+  .splash {
+    padding: var(--space-6);
+  }
+
+  .splash-wordmark {
+    font-size: 2.25rem;
+  }
+
+  .splash-tagline {
+    font-size: 1rem;
+  }
+}

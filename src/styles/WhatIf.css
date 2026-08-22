@@ -1,0 +1,247 @@
+.whatif-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.whatif-container h2 {
+  margin: 0 0 0.5rem;
+  color: #042C53;
+}
+
+.whatif-intro {
+  margin: 0 0 2rem;
+  color: #888780;
+  font-size: 1.05rem;
+}
+
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.scenario-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 2px solid #D3D1C7;
+  position: relative;
+  overflow: hidden;
+}
+
+.scenario-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.scenario-card:hover::before {
+  left: 100%;
+}
+
+.scenario-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.scenario-card h3 {
+  margin: 0;
+  color: #042C53;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.difficulty-badge {
+  background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+  color: #E65100;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.scenario-topic {
+  margin: 0;
+  color: #888780;
+  font-size: 0.9rem;
+}
+
+.scenario-cta {
+  margin-top: 1rem;
+  color: #667eea;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.scenario-card:hover .scenario-cta {
+  opacity: 1;
+}
+
+.simulation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.simulation-content {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888780;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  transform: rotate(90deg);
+  color: #0C447C;
+}
+
+.simulation-content h2 {
+  margin: 0 0 1.5rem;
+  color: #042C53;
+}
+
+.simulation-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 1rem;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #E0E0E0;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.simulation-visuals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.visual-box {
+  height: 200px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.simulation-explanation {
+  background: #F8F8F8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.simulation-explanation h3 {
+  margin: 0 0 1rem;
+  color: #042C53;
+}
+
+.simulation-explanation p {
+  margin: 0;
+  color: #5F5E5A;
+  line-height: 1.8;
+}
+
+.simulation-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-deep-dive,
+.btn-compare {
+  flex: 1;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-deep-dive:hover,
+.btn-compare:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+}
+
+.whatif-note {
+  padding: 1rem;
+  background: linear-gradient(135deg, #F8FBFF 0%, #FFF8F5 100%);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  margin-top: 2rem;
+}
+
+.whatif-note p {
+  margin: 0;
+  color: #042C53;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}

@@ -1,0 +1,185 @@
+.journey-page {
+  min-height: 100vh;
+  background: #F1EFE8;
+}
+
+.journey-header {
+  background: white;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #D3D1C7;
+  margin-bottom: 2rem;
+}
+
+.journey-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.journey-header h1 {
+  font-size: 1.8rem;
+  color: #042C53;
+  margin: 0;
+}
+
+.journey-main {
+  padding: 2rem 0;
+}
+
+.journey-timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.journey-timeline::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #0C447C 0%, #1D9E75 100%);
+}
+
+.journey-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+  position: relative;
+}
+
+.journey-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.marker-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  background: white;
+  border: 4px solid;
+  position: relative;
+  z-index: 10;
+}
+
+.journey-item.completed .marker-icon {
+  border-color: #2E7D32;
+  background: #E8F5E9;
+}
+
+.journey-item.in-progress .marker-icon {
+  border-color: #FFA500;
+  background: #FFF3E0;
+  animation: pulse 2s infinite;
+}
+
+.journey-item.locked .marker-icon {
+  border-color: #D3D1C7;
+  background: #F1EFE8;
+  opacity: 0.6;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.journey-content {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #D3D1C7;
+  transition: all 0.3s ease;
+}
+
+.journey-item.completed .journey-content {
+  border-left: 4px solid #2E7D32;
+}
+
+.journey-item.in-progress .journey-content {
+  border-left: 4px solid #FFA500;
+  box-shadow: 0 8px 16px rgba(255, 165, 0, 0.2);
+}
+
+.journey-content h3 {
+  margin: 0 0 0.5rem;
+  color: #042C53;
+  font-size: 1.2rem;
+}
+
+.date {
+  margin: 0 0 1rem;
+  color: #888780;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.journey-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.score,
+.time {
+  padding: 6px 12px;
+  background: #E8F5E9;
+  border-radius: 6px;
+  color: #2E7D32;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.progress-mini {
+  margin-top: 1rem;
+}
+
+.progress-bar-small {
+  height: 6px;
+  background: #E0E0E0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar-small .fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFA500 0%, #FF8C00 100%);
+}
+
+.progress-mini p {
+  margin: 0;
+  color: #888780;
+  font-size: 0.85rem;
+}
+
+.locked {
+  margin: 0;
+  color: #888780;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .journey-item {
+    grid-template-columns: 60px 1fr;
+    gap: 1rem;
+  }
+
+  .marker-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .journey-timeline::before {
+    left: 30px;
+  }
+}
