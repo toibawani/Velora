@@ -1,0 +1,277 @@
+.universe-home {
+  min-height: 100vh;
+  background: #ffffff;
+  padding: 0;
+  margin: 0;
+}
+
+/* Header */
+.uh-header {
+  padding: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+}
+
+.uh-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.uh-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #667eea;
+  letter-spacing: 0.05em;
+}
+
+.uh-tagline {
+  margin: 0;
+  font-size: 1rem;
+  color: #888780;
+  font-weight: 400;
+}
+
+.uh-header-right {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.uh-user {
+  font-size: 0.95rem;
+  color: #5f5e5a;
+  font-weight: 500;
+}
+
+.uh-logout {
+  padding: 8px 16px;
+  background: #f5f5f5;
+  color: #1a1a1a;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.uh-logout:hover {
+  background: #ececec;
+  border-color: #d0d0d0;
+}
+
+/* Main */
+.uh-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Daily Spark */
+.uh-daily-spark {
+  margin-bottom: 4rem;
+}
+
+.spark-card {
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.spark-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.spark-icon {
+  font-size: 2.5rem;
+}
+
+.spark-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.spark-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.spark-fact {
+  margin: 0;
+  color: #5f5e5a;
+  line-height: 1.7;
+}
+
+.spark-btn {
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Subjects */
+.uh-subjects {
+  margin-bottom: 4rem;
+}
+
+.uh-subjects-title {
+  margin: 0 0 2rem;
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.uh-subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.uh-subject-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.uh-subject-card:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+.card-header {
+  padding: 2rem;
+  background: #f8f8f8;
+  border-bottom: 3px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-emoji {
+  font-size: 2.5rem;
+}
+
+.card-content {
+  padding: 1.5rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.card-description {
+  margin: 0;
+  color: #5f5e5a;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.card-cta {
+  margin: 1.5rem 2rem 2rem;
+  padding: 12px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.card-cta:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+/* Social Proof */
+.uh-social-proof {
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+}
+
+.uh-section-title {
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.proof-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #667eea;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #888780;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .uh-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .uh-subjects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .spark-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .uh-main {
+    padding: 2rem 1rem;
+  }
+}
