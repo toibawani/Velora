@@ -1,0 +1,376 @@
+.flow-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.flow-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.timer-label {
+  font-size: 0.8rem;
+  color: #8a8a8a;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.timer-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.flow-title-small {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* ==================== START STATE ==================== */
+.flow-start {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.flow-title {
+  margin: 0 0 2rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -0.015em;
+}
+
+.flow-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background: #f8f8f8;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-label {
+  font-size: 0.8rem;
+  color: #8a8a8a;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.flow-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #6f6f6f;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flow-start-btn {
+  padding: 14px 32px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.flow-start-btn:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+/* ==================== PLAYING STATE ==================== */
+.flow-playing {
+  padding: 4rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.flow-content {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+}
+
+.flow-instruction {
+  margin: 0 0 2rem;
+  font-size: 1rem;
+  color: #6f6f6f;
+  font-style: italic;
+}
+
+/* Quiz */
+.quiz-container {
+  text-align: left;
+}
+
+.quiz-question {
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.quiz-option {
+  padding: 1.5rem;
+  background: #f8f8f8;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-weight: 500;
+}
+
+.quiz-option:hover {
+  border-color: #667eea;
+  background: #f8fbff;
+  transform: translateX(8px);
+}
+
+/* Scrabble */
+.scrabble-container {
+  text-align: center;
+}
+
+.scrabble-prompt {
+  margin: 0 0 2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.letter-tiles {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.letter-tile {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #667eea;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.letter-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+/* ==================== COMPLETE STATE ==================== */
+.flow-complete {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.complete-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: #f0f8f4;
+  border-radius: 50%;
+  color: #2E7D32;
+  font-weight: 700;
+}
+
+.complete-title {
+  margin: 0 0 2.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -0.015em;
+}
+
+.insights-section {
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.insights-title {
+  margin: 0 0 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.insights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.insight-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.insight-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.insight-text {
+  margin: 0;
+  color: #1a1a1a;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.reflection-section {
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.reflection-title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.reflection-input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #1a1a1a;
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.reflection-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.complete-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.action-btn.primary {
+  background: #667eea;
+  color: white;
+}
+
+.action-btn.primary:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+.action-btn.secondary {
+  background: #f5f5f5;
+  color: #1a1a1a;
+  border: 1px solid #e0e0e0;
+}
+
+.action-btn.secondary:hover {
+  background: #ececec;
+  border-color: #d0d0d0;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .flow-info {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .flow-playing {
+    padding: 2rem 1rem;
+  }
+
+  .flow-content {
+    padding: 1.5rem;
+  }
+
+  .complete-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
