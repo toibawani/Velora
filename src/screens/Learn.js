@@ -9,6 +9,7 @@ import WhatIfSimulator from '../components/WhatIfSimulator';
 import UniverseBuilder from '../components/UniverseBuilder';
 import ShadowLearning from '../components/ShadowLearning';
 import SketchbookCard from '../components/SketchbookCard';
+import ExpertMode from '../components/ExpertMode';
 import '../styles/Learn.css';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
@@ -460,6 +461,14 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
               <p className="tool-desc">Sketchbook cards</p>
             </div>
           </div>
+        </section>
+
+        {/* Academic Deep Dive & Expert Mode */}
+        <section className="learn-section">
+          <ExpertMode
+            domain={selectedSubject || 'physics'}
+            onOpenDiscussion={() => setCurrentView('shadow-learning')}
+          />
         </section>
       </main>
     </div>

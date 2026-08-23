@@ -1,0 +1,359 @@
+/* ==========================================================================
+   ExpertMode.css — Advanced Academic & Research Deep Dive
+   ========================================================================== */
+
+.expert-mode-container {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 12px;
+  padding: 2.25rem;
+  margin: 2.5rem 0;
+  text-align: left;
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+}
+
+.expert-hero-bar {
+  border-bottom: 1px solid var(--border-subtle, #282828);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.expert-badge-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #34c759;
+  background: rgba(52, 199, 89, 0.12);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.expert-hero-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--text-primary, #ffffff);
+}
+
+.expert-hero-sub {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-secondary, #a0a0a0);
+  line-height: 1.5;
+}
+
+/* Nav Tabs */
+.expert-nav-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-subtle, #282828);
+  padding-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.expert-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-tertiary, #888888);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expert-tab:hover {
+  color: var(--text-primary, #ffffff);
+  background: var(--bg-tertiary, #222222);
+}
+
+.expert-tab.active {
+  background: var(--bg-tertiary, #222222);
+  color: #ffffff;
+  border-color: var(--border-default, #383838);
+}
+
+/* Paper Selector Row */
+.paper-selector-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.paper-pill-btn {
+  background: var(--bg-tertiary, #222222);
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px solid var(--border-default, #333333);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.paper-pill-btn.selected {
+  background: #4f7df3;
+  color: #ffffff;
+  border-color: #4f7df3;
+}
+
+.paper-deep-card {
+  background: var(--bg-tertiary, #202020);
+  border: 1px solid var(--border-default, #2f2f2f);
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.journal-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4f7df3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.paper-headline {
+  margin: 0.35rem 0 0 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary, #ffffff);
+  line-height: 1.35;
+}
+
+.paper-section-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.block-title {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--text-tertiary, #888888);
+}
+
+.block-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary, #e0e0e0);
+}
+
+.highlight-takeaway {
+  background: rgba(79, 125, 243, 0.08);
+  border-left: 3px solid #4f7df3;
+  padding: 1rem 1.25rem;
+  border-radius: 0 6px 6px 0;
+}
+
+.paper-equation-box {
+  background: #151515;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.equation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.equation-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.mono-tag {
+  font-size: 0.72rem;
+  color: var(--text-tertiary, #777777);
+  font-family: var(--font-mono, monospace);
+}
+
+.equation-display {
+  background: #0d0d0d;
+  border: 1px solid #222222;
+  border-radius: 6px;
+  padding: 1.25rem;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #34c759;
+  font-family: var(--font-mono, monospace);
+  overflow-x: auto;
+}
+
+.equation-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #a0a0a0);
+  line-height: 1.5;
+}
+
+/* Debates Grid */
+.debates-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .debates-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.debate-card {
+  background: var(--bg-tertiary, #202020);
+  border: 1px solid var(--border-default, #2e2e2e);
+  border-radius: 10px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.debate-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.debate-provocation {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #cccccc);
+}
+
+.debate-bullet-points {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.bullet-heading {
+  font-weight: 700;
+  color: var(--text-primary, #e0e0e0);
+}
+
+.debate-bullet-points ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-secondary, #a0a0a0);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.join-debate-btn {
+  background: transparent;
+  color: #4f7df3;
+  border: 1px solid rgba(79, 125, 243, 0.4);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+.join-debate-btn:hover {
+  background: rgba(79, 125, 243, 0.1);
+}
+
+/* Careers Grid */
+.careers-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.career-card {
+  background: var(--bg-tertiary, #202020);
+  border: 1px solid var(--border-default, #2e2e2e);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.career-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.career-role {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.career-inst {
+  font-size: 0.8rem;
+  color: #ff9f0a;
+  font-weight: 600;
+}
+
+.career-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary, #b0b0b0);
+}
+
+.skills-tag-cloud {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 0.25rem;
+}
+
+.skills-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #888888);
+  font-weight: 600;
+}
+
+.tags-container {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.skill-pill {
+  background: #161616;
+  border: 1px solid #333333;
+  color: var(--text-secondary, #d0d0d0);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
