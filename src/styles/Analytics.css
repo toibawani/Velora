@@ -1,174 +1,183 @@
 /* ==========================================================================
-   Analytics.css — Clean Notion/Apple Styled Cognitive Analytics
+   Analytics.css — High-Contrast Cognitive Analytics & Retention Metrics
+   --------------------------------------------------------------------------
+   Disciplined, distraction-free performance insights with sharp borders.
    ========================================================================== */
 
 .analytics-page-root {
   min-height: 100vh;
-  background: var(--bg-primary, #111111);
-  color: var(--text-primary, #f5f5f5);
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
 }
 
 .analytics-top-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 2.5rem;
-  background: var(--bg-secondary, #1a1a1a);
-  border-bottom: 1px solid var(--border-default, #2a2a2a);
+  padding: var(--space-4) var(--space-8);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
 }
 
 .analytics-back-btn {
   background: transparent;
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px solid var(--border-default, #333333);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--duration-fast) var(--ease-standard);
 }
 
 .analytics-back-btn:hover {
-  color: #ffffff;
-  border-color: #555555;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
 }
 
 .analytics-brand-title {
   margin: 0;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  font-size: 1.125rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
 }
 
 .analytics-privacy-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  color: var(--color-success, #34c759);
-  background: rgba(52, 199, 89, 0.1);
-  border: 1px solid rgba(52, 199, 89, 0.25);
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-weight: 600;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  color: var(--accent-green);
+  background: rgba(0, 186, 124, 0.1);
+  border: 1px solid rgba(0, 186, 124, 0.3);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-weight: var(--weight-medium);
 }
 
 .analytics-main-container {
-  max-width: 1200px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 2.5rem 2rem 5rem 2rem;
+  padding: var(--space-8) var(--space-4) var(--space-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
 }
 
 .analytics-hero-section {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-subtle, #222222);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: var(--space-4);
 }
 
 .analytics-greeting {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.85rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary, #ffffff);
+  margin: 0 0 var(--space-1) 0;
+  font-size: 1.5rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
 }
 
 .analytics-lead {
   margin: 0;
-  font-size: 1rem;
-  color: var(--text-secondary, #a0a0a0);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
 }
 
 .timeframe-toggle-group {
-  display: flex;
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #333333);
-  border-radius: 8px;
-  padding: 4px;
-  gap: 4px;
+  display: inline-flex;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 2px;
 }
 
 .timeframe-btn {
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-secondary);
   padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--duration-fast) var(--ease-standard);
 }
 
 .timeframe-btn.active {
-  background: #333333;
-  color: #ffffff;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+  box-shadow: var(--shadow-xs);
 }
 
-/* ==================== Primary Metrics Grid ==================== */
-
+/* Primary Metrics Grid */
 .analytics-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
 }
 
 .metric-box {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 10px;
-  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
   text-align: left;
 }
 
 .metric-caption {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  color: var(--text-tertiary, #888888);
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
 }
 
 .metric-num-row {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: var(--space-1);
 }
 
 .metric-big-num {
-  font-size: 2.25rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text-primary, #ffffff);
+  font-size: 2rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  line-height: 1;
 }
 
 .metric-unit {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-tertiary, #777777);
+  font-size: 0.875rem;
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
 }
 
 .metric-subtext {
-  font-size: 0.82rem;
-  color: var(--text-secondary, #999999);
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
 }
 
-/* ==================== Split Layout & Cards ==================== */
-
+/* Split Layout & Cards */
 .analytics-split-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 @media (max-width: 900px) {
@@ -180,160 +189,159 @@
 .analytics-col {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 .analytics-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 12px;
-  padding: 1.75rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
   text-align: left;
 }
 
 .card-heading {
-  margin: 0 0 0.4rem 0;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  margin: 0 0 var(--space-1) 0;
+  font-size: 1.0625rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
 }
 
 .card-subhead {
-  margin: 0 0 1.5rem 0;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: var(--text-secondary, #a0a0a0);
+  margin: 0 0 var(--space-5) 0;
+  font-size: 0.8125rem;
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
 }
 
 /* Learning Style Bars */
 .style-bars-list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
 .style-header-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.88rem;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: var(--text-primary, #e5e5e5);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-1);
+  color: var(--text-primary);
 }
 
 .style-pct {
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: var(--weight-bold);
 }
 
 .bar-track {
-  height: 8px;
-  background: var(--bg-tertiary, #222222);
-  border-radius: 999px;
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
 .bar-fill {
   height: 100%;
-  border-radius: 999px;
-  transition: width 0.4s ease;
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-standard);
 }
 
 .recommendation-pill {
-  background: rgba(79, 125, 243, 0.08);
-  border: 1px solid rgba(79, 125, 243, 0.2);
-  border-radius: 8px;
-  padding: 1rem;
-  font-size: 0.85rem;
-  line-height: 1.55;
-  color: var(--text-primary, #d0e0ff);
+  background: rgba(29, 155, 240, 0.08);
+  border: 1px solid rgba(29, 155, 240, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.8125rem;
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
 }
 
 /* Peak Hours Grid */
 .peak-hours-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .peak-hour-box {
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #333333);
-  border-radius: 8px;
-  padding: 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .peak-hour-box.highlight {
-  border-color: #4f7df3;
-  background: rgba(79, 125, 243, 0.1);
+  border-color: var(--accent-primary);
+  background: rgba(29, 155, 240, 0.06);
 }
 
 .peak-label {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   text-transform: uppercase;
-  font-weight: 600;
-  color: var(--text-tertiary, #888888);
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
 }
 
 .peak-time {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 0.9375rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
 }
 
 .peak-pct {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #4f7df3;
+  font-size: 0.75rem;
+  font-weight: var(--weight-semibold);
+  color: var(--accent-primary);
 }
 
 .peak-tip {
   margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-secondary, #a0a0a0);
-  line-height: 1.5;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
 }
 
 /* Domain Time Distribution */
 .topic-dist-list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: var(--space-4);
 }
 
 .dist-title-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.88rem;
-  margin-bottom: 6px;
-  color: var(--text-primary, #e5e5e5);
+  font-size: 0.8125rem;
+  margin-bottom: var(--space-1);
+  color: var(--text-primary);
 }
 
 .dist-hours {
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: var(--weight-bold);
 }
 
 /* Struggled Concepts */
 .struggle-items-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-3);
 }
 
 .struggle-card-item {
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #333333);
-  border-radius: 8px;
-  padding: 1.15rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-1);
 }
 
 .struggle-badge-row {
@@ -343,69 +351,71 @@
 }
 
 .struggle-concept-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
 }
 
 .struggle-level-tag {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.6875rem;
+  font-weight: var(--weight-semibold);
   text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
 }
 
 .struggle-level-tag.high {
-  background: rgba(255, 59, 48, 0.15);
-  color: #ff3b30;
-  border: 1px solid rgba(255, 59, 48, 0.3);
+  background: rgba(244, 33, 46, 0.1);
+  color: var(--color-error);
+  border: 1px solid rgba(244, 33, 46, 0.3);
 }
 
 .struggle-level-tag.medium {
-  background: rgba(255, 159, 10, 0.15);
-  color: #ff9f0a;
-  border: 1px solid rgba(255, 159, 10, 0.3);
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--accent-orange);
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .struggle-topic-meta {
-  font-size: 0.78rem;
-  color: var(--text-tertiary, #888888);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
 }
 
 .struggle-remedy-text {
-  margin: 0.25rem 0 0 0;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: var(--text-secondary, #cccccc);
+  margin: var(--space-1) 0 0 0;
+  font-size: 0.8125rem;
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
 }
 
 /* Footer Actions */
 .analytics-footer-actions {
-  margin-top: 3rem;
+  margin-top: var(--space-4);
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--space-4);
 }
 
 .simulate-session-btn {
   background: transparent;
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px dashed var(--border-default, #444444);
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--duration-fast) var(--ease-standard);
 }
 
 .simulate-session-btn:hover {
-  border-color: #4f7df3;
-  color: #ffffff;
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--bg-hover);
 }
 
 .logged-toast {
-  font-size: 0.85rem;
-  color: #34c759;
-  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--accent-green);
+  font-weight: var(--weight-semibold);
 }
