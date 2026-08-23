@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DailySpark from '../components/DailySpark';
 import SocialProof from '../components/SocialProof';
 import ReferralModal from '../components/ReferralModal';
+import CertificateModal from '../components/CertificateModal';
 import '../styles/UniverseHome.css';
 
 /**
@@ -13,6 +14,7 @@ import '../styles/UniverseHome.css';
 function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
   const [hoveredSubject, setHoveredSubject] = useState(null);
   const [showReferral, setShowReferral] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   const subjects = [
     {
@@ -81,6 +83,9 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
         </nav>
 
         <div className="uh-header-right">
+          <button className="uh-cert-btn" onClick={() => setShowCertificate(true)}>
+            📜 Certificate
+          </button>
           <button className="uh-invite-btn" onClick={() => setShowReferral(true)}>
             🎁 Invite a Friend
           </button>
@@ -162,6 +167,14 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
         isOpen={showReferral}
         onClose={() => setShowReferral(false)}
         userName={user?.name}
+      />
+
+      {/* Course Completion Certificate Modal */}
+      <CertificateModal
+        isOpen={showCertificate}
+        onClose={() => setShowCertificate(false)}
+        userName={user?.name}
+        domain="Astrophysics & General Relativity"
       />
     </div>
   );

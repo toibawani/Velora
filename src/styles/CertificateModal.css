@@ -1,0 +1,317 @@
+/* ==========================================================================
+   CertificateModal.css — Verifiable Prestige Credential Design
+   ========================================================================== */
+
+.cert-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+  overflow-y: auto;
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+}
+
+.cert-modal-dialog {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 14px;
+  max-width: 780px;
+  width: 100%;
+  padding: 2.25rem;
+  text-align: left;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  animation: modal-zoom 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modal-zoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cert-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.cert-status-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #34c759;
+  background: rgba(52, 199, 89, 0.12);
+  border: 1px solid rgba(52, 199, 89, 0.25);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.cert-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #888888);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.cert-close-btn:hover {
+  color: #ffffff;
+}
+
+/* ==================== Printable Certificate Document ==================== */
+
+.certificate-document {
+  background: #ffffff;
+  color: #111111;
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.cert-border-outer {
+  border: 3px solid #111111;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.cert-border-inner {
+  border: 1px solid #c0c0c0;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cert-doc-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.cert-seal-symbol {
+  font-size: 2.5rem;
+  margin-bottom: 4px;
+}
+
+.cert-institution-name {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #555555;
+  text-transform: uppercase;
+}
+
+.cert-document-type {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #111111;
+}
+
+.cert-body-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 1rem 0;
+}
+
+.cert-presented-to {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666666;
+  font-style: italic;
+}
+
+.cert-recipient-name {
+  margin: 0.25rem 0;
+  font-size: 2.25rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #000000;
+  border-bottom: 2px solid #111111;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.cert-achievement-text {
+  margin: 0.5rem auto 0 auto;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #555555;
+  max-width: 500px;
+}
+
+.cert-curriculum-title {
+  margin: 0.25rem 0 0 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #4f7df3;
+}
+
+.cert-doc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.cert-signature-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.signature-line {
+  font-family: 'Brush Script MT', 'Dancing Script', cursive, sans-serif;
+  font-size: 1.75rem;
+  color: #111111;
+  border-bottom: 1px solid #111111;
+  padding-bottom: 2px;
+  min-width: 140px;
+  text-align: left;
+}
+
+.signature-title {
+  font-size: 0.72rem;
+  color: #777777;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cert-verification-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.verification-qr-mock {
+  width: 44px;
+  height: 44px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.cert-meta-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono, monospace);
+  color: #555555;
+}
+
+/* ==================== Career Competencies ==================== */
+
+.cert-career-insights {
+  background: var(--bg-tertiary, #222222);
+  border: 1px solid var(--border-default, #2e2e2e);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.insights-heading {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary, #888888);
+}
+
+.competencies-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-primary, #e0e0e0);
+}
+
+.competency-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comp-check {
+  color: #34c759;
+  font-weight: 800;
+}
+
+/* ==================== Actions ==================== */
+
+.cert-actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cert-btn {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cert-btn.linkedin-btn {
+  background: #0077b5;
+  color: #ffffff;
+  border: none;
+}
+
+.cert-btn.linkedin-btn:hover {
+  background: #005f93;
+}
+
+.cert-btn.copy-btn {
+  background: var(--bg-tertiary, #222222);
+  color: var(--text-primary, #ffffff);
+  border: 1px solid var(--border-default, #333333);
+}
+
+.cert-btn.copy-btn:hover {
+  background: #2a2a2a;
+  border-color: #555555;
+}
+
+.cert-btn.print-btn {
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px solid var(--border-default, #333333);
+}
+
+.cert-btn.print-btn:hover {
+  color: #ffffff;
+  border-color: #666666;
+}
