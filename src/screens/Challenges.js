@@ -1,209 +1,179 @@
 import React, { useState } from 'react';
 import '../styles/Challenges.css';
 
+/**
+ * Challenges Screen
+ * 
+ * Curated monthly sprints (e.g. "Master Black Holes in 7 Days") designed to foster
+ * deep peer community, urgency, and pride in mastery. The first 100 finishers unlock
+ * exclusive archival badges on the global leaderboard.
+ */
 function Challenges({ setScreen }) {
-  const [selectedChallenge, setSelectedChallenge] = useState(null);
-  const [userChallenges, setUserChallenges] = useState({
-    completed: 5,
-    inProgress: 2,
-    totalPoints: 3450
-  });
+  const [activeSprintTab, setActiveSprintTab] = useState('black-holes-7day');
+  const [joinedSprints, setJoinedSprints] = useState({ 'black-holes-7day': true });
 
-  const challenges = [
+  const monthlySprints = [
     {
-      id: 1,
-      name: 'Black Holes Mastery',
-      description: 'Learn 5 topics in Black Holes section and score 80%+ on quiz',
-      difficulty: 'Medium',
-      reward: 500,
-      progress: 80,
-      status: 'in-progress',
-      timeLeft: '2 days',
-      participants: 234,
-      yourRank: 45
+      id: 'black-holes-7day',
+      title: 'Master Black Holes in 7 Days',
+      domain: 'Astrophysics & Spacetime Geometry',
+      deadline: '4 days remaining',
+      spotsRemaining: '28 spots left (out of 100 Genesis Badges)',
+      participantsCount: 1420,
+      userProgress: 57, // Day 4 of 7
+      currentDay: 4,
+      days: [
+        { day: 1, title: 'Schwarzschild Radius & Escape Speed', status: 'completed' },
+        { day: 2, title: 'Gravitational Time Dilation & Clocks', status: 'completed' },
+        { day: 3, title: 'Photon Spheres & Event Horizon Optics', status: 'completed' },
+        { day: 4, title: 'Spacetime Singularity & Penrose Diagrams', status: 'in-progress' },
+        { day: 5, title: 'Hawking Radiation & Quantum Thermodynamics', status: 'locked' },
+        { day: 6, title: 'EHT Radio Interferometry Analysis', status: 'locked' },
+        { day: 7, title: 'Final Comprehensive Conceptual Defense', status: 'locked' },
+      ],
+      leaderboard: [
+        { rank: 1, name: 'Talia V.', time: 'Completed in 5d 4h', badge: 'Genesis #1' },
+        { rank: 2, name: 'Devon R.', time: 'Completed in 5d 8h', badge: 'Genesis #2' },
+        { rank: 3, name: 'Kenji S.', time: 'Completed in 5d 14h', badge: 'Genesis #3' },
+        { rank: 4, name: 'Maya L.', time: 'Completed in 5d 19h', badge: 'Genesis #4' },
+        { rank: 5, name: 'You (Explorer)', time: 'Day 4 / 7 (On Pace)', badge: 'Contender' }
+      ]
     },
     {
-      id: 2,
-      name: '7-Day Streak Champion',
-      description: 'Study for 7 consecutive days without missing',
-      difficulty: 'Easy',
-      reward: 300,
-      progress: 100,
-      status: 'completed',
-      participants: 1203,
-      yourRank: 1
-    },
-    {
-      id: 3,
-      name: 'Quantum Master',
-      description: 'Complete all Quantum Mechanics topics and score 90%',
-      difficulty: 'Hard',
-      reward: 800,
-      progress: 45,
-      status: 'in-progress',
-      timeLeft: '5 days',
-      participants: 156,
-      yourRank: 23
-    },
-    {
-      id: 4,
-      name: 'Community Helper',
-      description: 'Answer 10 doubts and get upvoted 50+ times',
-      difficulty: 'Medium',
-      reward: 600,
-      progress: 60,
-      status: 'in-progress',
-      timeLeft: '3 days',
-      participants: 89,
-      yourRank: 12
-    },
+      id: 'ancient-philosophy-10day',
+      title: 'The Socratic Crucible (10 Days)',
+      domain: 'Classical Epistemology & Logic',
+      deadline: '8 days remaining',
+      spotsRemaining: '45 spots left',
+      participantsCount: 890,
+      userProgress: 20,
+      currentDay: 2,
+      days: [
+        { day: 1, title: 'The Socratic Method & Aporia', status: 'completed' },
+        { day: 2, title: 'Platonic Forms & The Divided Line', status: 'in-progress' },
+        { day: 3, title: 'Aristotle’s Categories & Syllogisms', status: 'locked' },
+      ],
+      leaderboard: [
+        { rank: 1, name: 'Julian M.', time: 'Completed in 8d 2h', badge: 'Genesis #1' },
+        { rank: 2, name: 'Siddharth N.', time: 'Completed in 8d 6h', badge: 'Genesis #2' }
+      ]
+    }
   ];
 
+  const activeSprint = monthlySprints.find(s => s.id === activeSprintTab) || monthlySprints[0];
+
   return (
-    <div className="challenges-page">
-      <header className="challenges-header">
-        <div className="container">
-          <h1>🏆 Weekly Challenges</h1>
-          <button className="btn btn-primary" onClick={() => setScreen('dashboard')}>
-            ← Back
-          </button>
-        </div>
+    <div className="challenges-page-root">
+      {/* Top Header */}
+      <header className="challenges-nav-header">
+        <button className="challenges-back-btn" onClick={() => setScreen('universe')}>
+          ← Return to Universe
+        </button>
+        <h1 className="challenges-title-bar">Monthly Mastery Sprints</h1>
+        <div style={{ width: '80px' }}></div>
       </header>
 
-      <main className="container challenges-main">
-        {/* User Stats */}
-        <div className="user-stats">
-          <div className="stat-card">
-            <div className="stat-icon">✅</div>
-            <div className="stat-content">
-              <p className="stat-label">Challenges Completed</p>
-              <p className="stat-value">{userChallenges.completed}</p>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">⚡</div>
-            <div className="stat-content">
-              <p className="stat-label">Active Challenges</p>
-              <p className="stat-value">{userChallenges.inProgress}</p>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">⭐</div>
-            <div className="stat-content">
-              <p className="stat-label">Total Points Earned</p>
-              <p className="stat-value">{userChallenges.totalPoints}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Challenges List */}
-        <div className="challenges-grid">
-          {challenges.map((challenge) => (
-            <div 
-              key={challenge.id} 
-              className={`challenge-card ${challenge.status}`}
-              onClick={() => setSelectedChallenge(challenge)}
+      <main className="challenges-main-content">
+        {/* Sprint Tabs */}
+        <div className="sprint-picker-tabs">
+          {monthlySprints.map((sprint) => (
+            <button
+              key={sprint.id}
+              className={`sprint-tab-btn ${activeSprintTab === sprint.id ? 'active' : ''}`}
+              onClick={() => setActiveSprintTab(sprint.id)}
             >
-              <div className="challenge-header">
-                <h3>{challenge.name}</h3>
-                <span className={`difficulty-badge ${challenge.difficulty.toLowerCase()}`}>
-                  {challenge.difficulty}
-                </span>
-              </div>
-
-              <p className="challenge-description">{challenge.description}</p>
-
-              <div className="progress-section">
-                <div className="progress-label">
-                  <span>Progress</span>
-                  <span className="progress-value">{challenge.progress}%</span>
-                </div>
-                <div className="progress-bar">
-                  <div className="progress-fill" style={{ width: `${challenge.progress}%` }}></div>
-                </div>
-              </div>
-
-              <div className="challenge-footer">
-                <div className="challenge-info">
-                  <span className="participants">👥 {challenge.participants}</span>
-                  <span className="time-left">⏱️ {challenge.timeLeft}</span>
-                </div>
-                <span className="reward-badge">💎 +{challenge.reward}</span>
-              </div>
-
-              <button 
-                className={`challenge-btn ${challenge.status}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedChallenge(challenge);
-                }}
-              >
-                {challenge.status === 'completed' ? '✅ Completed' : 'Continue'}
-              </button>
-            </div>
+              {sprint.title}
+            </button>
           ))}
         </div>
 
-        {/* Leaderboard */}
-        <div className="leaderboard-section">
-          <h2>🥇 Weekly Leaderboard</h2>
-          <div className="leaderboard">
-            {[
-              { rank: 1, name: 'Arjun_Physics', points: 5420, challenges: 8 },
-              { rank: 2, name: 'Priya_Scholar', points: 5100, challenges: 7 },
-              { rank: 3, name: 'Rajesh_Pro', points: 4850, challenges: 7 },
-              { rank: 4, name: 'You', points: userChallenges.totalPoints, challenges: userChallenges.completed + userChallenges.inProgress },
-              { rank: 5, name: 'Sneha_Genius', points: 4200, challenges: 6 },
-            ].map((entry) => (
-              <div key={entry.rank} className={`leaderboard-entry ${entry.name === 'You' ? 'highlight' : ''}`}>
-                <span className="rank">{entry.rank}</span>
-                <span className="name">{entry.name}</span>
-                <span className="points">{entry.points} pts</span>
-                <span className="challenges">{entry.challenges} challenges</span>
+        {/* Sprint Hero Card */}
+        <section className="sprint-hero-card">
+          <div className="sprint-badge-row">
+            <span className="sprint-domain-badge">{activeSprint.domain}</span>
+            <span className="sprint-deadline-badge">⏳ {activeSprint.deadline}</span>
+          </div>
+
+          <h2 className="sprint-main-heading">{activeSprint.title}</h2>
+          <p className="sprint-lead-text">
+            Join {activeSprint.participantsCount.toLocaleString()} learners pushing the boundaries of comprehension. Complete all 7 daily deep dives to earn the permanent Genesis Finisher badge.
+          </p>
+
+          <div className="sprint-urgency-banner">
+            <span className="urgency-icon">🔥</span>
+            <span className="urgency-text">
+              <strong>{activeSprint.spotsRemaining}</strong> to be permanently immortalized on the monthly leaderboard.
+            </span>
+          </div>
+
+          {/* User Progress Bar */}
+          <div className="sprint-progress-wrapper">
+            <div className="progress-info-row">
+              <span className="progress-label">Your Sprint Velocity</span>
+              <span className="progress-value">Day {activeSprint.currentDay} of {activeSprint.days.length} ({activeSprint.userProgress}%)</span>
+            </div>
+            <div className="sprint-track">
+              <div className="sprint-fill" style={{ width: `${activeSprint.userProgress}%` }}></div>
+            </div>
+          </div>
+        </section>
+
+        {/* Split Section: Daily Milestones & Live Leaderboard */}
+        <div className="sprint-split-grid">
+          {/* Daily Milestones */}
+          <div className="sprint-milestones-col">
+            <h3 className="col-header-title">Daily Milestone Curriculum</h3>
+            <div className="milestones-stack">
+              {activeSprint.days.map((item) => (
+                <div key={item.day} className={`milestone-day-card ${item.status}`}>
+                  <div className="day-number-pill">Day {item.day}</div>
+                  <div className="day-info-block">
+                    <h4 className="day-title">{item.title}</h4>
+                    <span className="day-status-text">
+                      {item.status === 'completed' && '✓ Completed & Verified'}
+                      {item.status === 'in-progress' && '⚡ Today’s Active Focus'}
+                      {item.status === 'locked' && '🔒 Unlocks Tomorrow'}
+                    </span>
+                  </div>
+                  {item.status === 'in-progress' && (
+                    <button
+                      className="start-day-btn"
+                      onClick={() => setScreen('learn')}
+                    >
+                      Enter Day {item.day} →
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Live Leaderboard */}
+          <div className="sprint-leaderboard-col">
+            <h3 className="col-header-title">🏆 Top Finisher Standings</h3>
+            <div className="leaderboard-card-box">
+              <div className="board-header-row">
+                <span>Rank & Scholar</span>
+                <span>Pace / Badge</span>
               </div>
-            ))}
+              <div className="board-rows-list">
+                {activeSprint.leaderboard.map((user, idx) => (
+                  <div key={idx} className={`board-user-row ${user.rank === 5 ? 'highlight-user' : ''}`}>
+                    <div className="user-rank-name">
+                      <span className="rank-idx">#{user.rank}</span>
+                      <span className="user-text-name">{user.name}</span>
+                    </div>
+                    <div className="user-badge-time">
+                      <span className="time-stat">{user.time}</span>
+                      <span className="genesis-badge">{user.badge}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </main>
-
-      {/* Challenge Detail Modal */}
-      {selectedChallenge && (
-        <div className="modal-overlay" onClick={() => setSelectedChallenge(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedChallenge(null)}>✕</button>
-            <h2>{selectedChallenge.name}</h2>
-            <p className="modal-description">{selectedChallenge.description}</p>
-            
-            <div className="modal-stats">
-              <div className="modal-stat">
-                <p>Difficulty</p>
-                <p className={`difficulty-badge ${selectedChallenge.difficulty.toLowerCase()}`}>
-                  {selectedChallenge.difficulty}
-                </p>
-              </div>
-              <div className="modal-stat">
-                <p>Reward</p>
-                <p className="reward">💎 {selectedChallenge.reward} points</p>
-              </div>
-              <div className="modal-stat">
-                <p>Your Rank</p>
-                <p className="rank-text">#{selectedChallenge.yourRank} of {selectedChallenge.participants}</p>
-              </div>
-            </div>
-
-            <div className="modal-progress">
-              <p>Progress: {selectedChallenge.progress}%</p>
-              <div className="progress-bar">
-                <div className="progress-fill" style={{ width: `${selectedChallenge.progress}%` }}></div>
-              </div>
-            </div>
-
-            <button className="btn btn-primary" style={{ width: '100%', marginTop: '1.5rem' }}>
-              {selectedChallenge.status === 'completed' ? 'View Certificate' : 'Continue Challenge'}
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
