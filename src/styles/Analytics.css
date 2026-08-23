@@ -1,309 +1,411 @@
-.analytics-page {
+/* ==========================================================================
+   Analytics.css — Clean Notion/Apple Styled Cognitive Analytics
+   ========================================================================== */
+
+.analytics-page-root {
   min-height: 100vh;
-  background: #F1EFE8;
+  background: var(--bg-primary, #111111);
+  color: var(--text-primary, #f5f5f5);
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
 }
 
-.analytics-header {
-  background: white;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid #D3D1C7;
-  margin-bottom: 2rem;
+.analytics-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2.5rem;
+  background: var(--bg-secondary, #1a1a1a);
+  border-bottom: 1px solid var(--border-default, #2a2a2a);
 }
 
-.analytics-header .container {
+.analytics-back-btn {
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px solid var(--border-default, #333333);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.analytics-back-btn:hover {
+  color: #ffffff;
+  border-color: #555555;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.analytics-brand-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.analytics-privacy-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--color-success, #34c759);
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.25);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.analytics-main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 5rem 2rem;
+}
+
+.analytics-hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle, #222222);
+}
+
+.analytics-greeting {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary, #ffffff);
+}
+
+.analytics-lead {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-secondary, #a0a0a0);
+}
+
+.timeframe-toggle-group {
+  display: flex;
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.timeframe-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #888888);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timeframe-btn.active {
+  background: #333333;
+  color: #ffffff;
+}
+
+/* ==================== Primary Metrics Grid ==================== */
+
+.analytics-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.metric-box {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.metric-caption {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: var(--text-tertiary, #888888);
+}
+
+.metric-num-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.metric-big-num {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary, #ffffff);
+}
+
+.metric-unit {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-tertiary, #777777);
+}
+
+.metric-subtext {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #999999);
+}
+
+/* ==================== Split Layout & Cards ==================== */
+
+.analytics-split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .analytics-split-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analytics-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.analytics-card {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 12px;
+  padding: 1.75rem;
+  text-align: left;
+}
+
+.card-heading {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.card-subhead {
+  margin: 0 0 1.5rem 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #a0a0a0);
+}
+
+/* Learning Style Bars */
+.style-bars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.style-header-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text-primary, #e5e5e5);
+}
+
+.style-pct {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bar-track {
+  height: 8px;
+  background: var(--bg-tertiary, #222222);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.recommendation-pill {
+  background: rgba(79, 125, 243, 0.08);
+  border: 1px solid rgba(79, 125, 243, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-primary, #d0e0ff);
+}
+
+/* Peak Hours Grid */
+.peak-hours-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.peak-hour-box {
+  background: var(--bg-tertiary, #222222);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.peak-hour-box.highlight {
+  border-color: #4f7df3;
+  background: rgba(79, 125, 243, 0.1);
+}
+
+.peak-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text-tertiary, #888888);
+}
+
+.peak-time {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.peak-pct {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4f7df3;
+}
+
+.peak-tip {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #a0a0a0);
+  line-height: 1.5;
+}
+
+/* Domain Time Distribution */
+.topic-dist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dist-title-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+  color: var(--text-primary, #e5e5e5);
+}
+
+.dist-hours {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Struggled Concepts */
+.struggle-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.struggle-card-item {
+  background: var(--bg-tertiary, #222222);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 8px;
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.struggle-badge-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.analytics-header h1 {
-  font-size: 1.8rem;
-  color: #042C53;
-  margin: 0;
-}
-
-.analytics-main {
-  padding: 2rem 0;
-}
-
-/* AI Insight Card */
-.ai-insight-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-}
-
-.insight-icon {
-  font-size: 3rem;
-  flex-shrink: 0;
-}
-
-.insight-content h3 {
-  margin: 0 0 1rem;
-  font-size: 1.3rem;
-}
-
-.insight-content p {
-  margin: 0 0 1rem;
-  line-height: 1.6;
+.struggle-concept-title {
   font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-/* Metrics Grid */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.metric-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #D3D1C7;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.metric-icon {
-  font-size: 2.5rem;
-}
-
-.metric-info {
-  flex: 1;
-}
-
-.metric-label {
-  font-size: 0.85rem;
-  color: #888780;
-  margin: 0 0 0.5rem;
-  font-weight: 500;
-}
-
-.metric-value {
-  font-size: 1.8rem;
-  color: #042C53;
-  margin: 0;
-  font-weight: 600;
-}
-
-/* Weak Topics */
-.weak-topics-section {
-  margin-bottom: 2rem;
-}
-
-.weak-topics-section h2 {
-  font-size: 1.5rem;
-  color: #042C53;
-  margin: 0 0 0.5rem;
-}
-
-.section-subtitle {
-  color: #888780;
-  margin: 0 0 1.5rem;
-  font-size: 0.95rem;
-}
-
-.topic-strength-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #D3D1C7;
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-columns: 200px 1fr 120px;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.topic-info h4 {
-  margin: 0 0 0.5rem;
-  color: #042C53;
-  font-size: 1.1rem;
-}
-
-.understanding-level {
-  margin: 0;
-  color: #888780;
-  font-size: 0.9rem;
-}
-
-.progress-bar-container {
-  flex: 1;
-}
-
-.progress-bar {
-  background: #E0E0E0;
-  height: 8px;
+.struggle-level-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
   border-radius: 4px;
-  overflow: hidden;
 }
 
-.progress-fill {
-  height: 100%;
-  transition: width 0.3s ease;
+.struggle-level-tag.high {
+  background: rgba(255, 59, 48, 0.15);
+  color: #ff3b30;
+  border: 1px solid rgba(255, 59, 48, 0.3);
 }
 
-.btn-small {
-  padding: 8px 16px;
-  font-size: 0.9rem;
+.struggle-level-tag.medium {
+  background: rgba(255, 159, 10, 0.15);
+  color: #ff9f0a;
+  border: 1px solid rgba(255, 159, 10, 0.3);
 }
 
-/* Strengths */
-.strengths-section {
-  margin-bottom: 2rem;
+.struggle-topic-meta {
+  font-size: 0.78rem;
+  color: var(--text-tertiary, #888888);
 }
 
-.strengths-section h2 {
-  font-size: 1.5rem;
-  color: #042C53;
-  margin: 0 0 1.5rem;
-}
-
-.strength-card {
-  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.strength-icon {
-  font-size: 2rem;
-}
-
-.strength-info {
-  flex: 1;
-}
-
-.strength-info h4 {
-  margin: 0;
-  color: #042C53;
-  font-size: 1.1rem;
-}
-
-.strength-info p {
-  margin: 0.5rem 0 0;
-  color: #5F5E5A;
-  font-size: 0.9rem;
-}
-
-.strength-badge {
-  background: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 600;
-  color: #042C53;
-  font-size: 1rem;
-}
-
-/* Trend Chart */
-.trend-section {
-  margin-bottom: 2rem;
-}
-
-.trend-section h2 {
-  font-size: 1.5rem;
-  color: #042C53;
-  margin: 0 0 1.5rem;
-}
-
-.trend-chart {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid #D3D1C7;
-  display: flex;
-  gap: 1rem;
-  align-items: flex-end;
-  height: 250px;
-}
-
-.trend-bar {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-  height: 100%;
-}
-
-.bar-graph {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.bar {
-  width: 30px;
-  background: linear-gradient(180deg, #0C447C 0%, #185FA5 100%);
-  border-radius: 4px 4px 0 0;
-  transition: all 0.3s ease;
-}
-
-.bar:hover {
-  background: linear-gradient(180deg, #042C53 0%, #0C447C 100%);
-}
-
-.bar-label {
-  text-align: center;
-}
-
-.day {
-  margin: 0;
-  color: #042C53;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.hours {
-  margin: 0.25rem 0 0;
-  color: #888780;
+.struggle-remedy-text {
+  margin: 0.25rem 0 0 0;
   font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #cccccc);
 }
 
-/* Recommendation Card */
-.recommendation-card {
-  background: #FFF3E0;
-  padding: 2rem;
-  border-radius: 12px;
-  border-left: 4px solid #FFA500;
+/* Footer Actions */
+.analytics-footer-actions {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.recommendation-card h3 {
-  margin: 0 0 1rem;
-  color: #042C53;
-  font-size: 1.2rem;
+.simulate-session-btn {
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px dashed var(--border-default, #444444);
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.recommendation-card p {
-  margin: 0 0 1.5rem;
-  color: #5F5E5A;
-  line-height: 1.6;
+.simulate-session-btn:hover {
+  border-color: #4f7df3;
+  color: #ffffff;
 }
 
-@media (max-width: 768px) {
-  .ai-insight-card {
-    flex-direction: column;
-  }
-
-  .topic-strength-card {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .trend-chart {
-    height: 200px;
-  }
+.logged-toast {
+  font-size: 0.85rem;
+  color: #34c759;
+  font-weight: 600;
 }
