@@ -1,0 +1,184 @@
+/* ==========================================================================
+   BlackHoleMastery.css — High-Performance Scientific Visualization & Masterclass
+   --------------------------------------------------------------------------
+   Disciplined, distraction-free astronomy curriculum with sharp cards.
+   ========================================================================== */
+
+.black-hole-mastery-container {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+.black-hole-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.black-hole-content {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-20);
+}
+
+.bh-header {
+  margin-bottom: var(--space-8);
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: var(--space-6);
+}
+
+.bh-back-btn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  margin-bottom: var(--space-4);
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.bh-back-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.bh-title {
+  margin: 0 0 var(--space-1);
+  font-size: 1.75rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.bh-subtitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+/* Masterclass Chapters & Progression */
+.mastery-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.chapter-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.chapter-card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-hover);
+}
+
+.chapter-card.active {
+  border-color: var(--accent-primary);
+  background: var(--bg-secondary);
+}
+
+.chapter-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chapter-icon {
+  font-size: 1.25rem;
+}
+
+.chapter-duration {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-weight: var(--weight-medium);
+}
+
+.chapter-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.chapter-summary {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+
+/* Detailed Reading & Scientific Visuals */
+.detailed-reading-view {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.reading-chapter-title {
+  margin: 0 0 var(--space-6);
+  font-size: 1.375rem;
+  font-weight: var(--weight-bold);
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: var(--space-4);
+}
+
+.reading-section-block {
+  margin-bottom: var(--space-8);
+}
+
+.reading-heading {
+  font-size: 1.0625rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.reading-text {
+  font-size: 0.9375rem;
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-4);
+}
+
+.visual-container {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--space-4) 0;
+}
+
+.visual-svg {
+  max-width: 360px;
+  width: 100%;
+  height: auto;
+}
