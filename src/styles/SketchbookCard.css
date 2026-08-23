@@ -1,181 +1,335 @@
-.sketchbook-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  background: #fafaf8;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
-}
+/* ==========================================================================
+   SketchbookCard.css — Clean Notion/Apple Styled Visual Knowledge Cards
+   ========================================================================== */
 
-.sketchbook-illustration-side {
-  padding: 3rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f6f3 100%);
-  position: relative;
-}
-
-.sketchbook-illustration-side::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(45deg, #ddd 1px, transparent 1px),
-    linear-gradient(-45deg, #ddd 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.02;
-  pointer-events: none;
-}
-
-.sketch-svg {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
-}
-
-.illustration-credit {
-  margin-top: 1.5rem;
-  font-size: 0.8rem;
-  color: #999;
-  font-style: italic;
-}
-
-.sketchbook-definition-side {
-  padding: 3rem;
-  overflow-y: auto;
-  max-height: 600px;
-}
-
-.definition-header {
-  margin-bottom: 2rem;
-}
-
-.definition-term {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: #000000;
-  margin: 0 0 1rem;
-  letter-spacing: -0.01em;
-}
-
-.definition-divider {
-  width: 60px;
-  height: 4px;
-  background: #667eea;
-  border-radius: 2px;
-}
-
-.definition-section {
-  margin-bottom: 2.5rem;
-}
-
-.section-title {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #667eea;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 1rem;
-}
-
-.section-content {
-  font-size: 1rem;
-  color: #5f5e5a;
-  line-height: 1.7;
-  margin: 0;
-}
-
-.section-content.italic {
-  font-style: italic;
-  color: #888780;
-}
-
-.parts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.part-item {
+.sketchbook-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
   padding: 1rem;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
-  border-radius: 8px;
-  border-left: 4px solid #667eea;
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+}
+
+.sketchbook-selector-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.selector-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-tertiary, #888888);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.selector-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.term-pill {
+  background: var(--bg-secondary, #1a1a1a);
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px solid var(--border-default, #333333);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.part-item:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
-  border-left-color: #764ba2;
-  transform: translateX(4px);
+.term-pill:hover {
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.term-pill.active {
+  background: #4f7df3;
+  color: #ffffff;
+  border-color: #4f7df3;
+}
+
+.sketchbook-card {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: left;
+}
+
+@media (max-width: 820px) {
+  .sketchbook-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Illustration Side */
+.sketchbook-illustration-side {
+  background: #141414;
+  border-right: 1px solid var(--border-default, #2a2a2a);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sketch-svg {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  display: block;
+}
+
+.illustration-caption-row {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary, #777777);
+  font-weight: 600;
+}
+
+/* Definition Side */
+.sketchbook-definition-side {
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.definition-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-subtle, #282828);
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.domain-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: #4f7df3;
+}
+
+.definition-term {
+  margin: 0.25rem 0 0 0;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--text-primary, #ffffff);
+}
+
+.save-kit-btn {
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px solid var(--border-default, #3a3a3a);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-kit-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.save-kit-btn.saved {
+  background: rgba(255, 214, 10, 0.12);
+  border-color: #ffd60a;
+  color: #ffd60a;
+}
+
+.definition-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--text-tertiary, #888888);
+}
+
+.section-content {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--text-primary, #e0e0e0);
+}
+
+.section-content.italic {
+  font-style: italic;
+  color: var(--text-secondary, #b8b8b8);
+}
+
+/* Parts list */
+.parts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.part-item {
+  background: var(--bg-tertiary, #222222);
+  border: 1px solid var(--border-default, #303030);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.part-item:hover,
+.part-item.active {
+  border-color: #4f7df3;
+  background: #262626;
 }
 
 .part-label {
-  font-weight: 600;
-  color: #667eea;
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.part-label.active {
-  color: #764ba2;
-  font-size: 1.05rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2px;
 }
 
 .part-description {
-  font-size: 0.9rem;
-  color: #5f5e5a;
   margin: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: all 0.2s ease;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #a8a8a8);
 }
 
-.part-description.visible {
-  max-height: 100px;
-  opacity: 1;
+/* Everyday Connection Box */
+.everyday-connection-box {
+  background: rgba(52, 199, 89, 0.08);
+  border-left: 3px solid #34c759;
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.everyday-connection-box .section-title {
+  color: #34c759;
+}
+
+.everyday-connection-box .section-content {
+  color: #d0f0d8;
+}
+
+/* Challenge CTA & Panel */
+.challenge-cta-row {
   margin-top: 0.5rem;
 }
 
-@media (max-width: 1024px) {
-  .sketchbook-card {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .sketchbook-illustration-side {
-    padding: 2rem;
-  }
-
-  .sketchbook-definition-side {
-    padding: 2rem;
-    max-height: none;
-  }
+.challenge-me-trigger-btn {
+  background: #4f7df3;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s ease;
 }
 
-@media (max-width: 768px) {
-  .sketchbook-card {
-    border-radius: 12px;
-  }
+.challenge-me-trigger-btn:hover {
+  background: #3d6ce0;
+}
 
-  .definition-term {
-    font-size: 1.5rem;
-  }
+.interactive-challenge-panel {
+  background: var(--bg-tertiary, #222222);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .sketchbook-illustration-side,
-  .sketchbook-definition-side {
-    padding: 1.5rem;
-  }
+.challenge-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .definition-section {
-    margin-bottom: 1.5rem;
-  }
+.panel-badge {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #ff9f0a;
+  letter-spacing: 0.05em;
+}
+
+.close-panel-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #888888);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.challenge-q-text {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.challenge-opts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.challenge-opt-btn {
+  background: #181818;
+  color: var(--text-primary, #e0e0e0);
+  border: 1px solid #333333;
+  border-radius: 6px;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.challenge-opt-btn:hover {
+  border-color: #555555;
+  background: #202020;
+}
+
+.challenge-opt-btn.correct {
+  border-color: #34c759;
+  background: rgba(52, 199, 89, 0.15);
+}
+
+.challenge-opt-btn.wrong {
+  border-color: #ff3b30;
+  background: rgba(255, 59, 48, 0.15);
+}
+
+.challenge-explanation-text {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #a0c0ff;
 }
