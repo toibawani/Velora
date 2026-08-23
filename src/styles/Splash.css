@@ -1,84 +1,123 @@
 /* ==========================================================================
-   Splash Screen — Premium Welcome Gate
+   Splash.css — First Impression Welcome Gate
    --------------------------------------------------------------------------
-   Minimal, confident, premium. Dark background, clean typography.
-   No pastel gradients, no emojis, no clutter.
+   Minimal, confident, premium. Full-screen centered brand with a smooth
+   fade-in entrance, subtle radial ambient glow, and two crisp CTAs.
+   Zero gradients, zero clutter. Token-backed for light & dark mode.
    ========================================================================== */
 
+/* ==================== ROOT ==================== */
 .splash {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-primary);
-  padding: var(--space-8);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Ambient radial glow — barely perceptible depth cue */
+.splash::before {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(79, 125, 243, 0.05) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* ==================== CONTENT ==================== */
 .splash-content {
+  position: relative;
   max-width: 400px;
   width: 100%;
   text-align: center;
-  animation: fadeIn var(--duration-slow) var(--ease-out);
+  animation: splash-enter 0.55s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
 }
 
-/* ---- Brand ---- */
+@keyframes splash-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== BRAND ==================== */
 .splash-brand {
-  margin-bottom: var(--space-10);
+  margin-bottom: 2rem;
 }
 
 .splash-wordmark {
   font-family: var(--font-sans);
-  font-weight: var(--weight-black);
-  font-size: 3rem;
-  letter-spacing: -0.03em;
+  font-weight: 900;
+  font-size: 3.25rem;
+  letter-spacing: -0.05em;
   color: var(--text-primary);
-  margin-bottom: var(--space-3);
+  margin: 0 0 0.6rem;
+  line-height: 1;
 }
 
 .splash-tagline {
-  font-size: 1.125rem;
-  font-weight: var(--weight-regular);
+  font-size: 1.05rem;
+  font-weight: 400;
   color: var(--text-secondary);
-  line-height: var(--leading-normal);
+  line-height: 1.55;
+  margin: 0;
 }
 
-/* ---- Description ---- */
+/* ==================== DESCRIPTION ==================== */
 .splash-description {
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   color: var(--text-tertiary);
-  line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-10);
+  line-height: 1.7;
+  margin: 0 0 2.5rem;
+  padding: 0 0.5rem;
 }
 
-/* ---- Action Buttons ---- */
+/* ==================== ACTION BUTTONS ==================== */
 .splash-actions {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  margin-bottom: var(--space-8);
+  gap: 0.7rem;
+  margin-bottom: 2rem;
 }
 
 .splash-btn {
   width: 100%;
-  padding: var(--space-3) var(--space-6);
+  padding: 0.875rem 1.25rem;
   font-family: var(--font-sans);
   font-size: 0.9375rem;
-  font-weight: var(--weight-semibold);
-  border-radius: var(--radius-md);
+  font-weight: 700;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: all 0.18s ease;
   border: none;
+  box-sizing: border-box;
 }
 
 .splash-btn-primary {
-  background: var(--accent-blue);
-  color: white;
+  background: var(--accent-blue, #4f7df3);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(79, 125, 243, 0.22);
 }
 
 .splash-btn-primary:hover {
-  background: var(--accent-blue-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: #3d6ce0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(79, 125, 243, 0.32);
 }
 
 .splash-btn-secondary {
@@ -93,23 +132,50 @@
   background: var(--bg-secondary);
 }
 
-/* ---- Footer ---- */
+/* ==================== FOOTER MICRO-COPY ==================== */
 .splash-footer {
-  font-size: 0.8125rem;
+  font-size: 0.775rem;
   color: var(--text-tertiary);
+  margin: 0;
+  line-height: 1.5;
 }
 
-/* ---- Responsive ---- */
+/* ==================== DOMAIN STRIP (optional enhancement) ==================== */
+.splash-domains {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.splash-domain-dot {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  padding: 3px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ==================== RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .splash {
-    padding: var(--space-6);
+    padding: 1.5rem;
+    align-items: flex-start;
+    padding-top: 4rem;
   }
 
   .splash-wordmark {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
   }
 
   .splash-tagline {
-    font-size: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .splash-description {
+    font-size: 0.85rem;
   }
 }
