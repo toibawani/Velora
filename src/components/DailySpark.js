@@ -1,43 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/DailySpark.css';
 
-function DailySpark() {
-  const sparks = [
-    {
-      icon: '💡',
-      title: 'Did you know?',
-      fact: 'Light takes 8 minutes to reach Earth from the Sun.',
-      detail: 'This means when you see the Sun, it\'s already gone from that position 8 minutes ago.',
-      cta: 'Explore Light & Time →',
-      topic: 'physics',
-    },
-    {
-      icon: '🤔',
-      title: 'Philosophy Question',
-      fact: 'If a tree falls in a forest with no one to hear it, does it make a sound?',
-      detail: 'Explore the nature of perception, reality, and consciousness.',
-      cta: 'Explore Perception →',
-      topic: 'philosophy',
-    },
-    {
-      icon: '📜',
-      title: 'Historical Fact',
-      fact: 'The Renaissance began in Italy in the 1300s, changing everything about human thought.',
-      detail: 'Discover how rediscovering ancient wisdom transformed the modern world.',
-      cta: 'Explore the Renaissance →',
-      topic: 'history',
-    },
-  ];
+const SPARKS = [
+  {
+    icon: '💡',
+    title: 'Did you know?',
+    fact: 'Light takes 8 minutes and 20 seconds to travel from the Sun to Earth.',
+    detail: 'Photons generated in the solar core undergo thousands of years of radiative diffusion before escaping into space.',
+    cta: 'Explore Light & Relativity →',
+    topic: 'physics',
+  },
+  {
+    icon: '🤔',
+    title: 'Philosophical Inquiry',
+    fact: 'If a tree falls in a forest with no observer present, does it produce sound?',
+    detail: 'Examine the distinction between acoustic air pressure waves and subjective perceptual qualia.',
+    cta: 'Explore Epistemology →',
+    topic: 'philosophy',
+  },
+  {
+    icon: '📜',
+    title: 'Scientific History',
+    fact: 'The Renaissance marked the mathematical formalization of observational astronomy.',
+    detail: 'Galileo and Kepler bridged ancient deductive philosophy with empirical measurement.',
+    cta: 'Explore Scientific History →',
+    topic: 'history',
+  },
+];
 
+function DailySpark() {
   const [currentSpark, setCurrentSpark] = useState(0);
 
   useEffect(() => {
-    // Rotate through sparks (daily in production)
     const today = new Date().getDate();
-    setCurrentSpark(today % sparks.length);
+    setCurrentSpark(today % SPARKS.length);
   }, []);
 
-  const spark = sparks[currentSpark];
+  const spark = SPARKS[currentSpark];
 
   return (
     <div className="daily-spark">

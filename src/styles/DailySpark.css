@@ -1,85 +1,90 @@
+/* ==========================================================================
+   DailySpark.css — Daily Curiosity & Interdisciplinary Insight
+   --------------------------------------------------------------------------
+   High-contrast, distraction-free insight callout card.
+   ========================================================================== */
+
 .daily-spark {
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-6);
 }
 
 .spark-card {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
   display: grid;
-  grid-template-columns: 60px 1fr 160px;
-  gap: 2rem;
-  align-items: start;
-  transition: all 0.3s ease;
+  grid-template-columns: 48px 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+  transition: border-color var(--duration-fast) var(--ease-standard);
 }
 
 .spark-card:hover {
-  border-color: #d0d0d0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: var(--border-strong);
 }
 
 .spark-icon {
-  font-size: 2.5rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
 .spark-text {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-1);
 }
 
 .spark-title {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  text-transform: none;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--weight-bold);
+  color: var(--accent-primary);
 }
 
 .spark-fact {
   margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  line-height: 1.5;
+  font-size: 0.9375rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
 }
 
 .spark-detail {
   margin: 0;
-  font-size: 0.95rem;
-  color: #6f6f6f;
-  line-height: 1.6;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
 }
 
 .spark-cta {
-  padding: 12px 16px;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--accent-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: var(--weight-semibold);
+  font-size: 0.8125rem;
   white-space: nowrap;
-  height: fit-content;
-  transition: all 0.2s ease;
+  transition: all var(--duration-fast) var(--ease-standard);
 }
 
 .spark-cta:hover {
-  background: #5568d3;
-  transform: translateY(-2px);
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
 }
 
 @media (max-width: 768px) {
   .spark-card {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: var(--space-3);
   }
 
   .spark-cta {
     width: 100%;
-    white-space: normal;
+    text-align: center;
   }
 }
