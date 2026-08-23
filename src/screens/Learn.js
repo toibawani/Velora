@@ -10,6 +10,7 @@ import UniverseBuilder from '../components/UniverseBuilder';
 import ShadowLearning from '../components/ShadowLearning';
 import SketchbookCard from '../components/SketchbookCard';
 import ExpertMode from '../components/ExpertMode';
+import LearningStories from '../components/LearningStories';
 import '../styles/Learn.css';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
@@ -270,6 +271,11 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
             <BlackHolesElite />
           </section>
         )}
+
+        {/* Narrative Learning Stories */}
+        <section className="learn-section">
+          <LearningStories />
+        </section>
 
         {/* Structured Modules */}
         <section className="learn-section">
