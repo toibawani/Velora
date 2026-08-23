@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import DailySpark from '../components/DailySpark';
+import SocialProof from '../components/SocialProof';
 import '../styles/UniverseHome.css';
 
+/**
+ * UniverseHome Screen
+ * 
+ * Central dashboard designed with Apple/Notion clarity. Focuses on personal
+ * learning momentum, quick domain entry, and live community activity.
+ */
 function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
   const [hoveredSubject, setHoveredSubject] = useState(null);
 
@@ -10,25 +17,28 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
       id: 'physics',
       name: 'Physics',
       emoji: '⚛️',
-      color: '#667eea',
-      description: 'Master the laws of the universe',
+      color: '#4f7df3',
+      description: 'Master the fundamental laws governing spacetime, relativity, and quantum systems',
       icon: '🌌',
+      progress: '65% complete'
     },
     {
       id: 'philosophy',
       name: 'Philosophy',
       emoji: '🤔',
-      color: '#2E7D32',
-      description: 'Explore the big questions',
+      color: '#af52de',
+      description: 'Explore epistemology, ethical frameworks, and the philosophy of science',
       icon: '💭',
+      progress: '45% complete'
     },
     {
       id: 'history',
       name: 'History',
       emoji: '📜',
-      color: '#F39C12',
-      description: 'Understand how we got here',
+      color: '#ff9f0a',
+      description: 'Understand the civilizational catalysts and scientific revivals shaping humanity',
       icon: '🏛️',
+      progress: '80% complete'
     },
   ];
 
@@ -45,8 +55,31 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
           <h1 className="uh-title">VELORA</h1>
           <p className="uh-tagline">Your Personal Knowledge Universe</p>
         </div>
+
+        {/* Quick Nav Bar */}
+        <nav className="uh-nav-links">
+          <button className="uh-nav-item active" onClick={() => setScreen('universe')}>
+            Home
+          </button>
+          <button className="uh-nav-item" onClick={() => { setSelectedSubject('physics'); setScreen('learn'); }}>
+            Learn
+          </button>
+          <button className="uh-nav-item" onClick={() => setScreen('games')}>
+            Flow Games
+          </button>
+          <button className="uh-nav-item" onClick={() => setScreen('analytics')}>
+            Analytics
+          </button>
+          <button className="uh-nav-item" onClick={() => setScreen('community')}>
+            Community
+          </button>
+          <button className="uh-nav-item" onClick={() => setScreen('challenges')}>
+            Challenges
+          </button>
+        </nav>
+
         <div className="uh-header-right">
-          <span className="uh-user">{user?.name || 'Learner'}</span>
+          <span className="uh-user">{user?.name || 'Explorer'}</span>
           <button className="uh-logout" onClick={onLogout}>
             Exit
           </button>
@@ -62,7 +95,15 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
 
         {/* Subject Cards */}
         <section className="uh-subjects">
-          <h2 className="uh-subjects-title">Choose Your Learning Path</h2>
+          <div className="section-header-row">
+            <div>
+              <h2 className="uh-subjects-title">Choose Your Domain</h2>
+              <p className="uh-subjects-subtitle">
+                Select a pathway to explore interactive canvases, deep curriculum, and flow challenges.
+              </p>
+            </div>
+          </div>
+
           <div className="uh-subjects-grid">
             {subjects.map((subject) => (
               <div
@@ -71,15 +112,21 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
                 onMouseEnter={() => setHoveredSubject(subject.id)}
                 onMouseLeave={() => setHoveredSubject(null)}
                 onClick={() => handleSubjectClick(subject.id)}
+                style={{
+                  borderColor: hoveredSubject === subject.id ? subject.color : undefined
+                }}
               >
                 <div
                   className="card-header"
                   style={{
                     borderColor: subject.color,
-                    background: `${subject.color}08`,
+                    background: `${subject.color}10`,
                   }}
                 >
                   <span className="card-emoji">{subject.emoji}</span>
+                  <span className="card-progress-tag" style={{ color: subject.color }}>
+                    {subject.progress}
+                  </span>
                 </div>
                 <div className="card-content">
                   <h3 className="card-title">{subject.name}</h3>
@@ -91,58 +138,17 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
                     background: subject.color,
                   }}
                 >
-                  Start Learning →
+                  Explore Domain →
                 </button>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Social Proof */}
-        <section className="uh-social-proof">
-          <h2 className="uh-section-title">What Others Are Learning</h2>
-          <div className="proof-stats">
-            <div className="stat">
-              <span className="stat-number">5,247</span>
-              <span className="stat-label">Students mastered Physics</span>
-            </div>
-            <div className="stat">
-              <span className="stat-number">142K</span>
-              <span className="stat-label">Total hours of learning</span>
-            </div>
-            <div className="stat">
-              <span className="stat-number">87%</span>
-              <span className="stat-label">Would recommend VELORA</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Trending */}
-        <section className="uh-trending">
-          <h2 className="uh-section-title">Trending This Week</h2>
-          <div className="trending-list">
-            <div className="trending-item">
-              <span className="trending-icon">🌌</span>
-              <div className="trending-content">
-                <h4 className="trending-title">Black Holes Masterclass</h4>
-                <p className="trending-desc">2,847 students started</p>
-              </div>
-            </div>
-            <div className="trending-item">
-              <span className="trending-icon">💭</span>
-              <div className="trending-content">
-                <h4 className="trending-title">Ancient Philosophy</h4>
-                <p className="trending-desc">1,523 students completed</p>
-              </div>
-            </div>
-            <div className="trending-item">
-              <span className="trending-icon">📜</span>
-              <div className="trending-content">
-                <h4 className="trending-title">Renaissance & Art</h4>
-                <p className="trending-desc">934 students learning</p>
-              </div>
-            </div>
-          </div>
+        {/* Live Social Proof & Activity Dashboard */}
+        <section className="uh-social-section">
+          <h2 className="uh-section-title">Community & Momentum</h2>
+          <SocialProof onSelectTopic={() => { setSelectedSubject('physics'); setScreen('learn'); }} />
         </section>
       </main>
     </div>
