@@ -1,219 +1,249 @@
 import React, { useState } from 'react';
 import '../styles/Doubts.css';
 
+/**
+ * Academic Inquiry & Peer Review Resolver (Doubts)
+ * 
+ * High-signal student discourse where learners post conceptual questions
+ * with peer reward tokens and verified academic solutions.
+ */
+
+const INITIAL_DOUBTS = [
+  {
+    id: 1,
+    question: "Why is the coordinate singularity at r = 2M in Schwarzschild metric not a physical singularity?",
+    topic: "General Relativity",
+    bounty: 50,
+    answers: 3,
+    bestAnswer: {
+      author: "Relativity_Mentor",
+      reputation: 980,
+      content: "The Kretschmann scalar R^{abcd}R_{abcd} = 48M^2/r^6 remains perfectly finite at r = 2M. This proves the apparent divergence is merely a deficiency of Schwarzschild coordinates, easily resolved by switching to Eddington-Finkelstein or Kruskal-Szekeres coordinates.",
+      upvotes: 87,
+      reward: 50,
+      claimed: true
+    },
+    status: 'answered'
+  },
+  {
+    id: 2,
+    question: "How does the phase velocity of a de Broglie matter wave exceed c without violating special relativity?",
+    topic: "Quantum Mechanics",
+    bounty: 75,
+    answers: 1,
+    status: 'open'
+  },
+];
+
+const TOP_MENTORS = [
+  { name: "Relativity_Mentor", domain: "Gravitational Physics", reputation: 980, answers: 67, peerTokens: 2340 },
+  { name: "QuantumPioneer", domain: "Quantum State Mechanics", reputation: 840, answers: 52, peerTokens: 1890 },
+  { name: "EpistemeScholar", domain: "Formal Logic & Philosophy", reputation: 710, answers: 41, peerTokens: 1450 },
+];
+
 function Doubts({ setScreen }) {
   const [activeTab, setActiveTab] = useState('my-doubts');
-  const [newDoubt, setNewDoubt] = useState('');
-  const [userCoins, setUserCoins] = useState(450); // Virtual currency
+  const [newQuestionText, setNewQuestionText] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('Physics');
+  const [selectedBounty, setSelectedBounty] = useState(50);
+  const [userCoins, setUserCoins] = useState(450);
+  const [doubtsList, setDoubtsList] = useState(INITIAL_DOUBTS);
 
-  const myDoubts = [
-    {
-      id: 1,
-      question: "What's the difference between event horizon and singularity?",
-      topic: "Black Holes",
-      bounty: 50,
-      answers: 3,
-      bestAnswer: {
-        author: "Physics_Master",
-        reputation: 245,
-        content: "Event horizon is the boundary... singularity is the center...",
-        upvotes: 87,
-        reward: 50,
-        claimed: true
-      },
-      status: 'answered'
-    },
-    {
-      id: 2,
-      question: "How do I solve this relativity problem?",
-      topic: "Special Relativity",
-      bounty: 75,
-      answers: 1,
+  const handlePostInquiry = (e) => {
+    e.preventDefault();
+    if (!newQuestionText.trim() || userCoins < selectedBounty) return;
+
+    const newInquiry = {
+      id: Date.now(),
+      question: newQuestionText.trim(),
+      topic: selectedTopic,
+      bounty: selectedBounty,
+      answers: 0,
       status: 'open'
-    },
-  ];
+    };
 
-  const topDoubtAnswerers = [
-    { name: "Physics_Master", reputation: 245, answers: 67, earnings: 2340 },
-    { name: "Einstein_Fan", reputation: 198, answers: 52, earnings: 1890 },
-    { name: "Concept_Guru", reputation: 156, answers: 41, earnings: 1450 },
-  ];
+    setDoubtsList([newInquiry, ...doubtsList]);
+    setUserCoins(prev => prev - selectedBounty);
+    setNewQuestionText('');
+  };
 
   return (
-    <div className="doubts-page">
-      <header className="doubts-header">
-        <div className="container">
-          <h1>💬 Doubt Bounty System</h1>
-          <div className="header-right">
-            <div className="coins-display">
-              <span className="coin-icon">💎</span>
-              <span className="coin-amount">{userCoins} coins</span>
-            </div>
-            <button className="btn btn-primary" onClick={() => setScreen('dashboard')}>
-              ← Back
-            </button>
+    <div className="doubts-console">
+      {/* Top Navbar */}
+      <header className="doubts-navbar">
+        <div className="doubts-nav-left">
+          <button className="doubts-back-btn" onClick={() => setScreen('universe')}>
+            ← Back
+          </button>
+          <div className="doubts-title-col">
+            <h1 className="doubts-title">Academic Inquiry & Peer Review</h1>
+            <span className="doubts-sub">Precision concept debugging with peer token bounties</span>
           </div>
+        </div>
+        <div className="doubts-tokens-pill">
+          <span className="token-icon">💎</span>
+          <span>{userCoins} Peer Tokens</span>
         </div>
       </header>
 
-      <main className="container doubts-main">
-        {/* How it works */}
-        <div className="how-it-works">
-          <h3>🎯 How Doubt Bounty Works</h3>
-          <div className="steps">
-            <div className="step">
-              <div className="step-number">1</div>
-              <p><strong>Ask a doubt</strong> and offer coins as bounty</p>
-            </div>
-            <div className="step">
-              <div className="step-number">2</div>
-              <p><strong>Community answers</strong> your question</p>
-            </div>
-            <div className="step">
-              <div className="step-number">3</div>
-              <p><strong>You reward</strong> the best answer</p>
-            </div>
-            <div className="step">
-              <div className="step-number">4</div>
-              <p><strong>Answerer gets coins</strong> + reputation</p>
-            </div>
+      <main className="doubts-main-layout">
+        {/* Post Inquiry Composer */}
+        <section className="doubts-card composer-card">
+          <div className="composer-header-row">
+            <h2 className="card-heading">Post a Conceptual Inquiry</h2>
+            <span className="composer-caption">Offers token bounty to community mentors</span>
           </div>
-        </div>
 
-        {/* Post New Doubt */}
-        <div className="post-doubt-section">
-          <h3>📝 Post a Doubt</h3>
-          <div className="post-form">
-            <select style={{ marginBottom: '1rem', padding: '10px', borderRadius: '8px', border: '1px solid #D3D1C7', width: '100%' }}>
-              <option>Select Topic</option>
-              <option>Black Holes</option>
-              <option>Quantum Mechanics</option>
-              <option>Special Relativity</option>
-              <option>General Relativity</option>
-            </select>
-            <textarea
-              placeholder="Describe your doubt in detail..."
-              value={newDoubt}
-              onChange={(e) => setNewDoubt(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '12px',
-                borderRadius: '8px',
-                border: '1px solid #D3D1C7',
-                marginBottom: '1rem',
-                fontFamily: 'inherit',
-                minHeight: '120px'
-              }}
-            />
-            <div className="bounty-selector">
-              <label>Bounty (coins):</label>
-              <div className="bounty-options">
+          <form onSubmit={handlePostInquiry} className="inquiry-form">
+            <div className="form-fields-row">
+              <select
+                className="inquiry-topic-select"
+                value={selectedTopic}
+                onChange={(e) => setSelectedTopic(e.target.value)}
+              >
+                <option value="Physics">General & Relativistic Physics</option>
+                <option value="Quantum Mechanics">Quantum Mechanics & Waves</option>
+                <option value="Philosophy">Epistemology & Logic</option>
+                <option value="Mathematics">Mathematical Proofs & Calculus</option>
+              </select>
+
+              <div className="bounty-picker-row">
+                <span className="bounty-label">Bounty:</span>
                 {[25, 50, 75, 100].map((amount) => (
-                  <button key={amount} className="bounty-btn">
-                    {amount}
+                  <button
+                    key={amount}
+                    type="button"
+                    className={`bounty-chip ${selectedBounty === amount ? 'active' : ''}`}
+                    onClick={() => setSelectedBounty(amount)}
+                  >
+                    💎 {amount}
                   </button>
                 ))}
               </div>
             </div>
-            <button className="btn btn-primary" style={{ width: '100%' }}>
-              Post Doubt with Bounty
-            </button>
-          </div>
-        </div>
 
-        {/* Tabs */}
-        <div className="doubts-tabs">
+            <textarea
+              className="inquiry-textarea"
+              rows="3"
+              placeholder="State your analytical question or the point where derivation breaks down..."
+              value={newQuestionText}
+              onChange={(e) => setNewQuestionText(e.target.value)}
+            />
+
+            <div className="form-footer-row">
+              <span className="char-count">{newQuestionText.length}/400 chars</span>
+              <button
+                type="submit"
+                className="inquiry-submit-btn"
+                disabled={!newQuestionText.trim() || userCoins < selectedBounty}
+              >
+                Publish Inquiry (💎 {selectedBounty})
+              </button>
+            </div>
+          </form>
+        </section>
+
+        {/* Tab Navigation */}
+        <div className="doubts-tabs-row">
           <button
-            className={`tab ${activeTab === 'my-doubts' ? 'active' : ''}`}
+            className={`doubts-tab-btn ${activeTab === 'my-doubts' ? 'active' : ''}`}
             onClick={() => setActiveTab('my-doubts')}
           >
-            My Doubts ({myDoubts.length})
+            My Inquiries ({doubtsList.length})
           </button>
           <button
-            className={`tab ${activeTab === 'top-answerers' ? 'active' : ''}`}
-            onClick={() => setActiveTab('top-answerers')}
-          >
-            Top Answerers
-          </button>
-          <button
-            className={`tab ${activeTab === 'open-bounties' ? 'active' : ''}`}
+            className={`doubts-tab-btn ${activeTab === 'open-bounties' ? 'active' : ''}`}
             onClick={() => setActiveTab('open-bounties')}
           >
             Open Bounties
           </button>
+          <button
+            className={`doubts-tab-btn ${activeTab === 'top-mentors' ? 'active' : ''}`}
+            onClick={() => setActiveTab('top-mentors')}
+          >
+            Top Academic Mentors
+          </button>
         </div>
 
-        {/* My Doubts */}
+        {/* Tab 1: My Doubts */}
         {activeTab === 'my-doubts' && (
-          <div className="doubts-list">
-            {myDoubts.map((doubt) => (
-              <div key={doubt.id} className={`doubt-card ${doubt.status}`}>
-                <div className="doubt-header">
-                  <h3>{doubt.question}</h3>
-                  <span className={`status-badge ${doubt.status}`}>
-                    {doubt.status === 'answered' ? '✅ Answered' : '🔴 Open'}
+          <section className="inquiries-stream">
+            {doubtsList.map((d) => (
+              <article key={d.id} className="inquiry-card">
+                <div className="inquiry-card-header">
+                  <span className="inquiry-topic-tag">{d.topic}</span>
+                  <span className={`status-indicator-tag ${d.status}`}>
+                    {d.status === 'answered' ? '✓ Verified Solution' : '● Open Inquiry'}
                   </span>
                 </div>
-                <p className="doubt-topic">📚 {doubt.topic}</p>
-                <div className="doubt-stats">
-                  <span>💎 {doubt.bounty} coins bounty</span>
-                  <span>💬 {doubt.answers} answers</span>
+
+                <h3 className="inquiry-question">{d.question}</h3>
+
+                <div className="inquiry-meta-row">
+                  <span className="inquiry-bounty-val">💎 {d.bounty} Token Bounty</span>
+                  <span className="inquiry-answers-count">💬 {d.answers} {d.answers === 1 ? 'Answer' : 'Answers'}</span>
                 </div>
 
-                {doubt.bestAnswer && (
-                  <div className="best-answer">
-                    <div className="answer-header">
-                      <div className="answerer-info">
-                        <h4>{doubt.bestAnswer.author}</h4>
-                        <p>Reputation: {doubt.bestAnswer.reputation}</p>
+                {d.bestAnswer && (
+                  <div className="verified-solution-box">
+                    <div className="solution-head">
+                      <div className="mentor-info">
+                        <span className="mentor-name">{d.bestAnswer.author}</span>
+                        <span className="mentor-badge">Verified Mentor</span>
                       </div>
-                      <span className="best-badge">⭐ Best Answer</span>
+                      <span className="solution-tag">★ Best Explanation</span>
                     </div>
-                    <p className="answer-content">{doubt.bestAnswer.content}</p>
-                    <div className="answer-footer">
-                      <span className="upvotes">👍 {doubt.bestAnswer.upvotes}</span>
-                      <span className="reward">💎 +{doubt.bestAnswer.reward} earned</span>
+
+                    <p className="solution-content">{d.bestAnswer.content}</p>
+
+                    <div className="solution-footer">
+                      <span className="upvotes-badge">▲ {d.bestAnswer.upvotes} verified</span>
+                      <span className="claimed-badge">💎 {d.bestAnswer.reward} tokens awarded</span>
                     </div>
                   </div>
                 )}
-              </div>
+              </article>
             ))}
-          </div>
+          </section>
         )}
 
-        {/* Top Answerers */}
-        {activeTab === 'top-answerers' && (
-          <div className="top-answerers-list">
-            {topDoubtAnswerers.map((answerer, idx) => (
-              <div key={idx} className="answerer-card">
-                <div className="rank">{idx + 1}</div>
-                <div className="answerer-info">
-                  <h3>{answerer.name}</h3>
-                  <p>⭐ Reputation: {answerer.reputation}</p>
-                  <p>💬 {answerer.answers} answers</p>
-                </div>
-                <div className="answerer-earnings">
-                  <p className="earnings-amount">₹{answerer.earnings}</p>
-                  <p className="earnings-label">earned this month</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Open Bounties */}
+        {/* Tab 2: Open Bounties */}
         {activeTab === 'open-bounties' && (
-          <div className="open-bounties">
-            <p style={{ color: '#888780', marginBottom: '2rem' }}>🔥 Help others and earn coins!</p>
-            <div className="bounty-card">
-              <h3>What causes gravitational lensing?</h3>
-              <p className="bounty-topic">📚 General Relativity</p>
-              <div className="bounty-footer">
-                <span className="bounty-reward">💎 100 coins</span>
-                <button className="btn btn-primary">Answer Now</button>
+          <section className="inquiries-stream">
+            <div className="inquiry-card">
+              <div className="inquiry-card-header">
+                <span className="inquiry-topic-tag">General Relativity</span>
+                <span className="status-indicator-tag open">● Open Inquiry</span>
+              </div>
+              <h3 className="inquiry-question">How does gravitational lensing produce Einstein rings rather than simple focal points?</h3>
+              <p className="inquiry-desc-preview">
+                Looking for a rigorous optical derivation comparing geometric optics in curved spacetime with classical refraction.
+              </p>
+              <div className="inquiry-meta-row">
+                <span className="inquiry-bounty-val">💎 100 Token Bounty</span>
+                <button className="answer-cta-btn">Submit Formal Solution →</button>
               </div>
             </div>
-          </div>
+          </section>
+        )}
+
+        {/* Tab 3: Top Mentors */}
+        {activeTab === 'top-mentors' && (
+          <section className="mentors-grid">
+            {TOP_MENTORS.map((m, i) => (
+              <div key={i} className="mentor-card">
+                <div className="mentor-rank-badge">#{i + 1}</div>
+                <div className="mentor-details">
+                  <h4 className="mentor-title">{m.name}</h4>
+                  <span className="mentor-domain">{m.domain}</span>
+                </div>
+                <div className="mentor-stats-row">
+                  <span className="stat-item">⭐ {m.reputation} Rep</span>
+                  <span className="stat-item">💎 {m.peerTokens} Earned</span>
+                </div>
+              </div>
+            ))}
+          </section>
         )}
       </main>
     </div>
