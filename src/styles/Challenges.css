@@ -177,9 +177,30 @@
 
 .sprint-fill {
   height: 100%;
-  background: #4f7df3;
-  border-radius: 999px;
-  transition: width 0.4s ease;
+  background: var(--accent-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-standard);
+}
+
+.sprint-enroll-action-row {
+  display: flex;
+  margin-top: var(--space-2);
+}
+
+.sprint-enroll-btn {
+  background: var(--accent-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 10px 22px;
+  font-size: 0.875rem;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.sprint-enroll-btn:hover {
+  opacity: 0.9;
 }
 
 /* Split Grid */

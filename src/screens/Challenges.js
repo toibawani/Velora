@@ -106,16 +106,27 @@ function Challenges({ setScreen }) {
             </span>
           </div>
 
-          {/* User Progress Bar */}
-          <div className="sprint-progress-wrapper">
-            <div className="progress-info-row">
-              <span className="progress-label">Your Sprint Velocity</span>
-              <span className="progress-value">Day {activeSprint.currentDay} of {activeSprint.days.length} ({activeSprint.userProgress}%)</span>
+          {/* User Progress Bar / Enrollment */}
+          {joinedSprints[activeSprintTab] ? (
+            <div className="sprint-progress-wrapper">
+              <div className="progress-info-row">
+                <span className="progress-label">Your Sprint Velocity (Enrolled)</span>
+                <span className="progress-value">Day {activeSprint.currentDay} of {activeSprint.days.length} ({activeSprint.userProgress}%)</span>
+              </div>
+              <div className="sprint-track">
+                <div className="sprint-fill" style={{ width: `${activeSprint.userProgress}%` }}></div>
+              </div>
             </div>
-            <div className="sprint-track">
-              <div className="sprint-fill" style={{ width: `${activeSprint.userProgress}%` }}></div>
+          ) : (
+            <div className="sprint-enroll-action-row">
+              <button
+                className="sprint-enroll-btn"
+                onClick={() => setJoinedSprints(prev => ({ ...prev, [activeSprintTab]: true }))}
+              >
+                Enroll in Sprint Challenge →
+              </button>
             </div>
-          </div>
+          )}
         </section>
 
         {/* Split Section: Daily Milestones & Live Leaderboard */}
