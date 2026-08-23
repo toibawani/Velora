@@ -1,0 +1,350 @@
+/* ==========================================================================
+   RevisionPlanner.css — Spaced Repetition & Cognitive Decay Architecture
+   ========================================================================== */
+
+.revision-module-wrapper {
+  min-height: 100vh;
+  background: var(--bg-primary, #111111);
+  color: var(--text-primary, #f5f5f5);
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+}
+
+.revision-nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2.5rem;
+  background: var(--bg-secondary, #1a1a1a);
+  border-bottom: 1px solid var(--border-default, #2a2a2a);
+}
+
+.revision-back-btn {
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px solid var(--border-default, #333333);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.revision-back-btn:hover {
+  color: #ffffff;
+  border-color: #555555;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.revision-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.revision-main-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* ==================== Retention Hero Banner ==================== */
+
+.retention-score-hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .retention-score-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.retention-score-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(52, 199, 89, 0.08);
+  border: 2px solid #34c759;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.retention-pct-large {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #34c759;
+  letter-spacing: -0.03em;
+}
+
+.retention-lbl {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #a0a0a0);
+  font-weight: 600;
+}
+
+.retention-summary-copy {
+  flex: 1;
+}
+
+.summary-headline {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary, #ffffff);
+}
+
+.summary-body {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #a0a0a0);
+}
+
+.smart-prompt-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(79, 125, 243, 0.08);
+  border: 1px solid rgba(79, 125, 243, 0.25);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.prompt-icon {
+  font-size: 1.1rem;
+}
+
+.prompt-text {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #d0e0ff;
+}
+
+/* ==================== Forgetting Curve Chart Card ==================== */
+
+.retention-chart-card {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: left;
+}
+
+.chart-card-title {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.chart-card-sub {
+  margin: 0 0 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #a0a0a0);
+  line-height: 1.5;
+}
+
+.curve-svg-container {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--bg-tertiary, #181818);
+  border-radius: 8px;
+  padding: 1rem 0;
+}
+
+.memory-curve-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==================== Scheduled Queue ==================== */
+
+.scheduled-topics-section {
+  text-align: left;
+}
+
+.schedule-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-title-sm {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.filter-pill-tabs {
+  display: flex;
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.filter-pill {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #888888);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filter-pill.active {
+  background: #333333;
+  color: #ffffff;
+}
+
+.schedule-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.revision-item-card {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.revision-item-card.priority-due {
+  border-left: 4px solid #ff9f0a;
+}
+
+.item-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.item-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-concept-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.status-pill.due-soon {
+  background: rgba(255, 159, 10, 0.15);
+  color: #ff9f0a;
+  border: 1px solid rgba(255, 159, 10, 0.3);
+}
+
+.status-pill.optimal {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34c759;
+  border: 1px solid rgba(52, 199, 89, 0.3);
+}
+
+.item-domain-sub {
+  font-size: 0.82rem;
+  color: var(--text-tertiary, #888888);
+}
+
+.item-timing-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary, #b0b0b0);
+}
+
+.item-right-col {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.retention-meter-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 90px;
+}
+
+.meter-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #888888);
+}
+
+.meter-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.meter-track {
+  height: 6px;
+  background: var(--bg-tertiary, #222222);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.review-action-btn {
+  background: #4f7df3;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.review-action-btn:hover {
+  background: #3d6ce0;
+}
