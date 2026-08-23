@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DailySpark from '../components/DailySpark';
 import SocialProof from '../components/SocialProof';
+import ReferralModal from '../components/ReferralModal';
 import '../styles/UniverseHome.css';
 
 /**
@@ -11,6 +12,7 @@ import '../styles/UniverseHome.css';
  */
 function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
   const [hoveredSubject, setHoveredSubject] = useState(null);
+  const [showReferral, setShowReferral] = useState(false);
 
   const subjects = [
     {
@@ -79,6 +81,9 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
         </nav>
 
         <div className="uh-header-right">
+          <button className="uh-invite-btn" onClick={() => setShowReferral(true)}>
+            🎁 Invite a Friend
+          </button>
           <span className="uh-user">{user?.name || 'Explorer'}</span>
           <button className="uh-logout" onClick={onLogout}>
             Exit
@@ -151,6 +156,13 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
           <SocialProof onSelectTopic={() => { setSelectedSubject('physics'); setScreen('learn'); }} />
         </section>
       </main>
+
+      {/* Referral Modal */}
+      <ReferralModal
+        isOpen={showReferral}
+        onClose={() => setShowReferral(false)}
+        userName={user?.name}
+      />
     </div>
   );
 }

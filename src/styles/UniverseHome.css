@@ -84,8 +84,25 @@
 
 .uh-header-right {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   align-items: center;
+}
+
+.uh-invite-btn {
+  background: rgba(255, 159, 10, 0.1);
+  color: #ff9f0a;
+  border: 1px solid rgba(255, 159, 10, 0.3);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uh-invite-btn:hover {
+  background: rgba(255, 159, 10, 0.2);
+  border-color: #ff9f0a;
 }
 
 .uh-user {
