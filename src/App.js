@@ -9,6 +9,7 @@ import BottomNav from './components/BottomNav';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
+const LandingPage = lazy(() => import('./screens/LandingPage'));
 const LearnScreen = lazy(() => import('./screens/Learn'));
 const CommunityScreen = lazy(() => import('./screens/Community'));
 const GlossaryScreen = lazy(() => import('./screens/Glossary'));
@@ -79,6 +80,8 @@ function App() {
     <div className="app">
       <Suspense fallback={<ScreenLoader />}>
         {screen === 'splash' && <SplashScreen setScreen={setScreen} />}
+
+        {screen === 'landing' && <LandingPage setScreen={setScreen} />}
 
         {screen === 'login' && (
           <LoginScreen setScreen={setScreen} onLogin={handleLogin} />
