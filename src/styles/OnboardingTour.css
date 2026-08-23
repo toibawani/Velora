@@ -1,0 +1,235 @@
+/* ==========================================================================
+   OnboardingTour.css — Smart 5-Step New User Onboarding
+   ========================================================================== */
+
+.onboarding-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1.5rem;
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+}
+
+.onboarding-card {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 16px;
+  max-width: 580px;
+  width: 100%;
+  padding: 2.5rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  animation: card-emerge 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes card-emerge {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.onboarding-progress-track {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-tertiary, #222222);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.onboarding-progress-fill {
+  height: 100%;
+  background: #4f7df3;
+  border-radius: 999px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.onboarding-step-counter {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary, #888888);
+}
+
+.onboarding-illustration {
+  font-size: 3.5rem;
+  line-height: 1;
+  margin: 0.25rem 0;
+}
+
+.onboarding-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.onboarding-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text-primary, #ffffff);
+}
+
+.onboarding-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-secondary, #a0a0a0);
+  font-weight: 500;
+}
+
+.onboarding-body {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #a0a0a0);
+  max-width: 440px;
+}
+
+/* Options Grid (2-col domain, 3-col style) */
+.onboarding-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.onboarding-options-grid.three-col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 480px) {
+  .onboarding-options-grid,
+  .onboarding-options-grid.three-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.onboarding-option-card {
+  background: var(--bg-tertiary, #202020);
+  border: 1px solid var(--border-default, #2e2e2e);
+  border-radius: 10px;
+  padding: 1rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.onboarding-option-card:hover {
+  border-color: #4f7df3;
+}
+
+.onboarding-option-card.selected {
+  background: rgba(79, 125, 243, 0.12);
+  border-color: #4f7df3;
+  box-shadow: 0 0 0 2px rgba(79, 125, 243, 0.2);
+}
+
+.opt-emoji {
+  font-size: 1.6rem;
+}
+
+.opt-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.opt-desc {
+  font-size: 0.75rem;
+  color: var(--text-tertiary, #888888);
+  line-height: 1.3;
+}
+
+/* Time Options */
+.onboarding-time-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.time-option-btn {
+  background: var(--bg-tertiary, #202020);
+  border: 1px solid var(--border-default, #2e2e2e);
+  color: var(--text-secondary, #a0a0a0);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.time-option-btn:hover {
+  border-color: #555;
+  color: #fff;
+}
+
+.time-option-btn.selected {
+  background: rgba(79, 125, 243, 0.12);
+  border-color: #4f7df3;
+  color: #4f7df3;
+}
+
+/* CTA */
+.onboarding-cta-btn {
+  background: #4f7df3;
+  color: #ffffff;
+  border: none;
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  max-width: 320px;
+  transition: all 0.2s ease;
+}
+
+.onboarding-cta-btn:hover:not(:disabled) {
+  background: #3d6ce0;
+  transform: translateY(-1px);
+}
+
+.onboarding-cta-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.onboarding-skip-link {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #666666);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  margin-top: -0.5rem;
+}
+
+.onboarding-skip-link:hover {
+  color: var(--text-secondary, #a0a0a0);
+}

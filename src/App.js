@@ -6,6 +6,7 @@ import SplashScreen from './screens/Splash';
 import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
 import BottomNav from './components/BottomNav';
+import OnboardingTour from './components/OnboardingTour';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -60,6 +61,7 @@ function App() {
   const [screen, setScreen] = useState('splash');
   const [user, setUser] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const handleLogin = (email, password) => {
     setUser({ email, name: email.split('@')[0] });
@@ -68,7 +70,14 @@ function App() {
 
   const handleRegister = (email, password, name) => {
     setUser({ email, name });
-    setScreen('universe');
+    // Show onboarding tour for new users
+    const alreadyOnboarded = localStorage.getItem('velora_onboarding_done');
+    if (!alreadyOnboarded) {
+      setScreen('universe');
+      setShowOnboarding(true);
+    } else {
+      setScreen('universe');
+    }
   };
 
   const handleLogout = () => {
@@ -140,8 +149,16 @@ function App() {
           <JourneyScreen setScreen={setScreen} />
         )}
 
-        {user && screen !== 'splash' && screen !== 'login' && screen !== 'register' && (
+        {user && screen !== 'splash' && screen !== 'login' && screen !== 'register' && screen !== 'landing' && (
           <BottomNav currentScreen={screen} setScreen={setScreen} />
+        )}
+
+        {/* Smart Onboarding Tour for new users */}
+        {showOnboarding && user && (
+          <OnboardingTour
+            onComplete={() => setShowOnboarding(false)}
+            setSelectedSubject={setSelectedSubject}
+          />
         )}
       </Suspense>
     </div>
