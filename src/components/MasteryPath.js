@@ -1,81 +1,79 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/MasteryPath.css';
 
-function MasteryPath({ selectedSubject }) {
-  const paths = {
-    physics: {
-      name: 'Master Quantum Physics',
-      duration: '30 Days',
-      lessons: [
-        { id: 1, title: 'What is Space?', completed: true, time: '8 min' },
-        { id: 2, title: 'What is Time?', completed: true, time: '10 min' },
-        { id: 3, title: 'Space-Time', completed: false, time: '12 min' },
-        { id: 4, title: 'Quantum Mechanics Basics', completed: false, time: '15 min' },
-        { id: 5, title: 'Wave-Particle Duality', completed: false, time: '12 min' },
-      ],
-    },
-    philosophy: {
-      name: 'Foundations of Philosophy',
-      duration: '20 Days',
-      lessons: [
-        { id: 1, title: 'What is Philosophy?', completed: true, time: '7 min' },
-        { id: 2, title: 'Ancient Philosophy', completed: true, time: '14 min' },
-        { id: 3, title: 'Medieval Thought', completed: false, time: '12 min' },
-        { id: 4, title: 'Modern Philosophy', completed: false, time: '13 min' },
-      ],
-    },
-  };
+/**
+ * Mastery Path Progress Module
+ * 
+ * Tracks structured milestone sequences across subject tracks.
+ */
 
-  const path = paths[selectedSubject];
-  if (!path) return null;
+const PATHS = {
+  physics: {
+    name: 'Quantum & Relativistic Foundations',
+    duration: '30 Days Cadence',
+    lessons: [
+      { id: 1, title: 'Spacetime & Coordinate Invariance', completed: true, time: '8 min' },
+      { id: 2, title: 'Proper Time & Geodesic Deviation', completed: true, time: '10 min' },
+      { id: 3, title: 'Metric Tensors & Curvature', completed: false, time: '12 min' },
+      { id: 4, title: 'Wavefunction & State Vector Superposition', completed: false, time: '15 min' },
+      { id: 5, title: 'Decoherence & Measurement Problem', completed: false, time: '12 min' },
+    ],
+  },
+  philosophy: {
+    name: 'Formal Epistemology & Deductive Logic',
+    duration: '20 Days Cadence',
+    lessons: [
+      { id: 1, title: 'Axioms of Truth & Justification', completed: true, time: '7 min' },
+      { id: 2, title: 'Socratic Method & Aporia', completed: true, time: '14 min' },
+      { id: 3, title: 'Rationalism vs. Pure Empiricism', completed: false, time: '12 min' },
+      { id: 4, title: 'Falsifiability & Scientific Demarcation', completed: false, time: '13 min' },
+    ],
+  },
+};
+
+function MasteryPath({ selectedSubject }) {
+  const path = PATHS[selectedSubject || 'physics'] || PATHS.physics;
 
   const completed = path.lessons.filter(l => l.completed).length;
   const percentage = Math.round((completed / path.lessons.length) * 100);
 
   return (
-    <div className="mastery-path">
+    <div className="mastery-path-card">
       <div className="path-header">
-        <h2 className="path-title">{path.name}</h2>
-        <span className="path-duration">⏱️ {path.duration}</span>
+        <div className="path-title-col">
+          <span className="path-overline">Structured Syllabus</span>
+          <h2 className="path-title">{path.name}</h2>
+        </div>
+        <span className="path-duration-badge">⏱️ {path.duration}</span>
       </div>
 
       {/* Progress */}
       <div className="path-progress">
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${percentage}%` }}></div>
+        <div className="path-progress-bar">
+          <div className="path-progress-fill" style={{ width: `${percentage}%` }}></div>
         </div>
-        <p className="progress-text">
-          You've completed {completed} of {path.lessons.length} lessons ({percentage}%)
+        <p className="path-progress-text">
+          {completed} of {path.lessons.length} core modules verified ({percentage}%)
         </p>
       </div>
 
       {/* Lessons */}
       <div className="path-lessons">
         {path.lessons.map((lesson, idx) => (
-          <div key={lesson.id} className={`lesson-item ${lesson.completed ? 'completed' : ''}`}>
-            <div className="lesson-check">
+          <div key={lesson.id} className={`lesson-row-item ${lesson.completed ? 'completed' : ''}`}>
+            <div className="lesson-check-indicator">
               {lesson.completed ? '✓' : idx + 1}
             </div>
             <div className="lesson-info">
               <h4 className="lesson-title">{lesson.title}</h4>
-              <span className="lesson-time">{lesson.time}</span>
+              <span className="lesson-time">{lesson.time} focus</span>
             </div>
-            <button className={`lesson-btn ${lesson.completed ? 'review' : 'start'}`}>
-              {lesson.completed ? 'Review' : 'Start'}
+            <button className={`lesson-action-btn ${lesson.completed ? 'review' : 'start'}`}>
+              {lesson.completed ? 'Review' : 'Start Module'}
             </button>
           </div>
         ))}
       </div>
-
-      {/* Achievement */}
-      {percentage >= 50 && (
-        <div className="path-achievement">
-          <span className="achievement-icon">🎯</span>
-          <p className="achievement-text">
-            You're in the top 15% of learners! Keep it up.
-          </p>
-        </div>
-      )}
     </div>
   );
 }
