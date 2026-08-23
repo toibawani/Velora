@@ -1,69 +1,122 @@
 /* ==========================================================================
-   Auth Screens (Login + Register) — Dark Theme
+   Auth.css — Premium Login & Registration Screens
+   --------------------------------------------------------------------------
+   Centered card design with full token system, focus rings, smooth
+   transitions, and a subtle ambient glow. Works in both light and dark mode.
    ========================================================================== */
 
+/* ==================== CONTAINER ==================== */
 .auth-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-primary);
-  padding: var(--space-8);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Ambient glow behind card */
+.auth-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse at center, rgba(79, 125, 243, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ==================== CARD ==================== */
 .auth-card {
-  max-width: 400px;
+  position: relative;
+  max-width: 420px;
   width: 100%;
-  padding: var(--space-8);
+  padding: 2.5rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  animation: auth-card-appear 0.3s ease both;
 }
 
+@keyframes auth-card-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Logo/Brand mark at top */
+.auth-card::before {
+  content: 'VELORA';
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: var(--text-tertiary);
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+/* ==================== TYPOGRAPHY ==================== */
 .auth-title {
   font-family: var(--font-sans);
-  font-size: 1.5rem;
-  font-weight: var(--weight-bold);
+  font-size: 1.6rem;
+  font-weight: 800;
   color: var(--text-primary);
-  letter-spacing: var(--tracking-tight);
-  margin-bottom: var(--space-2);
+  letter-spacing: -0.03em;
+  margin: 0 0 0.35rem 0;
+  text-align: center;
 }
 
 .auth-subtitle {
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  margin-bottom: var(--space-8);
+  margin: 0 0 2rem 0;
+  text-align: center;
+  line-height: 1.5;
 }
 
-/* ---- Form ---- */
+/* ==================== FORM ==================== */
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0.4rem;
 }
 
 .form-group label {
   font-size: 0.8125rem;
-  font-weight: var(--weight-medium);
+  font-weight: 600;
   color: var(--text-secondary);
+  letter-spacing: 0.01em;
 }
 
 .form-group input {
   width: 100%;
-  padding: var(--space-3) var(--space-4);
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   color: var(--text-primary);
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 .form-group input::placeholder {
@@ -72,30 +125,35 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(79, 125, 243, 0.15);
+  border-color: var(--accent-blue, #4f7df3);
+  box-shadow: 0 0 0 3px rgba(79, 125, 243, 0.12);
 }
 
-/* ---- Buttons ---- */
+/* ==================== BUTTONS ==================== */
 .btn {
-  padding: var(--space-3) var(--space-6);
+  width: 100%;
+  padding: 0.75rem 1.25rem;
   font-family: var(--font-sans);
   font-size: 0.9375rem;
-  font-weight: var(--weight-semibold);
-  border-radius: var(--radius-sm);
+  font-weight: 700;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: all 0.18s ease;
   border: none;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .btn-primary {
-  background: var(--accent-blue);
-  color: white;
+  background: var(--accent-blue, #4f7df3);
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(79, 125, 243, 0.22);
 }
 
 .btn-primary:hover {
-  background: var(--accent-blue-hover);
+  background: #3d6ce0;
   transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(79, 125, 243, 0.32);
 }
 
 .btn-secondary {
@@ -107,15 +165,99 @@
 .btn-secondary:hover {
   border-color: var(--border-strong);
   color: var(--text-primary);
+  background: var(--bg-tertiary);
 }
 
-/* ---- Responsive ---- */
+.btn-full {
+  width: 100%;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-subtle);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.btn-ghost:hover {
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+  background: var(--bg-tertiary);
+}
+
+/* ==================== FOOTER LINKS ==================== */
+.auth-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.auth-link {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-align: center;
+  padding: 4px;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.auth-link:hover {
+  color: var(--text-primary);
+}
+
+.auth-link span {
+  color: var(--accent-blue, #4f7df3);
+  font-weight: 700;
+}
+
+.auth-back {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  text-align: center;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.auth-back:hover {
+  color: var(--text-secondary);
+}
+
+/* Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* ==================== RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .auth-container {
-    padding: var(--space-4);
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 3rem;
   }
 
   .auth-card {
-    padding: var(--space-6);
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
   }
 }

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import '../styles/Auth.css';
 
+/**
+ * Register Screen
+ *
+ * Clean, token-backed registration form. Inline styles removed in favour
+ * of Auth.css utility classes (.btn-secondary, .btn-ghost, .btn-full).
+ */
 function Register({ setScreen, onRegister }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +21,7 @@ function Register({ setScreen, onRegister }) {
     <div className="auth-container">
       <div className="auth-card">
         <h1 className="auth-title">Join VELORA</h1>
-        <p className="auth-subtitle">Start your learning journey today</p>
+        <p className="auth-subtitle">Start your intellectual exploration today</p>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
@@ -51,34 +57,25 @@ function Register({ setScreen, onRegister }) {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+          <button type="submit" className="btn btn-primary btn-full">
             Create account
           </button>
         </form>
 
-        <button 
-          onClick={() => setScreen('login')} 
-          className="btn btn-secondary" 
-          style={{ width: '100%', marginBottom: '1rem' }}
-        >
-          Already have an account? Login
-        </button>
-
-        <button 
-          onClick={() => setScreen('splash')} 
-          style={{ 
-            width: '100%', 
-            padding: '12px', 
-            background: '#F1EFE8', 
-            color: '#5F5E5A', 
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '1rem'
-          }}
-        >
-          Back
-        </button>
+        <div className="auth-footer">
+          <button
+            onClick={() => setScreen('login')}
+            className="auth-link"
+          >
+            Already have an account? <span>Sign in</span>
+          </button>
+          <button
+            onClick={() => setScreen('splash')}
+            className="auth-back"
+          >
+            ← Back to home
+          </button>
+        </div>
       </div>
     </div>
   );
