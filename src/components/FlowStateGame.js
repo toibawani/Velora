@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/FlowStateGame.css';
 
-function FlowStateGame({ gameName, gameType, difficulty, duration, onBack }) {
-  const [gameState, setGameState] = useState('start'); // start, playing, complete
-  const [score, setScore] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+/**
+ * FlowStateGame
+ * 
+ * Replaces gamified arcade mechanics with a distraction-free, flow-state learning
+ * experience. Focuses on conceptual clarity, reflective learning, and key takeaways
+ * rather than arcade points.
+ */
+function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', difficulty = 'Intermediate', duration = 10, onBack }) {
+  const [gameState, setGameState] = useState('start'); // 'start' | 'playing' | 'complete'
+  const [currentStep, setCurrentStep] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [revealedExplanations, setRevealedExplanations] = useState({});
   const [timeLeft, setTimeLeft] = useState(duration * 60);
-  const [insights, setInsights] = useState([]);
+  const [reflection, setReflection] = useState('');
+  const [savedReflection, setSavedReflection] = useState(false);
 
-  // Timer
+  // Timer countdown during flow state
   useEffect(() => {
     if (gameState === 'playing' && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      const timer = setTimeout(() => setTimeLeft(prev => prev - 1), 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && gameState === 'playing') {
-      handleGameComplete();
+      setGameState('complete');
     }
   }, [timeLeft, gameState]);
-
-  const handleGameComplete = () => {
-    setGameState('complete');
-  };
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -28,53 +33,128 @@ function FlowStateGame({ gameName, gameType, difficulty, duration, onBack }) {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
-  // START STATE
+  // Content for Quiz mode
+  const quizQuestions = [
+    {
+      id: 0,
+      question: 'What fundamentally defines an Event Horizon?',
+      options: [
+        'A physical impenetrable wall in space',
+        'The mathematical boundary where escape velocity equals light speed',
+        'The luminous accretion ring orbiting a stellar corpse',
+        'A distortion caused solely by dark matter'
+      ],
+      correct: 1,
+      explanation: 'The event horizon is a coordinate boundary. Once crossed, all paths in spacetime point inward toward the singularity.'
+    },
+    {
+      id: 1,
+      question: 'According to General Relativity, what happens to time near a massive black hole?',
+      options: [
+        'Time stops completely for all observers everywhere',
+        'Time speeds up relative to a distant observer',
+        'Gravitational time dilation causes time to pass slower relative to distant observers',
+        'Time flows backwards inside the photon sphere'
+      ],
+      correct: 2,
+      explanation: 'Mass curves spacetime. The closer you get to a profound gravitational well, the slower your clock ticks relative to an observer at infinity.'
+    },
+    {
+      id: 2,
+      question: 'What is Hawking Radiation?',
+      options: [
+        'Quantum thermal radiation predicted to emit from near the event horizon due to quantum fluctuations',
+        'High-energy synchrotron jets propelled from magnetic poles',
+        'X-rays released as infalling hydrogen gas heats up in the accretion disc',
+        'Gamma-ray bursts occurring when two neutron stars collide'
+      ],
+      correct: 0,
+      explanation: 'Stephen Hawking showed that quantum field theory in curved spacetime allows black holes to slowly lose mass and radiate energy.'
+    }
+  ];
+
+  // Content for Chain mode (connecting steps in a causal loop)
+  const chainSteps = [
+    { id: 'c1', label: 'Massive Star Exhausts Nuclear Fuel', order: 1 },
+    { id: 'c2', label: 'Outward Radiation Pressure Drops Below Gravity', order: 2 },
+    { id: 'c3', label: 'Core Undergoes Catastrophic Gravitational Collapse', order: 3 },
+    { id: 'c4', label: 'Density Exceeds Neutron Degeneracy Pressure Limit', order: 4 },
+    { id: 'c5', label: 'Spacetime Curves to Form an Event Horizon & Singularity', order: 5 }
+  ];
+
+  const [chainUserOrder, setChainUserOrder] = useState(['c3', 'c1', 'c5', 'c2', 'c4']);
+
+  const moveChainItem = (index, direction) => {
+    const newOrder = [...chainUserOrder];
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= newOrder.length) return;
+    const temp = newOrder[index];
+    newOrder[index] = newOrder[targetIndex];
+    newOrder[targetIndex] = temp;
+    setChainUserOrder(newOrder);
+  };
+
+  // Content for Scrabble / Anagram mode
+  const scrabbleData = {
+    target: 'SINGULARITY',
+    clue: 'The point in spacetime where gravitational curvature becomes infinite according to General Relativity.',
+    tiles: ['G', 'U', 'S', 'I', 'L', 'N', 'A', 'R', 'T', 'I', 'Y']
+  };
+
+  const [assembledWord, setAssembledWord] = useState([]);
+
+  const handleSelectQuizOption = (qIdx, optIdx) => {
+    setSelectedAnswers(prev => ({ ...prev, [qIdx]: optIdx }));
+    setRevealedExplanations(prev => ({ ...prev, [qIdx]: true }));
+  };
+
+  const handleFinish = () => {
+    setGameState('complete');
+  };
+
+  // START SCREEN
   if (gameState === 'start') {
     return (
-      <div className="learn-container">
-        <header className="learn-header">
-          <button className="learn-back-btn" onClick={onBack}>
-            ← Back
+      <div className="flow-game-container">
+        <header className="flow-nav-header">
+          <button className="flow-back-btn" onClick={onBack}>
+            ← Back to Lessons
           </button>
-          <h1>{gameName}</h1>
-          <div style={{ width: '60px' }}></div>
+          <span className="flow-mode-badge">Flow State Experience</span>
+          <div style={{ width: '80px' }}></div>
         </header>
 
-        <main style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-          <div className="flow-start">
-            <div className="flow-icon" style={{ fontSize: '4rem', marginBottom: '1rem' }}>
+        <main className="flow-start-wrapper">
+          <div className="flow-start-card">
+            <div className="flow-icon-hero">
               {gameType === 'quiz' && '🎯'}
               {gameType === 'scrabble' && '🔤'}
               {gameType === 'chain' && '🔗'}
+              {gameType === 'duel' && '📝'}
             </div>
 
-            <h2 className="flow-title">Ready to Master This Concept?</h2>
-
-            <div className="flow-info">
-              <div className="info-item">
-                <span className="info-label">Difficulty</span>
-                <span className="info-value">{difficulty}</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">Duration</span>
-                <span className="info-value">{duration} min</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">Focus Level</span>
-                <span className="info-value">High</span>
-              </div>
-            </div>
-
-            <p className="flow-desc">
-              This learning experience is designed for deep focus. No distractions, no points,
-              just you and the concepts. You'll discover key insights along the way.
+            <h1 className="flow-main-title">{gameName}</h1>
+            <p className="flow-subtitle">
+              Deep focus mode. No intrusive popups, zero arcade gimmicks. Just pure conceptual mastery and reflective discovery.
             </p>
 
-            <button
-              className="flow-start-btn"
-              onClick={() => setGameState('playing')}
-            >
-              Enter Flow State →
+            <div className="flow-meta-grid">
+              <div className="flow-meta-box">
+                <span className="meta-label">Difficulty</span>
+                <span className="meta-value">{difficulty}</span>
+              </div>
+              <div className="flow-meta-box">
+                <span className="meta-label">Target Duration</span>
+                <span className="meta-value">{duration} minutes</span>
+              </div>
+              <div className="flow-meta-box">
+                <span className="meta-label">Experience Style</span>
+                <span className="meta-value">Self-Paced Focus</span>
+              </div>
+            </div>
+
+            <button className="flow-action-btn primary" onClick={() => setGameState('playing')}>
+              Begin Flow Session →
             </button>
           </div>
         </main>
@@ -82,119 +162,284 @@ function FlowStateGame({ gameName, gameType, difficulty, duration, onBack }) {
     );
   }
 
-  // PLAYING STATE
+  // PLAYING SCREEN
   if (gameState === 'playing') {
     return (
-      <div className="learn-container">
-        <div className="flow-header">
-          <div className="flow-timer">
-            <span className="timer-label">Time</span>
-            <span className="timer-value">{formatTime(timeLeft)}</span>
+      <div className="flow-game-container">
+        <header className="flow-playing-header">
+          <div className="flow-timer-pill">
+            <span className="timer-icon">⏱️</span>
+            <span className="timer-digits">{formatTime(timeLeft)} remaining</span>
           </div>
-          <h2 className="flow-title-small">{gameName}</h2>
-          <div style={{ width: '80px' }}></div>
-        </div>
+          <h2 className="flow-header-title">{gameName}</h2>
+          <button className="flow-exit-btn" onClick={() => setGameState('complete')}>
+            Complete Early
+          </button>
+        </header>
 
-        <main className="flow-playing">
-          <div className="flow-content">
-            <p className="flow-instruction">
-              Focus on understanding, not points. You'll see insights at the end.
-            </p>
-
-            {gameType === 'quiz' && (
-              <div className="quiz-container">
-                <h3 className="quiz-question">What is an event horizon?</h3>
-                <div className="quiz-options">
-                  <button className="quiz-option">The boundary of a black hole</button>
-                  <button className="quiz-option">A type of star</button>
-                  <button className="quiz-option">A cosmic event</button>
-                  <button className="quiz-option">A time period</button>
-                </div>
+        <main className="flow-interactive-area">
+          {/* Quiz Experience */}
+          {gameType === 'quiz' && (
+            <div className="flow-card-stack">
+              <div className="flow-progress-indicator">
+                Concept {currentStep + 1} of {quizQuestions.length}
               </div>
-            )}
 
-            {gameType === 'scrabble' && (
-              <div className="scrabble-container">
-                <h3 className="scrabble-prompt">Build the word from these letters:</h3>
-                <div className="letter-tiles">
-                  {['S', 'I', 'N', 'G', 'U', 'L'].map((letter) => (
-                    <div key={letter} className="letter-tile">
-                      {letter}
+              <h3 className="flow-step-question">
+                {quizQuestions[currentStep].question}
+              </h3>
+
+              <div className="flow-options-list">
+                {quizQuestions[currentStep].options.map((opt, idx) => {
+                  const isSelected = selectedAnswers[currentStep] === idx;
+                  const isCorrect = idx === quizQuestions[currentStep].correct;
+                  const isRevealed = revealedExplanations[currentStep];
+
+                  let optionClass = 'flow-option-card';
+                  if (isRevealed && isSelected) {
+                    optionClass += isCorrect ? ' correct-choice' : ' incorrect-choice';
+                  } else if (isRevealed && isCorrect) {
+                    optionClass += ' correct-choice';
+                  }
+
+                  return (
+                    <button
+                      key={idx}
+                      className={optionClass}
+                      onClick={() => handleSelectQuizOption(currentStep, idx)}
+                    >
+                      <span className="option-index">{String.fromCharCode(65 + idx)}</span>
+                      <span className="option-text">{opt}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {revealedExplanations[currentStep] && (
+                <div className="flow-explanation-box">
+                  <div className="explanation-header">
+                    <span className="explanation-tag">Deep Insight</span>
+                  </div>
+                  <p className="explanation-content">
+                    {quizQuestions[currentStep].explanation}
+                  </p>
+                </div>
+              )}
+
+              <div className="flow-nav-actions">
+                {currentStep > 0 && (
+                  <button
+                    className="flow-secondary-btn"
+                    onClick={() => setCurrentStep(prev => prev - 1)}
+                  >
+                    ← Previous Concept
+                  </button>
+                )}
+                {currentStep < quizQuestions.length - 1 ? (
+                  <button
+                    className="flow-primary-btn"
+                    onClick={() => setCurrentStep(prev => prev + 1)}
+                    disabled={selectedAnswers[currentStep] === undefined}
+                  >
+                    Next Concept →
+                  </button>
+                ) : (
+                  <button
+                    className="flow-primary-btn"
+                    onClick={handleFinish}
+                    disabled={selectedAnswers[currentStep] === undefined}
+                  >
+                    Finish Session & View Insights →
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Chain Connection Experience */}
+          {gameType === 'chain' && (
+            <div className="flow-card-stack">
+              <h3 className="flow-step-question">
+                Arrange the physical sequence of cosmic collapse in correct chronological order:
+              </h3>
+              <p className="flow-helper-text">
+                Use the arrows on the right to reorder the conceptual chain.
+              </p>
+
+              <div className="chain-list">
+                {chainUserOrder.map((stepId, index) => {
+                  const item = chainSteps.find(s => s.id === stepId);
+                  return (
+                    <div key={stepId} className="chain-item-card">
+                      <div className="chain-index">{index + 1}</div>
+                      <div className="chain-text">{item.label}</div>
+                      <div className="chain-controls">
+                        <button
+                          className="chain-arrow-btn"
+                          disabled={index === 0}
+                          onClick={() => moveChainItem(index, -1)}
+                        >
+                          ▲
+                        </button>
+                        <button
+                          className="chain-arrow-btn"
+                          disabled={index === chainUserOrder.length - 1}
+                          onClick={() => moveChainItem(index, 1)}
+                        >
+                          ▼
+                        </button>
+                      </div>
                     </div>
+                  );
+                })}
+              </div>
+
+              <div className="flow-nav-actions">
+                <button className="flow-primary-btn" onClick={handleFinish}>
+                  Verify Knowledge Chain →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Concept Scrabble / Anagram Experience */}
+          {(gameType === 'scrabble' || gameType === 'duel' || gameType === 'puzzle') && (
+            <div className="flow-card-stack">
+              <h3 className="flow-step-question">{scrabbleData.clue}</h3>
+              
+              <div className="assembled-slots">
+                <span className="slots-label">Constructed Term:</span>
+                <div className="slots-container">
+                  {scrabbleData.target.split('').map((_, i) => (
+                    <span key={i} className="char-slot">
+                      {assembledWord[i] || '_'}
+                    </span>
                   ))}
                 </div>
               </div>
-            )}
-          </div>
-        </main>
-      </div>
-    );
-  }
 
-  // COMPLETE STATE
-  if (gameState === 'complete') {
-    return (
-      <div className="learn-container">
-        <header className="learn-header">
-          <button className="learn-back-btn" onClick={onBack}>
-            ← Back
-          </button>
-          <h1>Learning Complete</h1>
-          <div style={{ width: '60px' }}></div>
-        </header>
+              <div className="tiles-bank">
+                {scrabbleData.tiles.map((letter, i) => (
+                  <button
+                    key={i}
+                    className="flow-letter-tile"
+                    onClick={() => {
+                      if (assembledWord.length < scrabbleData.target.length) {
+                        setAssembledWord([...assembledWord, letter]);
+                      }
+                    }}
+                  >
+                    {letter}
+                  </button>
+                ))}
+              </div>
 
-        <main style={{ padding: '3rem 2rem', maxWidth: '800px', margin: '0 auto' }}>
-          <div className="flow-complete">
-            <div className="complete-icon">✓</div>
-
-            <h2 className="complete-title">You've Made Progress</h2>
-
-            <div className="insights-section">
-              <h3 className="insights-title">Key Insights You Discovered</h3>
-              <div className="insights-list">
-                <div className="insight-item">
-                  <span className="insight-icon">💡</span>
-                  <p className="insight-text">
-                    Event horizons aren't physical objects—they're mathematical boundaries where escape velocity exceeds light speed.
-                  </p>
-                </div>
-                <div className="insight-item">
-                  <span className="insight-icon">💡</span>
-                  <p className="insight-text">
-                    Time behaves differently near black holes. What takes seconds for you takes years for observers far away.
-                  </p>
-                </div>
-                <div className="insight-item">
-                  <span className="insight-icon">💡</span>
-                  <p className="insight-text">
-                    Black holes aren't cosmic vacuum cleaners. Matter in orbit can emit incredible energy before falling in.
-                  </p>
-                </div>
+              <div className="flow-tile-actions">
+                <button
+                  className="flow-secondary-btn"
+                  onClick={() => setAssembledWord([])}
+                >
+                  Clear Tiles
+                </button>
+                <button
+                  className="flow-primary-btn"
+                  onClick={handleFinish}
+                >
+                  Confirm Term →
+                </button>
               </div>
             </div>
-
-            <div className="reflection-section">
-              <h3 className="reflection-title">Reflect on Your Learning</h3>
-              <textarea
-                className="reflection-input"
-                placeholder="What's one thing you learned today that surprised you?"
-                rows="4"
-              />
-            </div>
-
-            <div className="complete-actions">
-              <button className="action-btn secondary" onClick={onBack}>
-                Back to Lessons
-              </button>
-              <button className="action-btn primary">
-                Continue Learning →
-              </button>
-            </div>
-          </div>
+          )}
         </main>
       </div>
     );
   }
+
+  // COMPLETION & REFLECTION SCREEN
+  return (
+    <div className="flow-game-container">
+      <header className="flow-nav-header">
+        <button className="flow-back-btn" onClick={onBack}>
+          ← Return to Hub
+        </button>
+        <span className="flow-mode-badge">Session Synthesis</span>
+        <div style={{ width: '80px' }}></div>
+      </header>
+
+      <main className="flow-complete-wrapper">
+        <div className="flow-complete-card">
+          <div className="completion-badge-circle">✓</div>
+          <h1 className="complete-heading">Flow Session Complete</h1>
+          <p className="complete-sub">
+            You maintained uninterrupted focus on fundamental physics principles.
+          </p>
+
+          {/* 3-Star Quality & Depth Rating */}
+          <div className="depth-rating-box">
+            <span className="rating-label">Conceptual Depth Attained</span>
+            <div className="stars-row">
+              <span className="star active">★</span>
+              <span className="star active">★</span>
+              <span className="star active">★</span>
+            </div>
+            <span className="rating-tagline">Mastery Level: Advanced Comprehension</span>
+          </div>
+
+          {/* Key Insights Discovered */}
+          <div className="insights-curation">
+            <h3 className="insights-header-text">Key Scientific Insights Discovered</h3>
+            <div className="insight-card-list">
+              <div className="curated-insight-item">
+                <span className="insight-bullet">✦</span>
+                <p>
+                  <strong>Coordinate vs Physical Boundaries:</strong> The event horizon is not a surface of solid matter; it is the mathematical demarcation where light itself cannot outpace spacetime curvature.
+                </p>
+              </div>
+              <div className="curated-insight-item">
+                <span className="insight-bullet">✦</span>
+                <p>
+                  <strong>Relativistic Invariance:</strong> Observers falling into a supermassive black hole experience normal local time progression, while external observers see them asymptotically freeze at the horizon.
+                </p>
+              </div>
+              <div className="curated-insight-item">
+                <span className="insight-bullet">✦</span>
+                <p>
+                  <strong>Quantum Thermodynamic Balance:</strong> Virtual particle pairs near the horizon lead to net radiation emission, providing a deep link between thermodynamics, quantum theory, and gravitation.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Reflection Area */}
+          <div className="flow-reflection-box">
+            <label className="reflection-label" htmlFor="reflection-text">
+              What was the most counterintuitive realization from this session?
+            </label>
+            <textarea
+              id="reflection-text"
+              className="reflection-textarea"
+              rows="3"
+              placeholder="e.g., How light curvature and time dilation are two expressions of the exact same geometric warping..."
+              value={reflection}
+              onChange={(e) => setReflection(e.target.value)}
+            />
+            <button
+              className="reflection-save-btn"
+              onClick={() => setSavedReflection(true)}
+            >
+              {savedReflection ? '✓ Saved to Your Study Notebook' : 'Save Reflection Note'}
+            </button>
+          </div>
+
+          <div className="flow-final-actions">
+            <button className="flow-action-btn primary" onClick={onBack}>
+              Continue Learning Pathway →
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 }
 
 export default FlowStateGame;

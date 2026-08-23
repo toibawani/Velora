@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
+import FlowStateGame from '../components/FlowStateGame';
 import AIWhiteboard from '../components/AIWhiteboard';
 import CreatorStudio from '../components/CreatorStudio';
 import SensoryRooms from '../components/SensoryRooms';
@@ -13,13 +14,19 @@ import '../styles/Learn.css';
 function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
   const [currentView, setCurrentView] = useState('overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
+  const [activeGame, setActiveGame] = useState({
+    name: 'Quantum Concepts Quiz',
+    type: 'quiz',
+    difficulty: 'Intermediate',
+    duration: 10
+  });
 
   const subjectData = {
     physics: {
       name: 'Physics',
       icon: '⚛️',
-      color: '#667eea',
-      description: 'Explore the fundamental laws of the universe',
+      color: '#4f7df3',
+      description: 'Explore the fundamental laws governing spacetime, matter, and energy',
       modules: [
         {
           id: 'classical-mechanics',
@@ -27,19 +34,19 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
           status: 'in-progress',
           progress: 65,
           topics: [
-            { id: 'newtons-laws', name: "Newton's Laws", lessons: 5 },
+            { id: 'newtons-laws', name: "Newton's Laws & Inertial Frames", lessons: 5 },
             { id: 'forces', name: 'Forces & Equilibrium', lessons: 4 },
-            { id: 'work-energy', name: 'Work & Energy', lessons: 6 },
+            { id: 'work-energy', name: 'Work, Energy & Conservative Fields', lessons: 6 },
           ],
         },
         {
           id: 'modern-physics',
-          name: 'Modern Physics',
-          status: 'locked',
-          progress: 0,
+          name: 'Modern & Relativistic Physics',
+          status: 'in-progress',
+          progress: 40,
           topics: [
-            { id: 'relativity', name: 'Relativity', lessons: 7 },
-            { id: 'quantum', name: 'Quantum Mechanics', lessons: 8 },
+            { id: 'relativity', name: 'Special & General Relativity', lessons: 7 },
+            { id: 'quantum', name: 'Quantum States & Superposition', lessons: 8 },
           ],
         },
       ],
@@ -47,27 +54,27 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
     philosophy: {
       name: 'Philosophy',
       icon: '🤔',
-      color: '#2E7D32',
-      description: 'Dive into the big questions of existence',
+      color: '#af52de',
+      description: 'Dive into epistemic, ethical, and metaphysical frameworks',
       modules: [
         {
           id: 'ancient-philosophy',
-          name: 'Ancient Philosophy',
+          name: 'Classical Antiquity',
           status: 'in-progress',
           progress: 45,
           topics: [
-            { id: 'socrates', name: 'Socrates & Plato', lessons: 4 },
-            { id: 'aristotle', name: 'Aristotle', lessons: 5 },
+            { id: 'socrates', name: 'Socratic Method & Platonic Forms', lessons: 4 },
+            { id: 'aristotle', name: 'Aristotelian Logic & Telos', lessons: 5 },
           ],
         },
         {
           id: 'modern-philosophy',
-          name: 'Modern Philosophy',
+          name: 'Modern Rationalism & Empiricism',
           status: 'not-started',
           progress: 0,
           topics: [
-            { id: 'descartes', name: 'Descartes', lessons: 3 },
-            { id: 'kant', name: 'Kant', lessons: 4 },
+            { id: 'descartes', name: 'Cartesian Doubt & Cogito', lessons: 3 },
+            { id: 'kant', name: 'Kantian Transcendental Idealism', lessons: 4 },
           ],
         },
       ],
@@ -75,8 +82,8 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
     history: {
       name: 'History',
       icon: '📜',
-      color: '#F39C12',
-      description: 'Understand how humanity evolved',
+      color: '#ff9f0a',
+      description: 'Understand the civilizational catalysts shaping human history',
       modules: [
         {
           id: 'ancient-history',
@@ -84,25 +91,25 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
           status: 'completed',
           progress: 100,
           topics: [
-            { id: 'egypt', name: 'Ancient Egypt', lessons: 6 },
-            { id: 'rome', name: 'Roman Empire', lessons: 7 },
+            { id: 'egypt', name: 'The Nile River & Monumental Architecture', lessons: 6 },
+            { id: 'rome', name: 'Roman Republic & Imperial Governance', lessons: 7 },
           ],
         },
         {
           id: 'medieval',
-          name: 'Medieval Era',
+          name: 'The Middle Ages & Renaissance',
           status: 'in-progress',
           progress: 35,
           topics: [
-            { id: 'dark-ages', name: 'Dark Ages', lessons: 5 },
-            { id: 'renaissance', name: 'Renaissance', lessons: 6 },
+            { id: 'dark-ages', name: 'Feudal Structure & Monastic Scholarship', lessons: 5 },
+            { id: 'renaissance', name: 'Scientific Revival & Humanism', lessons: 6 },
           ],
         },
       ],
     },
   };
 
-  const subject = subjectData[selectedSubject];
+  const subject = subjectData[selectedSubject || 'physics'];
   if (!subject) return null;
 
   const handleBack = () => {
@@ -113,6 +120,11 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
     } else {
       setScreen('universe');
     }
+  };
+
+  const startFlowGame = (gameConfig) => {
+    setActiveGame(gameConfig);
+    setCurrentView('playing-game');
   };
 
   const getStatusIcon = (status) => {
@@ -133,17 +145,30 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
   const getStatusColor = (status) => {
     switch (status) {
       case 'completed':
-        return '#2E7D32';
+        return '#34c759';
       case 'in-progress':
-        return '#F39C12';
+        return '#ff9f0a';
       case 'not-started':
-        return '#6f6f6f';
+        return '#666666';
       case 'locked':
-        return '#999';
+        return '#444444';
       default:
-        return '#6f6f6f';
+        return '#666666';
     }
   };
+
+  // View: Flow State Game
+  if (currentView === 'playing-game') {
+    return (
+      <FlowStateGame
+        gameName={activeGame.name}
+        gameType={activeGame.type}
+        difficulty={activeGame.difficulty}
+        duration={activeGame.duration}
+        onBack={handleBack}
+      />
+    );
+  }
 
   // View: Whiteboard
   if (currentView === 'whiteboard') {
@@ -213,7 +238,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
           <button className="learn-back-btn" onClick={handleBack}>
             ← Back
           </button>
-          <h1>Dictionary</h1>
+          <h1>Scientific Dictionary</h1>
           <div style={{ width: '60px' }}></div>
         </header>
         <SketchbookCard term="capillary-action" />
@@ -227,7 +252,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
       {/* Header */}
       <header className="learn-header">
         <button className="learn-back-btn" onClick={() => setScreen('universe')}>
-          ← Back
+          ← Return to Universe
         </button>
         <h1 className="learn-title">{subject.name}</h1>
         <div style={{ width: '60px' }}></div>
@@ -235,19 +260,19 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
 
       <main className="learn-main">
         {/* Mastery Path */}
-        <MasteryPath selectedSubject={selectedSubject} />
+        <MasteryPath selectedSubject={selectedSubject || 'physics'} />
 
         {/* Black Holes Special (for Physics) */}
-        {selectedSubject === 'physics' && (
+        {(selectedSubject === 'physics' || !selectedSubject) && (
           <section className="learn-section">
             <h2 className="section-title">Featured: Black Holes Masterclass</h2>
             <BlackHolesElite />
           </section>
         )}
 
-        {/* Modules */}
+        {/* Structured Modules */}
         <section className="learn-section">
-          <h2 className="section-title">Modules</h2>
+          <h2 className="section-title">Curated Modules</h2>
           <div className="modules-list">
             {subject.modules.map((module) => (
               <div
@@ -282,12 +307,17 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
                       className="topic-btn"
                       onClick={() => {
                         setSelectedTopic(topic);
-                        setCurrentView('topic-detail');
+                        startFlowGame({
+                          name: topic.name,
+                          type: 'quiz',
+                          difficulty: 'Intermediate',
+                          duration: 10
+                        });
                       }}
                     >
                       <span className="topic-name">{topic.name}</span>
                       <span className="topic-lessons">
-                        {topic.lessons} lessons
+                        {topic.lessons} interactive parts
                       </span>
                     </button>
                   ))}
@@ -297,9 +327,75 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
           </div>
         </section>
 
+        {/* Flow-State Interactive Learning Experiences */}
+        <section className="learn-section">
+          <h2 className="section-title">Flow-State Learning Experiences</h2>
+          <div className="games-grid">
+            <div
+              className="game-card"
+              onClick={() => startFlowGame({
+                name: 'Quantum Concepts Quiz',
+                type: 'quiz',
+                difficulty: 'Intermediate',
+                duration: 10
+              })}
+            >
+              <span className="game-icon">🎯</span>
+              <h4 className="game-title">Quantum Quiz</h4>
+              <p className="game-desc">Focus deeply on foundational principles</p>
+              <span className="game-time">10 min</span>
+            </div>
+
+            <div
+              className="game-card"
+              onClick={() => startFlowGame({
+                name: 'Singularity Concept Scrabble',
+                type: 'scrabble',
+                difficulty: 'Easy',
+                duration: 8
+              })}
+            >
+              <span className="game-icon">🔤</span>
+              <h4 className="game-title">Concept Scrabble</h4>
+              <p className="game-desc">Construct core terminology</p>
+              <span className="game-time">8 min</span>
+            </div>
+
+            <div
+              className="game-card"
+              onClick={() => startFlowGame({
+                name: 'Cosmic Collapse Chain',
+                type: 'chain',
+                difficulty: 'Advanced',
+                duration: 12
+              })}
+            >
+              <span className="game-icon">🔗</span>
+              <h4 className="game-title">Knowledge Chain</h4>
+              <p className="game-desc">Sequence causal phenomena</p>
+              <span className="game-time">12 min</span>
+            </div>
+
+            <div
+              className="game-card"
+              onClick={() => startFlowGame({
+                name: 'Definition Duel',
+                type: 'duel',
+                difficulty: 'Medium',
+                duration: 8
+              })}
+            >
+              <span className="game-icon">📝</span>
+              <h4 className="game-title">Definition Duel</h4>
+              <p className="game-desc">Match nuances with precision</p>
+              <span className="game-time">8 min</span>
+            </div>
+          </div>
+        </section>
+
         {/* Learning Tools */}
         <section className="learn-section">
-          <h2 className="section-title">Learning Tools</h2>
+          <h2 className="section-title">Deep Exploration Tools</h2>
           <div className="tools-grid">
             <div
               className="tool-card"

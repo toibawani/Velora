@@ -1,66 +1,91 @@
 import React, { useState } from 'react';
-import '../styles/Games.css';
-
-// Game Components
+import FlowStateGame from '../components/FlowStateGame';
 import ConceptScrabble from '../games/ConceptScrabble';
 import QuantumQuiz from '../games/QuantumQuiz';
 import DefinitionDuel from '../games/DefinitionDuel';
 import KnowledgeChain from '../games/KnowledgeChain';
 import WordPuzzle from '../games/WordPuzzle';
+import '../styles/Games.css';
 
+/**
+ * GameHub
+ * 
+ * Offers both classic interactive modes and distraction-free Flow State learning
+ * sessions tailored for deep conceptual mastery.
+ */
 function GameHub({ setScreen }) {
   const [selectedGame, setSelectedGame] = useState(null);
+  const [useFlowMode, setUseFlowMode] = useState(true);
 
   const games = [
     {
-      id: 'scrabble',
-      name: 'Concept Scrabble',
-      description: 'Build words from letters to complete definitions',
-      icon: '🔤',
-      color: '#667eea',
-      difficulty: 'Easy',
-      duration: '5 mins',
+      id: 'quiz',
+      name: 'Quantum Concepts Quiz',
+      type: 'quiz',
+      description: 'Test and sharpen fundamental principles of modern physics',
+      icon: '🎯',
+      color: '#4f7df3',
+      difficulty: 'Intermediate',
+      duration: '10 mins',
     },
     {
-      id: 'quiz',
-      name: 'Quantum Quiz',
-      description: 'Answer questions with beautiful animations',
-      icon: '⚡',
-      color: '#FF6B6B',
-      difficulty: 'Medium',
-      duration: '3 mins',
+      id: 'scrabble',
+      name: 'Singularity Concept Scrabble',
+      type: 'scrabble',
+      description: 'Assemble key scientific terminology from constituent root letters',
+      icon: '🔤',
+      color: '#34c759',
+      difficulty: 'Easy',
+      duration: '8 mins',
+    },
+    {
+      id: 'chain',
+      name: 'Cosmic Collapse Knowledge Chain',
+      type: 'chain',
+      description: 'Order sequential causality in gravitational and quantum phenomena',
+      icon: '🔗',
+      color: '#ff9f0a',
+      difficulty: 'Advanced',
+      duration: '12 mins',
     },
     {
       id: 'duel',
       name: 'Definition Duel',
-      description: 'Race against time to match definitions',
-      icon: '⚔️',
-      color: '#FFA500',
-      difficulty: 'Hard',
-      duration: '2 mins',
-    },
-    {
-      id: 'chain',
-      name: 'Knowledge Chain',
-      description: 'Connect related concepts to form chains',
-      icon: '⛓️',
-      color: '#1D9E75',
+      type: 'duel',
+      description: 'Discriminate between subtle conceptual nuances with precision',
+      icon: '📝',
+      color: '#af52de',
       difficulty: 'Medium',
-      duration: '4 mins',
+      duration: '8 mins',
     },
     {
       id: 'puzzle',
-      name: 'Word Puzzle',
-      description: 'Fill blanks to complete definitions',
+      name: 'Word & Principle Puzzle',
+      type: 'puzzle',
+      description: 'Fill in critical conceptual blanks to synthesize full physical laws',
       icon: '🧩',
-      color: '#764ba2',
+      color: '#30d5c8',
       difficulty: 'Easy',
-      duration: '3 mins',
+      duration: '6 mins',
     },
   ];
 
-  // Render selected game
-  const renderGame = () => {
+  // Render selected game in Flow State or Classic mode
+  if (selectedGame) {
+    const activeGameConfig = games.find(g => g.id === selectedGame) || games[0];
+
+    if (useFlowMode) {
+      return (
+        <FlowStateGame
+          gameName={activeGameConfig.name}
+          gameType={activeGameConfig.type}
+          difficulty={activeGameConfig.difficulty}
+          duration={parseInt(activeGameConfig.duration, 10) || 10}
+          onBack={() => setSelectedGame(null)}
+        />
+      );
+    }
+
     const gameMap = {
       scrabble: <ConceptScrabble onBack={() => setSelectedGame(null)} />,
       quiz: <QuantumQuiz onBack={() => setSelectedGame(null)} />,
@@ -68,29 +93,37 @@ function GameHub({ setScreen }) {
       chain: <KnowledgeChain onBack={() => setSelectedGame(null)} />,
       puzzle: <WordPuzzle onBack={() => setSelectedGame(null)} />,
     };
-    return gameMap[selectedGame];
-  };
 
-  if (selectedGame) {
-    return renderGame();
+    return gameMap[selectedGame] || <FlowStateGame gameName={activeGameConfig.name} onBack={() => setSelectedGame(null)} />;
   }
 
   return (
     <div className="games-hub-new">
       {/* Header */}
       <header className="games-header-new">
-        <button className="back-btn-games" onClick={() => setScreen('dashboard')}>
-          ← Back
+        <button className="back-btn-games" onClick={() => setScreen('universe')}>
+          ← Return to Universe
         </button>
-        <h1>🎮 Learning Games</h1>
-        <div style={{ width: '40px' }}></div>
+        <h1 className="games-main-title">Interactive Learning Experiences</h1>
+        <div className="flow-mode-switch">
+          <label className="mode-switch-label">
+            <input
+              type="checkbox"
+              checked={useFlowMode}
+              onChange={(e) => setUseFlowMode(e.target.checked)}
+            />
+            <span className="mode-text">Flow State Mode</span>
+          </label>
+        </div>
       </header>
 
       {/* Hero */}
       <section className="games-hero">
         <div className="hero-content">
-          <h2>Learn While Playing</h2>
-          <p>Master concepts through engaging games. No boring studying!</p>
+          <h2>Master Concepts Through Deep Interaction</h2>
+          <p>
+            Engage with scientific frameworks directly. No artificial scoreboards—only focus, clarity, and reflection.
+          </p>
         </div>
       </section>
 
@@ -116,7 +149,7 @@ function GameHub({ setScreen }) {
             </div>
 
             <button className="play-btn-large">
-              Play Now →
+              Start Session →
             </button>
           </div>
         ))}
@@ -124,23 +157,23 @@ function GameHub({ setScreen }) {
 
       {/* Stats */}
       <section className="games-stats">
-        <h3>Your Game Statistics</h3>
+        <h3>Your Learning Insights</h3>
         <div className="stats-row">
           <div className="stat-item">
-            <p className="stat-number">23</p>
-            <p className="stat-label">Games Played</p>
+            <p className="stat-number">18</p>
+            <p className="stat-label">Flow Sessions Completed</p>
           </div>
           <div className="stat-item">
-            <p className="stat-number">1,245</p>
-            <p className="stat-label">Points Earned</p>
+            <p className="stat-number">4.9/5</p>
+            <p className="stat-label">Comprehension Rating</p>
           </div>
           <div className="stat-item">
             <p className="stat-number">15</p>
             <p className="stat-label">Concepts Mastered</p>
           </div>
           <div className="stat-item">
-            <p className="stat-number">4.8/5</p>
-            <p className="stat-label">Average Score</p>
+            <p className="stat-number">92%</p>
+            <p className="stat-label">Retention Score</p>
           </div>
         </div>
       </section>
