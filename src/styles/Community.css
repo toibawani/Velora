@@ -1,146 +1,370 @@
+/* ==========================================================================
+   Community.css — Anonymous Discussions & Study Rooms
+   ========================================================================== */
+
 .community-page {
   min-height: 100vh;
-  background: #F1EFE8;
+  background: var(--bg-primary, #111111);
+  color: var(--text-primary, #f5f5f5);
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
 }
 
-.community-header {
-  background: white;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid #D3D1C7;
-  margin-bottom: 2rem;
-}
-
-.community-header .container {
+.community-nav-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.25rem 2.5rem;
+  background: var(--bg-secondary, #1a1a1a);
+  border-bottom: 1px solid var(--border-default, #2a2a2a);
 }
 
-.community-header h1 {
-  font-size: 1.8rem;
-  color: #042C53;
+.comm-back-btn {
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  border: 1px solid var(--border-default, #333333);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comm-back-btn:hover {
+  color: #fff;
+  border-color: #555;
+}
+
+.comm-title {
   margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 
-.community-main {
-  padding: 2rem 0;
+.community-main-body {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
 }
 
-.community-tabs {
+/* Tabs */
+.comm-tabs-row {
   display: flex;
-  gap: 1rem;
+  gap: 8px;
   margin-bottom: 2rem;
 }
 
-.tab-btn {
+.comm-tab-btn {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2e2e2e);
+  color: var(--text-secondary, #a0a0a0);
   padding: 10px 20px;
-  background: white;
-  color: #0C447C;
-  border: 1px solid #D3D1C7;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-.tab-btn.active {
-  background: #0C447C;
-  color: white;
-  border-color: #0C447C;
+.comm-tab-btn.active {
+  background: #4f7df3;
+  border-color: #4f7df3;
+  color: #ffffff;
 }
 
-.rooms-list {
+/* Discussions Layout */
+.discussions-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.discussions-controls {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.room-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #D3D1C7;
+.subject-filter-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
-.room-info h3 {
-  font-size: 1.1rem;
-  color: #042C53;
-  margin: 0 0 0.5rem;
-  font-weight: 500;
+.filter-pill {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #333333);
+  color: var(--text-secondary, #a0a0a0);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.room-info p {
+.filter-pill:hover,
+.filter-pill.active {
+  background: #222;
+  color: #fff;
+  border-color: #555;
+}
+
+.filter-pill.active {
+  background: rgba(79, 125, 243, 0.15);
+  color: #4f7df3;
+  border-color: rgba(79, 125, 243, 0.4);
+}
+
+/* Ask Box */
+.ask-question-box {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2e2e2e);
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ask-anon-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #34c759;
+}
+
+.ask-textarea {
+  background: var(--bg-tertiary, #202020);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 6px;
+  color: var(--text-primary, #f5f5f5);
+  font-family: var(--font-sans, 'Inter', sans-serif);
   font-size: 0.9rem;
-  color: #888780;
-  margin: 0 0 0.5rem;
+  line-height: 1.5;
+  padding: 0.75rem 1rem;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 
-.room-info span {
-  font-size: 0.85rem;
-  color: #5F5E5A;
+.ask-textarea:focus {
+  border-color: #4f7df3;
 }
 
-.room-actions {
+.ask-submit-btn {
+  background: #4f7df3;
+  color: #fff;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: background 0.2s ease;
+}
+
+.ask-submit-btn:hover {
+  background: #3d6ce0;
+}
+
+/* Discussion Cards */
+.discussion-cards-stack {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 1rem;
 }
 
-.unread-badge {
-  background: #E24B4A;
-  color: white;
-  padding: 0.5rem 0.75rem;
-  border-radius: 20px;
-  font-weight: 500;
+.discussion-card {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s ease;
+}
+
+.discussion-card:hover {
+  border-color: #3a3a3a;
+}
+
+.disc-card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.disc-topic-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4f7df3;
+}
+
+.expert-verified-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #34c759;
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.25);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.disc-time-ago {
+  font-size: 0.75rem;
+  color: var(--text-tertiary, #888888);
+  margin-left: auto;
+}
+
+.disc-question {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-primary, #ffffff);
+}
+
+.disc-preview-snippet {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #a0a0a0);
+  font-style: italic;
+  border-left: 3px solid var(--border-default, #333);
+  padding-left: 12px;
+}
+
+.disc-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle, #242424);
+}
+
+.disc-author {
+  font-size: 0.82rem;
+  color: var(--text-tertiary, #888);
+}
+
+.upvote-btn {
+  background: var(--bg-tertiary, #222222);
+  border: 1px solid var(--border-default, #333333);
+  color: var(--text-secondary, #a0a0a0);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.upvote-btn:hover {
+  color: #4f7df3;
+  border-color: rgba(79, 125, 243, 0.4);
+}
+
+.upvote-btn.upvoted {
+  background: rgba(79, 125, 243, 0.15);
+  color: #4f7df3;
+  border-color: rgba(79, 125, 243, 0.4);
+}
+
+/* Study Rooms */
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.room-card {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.room-card:hover {
+  border-color: #3a3a3a;
+}
+
+.room-live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34c759;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.live-count {
+  font-size: 0.75rem;
+  color: #34c759;
+  font-weight: 600;
+}
+
+.room-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+}
+
+.room-desc {
+  margin: 0;
   font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #a0a0a0);
+  flex: 1;
 }
 
-.rules-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid #D3D1C7;
+.room-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
 }
 
-.rules-card h2 {
-  font-size: 1.3rem;
-  color: #042C53;
-  margin: 0 0 1.5rem;
+.room-members {
+  font-size: 0.78rem;
+  color: var(--text-tertiary, #888);
 }
 
-.rules-content {
-  font-size: 0.95rem;
-  color: #5F5E5A;
-  line-height: 1.7;
+.room-join-btn {
+  background: transparent;
+  color: #4f7df3;
+  border: 1px solid rgba(79, 125, 243, 0.4);
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.rules-content p {
-  margin-bottom: 1rem;
-}
-
-.warning {
-  background: #FCEBEB;
-  padding: 1rem;
-  border-radius: 8px;
-  color: #A32D2D;
-  margin-top: 1.5rem !important;
-}
-
-@media (max-width: 768px) {
-  .room-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .room-actions {
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  .room-actions .btn {
-    flex: 1;
-  }
+.room-join-btn:hover {
+  background: rgba(79, 125, 243, 0.1);
 }
