@@ -5,6 +5,7 @@ import './App.css';
 import SplashScreen from './screens/Splash';
 import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
+import BottomNav from './components/BottomNav';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -134,6 +135,10 @@ function App() {
 
         {screen === 'journey' && user && (
           <JourneyScreen setScreen={setScreen} />
+        )}
+
+        {user && screen !== 'splash' && screen !== 'login' && screen !== 'register' && (
+          <BottomNav currentScreen={screen} setScreen={setScreen} />
         )}
       </Suspense>
     </div>
