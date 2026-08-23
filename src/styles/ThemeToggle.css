@@ -1,0 +1,35 @@
+/* ==========================================================================
+   ThemeToggle.css — Minimalist Theme Switcher
+   ========================================================================== */
+
+.theme-toggle-container {
+  display: flex;
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.theme-pill-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #888888);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.theme-pill-btn:hover {
+  color: var(--text-primary, #ffffff);
+}
+
+.theme-pill-btn.active {
+  background: var(--bg-elevated, #303030);
+  color: var(--text-primary, #ffffff);
+  box-shadow: var(--shadow-xs);
+}

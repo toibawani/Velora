@@ -2,8 +2,7 @@
    VELORA Design Tokens
    --------------------------------------------------------------------------
    Single source of truth for the visual language.
-   Import this file FIRST in index.css so every component inherits these
-   values. Use var(--token-name) everywhere instead of hardcoded values.
+   Supports Dark (charcoal), Light (clean paper), and Auto (time-based) themes.
    ========================================================================== */
 
 :root {
@@ -25,20 +24,20 @@
   --tracking-normal: 0;
   --tracking-wide: 0.06em;
 
-  /* ---- Surfaces ---- */
+  /* ---- Surfaces (Default: Charcoal Dark Mode) ---- */
   --bg-primary: #111111;
   --bg-secondary: #1a1a1a;
   --bg-tertiary: #222222;
   --bg-elevated: #2a2a2a;
   --bg-hover: #303030;
 
-  /* ---- Text ---- */
+  /* ---- Text (Dark Mode) ---- */
   --text-primary: #f5f5f5;
   --text-secondary: #a0a0a0;
   --text-tertiary: #666666;
   --text-inverse: #111111;
 
-  /* ---- Borders ---- */
+  /* ---- Borders (Dark Mode) ---- */
   --border-subtle: #222222;
   --border-default: #333333;
   --border-strong: #444444;
@@ -89,7 +88,7 @@
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* ---- Shadows (subtle, not neon) ---- */
+  /* ---- Shadows ---- */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -110,4 +109,47 @@
   --z-modal-backdrop: 300;
   --z-modal: 400;
   --z-toast: 500;
+}
+
+/* ==================== Light Theme Tokens ==================== */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f0f2f5;
+  --bg-elevated: #ffffff;
+  --bg-hover: #ebeef2;
+
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-tertiary: #888888;
+  --text-inverse: #ffffff;
+
+  --border-subtle: #eaeaea;
+  --border-default: #dcdcdc;
+  --border-strong: #bcbcbc;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== Dark Theme Explicit Tokens ==================== */
+[data-theme="dark"] {
+  --bg-primary: #111111;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #222222;
+  --bg-elevated: #2a2a2a;
+  --bg-hover: #303030;
+
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #666666;
+  --text-inverse: #111111;
+
+  --border-subtle: #222222;
+  --border-default: #333333;
+  --border-strong: #444444;
 }

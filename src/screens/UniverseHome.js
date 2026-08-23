@@ -3,6 +3,7 @@ import DailySpark from '../components/DailySpark';
 import SocialProof from '../components/SocialProof';
 import ReferralModal from '../components/ReferralModal';
 import CertificateModal from '../components/CertificateModal';
+import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
 
 /**
@@ -83,6 +84,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
         </nav>
 
         <div className="uh-header-right">
+          <ThemeToggle />
           <button className="uh-cert-btn" onClick={() => setShowCertificate(true)}>
             📜 Certificate
           </button>
