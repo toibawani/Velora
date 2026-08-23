@@ -1,0 +1,184 @@
+/* ==========================================================================
+   ShareAchievementModal.css — Viral Milestone & Badge Sharing
+   ========================================================================== */
+
+.share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+}
+
+.share-modal-card {
+  background: var(--bg-secondary, #1a1a1a);
+  border: 1px solid var(--border-default, #2a2a2a);
+  border-radius: 14px;
+  max-width: 520px;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: modal-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.share-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.milestone-badge-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ffd60a;
+  background: rgba(255, 214, 10, 0.12);
+  border: 1px solid rgba(255, 214, 10, 0.25);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.share-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary, #888888);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.share-close-btn:hover {
+  color: #ffffff;
+}
+
+.achievement-graphic-card {
+  background: var(--bg-tertiary, #202020);
+  border: 1px solid var(--border-default, #2e2e2e);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-svg-container {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 0.5rem;
+}
+
+.milestone-badge-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 12px rgba(79, 125, 243, 0.3));
+}
+
+.milestone-achievement-name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--text-primary, #ffffff);
+}
+
+.achievement-recipient {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4f7df3;
+}
+
+.achievement-blurb {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #a0a0a0);
+  max-width: 380px;
+}
+
+.share-caption-box {
+  background: #141414;
+  border: 1px solid var(--border-default, #2e2e2e);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.caption-preview-text {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #cccccc);
+  font-style: italic;
+}
+
+.share-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .share-buttons-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.viral-btn {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-default, #333333);
+  background: var(--bg-tertiary, #222222);
+  color: var(--text-primary, #e0e0e0);
+}
+
+.viral-btn:hover {
+  background: #2a2a2a;
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.viral-btn.whatsapp {
+  background: rgba(37, 211, 102, 0.1);
+  border-color: rgba(37, 211, 102, 0.3);
+  color: #25d366;
+}
+
+.viral-btn.whatsapp:hover {
+  background: rgba(37, 211, 102, 0.2);
+}
+
+.viral-btn.twitter {
+  background: rgba(29, 155, 240, 0.1);
+  border-color: rgba(29, 155, 240, 0.3);
+  color: #1d9bf0;
+}
+
+.viral-btn.twitter:hover {
+  background: rgba(29, 155, 240, 0.2);
+}
+
+.viral-btn.linkedin {
+  background: rgba(0, 119, 181, 0.1);
+  border-color: rgba(0, 119, 181, 0.3);
+  color: #0077b5;
+}
+
+.viral-btn.linkedin:hover {
+  background: rgba(0, 119, 181, 0.2);
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ShareAchievementModal from './ShareAchievementModal';
 import '../styles/FlowStateGame.css';
 
 /**
@@ -16,6 +17,7 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
   const [timeLeft, setTimeLeft] = useState(duration * 60);
   const [reflection, setReflection] = useState('');
   const [savedReflection, setSavedReflection] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   // Timer countdown during flow state
   useEffect(() => {
@@ -432,12 +434,32 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
           </div>
 
           <div className="flow-final-actions">
+            <button
+              className="flow-action-btn secondary-share"
+              onClick={() => setShowShareModal(true)}
+              style={{
+                background: 'rgba(255, 214, 10, 0.1)',
+                color: '#ffd60a',
+                border: '1px solid rgba(255, 214, 10, 0.3)',
+                marginRight: '12px'
+              }}
+            >
+              🏆 Share Milestone Badge
+            </button>
             <button className="flow-action-btn primary" onClick={onBack}>
               Continue Learning Pathway →
             </button>
           </div>
         </div>
       </main>
+
+      {/* Share Achievement Modal */}
+      <ShareAchievementModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        milestone={`${gameName} Mastery`}
+        score="3/3 Stars Comprehension"
+      />
     </div>
   );
 }
