@@ -11,6 +11,7 @@ import ShadowLearning from '../components/ShadowLearning';
 import SketchbookCard from '../components/SketchbookCard';
 import ExpertMode from '../components/ExpertMode';
 import LearningStories from '../components/LearningStories';
+import InstitutionalMode from '../components/InstitutionalMode';
 import '../styles/Learn.css';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
@@ -475,6 +476,11 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
             domain={selectedSubject || 'physics'}
             onOpenDiscussion={() => setCurrentView('shadow-learning')}
           />
+        </section>
+
+        {/* Institutional & Family Portal */}
+        <section className="learn-section">
+          <InstitutionalMode />
         </section>
       </main>
     </div>
