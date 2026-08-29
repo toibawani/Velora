@@ -13,6 +13,9 @@ import ExpertMode from '../components/ExpertMode';
 import LearningStories from '../components/LearningStories';
 import InstitutionalMode from '../components/InstitutionalMode';
 import '../styles/Learn.css';
+import LearningAnalytics from '../components/LearningAnalytics';
+import SmartRevision from '../components/SmartRevision';
+import SocialProof from '../components/SocialProof';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
   const [currentView, setCurrentView] = useState('overview');
@@ -159,6 +162,26 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
         return '#666666';
     }
   };
+  {currentView === 'overview' && (
+  <>
+    {/* ... existing sections ... */}
+
+    {/* Analytics */}
+    <section className="learn-section">
+      <LearningAnalytics selectedSubject={selectedSubject} />
+    </section>
+
+    {/* Revision */}
+    <section className="learn-section">
+      <SmartRevision selectedSubject={selectedSubject} />
+    </section>
+
+    {/* Social Proof */}
+    <section className="learn-section">
+      <SocialProof />
+    </section>
+  </>
+)}
 
   // View: Flow State Game
   if (currentView === 'playing-game') {
@@ -486,5 +509,6 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
     </div>
   );
 }
+
 
 export default Learn;
