@@ -1,254 +1,107 @@
-/* ==========================================================================
-   SocialProof.css — Live Activity, Trending Topics, and Peer Leaderboard
-   ========================================================================== */
-
-.social-proof-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-}
-
-.live-pulse-banner {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 8px;
-  padding: 0.85rem 1.25rem;
-}
-
-.live-pulse-indicator {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.pulsing-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #34c759;
-  box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
-  animation: pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
-}
-
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(52, 199, 89, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
-  }
-}
-
-.live-pulse-text {
-  font-size: 0.9rem;
-  color: var(--text-secondary, #cccccc);
-}
-
-.live-pulse-text strong {
-  color: var(--text-primary, #ffffff);
-}
-
-.social-proof-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-
-@media (max-width: 860px) {
-  .social-proof-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.social-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
+.social-proof {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
-  padding: 1.75rem;
-  text-align: left;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
 }
 
-.social-card-header {
+.proof-title {
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #000000;
+}
+
+.activity-feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.activity-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.25rem;
-}
-
-.social-card-title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text-primary, #ffffff);
-}
-
-.social-card-badge {
-  font-size: 0.75rem;
-  color: var(--text-tertiary, #888888);
-  background: var(--bg-tertiary, #222222);
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle, #333333);
-}
-
-/* Trending Topic Rows */
-.trending-cards-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.trending-topic-row {
-  display: flex;
-  align-items: center;
   gap: 1rem;
-  padding: 0.95rem 1.15rem;
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #2e2e2e);
+  align-items: flex-start;
+  padding: 1rem;
+  background: #f8f8f8;
   border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border: 1px solid #e0e0e0;
 }
 
-.trending-topic-row:hover {
-  border-color: #4f7df3;
-  background: #262626;
-  transform: translateX(4px);
-}
-
-.topic-icon-frame {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
+.activity-emoji {
+  font-size: 1.5rem;
   flex-shrink: 0;
 }
 
-.topic-details {
-  flex: 1;
-}
-
-.topic-row-title {
-  margin: 0 0 4px 0;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--text-primary, #ffffff);
-  line-height: 1.4;
-}
-
-.topic-sub-meta {
-  font-size: 0.78rem;
-  color: var(--text-tertiary, #888888);
-}
-
-.topic-domain-tag {
-  color: #4f7df3;
+.activity-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  line-height: 1.5;
   font-weight: 500;
 }
 
-.topic-arrow-cta {
-  color: var(--text-tertiary, #777777);
-  font-size: 1.1rem;
+.leaderboard {
+  background: #f8f8f8;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+}
+
+.leaderboard-title {
+  margin: 0 0 1rem;
+  font-size: 1rem;
   font-weight: 700;
-  transition: color 0.2s ease;
-}
-
-.trending-topic-row:hover .topic-arrow-cta {
-  color: #ffffff;
-}
-
-/* Leaderboard Rows */
-.leaderboard-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  color: #1a1a1a;
 }
 
 .leaderboard-row {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   gap: 1rem;
-  padding: 0.85rem 1.15rem;
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #2e2e2e);
-  border-radius: 8px;
-}
-
-.rank-number {
-  font-size: 0.9rem;
-  font-weight: 800;
-  font-family: var(--font-mono, monospace);
-  color: var(--text-tertiary, #888888);
-  min-width: 24px;
-}
-
-.rank-number.rank-1 {
-  color: #ffd60a;
-}
-.rank-number.rank-2 {
-  color: #d0d0d0;
-}
-.rank-number.rank-3 {
-  color: #ff9f0a;
-}
-
-.learner-meta-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.learner-name-line {
-  display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.learner-name {
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--text-primary, #ffffff);
-}
-
-.learner-streak {
-  font-size: 0.78rem;
-  color: #ff9f0a;
-  font-weight: 500;
-}
-
-.learner-focus {
-  font-size: 0.78rem;
-  color: var(--text-tertiary, #888888);
-}
-
-.kudos-btn {
-  background: transparent;
-  border: 1px solid var(--border-default, #3a3a3a);
-  color: var(--text-secondary, #a0a0a0);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
   transition: all 0.2s ease;
 }
 
-.kudos-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: #666666;
-  color: #ffffff;
+.leaderboard-row:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.kudos-btn.kudos-active {
-  background: rgba(79, 125, 243, 0.15);
-  border-color: #4f7df3;
-  color: #4f7df3;
+.leaderboard-row.you {
+  background: #f0f8ff;
+  border-color: #667eea;
+}
+
+.leaderboard-badge {
+  font-size: 1.5rem;
+  text-align: center;
+  min-width: 30px;
+}
+
+.leaderboard-name {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.leaderboard-score {
+  font-weight: 700;
+  color: #667eea;
+}
+
+@media (max-width: 768px) {
+  .activity-feed {
+    grid-template-columns: 1fr;
+  }
+
+  .leaderboard-row {
+    grid-template-columns: auto 1fr auto;
+  }
 }
