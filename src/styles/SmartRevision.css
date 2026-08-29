@@ -1,0 +1,150 @@
+.smart-revision {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.revision-header {
+  margin-bottom: 2rem;
+}
+
+.revision-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #000000;
+}
+
+.revision-desc {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #6f6f6f;
+}
+
+.revision-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.revision-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: #f8f8f8;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.revision-item:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.revision-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.revision-topic {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.revision-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.meta-badge {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background: #667eea;
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.meta-time {
+  font-size: 0.85rem;
+  color: #6f6f6f;
+}
+
+.revision-retention {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.retention-bar {
+  width: 100%;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.retention-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.retention-text {
+  font-size: 0.8rem;
+  color: #8a8a8a;
+  font-weight: 600;
+  text-align: center;
+}
+
+.revision-btn {
+  padding: 8px 16px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.revision-btn:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+.revision-tip {
+  background: #f0f8f4;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.revision-tip p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #2E7D32;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .revision-item {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .smart-revision {
+    padding: 1.5rem;
+  }
+}
