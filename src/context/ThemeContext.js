@@ -35,18 +35,20 @@ export function ThemeProvider({ children }) {
     }
   }, [themeMode, resolvedTheme]);
 
-  const toggleTheme = () => {
-    if (themeMode === 'dark') setThemeMode('light');
-    else if (themeMode === 'light') setThemeMode('auto');
-    else setThemeMode('dark');
-  };
+  const toggleTheme = React.useCallback(() => {
+    setThemeMode((currentMode) => {
+      if (currentMode === 'dark') return 'light';
+      if (currentMode === 'light') return 'auto';
+      return 'dark';
+    });
+  }, []);
 
   const contextValue = React.useMemo(() => ({
     theme: themeMode,
     resolvedTheme,
     setTheme: setThemeMode,
     toggleTheme
-  }), [themeMode, resolvedTheme]);
+  }), [themeMode, resolvedTheme, toggleTheme]);
 
   return (
     <ThemeContext.Provider value={contextValue}>
