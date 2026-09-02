@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import '../styles/RelativityLab.css';
 
 // Fundamental physical constants (SI Units)
@@ -172,7 +172,6 @@ function RelativityLab({ onBack }) {
 
       // Curvature depth scaled by mass and proximity
       const curvatureIntensity = Math.min(120, 30 + (logMass + 6) * 5);
-      const warpRadius = Math.max(40, (radiusRatio * 20));
 
       const getPoint = (c, r) => {
         const x = (c - cols / 2) * cellW;
@@ -330,7 +329,7 @@ function RelativityLab({ onBack }) {
           </div>
 
           <p className="rel-canvas-caption">
-            The rubber-sheet grid depicts gravitational depression $g_{00} = -(1 - r_s/r)$. The orange sphere represents the photon sphere ($1.5 r_s$), and the green node represents your current orbital coordinates.
+            The rubber-sheet grid depicts gravitational depression metric g_00 = -(1 - r_s/r). The orange ring represents the photon sphere (1.5 r_s), and the green node represents your current orbital probe coordinates.
           </p>
         </div>
 
