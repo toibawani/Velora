@@ -32,7 +32,8 @@
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
 }
 
 .analytics-back-btn:hover {
@@ -112,7 +113,8 @@
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
 }
 
 .timeframe-btn.active {
@@ -405,7 +407,9 @@
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
 }
 
 .simulate-session-btn:hover {

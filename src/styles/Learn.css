@@ -33,7 +33,8 @@
   cursor: pointer;
   font-weight: var(--weight-medium);
   font-size: 0.8125rem;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
 }
 
 .learn-back-btn:hover {
@@ -170,7 +171,8 @@
   flex-direction: column;
   gap: var(--space-1);
   align-items: flex-start;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
   text-align: left;
 }
 
@@ -203,7 +205,8 @@
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -257,7 +260,8 @@
   border-radius: var(--radius-md);
   padding: var(--space-4);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
