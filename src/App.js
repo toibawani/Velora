@@ -33,20 +33,20 @@ function ScreenLoader() {
       alignItems: 'center',
       justifyContent: 'center',
       background: 'var(--bg-primary, #111111)',
-      color: 'var(--text-secondary, #888888)',
-      fontFamily: "Inter, -apple-system, sans-serif",
+      color: 'var(--text-secondary, #a0a0a0)',
+      fontFamily: "var(--font-sans, 'Inter', -apple-system, sans-serif)",
       gap: '16px'
     }}>
       <div style={{
-        width: '32px',
-        height: '32px',
+        width: '28px',
+        height: '28px',
         border: '2px solid rgba(255, 255, 255, 0.1)',
-        borderTopColor: '#4f7df3',
+        borderTopColor: 'var(--accent-primary, #667eea)',
         borderRadius: '50%',
-        animation: 'spin 0.8s linear infinite'
+        animation: 'spin 0.8s cubic-bezier(0.16, 1, 0.3, 1) infinite'
       }} />
-      <span style={{ fontSize: '0.85rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-        Synthesizing Universe...
+      <span style={{ fontSize: '0.85rem', letterSpacing: '0.04em', textTransform: 'uppercase', fontWeight: 600 }}>
+        Preparing your workspace...
       </span>
       <style>{`
         @keyframes spin {
