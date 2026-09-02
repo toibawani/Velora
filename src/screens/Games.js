@@ -5,6 +5,7 @@ import QuantumQuiz from '../games/QuantumQuiz';
 import DefinitionDuel from '../games/DefinitionDuel';
 import KnowledgeChain from '../games/KnowledgeChain';
 import WordPuzzle from '../games/WordPuzzle';
+import RelativityLab from '../components/RelativityLab';
 import '../styles/Games.css';
 
 /**
@@ -68,11 +69,25 @@ function GameHub({ setScreen }) {
       difficulty: 'Easy',
       duration: '6 mins',
     },
+    {
+      id: 'relativity',
+      name: 'Spacetime & Relativity Laboratory',
+      type: 'simulation',
+      description: 'Interact with gravitational metric funnels, time dilation, and event horizons',
+      icon: '⚛️',
+      color: '#667eea',
+      difficulty: 'Advanced',
+      duration: '15 mins',
+    },
   ];
 
   // Render selected game in Flow State or Classic mode
   if (selectedGame) {
     const activeGameConfig = games.find(g => g.id === selectedGame) || games[0];
+
+    if (activeGameConfig.type === 'simulation') {
+      return <RelativityLab onBack={() => setSelectedGame(null)} />;
+    }
 
     if (useFlowMode) {
       return (
@@ -92,6 +107,7 @@ function GameHub({ setScreen }) {
       duel: <DefinitionDuel onBack={() => setSelectedGame(null)} />,
       chain: <KnowledgeChain onBack={() => setSelectedGame(null)} />,
       puzzle: <WordPuzzle onBack={() => setSelectedGame(null)} />,
+      relativity: <RelativityLab onBack={() => setSelectedGame(null)} />,
     };
 
     return gameMap[selectedGame] || <FlowStateGame gameName={activeGameConfig.name} onBack={() => setSelectedGame(null)} />;
