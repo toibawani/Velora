@@ -5,6 +5,23 @@
    community momentum strip. Fully token-backed — light & dark aware.
    ========================================================================== */
 
+/* ==================== GLOBAL INTERACTIVE STATES ==================== */
+button, .btn, .card, .interactive {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.2s ease, 
+              background-color 0.15s ease;
+}
+
+button:hover, .btn:hover, .card:hover, .interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+button:active, .btn:active, .card:active, .interactive:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
 /* ==================== ROOT ==================== */
 .universe-home {
   min-height: 100vh;
