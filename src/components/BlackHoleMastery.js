@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/BlackHoleMastery.css';
 
-function BlackHoleMastery({ onBack }) {
+function BlackHoleMastery({ onBack, onOpenLab }) {
   const [currentLevel, setCurrentLevel] = useState(0);
-  const [expandedSection, setExpandedSection] = useState(null);
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -362,62 +361,67 @@ function BlackHoleMastery({ onBack }) {
       <div className="black-hole-content">
         {/* Header */}
         <header className="bh-header">
-          <button className="bh-back-btn" onClick={onBack}>
-            ← Back to Learn
-          </button>
+          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+            <button className="bh-back-btn" onClick={onBack}>
+              ← Back to Learn
+            </button>
+            {onOpenLab && (
+              <button
+                className="bh-back-btn"
+                style={{ background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', color: '#ffffff' }}
+                onClick={onOpenLab}
+              >
+                ⚛️ Open Relativity Lab
+              </button>
+            )}
+          </div>
           <h1 className="bh-title">🌌 Black Holes: The Masterclass</h1>
-          <p className="bh-subtitle">From Absolute Zero to Advanced Physics</p>
+          <p className="bh-subtitle">From Fundamental Spacetime to Advanced Relativistic Phenomena</p>
         </header>
 
         {/* Main Content */}
         <main className="bh-main">
-          {/* Curriculum Grid */}
-          <div className="curriculum-grid">
+          {/* Chapters Grid */}
+          <div className="mastery-chapters-grid">
             {levels.map((level, idx) => (
               <div
                 key={level.id}
-                className="curriculum-card"
+                className={`chapter-card ${currentLevel === idx ? 'active' : ''}`}
                 onClick={() => setCurrentLevel(idx)}
               >
-                <div className="curriculum-icon">{level.icon}</div>
-                <h3 className="curriculum-title">{level.title}</h3>
-                <p className="curriculum-duration">⏱️ {level.duration}</p>
-                <div className="curriculum-progress">
-                  <div
-                    className="progress-bar"
-                    style={{
-                      background: level.color,
-                      width: `${(idx + 1) * 10}%`,
-                    }}
-                  ></div>
+                <div className="chapter-card-top">
+                  <span className="chapter-icon">{level.icon}</span>
+                  <span className="chapter-duration">⏱️ {level.duration}</span>
                 </div>
+                <h3 className="chapter-title">{level.title}</h3>
+                <p className="chapter-summary">{level.content}</p>
               </div>
             ))}
           </div>
 
-          {/* Detailed Content Panel */}
-          <div className="bh-detail-panel">
-            <div className="detail-content">
-              <h2 className="detail-title">{levels[currentLevel].title}</h2>
+          {/* Detailed Reading View */}
+          <div className="detailed-reading-view">
+            <h2 className="reading-chapter-title">
+              {levels[currentLevel].icon} {levels[currentLevel].title}
+            </h2>
 
-              {detailedContent[levels[currentLevel].id] && (
-                <div className="detail-sections">
-                  {detailedContent[levels[currentLevel].id].sections.map((section, idx) => (
-                    <div key={idx} className="detail-section">
-                      <h3 className="section-heading">{section.heading}</h3>
-                      <p className="section-text">{section.text}</p>
+            {detailedContent[levels[currentLevel].id] && (
+              <div className="reading-sections-list">
+                {detailedContent[levels[currentLevel].id].sections.map((section, idx) => (
+                  <div key={idx} className="reading-section-block">
+                    <h3 className="reading-heading">{section.heading}</h3>
+                    <p className="reading-text">{section.text}</p>
 
-                      {/* Visual Component */}
-                      {section.visual === 'space-basics' && <SpaceBasicsVisual />}
-                      {section.visual === 'rubber-sheet' && <RubberSheetVisual />}
-                      {section.visual === 'event-horizon-visual' && <EventHorizonVisual />}
-                      {section.visual === 'singularity-core' && <SingularityVisual />}
-                      {section.visual === 'frame-dragging' && <FrameDraggingVisual />}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                    {/* Visual Component */}
+                    {section.visual === 'space-basics' && <SpaceBasicsVisual />}
+                    {section.visual === 'rubber-sheet' && <RubberSheetVisual />}
+                    {section.visual === 'event-horizon-visual' && <EventHorizonVisual />}
+                    {section.visual === 'singularity-core' && <SingularityVisual />}
+                    {section.visual === 'frame-dragging' && <FrameDraggingVisual />}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </main>
       </div>
