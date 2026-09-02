@@ -1,6 +1,6 @@
 .learn-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #F5F7FA 0%, #F0F2F5 100%);
+  background: var(--bg-secondary);
   display: flex;
   flex-direction: column;
 }
@@ -20,17 +20,25 @@
 
 .learn-back-btn {
   padding: 8px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--accent-primary);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.learn-back-btn:hover {
+  transform: scale(0.98);
+}
+.learn-back-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 155, 240, 0.2);
 }
 
 .learn-header h1 {
   margin: 0;
-  color: #042C53;
+  color: #000000;
   font-size: 1.4rem;
 }
 
@@ -47,18 +55,19 @@
 
 .subject-card-select {
   background: white;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  border: 1px solid var(--border-default);
+  box-shadow: none;
   border-top: 4px solid #667eea;
   position: relative;
 }
 
 .subject-card-select:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .subj-icon {
@@ -68,14 +77,16 @@
 
 .subject-card-select h3 {
   margin: 0 0 0.5rem;
-  color: #042C53;
+  color: #000000;
   font-size: 1.2rem;
+  line-height: 1.2;
 }
 
 .subject-card-select p {
   margin: 0;
-  color: #888780;
+  color: #4a4a4a;
   font-size: 0.9rem;
+  line-height: 1.7;
 }
 
 .subj-arrow {
@@ -104,20 +115,21 @@
 
 .module-card {
   background: white;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   margin-bottom: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-default);
+  box-shadow: none;
 }
 
 .module-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-  transform: translateX(4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .module-header {
@@ -133,13 +145,15 @@
 
 .module-info h3 {
   margin: 0 0 0.25rem;
-  color: #042C53;
+  color: #000000;
+  line-height: 1.2;
 }
 
 .module-info p {
   margin: 0;
-  color: #888780;
+  color: #4a4a4a;
   font-size: 0.85rem;
+  line-height: 1.7;
 }
 
 .module-topics-count {
@@ -169,20 +183,21 @@
 
 .topic-card {
   background: white;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   margin-bottom: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-default);
+  box-shadow: none;
 }
 
 .topic-card:hover:not(.locked) {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-  transform: translateX(4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .topic-card.locked {
@@ -201,13 +216,15 @@
 
 .topic-content h4 {
   margin: 0 0 0.25rem;
-  color: #042C53;
+  color: #000000;
+  line-height: 1.2;
 }
 
 .topic-content p {
   margin: 0;
-  color: #888780;
+  color: #4a4a4a;
   font-size: 0.85rem;
+  line-height: 1.7;
 }
 
 .topic-arrow {
@@ -244,30 +261,33 @@
 
 .lesson-section h2 {
   margin: 0 0 1rem;
-  color: #042C53;
+  color: #000000;
 }
 
 .lesson-card {
   background: white;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-default);
+  box-shadow: none;
 }
 
 .lesson-card h3 {
   margin: 0 0 1rem;
-  color: #0C447C;
+  color: #000000;
+  line-height: 1.2;
 }
 
 .lesson-card p {
   margin: 0 0 1.5rem;
-  color: #5F5E5A;
-  line-height: 1.6;
+  color: #4a4a4a;
+  line-height: 1.7;
 }
 
 .lesson-outline h4 {
   margin: 1rem 0 0.75rem;
-  color: #042C53;
+  color: #000000;
+  line-height: 1.2;
 }
 
 .lesson-outline ul {
@@ -277,7 +297,7 @@
 
 .lesson-outline li {
   margin: 0.5rem 0;
-  color: #5F5E5A;
+  color: #4a4a4a;
 }
 
 .learning-tools {
@@ -301,13 +321,14 @@
   border-radius: 12px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  border: 1px solid var(--border-default);
+  box-shadow: none;
 }
 
 .tool-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .tool-icon {
@@ -318,13 +339,15 @@
 
 .tool-card h4 {
   margin: 0 0 0.25rem;
-  color: #042C53;
+  color: #000000;
+  line-height: 1.2;
 }
 
 .tool-card p {
   margin: 0;
-  color: #888780;
+  color: #4a4a4a;
   font-size: 0.85rem;
+  line-height: 1.7;
 }
 
 /* Teach AI */
@@ -393,16 +416,30 @@
   border: 2px solid #D3D1C7;
   border-radius: 8px;
   font-size: 1rem;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.teach-ai-input input:focus-visible {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(29, 155, 240, 0.2);
 }
 
 .teach-ai-input button {
   padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--accent-primary);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.teach-ai-input button:hover {
+  transform: scale(0.98);
+}
+.teach-ai-input button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 155, 240, 0.2);
 }
 
 .teaching-tips {
@@ -469,13 +506,21 @@
 }
 
 .btn-explore {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--accent-primary);
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.btn-explore:hover {
+  transform: scale(0.98);
+}
+.btn-explore:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 155, 240, 0.2);
 }
 
 /* Doubt Solver */
@@ -526,12 +571,20 @@
 .btn-ask {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--accent-primary);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.btn-ask:hover {
+  transform: scale(0.98);
+}
+.btn-ask:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 155, 240, 0.2);
 }
 
 .doubt-answer {
@@ -574,8 +627,17 @@
 }
 
 .btn-more {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--accent-primary);
   color: white;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.btn-more:hover {
+  transform: scale(0.98);
+}
+.btn-more:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 155, 240, 0.2);
 }
 
 /* Projects */
@@ -678,12 +740,20 @@
 .btn-start-project {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #1D9E75 0%, #0C447C 100%);
+  background: var(--accent-primary);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.btn-start-project:hover {
+  transform: scale(0.98);
+}
+.btn-start-project:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 155, 240, 0.2);
 }
 
 /* Revision */
