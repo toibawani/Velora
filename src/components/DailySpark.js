@@ -29,12 +29,10 @@ const SPARKS = [
 ];
 
 function DailySpark() {
-  const [currentSpark, setCurrentSpark] = useState(0);
-
-  useEffect(() => {
+  const [currentSpark, setCurrentSpark] = useState(() => {
     const today = new Date().getDate();
-    setCurrentSpark(today % SPARKS.length);
-  }, []);
+    return today % SPARKS.length;
+  });
 
   const spark = SPARKS[currentSpark];
 
