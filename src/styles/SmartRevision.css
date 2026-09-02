@@ -39,7 +39,7 @@
   background: #f8f8f8;
   border-radius: 10px;
   border: 1px solid #e0e0e0;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .revision-item:hover {
@@ -116,7 +116,7 @@
   cursor: pointer;
   font-weight: 600;
   font-size: 0.85rem;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .revision-btn:hover {
