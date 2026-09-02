@@ -166,26 +166,6 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
         return '#666666';
     }
   };
-  {currentView === 'overview' && (
-  <>
-    {/* ... existing sections ... */}
-
-    {/* Analytics */}
-    <section className="learn-section">
-      <LearningAnalytics selectedSubject={selectedSubject} />
-    </section>
-
-    {/* Revision */}
-    <section className="learn-section">
-      <SmartRevision selectedSubject={selectedSubject} />
-    </section>
-
-    {/* Social Proof */}
-    <section className="learn-section">
-      <SocialProof />
-    </section>
-  </>
-)}
 
   // View: Flow State Game
   if (currentView === 'playing-game') {
@@ -545,9 +525,23 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
           />
         </section>
 
+        {/* Analytics & Smart Revision */}
+        <section className="learn-section">
+          <LearningAnalytics selectedSubject={selectedSubject} />
+        </section>
+
+        <section className="learn-section">
+          <SmartRevision selectedSubject={selectedSubject} />
+        </section>
+
         {/* Institutional & Family Portal */}
         <section className="learn-section">
           <InstitutionalMode />
+        </section>
+
+        {/* Community Proof */}
+        <section className="learn-section">
+          <SocialProof />
         </section>
       </main>
     </div>
