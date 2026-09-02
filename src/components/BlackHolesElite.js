@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/BlackHolesElite.css';
 
-function BlackHolesElite() {
+function BlackHolesElite({ onExploreMasterclass, onOpenLab }) {
   const sections = [
     {
       title: 'The Story of How We Discovered Black Holes',
@@ -9,7 +9,7 @@ function BlackHolesElite() {
       content:
         'Karl Schwarzschild predicted black holes mathematically in 1916, but we didn\'t actually observe one until 2019 with the Event Horizon Telescope.',
       facts: [
-        'First real image: M87, 55 million light-years away',
+        'First real image: M87*, 55 million light-years away',
         'Mass: 6.5 billion suns',
         'Event Horizon size: 42 million km across',
       ],
@@ -50,8 +50,21 @@ function BlackHolesElite() {
       ))}
 
       <div className="elite-cta">
-        <p>Ready to go deeper?</p>
-        <button className="cta-button">Explore Full Black Holes Masterclass →</button>
+        <p>Ready to go deeper into gravitational physics?</p>
+        <div className="elite-cta-buttons">
+          <button
+            className="cta-button"
+            onClick={onExploreMasterclass}
+          >
+            🌌 Explore Full Black Holes Masterclass →
+          </button>
+          <button
+            className="cta-button secondary"
+            onClick={onOpenLab}
+          >
+            ⚛️ Launch Relativity Simulation Lab →
+          </button>
+        </div>
       </div>
     </div>
   );
