@@ -22,28 +22,18 @@ export function ThemeProvider({ children }) {
     }
   });
 
-  // Calculate actual applied theme ('dark' | 'light')
-  const [resolvedTheme, setResolvedTheme] = useState(() => {
-    if (themeMode === 'auto') {
-      return isDaytime() ? 'light' : 'dark';
-    }
-    return themeMode;
-  });
+  // Compute actual applied theme ('dark' | 'light') dynamically during render
+  const resolvedTheme = themeMode === 'auto' ? (isDaytime() ? 'light' : 'dark') : themeMode;
 
   useEffect(() => {
-    let effective = themeMode;
-    if (themeMode === 'auto') {
-      effective = isDaytime() ? 'light' : 'dark';
-    }
-    setResolvedTheme(effective);
-    document.documentElement.setAttribute('data-theme', effective);
-    document.body.setAttribute('data-theme', effective);
+    document.documentElement.setAttribute('data-theme', resolvedTheme);
+    document.body.setAttribute('data-theme', resolvedTheme);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, themeMode);
     } catch (e) {
       console.warn('Could not save theme preference', e);
     }
-  }, [themeMode]);
+  }, [themeMode, resolvedTheme]);
 
   const toggleTheme = () => {
     if (themeMode === 'dark') setThemeMode('light');
@@ -51,8 +41,15 @@ export function ThemeProvider({ children }) {
     else setThemeMode('dark');
   };
 
+  const contextValue = React.useMemo(() => ({
+    theme: themeMode,
+    resolvedTheme,
+    setTheme: setThemeMode,
+    toggleTheme
+  }), [themeMode, resolvedTheme]);
+
   return (
-    <ThemeContext.Provider value={{ theme: themeMode, resolvedTheme, setTheme: setThemeMode, toggleTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
