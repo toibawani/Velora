@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/DailySpark.css';
 
 const SPARKS = [
@@ -29,7 +29,7 @@ const SPARKS = [
 ];
 
 function DailySpark() {
-  const [currentSpark, setCurrentSpark] = useState(() => {
+  const [currentSpark] = useState(() => {
     const today = new Date().getDate();
     return today % SPARKS.length;
   });
