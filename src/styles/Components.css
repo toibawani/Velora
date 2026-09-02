@@ -26,7 +26,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .learn-back-btn:hover {
   transform: scale(0.98);
@@ -58,7 +58,7 @@
   padding: 2.5rem;
   border-radius: 16px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1), border-color 0.3s cubic-bezier(0.2, 0, 0, 1);
   border: 1px solid var(--border-default);
   box-shadow: none;
   border-top: 4px solid #667eea;
@@ -96,7 +96,7 @@
   transform: translateY(-50%);
   font-size: 1.5rem;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, right 0.3s ease;
 }
 
 .subject-card-select:hover .subj-arrow {
@@ -119,7 +119,7 @@
   border-radius: 12px;
   margin-bottom: 1rem;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,7 +165,7 @@
 .module-arrow {
   font-size: 1.5rem;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .module-card:hover .module-arrow {
@@ -187,7 +187,7 @@
   border-radius: 12px;
   margin-bottom: 1rem;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -230,7 +230,7 @@
 .topic-arrow {
   font-size: 1.5rem;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .topic-card:hover:not(.locked) .topic-arrow {
@@ -321,7 +321,7 @@
   border-radius: 12px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1);
   border: 1px solid var(--border-default);
   box-shadow: none;
 }
@@ -416,7 +416,7 @@
   border: 2px solid #D3D1C7;
   border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: border-color 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .teach-ai-input input:focus-visible {
   outline: none;
@@ -432,7 +432,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .teach-ai-input button:hover {
   transform: scale(0.98);
@@ -472,7 +472,7 @@
   stroke: #667eea;
   stroke-width: 2;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: fill 0.3s ease, r 0.3s ease;
 }
 
 .graph-node:hover circle {
@@ -513,7 +513,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .btn-explore:hover {
   transform: scale(0.98);
@@ -577,7 +577,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .btn-ask:hover {
   transform: scale(0.98);
@@ -630,7 +630,7 @@
   background: var(--accent-primary);
   color: white;
   border-radius: 8px;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .btn-more:hover {
   transform: scale(0.98);
@@ -664,7 +664,7 @@
   cursor: pointer;
   font-weight: 600;
   white-space: nowrap;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .project-btn.active {
@@ -746,7 +746,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 .btn-start-project:hover {
   transform: scale(0.98);
@@ -909,7 +909,7 @@
   border: 2px solid #D3D1C7;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
   text-align: center;
 }
 
