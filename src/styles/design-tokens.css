@@ -2,75 +2,75 @@
    VELORA Design Tokens
    --------------------------------------------------------------------------
    Single source of truth for the visual language.
-   Inspired by high-contrast, distraction-free production interfaces (Twitter/X & top-tier edtech).
-   Sharp borders, matte dark & light surfaces, crisp typography, zero neon glow.
+   Inspired by high-contrast, distraction-free production interfaces (Linear, Notion, Apple).
+   Sharp 1px borders, matte surfaces, Inter typography, zero neon glow.
    ========================================================================== */
 
 :root {
   /* ---- Typography ---- */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', monospace;
 
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
-  --weight-black: 800;
+  --weight-black: 900;
 
-  --leading-tight: 1.25;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.7;
+  --leading-tight: 1.2;
+  --leading-normal: 1.7;
+  --leading-relaxed: 1.85;
 
-  --tracking-tight: -0.015em;
+  --tracking-tight: -0.03em;
   --tracking-normal: 0;
-  --tracking-wide: 0.04em;
+  --tracking-wide: 0.05em;
 
-  /* ---- Surfaces (Default: High-Performance Matte Dark) ---- */
-  --bg-primary: #000000;
-  --bg-secondary: #16181c;
-  --bg-tertiary: #202327;
-  --bg-elevated: #16181c;
-  --bg-hover: #1d1f23;
-  --bg-active: #272a30;
+  /* ---- Surfaces (Default: Matte Dark) ---- */
+  --bg-primary: #111111;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #222222;
+  --bg-elevated: #1e1e1e;
+  --bg-hover: #262626;
+  --bg-active: #2c2c2c;
 
   /* ---- Text (Dark Mode) ---- */
-  --text-primary: #f7f9f9;
-  --text-secondary: #71767b;
-  --text-tertiary: #536471;
-  --text-inverse: #0f1419;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #666666;
+  --text-inverse: #111111;
 
-  /* ---- Borders (Sharp & Minimalist) ---- */
-  --border-subtle: #202327;
-  --border-default: #2f3336;
-  --border-strong: #3e4144;
+  /* ---- Borders ---- */
+  --border-subtle: #222222;
+  --border-default: #333333;
+  --border-strong: #444444;
 
-  /* ---- Brand & Semantic Accents (Solid & Disciplined) ---- */
-  --accent-primary: #1d9bf0;
-  --accent-primary-hover: #1a8cd8;
-  --accent-blue: #1d9bf0;
-  --accent-blue-hover: #1a8cd8;
-  --accent-green: #00ba7c;
-  --accent-green-hover: #00a36d;
-  --accent-orange: #f59e0b;
-  --accent-red: #f4212e;
-  --accent-red-hover: #dc1e29;
-  --accent-purple: #7856ff;
-  --accent-teal: #14b8a6;
-  --accent-gold: #eab308;
+  /* ---- Brand Accent (Strict, Solid, No Gradients) ---- */
+  --accent-primary: #667eea;
+  --accent-primary-hover: #5a6fd6;
+  --accent-blue: #667eea;
+  --accent-blue-hover: #5a6fd6;
+  --accent-green: #2E7D32;
+  --accent-green-hover: #256628;
+  --accent-orange: #F39C12;
+  --accent-red: #E74C3C;
+  --accent-red-hover: #c0392b;
+  --accent-purple: #9B59B6;
+  --accent-teal: #1ABC9C;
+  --accent-gold: #F1C40F;
 
   /* ---- Subject Identity Tokens ---- */
-  --color-physics: #1d9bf0;
-  --color-chemistry: #00ba7c;
-  --color-biology: #f4212e;
-  --color-philosophy: #7856ff;
-  --color-history: #f59e0b;
-  --color-mathematics: #14b8a6;
+  --color-physics: #667eea;
+  --color-chemistry: #2E7D32;
+  --color-biology: #E74C3C;
+  --color-philosophy: #9B59B6;
+  --color-history: #F39C12;
+  --color-mathematics: #1ABC9C;
 
   /* ---- Functional Semantic Colors ---- */
-  --color-success: #00ba7c;
-  --color-warning: #f59e0b;
-  --color-error: #f4212e;
-  --color-info: #1d9bf0;
+  --color-success: #2E7D32;
+  --color-warning: #F39C12;
+  --color-error: #E74C3C;
+  --color-info: #667eea;
 
   /* ---- Standard 8px Spatial Grid ---- */
   --space-1: 4px;
@@ -87,22 +87,22 @@
   /* ---- Controlled Sharp Radii ---- */
   --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
   /* ---- Subtle, Low-Noise Shadows ---- */
   --shadow-none: none;
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
 
   /* ---- Precision Transitions ---- */
-  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
-  --duration-fast: 120ms;
-  --duration-normal: 200ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
 
   /* ---- Layer Depth Scale ---- */
   --z-dropdown: 100;
@@ -115,61 +115,42 @@
 /* ==================== Light Theme Tokens ==================== */
 [data-theme="light"] {
   --bg-primary: #ffffff;
-  --bg-secondary: #f7f9f9;
-  --bg-tertiary: #eff3f4;
+  --bg-secondary: #f9f9fb;
+  --bg-tertiary: #f0f0f3;
   --bg-elevated: #ffffff;
-  --bg-hover: #e7e7e8;
-  --bg-active: #d8dbdc;
+  --bg-hover: #ebebee;
+  --bg-active: #e2e2e6;
 
-  --text-primary: #0f1419;
-  --text-secondary: #536471;
-  --text-tertiary: #8b98a5;
+  --text-primary: #000000;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #888888;
   --text-inverse: #ffffff;
 
-  --border-subtle: #eff3f4;
-  --border-default: #cfd9de;
-  --border-strong: #b9cad2;
+  --border-subtle: #f0f0f0;
+  --border-default: #e0e0e0;
+  --border-strong: #cccccc;
 
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 /* ==================== Explicit Dark Theme ==================== */
 [data-theme="dark"] {
-  --bg-primary: #000000;
-  --bg-secondary: #16181c;
-  --bg-tertiary: #202327;
-  --bg-elevated: #16181c;
-  --bg-hover: #1d1f23;
-  --bg-active: #272a30;
+  --bg-primary: #111111;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #222222;
+  --bg-elevated: #1e1e1e;
+  --bg-hover: #262626;
+  --bg-active: #2c2c2c;
 
-  --text-primary: #f7f9f9;
-  --text-secondary: #71767b;
-  --text-tertiary: #536471;
-  --text-inverse: #0f1419;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #666666;
+  --text-inverse: #111111;
 
-  --border-subtle: #202327;
-  --border-default: #2f3336;
-  --border-strong: #3e4144;
-}
-
-:root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --leading-normal: 1.7;
-  --leading-tight: 1.2;
-  --tracking-tight: -0.03em;
-}
-
-body, p {
-  font-family: var(--font-sans);
-  line-height: var(--leading-normal);
-  color: #4a4a4a;
-}
-
-h1, h2, h3, h4 {
-  font-weight: 800;
-  color: #000000;
-  letter-spacing: var(--tracking-tight);
+  --border-subtle: #222222;
+  --border-default: #333333;
+  --border-strong: #444444;
 }
