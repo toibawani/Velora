@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
+import BlackHoleMastery from '../components/BlackHoleMastery';
+import RelativityLab from '../components/RelativityLab';
 import FlowStateGame from '../components/FlowStateGame';
 import AIWhiteboard from '../components/AIWhiteboard';
 import CreatorStudio from '../components/CreatorStudio';
@@ -17,8 +19,8 @@ import LearningAnalytics from '../components/LearningAnalytics';
 import SmartRevision from '../components/SmartRevision';
 import SocialProof from '../components/SocialProof';
 
-function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
-  const [currentView, setCurrentView] = useState('overview');
+function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView }) {
+  const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [activeGame, setActiveGame] = useState({
     name: 'Quantum Concepts Quiz',
@@ -123,7 +125,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
       setSelectedTopic(null);
     } else if (currentView !== 'overview') {
       setCurrentView('overview');
+      if (setInitialView) setInitialView('overview');
     } else {
+      if (setInitialView) setInitialView('overview');
       setScreen('universe');
     }
   };
@@ -272,6 +276,25 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
     );
   }
 
+  // View: Black Hole Masterclass
+  if (currentView === 'black-hole-mastery') {
+    return (
+      <BlackHoleMastery
+        onBack={handleBack}
+        onOpenLab={() => setCurrentView('relativity-lab')}
+      />
+    );
+  }
+
+  // View: Relativity Lab
+  if (currentView === 'relativity-lab') {
+    return (
+      <RelativityLab
+        onBack={handleBack}
+      />
+    );
+  }
+
   // Main Overview
   return (
     <div className="learn-container">
@@ -291,8 +314,11 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
         {/* Black Holes Special (for Physics) */}
         {(selectedSubject === 'physics' || !selectedSubject) && (
           <section className="learn-section">
-            <h2 className="section-title">Featured: Black Holes Masterclass</h2>
-            <BlackHolesElite />
+            <h2 className="section-title">Featured: Black Holes & Spacetime</h2>
+            <BlackHolesElite
+              onExploreMasterclass={() => setCurrentView('black-hole-mastery')}
+              onOpenLab={() => setCurrentView('relativity-lab')}
+            />
           </section>
         )}
 
@@ -428,6 +454,24 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject }) {
         <section className="learn-section">
           <h2 className="section-title">Deep Exploration Tools</h2>
           <div className="tools-grid">
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('relativity-lab')}
+            >
+              <span className="tool-icon">⚛️</span>
+              <h4 className="tool-title">Relativity Lab</h4>
+              <p className="tool-desc">Simulate spacetime curvature</p>
+            </div>
+
+            <div
+              className="tool-card"
+              onClick={() => setCurrentView('black-hole-mastery')}
+            >
+              <span className="tool-icon">🌌</span>
+              <h4 className="tool-title">Black Holes Masterclass</h4>
+              <p className="tool-desc">10 deep visual chapters</p>
+            </div>
+
             <div
               className="tool-card"
               onClick={() => setCurrentView('whiteboard')}
