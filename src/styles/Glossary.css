@@ -34,7 +34,7 @@
   font-size: 1rem;
   margin-bottom: 2rem;
   box-sizing: border-box;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .search-input:focus {
@@ -58,7 +58,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .filter-btn.active {
@@ -79,7 +79,7 @@
   padding: 1.5rem;
   border-radius: 12px;
   border: 1px solid #D3D1C7;
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .term-card:hover {
