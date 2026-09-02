@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
   background: var(--bg-primary);
-  padding: 2rem;
+  padding: var(--space-8);
   position: relative;
   overflow: hidden;
 }
@@ -26,21 +26,21 @@
   transform: translate(-50%, -55%);
   width: 600px;
   height: 400px;
-  background: radial-gradient(ellipse at center, rgba(79, 125, 243, 0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(102, 126, 234, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
 /* ==================== CARD ==================== */
 .auth-card {
   position: relative;
-  max-width: 420px;
+  max-width: 440px;
   width: 100%;
-  padding: 2.5rem;
+  padding: var(--space-10);
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: 16px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
-  animation: auth-card-appear 0.3s ease both;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  animation: auth-card-appear 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes auth-card-appear {
@@ -58,45 +58,45 @@
 .auth-card::before {
   content: 'VELORA';
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 900;
   letter-spacing: 0.12em;
   color: var(--text-tertiary);
-  margin-bottom: 1.75rem;
+  margin-bottom: var(--space-6);
   text-align: center;
 }
 
 /* ==================== TYPOGRAPHY ==================== */
 .auth-title {
   font-family: var(--font-sans);
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.03em;
-  margin: 0 0 0.35rem 0;
+  margin: 0 0 var(--space-1) 0;
   text-align: center;
 }
 
 .auth-subtitle {
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   color: var(--text-secondary);
-  margin: 0 0 2rem 0;
+  margin: 0 0 var(--space-8) 0;
   text-align: center;
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 /* ==================== FORM ==================== */
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  margin-bottom: 1.25rem;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .form-group label {
@@ -109,12 +109,13 @@
 .form-group input {
   width: 100%;
   box-sizing: border-box;
-  padding: 0.75rem 1rem;
+  padding: 12px 16px;
+  min-height: 48px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   color: var(--text-primary);
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
@@ -125,35 +126,43 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--accent-blue, #4f7df3);
-  box-shadow: 0 0 0 3px rgba(79, 125, 243, 0.12);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 /* ==================== BUTTONS ==================== */
 .btn {
   width: 100%;
-  padding: 0.75rem 1.25rem;
+  padding: 12px 20px;
+  min-height: 48px;
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 700;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background-color 0.15s ease;
   border: none;
   text-align: center;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary {
-  background: var(--accent-blue, #4f7df3);
+  background: var(--accent-primary);
   color: #ffffff;
-  box-shadow: 0 2px 12px rgba(79, 125, 243, 0.22);
 }
 
 .btn-primary:hover {
-  background: #3d6ce0;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(79, 125, 243, 0.32);
+  background: var(--accent-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.28);
+}
+
+.btn-primary:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
@@ -166,6 +175,11 @@
   border-color: var(--border-strong);
   color: var(--text-primary);
   background: var(--bg-tertiary);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
 }
 
 .btn-full {
@@ -190,8 +204,8 @@
 .auth-footer {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
 }
 
 .auth-link {
@@ -201,9 +215,13 @@
   font-size: 0.875rem;
   cursor: pointer;
   text-align: center;
-  padding: 4px;
+  padding: 8px;
   transition: color 0.2s ease;
   font-weight: 500;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .auth-link:hover {
@@ -211,8 +229,9 @@
 }
 
 .auth-link span {
-  color: var(--accent-blue, #4f7df3);
+  color: var(--accent-primary);
   font-weight: 700;
+  margin-left: 4px;
 }
 
 .auth-back {
@@ -222,8 +241,12 @@
   font-size: 0.8125rem;
   cursor: pointer;
   text-align: center;
-  padding: 4px;
+  padding: 8px;
   transition: color 0.2s ease;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .auth-back:hover {
@@ -234,10 +257,10 @@
 .auth-divider {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   color: var(--text-tertiary);
   font-size: 0.75rem;
-  margin: 0.5rem 0;
+  margin: var(--space-2) 0;
 }
 
 .auth-divider::before,
@@ -251,13 +274,17 @@
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .auth-container {
-    padding: 1rem;
+    padding: var(--space-4);
     align-items: flex-start;
-    padding-top: 3rem;
+    padding-top: var(--space-12);
   }
 
   .auth-card {
-    padding: 2rem 1.5rem;
-    border-radius: 12px;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+  }
+
+  .form-group input {
+    font-size: 1rem; /* 16px ensures no browser auto-zoom on iOS */
   }
 }
