@@ -1,0 +1,313 @@
+/* ==========================================================================
+   RelativityLab.css — Spacetime Curvature & General Relativity Laboratory
+   ========================================================================== */
+
+.relativity-lab-container {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  padding: var(--space-6) var(--space-6) var(--space-16);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.rel-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rel-back-btn {
+  align-self: flex-start;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  margin-bottom: var(--space-3);
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.rel-back-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background: var(--bg-hover);
+}
+
+.rel-title {
+  font-size: 1.75rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.rel-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+/* Preset selector bar */
+.rel-presets-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.rel-presets-label {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
+}
+
+.rel-preset-chip {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.rel-preset-chip:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.rel-preset-chip.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #ffffff;
+  font-weight: var(--weight-semibold);
+}
+
+/* Main Grid Layout */
+.rel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 900px) {
+  .rel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Simulation Canvas Card */
+.rel-canvas-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.rel-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rel-card-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: var(--weight-semibold);
+}
+
+.rel-badge {
+  font-size: 0.75rem;
+  font-weight: var(--weight-semibold);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(102, 126, 234, 0.15);
+  color: var(--accent-primary);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.rel-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #06080d;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.rel-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.rel-canvas-caption {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  margin: 0;
+  line-height: var(--leading-normal);
+}
+
+/* Control Controls Card */
+.rel-controls-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.rel-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rel-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.rel-slider-label {
+  font-size: 0.875rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.rel-slider-value {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: var(--weight-bold);
+  color: var(--accent-primary);
+}
+
+.rel-slider {
+  width: 100%;
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+}
+
+.rel-slider-subtext {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* Physics Metrics Dashboard */
+.rel-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.rel-metric-box {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rel-metric-title {
+  font-size: 0.75rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.rel-metric-number {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+}
+
+.rel-metric-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Formula & Scientific Theory Card */
+.rel-theory-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rel-formula-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.rel-formula-block {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rel-formula-code {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: var(--weight-bold);
+  color: var(--accent-primary);
+  background: var(--bg-tertiary);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.rel-formula-explanation {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+  margin: 0;
+}
