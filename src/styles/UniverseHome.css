@@ -32,8 +32,8 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 /* ==================== HEADER ==================== */
 .uh-header {
-  padding: 0 2rem;
-  height: 60px;
+  padding: 0 var(--space-8);
+  height: 64px;
   border-bottom: 1px solid var(--border-default);
   display: flex;
   justify-content: space-between;
@@ -42,7 +42,7 @@ button:active, .btn:active, .card:active, .interactive:active {
   position: sticky;
   top: 0;
   z-index: 100;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .uh-header-left {
@@ -54,7 +54,7 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 .uh-title {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: var(--text-primary);
   letter-spacing: -0.04em;
@@ -63,20 +63,20 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 .uh-tagline {
   margin: 0;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--text-tertiary);
   font-weight: 500;
   line-height: 1;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 /* ==================== NAV LINKS ==================== */
 .uh-nav-links {
   display: flex;
-  gap: 4px;
+  gap: var(--space-1);
   background: var(--bg-secondary);
   padding: 4px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   flex-shrink: 0;
 }
@@ -89,9 +89,9 @@ button:active, .btn:active, .card:active, .interactive:active {
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  padding: 6px 13px;
-  border-radius: 5px;
-  font-size: 0.8125rem;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -112,18 +112,18 @@ button:active, .btn:active, .card:active, .interactive:active {
 /* ==================== HEADER RIGHT ==================== */
 .uh-header-right {
   display: flex;
-  gap: 0.6rem;
+  gap: var(--space-3);
   align-items: center;
   flex-shrink: 0;
 }
 
 .uh-cert-btn {
-  background: rgba(79, 125, 243, 0.08);
-  color: var(--accent-blue, #4f7df3);
-  border: 1px solid rgba(79, 125, 243, 0.2);
-  padding: 6px 13px;
-  border-radius: 6px;
-  font-size: 0.8125rem;
+  background: rgba(102, 126, 234, 0.08);
+  color: var(--accent-primary);
+  border: 1px solid rgba(102, 126, 234, 0.25);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -131,17 +131,17 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .uh-cert-btn:hover {
-  background: rgba(79, 125, 243, 0.15);
-  border-color: rgba(79, 125, 243, 0.4);
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.4);
 }
 
 .uh-invite-btn {
-  background: rgba(255, 159, 10, 0.08);
-  color: var(--accent-amber, #ff9f0a);
-  border: 1px solid rgba(255, 159, 10, 0.2);
-  padding: 6px 13px;
-  border-radius: 6px;
-  font-size: 0.8125rem;
+  background: rgba(243, 156, 18, 0.08);
+  color: var(--color-warning);
+  border: 1px solid rgba(243, 156, 18, 0.25);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -149,8 +149,8 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .uh-invite-btn:hover {
-  background: rgba(255, 159, 10, 0.15);
-  border-color: rgba(255, 159, 10, 0.4);
+  background: rgba(243, 156, 18, 0.15);
+  border-color: rgba(243, 156, 18, 0.4);
 }
 
 .uh-user {
@@ -161,14 +161,14 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .uh-logout {
-  padding: 6px 14px;
+  padding: 8px 16px;
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-default);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   transition: all 0.18s ease;
   white-space: nowrap;
 }
@@ -183,27 +183,27 @@ button:active, .btn:active, .card:active, .interactive:active {
 .uh-main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2.5rem 2rem 5rem;
+  padding: var(--space-10) var(--space-8) var(--space-16);
 }
 
 /* ==================== DAILY SPARK ==================== */
 .uh-daily-spark {
-  margin-bottom: 3.5rem;
+  margin-bottom: var(--space-12);
 }
 
 /* ==================== SUBJECTS SECTION ==================== */
 .uh-subjects {
-  margin-bottom: 3.5rem;
+  margin-bottom: var(--space-12);
 }
 
 .section-header-row {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
   text-align: left;
 }
 
 .uh-subjects-title {
-  margin: 0 0 0.4rem 0;
-  font-size: 1.7rem;
+  margin: 0 0 var(--space-2) 0;
+  font-size: 1.85rem;
   font-weight: 900;
   color: var(--text-primary);
   letter-spacing: -0.03em;
@@ -211,35 +211,36 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 .uh-subjects-subtitle {
   margin: 0;
-  font-size: 0.925rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  line-height: 1.55;
+  line-height: var(--leading-normal);
 }
 
 /* ==================== SUBJECTS GRID ==================== */
 .uh-subjects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-6);
 }
 
 .uh-subject-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: 14px;
-  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-10);
   cursor: pointer;
   transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: left;
-  gap: 1.25rem;
+  gap: var(--space-6);
 }
 
 .uh-subject-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  border-color: var(--border-strong);
 }
 
 /* ==================== CARD INTERNALS ==================== */
@@ -247,8 +248,8 @@ button:active, .btn:active, .card:active, .interactive:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.9rem 1rem;
-  border-radius: 10px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
   border: 1px solid transparent;
 }
 
@@ -258,7 +259,7 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .card-progress-tag {
-  font-size: 0.725rem;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -269,8 +270,8 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .card-title {
-  margin: 0 0 0.45rem 0;
-  font-size: 1.3rem;
+  margin: 0 0 var(--space-2) 0;
+  font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.02em;
@@ -278,18 +279,18 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 .card-description {
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: var(--leading-normal);
   color: var(--text-secondary);
 }
 
 .card-cta {
-  padding: 11px 18px;
+  padding: 12px 20px;
   color: #ffffff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: opacity 0.18s ease, transform 0.18s ease;
   text-align: center;
@@ -298,19 +299,19 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .card-cta:hover {
-  opacity: 0.9;
+  opacity: 0.92;
   transform: translateY(-1px);
 }
 
 /* ==================== SOCIAL / COMMUNITY SECTION ==================== */
 .uh-social-section {
   text-align: left;
-  margin-top: 1rem;
+  margin-top: var(--space-6);
 }
 
 .uh-section-title {
-  margin: 0 0 1.5rem 0;
-  font-size: 1.4rem;
+  margin: 0 0 var(--space-6) 0;
+  font-size: 1.5rem;
   font-weight: 900;
   color: var(--text-primary);
   letter-spacing: -0.025em;
@@ -319,17 +320,17 @@ button:active, .btn:active, .card:active, .interactive:active {
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 640px) {
   .uh-header {
-    padding: 0 1rem;
+    padding: 0 var(--space-4);
     height: auto;
     min-height: 56px;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
   }
 
   .uh-header-right {
-    gap: 0.4rem;
+    gap: var(--space-2);
     flex-wrap: wrap;
   }
 
@@ -339,10 +340,22 @@ button:active, .btn:active, .card:active, .interactive:active {
   }
 
   .uh-main {
-    padding: 1.5rem 1rem 4rem;
+    padding: var(--space-6) var(--space-4) var(--space-12);
   }
 
   .uh-subjects-grid {
     grid-template-columns: 1fr;
+  }
+
+  .uh-subject-card {
+    padding: var(--space-6);
+  }
+
+  .card-cta,
+  .uh-logout {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
