@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/LearningAnalytics.css';
 
 function LearningAnalytics({ selectedSubject }) {
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     totalHours: 12.5,
     topicsCompleted: 8,
     retentionScore: 73,
