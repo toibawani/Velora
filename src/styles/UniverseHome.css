@@ -317,6 +317,89 @@ button:active, .btn:active, .card:active, .interactive:active {
   letter-spacing: -0.025em;
 }
 
+/* ==================== FEATURE SPOTLIGHT ==================== */
+.uh-spotlight-section {
+  margin-bottom: var(--space-10);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.uh-spotlight-content {
+  flex: 1;
+  min-width: 280px;
+}
+
+.uh-spotlight-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent-primary);
+  margin-bottom: var(--space-2);
+}
+
+.uh-spotlight-title {
+  font-size: 1.25rem;
+  font-weight: var(--weight-bold);
+  margin: 0 0 var(--space-2);
+  color: var(--text-primary);
+}
+
+.uh-spotlight-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+  margin: 0;
+}
+
+.uh-spotlight-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.uh-spotlight-btn {
+  background: var(--accent-primary);
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.uh-spotlight-btn:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-1px);
+}
+
+.uh-spotlight-btn.secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+
+.uh-spotlight-btn.secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 640px) {
   .uh-header {

@@ -62,6 +62,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [learnView, setLearnView] = useState('overview');
 
   const handleLogin = (email, password) => {
     setUser({ email, name: email.split('@')[0] });
@@ -105,6 +106,7 @@ function App() {
             user={user}
             setScreen={setScreen}
             setSelectedSubject={setSelectedSubject}
+            setLearnView={setLearnView}
             onLogout={handleLogout}
           />
         )}
@@ -114,6 +116,8 @@ function App() {
             setScreen={setScreen}
             selectedSubject={selectedSubject}
             setSelectedSubject={setSelectedSubject}
+            initialView={learnView}
+            setInitialView={setLearnView}
           />
         )}
 

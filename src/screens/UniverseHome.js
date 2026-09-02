@@ -12,7 +12,7 @@ import '../styles/UniverseHome.css';
  * Central dashboard designed with Apple/Notion clarity. Focuses on personal
  * learning momentum, quick domain entry, and live community activity.
  */
-function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
+function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLogout }) {
   const [hoveredSubject, setHoveredSubject] = useState(null);
   const [showReferral, setShowReferral] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
@@ -103,6 +103,51 @@ function UniverseHome({ user, setScreen, setSelectedSubject, onLogout }) {
         {/* Daily Spark */}
         <section className="uh-daily-spark">
           <DailySpark />
+        </section>
+
+        {/* Feature Spotlight Banner */}
+        <section className="uh-spotlight-section">
+          <div className="uh-spotlight-content">
+            <div className="uh-spotlight-tag">
+              <span>🚀</span> New Laboratory & Sensory Features
+            </div>
+            <h2 className="uh-spotlight-title">Interactive Spacetime Physics & Deep Focus Soundscapes</h2>
+            <p className="uh-spotlight-desc">
+              Explore our real-time General Relativity curvature canvas, calculate gravitational time dilation for supermassive black holes, or enter the Web Audio binaural sensory chamber.
+            </p>
+          </div>
+          <div className="uh-spotlight-actions">
+            <button
+              className="uh-spotlight-btn"
+              onClick={() => {
+                if (setLearnView) setLearnView('relativity-lab');
+                setSelectedSubject('physics');
+                setScreen('learn');
+              }}
+            >
+              ⚛️ Launch Relativity Lab
+            </button>
+            <button
+              className="uh-spotlight-btn secondary"
+              onClick={() => {
+                if (setLearnView) setLearnView('black-hole-mastery');
+                setSelectedSubject('physics');
+                setScreen('learn');
+              }}
+            >
+              🌌 Black Holes Masterclass
+            </button>
+            <button
+              className="uh-spotlight-btn secondary"
+              onClick={() => {
+                if (setLearnView) setLearnView('sensory-rooms');
+                setSelectedSubject('physics');
+                setScreen('learn');
+              }}
+            >
+              🏛️ Sensory Focus Room
+            </button>
+          </div>
         </section>
 
         {/* Subject Cards */}
