@@ -5,6 +5,7 @@
 @import './styles/Typography.css';
 @import './styles/Colors.css';
 @import './styles/skeleton.css';
+@import './styles/design-tokens.css';
 * {
   margin: 0;
   padding: 0;
