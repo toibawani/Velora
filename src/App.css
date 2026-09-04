@@ -116,3 +116,45 @@ button:focus:not(:focus-visible),
 input:focus:not(:focus-visible) {
   outline: none;
 }
+/* ==================== ENTRANCE ANIMATIONS ==================== */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply animations to cards */
+.card,
+.module-card,
+.lesson-item,
+.subject-card,
+.tool-card,
+.game-card,
+.stat-card,
+.revision-item,
+.activity-item {
+  animation: fade-in-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
