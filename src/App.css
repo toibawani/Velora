@@ -100,3 +100,18 @@ p {
     --color-border: #333333;
   }
 }
+/* Focus states for keyboard navigation */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+.interactive:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+  transition: outline 0.15s ease;
+}
+
+/* Remove default outline on mouse clicks */
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+  outline: none;
+}
