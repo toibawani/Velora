@@ -1,0 +1,150 @@
+.streak-tracker {
+  margin-bottom: 2.5rem;
+}
+
+.streak-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 2.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.streak-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.streak-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #000000;
+}
+
+.streak-message {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.streak-display {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: #ffffff;
+  border: 2px solid #667eea;
+  border-radius: 12px;
+}
+
+.streak-number {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #667eea;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.streak-label {
+  font-size: 1rem;
+  color: #6f6f6f;
+  font-weight: 600;
+}
+
+.streak-tokens {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f0f8f4;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+}
+
+.token-label {
+  font-weight: 600;
+  color: #2E7D32;
+  font-size: 0.9rem;
+}
+
+.token-boxes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.token-box {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+}
+
+.token-box.active {
+  background: #2E7D32;
+  color: white;
+  border: 2px solid #1b5e20;
+}
+
+.token-box.used {
+  background: #e0e0e0;
+  color: #999;
+  border: 2px solid #ccc;
+}
+
+.streak-info {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: #6f6f6f;
+  line-height: 1.6;
+}
+
+.streak-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.streak-btn:hover {
+  background: #5a6fd6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(102, 126, 234, 0.3);
+}
+
+.streak-btn:active {
+  transform: scale(0.98) translateY(0);
+}
+
+@media (max-width: 768px) {
+  .streak-card {
+    padding: 1.5rem;
+  }
+
+  .streak-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .streak-number {
+    font-size: 3rem;
+  }
+
+  .streak-tokens {
+    flex-wrap: wrap;
+  }
+}
