@@ -6,6 +6,7 @@ import CertificateModal from '../components/CertificateModal';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
 import StreakTracker from '../components/StreakTracker';
+import PersonalizedDashboard from '../components/PersonalizedDashboard';
 
 /**
  * UniverseHome Screen
