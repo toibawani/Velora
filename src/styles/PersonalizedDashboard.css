@@ -1,0 +1,178 @@
+.personalized-dashboard {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #000000;
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #6f6f6f;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.recommendation-card {
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.recommendation-card:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateY(-4px);
+}
+
+.rec-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.rec-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rec-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.rec-time {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6f6f6f;
+}
+
+.rec-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: #8a8a8a;
+  font-weight: 600;
+  min-width: 35px;
+}
+
+.rec-btn {
+  padding: 8px 16px;
+  background: #ffffff;
+  color: #667eea;
+  border: 1.5px solid #667eea;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.rec-btn:hover {
+  background: #f8fbff;
+  transform: translateY(-2px);
+}
+
+.learning-style {
+  background: #f0f8f4;
+  border: 1px solid #c8e6c9;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.learning-style-title {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2E7D32;
+}
+
+.hours-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hour-card {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+}
+
+.hour-emoji {
+  font-size: 1.5rem;
+}
+
+.hour-label {
+  font-size: 0.9rem;
+  color: #2E7D32;
+  font-weight: 600;
+}
+
+.learning-tip {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #2E7D32;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .personalized-dashboard {
+    padding: 1.5rem;
+  }
+
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hours-display {
+    grid-template-columns: 1fr;
+  }
+}
