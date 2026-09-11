@@ -1,0 +1,164 @@
+import React, { useState, useEffect } from 'react';
+import '../styles/PeerExplanations.css';
+
+function PeerExplanations({ topic }) {
+  const [explanations, setExplanations] = useState(() => {
+    const saved = localStorage.getItem('velora_explanations');
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            id: 1,
+            text: 'Imagine spacetime as a rubber sheet. Heavy objects bend it, creating gravity. Nothing can escape once it bends too much.',
+            votes: { clear: 24, funny: 3, mindBending: 8 },
+            timestamp: new Date(Date.now() - 3600000).toISOString(),
+          },
+          {
+            id: 2,
+            text: 'A black hole is where physics breaks. Time stops, space folds, and light gives up. It\'s the universe saying "I don\'t know".',
+            votes: { clear: 12, funny: 42, mindBending: 18 },
+            timestamp: new Date(Date.now() - 7200000).toISOString(),
+          },
+          {
+            id: 3,
+            text: 'Think of it as an infinite trap. You can look in but never get out. Not even light escapes.',
+            votes: { clear: 31, funny: 2, mindBending: 5 },
+            timestamp: new Date(Date.now() - 86400000).toISOString(),
+          },
+        ];
+  });
+
+  const [newExplanation, setNewExplanation] = useState('');
+  const [userVotes, setUserVotes] = useState({});
+
+  useEffect(() => {
+    localStorage.setItem('velora_explanations', JSON.stringify(explanations));
+  }, [explanations]);
+
+  const handleSubmit = () => {
+    if (newExplanation.trim().length < 10) {
+      alert('Explanation too short. Help others understand!');
+      return;
+    }
+    if (newExplanation.length > 200) {
+      alert('Keep it concise! Maximum 200 characters.');
+      return;
+    }
+
+    const explanation = {
+      id: explanations.length + 1,
+      text: newExplanation,
+      votes: { clear: 0, funny: 0, mindBending: 0 },
+      timestamp: new Date().toISOString(),
+    };
+
+    setExplanations([explanation, ...explanations]);
+    setNewExplanation('');
+    alert('Submitted! Your anonymous explanation is live.');
+  };
+
+  const handleVote = (id, voteType) => {
+    const key = `${id}-${voteType}`;
+    if (userVotes[key]) {
+      alert("You've already voted on this explanation!");
+      return;
+    }
+
+    setExplanations(
+      explanations.map((exp) =>
+        exp.id === id
+          ? {
+              ...exp,
+              votes: {
+                ...exp.votes,
+                [voteType]: exp.votes[voteType] + 1,
+              },
+            }
+          : exp
+      )
+    );
+
+    setUserVotes({ ...userVotes, [key]: true });
+  };
+
+  const getTimeAgo = (timestamp) => {
+    const now = new Date();
+    const date = new Date(timestamp);
+    const diff = now - date;
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (hours < 1) return 'just now';
+    if (hours < 24) return `${hours}h ago`;
+    return `${days}d ago`;
+  };
+
+  const sortedExplanations = [...explanations].sort(
+    (a, b) => (b.votes.clear + b.votes.mindBending) - (a.votes.clear + a.votes.mindBending)
+  );
+
+  return (
+    <div className="peer-explanations">
+      <div className="explanations-header">
+        <h2 className="explanations-title">How Others Explain This</h2>
+        <p className="explanations-subtitle">Anonymous peer learning - vote on clarity</p>
+      </div>
+
+      <div className="explanation-input-box">
+        <textarea
+          className="explanation-input"
+          placeholder="Explain this concept in 1-2 sentences. Be clear, be creative!"
+          value={newExplanation}
+          onChange={(e) => setNewExplanation(e.target.value)}
+          maxLength={200}
+        />
+        <div className="input-footer">
+          <span className="char-count">{newExplanation.length}/200</span>
+          <button className="submit-btn" onClick={handleSubmit}>
+            Share Anonymously →
+          </button>
+        </div>
+      </div>
+
+      <div className="explanations-list">
+        {sortedExplanations.map((exp) => (
+          <div key={exp.id} className="explanation-card">
+            <p className="explanation-text">"{exp.text}"</p>
+
+            <div className="explanation-footer">
+              <span className="time-ago">{getTimeAgo(exp.timestamp)}</span>
+
+              <div className="vote-buttons">
+                <button
+                  className="vote-btn clear"
+                  onClick={() => handleVote(exp.id, 'clear')}
+                >
+                  <span className="vote-icon">🎯</span>
+                  <span className="vote-count">{exp.votes.clear}</span>
+                </button>
+
+                <button
+                  className="vote-btn funny"
+                  onClick={() => handleVote(exp.id, 'funny')}
+                >
+                  <span className="vote-icon">😄</span>
+                  <span className="vote-count">{exp.votes.funny}</span>
+                </button>
+
+                <button
+                  className="vote-btn mindBending"
+                  onClick={() => handleVote(exp.id, 'mindBending')}
+                >
+                  <span className="vote-icon">🤯</span>
+                  <span className="vote-count">{exp.votes.mindBending}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default PeerExplanations;
