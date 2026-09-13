@@ -26,7 +26,7 @@
   transform: translate(-50%, -55%);
   width: 600px;
   height: 400px;
-  background: radial-gradient(ellipse at center, rgba(102, 126, 234, 0.06) 0%, transparent 70%);
+  background: transparent;
   pointer-events: none;
 }
 
@@ -127,7 +127,7 @@
 .form-group input:focus {
   outline: none;
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.15);
 }
 
 /* ==================== BUTTONS ==================== */
@@ -151,18 +151,18 @@
 
 .btn-primary {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
 }
 
 .btn-primary:hover {
   background: var(--accent-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.28);
+  box-shadow: var(--shadow-hover);
 }
 
 .btn-primary:active {
   transform: scale(0.98) translateY(0);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .btn-secondary {

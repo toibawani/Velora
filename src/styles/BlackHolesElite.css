@@ -126,9 +126,9 @@
 .cta-button {
   padding: 10px 20px;
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: var(--weight-semibold);
   font-size: 0.875rem;

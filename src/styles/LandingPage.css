@@ -1,16 +1,16 @@
 /* ==========================================================================
    LandingPage.css — World-Class Marketing & First Impression Design
    --------------------------------------------------------------------------
-   Premium dark-mode marketing page. Animated hero, comparison grid,
-   testimonials, and high-conversion CTA block. Zero generic neon.
+   Clean, distraction-free marketing page. Minimal ambient effects,
+   token-governed typography, and high-conversion CTA block.
    ========================================================================== */
 
 /* ==================== ROOT ==================== */
 .landing-page {
   min-height: 100vh;
-  background: var(--bg-primary, #0a0a0a);
-  color: var(--text-primary, #f0f0f0);
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
@@ -18,11 +18,9 @@
 .landing-nav {
   position: sticky;
   top: 0;
-  z-index: 200;
-  background: rgba(10, 10, 10, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle, #1c1c1c);
+  z-index: var(--z-sticky);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .landing-nav-inner {
@@ -38,7 +36,7 @@
   font-size: 1.4rem;
   font-weight: 900;
   letter-spacing: -0.05em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .landing-logo.small {
@@ -60,17 +58,17 @@
 .lp-nav-link {
   background: transparent;
   border: none;
-  color: var(--text-secondary, #888);
+  color: var(--text-secondary);
   padding: 7px 14px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color var(--duration-normal) var(--ease-standard);
 }
 
 .lp-nav-link:hover {
-  color: var(--text-primary, #f0f0f0);
+  color: var(--text-primary);
 }
 
 .landing-nav-cta {
@@ -81,36 +79,37 @@
 
 .lp-login-btn {
   background: transparent;
-  border: 1px solid var(--border-default, #2a2a2a);
-  color: var(--text-secondary, #888);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
   padding: 7px 18px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 
 .lp-login-btn:hover {
-  color: var(--text-primary, #f0f0f0);
-  border-color: var(--border-strong, #444);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
 }
 
 .lp-cta-btn {
-  background: var(--text-primary, #ffffff);
-  color: var(--bg-primary, #0a0a0a);
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   border: none;
   padding: 8px 20px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 
 .lp-cta-btn:hover {
-  opacity: 0.88;
+  background: var(--accent-primary-hover);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
 }
 
 /* ==================== HERO ==================== */
@@ -126,19 +125,6 @@
   position: relative;
 }
 
-/* Subtle radial glow behind hero */
-.landing-hero::before {
-  content: '';
-  position: absolute;
-  top: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  height: 400px;
-  background: radial-gradient(ellipse at center, rgba(79, 125, 243, 0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-
 .hero-eyebrow {
   display: flex;
   justify-content: center;
@@ -150,11 +136,11 @@
   gap: 6px;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--accent-blue, #4f7df3);
-  background: rgba(79, 125, 243, 0.08);
-  border: 1px solid rgba(79, 125, 243, 0.2);
+  color: var(--accent-primary);
+  background: rgba(109, 40, 217, 0.08);
+  border: 1px solid rgba(109, 40, 217, 0.2);
   padding: 5px 16px;
-  border-radius: 999px;
+  border-radius: var(--radius-md);
   letter-spacing: 0.01em;
 }
 
@@ -164,19 +150,19 @@
   font-weight: 900;
   letter-spacing: -0.05em;
   line-height: 1.03;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .hero-accent {
   font-style: italic;
-  color: var(--accent-blue, #4f7df3);
+  color: var(--accent-primary);
 }
 
 .hero-subline {
   margin: 0;
   font-size: 1.1rem;
   line-height: 1.75;
-  color: var(--text-secondary, #888);
+  color: var(--text-secondary);
   max-width: 580px;
 }
 
@@ -189,22 +175,21 @@
 }
 
 .hero-primary-cta {
-  background: var(--accent-blue, #4f7df3);
-  color: #ffffff;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   border: none;
   padding: 14px 30px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 20px rgba(79, 125, 243, 0.25);
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 
 .hero-primary-cta:hover {
-  background: #3d6ce0;
+  background: var(--accent-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(79, 125, 243, 0.35);
+  box-shadow: var(--shadow-hover);
 }
 
 .hero-primary-cta.large {
@@ -214,16 +199,16 @@
 
 .hero-secondary-cta {
   background: transparent;
-  color: var(--text-secondary, #888);
+  color: var(--text-secondary);
   border: none;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color var(--duration-normal) var(--ease-standard);
 }
 
 .hero-secondary-cta:hover {
-  color: var(--text-primary, #f0f0f0);
+  color: var(--text-primary);
 }
 
 /* Domain Pill Strip */
@@ -239,23 +224,23 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  background: var(--bg-secondary, #111);
-  border: 1px solid;
-  border-radius: 999px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 5px 14px;
   font-size: 0.8rem;
   font-weight: 600;
-  transition: background 0.2s ease;
+  transition: background var(--duration-normal) var(--ease-standard);
 }
 
 .hero-domain-pill:hover {
-  background: var(--bg-tertiary, #1a1a1a);
+  background: var(--bg-tertiary);
 }
 
 /* ==================== SHARED SECTION LAYOUT ==================== */
 .landing-section {
   padding: 6rem 0;
-  border-top: 1px solid var(--border-subtle, #1a1a1a);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .section-inner {
@@ -270,7 +255,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--text-tertiary, #555);
+  color: var(--text-tertiary);
   display: block;
   margin-bottom: 1rem;
 }
@@ -280,7 +265,7 @@
   font-size: clamp(1.85rem, 4.5vw, 2.85rem);
   font-weight: 900;
   letter-spacing: -0.04em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .section-sub {
@@ -288,7 +273,7 @@
   max-width: 560px;
   font-size: 1rem;
   line-height: 1.7;
-  color: var(--text-secondary, #888);
+  color: var(--text-secondary);
 }
 
 /* ==================== PILLARS GRID ==================== */
@@ -308,19 +293,20 @@
 }
 
 .pillar-card {
-  background: var(--bg-secondary, #111);
-  border: 1px solid var(--border-default, #222);
-  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color var(--duration-normal) var(--ease-standard),
+              box-shadow var(--duration-normal) var(--ease-standard);
 }
 
 .pillar-card:hover {
-  border-color: var(--border-strong, #3a3a3a);
-  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .pillar-icon {
@@ -331,21 +317,21 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--text-primary, #f0f0f0);
+  color: var(--text-primary);
 }
 
 .pillar-desc {
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: var(--text-secondary, #888);
+  color: var(--text-secondary);
 }
 
 /* ==================== COMPARISON TABLE ==================== */
 .compare-table {
-  background: var(--bg-secondary, #111);
-  border: 1px solid var(--border-default, #222);
-  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   overflow: hidden;
   text-align: left;
   margin-top: 2.5rem;
@@ -354,8 +340,8 @@
 .compare-header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  background: var(--bg-tertiary, #161616);
-  border-bottom: 1px solid var(--border-subtle, #1e1e1e);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .compare-col-label {
@@ -364,18 +350,18 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-tertiary, #555);
+  color: var(--text-tertiary);
 }
 
 .compare-col-label.velora {
-  color: var(--accent-blue, #4f7df3);
+  color: var(--accent-primary);
 }
 
 .compare-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  border-bottom: 1px solid var(--border-subtle, #1a1a1a);
-  transition: background 0.15s ease;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--duration-fast) var(--ease-standard);
 }
 
 .compare-row:last-child {
@@ -383,29 +369,29 @@
 }
 
 .compare-row:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-hover);
 }
 
 .compare-feature {
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-primary, #e0e0e0);
+  color: var(--text-primary);
 }
 
 .compare-them {
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
-  color: var(--text-tertiary, #555);
-  border-left: 1px solid var(--border-subtle, #1a1a1a);
+  color: var(--text-tertiary);
+  border-left: 1px solid var(--border-subtle);
 }
 
 .compare-us {
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
-  color: var(--accent-blue, #4f7df3);
+  color: var(--accent-primary);
   font-weight: 600;
-  border-left: 1px solid var(--border-subtle, #1a1a1a);
+  border-left: 1px solid var(--border-subtle);
 }
 
 /* ==================== TESTIMONIALS ==================== */
@@ -422,25 +408,27 @@
 }
 
 .testimonial-card {
-  background: var(--bg-secondary, #111);
-  border: 1px solid var(--border-default, #222);
-  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--duration-normal) var(--ease-standard),
+              box-shadow var(--duration-normal) var(--ease-standard);
 }
 
 .testimonial-card:hover {
-  border-color: var(--border-strong, #3a3a3a);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .testimonial-quote {
   margin: 0;
   font-size: 0.925rem;
   line-height: 1.65;
-  color: var(--text-primary, #d8d8d8);
+  color: var(--text-primary);
   font-style: italic;
 }
 
@@ -457,34 +445,22 @@
 .testimonial-name {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .testimonial-role {
   font-size: 0.775rem;
-  color: var(--text-tertiary, #666);
+  color: var(--text-tertiary);
   margin-top: 2px;
 }
 
 /* ==================== FINAL CTA BLOCK ==================== */
 .landing-final-cta {
   padding: 7rem 0;
-  border-top: 1px solid var(--border-subtle, #1a1a1a);
+  border-top: 1px solid var(--border-subtle);
   text-align: center;
   position: relative;
   overflow: hidden;
-}
-
-.landing-final-cta::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  height: 300px;
-  background: radial-gradient(ellipse at bottom, rgba(79, 125, 243, 0.07) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .final-cta-inner {
@@ -503,19 +479,19 @@
   font-size: clamp(1.85rem, 4.5vw, 2.85rem);
   font-weight: 900;
   letter-spacing: -0.04em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .final-cta-sub {
   margin: 0;
   font-size: 1rem;
   line-height: 1.7;
-  color: var(--text-secondary, #888);
+  color: var(--text-secondary);
 }
 
 /* ==================== FOOTER ==================== */
 .landing-footer {
-  border-top: 1px solid var(--border-subtle, #1a1a1a);
+  border-top: 1px solid var(--border-subtle);
   padding: 2.5rem 2rem;
 }
 
@@ -531,7 +507,7 @@
 
 .footer-tagline {
   font-size: 0.825rem;
-  color: var(--text-tertiary, #555);
+  color: var(--text-tertiary);
   font-style: italic;
 }
 
@@ -543,14 +519,14 @@
 .footer-link {
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #555);
+  color: var(--text-tertiary);
   font-size: 0.8rem;
   padding: 6px 10px;
   cursor: pointer;
-  transition: color 0.2s ease;
-  border-radius: 4px;
+  transition: color var(--duration-normal) var(--ease-standard);
+  border-radius: var(--radius-xs);
 }
 
 .footer-link:hover {
-  color: var(--text-secondary, #888);
+  color: var(--text-secondary);
 }

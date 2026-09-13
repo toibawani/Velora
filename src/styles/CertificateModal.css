@@ -16,18 +16,18 @@
   z-index: 1000;
   padding: 1.5rem;
   overflow-y: auto;
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  font-family: var(--font-sans);
 }
 
 .cert-modal-dialog {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
   max-width: 780px;
   width: 100%;
   padding: 2.25rem;
   text-align: left;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-hover);
   animation: modal-zoom 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -53,35 +53,35 @@
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.06em;
-  color: #34c759;
-  background: rgba(52, 199, 89, 0.12);
-  border: 1px solid rgba(52, 199, 89, 0.25);
+  color: var(--accent-green);
+  background: rgba(21, 128, 61, 0.1);
+  border: 1px solid rgba(21, 128, 61, 0.25);
   padding: 4px 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .cert-close-btn {
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
   font-size: 1.5rem;
   cursor: pointer;
   line-height: 1;
 }
 
 .cert-close-btn:hover {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 /* ==================== Printable Certificate Document ==================== */
-
+/* This block uses intentional light-mode print values — do not tokenize */
 .certificate-document {
   background: #ffffff;
   color: #111111;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   padding: 2.5rem 2rem;
   margin-bottom: 1.75rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-hover);
 }
 
 .cert-border-outer {
@@ -163,7 +163,7 @@
   margin: 0.25rem 0 0 0;
   font-size: 1.45rem;
   font-weight: 800;
-  color: #4f7df3;
+  color: var(--color-accent);
 }
 
 .cert-doc-footer {
@@ -215,7 +215,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   letter-spacing: 0.05em;
 }
 
@@ -225,16 +225,16 @@
   align-items: flex-start;
   gap: 2px;
   font-size: 0.75rem;
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-mono);
   color: #555555;
 }
 
 /* ==================== Career Competencies ==================== */
 
 .cert-career-insights {
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #2e2e2e);
-  border-radius: 8px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.25rem;
   margin-bottom: 1.75rem;
 }
@@ -245,7 +245,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .competencies-grid {
@@ -253,7 +253,7 @@
   flex-direction: column;
   gap: 6px;
   font-size: 0.85rem;
-  color: var(--text-primary, #e0e0e0);
+  color: var(--text-primary);
 }
 
 .competency-item {
@@ -263,7 +263,7 @@
 }
 
 .comp-check {
-  color: #34c759;
+  color: var(--accent-green);
   font-weight: 800;
 }
 
@@ -277,16 +277,16 @@
 
 .cert-btn {
   padding: 10px 18px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 
 .cert-btn.linkedin-btn {
   background: #0077b5;
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
 }
 
@@ -295,23 +295,23 @@
 }
 
 .cert-btn.copy-btn {
-  background: var(--bg-tertiary, #222222);
-  color: var(--text-primary, #ffffff);
-  border: 1px solid var(--border-default, #333333);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
 }
 
 .cert-btn.copy-btn:hover {
-  background: #2a2a2a;
-  border-color: #555555;
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
 }
 
 .cert-btn.print-btn {
   background: transparent;
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px solid var(--border-default, #333333);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
 }
 
 .cert-btn.print-btn:hover {
-  color: #ffffff;
-  border-color: #666666;
+  color: var(--text-primary);
+  border-color: var(--border-strong);
 }

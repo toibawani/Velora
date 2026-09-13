@@ -177,9 +177,9 @@
 }
 
 .bounty-chip.active {
-  background: rgba(29, 155, 240, 0.1);
+  background: rgba(109, 40, 217, 0.1);
   color: var(--accent-primary);
-  border-color: rgba(29, 155, 240, 0.4);
+  border-color: rgba(109, 40, 217, 0.35);
   font-weight: var(--weight-semibold);
 }
 
@@ -215,7 +215,7 @@
 
 .inquiry-submit-btn {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
   border-radius: var(--radius-full);
   padding: 6px 16px;
@@ -309,14 +309,14 @@
 
 .status-indicator-tag.answered {
   color: var(--accent-green);
-  background: rgba(0, 186, 124, 0.1);
-  border: 1px solid rgba(0, 186, 124, 0.3);
+  background: rgba(21, 128, 61, 0.1);
+  border: 1px solid rgba(21, 128, 61, 0.25);
 }
 
 .status-indicator-tag.open {
   color: var(--accent-orange);
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(194, 65, 12, 0.1);
+  border: 1px solid rgba(194, 65, 12, 0.25);
 }
 
 .inquiry-question {
@@ -400,7 +400,7 @@
 .mentor-badge {
   font-size: 0.6875rem;
   color: var(--accent-green);
-  background: rgba(0, 186, 124, 0.1);
+  background: rgba(21, 128, 61, 0.1);
   padding: 1px 6px;
   border-radius: var(--radius-xs);
 }
