@@ -1,19 +1,21 @@
 /* ==========================================================================
    ExpertMode.css — Advanced Academic & Research Deep Dive
+   --------------------------------------------------------------------------
+   Fully tokenized. No hardcoded hex colors.
    ========================================================================== */
 
 .expert-mode-container {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 2.25rem;
   margin: 2.5rem 0;
   text-align: left;
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  font-family: var(--font-sans);
 }
 
 .expert-hero-bar {
-  border-bottom: 1px solid var(--border-subtle, #282828);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 1.5rem;
   margin-bottom: 1.75rem;
 }
@@ -23,11 +25,11 @@
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: #34c759;
-  background: rgba(52, 199, 89, 0.12);
-  border: 1px solid rgba(52, 199, 89, 0.3);
+  color: var(--accent-green);
+  background: rgba(21, 128, 61, 0.1);
+  border: 1px solid rgba(21, 128, 61, 0.25);
   padding: 4px 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   margin-bottom: 0.75rem;
 }
 
@@ -36,13 +38,13 @@
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.015em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .expert-hero-sub {
   margin: 0;
   font-size: 0.92rem;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -51,7 +53,7 @@
   display: flex;
   gap: 8px;
   margin-bottom: 2rem;
-  border-bottom: 1px solid var(--border-subtle, #282828);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 0.75rem;
   flex-wrap: wrap;
 }
@@ -59,24 +61,27 @@
 .expert-tab {
   background: transparent;
   border: 1px solid transparent;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-sans);
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background-color var(--duration-normal) var(--ease-standard),
+              border-color var(--duration-normal) var(--ease-standard),
+              color var(--duration-normal) var(--ease-standard);
 }
 
 .expert-tab:hover {
-  color: var(--text-primary, #ffffff);
-  background: var(--bg-tertiary, #222222);
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
 }
 
 .expert-tab.active {
-  background: var(--bg-tertiary, #222222);
-  color: #ffffff;
-  border-color: var(--border-default, #383838);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-default);
 }
 
 /* Paper Selector Row */
@@ -88,27 +93,28 @@
 }
 
 .paper-pill-btn {
-  background: var(--bg-tertiary, #222222);
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px solid var(--border-default, #333333);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
   padding: 6px 14px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
   cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color var(--duration-normal) var(--ease-standard);
 }
 
 .paper-pill-btn.selected {
-  background: #4f7df3;
-  color: #ffffff;
-  border-color: #4f7df3;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  border-color: var(--accent-primary);
 }
 
 .paper-deep-card {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2f2f2f);
-  border-radius: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -118,7 +124,7 @@
 .journal-badge {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #4f7df3;
+  color: var(--accent-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -127,7 +133,7 @@
   margin: 0.35rem 0 0 0;
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
   line-height: 1.35;
 }
 
@@ -143,27 +149,27 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .block-text {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--text-primary, #e0e0e0);
+  color: var(--text-primary);
 }
 
 .highlight-takeaway {
-  background: rgba(79, 125, 243, 0.08);
-  border-left: 3px solid #4f7df3;
+  background: rgba(109, 40, 217, 0.06);
+  border-left: 3px solid var(--accent-primary);
   padding: 1rem 1.25rem;
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 .paper-equation-box {
-  background: #151515;
-  border: 1px solid #2a2a2a;
-  border-radius: 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -179,32 +185,32 @@
 .equation-label {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .mono-tag {
   font-size: 0.72rem;
-  color: var(--text-tertiary, #777777);
-  font-family: var(--font-mono, monospace);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
 }
 
 .equation-display {
-  background: #0d0d0d;
-  border: 1px solid #222222;
-  border-radius: 6px;
+  background: var(--bg-active);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
   padding: 1.25rem;
   text-align: center;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #34c759;
-  font-family: var(--font-mono, monospace);
+  color: var(--accent-green);
+  font-family: var(--font-mono);
   overflow-x: auto;
 }
 
 .equation-desc {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -222,9 +228,9 @@
 }
 
 .debate-card {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
-  border-radius: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
@@ -235,14 +241,14 @@
   margin: 0;
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .debate-provocation {
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--text-secondary, #cccccc);
+  color: var(--text-secondary);
 }
 
 .debate-bullet-points {
@@ -254,13 +260,13 @@
 
 .bullet-heading {
   font-weight: 700;
-  color: var(--text-primary, #e0e0e0);
+  color: var(--text-primary);
 }
 
 .debate-bullet-points ul {
   margin: 0;
   padding-left: 1.25rem;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -268,19 +274,21 @@
 
 .join-debate-btn {
   background: transparent;
-  color: #4f7df3;
-  border: 1px solid rgba(79, 125, 243, 0.4);
+  color: var(--accent-primary);
+  border: 1px solid rgba(109, 40, 217, 0.35);
   padding: 8px 14px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-sans);
   cursor: pointer;
   align-self: flex-start;
   margin-top: 0.5rem;
+  transition: background-color var(--duration-fast) var(--ease-standard);
 }
 
 .join-debate-btn:hover {
-  background: rgba(79, 125, 243, 0.1);
+  background: rgba(109, 40, 217, 0.08);
 }
 
 /* Careers Grid */
@@ -291,9 +299,9 @@
 }
 
 .career-card {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
-  border-radius: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -312,12 +320,12 @@
   margin: 0;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .career-inst {
   font-size: 0.8rem;
-  color: #ff9f0a;
+  color: var(--accent-orange);
   font-weight: 600;
 }
 
@@ -325,7 +333,7 @@
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: var(--text-secondary, #b0b0b0);
+  color: var(--text-secondary);
 }
 
 .skills-tag-cloud {
@@ -338,7 +346,7 @@
 .skills-label {
   font-size: 0.75rem;
   text-transform: uppercase;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
   font-weight: 600;
 }
 
@@ -349,11 +357,11 @@
 }
 
 .skill-pill {
-  background: #161616;
-  border: 1px solid #333333;
-  color: var(--text-secondary, #d0d0d0);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
   padding: 4px 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   font-size: 0.78rem;
   font-weight: 500;
 }
