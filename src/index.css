@@ -20,3 +20,29 @@ body {
 code {
   font-family: var(--font-mono);
 }
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('./fonts/GeneralSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('./fonts/GeneralSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+}
+
+:root {
+  --font-body: 'General Sans', sans-serif;
+}
+body {
+  font-family: var(--font-body);
+}
+
+:root {
+  --color-bg: #FAFAFA;
+  --color-text: #111111;
+  --color-text-muted: #666666;
+  --color-accent: #6D28D9;
+  --color-border: #E5E5E5;
+}

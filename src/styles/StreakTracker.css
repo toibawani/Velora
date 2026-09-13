@@ -3,72 +3,81 @@
 }
 
 .streak-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
-  border: 1px solid #e0e0e0;
-  border-radius: 14px;
-  padding: 2.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: var(--bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: none;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.streak-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .streak-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   gap: 1rem;
 }
 
 .streak-title {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #000000;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
 }
 
 .streak-message {
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #667eea;
+  color: var(--color-accent);
 }
 
 .streak-display {
   text-align: center;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  background: #ffffff;
-  border: 2px solid #667eea;
-  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
 }
 
 .streak-number {
-  font-size: 4rem;
-  font-weight: 900;
-  color: #667eea;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--color-accent);
   line-height: 1;
   margin-bottom: 0.5rem;
+  letter-spacing: var(--tracking-tight);
 }
 
 .streak-label {
-  font-size: 1rem;
-  color: #6f6f6f;
-  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
 }
 
 .streak-tokens {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #f0f8f4;
-  border-radius: 8px;
-  border: 1px solid #c8e6c9;
+  margin-bottom: 1.25rem;
+  padding: 0.875rem 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
 }
 
 .token-label {
   font-weight: 600;
-  color: #2E7D32;
-  font-size: 0.9rem;
+  color: var(--color-text);
+  font-size: 0.8125rem;
 }
 
 .token-boxes {
@@ -77,62 +86,67 @@
 }
 
 .token-box {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  font-size: 1.2rem;
-  transition: all 0.2s ease;
+  border-radius: var(--radius-xs);
+  font-size: 1rem;
+  transition: all var(--duration-fast) var(--ease-standard);
+  background: var(--bg-primary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .token-box.active {
-  background: #2E7D32;
-  color: white;
-  border: 2px solid #1b5e20;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
 }
 
 .token-box.used {
-  background: #e0e0e0;
-  color: #999;
-  border: 2px solid #ccc;
+  background: var(--bg-tertiary);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+  opacity: 0.6;
 }
 
 .streak-info {
   margin: 1rem 0;
-  font-size: 0.9rem;
-  color: #6f6f6f;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   line-height: 1.6;
 }
 
 .streak-btn {
   width: 100%;
-  padding: 14px 24px;
-  background: #667eea;
-  color: white;
+  padding: 10px 18px;
+  background: var(--color-accent);
+  color: var(--color-bg);
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 1rem;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  margin-top: 0.75rem;
+  box-shadow: none;
 }
 
 .streak-btn:hover {
-  background: #5a6fd6;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(102, 126, 234, 0.3);
+  background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .streak-btn:active {
-  transform: scale(0.98) translateY(0);
+  transform: scale(0.99);
 }
 
 @media (max-width: 768px) {
   .streak-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
   .streak-header {
@@ -141,7 +155,7 @@
   }
 
   .streak-number {
-    font-size: 3rem;
+    font-size: 2.75rem;
   }
 
   .streak-tokens {

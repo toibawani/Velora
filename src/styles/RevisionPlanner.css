@@ -4,52 +4,55 @@
 
 .revision-module-wrapper {
   min-height: 100vh;
-  background: var(--bg-primary, #111111);
-  color: var(--text-primary, #f5f5f5);
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
 }
 
 .revision-nav-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 2.5rem;
-  background: var(--bg-secondary, #1a1a1a);
-  border-bottom: 1px solid var(--border-default, #2a2a2a);
+  padding: 1rem 2rem;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .revision-back-btn {
   background: transparent;
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px solid var(--border-default, #333333);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
 }
 
 .revision-back-btn:hover {
-  color: #ffffff;
-  border-color: #555555;
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background: var(--bg-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .revision-title {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
 }
 
 .revision-main-content {
-  max-width: 1000px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 5rem 1.5rem;
+  padding: 2rem 1.5rem 4rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 /* ==================== Retention Hero Banner ==================== */
@@ -58,10 +61,10 @@
   display: flex;
   align-items: center;
   gap: 2rem;
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 12px;
-  padding: 2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
   text-align: left;
 }
 
@@ -73,11 +76,11 @@
 }
 
 .retention-score-circle {
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  background: rgba(52, 199, 89, 0.08);
-  border: 2px solid #34c759;
+  background: var(--bg-primary);
+  border: 2px solid var(--accent-green);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,17 +89,17 @@
 }
 
 .retention-pct-large {
-  font-size: 2.25rem;
-  font-weight: 900;
-  color: #34c759;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent-green);
   letter-spacing: -0.03em;
 }
 
 .retention-lbl {
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -105,69 +108,70 @@
 }
 
 .summary-headline {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--text-primary, #ffffff);
+  margin: 0 0 0.35rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .summary-body {
-  margin: 0 0 1rem 0;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-secondary, #a0a0a0);
+  margin: 0 0 0.875rem 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
 }
 
 .smart-prompt-box {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  background: rgba(79, 125, 243, 0.08);
-  border: 1px solid rgba(79, 125, 243, 0.25);
-  border-radius: 8px;
-  padding: 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
 }
 
 .prompt-icon {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .prompt-text {
   margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: #d0e0ff;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
 }
 
 /* ==================== Forgetting Curve Chart Card ==================== */
 
 .retention-chart-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 12px;
-  padding: 2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
   text-align: left;
 }
 
 .chart-card-title {
-  margin: 0 0 0.4rem 0;
-  font-size: 1.15rem;
+  margin: 0 0 0.35rem 0;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .chart-card-sub {
-  margin: 0 0 1.5rem 0;
-  font-size: 0.9rem;
-  color: var(--text-secondary, #a0a0a0);
+  margin: 0 0 1.25rem 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
 .curve-svg-container {
   width: 100%;
   overflow-x: auto;
-  background: var(--bg-tertiary, #181818);
-  border-radius: 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
   padding: 1rem 0;
 }
 
@@ -187,164 +191,176 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
 .section-title-sm {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .filter-pill-tabs {
   display: flex;
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #333333);
-  border-radius: 8px;
-  padding: 4px;
-  gap: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
 }
 
 .filter-pill {
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #888888);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  font-size: 0.8125rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
 }
 
 .filter-pill.active {
-  background: #333333;
-  color: #ffffff;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .schedule-card-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.875rem;
 }
 
 .revision-item-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 10px;
-  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
-  transition: all 0.2s ease;
+  gap: 1.25rem;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
+}
+
+.revision-item-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .revision-item-card.priority-due {
-  border-left: 4px solid #ff9f0a;
+  border-left: 3px solid var(--color-warning);
 }
 
 .item-left-col {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .item-badge-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .item-concept-name {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .status-pill {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.6875rem;
+  font-weight: 600;
   text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
 }
 
 .status-pill.due-soon {
-  background: rgba(255, 159, 10, 0.15);
-  color: #ff9f0a;
-  border: 1px solid rgba(255, 159, 10, 0.3);
+  background: var(--bg-tertiary);
+  color: var(--color-warning);
+  border: 1px solid var(--color-border);
 }
 
 .status-pill.optimal {
-  background: rgba(52, 199, 89, 0.15);
-  color: #34c759;
-  border: 1px solid rgba(52, 199, 89, 0.3);
+  background: var(--bg-tertiary);
+  color: var(--accent-green);
+  border: 1px solid var(--color-border);
 }
 
 .item-domain-sub {
-  font-size: 0.82rem;
-  color: var(--text-tertiary, #888888);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
 }
 
 .item-timing-note {
   margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-secondary, #b0b0b0);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
 }
 
 .item-right-col {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .retention-meter-wrapper {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-width: 90px;
+  min-width: 80px;
 }
 
 .meter-label {
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   text-transform: uppercase;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .meter-val {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .meter-track {
-  height: 6px;
-  background: var(--bg-tertiary, #222222);
-  border-radius: 999px;
+  height: 5px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-xs);
   overflow: hidden;
 }
 
 .meter-fill {
   height: 100%;
-  border-radius: 999px;
+  border-radius: var(--radius-xs);
 }
 
 .review-action-btn {
-  background: #4f7df3;
-  color: #ffffff;
+  background: var(--color-accent);
+  color: var(--color-bg);
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-size: 0.88rem;
-  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
 }
 
 .review-action-btn:hover {
-  background: #3d6ce0;
+  background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-hover);
 }
