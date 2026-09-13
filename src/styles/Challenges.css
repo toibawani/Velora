@@ -109,13 +109,13 @@
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #4f7df3;
+  color: var(--accent-primary);
   letter-spacing: 0.05em;
 }
 
 .sprint-deadline-badge {
   font-size: 0.75rem;
-  color: #ff9f0a;
+  color: var(--accent-orange);
   font-weight: 600;
 }
 
@@ -124,23 +124,23 @@
   font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .sprint-lead-text {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
 }
 
 .sprint-urgency-banner {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 159, 10, 0.08);
-  border: 1px solid rgba(255, 159, 10, 0.25);
-  border-radius: 8px;
+  background: rgba(194, 65, 12, 0.08);
+  border: 1px solid rgba(194, 65, 12, 0.22);
+  border-radius: var(--radius-md);
   padding: 0.85rem 1.25rem;
 }
 
@@ -150,7 +150,7 @@
 
 .urgency-text {
   font-size: 0.88rem;
-  color: #ffd60a;
+  color: var(--accent-orange);
 }
 
 .sprint-progress-wrapper {
@@ -164,14 +164,14 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.85rem;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .sprint-track {
   height: 8px;
-  background: var(--bg-tertiary, #222222);
-  border-radius: 999px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
@@ -189,18 +189,20 @@
 
 .sprint-enroll-btn {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-md);
   padding: 10px 22px;
   font-size: 0.875rem;
   font-weight: var(--weight-semibold);
   cursor: pointer;
-  transition: opacity var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
 }
 
 .sprint-enroll-btn:hover {
-  opacity: 0.9;
+  background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Split Grid */
@@ -220,7 +222,7 @@
   margin: 0 0 1.25rem 0;
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 /* Milestones Stack */
@@ -231,9 +233,9 @@
 }
 
 .milestone-day-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 8px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.15rem 1.25rem;
   display: flex;
   align-items: center;
@@ -241,12 +243,12 @@
 }
 
 .milestone-day-card.completed {
-  border-left: 3px solid #34c759;
+  border-left: 3px solid var(--accent-green);
 }
 
 .milestone-day-card.in-progress {
-  border-left: 3px solid #ff9f0a;
-  background: #1f1f1f;
+  border-left: 3px solid var(--accent-orange);
+  background: var(--bg-tertiary);
 }
 
 .milestone-day-card.locked {
@@ -256,7 +258,7 @@
 .day-number-pill {
   font-size: 0.78rem;
   font-weight: 800;
-  color: var(--text-secondary, #888888);
+  color: var(--text-secondary);
   min-width: 48px;
 }
 
@@ -271,30 +273,35 @@
   margin: 0;
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .day-status-text {
   font-size: 0.78rem;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .start-day-btn {
-  background: #4f7df3;
-  color: #ffffff;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   border: none;
   padding: 8px 14px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.start-day-btn:hover {
+  background: var(--accent-primary-hover);
 }
 
 /* Leaderboard Column */
 .leaderboard-card-box {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 
@@ -302,13 +309,13 @@
   display: flex;
   justify-content: space-between;
   padding: 0.85rem 1.25rem;
-  background: var(--bg-tertiary, #222222);
+  background: var(--bg-tertiary);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
-  color: var(--text-tertiary, #888888);
-  border-bottom: 1px solid var(--border-subtle, #282828);
+  color: var(--text-tertiary);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .board-rows-list {
@@ -321,7 +328,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border-subtle, #242424);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .board-user-row:last-child {
@@ -329,8 +336,8 @@
 }
 
 .board-user-row.highlight-user {
-  background: rgba(79, 125, 243, 0.1);
-  border-left: 3px solid #4f7df3;
+  background: rgba(109, 40, 217, 0.08);
+  border-left: 3px solid var(--accent-primary);
 }
 
 .user-rank-name {
@@ -341,15 +348,15 @@
 
 .rank-idx {
   font-weight: 800;
-  font-family: var(--font-mono, monospace);
-  color: var(--text-tertiary, #888888);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
   font-size: 0.85rem;
 }
 
 .user-text-name {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .user-badge-time {
@@ -361,11 +368,11 @@
 
 .time-stat {
   font-size: 0.78rem;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .genesis-badge {
   font-size: 0.72rem;
   font-weight: 700;
-  color: #ffd60a;
+  color: var(--accent-gold);
 }
