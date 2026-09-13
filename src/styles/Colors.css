@@ -5,92 +5,92 @@
    ========================================================================== */
 
 :root {
-  /* Legacy alias map referencing design-tokens.css */
-  --color-primary: var(--accent-primary, #1d9bf0);
-  --color-primary-dark: var(--accent-primary-hover, #1a8cd8);
-  --color-primary-light: #e8f5fd;
+  --color-primary: var(--color-accent);
+  --color-primary-dark: #5b21b6;
+  --color-primary-light: var(--color-bg);
 
-  --color-bg-light: var(--bg-primary);
-  --color-bg-dark: var(--bg-primary);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-tertiary);
-  --color-border: var(--border-default);
-  --color-border-dark: var(--border-default);
+  --color-bg-light: var(--color-bg);
+  --color-bg-dark: var(--color-bg);
+  --color-text-primary: var(--color-text);
+  --color-text-secondary: var(--color-text-muted);
+  --color-text-tertiary: var(--color-text-muted);
+  --color-border-dark: var(--color-border);
 }
 
 body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
-/* Standardized Flat/Crisp Buttons */
+/* Standardized Flat/Crisp Buttons (6-8px border radius) */
 button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  background: var(--accent-primary);
-  color: #ffffff;
+  background: var(--color-accent);
+  color: var(--color-bg);
   border: 1px solid transparent;
-  border-radius: var(--radius-full);
-  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  font-weight: var(--weight-semibold);
+  font-size: 0.875rem;
+  font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-normal);
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-standard),
               border-color var(--duration-fast) var(--ease-standard),
-              transform var(--duration-fast) var(--ease-standard);
+              box-shadow var(--duration-fast) var(--ease-standard);
   box-shadow: none;
   user-select: none;
 }
 
 button:hover {
-  background: var(--accent-primary-hover);
-  transform: none;
-  box-shadow: none;
+  background: #5b21b6;
+  box-shadow: var(--shadow-hover);
 }
 
 button:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 /* Secondary / Ghost button utilities */
 button.btn-secondary,
 .btn-secondary {
   background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-default);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
 }
 
 button.btn-secondary:hover,
 .btn-secondary:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Standardized Card Layout */
+/* Standardized Card Layout (8px border radius, flat default, shadow on hover) */
 .card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: var(--space-6);
   transition: border-color var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard);
+              box-shadow var(--duration-fast) var(--ease-standard);
   box-shadow: none;
 }
 
 .card:hover {
   border-color: var(--border-strong);
-  background: var(--bg-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Clean text hierarchy */
@@ -98,11 +98,11 @@ button.btn-secondary:hover,
   background: none !important;
   -webkit-background-clip: unset !important;
   -webkit-text-fill-color: unset !important;
-  color: var(--text-primary);
+  color: var(--color-text);
   font-weight: var(--weight-bold);
 }
 
 .no-gradient {
-  background: var(--bg-secondary) !important;
-  color: var(--text-primary) !important;
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
 }

@@ -8,11 +8,11 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--bg-secondary, #1a1a1a);
-  border-top: 1px solid var(--border-default, #2a2a2a);
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
   padding: 6px 12px calc(6px + env(safe-area-inset-bottom, 0px)) 12px;
   z-index: 900;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -41,34 +41,35 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #888888);
+  color: var(--color-text-muted);
   min-width: 52px;
-  min-height: 48px; /* 48px standard touch target */
+  min-height: 48px;
   padding: 4px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: color var(--duration-fast) var(--ease-standard);
   gap: 3px;
   -webkit-tap-highlight-color: transparent;
+  box-shadow: none;
 }
 
 .mobile-nav-btn:active {
-  transform: scale(0.92);
+  transform: scale(0.96);
 }
 
 .mobile-nav-icon {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1;
 }
 
 .mobile-nav-label {
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.02em;
 }
 
 .mobile-nav-btn.active {
-  color: #4f7df3;
+  color: var(--color-accent);
 }
 
 .mobile-nav-btn.active .mobile-nav-icon {
