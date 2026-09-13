@@ -1,54 +1,56 @@
 .personalized-dashboard {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 14px;
-  padding: 2.5rem;
-  margin-bottom: 3rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .dashboard-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .dashboard-title {
   margin: 0 0 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #000000;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
 }
 
 .dashboard-subtitle {
   margin: 0;
-  font-size: 0.95rem;
-  color: #6f6f6f;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
 }
 
 .recommendations-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .recommendation-card {
-  background: #f8f8f8;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  transition: all 0.3s ease;
+  gap: 0.875rem;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
 }
 
 .recommendation-card:hover {
-  border-color: #d0d0d0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .rec-icon {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   line-height: 1;
 }
 
@@ -60,15 +62,15 @@
 
 .rec-title {
   margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 .rec-time {
   margin: 0;
-  font-size: 0.85rem;
-  color: #6f6f6f;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
 }
 
 .rec-progress {
@@ -80,60 +82,63 @@
 .progress-bar {
   flex: 1;
   height: 6px;
-  background: #e0e0e0;
-  border-radius: 3px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-xs);
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  transition: width 0.3s ease;
+  background: var(--color-accent);
+  transition: width var(--duration-normal) var(--ease-standard);
 }
 
 .progress-text {
-  font-size: 0.8rem;
-  color: #8a8a8a;
-  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
   min-width: 35px;
 }
 
 .rec-btn {
-  padding: 8px 16px;
-  background: #ffffff;
-  color: #667eea;
-  border: 1.5px solid #667eea;
-  border-radius: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
   align-self: flex-start;
+  box-shadow: none;
 }
 
 .rec-btn:hover {
-  background: #f8fbff;
-  transform: translateY(-2px);
+  background: var(--bg-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .learning-style {
-  background: #f0f8f4;
-  border: 1px solid #c8e6c9;
-  border-radius: 10px;
-  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
 }
 
 .learning-style-title {
-  margin: 0 0 1rem;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #2E7D32;
+  margin: 0 0 0.875rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 .hours-display {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.875rem;
 }
 
 .hour-card {
@@ -141,31 +146,37 @@
   gap: 0.75rem;
   align-items: center;
   padding: 0.75rem 1rem;
-  background: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #c8e6c9;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  transition: box-shadow var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
+}
+
+.hour-card:hover {
+  box-shadow: var(--shadow-hover);
 }
 
 .hour-emoji {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .hour-label {
-  font-size: 0.9rem;
-  color: #2E7D32;
-  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  font-weight: 500;
 }
 
 .learning-tip {
   margin: 0;
-  font-size: 0.85rem;
-  color: #2E7D32;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
   line-height: 1.5;
 }
 
 @media (max-width: 768px) {
   .personalized-dashboard {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
   .recommendations-grid {

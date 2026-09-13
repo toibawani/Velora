@@ -81,17 +81,19 @@
   border: 1px solid var(--border-default);
   color: var(--text-secondary);
   padding: 6px 14px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
 }
 
 .console-action-btn:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
   border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .console-logout-btn {
@@ -99,15 +101,17 @@
   border: 1px solid var(--border-default);
   color: var(--text-secondary);
   padding: 6px 14px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
+  box-shadow: none;
 }
 
 .console-logout-btn:hover {
   color: var(--color-error);
-  border-color: rgba(244, 33, 46, 0.4);
+  border-color: var(--color-error);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Main Container */
@@ -242,7 +246,7 @@
 .metric-cell {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -286,11 +290,19 @@
 .console-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
+}
+
+.console-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .card-header-row {
@@ -309,11 +321,11 @@
 .timer-tag {
   font-size: 0.6875rem;
   font-weight: var(--weight-semibold);
-  color: var(--accent-orange);
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--color-warning);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--color-border);
   padding: 2px 8px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-xs);
 }
 
 .status-badge-neutral {
@@ -321,7 +333,7 @@
   color: var(--text-secondary);
   background: var(--bg-tertiary);
   padding: 2px 8px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-xs);
 }
 
 .widget-desc {
@@ -344,20 +356,22 @@
 }
 
 .console-btn-primary {
-  background: var(--accent-primary);
-  color: #ffffff;
+  background: var(--color-accent);
+  color: var(--color-bg);
   border: 1px solid transparent;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   padding: 8px 16px;
   font-size: 0.875rem;
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   cursor: pointer;
   align-self: flex-start;
   transition: all var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
 }
 
 .console-btn-primary:hover {
   background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .console-btn-primary.full-width {
@@ -396,7 +410,7 @@
   flex: 1;
   background: transparent;
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-xs);
   color: var(--text-secondary);
   padding: 4px 6px;
   font-size: 0.6875rem;
@@ -406,9 +420,9 @@
 }
 
 .token-pill.available {
-  background: rgba(0, 186, 124, 0.1);
+  background: var(--bg-tertiary);
   color: var(--accent-green);
-  border-color: rgba(0, 186, 124, 0.3);
+  border-color: var(--color-border);
 }
 
 .token-pill.spent {
@@ -583,8 +597,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  background: rgba(17, 17, 17, 0.7);
   z-index: var(--z-modal-backdrop);
   display: flex;
   align-items: center;
@@ -595,14 +608,14 @@
 .console-modal-panel {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
   max-width: 540px;
   width: 100%;
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-hover);
 }
 
 .modal-header-row {

@@ -7,19 +7,17 @@
 
 /* ==================== GLOBAL INTERACTIVE STATES ==================== */
 button, .btn, .card, .interactive {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              box-shadow 0.2s ease, 
-              background-color 0.15s ease;
+  transition: box-shadow var(--duration-fast) var(--ease-standard), 
+              background-color var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
 }
 
 button:hover, .btn:hover, .card:hover, .interactive:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-hover);
 }
 
 button:active, .btn:active, .card:active, .interactive:active {
-  transform: scale(0.98) translateY(0);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transform: scale(0.99);
 }
 
 /* ==================== ROOT ==================== */
@@ -106,7 +104,8 @@ button:active, .btn:active, .card:active, .interactive:active {
 .uh-nav-item.active {
   background: var(--bg-primary);
   color: var(--text-primary);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
+  font-weight: 600;
 }
 
 /* ==================== HEADER RIGHT ==================== */
@@ -118,39 +117,43 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .uh-cert-btn {
-  background: rgba(102, 126, 234, 0.08);
-  color: var(--accent-primary);
-  border: 1px solid rgba(102, 126, 234, 0.25);
+  background: var(--bg-secondary);
+  color: var(--color-accent);
+  border: 1px solid var(--color-border);
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all var(--duration-fast) var(--ease-standard);
   white-space: nowrap;
+  box-shadow: none;
 }
 
 .uh-cert-btn:hover {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.4);
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .uh-invite-btn {
-  background: rgba(243, 156, 18, 0.08);
-  color: var(--color-warning);
-  border: 1px solid rgba(243, 156, 18, 0.25);
+  background: var(--bg-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all var(--duration-fast) var(--ease-standard);
   white-space: nowrap;
+  box-shadow: none;
 }
 
 .uh-invite-btn:hover {
-  background: rgba(243, 156, 18, 0.15);
-  border-color: rgba(243, 156, 18, 0.4);
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .uh-user {
@@ -226,20 +229,20 @@ button:active, .btn:active, .card:active, .interactive:active {
 .uh-subject-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-10);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
   cursor: pointer;
-  transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: left;
   gap: var(--space-6);
+  box-shadow: none;
 }
 
 .uh-subject-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-hover);
   border-color: var(--border-strong);
 }
 
@@ -249,7 +252,7 @@ button:active, .btn:active, .card:active, .interactive:active {
   justify-content: space-between;
   align-items: center;
   padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
 }
 
@@ -260,7 +263,7 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 .card-progress-tag {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -271,36 +274,38 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 .card-title {
   margin: 0 0 var(--space-2) 0;
-  font-size: 1.35rem;
-  font-weight: 800;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 
 .card-description {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   line-height: var(--leading-normal);
   color: var(--text-secondary);
 }
 
 .card-cta {
-  padding: 12px 20px;
-  color: #ffffff;
+  padding: 10px 18px;
+  background: var(--color-accent);
+  color: var(--color-bg);
   border: none;
-  border-radius: var(--radius-md);
-  font-weight: 700;
-  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: background-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
   text-align: center;
   align-self: flex-start;
   width: 100%;
+  box-shadow: none;
 }
 
 .card-cta:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
+  background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 /* ==================== SOCIAL / COMMUNITY SECTION ==================== */
@@ -370,34 +375,37 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .uh-spotlight-btn {
-  background: var(--accent-primary);
-  color: #ffffff;
+  background: var(--color-accent);
+  color: var(--color-bg);
   border: none;
-  padding: 10px 20px;
-  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   transition: all var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
 }
 
 .uh-spotlight-btn:hover {
   background: var(--accent-primary-hover);
-  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
 }
 
 .uh-spotlight-btn.secondary {
   background: var(--bg-tertiary);
   color: var(--text-primary);
   border: 1px solid var(--border-default);
+  box-shadow: none;
 }
 
 .uh-spotlight-btn.secondary:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 /* ==================== RESPONSIVE ==================== */
