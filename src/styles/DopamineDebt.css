@@ -1,23 +1,28 @@
+/* ==========================================================================
+   DopamineDebt.css — Streak Debt & Off-Day Token System
+   --------------------------------------------------------------------------
+   Fully tokenized. No hardcoded colors, no gradients.
+   ========================================================================== */
+
 .dopamine-debt-widget {
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 2px solid #D3D1C7;
+  background: var(--bg-secondary);
+  padding: var(--space-8);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
 }
 
 .debt-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #D3D1C7;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .debt-header h3 {
   margin: 0;
-  color: #042C53;
+  color: var(--text-primary);
   font-size: 1.3rem;
 }
 
@@ -26,42 +31,46 @@
 }
 
 .streak-visual {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
 }
 
 .streak-visual h4 {
-  margin: 0 0 1rem;
-  color: #042C53;
+  margin: 0 0 var(--space-4);
+  color: var(--text-primary);
 }
 
 .streak-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .day-marker {
-  padding: 1rem;
-  border-radius: 8px;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-tertiary);
   text-align: center;
-  transition: all 0.3s ease;
+  transition: background-color var(--duration-normal) var(--ease-standard);
 }
 
 .day-marker.studied {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  color: white;
+  background: var(--accent-gold);
+  color: var(--text-inverse);
+  border-color: var(--accent-gold);
 }
 
 .day-marker.debt {
-  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
-  border: 2px dashed #C62828;
+  background: var(--bg-tertiary);
+  border: 1px dashed var(--accent-red);
+  color: var(--accent-red);
 }
 
 .day-label {
   display: block;
   font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .day-indicator {
@@ -71,160 +80,162 @@
 }
 
 .debt-display {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
 }
 
 .debt-card {
-  padding: 1.5rem;
-  border-radius: 12px;
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-tertiary);
   text-align: center;
 }
 
 .debt-card h4 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
   font-size: 1.1rem;
 }
 
 .debt-card.danger {
-  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
-  border: 2px solid #C62828;
-  color: #C62828;
+  border-color: var(--accent-red);
+  color: var(--accent-red);
 }
 
 .debt-card.success {
-  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
-  border: 2px solid #2E7D32;
-  color: #2E7D32;
+  border-color: var(--accent-green);
+  color: var(--accent-green);
 }
 
 .debt-amount {
   font-size: 2.5rem;
   font-weight: 700;
-  margin: 0.5rem 0;
+  margin: var(--space-2) 0;
 }
 
 .debt-desc {
-  margin: 1rem 0;
+  margin: var(--space-4) 0;
   font-size: 0.9rem;
 }
 
 .btn-pay-debt {
   padding: 10px 20px;
-  background: #C62828;
-  color: white;
+  background: var(--accent-red);
+  color: var(--text-inverse);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
 }
 
 .btn-pay-debt:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(198, 40, 40, 0.3);
+  background: var(--accent-red-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .off-tokens {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
 }
 
 .off-tokens h4 {
-  margin: 0 0 0.5rem;
-  color: #042C53;
+  margin: 0 0 var(--space-2);
+  color: var(--text-primary);
 }
 
 .token-desc {
-  margin: 0 0 1rem;
-  color: #888780;
+  margin: 0 0 var(--space-4);
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .tokens-visual {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
 .token {
   width: 60px;
   height: 60px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: border-color var(--duration-normal) var(--ease-standard),
+              box-shadow var(--duration-normal) var(--ease-standard);
 }
 
 .token.available {
-  background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+  border-color: var(--accent-green);
+  background: rgba(21, 128, 61, 0.08);
 }
 
 .token.available:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(46, 204, 113, 0.5);
+  box-shadow: var(--shadow-hover);
 }
 
 .token.used {
-  background: #E0E0E0;
-  opacity: 0.5;
+  background: var(--bg-tertiary);
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .token-hint {
   font-size: 0.8rem;
-  color: #888780;
+  color: var(--text-secondary);
   margin: 0;
 }
 
 .streak-bonus {
-  padding: 1.5rem;
-  background: #F8F8F8;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  padding: var(--space-6);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-8);
 }
 
 .streak-bonus h4 {
-  margin: 0 0 1rem;
-  color: #042C53;
+  margin: 0 0 var(--space-4);
+  color: var(--text-primary);
 }
 
 .bonus-progress {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .bonus-item {
   display: flex;
   justify-content: space-between;
-  padding: 0.75rem;
-  background: white;
-  border-radius: 6px;
-  border-left: 4px solid #667eea;
+  padding: var(--space-3);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-primary);
 }
 
 .psychology-note {
-  padding: 1rem;
-  background: linear-gradient(135deg, #F8FBFF 0%, #FFF8F5 100%);
-  border-radius: 8px;
-  border-left: 4px solid #667eea;
+  padding: var(--space-4);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--accent-primary);
 }
 
 .psychology-note p {
   margin: 0;
-  color: #042C53;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }

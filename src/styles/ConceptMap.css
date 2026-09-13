@@ -1,7 +1,13 @@
+/* ==========================================================================
+   ConceptMap.css — Interactive Knowledge Graph Visualization
+   --------------------------------------------------------------------------
+   Fully tokenized. No hardcoded hex values.
+   ========================================================================== */
+
 .concept-map {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 2.5rem;
   margin-bottom: 3rem;
 }
@@ -14,19 +20,19 @@
   margin: 0 0 0.5rem;
   font-size: 1.5rem;
   font-weight: 800;
-  color: #000000;
+  color: var(--text-primary);
 }
 
 .map-subtitle {
   margin: 0;
   font-size: 0.95rem;
-  color: #6f6f6f;
+  color: var(--text-secondary);
 }
 
 .map-visualization {
-  background: #f8f8f8;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 2rem;
   margin-bottom: 2rem;
   overflow: auto;
@@ -39,30 +45,30 @@
 }
 
 .concept-edge {
-  stroke: #ddd;
+  stroke: var(--border-default);
   stroke-width: 0.5;
   pointer-events: none;
 }
 
 .edge-label {
   font-size: 2px;
-  fill: #999;
+  fill: var(--text-tertiary);
   pointer-events: none;
 }
 
 .concept-node {
-  transition: all 0.2s ease;
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 
 .concept-node:hover circle {
   r: 6;
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.15));
 }
 
 .concept-node.selected circle {
-  stroke: #667eea;
+  stroke: var(--accent-primary);
   stroke-width: 1;
-  filter: drop-shadow(0 0 4px rgba(102, 126, 234, 0.5));
+  filter: drop-shadow(0 0 4px rgba(109, 40, 217, 0.35));
 }
 
 .node-label {
@@ -73,9 +79,9 @@
 }
 
 .node-detail {
-  background: #f0f8ff;
-  border: 1px solid #c8e6ff;
-  border-radius: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -92,7 +98,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #667eea;
+  color: var(--accent-primary);
 }
 
 .detail-close {
@@ -100,44 +106,45 @@
   background: transparent;
   border: none;
   font-size: 1.25rem;
-  color: #999;
+  color: var(--text-tertiary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color var(--duration-fast) var(--ease-standard);
 }
 
 .detail-close:hover {
-  color: #1a1a1a;
-  transform: scale(1.1);
+  color: var(--text-primary);
 }
 
 .detail-description {
   margin: 0 0 1rem;
   font-size: 0.95rem;
   line-height: 1.7;
-  color: #1a1a1a;
+  color: var(--text-secondary);
 }
 
 .learn-btn {
   padding: 10px 20px;
-  background: #667eea;
-  color: white;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
   font-size: 0.9rem;
-  transition: all 0.2s ease;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
 }
 
 .learn-btn:hover {
-  background: #5a6fd6;
-  transform: translateY(-2px);
+  background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .map-legend {
-  background: #f8f8f8;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   padding: 1.5rem;
 }
 
@@ -145,7 +152,7 @@
   margin: 0 0 1rem;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .legend-items {
@@ -169,7 +176,7 @@
 
 .legend-label {
   font-size: 0.9rem;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
