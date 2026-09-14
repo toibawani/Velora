@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Award, UserPlus, Atom, Brain, Landmark, Sparkles, Headphones, Disc, ArrowRight } from 'lucide-react';
 import DailySpark from '../components/DailySpark';
 import SocialProof from '../components/SocialProof';
 import ReferralModal from '../components/ReferralModal';
@@ -23,28 +24,25 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
     {
       id: 'physics',
       name: 'Physics',
-      emoji: '⚛️',
+      icon: Atom,
       color: '#4f7df3',
       description: 'Master the fundamental laws governing spacetime, relativity, and quantum systems',
-      icon: '🌌',
       progress: '65% complete'
     },
     {
       id: 'philosophy',
       name: 'Philosophy',
-      emoji: '🤔',
+      icon: Brain,
       color: '#af52de',
       description: 'Explore epistemology, ethical frameworks, and the philosophy of science',
-      icon: '💭',
       progress: '45% complete'
     },
     {
       id: 'history',
       name: 'History',
-      emoji: '📜',
+      icon: Landmark,
       color: '#ff9f0a',
       description: 'Understand the civilizational catalysts and scientific revivals shaping humanity',
-      icon: '🏛️',
       progress: '80% complete'
     },
   ];
@@ -87,11 +85,13 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
 
         <div className="uh-header-right">
           <ThemeToggle />
-          <button className="uh-cert-btn" onClick={() => setShowCertificate(true)}>
-            📜 Certificate
+          <button className="uh-cert-btn" onClick={() => setShowCertificate(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <Award size={15} strokeWidth={1.5} color="var(--color-accent)" />
+            <span>Certificate</span>
           </button>
-          <button className="uh-invite-btn" onClick={() => setShowReferral(true)}>
-            🎁 Invite a Friend
+          <button className="uh-invite-btn" onClick={() => setShowReferral(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <UserPlus size={15} strokeWidth={1.5} color="var(--color-accent)" />
+            <span>Invite</span>
           </button>
           <span className="uh-user">{user?.name || 'Explorer'}</span>
           <button className="uh-logout" onClick={onLogout}>
@@ -110,8 +110,9 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
         {/* Feature Spotlight Banner */}
         <section className="uh-spotlight-section">
           <div className="uh-spotlight-content">
-            <div className="uh-spotlight-tag">
-              <span>🚀</span> New Laboratory & Sensory Features
+            <div className="uh-spotlight-tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <Sparkles size={14} strokeWidth={1.5} color="var(--color-accent)" />
+              <span>New Laboratory & Sensory Features</span>
             </div>
             <h2 className="uh-spotlight-title">Interactive Spacetime Physics & Deep Focus Soundscapes</h2>
             <p className="uh-spotlight-desc">
@@ -121,33 +122,39 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
           <div className="uh-spotlight-actions">
             <button
               className="uh-spotlight-btn"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               onClick={() => {
                 if (setLearnView) setLearnView('relativity-lab');
                 setSelectedSubject('physics');
                 setScreen('learn');
               }}
             >
-              ⚛️ Launch Relativity Lab
+              <Atom size={16} strokeWidth={1.5} />
+              <span>Launch Relativity Lab</span>
             </button>
             <button
               className="uh-spotlight-btn secondary"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               onClick={() => {
                 if (setLearnView) setLearnView('black-hole-mastery');
                 setSelectedSubject('physics');
                 setScreen('learn');
               }}
             >
-              🌌 Black Holes Masterclass
+              <Disc size={16} strokeWidth={1.5} />
+              <span>Black Holes Masterclass</span>
             </button>
             <button
               className="uh-spotlight-btn secondary"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               onClick={() => {
                 if (setLearnView) setLearnView('sensory-rooms');
                 setSelectedSubject('physics');
                 setScreen('learn');
               }}
             >
-              🏛️ Sensory Focus Room
+              <Headphones size={16} strokeWidth={1.5} />
+              <span>Sensory Focus Room</span>
             </button>
           </div>
         </section>
@@ -164,43 +171,53 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
           </div>
 
           <div className="uh-subjects-grid">
-            {subjects.map((subject) => (
-              <div
-                key={subject.id}
-                className="uh-subject-card"
-                onMouseEnter={() => setHoveredSubject(subject.id)}
-                onMouseLeave={() => setHoveredSubject(null)}
-                onClick={() => handleSubjectClick(subject.id)}
-                style={{
-                  borderColor: hoveredSubject === subject.id ? subject.color : undefined
-                }}
-              >
+            {subjects.map((subject) => {
+              const SubjectIcon = subject.icon;
+              return (
                 <div
-                  className="card-header"
+                  key={subject.id}
+                  className="uh-subject-card"
+                  onMouseEnter={() => setHoveredSubject(subject.id)}
+                  onMouseLeave={() => setHoveredSubject(null)}
+                  onClick={() => handleSubjectClick(subject.id)}
                   style={{
-                    borderColor: subject.color,
-                    background: `${subject.color}10`,
+                    borderColor: hoveredSubject === subject.id ? subject.color : undefined
                   }}
                 >
-                  <span className="card-emoji">{subject.emoji}</span>
-                  <span className="card-progress-tag" style={{ color: subject.color }}>
-                    {subject.progress}
-                  </span>
+                  <div
+                    className="card-header"
+                    style={{
+                      borderColor: subject.color,
+                      background: `${subject.color}10`,
+                    }}
+                  >
+                    <span className="card-emoji" style={{ display: 'flex', alignItems: 'center' }}>
+                      <SubjectIcon size={24} strokeWidth={1.5} color={subject.color} />
+                    </span>
+                    <span className="card-progress-tag" style={{ color: subject.color }}>
+                      {subject.progress}
+                    </span>
+                  </div>
+                  <div className="card-content">
+                    <h3 className="card-title">{subject.name}</h3>
+                    <p className="card-description">{subject.description}</p>
+                  </div>
+                  <button
+                    className="card-cta"
+                    style={{
+                      background: subject.color,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <span>Explore Domain</span>
+                    <ArrowRight size={15} strokeWidth={1.5} />
+                  </button>
                 </div>
-                <div className="card-content">
-                  <h3 className="card-title">{subject.name}</h3>
-                  <p className="card-description">{subject.description}</p>
-                </div>
-                <button
-                  className="card-cta"
-                  style={{
-                    background: subject.color,
-                  }}
-                >
-                  Explore Domain →
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
