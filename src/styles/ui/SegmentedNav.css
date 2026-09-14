@@ -1,0 +1,57 @@
+/* ==========================================================================
+   SegmentedNav.css — Segmented Filter & Tab Primitive
+   ========================================================================== */
+
+.velora-segmented-nav {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.velora-segment-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-standard);
+  box-shadow: none;
+}
+
+.velora-segment-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.velora-segment-btn.active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+  box-shadow: var(--shadow-xs);
+}
+
+.velora-segment-badge {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.velora-segment-btn.active .velora-segment-badge {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
