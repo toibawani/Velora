@@ -1,48 +1,144 @@
 /* ==========================================================================
    VELORA — Global Styles
    --------------------------------------------------------------------------
-   Import order matters: tokens first, then base styles.
+   Import order: tokens → fonts → base resets.
+   Do NOT add colour variables here; they live in design-tokens.css.
+   Do NOT modify the @font-face blocks or the :root colour vars below.
    ========================================================================== */
 
 @import url('./styles/design-tokens.css');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
 
-body {
-  margin: 0;
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: var(--leading-normal);
-  color: var(--text-primary);
-  background: var(--bg-primary);
-}
-
-code {
-  font-family: var(--font-mono);
-}
-
+/* ─── Typefaces ─────────────────────────────────────────────────────────── */
+/* 1. General Sans (self-hosted, 400 + 500 only — these two weights ship
+      in src/fonts/ and always load offline / without network) */
 @font-face {
   font-family: 'General Sans';
   src: url('./fonts/GeneralSans-Regular.woff2') format('woff2');
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'General Sans';
   src: url('./fonts/GeneralSans-Medium.woff2') format('woff2');
   font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 
+/* 2. Plus Jakarta Sans (Google Fonts, variable — covers 400 through 800,
+      fills in as the body font when weights above 500 are needed, or
+      as the complete fallback if General Sans fails to load) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ─── Core variable overrides: font stacks ──────────────────────────────── */
 :root {
-  --font-body: 'General Sans', sans-serif;
-}
-body {
-  font-family: var(--font-body);
+  /* Body / UI text — General Sans local first, Jakarta as network fallback */
+  --font-body:    'General Sans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Headings and display labels — Plus Jakarta Sans for expressive weight range */
+  --font-display: 'Plus Jakarta Sans', 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Monospace (inline code, formula blocks, data) */
+  --font-mono:    'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Liberation Mono', monospace;
 }
 
+/* ─── Colour tokens (defined by task brief — do not change) ──────────────── */
 :root {
   --color-bg: #FAFAFA;
   --color-text: #111111;
   --color-text-muted: #666666;
   --color-accent: #6D28D9;
   --color-border: #E5E5E5;
+}
+
+/* ─── Base reset ────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ─── Heading typography system ─────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: var(--weight-bold);
+}
+
+h1 { font-size: 2.25rem;  font-weight: var(--weight-black); }  /* 36px */
+h2 { font-size: 1.75rem;  font-weight: var(--weight-bold);  }  /* 28px */
+h3 { font-size: 1.375rem; font-weight: var(--weight-semibold); } /* 22px */
+h4 { font-size: 1.125rem; font-weight: var(--weight-semibold); } /* 18px */
+h5 { font-size: 1rem;     font-weight: var(--weight-medium);   } /* 16px */
+h6 { font-size: 0.875rem; font-weight: var(--weight-medium);   } /* 14px */
+
+/* ─── Body copy ─────────────────────────────────────────────────────────── */
+p {
+  margin: 0 0 1em;
+  color: var(--text-secondary);
+  font-size: 0.9375rem; /* 15px — slightly smaller than 16 feels more precise */
+  line-height: var(--leading-relaxed);
+}
+
+p:last-child { margin-bottom: 0; }
+
+/* ─── Inline code / monospace ───────────────────────────────────────────── */
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+/* ─── Links ─────────────────────────────────────────────────────────────── */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* ─── Focus ring (keyboard accessibility) ────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ─── Scrollbar (webkit — subtle, no coloured tracks) ───────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(109, 40, 217, 0.15);
+  color: var(--text-primary);
 }

@@ -15,8 +15,10 @@
   --color-border: #E5E5E5;
 
   /* ---- Typography ---- */
-  --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', monospace;
+  /* --font-body / --font-display are set in index.css after @font-face loads */
+  --font-sans:    'General Sans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', 'Liberation Mono', monospace;
 
   --weight-regular: 400;
   --weight-medium: 500;
