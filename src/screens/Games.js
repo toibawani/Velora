@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Target, Type, Link2, FileText, Puzzle, Orbit, Clock, ArrowRight } from 'lucide-react';
 import FlowStateGame from '../components/FlowStateGame';
 import ConceptScrabble from '../games/ConceptScrabble';
 import QuantumQuiz from '../games/QuantumQuiz';
@@ -24,7 +25,7 @@ function GameHub({ setScreen }) {
       name: 'Quantum Concepts Quiz',
       type: 'quiz',
       description: 'Test and sharpen fundamental principles of modern physics',
-      icon: '🎯',
+      icon: Target,
       color: '#4f7df3',
       difficulty: 'Intermediate',
       duration: '10 mins',
@@ -34,7 +35,7 @@ function GameHub({ setScreen }) {
       name: 'Singularity Concept Scrabble',
       type: 'scrabble',
       description: 'Assemble key scientific terminology from constituent root letters',
-      icon: '🔤',
+      icon: Type,
       color: '#34c759',
       difficulty: 'Easy',
       duration: '8 mins',
@@ -44,7 +45,7 @@ function GameHub({ setScreen }) {
       name: 'Cosmic Collapse Knowledge Chain',
       type: 'chain',
       description: 'Order sequential causality in gravitational and quantum phenomena',
-      icon: '🔗',
+      icon: Link2,
       color: '#ff9f0a',
       difficulty: 'Advanced',
       duration: '12 mins',
@@ -54,7 +55,7 @@ function GameHub({ setScreen }) {
       name: 'Definition Duel',
       type: 'duel',
       description: 'Discriminate between subtle conceptual nuances with precision',
-      icon: '📝',
+      icon: FileText,
       color: '#af52de',
       difficulty: 'Medium',
       duration: '8 mins',
@@ -64,7 +65,7 @@ function GameHub({ setScreen }) {
       name: 'Word & Principle Puzzle',
       type: 'puzzle',
       description: 'Fill in critical conceptual blanks to synthesize full physical laws',
-      icon: '🧩',
+      icon: Puzzle,
       color: '#30d5c8',
       difficulty: 'Easy',
       duration: '6 mins',
@@ -74,7 +75,7 @@ function GameHub({ setScreen }) {
       name: 'Spacetime & Relativity Laboratory',
       type: 'simulation',
       description: 'Interact with gravitational metric funnels, time dilation, and event horizons',
-      icon: '⚛️',
+      icon: Orbit,
       color: '#667eea',
       difficulty: 'Advanced',
       duration: '15 mins',
@@ -145,30 +146,39 @@ function GameHub({ setScreen }) {
 
       {/* Games Grid */}
       <main className="games-grid-main">
-        {games.map((game) => (
-          <div
-            key={game.id}
-            className="game-card-large"
-            onClick={() => setSelectedGame(game.id)}
-            style={{ '--game-color': game.color }}
-          >
-            <div className="game-card-header">
-              <span className="game-icon-large">{game.icon}</span>
-              <h3>{game.name}</h3>
+        {games.map((game) => {
+          const GameIcon = game.icon;
+          return (
+            <div
+              key={game.id}
+              className="game-card-large"
+              onClick={() => setSelectedGame(game.id)}
+              style={{ '--game-color': game.color }}
+            >
+              <div className="game-card-header">
+                <span className="game-icon-large" style={{ display: 'flex', alignItems: 'center' }}>
+                  <GameIcon size={24} strokeWidth={1.5} color={game.color} />
+                </span>
+                <h3>{game.name}</h3>
+              </div>
+
+              <p className="game-description">{game.description}</p>
+
+              <div className="game-meta-row">
+                <span className="game-difficulty">{game.difficulty}</span>
+                <span className="game-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Clock size={12} strokeWidth={1.5} />
+                  <span>{game.duration}</span>
+                </span>
+              </div>
+
+              <button className="play-btn-large" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <span>Start Session</span>
+                <ArrowRight size={14} strokeWidth={1.5} />
+              </button>
             </div>
-
-            <p className="game-description">{game.description}</p>
-
-            <div className="game-meta-row">
-              <span className="game-difficulty">{game.difficulty}</span>
-              <span className="game-duration">⏱️ {game.duration}</span>
-            </div>
-
-            <button className="play-btn-large">
-              Start Session →
-            </button>
-          </div>
-        ))}
+          );
+        })}
       </main>
 
       {/* Stats */}
