@@ -1,4 +1,22 @@
 import React, { useState } from 'react';
+import {
+  Atom,
+  Brain,
+  Landmark,
+  Target,
+  Type,
+  Link2,
+  FileText,
+  Orbit,
+  Disc,
+  Edit3,
+  Palette,
+  Headphones,
+  Sparkles,
+  Compass,
+  Users,
+  BookOpen
+} from 'lucide-react';
 import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
 import BlackHoleMastery from '../components/BlackHoleMastery';
@@ -32,7 +50,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
   const subjectData = {
     physics: {
       name: 'Physics',
-      icon: '⚛️',
+      icon: Atom,
       color: '#4f7df3',
       description: 'Explore the fundamental laws governing spacetime, matter, and energy',
       modules: [
@@ -61,7 +79,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     },
     philosophy: {
       name: 'Philosophy',
-      icon: '🤔',
+      icon: Brain,
       color: '#af52de',
       description: 'Dive into epistemic, ethical, and metaphysical frameworks',
       modules: [
@@ -89,7 +107,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     },
     history: {
       name: 'History',
-      icon: '📜',
+      icon: Landmark,
       color: '#ff9f0a',
       description: 'Understand the civilizational catalysts shaping human history',
       modules: [
@@ -275,6 +293,8 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     );
   }
 
+  const SubjectIconHeader = subject.icon;
+
   // Main Overview
   return (
     <div className="learn-container">
@@ -283,7 +303,10 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
         <button className="learn-back-btn" onClick={() => setScreen('universe')}>
           ← Return to Universe
         </button>
-        <h1 className="learn-title">{subject.name}</h1>
+        <h1 className="learn-title" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+          <SubjectIconHeader size={20} strokeWidth={1.5} color="var(--color-accent)" />
+          <span>{subject.name}</span>
+        </h1>
         <div style={{ width: '60px' }}></div>
       </header>
 
@@ -377,7 +400,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                 duration: 10
               })}
             >
-              <span className="game-icon">🎯</span>
+              <span className="game-icon" style={{ display: 'flex', alignItems: 'center' }}>
+                <Target size={22} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="game-title">Quantum Quiz</h4>
               <p className="game-desc">Focus deeply on foundational principles</p>
               <span className="game-time">10 min</span>
@@ -392,7 +417,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                 duration: 8
               })}
             >
-              <span className="game-icon">🔤</span>
+              <span className="game-icon" style={{ display: 'flex', alignItems: 'center' }}>
+                <Type size={22} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="game-title">Concept Scrabble</h4>
               <p className="game-desc">Construct core terminology</p>
               <span className="game-time">8 min</span>
@@ -407,7 +434,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                 duration: 12
               })}
             >
-              <span className="game-icon">🔗</span>
+              <span className="game-icon" style={{ display: 'flex', alignItems: 'center' }}>
+                <Link2 size={22} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="game-title">Knowledge Chain</h4>
               <p className="game-desc">Sequence causal phenomena</p>
               <span className="game-time">12 min</span>
@@ -422,7 +451,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                 duration: 8
               })}
             >
-              <span className="game-icon">📝</span>
+              <span className="game-icon" style={{ display: 'flex', alignItems: 'center' }}>
+                <FileText size={22} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="game-title">Definition Duel</h4>
               <p className="game-desc">Match nuances with precision</p>
               <span className="game-time">8 min</span>
@@ -438,7 +469,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('relativity-lab')}
             >
-              <span className="tool-icon">⚛️</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Orbit size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">Relativity Lab</h4>
               <p className="tool-desc">Simulate spacetime curvature</p>
             </div>
@@ -447,7 +480,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('black-hole-mastery')}
             >
-              <span className="tool-icon">🌌</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Disc size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">Black Holes Masterclass</h4>
               <p className="tool-desc">10 deep visual chapters</p>
             </div>
@@ -456,7 +491,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('whiteboard')}
             >
-              <span className="tool-icon">✏️</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Edit3 size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">AI Whiteboard</h4>
               <p className="tool-desc">Draw & visualize concepts</p>
             </div>
@@ -465,7 +502,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('creator')}
             >
-              <span className="tool-icon">🎨</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Palette size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">Creator Studio</h4>
               <p className="tool-desc">Make notes & flashcards</p>
             </div>
@@ -474,7 +513,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('sensory-rooms')}
             >
-              <span className="tool-icon">🏛️</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Headphones size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">Sensory Rooms</h4>
               <p className="tool-desc">Multi-sensory learning</p>
             </div>
@@ -483,7 +524,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('what-if')}
             >
-              <span className="tool-icon">🔮</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Sparkles size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">What-If Simulator</h4>
               <p className="tool-desc">Explore scenarios</p>
             </div>
@@ -492,7 +535,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('universe')}
             >
-              <span className="tool-icon">🌌</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Compass size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">Universe Builder</h4>
               <p className="tool-desc">Map your knowledge</p>
             </div>
@@ -501,7 +546,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('shadow-learning')}
             >
-              <span className="tool-icon">👥</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Users size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">Shadow Learning</h4>
               <p className="tool-desc">Learn from community</p>
             </div>
@@ -510,7 +557,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               className="tool-card"
               onClick={() => setCurrentView('sketchbook')}
             >
-              <span className="tool-icon">📚</span>
+              <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <BookOpen size={24} strokeWidth={1.5} color="var(--color-accent)" />
+              </span>
               <h4 className="tool-title">Dictionary</h4>
               <p className="tool-desc">Sketchbook cards</p>
             </div>
@@ -547,6 +596,5 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     </div>
   );
 }
-
 
 export default Learn;
