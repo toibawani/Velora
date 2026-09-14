@@ -1,36 +1,47 @@
+/* ==========================================================================
+   GameStyles.css — Scrabble, Quiz, Duel, Chain, Puzzle Games
+   --------------------------------------------------------------------------
+   Fully tokenized. No hardcoded hex colors, no gradients.
+   ========================================================================== */
+
 .game-screen {
   min-height: 100vh;
-  background: linear-gradient(135deg, #F5F7FA 0%, #F0F2F5 100%);
+  background: var(--bg-primary);
   display: flex;
   flex-direction: column;
 }
 
 .game-header {
-  background: white;
+  background: var(--bg-elevated);
   padding: 1rem;
-  border-bottom: 1px solid #D3D1C7;
+  border-bottom: 1px solid var(--border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 40;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  z-index: var(--z-sticky);
 }
 
 .game-back-btn {
   padding: 8px 16px;
-  background: #F1EFE8;
-  border: none;
-  border-radius: 6px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-weight: 600;
-  color: #0C447C;
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.game-back-btn:hover {
+  background: var(--bg-hover);
 }
 
 .game-score {
   font-weight: 700;
-  color: #0C447C;
+  color: var(--text-primary);
   font-size: 1rem;
 }
 
@@ -52,51 +63,51 @@
 
 .progress-bar {
   height: 6px;
-  background: #E0E0E0;
-  border-radius: 3px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
   overflow: hidden;
   margin-bottom: 0.5rem;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-  transition: width 0.3s ease;
+  background: var(--accent-primary);
+  transition: width var(--duration-normal) var(--ease-standard);
 }
 
 .progress-text {
   font-size: 0.8rem;
-  color: #888780;
+  color: var(--text-secondary);
   display: block;
   text-align: center;
 }
 
 .definition-box {
-  background: white;
+  background: var(--bg-secondary);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .definition-text {
   margin: 0 0 1rem;
-  color: #042C53;
+  color: var(--text-primary);
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 .hint-text {
   margin: 0;
-  color: #888780;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
 .word-builder {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 2rem;
   min-height: 100px;
   display: flex;
@@ -122,14 +133,14 @@
 }
 
 .built-letter {
-  background: white;
-  color: #667eea;
+  background: var(--bg-elevated);
+  color: var(--accent-primary);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-weight: 700;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform var(--duration-fast) var(--ease-standard);
   min-width: 50px;
   text-align: center;
 }
@@ -153,19 +164,22 @@
 
 .letter-btn {
   padding: 1rem;
-  background: white;
-  border: 2px solid #667eea;
-  border-radius: 8px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 700;
   font-size: 1.1rem;
-  color: #667eea;
-  transition: all 0.3s ease;
+  color: var(--accent-primary);
+  font-family: var(--font-sans);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard);
 }
 
 .letter-btn:hover:not(:disabled) {
-  background: #667eea;
-  color: white;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   transform: scale(1.05);
 }
 
@@ -179,18 +193,20 @@
   font-size: 1.2rem;
   font-weight: 700;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin-bottom: 1rem;
 }
 
 .game-message.success {
-  background: #E8F5E9;
-  color: #2E7D32;
+  background: rgba(21, 128, 61, 0.1);
+  color: var(--accent-green);
+  border: 1px solid rgba(21, 128, 61, 0.2);
 }
 
 .game-message.error {
-  background: #FFEBEE;
-  color: #C62828;
+  background: rgba(185, 28, 28, 0.08);
+  color: var(--accent-red);
+  border: 1px solid rgba(185, 28, 28, 0.2);
 }
 
 .game-actions,
@@ -212,46 +228,47 @@
   flex: 1;
   padding: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
 }
 
 .btn-submit,
 .btn-duel-submit,
 .btn-submit-chain,
-.btn-submit-puzzle {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+.btn-submit-puzzle,
+.btn-next,
+.btn-restart {
+  background: var(--accent-primary);
+  color: var(--text-inverse);
 }
 
 .btn-submit:hover:not(:disabled),
 .btn-duel-submit:hover:not(:disabled),
 .btn-submit-chain:hover:not(:disabled),
-.btn-submit-puzzle:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
+.btn-submit-puzzle:hover:not(:disabled),
+.btn-next:hover,
+.btn-restart:hover {
+  background: var(--accent-primary-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .btn-skip,
 .btn-undo,
 .btn-hint {
-  background: #F1EFE8;
-  color: #0C447C;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
 }
 
 .btn-skip:hover:not(:disabled),
 .btn-undo:hover:not(:disabled),
 .btn-hint:hover:not(:disabled) {
-  background: #D3D1C7;
-}
-
-.btn-next,
-.btn-restart {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 12px 32px;
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
 }
 
 /* QUIZ */
@@ -265,25 +282,26 @@
 
 .category-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
   padding: 6px 16px;
-  border-radius: 20px;
+  border-radius: var(--radius-md);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
   margin-bottom: 1.5rem;
 }
 
 .quiz-question {
-  background: white;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 2rem;
 }
 
 .quiz-question h3 {
   margin: 0;
-  color: #042C53;
+  color: var(--text-primary);
   font-size: 1.3rem;
 }
 
@@ -295,42 +313,44 @@
 }
 
 .quiz-option {
-  background: white;
-  border: 2px solid #D3D1C7;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   padding: 1rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
   display: flex;
   gap: 1rem;
   align-items: center;
   text-align: left;
   font-size: 1rem;
+  font-family: var(--font-sans);
 }
 
 .quiz-option:hover:not(:disabled) {
-  border-color: #667eea;
-  background: #F8FBFF;
+  border-color: var(--accent-primary);
+  background: var(--bg-tertiary);
 }
 
 .quiz-option.correct {
-  background: #E8F5E9;
-  border-color: #2E7D32;
-  color: #2E7D32;
+  background: rgba(21, 128, 61, 0.08);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
 }
 
 .quiz-option.incorrect {
-  background: #FFEBEE;
-  border-color: #C62828;
-  color: #C62828;
+  background: rgba(185, 28, 28, 0.08);
+  border-color: var(--accent-red);
+  color: var(--accent-red);
 }
 
 .option-number {
   min-width: 30px;
   font-weight: 700;
-  background: #F1EFE8;
+  background: var(--bg-tertiary);
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .option-text {
@@ -374,25 +394,26 @@
   transform: translate(-50%, -50%);
   font-size: 1.8rem;
   font-weight: 700;
-  color: #667eea;
+  color: var(--accent-primary);
 }
 
 .timer.danger .timer-text {
-  color: #FF6B6B;
+  color: var(--accent-red);
 }
 
 .duel-definition {
-  background: white;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 2rem;
 }
 
 .duel-definition p {
   margin: 0;
-  color: #042C53;
+  color: var(--text-primary);
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 .duel-input-group {
@@ -404,39 +425,41 @@
 .duel-input-group input {
   flex: 1;
   padding: 12px;
-  border: 2px solid #D3D1C7;
-  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   font-size: 1rem;
-  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color var(--duration-normal) var(--ease-standard);
 }
 
 .duel-input-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--accent-primary);
 }
 
 .duel-feedback {
   text-align: center;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 .duel-feedback.correct {
-  background: #E8F5E9;
-  color: #2E7D32;
+  background: rgba(21, 128, 61, 0.1);
+  color: var(--accent-green);
 }
 
 .duel-feedback.incorrect {
-  background: #FFEBEE;
-  color: #C62828;
+  background: rgba(185, 28, 28, 0.08);
+  color: var(--accent-red);
 }
 
 .duel-progress {
   text-align: center;
-  color: #888780;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
@@ -451,15 +474,15 @@
 
 .chain-title {
   text-align: center;
-  color: #042C53;
+  color: var(--text-primary);
   margin-bottom: 2rem;
 }
 
 .chain-display {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   gap: 1rem;
   justify-content: center;
@@ -470,17 +493,17 @@
 }
 
 .chain-node {
-  background: white;
-  color: #667eea;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: var(--weight-semibold);
   text-align: center;
 }
 
 .chain-node.empty {
-  border: 2px dashed white;
-  color: white;
+  border: 1px dashed var(--border-strong);
+  color: var(--text-tertiary);
   background: transparent;
 }
 
@@ -493,47 +516,49 @@
 
 .concept-btn {
   padding: 1rem;
-  background: white;
-  border: 2px solid #D3D1C7;
-  border-radius: 8px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 600;
-  color: #042C53;
-  transition: all 0.3s ease;
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
 }
 
 .concept-btn:hover:not(:disabled) {
-  border-color: #667eea;
-  background: #F8FBFF;
+  border-color: var(--accent-primary);
+  background: var(--bg-tertiary);
 }
 
 .concept-btn.selected {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  border-color: var(--accent-primary);
 }
 
 .chain-message {
   text-align: center;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 .chain-message.success {
-  background: #E8F5E9;
-  color: #2E7D32;
+  background: rgba(21, 128, 61, 0.1);
+  color: var(--accent-green);
 }
 
 .chain-message.error {
-  background: #FFEBEE;
-  color: #C62828;
+  background: rgba(185, 28, 28, 0.08);
+  color: var(--accent-red);
 }
 
 .chain-progress {
   text-align: center;
-  color: #888780;
+  color: var(--text-secondary);
   margin-top: 1rem;
 }
 
@@ -547,30 +572,33 @@
 }
 
 .puzzle-definition {
-  background: white;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   padding: 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 2rem;
 }
 
 .puzzle-definition p {
   margin: 0;
-  color: #042C53;
+  color: var(--text-primary);
   font-size: 1.1rem;
 }
 
 .puzzle-sentence {
-  background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--accent-orange);
   padding: 1.5rem;
-  border-radius: 12px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   margin-bottom: 2rem;
 }
 
 .puzzle-sentence p {
   margin: 0;
-  color: #E65100;
+  color: var(--accent-orange);
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 .puzzle-inputs {
@@ -582,34 +610,37 @@
 
 .puzzle-input {
   padding: 12px;
-  border: 2px solid #D3D1C7;
-  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   font-size: 1rem;
-  transition: all 0.3s ease;
+  font-family: var(--font-mono);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color var(--duration-normal) var(--ease-standard);
   text-transform: uppercase;
 }
 
 .puzzle-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--accent-primary);
 }
 
 .puzzle-message {
   text-align: center;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 .puzzle-message.success {
-  background: #E8F5E9;
-  color: #2E7D32;
+  background: rgba(21, 128, 61, 0.1);
+  color: var(--accent-green);
 }
 
 .puzzle-message.error {
-  background: #FFEBEE;
-  color: #C62828;
+  background: rgba(185, 28, 28, 0.08);
+  color: var(--accent-red);
 }
 
 /* GAME OVER */
@@ -625,25 +656,25 @@
 
 .game-over-screen h2 {
   font-size: 2.5rem;
-  color: #042C53;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .final-score {
   font-size: 3rem;
   font-weight: 700;
-  color: #667eea;
+  color: var(--accent-primary);
   margin: 1rem 0;
 }
 
 .percentage {
   font-size: 1.5rem;
-  color: #1D9E75;
+  color: var(--accent-green);
   font-weight: 700;
 }
 
 .game-completed-msg {
-  color: #888780;
+  color: var(--text-secondary);
   font-size: 1rem;
 }
 
@@ -653,7 +684,7 @@
 
 .performance p {
   font-size: 1.1rem;
-  color: #042C53;
+  color: var(--text-primary);
 }
 
 /* RESPONSIVE */
