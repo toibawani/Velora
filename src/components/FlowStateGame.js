@@ -1,4 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import {
+  Target,
+  Type,
+  Link2,
+  FileText,
+  Clock,
+  CheckCircle2,
+  Share2,
+  ArrowRight,
+  ArrowLeft,
+  ChevronUp,
+  ChevronDown,
+  Sparkles
+} from 'lucide-react';
 import ShareAchievementModal from './ShareAchievementModal';
 import '../styles/FlowStateGame.css';
 
@@ -114,344 +129,382 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
     setGameState('complete');
   };
 
-  // START SCREEN
-  if (gameState === 'start') {
-    return (
-      <div className="flow-game-container">
-        <header className="flow-nav-header">
-          <button className="flow-back-btn" onClick={onBack}>
-            ← Back to Lessons
-          </button>
-          <span className="flow-mode-badge">Flow State Experience</span>
-          <div style={{ width: '80px' }}></div>
-        </header>
+  return (
+    <div className="flow-game-container">
+      <AnimatePresence mode="wait">
+        {gameState === 'start' && (
+          <motion.div
+            key="start"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            style={{ width: '100%' }}
+          >
+            <header className="flow-nav-header">
+              <button className="flow-back-btn" onClick={onBack} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <ArrowLeft size={14} strokeWidth={1.5} />
+                <span>Back to Lessons</span>
+              </button>
+              <span className="flow-mode-badge">Flow State Experience</span>
+              <div style={{ width: '80px' }}></div>
+            </header>
 
-        <main className="flow-start-wrapper">
-          <div className="flow-start-card">
-            <div className="flow-icon-hero">
-              {gameType === 'quiz' && '🎯'}
-              {gameType === 'scrabble' && '🔤'}
-              {gameType === 'chain' && '🔗'}
-              {gameType === 'duel' && '📝'}
-            </div>
+            <main className="flow-start-wrapper">
+              <div className="flow-start-card">
+                <div className="flow-icon-hero" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {gameType === 'quiz' && <Target size={32} strokeWidth={1.5} color="var(--color-accent)" />}
+                  {gameType === 'scrabble' && <Type size={32} strokeWidth={1.5} color="var(--color-accent)" />}
+                  {gameType === 'chain' && <Link2 size={32} strokeWidth={1.5} color="var(--color-accent)" />}
+                  {gameType === 'duel' && <FileText size={32} strokeWidth={1.5} color="var(--color-accent)" />}
+                </div>
 
-            <h1 className="flow-main-title">{gameName}</h1>
-            <p className="flow-subtitle">
-              Deep focus mode. No intrusive popups, zero arcade gimmicks. Just pure conceptual mastery and reflective discovery.
-            </p>
+                <h1 className="flow-main-title">{gameName}</h1>
+                <p className="flow-subtitle">
+                  Deep focus mode. No intrusive popups, zero arcade gimmicks. Just pure conceptual mastery and reflective discovery.
+                </p>
 
-            <div className="flow-meta-grid">
-              <div className="flow-meta-box">
-                <span className="meta-label">Difficulty</span>
-                <span className="meta-value">{difficulty}</span>
-              </div>
-              <div className="flow-meta-box">
-                <span className="meta-label">Target Duration</span>
-                <span className="meta-value">{duration} minutes</span>
-              </div>
-              <div className="flow-meta-box">
-                <span className="meta-label">Experience Style</span>
-                <span className="meta-value">Self-Paced Focus</span>
-              </div>
-            </div>
-
-            <button className="flow-action-btn primary" onClick={() => setGameState('playing')}>
-              Begin Flow Session →
-            </button>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
-  // PLAYING SCREEN
-  if (gameState === 'playing') {
-    return (
-      <div className="flow-game-container">
-        <header className="flow-playing-header">
-          <div className="flow-timer-pill">
-            <span className="timer-icon">⏱️</span>
-            <span className="timer-digits">{formatTime(timeLeft)} remaining</span>
-          </div>
-          <h2 className="flow-header-title">{gameName}</h2>
-          <button className="flow-exit-btn" onClick={() => setGameState('complete')}>
-            Complete Early
-          </button>
-        </header>
-
-        <main className="flow-interactive-area">
-          {/* Quiz Experience */}
-          {gameType === 'quiz' && (
-            <div className="flow-card-stack">
-              <div className="flow-progress-indicator">
-                Concept {currentStep + 1} of {quizQuestions.length}
-              </div>
-
-              <h3 className="flow-step-question">
-                {quizQuestions[currentStep].question}
-              </h3>
-
-              <div className="flow-options-list">
-                {quizQuestions[currentStep].options.map((opt, idx) => {
-                  const isSelected = selectedAnswers[currentStep] === idx;
-                  const isCorrect = idx === quizQuestions[currentStep].correct;
-                  const isRevealed = revealedExplanations[currentStep];
-
-                  let optionClass = 'flow-option-card';
-                  if (isRevealed && isSelected) {
-                    optionClass += isCorrect ? ' correct-choice' : ' incorrect-choice';
-                  } else if (isRevealed && isCorrect) {
-                    optionClass += ' correct-choice';
-                  }
-
-                  return (
-                    <button
-                      key={idx}
-                      className={optionClass}
-                      onClick={() => handleSelectQuizOption(currentStep, idx)}
-                    >
-                      <span className="option-index">{String.fromCharCode(65 + idx)}</span>
-                      <span className="option-text">{opt}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {revealedExplanations[currentStep] && (
-                <div className="flow-explanation-box">
-                  <div className="explanation-header">
-                    <span className="explanation-tag">Deep Insight</span>
+                <div className="flow-meta-grid">
+                  <div className="flow-meta-box">
+                    <span className="meta-label">Difficulty</span>
+                    <span className="meta-value">{difficulty}</span>
                   </div>
-                  <p className="explanation-content">
-                    {quizQuestions[currentStep].explanation}
-                  </p>
+                  <div className="flow-meta-box">
+                    <span className="meta-label">Target Duration</span>
+                    <span className="meta-value">{duration} minutes</span>
+                  </div>
+                  <div className="flow-meta-box">
+                    <span className="meta-label">Experience Style</span>
+                    <span className="meta-value">Self-Paced Focus</span>
+                  </div>
+                </div>
+
+                <button
+                  className="flow-action-btn primary"
+                  onClick={() => setGameState('playing')}
+                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                >
+                  <span>Begin Flow Session</span>
+                  <ArrowRight size={15} strokeWidth={1.5} />
+                </button>
+              </div>
+            </main>
+          </motion.div>
+        )}
+
+        {gameState === 'playing' && (
+          <motion.div
+            key="playing"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            style={{ width: '100%' }}
+          >
+            <header className="flow-playing-header">
+              <div className="flow-timer-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <Clock size={14} strokeWidth={1.5} color="var(--color-accent)" />
+                <span className="timer-digits">{formatTime(timeLeft)} remaining</span>
+              </div>
+              <h2 className="flow-header-title">{gameName}</h2>
+              <button className="flow-exit-btn" onClick={() => setGameState('complete')}>
+                Complete Early
+              </button>
+            </header>
+
+            <main className="flow-interactive-area">
+              {/* Quiz Experience */}
+              {gameType === 'quiz' && (
+                <div className="flow-card-stack">
+                  <div className="flow-progress-indicator">
+                    Concept {currentStep + 1} of {quizQuestions.length}
+                  </div>
+
+                  <h3 className="flow-step-question">
+                    {quizQuestions[currentStep].question}
+                  </h3>
+
+                  <div className="flow-options-list">
+                    {quizQuestions[currentStep].options.map((opt, idx) => {
+                      const isSelected = selectedAnswers[currentStep] === idx;
+                      const isCorrect = idx === quizQuestions[currentStep].correct;
+                      const isRevealed = revealedExplanations[currentStep];
+
+                      let optionClass = 'flow-option-card';
+                      if (isRevealed && isSelected) {
+                        optionClass += isCorrect ? ' correct-choice' : ' incorrect-choice';
+                      } else if (isRevealed && isCorrect) {
+                        optionClass += ' correct-choice';
+                      }
+
+                      return (
+                        <button
+                          key={idx}
+                          className={optionClass}
+                          onClick={() => handleSelectQuizOption(currentStep, idx)}
+                        >
+                          <span className="option-index">{String.fromCharCode(65 + idx)}</span>
+                          <span className="option-text">{opt}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {revealedExplanations[currentStep] && (
+                    <div className="flow-explanation-box">
+                      <div className="explanation-header">
+                        <span className="explanation-tag">Deep Insight</span>
+                      </div>
+                      <p className="explanation-content">
+                        {quizQuestions[currentStep].explanation}
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="flow-nav-actions">
+                    {currentStep > 0 && (
+                      <button
+                        className="flow-secondary-btn"
+                        onClick={() => setCurrentStep(prev => prev - 1)}
+                      >
+                        ← Previous Concept
+                      </button>
+                    )}
+                    {currentStep < quizQuestions.length - 1 ? (
+                      <button
+                        className="flow-primary-btn"
+                        onClick={() => setCurrentStep(prev => prev + 1)}
+                        disabled={selectedAnswers[currentStep] === undefined}
+                      >
+                        Next Concept →
+                      </button>
+                    ) : (
+                      <button
+                        className="flow-primary-btn"
+                        onClick={handleFinish}
+                        disabled={selectedAnswers[currentStep] === undefined}
+                      >
+                        Finish Session & View Insights →
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
 
-              <div className="flow-nav-actions">
-                {currentStep > 0 && (
-                  <button
-                    className="flow-secondary-btn"
-                    onClick={() => setCurrentStep(prev => prev - 1)}
-                  >
-                    ← Previous Concept
-                  </button>
-                )}
-                {currentStep < quizQuestions.length - 1 ? (
-                  <button
-                    className="flow-primary-btn"
-                    onClick={() => setCurrentStep(prev => prev + 1)}
-                    disabled={selectedAnswers[currentStep] === undefined}
-                  >
-                    Next Concept →
-                  </button>
-                ) : (
-                  <button
-                    className="flow-primary-btn"
-                    onClick={handleFinish}
-                    disabled={selectedAnswers[currentStep] === undefined}
-                  >
-                    Finish Session & View Insights →
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
+              {/* Chain Connection Experience */}
+              {gameType === 'chain' && (
+                <div className="flow-card-stack">
+                  <h3 className="flow-step-question">
+                    Arrange the physical sequence of cosmic collapse in correct chronological order:
+                  </h3>
+                  <p className="flow-helper-text">
+                    Use the arrows on the right to reorder the conceptual chain.
+                  </p>
 
-          {/* Chain Connection Experience */}
-          {gameType === 'chain' && (
-            <div className="flow-card-stack">
-              <h3 className="flow-step-question">
-                Arrange the physical sequence of cosmic collapse in correct chronological order:
-              </h3>
-              <p className="flow-helper-text">
-                Use the arrows on the right to reorder the conceptual chain.
-              </p>
+                  <div className="chain-list">
+                    {chainUserOrder.map((stepId, index) => {
+                      const item = chainSteps.find(s => s.id === stepId);
+                      return (
+                        <div key={stepId} className="chain-item-card">
+                          <div className="chain-index">{index + 1}</div>
+                          <div className="chain-text">{item.label}</div>
+                          <div className="chain-controls">
+                            <button
+                              className="chain-arrow-btn"
+                              disabled={index === 0}
+                              onClick={() => moveChainItem(index, -1)}
+                            >
+                              <ChevronUp size={14} strokeWidth={1.5} />
+                            </button>
+                            <button
+                              className="chain-arrow-btn"
+                              disabled={index === chainUserOrder.length - 1}
+                              onClick={() => moveChainItem(index, 1)}
+                            >
+                              <ChevronDown size={14} strokeWidth={1.5} />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
 
-              <div className="chain-list">
-                {chainUserOrder.map((stepId, index) => {
-                  const item = chainSteps.find(s => s.id === stepId);
-                  return (
-                    <div key={stepId} className="chain-item-card">
-                      <div className="chain-index">{index + 1}</div>
-                      <div className="chain-text">{item.label}</div>
-                      <div className="chain-controls">
-                        <button
-                          className="chain-arrow-btn"
-                          disabled={index === 0}
-                          onClick={() => moveChainItem(index, -1)}
-                        >
-                          ▲
-                        </button>
-                        <button
-                          className="chain-arrow-btn"
-                          disabled={index === chainUserOrder.length - 1}
-                          onClick={() => moveChainItem(index, 1)}
-                        >
-                          ▼
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="flow-nav-actions">
-                <button className="flow-primary-btn" onClick={handleFinish}>
-                  Verify Knowledge Chain →
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Concept Scrabble / Anagram Experience */}
-          {(gameType === 'scrabble' || gameType === 'duel' || gameType === 'puzzle') && (
-            <div className="flow-card-stack">
-              <h3 className="flow-step-question">{scrabbleData.clue}</h3>
-              
-              <div className="assembled-slots">
-                <span className="slots-label">Constructed Term:</span>
-                <div className="slots-container">
-                  {scrabbleData.target.split('').map((_, i) => (
-                    <span key={i} className="char-slot">
-                      {assembledWord[i] || '_'}
-                    </span>
-                  ))}
+                  <div className="flow-nav-actions">
+                    <button className="flow-primary-btn" onClick={handleFinish}>
+                      Verify Knowledge Chain →
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="tiles-bank">
-                {scrabbleData.tiles.map((letter, i) => (
+              {/* Concept Scrabble / Anagram Experience */}
+              {(gameType === 'scrabble' || gameType === 'duel' || gameType === 'puzzle') && (
+                <div className="flow-card-stack">
+                  <h3 className="flow-step-question">{scrabbleData.clue}</h3>
+                  
+                  <div className="assembled-slots">
+                    <span className="slots-label">Constructed Term:</span>
+                    <div className="slots-container">
+                      {scrabbleData.target.split('').map((_, i) => (
+                        <span key={i} className="char-slot">
+                          {assembledWord[i] || '_'}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="tiles-bank">
+                    {scrabbleData.tiles.map((letter, i) => (
+                      <button
+                        key={i}
+                        className="flow-letter-tile"
+                        onClick={() => {
+                          if (assembledWord.length < scrabbleData.target.length) {
+                            setAssembledWord([...assembledWord, letter]);
+                          }
+                        }}
+                      >
+                        {letter}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flow-tile-actions">
+                    <button
+                      className="flow-secondary-btn"
+                      onClick={() => setAssembledWord([])}
+                    >
+                      Clear Tiles
+                    </button>
+                    <button
+                      className="flow-primary-btn"
+                      onClick={handleFinish}
+                    >
+                      Confirm Term →
+                    </button>
+                  </div>
+                </div>
+              )}
+            </main>
+          </motion.div>
+        )}
+
+        {gameState === 'complete' && (
+          <motion.div
+            key="complete"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            style={{ width: '100%' }}
+          >
+            <header className="flow-nav-header">
+              <button className="flow-back-btn" onClick={onBack} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <ArrowLeft size={14} strokeWidth={1.5} />
+                <span>Return to Hub</span>
+              </button>
+              <span className="flow-mode-badge">Session Synthesis</span>
+              <div style={{ width: '80px' }}></div>
+            </header>
+
+            <main className="flow-complete-wrapper">
+              <div className="flow-complete-card">
+                <div className="completion-badge-circle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <CheckCircle2 size={24} strokeWidth={1.5} color="var(--color-accent)" />
+                </div>
+                <h1 className="complete-heading">Flow Session Complete</h1>
+                <p className="complete-sub">
+                  You maintained uninterrupted focus on fundamental scientific principles.
+                </p>
+
+                {/* 3-Star Quality & Depth Rating */}
+                <div className="depth-rating-box">
+                  <span className="rating-label">Conceptual Depth Attained</span>
+                  <div className="stars-row">
+                    <span className="star active">★</span>
+                    <span className="star active">★</span>
+                    <span className="star active">★</span>
+                  </div>
+                  <span className="rating-tagline">Mastery Level: Advanced Comprehension</span>
+                </div>
+
+                {/* Key Insights Discovered */}
+                <div className="insights-curation">
+                  <h3 className="insights-header-text">Key Scientific Insights Discovered</h3>
+                  <div className="insight-card-list">
+                    <div className="curated-insight-item">
+                      <span className="insight-bullet">✦</span>
+                      <p>
+                        <strong>Coordinate vs Physical Boundaries:</strong> The event horizon is not a surface of solid matter; it is the mathematical demarcation where light itself cannot outpace spacetime curvature.
+                      </p>
+                    </div>
+                    <div className="curated-insight-item">
+                      <span className="insight-bullet">✦</span>
+                      <p>
+                        <strong>Relativistic Invariance:</strong> Observers falling into a supermassive black hole experience normal local time progression, while external observers see them asymptotically freeze at the horizon.
+                      </p>
+                    </div>
+                    <div className="curated-insight-item">
+                      <span className="insight-bullet">✦</span>
+                      <p>
+                        <strong>Quantum Thermodynamic Balance:</strong> Virtual particle pairs near the horizon lead to net radiation emission, providing a deep link between thermodynamics, quantum theory, and gravitation.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Reflection Area */}
+                <div className="flow-reflection-box">
+                  <label className="reflection-label" htmlFor="reflection-text">
+                    What was the most counterintuitive realization from this session?
+                  </label>
+                  <textarea
+                    id="reflection-text"
+                    className="reflection-textarea"
+                    rows="3"
+                    placeholder="e.g., How light curvature and time dilation are two expressions of the exact same geometric warping..."
+                    value={reflection}
+                    onChange={(e) => setReflection(e.target.value)}
+                  />
                   <button
-                    key={i}
-                    className="flow-letter-tile"
-                    onClick={() => {
-                      if (assembledWord.length < scrabbleData.target.length) {
-                        setAssembledWord([...assembledWord, letter]);
-                      }
+                    className="reflection-save-btn"
+                    onClick={() => setSavedReflection(true)}
+                  >
+                    {savedReflection ? '✓ Saved to Your Study Notebook' : 'Save Reflection Note'}
+                  </button>
+                </div>
+
+                <div className="flow-final-actions">
+                  <button
+                    className="flow-action-btn secondary-share"
+                    onClick={() => setShowShareModal(true)}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      background: 'var(--bg-secondary)',
+                      color: 'var(--color-accent)',
+                      border: '1px solid var(--border-default)',
+                      marginRight: '12px'
                     }}
                   >
-                    {letter}
+                    <Share2 size={15} strokeWidth={1.5} />
+                    <span>Share Milestone</span>
                   </button>
-                ))}
+                  <button
+                    className="flow-action-btn primary"
+                    onClick={onBack}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                  >
+                    <span>Continue Pathway</span>
+                    <ArrowRight size={15} strokeWidth={1.5} />
+                  </button>
+                </div>
               </div>
-
-              <div className="flow-tile-actions">
-                <button
-                  className="flow-secondary-btn"
-                  onClick={() => setAssembledWord([])}
-                >
-                  Clear Tiles
-                </button>
-                <button
-                  className="flow-primary-btn"
-                  onClick={handleFinish}
-                >
-                  Confirm Term →
-                </button>
-              </div>
-            </div>
-          )}
-        </main>
-      </div>
-    );
-  }
-
-  // COMPLETION & REFLECTION SCREEN
-  return (
-    <div className="flow-game-container">
-      <header className="flow-nav-header">
-        <button className="flow-back-btn" onClick={onBack}>
-          ← Return to Hub
-        </button>
-        <span className="flow-mode-badge">Session Synthesis</span>
-        <div style={{ width: '80px' }}></div>
-      </header>
-
-      <main className="flow-complete-wrapper">
-        <div className="flow-complete-card">
-          <div className="completion-badge-circle">✓</div>
-          <h1 className="complete-heading">Flow Session Complete</h1>
-          <p className="complete-sub">
-            You maintained uninterrupted focus on fundamental physics principles.
-          </p>
-
-          {/* 3-Star Quality & Depth Rating */}
-          <div className="depth-rating-box">
-            <span className="rating-label">Conceptual Depth Attained</span>
-            <div className="stars-row">
-              <span className="star active">★</span>
-              <span className="star active">★</span>
-              <span className="star active">★</span>
-            </div>
-            <span className="rating-tagline">Mastery Level: Advanced Comprehension</span>
-          </div>
-
-          {/* Key Insights Discovered */}
-          <div className="insights-curation">
-            <h3 className="insights-header-text">Key Scientific Insights Discovered</h3>
-            <div className="insight-card-list">
-              <div className="curated-insight-item">
-                <span className="insight-bullet">✦</span>
-                <p>
-                  <strong>Coordinate vs Physical Boundaries:</strong> The event horizon is not a surface of solid matter; it is the mathematical demarcation where light itself cannot outpace spacetime curvature.
-                </p>
-              </div>
-              <div className="curated-insight-item">
-                <span className="insight-bullet">✦</span>
-                <p>
-                  <strong>Relativistic Invariance:</strong> Observers falling into a supermassive black hole experience normal local time progression, while external observers see them asymptotically freeze at the horizon.
-                </p>
-              </div>
-              <div className="curated-insight-item">
-                <span className="insight-bullet">✦</span>
-                <p>
-                  <strong>Quantum Thermodynamic Balance:</strong> Virtual particle pairs near the horizon lead to net radiation emission, providing a deep link between thermodynamics, quantum theory, and gravitation.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Reflection Area */}
-          <div className="flow-reflection-box">
-            <label className="reflection-label" htmlFor="reflection-text">
-              What was the most counterintuitive realization from this session?
-            </label>
-            <textarea
-              id="reflection-text"
-              className="reflection-textarea"
-              rows="3"
-              placeholder="e.g., How light curvature and time dilation are two expressions of the exact same geometric warping..."
-              value={reflection}
-              onChange={(e) => setReflection(e.target.value)}
-            />
-            <button
-              className="reflection-save-btn"
-              onClick={() => setSavedReflection(true)}
-            >
-              {savedReflection ? '✓ Saved to Your Study Notebook' : 'Save Reflection Note'}
-            </button>
-          </div>
-
-          <div className="flow-final-actions">
-            <button
-              className="flow-action-btn secondary-share"
-              onClick={() => setShowShareModal(true)}
-              style={{
-                background: 'rgba(255, 214, 10, 0.1)',
-                color: '#ffd60a',
-                border: '1px solid rgba(255, 214, 10, 0.3)',
-                marginRight: '12px'
-              }}
-            >
-              🏆 Share Milestone Badge
-            </button>
-            <button className="flow-action-btn primary" onClick={onBack}>
-              Continue Learning Pathway →
-            </button>
-          </div>
-        </div>
-      </main>
+            </main>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Share Achievement Modal */}
       <ShareAchievementModal
