@@ -1,4 +1,5 @@
 import React from 'react';
+import { Compass, BookOpen, Zap, BarChart2, Users } from 'lucide-react';
 import '../styles/BottomNav.css';
 
 /**
@@ -9,11 +10,11 @@ import '../styles/BottomNav.css';
  */
 function BottomNav({ currentScreen, setScreen }) {
   const navItems = [
-    { id: 'universe', label: 'Home', icon: '🌌' },
-    { id: 'learn', label: 'Learn', icon: '⚛️' },
-    { id: 'games', label: 'Flow', icon: '⚡' },
-    { id: 'analytics', label: 'Insights', icon: '📊' },
-    { id: 'community', label: 'Community', icon: '👥' },
+    { id: 'universe', label: 'Home', icon: Compass },
+    { id: 'learn', label: 'Learn', icon: BookOpen },
+    { id: 'games', label: 'Flow', icon: Zap },
+    { id: 'analytics', label: 'Insights', icon: BarChart2 },
+    { id: 'community', label: 'Community', icon: Users },
   ];
 
   return (
@@ -21,13 +22,20 @@ function BottomNav({ currentScreen, setScreen }) {
       <div className="mobile-bottom-nav-inner">
         {navItems.map((item) => {
           const isActive = currentScreen === item.id;
+          const Icon = item.icon;
           return (
             <button
               key={item.id}
               className={`mobile-nav-btn ${isActive ? 'active' : ''}`}
               onClick={() => setScreen(item.id)}
             >
-              <span className="mobile-nav-icon">{item.icon}</span>
+              <span className="mobile-nav-icon">
+                <Icon
+                  size={20}
+                  strokeWidth={1.5}
+                  color={isActive ? 'var(--color-accent)' : 'var(--color-text-muted)'}
+                />
+              </span>
               <span className="mobile-nav-label">{item.label}</span>
             </button>
           );
