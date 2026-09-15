@@ -58,16 +58,21 @@
 
 .bh-title {
   margin: 0 0 var(--space-1);
-  font-size: 1.75rem;
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
 .bh-subtitle {
   margin: 0;
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+  color: var(--color-text-muted);
 }
 
 /* Masterclass Chapters & Progression */
@@ -112,23 +117,29 @@
 }
 
 .chapter-duration {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
-  font-weight: var(--weight-medium);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
 }
 
 .chapter-title {
   margin: 0;
-  font-size: 1rem;
-  font-weight: var(--weight-semibold);
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
 }
 
 .chapter-summary {
   margin: 0;
-  font-size: 0.8125rem;
-  line-height: var(--leading-normal);
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 68ch;
+  color: var(--color-text-muted);
 }
 
 /* Detailed Reading & Scientific Visuals */
@@ -142,8 +153,12 @@
 
 .reading-chapter-title {
   margin: 0 0 var(--space-6);
-  font-size: 1.375rem;
-  font-weight: var(--weight-bold);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
   border-bottom: 1px solid var(--border-default);
   padding-bottom: var(--space-4);
 }
@@ -153,16 +168,21 @@
 }
 
 .reading-heading {
-  font-size: 1.0625rem;
-  font-weight: var(--weight-semibold);
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
   margin: 0 0 var(--space-2);
 }
 
 .reading-text {
-  font-size: 0.9375rem;
-  line-height: var(--leading-relaxed);
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+  color: var(--color-text-muted);
   margin: 0 0 var(--space-4);
 }
 
