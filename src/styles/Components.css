@@ -76,7 +76,7 @@
 .subject-card-select {
   background: var(--bg-secondary);
   padding: var(--space-10);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.15s ease;
   border: 1px solid var(--border-default);
@@ -90,7 +90,7 @@
   transform: translateY(-2px);
   border-color: var(--border-strong);
   background: var(--bg-hover);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-hover);
 }
 
 .subject-card-select:active {
@@ -148,7 +148,7 @@
 .module-card {
   background: var(--bg-secondary);
   padding: var(--space-8);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   margin-bottom: var(--space-4);
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.15s ease;
@@ -162,7 +162,7 @@
 .module-card:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
 
@@ -228,7 +228,7 @@
 .topic-card {
   background: var(--bg-secondary);
   padding: var(--space-6) var(--space-8);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   margin-bottom: var(--space-4);
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.15s ease;
@@ -242,7 +242,7 @@
 .topic-card:hover:not(.locked) {
   background: var(--bg-hover);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
 
@@ -327,7 +327,7 @@
 .lesson-card {
   background: var(--bg-secondary);
   padding: var(--space-10);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   box-shadow: none;
 }
@@ -385,7 +385,7 @@
 .tool-card {
   background: var(--bg-secondary);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.15s ease;
@@ -396,7 +396,7 @@
 .tool-card:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
 
@@ -440,7 +440,7 @@
   flex: 1;
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-6);
   margin-bottom: var(--space-4);
   overflow-y: auto;
@@ -610,7 +610,7 @@
   background: var(--bg-secondary);
   width: 100%;
   height: 400px;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   margin-bottom: var(--space-6);
 }
@@ -640,7 +640,7 @@
 .node-details {
   background: var(--bg-secondary);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
 }
 
@@ -667,7 +667,7 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   margin-bottom: var(--space-6);
 }
 
@@ -680,7 +680,7 @@
 .doubt-input-section {
   background: var(--bg-secondary);
   padding: var(--space-8);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   margin-bottom: var(--space-6);
 }
@@ -714,7 +714,7 @@
 .doubt-answer {
   background: var(--bg-secondary);
   padding: var(--space-8);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
 }
 
@@ -882,7 +882,7 @@
 .spaced-repetition-info {
   background: var(--bg-secondary);
   padding: var(--space-8);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   margin-bottom: var(--space-6);
 }
@@ -904,7 +904,7 @@
 .timeline-item {
   background: var(--bg-secondary);
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   margin-bottom: var(--space-3);
   display: flex;
@@ -944,7 +944,7 @@
 .retention-graph {
   background: var(--bg-secondary);
   padding: var(--space-8);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
 }
 
