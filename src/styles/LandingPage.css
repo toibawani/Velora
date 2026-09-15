@@ -134,36 +134,38 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--accent-primary);
-  background: rgba(109, 40, 217, 0.08);
-  border: 1px solid rgba(109, 40, 217, 0.2);
-  padding: 5px 16px;
-  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 4px 14px;
+  border-radius: 6px;
   letter-spacing: 0.01em;
 }
 
 .hero-headline {
   margin: 0;
-  font-size: clamp(2.75rem, 7vw, 5rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 1.03;
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
 .hero-accent {
-  font-style: italic;
-  color: var(--accent-primary);
+  font-style: normal;
+  color: var(--color-accent);
 }
 
 .hero-subline {
   margin: 0;
-  font-size: 1.1rem;
-  line-height: 1.75;
-  color: var(--text-secondary);
-  max-width: 580px;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 68ch;
 }
 
 .hero-cta-row {
@@ -251,29 +253,32 @@
 }
 
 .section-label {
-  font-size: 0.7rem;
-  font-weight: 800;
+  font-size: 0.875rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--text-tertiary);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .section-heading {
   margin: 0 0 0.75rem 0;
-  font-size: clamp(1.85rem, 4.5vw, 2.85rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
 .section-sub {
   margin: 0 auto 2.5rem;
-  max-width: 560px;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
+  max-width: 68ch;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
 }
 
 /* ==================== PILLARS GRID ==================== */
@@ -294,19 +299,17 @@
 
 .pillar-card {
   background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color var(--duration-normal) var(--ease-standard),
-              box-shadow var(--duration-normal) var(--ease-standard);
+  transition: border-color var(--duration-normal) var(--ease-standard);
 }
 
 .pillar-card:hover {
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-hover);
 }
 
 .pillar-icon {
@@ -315,16 +318,20 @@
 
 .pillar-title {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
 .pillar-desc {
   margin: 0;
+  font-family: var(--font-body);
   font-size: 0.875rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
+  line-height: 1.5;
+  color: var(--color-text-muted);
 }
 
 /* ==================== COMPARISON TABLE ==================== */
@@ -426,10 +433,11 @@
 
 .testimonial-quote {
   margin: 0;
-  font-size: 0.925rem;
-  line-height: 1.65;
-  color: var(--text-primary);
-  font-style: italic;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+  color: var(--color-text);
 }
 
 .testimonial-author-row {
@@ -443,14 +451,16 @@
 }
 
 .testimonial-name {
+  font-family: var(--font-display);
   font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 .testimonial-role {
-  font-size: 0.775rem;
-  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   margin-top: 2px;
 }
 
@@ -464,7 +474,7 @@
 }
 
 .final-cta-inner {
-  max-width: 620px;
+  max-width: 68ch;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -476,17 +486,21 @@
 
 .final-cta-heading {
   margin: 0;
-  font-size: clamp(1.85rem, 4.5vw, 2.85rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
 .final-cta-sub {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+  color: var(--color-text-muted);
 }
 
 /* ==================== FOOTER ==================== */
