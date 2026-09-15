@@ -27,7 +27,7 @@
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-default);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
@@ -40,7 +40,6 @@
 .analytics-back-btn:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-hover);
 }
 
 .analytics-brand-title {
@@ -59,7 +58,7 @@
   color: var(--accent-green);
   background: var(--bg-tertiary);
   border: 1px solid var(--color-border);
-  padding: 4px 12px;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-xs);
   font-weight: var(--weight-medium);
 }
@@ -110,7 +109,7 @@
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-xs);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
@@ -137,7 +136,7 @@
 .metric-box {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
@@ -181,7 +180,7 @@
 /* Split Layout & Cards */
 .analytics-split-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.3fr 1fr;
   gap: var(--space-6);
 }
 
@@ -200,7 +199,7 @@
 .analytics-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-6);
   text-align: left;
 }
@@ -365,7 +364,7 @@
   font-size: 0.6875rem;
   font-weight: var(--weight-semibold);
   text-transform: uppercase;
-  padding: 2px 6px;
+  padding: 2px var(--space-2);
   border-radius: var(--radius-xs);
 }
 
@@ -405,7 +404,7 @@
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-default);
-  padding: 8px 16px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
@@ -420,7 +419,6 @@
   border-color: var(--border-strong);
   color: var(--text-primary);
   background: var(--bg-hover);
-  box-shadow: var(--shadow-hover);
 }
 
 .logged-toast {
