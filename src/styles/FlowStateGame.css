@@ -44,20 +44,23 @@
 }
 
 .flow-progress-indicator {
-  font-size: 0.8rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-tertiary);
-  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  font-weight: 600;
   margin-bottom: 1rem;
 }
 
 .flow-step-question {
   margin: 0 0 1.75rem 0;
-  font-size: 1.35rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
   font-weight: 700;
-  line-height: 1.45;
-  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
 }
 
 .flow-options-list {
@@ -73,12 +76,13 @@
   gap: 14px;
   padding: 1rem 1.25rem;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  color: var(--text-primary);
+  color: var(--color-text);
   cursor: pointer;
   text-align: left;
-  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
   line-height: 1.5;
   transition: border-color var(--duration-fast) var(--ease-standard),
               background-color var(--duration-fast) var(--ease-standard);
@@ -91,8 +95,8 @@
 
 .flow-option-card .option-index {
   font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   min-width: 20px;
 }
 
@@ -109,24 +113,27 @@
 .flow-explanation-box {
   margin: 1.5rem 0;
   padding: 1.25rem;
-  background: rgba(109, 40, 217, 0.06);
-  border-left: 3px solid var(--accent-primary);
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--color-border);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 .explanation-tag {
-  font-size: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  color: var(--accent-primary);
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: var(--color-text-muted);
 }
 
 .explanation-content {
   margin: 0.5rem 0 0 0;
-  font-size: 0.92rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
   line-height: 1.6;
-  color: var(--text-primary);
+  max-width: 68ch;
+  color: var(--color-text);
 }
 
 .flow-nav-actions {
@@ -331,15 +338,21 @@
 
 .complete-heading {
   margin: 0 0 0.5rem 0;
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
 }
 
 .complete-sub {
   margin: 0 0 1.75rem 0;
-  font-size: 0.95rem;
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+  color: var(--color-text-muted);
 }
 
 .depth-rating-box {
