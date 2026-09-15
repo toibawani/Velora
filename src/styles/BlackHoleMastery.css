@@ -29,7 +29,7 @@
   z-index: 1;
   max-width: 920px;
   margin: 0 auto;
-  padding: var(--space-6) var(--space-4) var(--space-20);
+  padding: var(--space-6) var(--space-4) var(--space-16);
 }
 
 .bh-header {
@@ -42,13 +42,14 @@
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-default);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
   margin-bottom: var(--space-4);
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background var(--duration-fast) var(--ease-standard);
 }
 
 .bh-back-btn:hover {
@@ -86,7 +87,7 @@
 .chapter-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-5);
   cursor: pointer;
   transition: border-color var(--duration-fast) var(--ease-standard),
@@ -127,8 +128,8 @@
   margin: 0;
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.1;
+  font-weight: 700;
+  line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--color-text);
 }
@@ -137,7 +138,7 @@
   margin: 0;
   font-family: var(--font-body);
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.55;
   max-width: 68ch;
   color: var(--color-text-muted);
 }
@@ -146,7 +147,7 @@
 .detailed-reading-view {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
   padding: var(--space-8);
   margin-top: var(--space-6);
 }
@@ -170,8 +171,8 @@
 .reading-heading {
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.1;
+  font-weight: 700;
+  line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--color-text);
   margin: 0 0 var(--space-2);
@@ -189,7 +190,7 @@
 .visual-container {
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-6);
   display: flex;
   justify-content: center;

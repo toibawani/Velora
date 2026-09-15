@@ -1,5 +1,6 @@
 /* ==========================================================================
    RelativityLab.css — Spacetime Curvature & General Relativity Laboratory
+   Disciplined, tokenized, max 8px radius, shadow-free.
    ========================================================================== */
 
 .relativity-lab-container {
@@ -32,8 +33,8 @@
   background: var(--bg-secondary);
   color: var(--text-secondary);
   border: 1px solid var(--border-default);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
@@ -66,7 +67,7 @@
   font-size: 1.0625rem;
   line-height: 1.6;
   max-width: 68ch;
-  margin: 0.5rem 0 0 0;
+  margin: var(--space-2) 0 0 0;
 }
 
 /* Preset selector bar */
@@ -92,8 +93,8 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
   color: var(--text-secondary);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   cursor: pointer;
@@ -110,14 +111,14 @@
 .rel-preset-chip.active {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   font-weight: var(--weight-semibold);
 }
 
 /* Main Grid Layout */
 .rel-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: var(--space-6);
   margin-bottom: var(--space-8);
 }
@@ -132,7 +133,7 @@
 .rel-canvas-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
@@ -151,8 +152,8 @@
   margin: 0;
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.1;
+  font-weight: 700;
+  line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--color-text);
 }
@@ -160,11 +161,11 @@
 .rel-badge {
   font-size: 0.75rem;
   font-weight: var(--weight-semibold);
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
-  background: rgba(102, 126, 234, 0.15);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-xs);
+  background: var(--bg-tertiary);
   color: var(--accent-primary);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  border: 1px solid var(--border-default);
 }
 
 .rel-canvas-wrapper {
@@ -173,7 +174,7 @@
   aspect-ratio: 16 / 10;
   background: #06080d;
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -196,7 +197,7 @@
 .rel-controls-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -253,7 +254,7 @@
 .rel-metric-box {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -262,7 +263,7 @@
 
 .rel-metric-title {
   font-family: var(--font-display);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -288,7 +289,7 @@
 .rel-theory-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -304,7 +305,7 @@
 .rel-formula-block {
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -317,8 +318,8 @@
   font-weight: var(--weight-bold);
   color: var(--accent-primary);
   background: var(--bg-tertiary);
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-xs);
   display: inline-block;
   align-self: flex-start;
 }

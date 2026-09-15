@@ -1,14 +1,14 @@
 /* ==========================================================================
    BlackHolesElite.css — Featured Masterclass & Theoretical Insights Card
+   Disciplined, tokenized, shadow-free, asymmetric layout.
    ========================================================================== */
 
 .black-holes-elite {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
   padding: var(--space-8);
   margin: var(--space-6) 0;
-  box-shadow: var(--shadow-sm);
   transition: border-color var(--duration-fast) var(--ease-standard);
 }
 
@@ -38,28 +38,31 @@
 
 .section-title {
   margin: 0;
+  font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: var(--weight-bold);
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .section-expert {
   font-size: 0.8125rem;
-  color: var(--text-tertiary);
-  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  font-weight: 600;
   white-space: nowrap;
   background: var(--bg-tertiary);
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-subtle);
+  padding: 4px var(--space-2);
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-default);
 }
 
 .section-content {
   margin: 0 0 var(--space-4);
   font-size: 0.9375rem;
-  line-height: var(--leading-normal);
+  line-height: 1.6;
   color: var(--text-secondary);
+  max-width: 68ch;
 }
 
 .facts-list {
@@ -75,7 +78,7 @@
   padding: var(--space-3) var(--space-4);
   background: var(--bg-tertiary);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   transition: background-color var(--duration-fast) var(--ease-standard);
 }
 
@@ -85,54 +88,55 @@
 
 .fact-icon {
   color: var(--accent-primary);
-  font-weight: var(--weight-bold);
+  font-weight: 700;
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .fact-text {
   font-size: 0.875rem;
   color: var(--text-primary);
-  line-height: var(--leading-normal);
+  line-height: 1.55;
 }
 
 .elite-cta {
   margin-top: var(--space-8);
   padding: var(--space-6);
   background: var(--bg-elevated);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
-  gap: var(--space-4);
+  gap: var(--space-6);
+  flex-wrap: wrap;
 }
 
 .elite-cta p {
   margin: 0;
   font-size: 1.0625rem;
-  font-weight: var(--weight-semibold);
+  font-weight: 600;
   color: var(--text-primary);
+  flex: 1;
+  min-width: 240px;
 }
 
 .elite-cta-buttons {
   display: flex;
   gap: var(--space-3);
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .cta-button {
-  padding: 10px 20px;
+  padding: var(--space-2) var(--space-4);
   background: var(--accent-primary);
   color: var(--text-inverse);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-weight: var(--weight-semibold);
+  font-weight: 600;
   font-size: 0.875rem;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard);
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -140,7 +144,6 @@
 
 .cta-button:hover {
   background: var(--accent-primary-hover);
-  transform: translateY(-1px);
 }
 
 .cta-button.secondary {
@@ -155,17 +158,24 @@
 }
 
 @media (max-width: 768px) {
-  .section-header {
-    flex-direction: column;
-  }
-
-  .elite-cta {
+  .black-holes-elite {
     padding: var(--space-5);
   }
 
-  .elite-cta-buttons {
+  .section-header {
     flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .elite-cta {
+    padding: var(--space-4);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .elite-cta-buttons {
     width: 100%;
+    flex-direction: column;
   }
 
   .cta-button {
