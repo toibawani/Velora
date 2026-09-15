@@ -27,16 +27,19 @@
 
 .streak-title {
   margin: 0;
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
   color: var(--color-text);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .streak-message {
+  font-family: var(--font-body);
   font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-accent);
+  font-weight: 500;
+  color: var(--color-text-muted);
 }
 
 .streak-display {
@@ -49,18 +52,20 @@
 }
 
 .streak-number {
-  font-size: 3.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
-  color: var(--color-accent);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
 }
 
 .streak-label {
+  font-family: var(--font-body);
   font-size: 0.875rem;
   color: var(--color-text-muted);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .streak-tokens {
@@ -75,9 +80,10 @@
 }
 
 .token-label {
-  font-weight: 600;
-  color: var(--color-text);
-  font-size: 0.8125rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
 }
 
 .token-boxes {
@@ -100,23 +106,25 @@
 }
 
 .token-box.active {
-  background: var(--color-accent);
-  color: var(--color-bg);
-  border-color: var(--color-accent);
+  background: var(--bg-secondary);
+  color: var(--color-text);
+  border-color: var(--color-border);
 }
 
 .token-box.used {
   background: var(--bg-tertiary);
   color: var(--color-text-muted);
   border-color: var(--color-border);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .streak-info {
   margin: 1rem 0;
+  font-family: var(--font-body);
   font-size: 0.875rem;
   color: var(--color-text-muted);
   line-height: 1.6;
+  max-width: 68ch;
 }
 
 .streak-btn {
