@@ -155,9 +155,10 @@
 }
 
 /* ==================== Metrics Strip ==================== */
+/* 3:2 split — left card is the primary focus card */
 .metrics-strip-section {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1.4fr 1fr;
   gap: var(--space-4);
 }
 
@@ -281,10 +282,17 @@
 }
 
 /* ==================== Workspace Twin Grid ==================== */
+/* Explicit 60/40 split — kill the uniform auto-fit pattern */
 .workspace-twin-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: 3fr 2fr;
   gap: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  .workspace-twin-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .console-card {
@@ -358,14 +366,14 @@
 .console-btn-primary {
   background: var(--color-accent);
   color: var(--color-bg);
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--radius-sm);
-  padding: 8px 16px;
+  padding: var(--space-2) var(--space-4);
   font-size: 0.875rem;
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-semibold);
   cursor: pointer;
   align-self: flex-start;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: background var(--duration-fast) var(--ease-standard);
   box-shadow: none;
 }
 
