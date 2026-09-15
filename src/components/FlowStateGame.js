@@ -11,8 +11,7 @@ import {
   ArrowRight,
   ArrowLeft,
   ChevronUp,
-  ChevronDown,
-  Sparkles
+  ChevronDown
 } from 'lucide-react';
 import ShareAchievementModal from './ShareAchievementModal';
 import '../styles/FlowStateGame.css';

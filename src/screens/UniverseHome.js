@@ -6,8 +6,7 @@ import ReferralModal from '../components/ReferralModal';
 import CertificateModal from '../components/CertificateModal';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
-import StreakTracker from '../components/StreakTracker';
-import PersonalizedDashboard from '../components/PersonalizedDashboard';
+// StreakTracker & PersonalizedDashboard reserved for future feature sections
 
 /**
  * UniverseHome Screen

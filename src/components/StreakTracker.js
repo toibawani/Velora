@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Flame, Gift, Check, Sparkles } from 'lucide-react';
+import { Flame, Gift, Check } from 'lucide-react';
 import '../styles/StreakTracker.css';
 
 function StreakTracker({ user }) {
