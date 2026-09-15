@@ -48,9 +48,12 @@
 }
 
 .rel-title {
-  font-size: 1.75rem;
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-tight);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
   margin: 0;
   display: flex;
   align-items: center;
@@ -58,9 +61,12 @@
 }
 
 .rel-subtitle {
-  color: var(--text-secondary);
-  font-size: 0.9375rem;
-  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+  margin: 0.5rem 0 0 0;
 }
 
 /* Preset selector bar */
@@ -143,8 +149,12 @@
 
 .rel-card-title {
   margin: 0;
-  font-size: 1.125rem;
-  font-weight: var(--weight-semibold);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
 }
 
 .rel-badge {
@@ -174,10 +184,12 @@
 }
 
 .rel-canvas-caption {
-  font-size: 0.8125rem;
-  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   margin: 0;
-  line-height: var(--leading-normal);
+  line-height: 1.5;
+  max-width: 68ch;
 }
 
 /* Control Controls Card */
@@ -223,9 +235,12 @@
 }
 
 .rel-slider-subtext {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
   margin: 0;
+  line-height: 1.5;
+  max-width: 68ch;
 }
 
 /* Physics Metrics Dashboard */
@@ -246,24 +261,27 @@
 }
 
 .rel-metric-title {
-  font-size: 0.75rem;
-  font-weight: var(--weight-semibold);
-  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: 0.04em;
 }
 
 .rel-metric-number {
   font-family: var(--font-mono);
-  font-size: 1.125rem;
-  font-weight: var(--weight-bold);
-  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
 }
 
 .rel-metric-desc {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  max-width: 68ch;
 }
 
 /* Formula & Scientific Theory Card */
