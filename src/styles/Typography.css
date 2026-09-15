@@ -6,70 +6,70 @@
 
 /* Headings */
 h1, .h1 {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 2.25rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 4rem);
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.1;
   margin: 1.5rem 0 0.75rem 0;
   color: var(--color-text);
 }
 
 h2, .h2 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.75rem;
-  letter-spacing: -0.015em;
-  line-height: 1.25;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin: 1.25rem 0 0.5rem 0;
   color: var(--color-text);
 }
 
 h3, .h3 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.25rem;
-  letter-spacing: -0.01em;
-  line-height: 1.35;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin: 1rem 0 0.5rem 0;
   color: var(--color-text);
 }
 
 h4, .h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0;
-  line-height: 1.4;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   margin: 0.75rem 0 0.25rem 0;
   color: var(--color-text);
 }
 
 /* Body text */
 p, .body-lg {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   line-height: 1.6;
-  letter-spacing: -0.005em;
+  max-width: 68ch;
   margin: 0 0 1rem 0;
   color: var(--color-text-muted);
 }
 
-.body-sm {
-  font-family: var(--font-sans);
+small, .body-sm, .small {
+  font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   color: var(--color-text-muted);
 }
 
 .label {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: var(--color-text-muted);
 }
 
