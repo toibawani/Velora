@@ -102,6 +102,13 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
 
       {/* Main Content */}
       <main className="uh-main">
+        <div className="uh-hero-header">
+          <h1 className="uh-hero-title">Academic Universe</h1>
+          <p className="uh-hero-subtitle">
+            Curated curriculum spanning relativistic spacetime, epistemology, and historical revivals.
+          </p>
+        </div>
+
         {/* Daily Spark */}
         <section className="uh-daily-spark">
           <DailySpark />

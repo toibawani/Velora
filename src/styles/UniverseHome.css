@@ -189,6 +189,31 @@ button:active, .btn:active, .card:active, .interactive:active {
   padding: var(--space-10) var(--space-8) var(--space-16);
 }
 
+/* ==================== HERO HEADER ==================== */
+.uh-hero-header {
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.uh-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin: 0 0 0.5rem 0;
+}
+
+.uh-hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 68ch;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
 /* ==================== DAILY SPARK ==================== */
 .uh-daily-spark {
   margin-bottom: var(--space-12);
@@ -205,18 +230,22 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .uh-subjects-title {
-  margin: 0 0 var(--space-2) 0;
-  font-size: 1.85rem;
-  font-weight: 900;
-  color: var(--text-primary);
-  letter-spacing: -0.03em;
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .uh-subjects-subtitle {
   margin: 0;
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: var(--leading-normal);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  max-width: 68ch;
 }
 
 /* ==================== SUBJECTS GRID ==================== */
@@ -273,18 +302,22 @@ button:active, .btn:active, .card:active, .interactive:active {
 }
 
 .card-title {
-  margin: 0 0 var(--space-2) 0;
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 600;
+  color: var(--color-text);
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .card-description {
   margin: 0;
+  font-family: var(--font-body);
   font-size: 0.875rem;
-  line-height: var(--leading-normal);
-  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 68ch;
+  color: var(--color-text-muted);
 }
 
 .card-cta {
@@ -316,10 +349,12 @@ button:active, .btn:active, .card:active, .interactive:active {
 
 .uh-section-title {
   margin: 0 0 var(--space-6) 0;
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: var(--text-primary);
-  letter-spacing: -0.025em;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 /* ==================== FEATURE SPOTLIGHT ==================== */
@@ -345,25 +380,30 @@ button:active, .btn:active, .card:active, .interactive:active {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 0.75rem;
-  font-weight: var(--weight-bold);
+  font-size: 0.875rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  color: var(--accent-primary);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
   margin-bottom: var(--space-2);
 }
 
 .uh-spotlight-title {
-  font-size: 1.25rem;
-  font-weight: var(--weight-bold);
-  margin: 0 0 var(--space-2);
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--color-text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .uh-spotlight-desc {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: var(--leading-normal);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  max-width: 68ch;
   margin: 0;
 }
 
