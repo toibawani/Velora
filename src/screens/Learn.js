@@ -36,6 +36,7 @@ import '../styles/Learn.css';
 import LearningAnalytics from '../components/LearningAnalytics';
 import SmartRevision from '../components/SmartRevision';
 import SocialProof from '../components/SocialProof';
+import EmptyState from '../components/EmptyState';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
@@ -333,58 +334,68 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
         {/* Structured Modules */}
         <section className="learn-section">
           <h2 className="section-title">Curated Modules</h2>
-          <div className="modules-list">
-            {subject.modules.map((module) => (
-              <div
-                key={module.id}
-                className={`module-card ${module.status}`}
-              >
-                <div className="module-header">
-                  <div className="module-info">
-                    <h3 className="module-name">{module.name}</h3>
-                    <span
-                      className="module-status"
-                      style={{ color: getStatusColor(module.status) }}
-                    >
-                      {getStatusIcon(module.status)} {module.status.replace('-', ' ')}
-                    </span>
-                  </div>
-                  <div className="module-progress">
-                    <div className="progress-bar">
-                      <div
-                        className="progress-fill"
-                        style={{ width: `${module.progress}%` }}
-                      ></div>
-                    </div>
-                    <span className="progress-text">{module.progress}%</span>
-                  </div>
-                </div>
-
-                <div className="module-topics">
-                  {module.topics.map((topic) => (
-                    <button
-                      key={topic.id}
-                      className="topic-btn"
-                      onClick={() => {
-                        setSelectedTopic(topic);
-                        startFlowGame({
-                          name: topic.name,
-                          type: 'quiz',
-                          difficulty: 'Intermediate',
-                          duration: 10
-                        });
-                      }}
-                    >
-                      <span className="topic-name">{topic.name}</span>
-                      <span className="topic-lessons">
-                        {topic.lessons} interactive parts
+          {(!subject.modules || subject.modules.length === 0) ? (
+            <EmptyState
+              icon="📚"
+              title="No modules found"
+              description="Complete topics or explore another subject to unlock tailored modules."
+              actionText="Switch Subject"
+              action={() => setSelectedSubject('physics')}
+            />
+          ) : (
+            <div className="modules-list">
+              {subject.modules.map((module) => (
+                <div
+                  key={module.id}
+                  className={`module-card ${module.status}`}
+                >
+                  <div className="module-header">
+                    <div className="module-info">
+                      <h3 className="module-name">{module.name}</h3>
+                      <span
+                        className="module-status"
+                        style={{ color: getStatusColor(module.status) }}
+                      >
+                        {getStatusIcon(module.status)} {module.status.replace('-', ' ')}
                       </span>
-                    </button>
-                  ))}
+                    </div>
+                    <div className="module-progress">
+                      <div className="progress-bar">
+                        <div
+                          className="progress-fill"
+                          style={{ width: `${module.progress}%` }}
+                        ></div>
+                      </div>
+                      <span className="progress-text">{module.progress}%</span>
+                    </div>
+                  </div>
+
+                  <div className="module-topics">
+                    {module.topics.map((topic) => (
+                      <button
+                        key={topic.id}
+                        className="topic-btn"
+                        onClick={() => {
+                          setSelectedTopic(topic);
+                          startFlowGame({
+                            name: topic.name,
+                            type: 'quiz',
+                            difficulty: 'Intermediate',
+                            duration: 10
+                          });
+                        }}
+                      >
+                        <span className="topic-name">{topic.name}</span>
+                        <span className="topic-lessons">
+                          {topic.lessons} interactive parts
+                        </span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Flow-State Interactive Learning Experiences */}
