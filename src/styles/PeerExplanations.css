@@ -20,7 +20,7 @@
 .explanations-subtitle {
   margin: 0;
   font-size: 0.95rem;
-  color: #6f6f6f;
+  color: #4a4a4a;
 }
 
 .explanation-input-box {
@@ -60,7 +60,7 @@
 
 .char-count {
   font-size: 0.85rem;
-  color: #8a8a8a;
+  color: #5f5e5a;
   font-weight: 600;
 }
 
@@ -117,7 +117,7 @@
 
 .time-ago {
   font-size: 0.8rem;
-  color: #8a8a8a;
+  color: #5f5e5a;
   font-weight: 600;
 }
 
@@ -151,7 +151,7 @@
 }
 
 .vote-count {
-  color: #6f6f6f;
+  color: #4a4a4a;
 }
 
 .vote-btn.clear:hover {
