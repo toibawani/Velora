@@ -33,13 +33,18 @@
   cursor: pointer;
   font-weight: var(--weight-medium);
   font-size: 0.8125rem;
-  transition: background-color var(--duration-fast) var(--ease-standard),
-              border-color var(--duration-fast) var(--ease-standard);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .learn-back-btn:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.learn-back-btn:active {
+  transform: translateY(0);
 }
 
 .learn-title {
@@ -171,14 +176,19 @@
   flex-direction: column;
   gap: var(--space-1);
   align-items: flex-start;
-  transition: border-color var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-align: left;
 }
 
 .topic-btn:hover {
   border-color: var(--accent-primary);
   background: var(--bg-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.topic-btn:active {
+  transform: translateY(0);
 }
 
 .topic-name {
