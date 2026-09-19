@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import EmptyState from './EmptyState';
 import '../styles/PeerExplanations.css';
 
 function PeerExplanations({ topic }) {
@@ -120,43 +121,56 @@ function PeerExplanations({ topic }) {
         </div>
       </div>
 
-      <div className="explanations-list">
-        {sortedExplanations.map((exp) => (
-          <div key={exp.id} className="explanation-card">
-            <p className="explanation-text">"{exp.text}"</p>
+      {sortedExplanations.length === 0 ? (
+        <EmptyState
+          icon="💡"
+          title="No peer explanations yet"
+          description="Be the first to explain this concept in simple words for your peers."
+          actionText="Write First Explanation"
+          action={() => {
+            const input = document.querySelector('.explanation-input');
+            if (input) input.focus();
+          }}
+        />
+      ) : (
+        <div className="explanations-list">
+          {sortedExplanations.map((exp) => (
+            <div key={exp.id} className="explanation-card">
+              <p className="explanation-text">"{exp.text}"</p>
 
-            <div className="explanation-footer">
-              <span className="time-ago">{getTimeAgo(exp.timestamp)}</span>
+              <div className="explanation-footer">
+                <span className="time-ago">{getTimeAgo(exp.timestamp)}</span>
 
-              <div className="vote-buttons">
-                <button
-                  className="vote-btn clear"
-                  onClick={() => handleVote(exp.id, 'clear')}
-                >
-                  <span className="vote-icon">🎯</span>
-                  <span className="vote-count">{exp.votes.clear}</span>
-                </button>
+                <div className="vote-buttons">
+                  <button
+                    className="vote-btn clear"
+                    onClick={() => handleVote(exp.id, 'clear')}
+                  >
+                    <span className="vote-icon">🎯</span>
+                    <span className="vote-count">{exp.votes.clear}</span>
+                  </button>
 
-                <button
-                  className="vote-btn funny"
-                  onClick={() => handleVote(exp.id, 'funny')}
-                >
-                  <span className="vote-icon">😄</span>
-                  <span className="vote-count">{exp.votes.funny}</span>
-                </button>
+                  <button
+                    className="vote-btn funny"
+                    onClick={() => handleVote(exp.id, 'funny')}
+                  >
+                    <span className="vote-icon">😄</span>
+                    <span className="vote-count">{exp.votes.funny}</span>
+                  </button>
 
-                <button
-                  className="vote-btn mindBending"
-                  onClick={() => handleVote(exp.id, 'mindBending')}
-                >
-                  <span className="vote-icon">🤯</span>
-                  <span className="vote-count">{exp.votes.mindBending}</span>
-                </button>
+                  <button
+                    className="vote-btn mindBending"
+                    onClick={() => handleVote(exp.id, 'mindBending')}
+                  >
+                    <span className="vote-icon">🤯</span>
+                    <span className="vote-count">{exp.votes.mindBending}</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
