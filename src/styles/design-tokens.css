@@ -101,13 +101,13 @@
   --radius-xl: 8px;
   --radius-full: 8px;
 
-  /* ---- Clean Elevation (Flat by default, subtle shadow on hover) ---- */
+  /* ---- Clean Elevation (3-tier shadow scale) ---- */
   --shadow-none: none;
-  --shadow-xs: none;
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
-  --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.10);
 
   /* ---- Precision Transitions ---- */
   --ease-standard: ease-out;
