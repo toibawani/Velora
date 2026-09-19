@@ -72,9 +72,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--leading-tight);
 }
 
-p {
+/* Ensure minimum contrast */
+p, .text-secondary {
   line-height: var(--leading-normal);
-  color: var(--color-text-muted);
+  color: var(--text-secondary, #4a4a4a);
 }
 
 /* Global utility animations — purposeful, subtle fade */
