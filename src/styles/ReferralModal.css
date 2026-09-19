@@ -128,7 +128,7 @@
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.45;
-  color: var(--text-secondary, #999999);
+  color: var(--text-secondary, #5f5e5a);
 }
 
 /* Link Copy Section */
