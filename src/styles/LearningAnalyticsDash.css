@@ -20,7 +20,7 @@
 .analytics-subtitle {
   margin: 0;
   font-size: 0.95rem;
-  color: #6f6f6f;
+  color: #4a4a4a;
 }
 
 .stats-grid {
@@ -54,7 +54,7 @@
 
 .stat-label {
   font-size: 0.8rem;
-  color: #8a8a8a;
+  color: #5f5e5a;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -109,7 +109,7 @@
 
 .bar-label {
   font-size: 0.8rem;
-  color: #8a8a8a;
+  color: #5f5e5a;
   font-weight: 600;
 }
 
