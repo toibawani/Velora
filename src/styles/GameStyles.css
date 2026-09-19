@@ -235,8 +235,31 @@
   cursor: pointer;
   font-family: var(--font-sans);
   font-size: 0.875rem;
-  font-weight: var(--weight-semibold);
-  transition: background-color var(--duration-fast) var(--ease-standard);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-submit:hover:not(:disabled),
+.btn-skip:hover:not(:disabled),
+.btn-next:hover:not(:disabled),
+.btn-restart:hover:not(:disabled),
+.btn-duel-submit:hover:not(:disabled),
+.btn-undo:hover:not(:disabled),
+.btn-submit-chain:hover:not(:disabled),
+.btn-submit-puzzle:hover:not(:disabled),
+.btn-hint:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn-submit:active:not(:disabled),
+.btn-skip:active:not(:disabled),
+.btn-next:active:not(:disabled),
+.btn-restart:active:not(:disabled),
+.btn-duel-submit:active:not(:disabled),
+.btn-undo:active:not(:disabled),
+.btn-submit-chain:active:not(:disabled),
+.btn-submit-puzzle:active:not(:disabled),
+.btn-hint:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-submit,
