@@ -93,19 +93,22 @@ p {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Focus states for keyboard navigation */
+/* Accessibility: Focus states */
 button:focus-visible,
 input:focus-visible,
+textarea:focus-visible,
 a:focus-visible,
+[role="button"]:focus-visible,
 .interactive:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid #667eea;
   outline-offset: 2px;
-  transition: outline 0.15s ease-out;
+  border-radius: 4px;
 }
 
-/* Remove default outline on mouse clicks */
+/* Remove default outline on mouse clicks only */
 button:focus:not(:focus-visible),
-input:focus:not(:focus-visible) {
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
   outline: none;
 }
 
