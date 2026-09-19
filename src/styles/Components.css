@@ -156,13 +156,13 @@
   justify-content: space-between;
   align-items: center;
   border: 1px solid var(--border-default);
-  box-shadow: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .module-card:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
@@ -390,13 +390,13 @@
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.15s ease;
   border: 1px solid var(--border-default);
-  box-shadow: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .tool-card:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-hover);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
