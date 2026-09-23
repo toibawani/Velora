@@ -121,3 +121,43 @@
   --z-modal: 400;
   --z-toast: 500;
 }
+/* ==========================================================================
+   Dark Mode — contrast-aware token overrides
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #111111;
+    --color-text: #f2f2f2;
+    --color-text-muted: #a0a0a0;
+    --color-border: #2a2a2a;
+    --bg-primary: #111111;
+    --bg-secondary: #1c1c1c;
+    --bg-tertiary: #252525;
+    --bg-elevated: #1c1c1c;
+    --bg-hover: #2a2a2a;
+    --bg-active: #333333;
+    --text-primary: #f2f2f2;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #777777;
+    --text-inverse: #111111;
+    --border-subtle: #222222;
+    --border-default: #2a2a2a;
+    --border-strong: #3a3a3a;
+    --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.25);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.50);
+    --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.40);
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  .card, input, textarea, select {
+    background: var(--bg-secondary);
+    border-color: var(--border-default);
+    color: var(--text-primary);
+  }
+}
