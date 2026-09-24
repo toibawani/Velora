@@ -6,6 +6,7 @@ import SplashScreen from './screens/Splash';
 import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
 import BottomNav from './components/BottomNav';
+import MobileNav from './components/MobileNav';
 import OnboardingTour from './components/OnboardingTour';
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -90,6 +91,9 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="app">
+        {screen === 'splash' ? null : (
+          <MobileNav currentScreen={screen} setScreen={setScreen} onLogout={handleLogout} />
+        )}
         <Suspense fallback={<ScreenLoader />}>
         {screen === 'splash' && <SplashScreen setScreen={setScreen} />}
 
