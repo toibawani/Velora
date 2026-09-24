@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAnalyticsData, recordStudySession } from '../utils/analyticsStorage';
+import { trackEvent } from '../utils/analytics';
 import '../styles/Analytics.css';
 
 /**
@@ -15,6 +16,7 @@ function Analytics({ setScreen, user }) {
   const [simulatedLogged, setSimulatedLogged] = useState(false);
 
   useEffect(() => {
+    trackEvent('screen_view', { screen: 'analytics' });
     setAnalytics(getAnalyticsData());
   }, []);
 
