@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Auth.css';
+import { getErrorMessage } from '../utils/validation';
 
 /**
  * Register Screen
@@ -9,11 +10,42 @@ import '../styles/Auth.css';
  */
 function Register({ setScreen, onRegister }) {
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [name, setName] = useState('');
+  const [nameError, setNameError] = useState('');
+
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    setName(value);
+    setNameError(getErrorMessage('Username', value));
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailError(getErrorMessage('Email', value));
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordError(getErrorMessage('Password', value));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const nErr = getErrorMessage('Username', name);
+    const eErr = getErrorMessage('Email', email);
+    const pErr = getErrorMessage('Password', password);
+    setNameError(nErr);
+    setEmailError(eErr);
+    setPasswordError(pErr);
+
+    if (nErr || eErr || pErr || !name || !email || !password) {
+      return;
+    }
     onRegister(email, password, name);
   };
 
@@ -23,16 +55,21 @@ function Register({ setScreen, onRegister }) {
         <h1 className="auth-title">Join VELORA</h1>
         <p className="auth-subtitle">Start your intellectual exploration today</p>
 
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form" noValidate>
           <div className="form-group">
             <label>Full name</label>
             <input
               type="text"
               placeholder="Your name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleNameChange}
               required
             />
+            {nameError && (
+              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+                {nameError}
+              </span>
+            )}
           </div>
 
           <div className="form-group">
@@ -41,9 +78,14 @@ function Register({ setScreen, onRegister }) {
               type="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               required
             />
+            {emailError && (
+              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+                {emailError}
+              </span>
+            )}
           </div>
 
           <div className="form-group">
@@ -52,9 +94,14 @@ function Register({ setScreen, onRegister }) {
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               required
             />
+            {passwordError && (
+              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+                {passwordError}
+              </span>
+            )}
           </div>
 
           <button type="submit" className="btn btn-primary btn-full">
