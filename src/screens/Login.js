@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Auth.css';
 import { getErrorMessage } from '../utils/validation';
 
-function Login({ setScreen, onLogin }) {
+function Login({ setScreen, onLogin, showToast }) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +28,9 @@ function Login({ setScreen, onLogin }) {
     setPasswordError(pErr);
 
     if (eErr || pErr || !email || !password) {
+      if (showToast) {
+        showToast('Please check your email and password.', 'error');
+      }
       return;
     }
     onLogin(email, password);
