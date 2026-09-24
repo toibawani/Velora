@@ -1,7 +1,7 @@
 .analytics-dash {
   background: #ffffff;
   border: 1px solid #e0e0e0;
-  border-radius: 14px;
+  border-radius: var(--radius-lg, 8px);
   padding: 2.5rem;
   margin-bottom: 3rem;
 }
@@ -33,7 +33,7 @@
 .stat-box {
   background: #f8f8f8;
   border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  border-radius: var(--radius-md, 8px);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
