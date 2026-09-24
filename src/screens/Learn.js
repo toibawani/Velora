@@ -17,6 +17,7 @@ import {
   Users,
   BookOpen
 } from 'lucide-react';
+import LoadingCard from '../components/LoadingCard';
 import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
 import BlackHoleMastery from '../components/BlackHoleMastery';
@@ -39,6 +40,7 @@ import SocialProof from '../components/SocialProof';
 import EmptyState from '../components/EmptyState';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [activeGame, setActiveGame] = useState({
@@ -313,7 +315,8 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
 
       <main className="learn-main">
         {/* Mastery Path */}
-        <MasteryPath selectedSubject={selectedSubject || 'physics'} />
+        {isLoading && <LoadingCard count={3} />}
+        {!isLoading && <MasteryPath selectedSubject={selectedSubject || 'physics'} />}
 
         {/* Black Holes Special (for Physics) */}
         {(selectedSubject === 'physics' || !selectedSubject) && (
