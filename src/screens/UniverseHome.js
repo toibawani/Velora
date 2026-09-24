@@ -6,6 +6,7 @@ import ReferralModal from '../components/ReferralModal';
 import CertificateModal from '../components/CertificateModal';
 import ThemeToggle from '../components/ThemeToggle';
 import { trackEvent } from '../utils/analytics';
+import useKeyboardShortcuts from '../hooks/useKeyboardShortcuts';
 import '../styles/UniverseHome.css';
 // StreakTracker & PersonalizedDashboard reserved for future feature sections
 
@@ -19,6 +20,13 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
   const [hoveredSubject, setHoveredSubject] = useState(null);
   const [showReferral, setShowReferral] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
+
+  useKeyboardShortcuts({
+    escape: () => {
+      setShowReferral(false);
+      setShowCertificate(false);
+    }
+  });
 
   useEffect(() => {
     trackEvent('screen_view', { screen: 'universe', user: user?.name });
