@@ -1,5 +1,6 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import './App.css';
+import { getPreference, setPreference } from './utils/preferences';
 
 // Core Landing / Auth Screens (loaded directly for instant initial render)
 import SplashScreen from './screens/Splash';
@@ -65,6 +66,18 @@ function App() {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [learnView, setLearnView] = useState('overview');
+  const [darkMode, setDarkMode] = useState(() => 
+    getPreference('darkMode', false)
+  );
+
+  useEffect(() => {
+    setPreference('darkMode', darkMode);
+    if (darkMode) {
+      document.documentElement.style.colorScheme = 'dark';
+    } else {
+      document.documentElement.style.colorScheme = 'light';
+    }
+  }, [darkMode]);
 
   const handleLogin = (email, password) => {
     setUser({ email, name: email.split('@')[0] });
