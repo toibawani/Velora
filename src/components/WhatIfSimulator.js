@@ -96,7 +96,8 @@ function WhatIfSimulator({ topic }) {
                       key={idx}
                       className="visual-box"
                       style={{
-                        background: `linear-gradient(135deg, ${['#667eea', '#764ba2', '#1D9E75', '#FF6B6B'][idx % 4]} 0%, #F5F5F5 100%)`,
+                        background: '#f8f8f8',
+                        border: '1px solid #e0e0e0',
                       }}
                     >
                       <p>Scenario Visualization</p>
