@@ -61,6 +61,16 @@ button:disabled {
   box-shadow: none;
 }
 
+/* Accessible focus ring for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* Secondary / Ghost button utilities */
 button.btn-secondary,
 .btn-secondary {
