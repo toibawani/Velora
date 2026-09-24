@@ -8,7 +8,7 @@ import { getErrorMessage } from '../utils/validation';
  * Clean, token-backed registration form. Inline styles removed in favour
  * of Auth.css utility classes (.btn-secondary, .btn-ghost, .btn-full).
  */
-function Register({ setScreen, onRegister }) {
+function Register({ setScreen, onRegister, showToast }) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
@@ -44,6 +44,9 @@ function Register({ setScreen, onRegister }) {
     setPasswordError(pErr);
 
     if (nErr || eErr || pErr || !name || !email || !password) {
+      if (showToast) {
+        showToast('Please fill in all fields correctly.', 'error');
+      }
       return;
     }
     onRegister(email, password, name);
