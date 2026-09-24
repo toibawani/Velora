@@ -39,6 +39,7 @@ import SmartRevision from '../components/SmartRevision';
 import SocialProof from '../components/SocialProof';
 import EmptyState from '../components/EmptyState';
 import { trackEvent } from '../utils/analytics';
+import { measurePerformance } from '../utils/performance';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -143,7 +144,9 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     },
   };
 
-  const subject = subjectData[selectedSubject || 'physics'];
+  const subject = measurePerformance('resolve_subject_data', () => {
+    return subjectData[selectedSubject || 'physics'];
+  });
   if (!subject) return null;
 
   const handleBack = () => {
