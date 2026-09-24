@@ -121,3 +121,10 @@
     display: none;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav,
+  .mobile-nav-item {
+    transition: none;
+  }
+}
