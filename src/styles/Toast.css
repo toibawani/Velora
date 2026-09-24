@@ -4,14 +4,14 @@
   right: 2rem;
   background: white;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: var(--radius-md, 8px);
   padding: 1rem 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
   display: flex;
   align-items: center;
   gap: 1rem;
   animation: toast-slide-in 0.25s ease;
-  z-index: 10000;
+  z-index: var(--z-toast, 10000);
   max-width: 360px;
   min-width: 220px;
   font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
