@@ -93,7 +93,7 @@
 
 .leaderboard-score {
   font-weight: 700;
-  color: #667eea;
+  color: var(--accent-primary, #667eea);
 }
 
 @media (max-width: 768px) {
