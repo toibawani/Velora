@@ -1,0 +1,123 @@
+.mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 44px;
+  height: 44px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav.open {
+  transform: translateX(0);
+}
+
+.mobile-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mobile-nav-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.mobile-nav-header button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.mobile-nav-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.mobile-nav-item {
+  background: none;
+  border: none;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  color: #4a4a4a;
+  font-size: 1rem;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-item:hover {
+  background: #f8f8f8;
+}
+
+.mobile-nav-item.active {
+  background: #f0f8ff;
+  border-left-color: #667eea;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.mobile-nav-logout {
+  background: #E74C3C;
+  color: white;
+  border: none;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+@media (min-width: 769px) {
+  .mobile-nav,
+  .mobile-nav-toggle,
+  .mobile-nav-overlay {
+    display: none;
+  }
+}
