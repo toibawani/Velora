@@ -55,9 +55,9 @@
 
   /* ---- Brand Accent (Solid, Zero Gradients, Zero Clutter) ---- */
   --accent-primary: var(--color-accent);
-  --accent-primary-hover: #5b21b6;
+  --accent-primary-hover: #556cd6;
   --accent-blue: var(--color-accent);
-  --accent-blue-hover: #5b21b6;
+  --accent-blue-hover: #556cd6;
   --accent-green: #15803d;
   --accent-green-hover: #166534;
   --accent-orange: #c2410c;
