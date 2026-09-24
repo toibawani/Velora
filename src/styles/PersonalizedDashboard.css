@@ -103,13 +103,14 @@
 .rec-btn {
   padding: 6px 14px;
   background: transparent;
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
+  color: #1a1a1a;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 500;
   font-size: 0.8125rem;
   transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
               box-shadow var(--duration-fast) var(--ease-standard);
   align-self: flex-start;
   box-shadow: none;
@@ -117,6 +118,7 @@
 
 .rec-btn:hover {
   background: var(--bg-hover);
+  border-color: #1a1a1a;
   box-shadow: var(--shadow-hover);
 }
 
