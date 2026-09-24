@@ -63,18 +63,18 @@
 
 .btn-submit-note {
   padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #667eea;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-submit-note:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+  background: #556cd6;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.25);
 }
 
 .btn-submit-note.submitted {
