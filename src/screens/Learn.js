@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Atom,
   Brain,
@@ -38,6 +38,7 @@ import LearningAnalytics from '../components/LearningAnalytics';
 import SmartRevision from '../components/SmartRevision';
 import SocialProof from '../components/SocialProof';
 import EmptyState from '../components/EmptyState';
+import { trackEvent } from '../utils/analytics';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +50,10 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     difficulty: 'Intermediate',
     duration: 10
   });
+
+  useEffect(() => {
+    trackEvent('learning_started', { subject: selectedSubject, view: currentView });
+  }, [selectedSubject, currentView]);
 
   const subjectData = {
     physics: {
