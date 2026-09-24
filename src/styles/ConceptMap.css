@@ -68,7 +68,7 @@
 .concept-node.selected circle {
   stroke: var(--accent-primary);
   stroke-width: 1;
-  filter: drop-shadow(0 0 4px rgba(109, 40, 217, 0.35));
+  filter: drop-shadow(0 0 4px rgba(102, 126, 234, 0.35));
 }
 
 .node-label {
@@ -98,7 +98,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--accent-primary);
+  color: #1a1a1a;
 }
 
 .detail-close {
