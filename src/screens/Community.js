@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { trackEvent } from '../utils/analytics';
 import '../styles/Community.css';
 
 /**
@@ -110,6 +111,10 @@ function Community({ setScreen }) {
   const [selectedSubject, setSelectedSubject] = useState('physics');
   const [moderationNotice, setModerationNotice] = useState(null);
   const [flaggedIds, setFlaggedIds] = useState(new Set());
+
+  useEffect(() => {
+    trackEvent('screen_view', { screen: 'community' });
+  }, []);
 
   // Filtered thread listing
   const filteredDiscussions = useMemo(() => {
