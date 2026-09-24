@@ -10,6 +10,7 @@ import BottomNav from './components/BottomNav';
 import MobileNav from './components/MobileNav';
 import OnboardingTour from './components/OnboardingTour';
 import ErrorBoundary from './components/ErrorBoundary';
+import Toast from './components/Toast';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -66,9 +67,14 @@ function App() {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [learnView, setLearnView] = useState('overview');
+  const [toast, setToast] = useState(null);
   const [darkMode, setDarkMode] = useState(() => 
     getPreference('darkMode', false)
   );
+
+  const showToast = (message, type = 'info') => {
+    setToast({ message, type });
+  };
 
   useEffect(() => {
     setPreference('darkMode', darkMode);
@@ -113,11 +119,11 @@ function App() {
         {screen === 'landing' && <LandingPage setScreen={setScreen} />}
 
         {screen === 'login' && (
-          <LoginScreen setScreen={setScreen} onLogin={handleLogin} />
+          <LoginScreen setScreen={setScreen} onLogin={handleLogin} showToast={showToast} />
         )}
 
         {screen === 'register' && (
-          <RegisterScreen setScreen={setScreen} onRegister={handleRegister} />
+          <RegisterScreen setScreen={setScreen} onRegister={handleRegister} showToast={showToast} />
         )}
 
         {screen === 'universe' && user && (
@@ -181,6 +187,14 @@ function App() {
           <OnboardingTour
             onComplete={() => setShowOnboarding(false)}
             setSelectedSubject={setSelectedSubject}
+          />
+        )}
+
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
           />
         )}
       </Suspense>
