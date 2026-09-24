@@ -19,7 +19,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'spacetime',
       title: 'Space-Time',
       icon: '⏱️',
-      color: '#764ba2',
+      color: '#667eea',
       content: 'Time and space are the same fabric—spacetime. Gravity bends it.',
       duration: '10 mins',
     },
@@ -436,14 +436,14 @@ function SpaceBasicsVisual() {
       <svg viewBox="0 0 400 300" className="visual-svg">
         <defs>
           <linearGradient id="spaceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#667eea" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#764ba2" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="#667eea" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#667eea" stopOpacity="0.05" />
           </linearGradient>
         </defs>
 
         {/* 3D Axes */}
         <line x1="200" y1="250" x2="200" y2="50" stroke="#667eea" strokeWidth="2" />
-        <line x1="200" y1="250" x2="350" y2="250" stroke="#764ba2" strokeWidth="2" />
+        <line x1="200" y1="250" x2="350" y2="250" stroke="#667eea" strokeWidth="2" />
         <line x1="200" y1="250" x2="130" y2="300" stroke="#1D9E75" strokeWidth="2" />
 
         {/* Axis Labels */}
