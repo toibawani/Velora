@@ -7,6 +7,7 @@ import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
 import BottomNav from './components/BottomNav';
 import OnboardingTour from './components/OnboardingTour';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -87,8 +88,9 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <Suspense fallback={<ScreenLoader />}>
+    <ErrorBoundary>
+      <div className="app">
+        <Suspense fallback={<ScreenLoader />}>
         {screen === 'splash' && <SplashScreen setScreen={setScreen} />}
 
         {screen === 'landing' && <LandingPage setScreen={setScreen} />}
@@ -165,7 +167,8 @@ function App() {
           />
         )}
       </Suspense>
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 
