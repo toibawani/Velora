@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Award, UserPlus, Atom, Brain, Landmark, Sparkles, Headphones, Disc, ArrowRight } from 'lucide-react';
 import DailySpark from '../components/DailySpark';
 import SocialProof from '../components/SocialProof';
 import ReferralModal from '../components/ReferralModal';
 import CertificateModal from '../components/CertificateModal';
 import ThemeToggle from '../components/ThemeToggle';
+import { trackEvent } from '../utils/analytics';
 import '../styles/UniverseHome.css';
 // StreakTracker & PersonalizedDashboard reserved for future feature sections
 
@@ -18,6 +19,10 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
   const [hoveredSubject, setHoveredSubject] = useState(null);
   const [showReferral, setShowReferral] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
+
+  useEffect(() => {
+    trackEvent('screen_view', { screen: 'universe', user: user?.name });
+  }, [user]);
 
   const subjects = [
     {
@@ -47,6 +52,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
   ];
 
   const handleSubjectClick = (subjectId) => {
+    trackEvent('subject_selected', { subjectId });
     setSelectedSubject(subjectId);
     setScreen('learn');
   };
