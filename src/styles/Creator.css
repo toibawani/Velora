@@ -166,7 +166,7 @@
 }
 
 .mindmap-canvas circle:hover {
-  filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.2));
+  filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.2));
 }
 
 .mindmap-hint {

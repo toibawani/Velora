@@ -50,8 +50,8 @@
 .explanation-error { margin: -0.5rem 0 var(--space-4); color: var(--color-error); font-size: 0.8125rem; line-height: 1.5; }
 
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .input-footer {
@@ -68,7 +68,7 @@
 
 .submit-btn {
   padding: 10px 20px;
-  background: #667eea;
+  background: #2563EB;
   color: white;
   border: none;
   border-radius: 6px;
@@ -155,7 +155,7 @@
 
 .vote-btn.clear:hover {
   background: #f0f8ff;
-  border-color: #667eea;
+  border-color: #2563EB;
 }
 
 .vote-btn.funny:hover {
@@ -165,7 +165,7 @@
 
 .vote-btn.mindBending:hover {
   background: #f0f0ff;
-  border-color: #667eea;
+  border-color: #2563EB;
 }
 
 @media (max-width: 768px) {

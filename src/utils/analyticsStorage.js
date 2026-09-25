@@ -79,7 +79,7 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
       topic: topicName,
       hours: parseFloat(hours.toFixed(1)),
       subject,
-      color: subject === 'physics' ? '#4f7df3' : subject === 'philosophy' ? '#4f7df3' : '#ff9f0a'
+      color: subject === 'physics' ? '#2563EB' : subject === 'philosophy' ? '#2563EB' : '#ff9f0a'
     });
   }
   

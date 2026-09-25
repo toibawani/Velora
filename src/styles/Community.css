@@ -422,9 +422,9 @@
 }
 
 .upvote-btn.upvoted {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(37, 99, 235, 0.1);
   color: var(--accent-primary);
-  border-color: rgba(102, 126, 234, 0.35);
+  border-color: rgba(37, 99, 235, 0.35);
 }
 
 .flag-btn {

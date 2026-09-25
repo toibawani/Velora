@@ -84,7 +84,7 @@ function RevisionPlanner({ onBack }) {
               {/* Initial curve (steep drop) */}
               <path d="M 60 40 Q 120 160, 200 160" stroke="#444444" strokeWidth="2" strokeDasharray="4 4" fill="none" />
               {/* Review 1 (Day 1) */}
-              <path d="M 120 120 L 120 40 Q 200 120, 280 120" stroke="#4f7df3" strokeWidth="2" fill="none" />
+              <path d="M 120 120 L 120 40 Q 200 120, 280 120" stroke="#2563EB" strokeWidth="2" fill="none" />
               {/* Review 2 (Day 3) */}
               <path d="M 240 90 L 240 40 Q 340 85, 440 85" stroke="#34c759" strokeWidth="2.5" fill="none" />
               {/* Review 3 (Day 7 -> Permanent) */}
@@ -92,7 +92,7 @@ function RevisionPlanner({ onBack }) {
 
               {/* Data points */}
               <circle cx="60" cy="40" r="5" fill="#ffffff" />
-              <circle cx="120" cy="40" r="5" fill="#4f7df3" />
+              <circle cx="120" cy="40" r="5" fill="#2563EB" />
               <circle cx="240" cy="40" r="5" fill="#34c759" />
               <circle cx="400" cy="40" r="5" fill="#34c759" />
 

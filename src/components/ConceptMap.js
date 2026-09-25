@@ -8,10 +8,10 @@ function ConceptMap({ subject }) {
     physics: {
       title: 'Physics Knowledge Map',
       nodes: [
-        { id: 1, label: 'Space & Time', x: 50, y: 20, color: '#667eea' },
-        { id: 2, label: 'Gravity', x: 80, y: 50, color: '#667eea' },
+        { id: 1, label: 'Space & Time', x: 50, y: 20, color: '#2563EB' },
+        { id: 2, label: 'Gravity', x: 80, y: 50, color: '#2563EB' },
         { id: 3, label: 'Black Holes', x: 95, y: 80, color: '#E74C3C' },
-        { id: 4, label: 'Relativity', x: 20, y: 50, color: '#667eea' },
+        { id: 4, label: 'Relativity', x: 20, y: 50, color: '#2563EB' },
         { id: 5, label: 'Quantum Mechanics', x: 50, y: 80, color: '#F39C12' },
       ],
       edges: [
@@ -36,7 +36,7 @@ function ConceptMap({ subject }) {
         { id: 2, label: 'Ontology', x: 80, y: 50, color: '#2E7D32' },
         { id: 3, label: 'Ethics', x: 20, y: 50, color: '#2E7D32' },
         { id: 4, label: 'Metaphysics', x: 50, y: 80, color: '#F39C12' },
-        { id: 5, label: 'Logic', x: 95, y: 20, color: '#667eea' },
+        { id: 5, label: 'Logic', x: 95, y: 20, color: '#2563EB' },
       ],
       edges: [
         { from: 1, to: 4, label: 'overlaps with' },

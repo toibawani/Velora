@@ -11,7 +11,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'what-is-space',
       title: 'What is Space?',
       icon: '🌌',
-      color: '#667eea',
+      color: '#2563EB',
       content: 'The three-dimensional arena in which all physical objects exist and events occur.',
       duration: '8 mins',
     },
@@ -19,7 +19,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'spacetime',
       title: 'Space-Time',
       icon: '⏱️',
-      color: '#667eea',
+      color: '#2563EB',
       content: 'Time and space are the same fabric—spacetime. Gravity bends it.',
       duration: '10 mins',
     },
@@ -27,7 +27,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'gravity',
       title: "Einstein's Gravity",
       icon: '⬇️',
-      color: '#4f7df3',
+      color: '#2563EB',
       content: 'Mass curves spacetime. Objects follow the straightest path in curved geometry.',
       duration: '12 mins',
     },
@@ -59,7 +59,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'kerr-black-hole',
       title: 'Spinning Black Holes',
       icon: '⚡',
-      color: '#667eea',
+      color: '#2563EB',
       content: 'Frame-dragging. Ergosphere. The cosmic tornado.',
       duration: '14 mins',
     },
@@ -75,7 +75,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'information-paradox',
       title: 'Information Paradox',
       icon: '❓',
-      color: '#667eea',
+      color: '#2563EB',
       content: 'The greatest unsolved problem. Is information destroyed?',
       duration: '15 mins',
     },
@@ -435,9 +435,9 @@ function SpaceBasicsVisual() {
     <div className="visual-container">
       <svg viewBox="0 0 400 300" className="visual-svg">
         {/* Objects in space */}
-        <circle cx="200" cy="150" r="30" fill="#263b72" stroke="#667eea" strokeWidth="2" />
-        <line x1="200" y1="250" x2="200" y2="50" stroke="#667eea" strokeWidth="2" />
-        <line x1="200" y1="250" x2="350" y2="250" stroke="#667eea" strokeWidth="2" />
+        <circle cx="200" cy="150" r="30" fill="#263b72" stroke="#2563EB" strokeWidth="2" />
+        <line x1="200" y1="250" x2="200" y2="50" stroke="#2563EB" strokeWidth="2" />
+        <line x1="200" y1="250" x2="350" y2="250" stroke="#2563EB" strokeWidth="2" />
         <line x1="200" y1="250" x2="130" y2="300" stroke="#1D9E75" strokeWidth="2" />
 
         {/* Axis Labels */}
@@ -459,10 +459,10 @@ function SpaceBasicsVisual() {
 
         {/* Grid */}
         {[0, 50, 100, 150, 200, 250, 300, 350, 400].map((x) => (
-          <line key={`v${x}`} x1={x} y1="250" x2={x} y2="260" stroke="#667eea" strokeWidth="0.5" opacity="0.3" />
+          <line key={`v${x}`} x1={x} y1="250" x2={x} y2="260" stroke="#2563EB" strokeWidth="0.5" opacity="0.3" />
         ))}
         {[0, 50, 100, 150, 200, 250, 300].map((y) => (
-          <line key={`h${y}`} x1="200" y1={y} x2="210" y2={y} stroke="#667eea" strokeWidth="0.5" opacity="0.3" />
+          <line key={`h${y}`} x1="200" y1={y} x2="210" y2={y} stroke="#2563EB" strokeWidth="0.5" opacity="0.3" />
         ))}
       </svg>
     </div>

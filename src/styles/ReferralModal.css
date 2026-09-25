@@ -165,7 +165,7 @@
 }
 
 .copy-link-btn {
-  background: #4f7df3;
+  background: #2563EB;
   color: #ffffff;
   border: none;
   padding: 10px 18px;
@@ -178,7 +178,7 @@
 }
 
 .copy-link-btn:hover {
-  background: #3d6ce0;
+  background: #1D4ED8;
 }
 
 /* Social Buttons */

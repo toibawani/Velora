@@ -89,7 +89,7 @@ function CreatorStudio({ topic, onBack }) {
               <h2>🧠 Create a Mind Map</h2>
               <svg className="mindmap-canvas" viewBox="0 0 600 400">
                 {/* Center circle */}
-                <circle cx="300" cy="200" r="50" fill="#667eea" />
+                <circle cx="300" cy="200" r="50" fill="#2563EB" />
                 <text x="300" y="200" textAnchor="middle" dominantBaseline="central" fill="white">
                   {topic?.name}
                 </text>
@@ -102,7 +102,7 @@ function CreatorStudio({ topic, onBack }) {
                   return (
                     <g key={i}>
                       <line x1="300" y1="200" x2={x} y2={y} stroke="#D3D1C7" strokeWidth="2" />
-                      <circle cx={x} cy={y} r="40" fill="#F1EFE8" stroke="#667eea" strokeWidth="2" />
+                      <circle cx={x} cy={y} r="40" fill="#F1EFE8" stroke="#2563EB" strokeWidth="2" />
                       <text x={x} y={y} textAnchor="middle" dominantBaseline="central">
                         Concept {i + 1}
                       </text>

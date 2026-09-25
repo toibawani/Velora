@@ -85,7 +85,7 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
                 className="review-btn"
                 onClick={() => handleReviewNow(item.id)}
                 style={{
-                  background: getDaysUntilReview(item.nextReview) <= 0 ? '#E74C3C' : '#667eea',
+                  background: getDaysUntilReview(item.nextReview) <= 0 ? '#E74C3C' : '#2563EB',
                 }}
               >
                 Review

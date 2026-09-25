@@ -56,7 +56,7 @@
 
 .onboarding-progress-fill {
   height: 100%;
-  background: #4f7df3;
+  background: #2563EB;
   border-radius: 999px;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -138,13 +138,13 @@
 }
 
 .onboarding-option-card:hover {
-  border-color: #4f7df3;
+  border-color: #2563EB;
 }
 
 .onboarding-option-card.selected {
-  background: rgba(79, 125, 243, 0.12);
-  border-color: #4f7df3;
-  box-shadow: 0 0 0 2px rgba(79, 125, 243, 0.2);
+  background: rgba(37, 99, 235, 0.12);
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .opt-emoji {
@@ -190,14 +190,14 @@
 }
 
 .time-option-btn.selected {
-  background: rgba(79, 125, 243, 0.12);
-  border-color: #4f7df3;
-  color: #4f7df3;
+  background: rgba(37, 99, 235, 0.12);
+  border-color: #2563EB;
+  color: #2563EB;
 }
 
 /* CTA */
 .onboarding-cta-btn {
-  background: #4f7df3;
+  background: #2563EB;
   color: #ffffff;
   border: none;
   padding: 13px 28px;
@@ -211,7 +211,7 @@
 }
 
 .onboarding-cta-btn:hover:not(:disabled) {
-  background: #3d6ce0;
+  background: #1D4ED8;
   transform: translateY(-1px);
 }
 

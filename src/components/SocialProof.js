@@ -17,7 +17,7 @@ function SocialProof({ onSelectTopic }) {
       domain: 'Philosophy & Physics',
       learnersCount: '1,842 learners today',
       icon: '⏳',
-      color: '#4f7df3'
+      color: '#2563EB'
     },
     {
       id: 'holographic-universe',
@@ -25,7 +25,7 @@ function SocialProof({ onSelectTopic }) {
       domain: 'Theoretical Physics',
       learnersCount: '1,247 mastered this month',
       icon: '🌌',
-      color: '#4f7df3'
+      color: '#2563EB'
     },
     {
       id: 'determinism-free-will',

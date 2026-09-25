@@ -27,7 +27,7 @@
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: #4f7df3;
+  color: #2563EB;
   text-transform: uppercase;
   display: block;
   margin-bottom: 4px;
@@ -111,8 +111,8 @@
 }
 
 .age-btn.active {
-  background: #4f7df3;
-  border-color: #4f7df3;
+  background: #2563EB;
+  border-color: #2563EB;
   color: #ffffff;
 }
 
@@ -147,7 +147,7 @@
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #4f7df3;
+  color: #2563EB;
   letter-spacing: 0.05em;
 }
 
@@ -231,8 +231,8 @@
 
 .guide-export-btn {
   background: transparent;
-  color: #4f7df3;
-  border: 1px solid rgba(79, 125, 243, 0.4);
+  color: #2563EB;
+  border: 1px solid rgba(37, 99, 235, 0.4);
   padding: 8px 14px;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -242,7 +242,7 @@
 }
 
 .guide-export-btn:hover {
-  background: rgba(79, 125, 243, 0.1);
+  background: rgba(37, 99, 235, 0.1);
 }
 
 /* ==================== Parent Dashboard ==================== */
@@ -332,8 +332,8 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(79, 125, 243, 0.15);
-  color: #4f7df3;
+  background: rgba(37, 99, 235, 0.15);
+  color: #2563EB;
   display: flex;
   align-items: center;
   justify-content: center;

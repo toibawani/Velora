@@ -138,13 +138,13 @@ function SketchbookCard({ term = 'capillary-action' }) {
               <line x1="95" y1="40" x2="135" y2="40" stroke="#555" strokeWidth="2" />
               <path
                 d="M 97 290 Q 115 220 133 290 Z"
-                fill="#4f7df3"
+                fill="#2563EB"
                 opacity="0.6"
                 className="liquid-fill"
               />
-              <path d="M 97 290 Q 115 220 133 290" stroke="#4f7df3" strokeWidth="2" fill="none" />
-              <path d="M 97 220 Q 115 210 133 220" stroke="#4f7df3" strokeWidth="3" fill="none" />
-              <text x="115" y="195" fontSize="11" fill="#4f7df3" textAnchor="middle" fontWeight="bold">
+              <path d="M 97 290 Q 115 220 133 290" stroke="#2563EB" strokeWidth="2" fill="none" />
+              <path d="M 97 220 Q 115 210 133 220" stroke="#2563EB" strokeWidth="3" fill="none" />
+              <text x="115" y="195" fontSize="11" fill="#2563EB" textAnchor="middle" fontWeight="bold">
                 Meniscus
               </text>
               <text x="165" y="100" fontSize="13" fill="#e0e0e0" fontWeight="bold">
@@ -160,12 +160,12 @@ function SketchbookCard({ term = 'capillary-action' }) {
           {selectedTermKey === 'event-horizon' && (
             <svg viewBox="0 0 300 400" className="sketch-svg">
               <circle cx="150" cy="200" r="90" fill="none" stroke="#ff9f0a" strokeWidth="2" strokeDasharray="4 4" />
-              <circle cx="150" cy="200" r="65" fill="none" stroke="#4f7df3" strokeWidth="2" />
+              <circle cx="150" cy="200" r="65" fill="none" stroke="#2563EB" strokeWidth="2" />
               <circle cx="150" cy="200" r="45" fill="#000000" stroke="#ffffff" strokeWidth="2" />
               <text x="150" y="205" fontSize="12" fill="#ffffff" textAnchor="middle" fontWeight="bold">
                 Singularity
               </text>
-              <text x="150" y="145" fontSize="11" fill="#4f7df3" textAnchor="middle" fontWeight="bold">
+              <text x="150" y="145" fontSize="11" fill="#2563EB" textAnchor="middle" fontWeight="bold">
                 $R_s$ Horizon
               </text>
               <text x="150" y="95" fontSize="11" fill="#ff9f0a" textAnchor="middle" fontWeight="bold">
@@ -176,14 +176,14 @@ function SketchbookCard({ term = 'capillary-action' }) {
 
           {selectedTermKey === 'entropy' && (
             <svg viewBox="0 0 300 400" className="sketch-svg">
-              <rect x="40" y="80" width="90" height="90" fill="none" stroke="#4f7df3" strokeWidth="2" />
-              <circle cx="65" cy="105" r="4" fill="#4f7df3" />
-              <circle cx="85" cy="105" r="4" fill="#4f7df3" />
-              <circle cx="105" cy="105" r="4" fill="#4f7df3" />
-              <circle cx="65" cy="125" r="4" fill="#4f7df3" />
-              <circle cx="85" cy="125" r="4" fill="#4f7df3" />
-              <circle cx="105" cy="125" r="4" fill="#4f7df3" />
-              <text x="85" y="195" fontSize="11" fill="#4f7df3" textAnchor="middle" fontWeight="bold">
+              <rect x="40" y="80" width="90" height="90" fill="none" stroke="#2563EB" strokeWidth="2" />
+              <circle cx="65" cy="105" r="4" fill="#2563EB" />
+              <circle cx="85" cy="105" r="4" fill="#2563EB" />
+              <circle cx="105" cy="105" r="4" fill="#2563EB" />
+              <circle cx="65" cy="125" r="4" fill="#2563EB" />
+              <circle cx="85" cy="125" r="4" fill="#2563EB" />
+              <circle cx="105" cy="125" r="4" fill="#2563EB" />
+              <text x="85" y="195" fontSize="11" fill="#2563EB" textAnchor="middle" fontWeight="bold">
                 Low Entropy (Ordered)
               </text>
 

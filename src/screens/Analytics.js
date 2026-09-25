@@ -102,7 +102,7 @@ function Analytics({ setScreen, user }) {
                     <span className="style-pct">{analytics.learningStyle.visual}%</span>
                   </div>
                   <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.visual}%`, background: '#4f7df3' }}></div>
+                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.visual}%`, background: '#2563EB' }}></div>
                   </div>
                 </div>
 
@@ -112,7 +112,7 @@ function Analytics({ setScreen, user }) {
                     <span className="style-pct">{analytics.learningStyle.textual}%</span>
                   </div>
                   <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.textual}%`, background: '#4f7df3' }}></div>
+                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.textual}%`, background: '#2563EB' }}></div>
                   </div>
                 </div>
 
@@ -187,7 +187,7 @@ function Analytics({ setScreen, user }) {
                         className="bar-fill"
                         style={{
                           width: `${Math.min((item.hours / 8) * 100, 100)}%`,
-                          background: item.color || '#4f7df3'
+                          background: item.color || '#2563EB'
                         }}
                       ></div>
                     </div>

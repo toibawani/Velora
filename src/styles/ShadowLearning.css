@@ -46,8 +46,8 @@
 
 .note-input-shadow:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .note-meta {
@@ -63,7 +63,7 @@
 
 .btn-submit-note {
   padding: 12px 24px;
-  background: #667eea;
+  background: #2563EB;
   color: white;
   border: none;
   border-radius: 8px;
@@ -73,8 +73,8 @@
 }
 
 .btn-submit-note:hover {
-  background: #5568d3;
-  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.25);
+  background: #1D4ED8;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
 }
 
 .btn-submit-note.submitted {
@@ -142,7 +142,7 @@
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #2563EB;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -170,7 +170,7 @@
 }
 
 .vote-btn.clear:hover {
-  border-color: #667eea;
+  border-color: #2563EB;
   color: #1a1a1a;
 }
 
@@ -188,7 +188,7 @@
   padding: 1rem;
   background: #f5f8fc;
   border-radius: 8px;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #2563EB;
 }
 
 .shadow-note p {

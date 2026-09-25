@@ -147,8 +147,8 @@
 }
 
 .stepper-dot.current {
-  background: #4f7df3;
-  border-color: #4f7df3;
+  background: #2563EB;
+  border-color: #2563EB;
   width: 22px;
   border-radius: 999px;
 }
@@ -188,7 +188,7 @@
 
 .chapter-takeaway-box {
   background: rgba(255, 255, 255, 0.03);
-  border-left: 3px solid #4f7df3;
+  border-left: 3px solid #2563EB;
   padding: 1.15rem 1.5rem;
   border-radius: 0 8px 8px 0;
   margin-top: 0.5rem;
@@ -235,7 +235,7 @@
 }
 
 .reader-next-btn {
-  background: #4f7df3;
+  background: #2563EB;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -247,5 +247,5 @@
 }
 
 .reader-next-btn:hover {
-  background: #3d6ce0;
+  background: #1D4ED8;
 }

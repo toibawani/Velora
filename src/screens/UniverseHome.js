@@ -47,7 +47,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
       id: 'physics',
       name: 'Physics',
       icon: Atom,
-      color: '#4f7df3',
+      color: '#2563EB',
       description: 'Master the fundamental laws governing spacetime, relativity, and quantum systems',
       progress: '65% complete'
     },
@@ -55,7 +55,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
       id: 'philosophy',
       name: 'Philosophy',
       icon: Brain,
-      color: '#4f7df3',
+      color: '#2563EB',
       description: 'Explore epistemology, ethical frameworks, and the philosophy of science',
       progress: '45% complete'
     },

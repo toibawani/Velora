@@ -46,9 +46,9 @@ function ShareAchievementModal({ isOpen, onClose, milestone = 'Black Holes Maste
         <div className="achievement-graphic-card">
           <div className="badge-svg-container">
             <svg viewBox="0 0 160 160" className="milestone-badge-svg">
-              <circle cx="80" cy="80" r="72" fill="none" stroke="#4f7df3" strokeWidth="3" opacity="0.3" />
-              <circle cx="80" cy="80" r="64" fill="#141414" stroke="#4f7df3" strokeWidth="2" />
-              <circle cx="80" cy="80" r="50" fill="rgba(79, 125, 243, 0.1)" stroke="#34c759" strokeWidth="1.5" strokeDasharray="4 2" />
+              <circle cx="80" cy="80" r="72" fill="none" stroke="#2563EB" strokeWidth="3" opacity="0.3" />
+              <circle cx="80" cy="80" r="64" fill="#141414" stroke="#2563EB" strokeWidth="2" />
+              <circle cx="80" cy="80" r="50" fill="rgba(37, 99, 235, 0.1)" stroke="#34c759" strokeWidth="1.5" strokeDasharray="4 2" />
               <text x="80" y="74" fontSize="28" textAnchor="middle" dominantBaseline="middle">
                 🌌
               </text>

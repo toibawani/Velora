@@ -200,7 +200,7 @@ function RelativityLab({ onBack }) {
         for (let c = 0; c < cols; c++) {
           const pt = getPoint(c, r);
           const alpha = Math.max(0.1, 0.45 - (pt.dist / (width * 0.75)));
-          ctx.strokeStyle = `rgba(102, 126, 234, ${alpha})`;
+          ctx.strokeStyle = `rgba(37, 99, 235, ${alpha})`;
           if (c === 0) ctx.moveTo(pt.x, pt.y);
           else ctx.lineTo(pt.x, pt.y);
         }
@@ -213,7 +213,7 @@ function RelativityLab({ onBack }) {
         for (let r = 0; r < rows; r++) {
           const pt = getPoint(c, r);
           const alpha = Math.max(0.1, 0.45 - (pt.dist / (width * 0.75)));
-          ctx.strokeStyle = `rgba(102, 126, 234, ${alpha})`;
+          ctx.strokeStyle = `rgba(37, 99, 235, ${alpha})`;
           if (r === 0) ctx.moveTo(pt.x, pt.y);
           else ctx.lineTo(pt.x, pt.y);
         }
