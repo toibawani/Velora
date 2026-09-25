@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, X, BookOpen, Command, Home, BarChart3, Users, ArrowDown, ArrowUp } from 'lucide-react';
+import { Search, X, BookOpen, Command, Home, BarChart3, Users } from 'lucide-react';
 import '../styles/CommandPalette.css';
 
 const DESTINATIONS = [
