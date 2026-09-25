@@ -12,7 +12,6 @@ import '../styles/Analytics.css';
  */
 function Analytics({ setScreen, user }) {
   const [analytics, setAnalytics] = useState(getAnalyticsData());
-  const [selectedTimeframe, setSelectedTimeframe] = useState('week');
   const hasActivity = analytics.totalHoursStudied > 0 || analytics.topicTimeDistribution.length > 0;
   const domainCount = new Set(analytics.topicTimeDistribution.map((item) => item.subject)).size;
 
@@ -44,20 +43,7 @@ function Analytics({ setScreen, user }) {
               Understand how your brain retains complex subjects and optimize your study cadence.
             </p>
           </div>
-          <div className="timeframe-toggle-group">
-            <button
-              className={`timeframe-btn ${selectedTimeframe === 'week' ? 'active' : ''}`}
-              onClick={() => setSelectedTimeframe('week')}
-            >
-              This Week
-            </button>
-            <button
-              className={`timeframe-btn ${selectedTimeframe === 'month' ? 'active' : ''}`}
-              onClick={() => setSelectedTimeframe('month')}
-            >
-              All Time
-            </button>
-          </div>
+          <div className="analytics-scope-note">All activity is stored locally on this device.</div>
         </section>
 
         {/* Primary Metrics Grid */}

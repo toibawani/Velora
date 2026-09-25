@@ -30,8 +30,8 @@ function Glossary({ setScreen }) {
   const [selectedSubject, setSelectedSubject] = useState('physics');
 
   const allTerms = Object.values(GLOSSARY_DATA).flat();
-  const filteredTerms = search 
-    ? allTerms.filter(t => t.term.toLowerCase().includes(search.toLowerCase()))
+  const filteredTerms = search.trim()
+    ? allTerms.filter(t => t.term.toLowerCase().includes(search.trim().toLowerCase()))
     : GLOSSARY_DATA[selectedSubject];
 
   return (
@@ -39,8 +39,8 @@ function Glossary({ setScreen }) {
       <header className="glossary-header">
         <div className="container">
           <h1>Fun - Glossaries & Dictionaries</h1>
-          <button className="btn btn-primary" onClick={() => setScreen('dashboard')}>
-            Back
+          <button className="btn btn-primary" onClick={() => setScreen('universe')}>
+            Back to Universe
           </button>
         </div>
       </header>
@@ -68,14 +68,18 @@ function Glossary({ setScreen }) {
           </div>
         )}
 
-        <div className="terms-grid">
-          {filteredTerms.map((item, idx) => (
-            <div key={idx} className="term-card">
-              <h3>{item.term}</h3>
-              <p>{item.def}</p>
-            </div>
-          ))}
-        </div>
+        {filteredTerms.length === 0 ? (
+          <div className="glossary-empty" role="status">No terms match “{search.trim()}”. Try a shorter search.</div>
+        ) : (
+          <div className="terms-grid">
+            {filteredTerms.map((item, idx) => (
+              <div key={idx} className="term-card">
+                <h3>{item.term}</h3>
+                <p>{item.def}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="glossary-footer">
           <p>📚 Glossaries available for: Physics • Chemistry • Biology • Mathematics • Philosophy</p>
