@@ -32,7 +32,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
   });
 
   useEffect(() => {
-    trackEvent('screen_view', { screen: 'universe', user: user?.name });
+    trackEvent('screen_view', { screen: 'universe' });
     
     // Simulate initial data loading
     const timer = setTimeout(() => {
