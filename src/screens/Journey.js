@@ -57,8 +57,8 @@ function LearningJourney({ setScreen }) {
       {/* Top Navbar */}
       <header className="journey-navbar">
         <div className="journey-nav-left">
-          <button className="journey-back-btn" onClick={() => setScreen('dashboard')}>
-            ← Return to Dashboard
+          <button className="journey-back-btn" onClick={() => setScreen('universe')}>
+            ← Return to Universe
           </button>
           <div className="journey-title-col">
             <h1 className="journey-title">Epistemic Learning Journey</h1>
