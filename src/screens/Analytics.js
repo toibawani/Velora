@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAnalyticsData, recordStudySession } from '../utils/analyticsStorage';
+import { getAnalyticsData } from '../utils/analyticsStorage';
 import { trackEvent } from '../utils/analytics';
 import '../styles/Analytics.css';
 
@@ -13,19 +13,11 @@ import '../styles/Analytics.css';
 function Analytics({ setScreen, user }) {
   const [analytics, setAnalytics] = useState(getAnalyticsData());
   const [selectedTimeframe, setSelectedTimeframe] = useState('week');
-  const [simulatedLogged, setSimulatedLogged] = useState(false);
 
   useEffect(() => {
     trackEvent('screen_view', { screen: 'analytics' });
     setAnalytics(getAnalyticsData());
   }, []);
-
-  const handleSimulateSession = () => {
-    recordStudySession('General Relativity & Gravity', 30, 'physics');
-    setAnalytics(getAnalyticsData());
-    setSimulatedLogged(true);
-    setTimeout(() => setSimulatedLogged(false), 3000);
-  };
 
   return (
     <div className="analytics-page-root">
@@ -243,15 +235,6 @@ function Analytics({ setScreen, user }) {
           </div>
         </div>
 
-        {/* Live Simulation / Test Helper */}
-        <section className="analytics-footer-actions">
-          <button className="simulate-session-btn" onClick={handleSimulateSession}>
-            + Log 30-min Simulated Session (General Relativity)
-          </button>
-          {simulatedLogged && (
-            <span className="logged-toast">✓ Session logged locally! Refreshing stats...</span>
-          )}
-        </section>
       </main>
     </div>
   );
