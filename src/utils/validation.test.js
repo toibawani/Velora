@@ -23,11 +23,16 @@ describe('Validation utilities', () => {
     expect(validateUsername('a'.repeat(21))).toBe(false);
   });
 
+  test('handles non-string values without throwing', () => {
+    expect(getErrorMessage('Email', null)).toBe('Email is required');
+    expect(getErrorMessage('Password', {})).toBe('Password is required');
+  });
+
   test('generates expected error messages', () => {
     expect(getErrorMessage('Email', '')).toBe('Email is required');
-    expect(getErrorMessage('Email', 'bademail')).toBe('Invalid email format');
-    expect(getErrorMessage('Password', '123')).toBe('Password must be 6+ characters');
-    expect(getErrorMessage('Username', 'ab')).toBe('Username must be 3-20 characters');
+    expect(getErrorMessage('Email', 'bademail')).toBe('Enter a valid email address, such as name@example.com');
+    expect(getErrorMessage('Password', '123')).toBe('Use at least 6 characters for your password');
+    expect(getErrorMessage('Username', 'ab')).toBe('Use 3–20 characters for your name');
     expect(getErrorMessage('Email', 'good@email.com')).toBeNull();
   });
 });

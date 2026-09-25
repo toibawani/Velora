@@ -13,18 +13,19 @@ export const validateUsername = (username) => {
 };
 
 export const getErrorMessage = (field, value) => {
-  if (!value || !value.trim()) return `${field} is required`;
+  const normalized = typeof value === 'string' ? value.trim() : '';
+  if (!normalized) return `${field} is required`;
 
-  if (field === 'Email' && !validateEmail(value)) {
-    return 'Invalid email format';
+  if (field === 'Email' && !validateEmail(normalized)) {
+    return 'Enter a valid email address, such as name@example.com';
   }
 
-  if (field === 'Password' && !validatePassword(value)) {
-    return 'Password must be 6+ characters';
+  if (field === 'Password' && !validatePassword(normalized)) {
+    return 'Use at least 6 characters for your password';
   }
 
-  if (field === 'Username' && !validateUsername(value)) {
-    return 'Username must be 3-20 characters';
+  if (field === 'Username' && !validateUsername(normalized)) {
+    return 'Use 3–20 characters for your name';
   }
 
   return null;
