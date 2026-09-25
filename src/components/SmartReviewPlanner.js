@@ -48,7 +48,8 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
       <div className="review-list">
         {visibleItems.length === 0 ? (
           <div className="no-reviews">
-            <p>No topics to review yet. Start learning to unlock smart reviews!</p>
+            <strong>No saved lessons in this subject yet.</strong>
+            <p>Open a lesson and choose “Save for review” to create your first recall step.</p>
           </div>
         ) : (
           visibleItems.map((item) => (
