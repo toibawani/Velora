@@ -6,6 +6,7 @@ import ReferralModal from '../components/ReferralModal';
 import CertificateModal from '../components/CertificateModal';
 import ThemeToggle from '../components/ThemeToggle';
 import LoadingCard from '../components/LoadingCard';
+import StreakTracker from '../components/StreakTracker';
 import { trackEvent } from '../utils/analytics';
 import useKeyboardShortcuts from '../hooks/useKeyboardShortcuts';
 import '../styles/UniverseHome.css';
@@ -17,7 +18,7 @@ import '../styles/UniverseHome.css';
  * Central dashboard designed with Apple/Notion clarity. Focuses on personal
  * learning momentum, quick domain entry, and live community activity.
  */
-function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLogout }) {
+function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLogout, showToast }) {
   const [hoveredSubject, setHoveredSubject] = useState(null);
   const [showReferral, setShowReferral] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
@@ -138,6 +139,10 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
             {/* Daily Spark */}
             <section className="uh-daily-spark">
               <DailySpark />
+            </section>
+
+            <section className="uh-streak-section" aria-label="Learning consistency">
+              <StreakTracker onNotify={showToast} />
             </section>
 
         {/* Feature Spotlight Banner */}

@@ -110,6 +110,7 @@ function App() {
             setSelectedSubject={setSelectedSubject}
             setLearnView={setLearnView}
             onLogout={handleLogout}
+            showToast={showToast}
           />
         )}
 

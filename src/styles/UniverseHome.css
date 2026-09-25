@@ -219,6 +219,10 @@ button:active, .btn:active, .card:active, .interactive:active {
   margin-bottom: var(--space-12);
 }
 
+.uh-streak-section {
+  margin-bottom: var(--space-10);
+}
+
 /* ==================== SUBJECTS SECTION ==================== */
 .uh-subjects {
   margin-bottom: var(--space-12);

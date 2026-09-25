@@ -1,9 +1,9 @@
 .peer-explanations {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 14px;
-  padding: 2.5rem;
-  margin-bottom: 3rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
 }
 
 .explanations-header {
@@ -24,11 +24,11 @@
 }
 
 .explanation-input-box {
-  background: #f8f8f8;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
 }
 
 .explanation-input {
@@ -47,6 +47,8 @@
 }
 
 .explanation-input:focus {
+.explanation-error { margin: -0.5rem 0 var(--space-4); color: var(--color-error); font-size: 0.8125rem; line-height: 1.5; }
+
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);

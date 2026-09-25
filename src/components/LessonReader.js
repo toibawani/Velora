@@ -4,16 +4,20 @@ import PeerExplanations from './PeerExplanations';
 import ConceptMap from './ConceptMap';
 import SmartReviewPlanner from './SmartReviewPlanner';
 import { trackEvent } from '../utils/analytics';
+import { getReviewItems, addReviewItem, removeReviewItem } from '../utils/reviewPlanner';
 import '../styles/LessonReader.css';
 
 function LessonReader({ topic, subject, onBack, showToast }) {
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(() => topic ? getReviewItems().some((item) => item.id === `${subject}:${topic.id}`) : false);
   if (!topic) return null;
 
   const toggleSaved = () => {
-    setSaved((value) => !value);
-    trackEvent('lesson_saved', { subject, topic: topic.id, saved: !saved });
-    if (showToast) showToast(!saved ? 'Lesson saved to your review list.' : 'Lesson removed from your review list.', 'success');
+    const nextSaved = !saved;
+    if (nextSaved) addReviewItem(topic, subject);
+    else removeReviewItem(`${subject}:${topic.id}`);
+    setSaved(nextSaved);
+    trackEvent('lesson_saved', { subject, topic: topic.id, saved: nextSaved });
+    if (showToast) showToast(nextSaved ? 'Lesson saved. Your first review is tomorrow.' : 'Lesson removed from your review list.', 'success');
   };
 
   return (
@@ -39,7 +43,7 @@ function LessonReader({ topic, subject, onBack, showToast }) {
         </div>
         <section className="lesson-section-card"><div className="lesson-card-heading"><Compass size={17} /><h2>Map the idea</h2></div><ConceptMap subject={subject} /></section>
         <section className="lesson-section-card"><div className="lesson-card-heading"><Users size={17} /><h2>Compare explanations</h2></div><PeerExplanations topic={topic.title} /></section>
-        <section className="lesson-section-card"><div className="lesson-card-heading"><CalendarClock size={17} /><h2>Return to this later</h2></div><SmartReviewPlanner selectedSubject={subject} /></section>
+        <section className="lesson-section-card"><div className="lesson-card-heading"><CalendarClock size={17} /><h2>Return to this later</h2></div><SmartReviewPlanner selectedSubject={subject} onNotify={showToast} /></section>
       </main>
     </div>
   );

@@ -1,60 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { getReviewItems, saveReviewItems, completeReviewItem } from '../utils/reviewPlanner';
 import '../styles/SmartReviewPlanner.css';
 
-function SmartReviewPlanner({ selectedSubject }) {
-  const [reviewItems, setReviewItems] = useState(() => {
-    const saved = localStorage.getItem('velora_reviews');
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 1,
-            topic: 'Event Horizon',
-            subject: 'physics',
-            lastReviewed: new Date(Date.now() - 86400000).toISOString(),
-            nextReview: new Date(Date.now() + 86400000).toISOString(),
-            difficulty: 'medium',
-            retention: 65,
-          },
-          {
-            id: 2,
-            topic: 'Singularity',
-            subject: 'physics',
-            lastReviewed: new Date(Date.now() - 172800000).toISOString(),
-            nextReview: new Date(Date.now() + 259200000).toISOString(),
-            difficulty: 'hard',
-            retention: 45,
-          },
-          {
-            id: 3,
-            topic: "Newton's Laws",
-            subject: 'physics',
-            lastReviewed: new Date(Date.now() - 604800000).toISOString(),
-            nextReview: new Date(Date.now() + 604800000).toISOString(),
-            difficulty: 'easy',
-            retention: 92,
-          },
-        ];
-  });
+function SmartReviewPlanner({ selectedSubject, onNotify }) {
+  const [reviewItems, setReviewItems] = useState(getReviewItems);
 
   useEffect(() => {
-    localStorage.setItem('velora_reviews', JSON.stringify(reviewItems));
+    saveReviewItems(reviewItems);
   }, [reviewItems]);
 
   const handleReviewNow = (id) => {
-    setReviewItems(
-      reviewItems.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              lastReviewed: new Date().toISOString(),
-              nextReview: new Date(Date.now() + 7 * 86400000).toISOString(),
-              retention: Math.min(item.retention + 10, 100),
-            }
-          : item
-      )
-    );
-    alert('Great! Review completed. Scheduled for next week.');
+    setReviewItems(completeReviewItem(id));
+    if (onNotify) onNotify('Review recorded. Your next recall is in 7 days.', 'success');
   };
 
   const getDaysUntilReview = (nextReviewDate) => {
@@ -77,6 +34,8 @@ function SmartReviewPlanner({ selectedSubject }) {
     return `⏱️ In ${days} days`;
   };
 
+  const visibleItems = selectedSubject ? reviewItems.filter((item) => item.subject === selectedSubject) : reviewItems;
+
   return (
     <div className="smart-review-planner">
       <div className="planner-header">
@@ -87,12 +46,12 @@ function SmartReviewPlanner({ selectedSubject }) {
       </div>
 
       <div className="review-list">
-        {reviewItems.length === 0 ? (
+        {visibleItems.length === 0 ? (
           <div className="no-reviews">
             <p>No topics to review yet. Start learning to unlock smart reviews!</p>
           </div>
         ) : (
-          reviewItems.map((item) => (
+          visibleItems.map((item) => (
             <div key={item.id} className="review-item">
               <div className="review-left">
                 <h4 className="review-topic">{item.topic}</h4>

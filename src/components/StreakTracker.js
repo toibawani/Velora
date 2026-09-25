@@ -3,14 +3,23 @@ import { motion } from 'motion/react';
 import { Flame, Gift, Check } from 'lucide-react';
 import '../styles/StreakTracker.css';
 
-function StreakTracker({ user }) {
+function StreakTracker({ onNotify }) {
   const [streak, setStreak] = useState(() => {
-    const saved = localStorage.getItem('velora_streak');
-    return saved ? JSON.parse(saved) : { current: 0, lastLearned: null, breakTokens: 2 };
+    try {
+      const saved = JSON.parse(localStorage.getItem('velora_streak') || 'null');
+      if (saved && Number.isInteger(saved.current) && saved.current >= 0 && Number.isInteger(saved.breakTokens) && saved.breakTokens >= 0 && saved.breakTokens <= 2 && (saved.lastLearned === null || typeof saved.lastLearned === 'string')) return saved;
+    } catch {
+      // Start clean if the browser cache is damaged.
+    }
+    return { current: 0, lastLearned: null, breakTokens: 2 };
   });
 
   useEffect(() => {
-    localStorage.setItem('velora_streak', JSON.stringify(streak));
+    try {
+      localStorage.setItem('velora_streak', JSON.stringify(streak));
+    } catch {
+      // A full or unavailable storage should not interrupt learning.
+    }
   }, [streak]);
 
   const handleLearningToday = () => {
@@ -18,7 +27,7 @@ function StreakTracker({ user }) {
     const lastDate = streak.lastLearned ? new Date(streak.lastLearned).toDateString() : null;
 
     if (lastDate === today) {
-      alert('You already learned today! Come back tomorrow to keep your streak.');
+      if (onNotify) onNotify('You already learned today. Your streak is safe.', 'info');
       return;
     }
 
@@ -37,9 +46,9 @@ function StreakTracker({ user }) {
           lastLearned: new Date(),
           breakTokens: streak.breakTokens - 1,
         });
-        alert('Break token used! Your streak is safe.');
+        if (onNotify) onNotify('Break token used. Your streak is safe.', 'info');
       } else {
-        alert('Streak broken! Start fresh and build a new one.');
+        if (onNotify) onNotify('Your streak restarted. A fresh rhythm starts today.', 'info');
         setStreak({ current: 1, lastLearned: new Date(), breakTokens: 2 });
       }
     }

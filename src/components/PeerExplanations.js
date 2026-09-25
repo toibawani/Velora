@@ -2,66 +2,60 @@ import React, { useState, useEffect } from 'react';
 import EmptyState from './EmptyState';
 import '../styles/PeerExplanations.css';
 
-function PeerExplanations({ topic }) {
+const DEFAULT_EXPLANATIONS = [
+  { id: 1, text: 'Imagine spacetime as a rubber sheet. Heavy objects bend it, creating gravity. Nothing can escape once it bends too much.', votes: { clear: 24, funny: 3, mindBending: 8 }, timestamp: new Date(Date.now() - 3600000).toISOString() },
+  { id: 2, text: 'A black hole is where physics breaks. Time stops, space folds, and light gives up. It is the universe saying “I don’t know.”', votes: { clear: 12, funny: 42, mindBending: 18 }, timestamp: new Date(Date.now() - 7200000).toISOString() },
+  { id: 3, text: 'Think of it as an infinite trap. You can look in but never get out. Not even light escapes.', votes: { clear: 31, funny: 2, mindBending: 5 }, timestamp: new Date(Date.now() - 86400000).toISOString() }
+];
+
+const storageKey = (topic) => `velora_explanations_${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+function PeerExplanations({ topic, onNotify }) {
   const [explanations, setExplanations] = useState(() => {
-    const saved = localStorage.getItem('velora_explanations');
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 1,
-            text: 'Imagine spacetime as a rubber sheet. Heavy objects bend it, creating gravity. Nothing can escape once it bends too much.',
-            votes: { clear: 24, funny: 3, mindBending: 8 },
-            timestamp: new Date(Date.now() - 3600000).toISOString(),
-          },
-          {
-            id: 2,
-            text: 'A black hole is where physics breaks. Time stops, space folds, and light gives up. It\'s the universe saying "I don\'t know".',
-            votes: { clear: 12, funny: 42, mindBending: 18 },
-            timestamp: new Date(Date.now() - 7200000).toISOString(),
-          },
-          {
-            id: 3,
-            text: 'Think of it as an infinite trap. You can look in but never get out. Not even light escapes.',
-            votes: { clear: 31, funny: 2, mindBending: 5 },
-            timestamp: new Date(Date.now() - 86400000).toISOString(),
-          },
-        ];
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey(topic)) || 'null');
+      if (Array.isArray(saved) && saved.every((item) => item && typeof item.text === 'string' && item.votes)) return saved;
+    } catch {
+      // Fall back to the starter explanations when the local cache is damaged.
+    }
+    return DEFAULT_EXPLANATIONS;
   });
 
   const [newExplanation, setNewExplanation] = useState('');
+  const [inputError, setInputError] = useState('');
   const [userVotes, setUserVotes] = useState({});
 
   useEffect(() => {
-    localStorage.setItem('velora_explanations', JSON.stringify(explanations));
-  }, [explanations]);
+    try {
+      localStorage.setItem(storageKey(topic), JSON.stringify(explanations));
+    } catch {
+      // Explanations remain usable for this session if persistence is unavailable.
+    }
+  }, [explanations, topic]);
 
-  const handleSubmit = () => {
-    if (newExplanation.trim().length < 10) {
-      alert('Explanation too short. Help others understand!');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const text = newExplanation.trim();
+    if (text.length < 10) {
+      setInputError('Add a little more detail so another learner can follow your thinking.');
       return;
     }
-    if (newExplanation.length > 200) {
-      alert('Keep it concise! Maximum 200 characters.');
+    if (text.length > 200) {
+      setInputError('Keep your explanation to 200 characters or fewer.');
       return;
     }
 
-    const explanation = {
-      id: explanations.length + 1,
-      text: newExplanation,
-      votes: { clear: 0, funny: 0, mindBending: 0 },
-      timestamp: new Date().toISOString(),
-    };
-
+    const explanation = { id: Date.now(), text, votes: { clear: 0, funny: 0, mindBending: 0 }, timestamp: new Date().toISOString() };
     setExplanations([explanation, ...explanations]);
     setNewExplanation('');
-    alert('Submitted! Your anonymous explanation is live.');
+    setInputError('');
+    if (onNotify) onNotify('Your explanation is now part of the conversation.', 'success');
   };
 
   const handleVote = (id, voteType) => {
     const key = `${id}-${voteType}`;
     if (userVotes[key]) {
-      alert("You've already voted on this explanation!");
+      if (onNotify) onNotify('You have already voted on this explanation.', 'info');
       return;
     }
 
@@ -105,21 +99,24 @@ function PeerExplanations({ topic }) {
         <p className="explanations-subtitle">Anonymous peer learning - vote on clarity</p>
       </div>
 
-      <div className="explanation-input-box">
+      <form id="peer-explanation-form" className="explanation-input-box" onSubmit={handleSubmit}>
         <textarea
           className="explanation-input"
           placeholder="Explain this concept in 1-2 sentences. Be clear, be creative!"
           value={newExplanation}
-          onChange={(e) => setNewExplanation(e.target.value)}
+          onChange={(e) => { setNewExplanation(e.target.value); setInputError(''); }}
           maxLength={200}
+          aria-invalid={Boolean(inputError)}
+          aria-describedby={inputError ? 'peer-explanation-error' : undefined}
         />
+        {inputError && <p className="explanation-error" id="peer-explanation-error" role="alert">{inputError}</p>}
         <div className="input-footer">
           <span className="char-count">{newExplanation.length}/200</span>
-          <button className="submit-btn" onClick={handleSubmit}>
+          <button className="submit-btn" type="submit">
             Share Anonymously →
           </button>
         </div>
-      </div>
+      </form>
 
       {sortedExplanations.length === 0 ? (
         <EmptyState
