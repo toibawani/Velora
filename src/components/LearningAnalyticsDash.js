@@ -103,7 +103,7 @@ function LearningAnalyticsDash() {
         <div className="insight-item">
           <span className="insight-icon">📈</span>
           <p className="insight-text">
-            You're in the <strong>top 12%</strong> of learners this month!
+            Your current week is a useful baseline. Keep learning to see what changes.
           </p>
         </div>
       </div>
