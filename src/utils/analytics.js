@@ -1,32 +1,40 @@
-export const trackEvent = (eventName, data = {}) => {
-  const event = {
-    name: eventName,
-    timestamp: new Date().toISOString(),
-    ...data,
-  };
+const EVENTS_KEY = 'velora_events';
+const MAX_EVENTS = 100;
+const PRIVATE_KEYS = /^(email|password|token|secret|authorization)$/i;
 
-  try {
-    const events = JSON.parse(localStorage.getItem('velora_events') || '[]');
-    events.push(event);
-    // keep last 100 events to avoid storage bloat
-    localStorage.setItem('velora_events', JSON.stringify(events.slice(-100)));
-  } catch {
-    console.error('Failed to track event');
-  }
-};
+const sanitizeData = (data) => Object.fromEntries(Object.entries(data).filter(([key]) => !PRIVATE_KEYS.test(key)).map(([key, value]) => [key, ['string', 'number', 'boolean'].includes(typeof value) ? value : String(value)]));
 
-export const getAnalytics = () => {
+const readEvents = () => {
   try {
-    return JSON.parse(localStorage.getItem('velora_events') || '[]');
+    const parsed = JSON.parse(localStorage.getItem(EVENTS_KEY) || '[]');
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
 };
 
+export const trackEvent = (eventName, data = {}) => {
+  const event = {
+    name: typeof eventName === 'string' && eventName.trim() ? eventName.trim().slice(0, 80) : 'unknown_event',
+    timestamp: new Date().toISOString(),
+    ...sanitizeData(data),
+  };
+
+  try {
+    const events = readEvents();
+    events.push(event);
+    localStorage.setItem(EVENTS_KEY, JSON.stringify(events.slice(-MAX_EVENTS)));
+  } catch {
+    // Analytics must never interrupt a learner.
+  }
+};
+
+export const getAnalytics = () => readEvents();
+
 export const clearAnalytics = () => {
   try {
-    localStorage.removeItem('velora_events');
+    localStorage.removeItem(EVENTS_KEY);
   } catch {
-    console.error('Failed to clear analytics');
+    // Clearing analytics is best effort.
   }
 };

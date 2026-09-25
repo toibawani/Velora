@@ -14,6 +14,22 @@ describe('Analytics utilities', () => {
     expect(events[0].timestamp).toBeDefined();
   });
 
+  test('redacts private fields from tracked events', () => {
+    trackEvent('login_attempt', { screen: 'login', email: 'person@example.com', password: 'secret', token: 'abc' });
+    const [event] = getAnalytics();
+    expect(event.screen).toBe('login');
+    expect(event.email).toBeUndefined();
+    expect(event.password).toBeUndefined();
+    expect(event.token).toBeUndefined();
+  });
+
+  test('recovers from malformed analytics storage', () => {
+    localStorage.setItem('velora_events', '{not-json');
+    expect(getAnalytics()).toEqual([]);
+    trackEvent('recovered');
+    expect(getAnalytics()[0].name).toBe('recovered');
+  });
+
   test('caps events at 100 to prevent storage bloat', () => {
     for (let i = 0; i < 110; i++) {
       trackEvent('test', { i });
