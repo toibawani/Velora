@@ -1,11 +1,7 @@
 const STORAGE_KEY = 'velora_reviews';
 const DAY = 86400000;
 
-const DEFAULT_REVIEW_ITEMS = [
-  { id: 'physics:event-horizon', topic: 'Event Horizon', subject: 'physics', lastReviewed: new Date(Date.now() - DAY).toISOString(), nextReview: new Date(Date.now() + DAY).toISOString(), difficulty: 'medium', retention: 65 },
-  { id: 'physics:singularity', topic: 'Singularity', subject: 'physics', lastReviewed: new Date(Date.now() - 2 * DAY).toISOString(), nextReview: new Date(Date.now() + 3 * DAY).toISOString(), difficulty: 'hard', retention: 45 },
-  { id: 'physics:newtons-laws', topic: "Newton's Laws", subject: 'physics', lastReviewed: new Date(Date.now() - 7 * DAY).toISOString(), nextReview: new Date(Date.now() + 7 * DAY).toISOString(), difficulty: 'easy', retention: 92 }
-];
+const DEFAULT_REVIEW_ITEMS = [];
 
 const isValidItem = (item) => item && typeof item.id === 'string' && typeof item.topic === 'string' && typeof item.subject === 'string' && !Number.isNaN(Date.parse(item.nextReview));
 

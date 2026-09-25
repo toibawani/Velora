@@ -3,9 +3,9 @@ import { getReviewItems, saveReviewItems, addReviewItem, removeReviewItem, compl
 describe('review planner storage', () => {
   beforeEach(() => localStorage.clear());
 
-  test('recovers defaults when stored JSON is invalid', () => {
+  test('recovers an empty schedule when stored JSON is invalid', () => {
     localStorage.setItem('velora_reviews', '{not-json');
-    expect(getReviewItems().length).toBeGreaterThan(0);
+    expect(getReviewItems()).toEqual([]);
   });
 
   test('adds, completes, and removes a saved lesson', () => {
