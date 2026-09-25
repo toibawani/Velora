@@ -1,4 +1,4 @@
-import { getAnalyticsData } from './analyticsStorage';
+import { getAnalyticsData, recordStudySession } from './analyticsStorage';
 
 describe('analytics storage', () => {
   beforeEach(() => localStorage.clear());
@@ -14,3 +14,11 @@ describe('analytics storage', () => {
     expect(getAnalyticsData().totalHoursStudied).toBe(24.5);
   });
 });
+
+
+  test('records only valid study sessions', () => {
+    expect(recordStudySession('Stoicism', 0)).toBe(false);
+    expect(recordStudySession('Stoicism', 2000)).toBe(false);
+    expect(recordStudySession('Stoicism', 15, 'philosophy')).toBe(true);
+    expect(getAnalyticsData().topicTimeDistribution.some((item) => item.topic === 'Stoicism')).toBe(true);
+  });

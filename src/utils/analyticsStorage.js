@@ -94,8 +94,10 @@ export const saveAnalyticsData = (data) => {
 };
 
 export const recordStudySession = (topicName, minutes, subject = 'physics') => {
+  const safeMinutes = Number(minutes);
+  if (!topicName || !Number.isFinite(safeMinutes) || safeMinutes <= 0 || safeMinutes > 1440) return false;
   const data = getAnalyticsData();
-  const hours = minutes / 60;
+  const hours = safeMinutes / 60;
   data.totalHoursStudied = parseFloat((data.totalHoursStudied + hours).toFixed(1));
   
   const existingTopic = data.topicTimeDistribution.find(t => t.topic === topicName);
@@ -111,6 +113,7 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
   }
   
   saveAnalyticsData(data);
+  return true;
 };
 
 export const clearAnalyticsData = () => {
