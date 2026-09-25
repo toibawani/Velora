@@ -9,28 +9,22 @@
 const STORAGE_KEY = 'velora_learning_analytics';
 
 const DEFAULT_ANALYTICS = {
-  totalHoursStudied: 24.5,
-  currentStreak: 7,
-  topicsCompleted: 14,
+  totalHoursStudied: 0,
+  currentStreak: 0,
+  topicsCompleted: 0,
   learningStyle: {
-    visual: 45,      // % interactive/diagram preference
-    textual: 30,     // % deep reading preference
-    interactive: 25  // % flow-state challenges preference
+    visual: 0,      // % interactive/diagram preference
+    textual: 0,     // % deep reading preference
+    interactive: 0  // % flow-state challenges preference
   },
   peakHours: {
-    morning: 15,
-    afternoon: 25,
-    evening: 50,     // e.g. 7 PM - 10 PM
-    night: 10
+    morning: 0,
+    afternoon: 0,
+    evening: 0,
+    night: 0
   },
-  topicTimeDistribution: [
-    { topic: 'General Relativity & Gravity', hours: 7.2, subject: 'physics', color: '#4f7df3' },
-    { topic: 'Event Horizons & Singularities', hours: 6.5, subject: 'physics', color: '#4f7df3' },
-    { topic: 'Socratic Method & Epistemology', hours: 4.8, subject: 'philosophy', color: '#4f7df3' },
-    { topic: 'Ancient Egyptian Astronomy', hours: 3.5, subject: 'history', color: '#ff9f0a' },
-    { topic: 'Quantum Superposition', hours: 2.5, subject: 'physics', color: '#4f7df3' }
-  ],
-  struggledConcepts: [
+  topicTimeDistribution: [],
+  struggledConcepts: [],
     {
       concept: 'Spacetime Geodesics & Curvature Tensor',
       topic: 'General Relativity',
@@ -53,15 +47,7 @@ const DEFAULT_ANALYTICS = {
       recommendation: 'Review the Sketchbook card comparing subjective perception with physical reality.'
     }
   ],
-  weeklyActivity: [
-    { day: 'Mon', hours: 2.5, sessions: 2 },
-    { day: 'Tue', hours: 3.0, sessions: 3 },
-    { day: 'Wed', hours: 1.5, sessions: 1 },
-    { day: 'Thu', hours: 4.0, sessions: 4 },
-    { day: 'Fri', hours: 2.0, sessions: 2 },
-    { day: 'Sat', hours: 5.5, sessions: 5 },
-    { day: 'Sun', hours: 3.0, sessions: 3 }
-  ]
+  weeklyActivity: []
 };
 
 const cloneDefault = () => JSON.parse(JSON.stringify(DEFAULT_ANALYTICS));
