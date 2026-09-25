@@ -1,0 +1,149 @@
+:root,
+:root[data-theme='light'],
+:root[data-theme='dark'] {
+
+  --color-bg: #0B0F17;
+  --color-text: #F3F4F6;
+  --color-text-muted: #9CA3AF;
+  --color-accent: #A5B4FC;
+  --color-border: rgba(255, 255, 255, 0.12);
+
+  --bg-primary: #0B0F17;
+  --bg-secondary: rgba(255, 255, 255, 0.03);
+  --bg-tertiary: rgba(255, 255, 255, 0.06);
+  --bg-elevated: #111722;
+  --bg-hover: rgba(255, 255, 255, 0.08);
+  --bg-active: rgba(255, 255, 255, 0.11);
+
+  --text-primary: #F3F4F6;
+  --text-secondary: #B8C0CC;
+  --text-tertiary: #929BAA;
+  --text-inverse: #0B0F17;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.24);
+
+  --accent-primary: #6366F1;
+  --accent-primary-hover: #4F46E5;
+  --accent-blue: #6366F1;
+  --accent-blue-hover: #4F46E5;
+  --accent-green: #4ADE80;
+  --accent-green-hover: #22C55E;
+  --accent-orange: #FB923C;
+  --accent-red: #F87171;
+  --accent-red-hover: #EF4444;
+  --accent-teal: #2DD4BF;
+  --accent-gold: #FBBF24;
+
+  --color-success: #4ADE80;
+  --color-warning: #FB923C;
+  --color-error: #F87171;
+  --color-info: #A5B4FC;
+
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 24px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.42);
+  --shadow-hover: 0 12px 30px rgba(79, 70, 229, 0.2);
+
+  --ease-standard: ease-out;
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.04em;
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+}
+
+html,
+body,
+#root,
+.app {
+  background: #0B0F17;
+  color: #F3F4F6;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #A5B4FC;
+  outline-offset: 3px;
+}
+
+/* Preserve transparent secondary and icon actions under the required global
+   filled-button rule. */
+.auth-container button.auth-link,
+.auth-container button.auth-back,
+.auth-container .password-toggle,
+.splash .splash-btn-secondary,
+.mobile-nav-toggle,
+.mobile-nav-item,
+.bottom-nav-item,
+.btn-secondary,
+.btn-ghost,
+[class*="icon-button"] {
+  background: transparent !important;
+  color: #B8C0CC !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+.auth-container button.auth-link:hover,
+.auth-container button.auth-back:hover,
+.auth-container .password-toggle:hover,
+.splash .splash-btn-secondary:hover,
+.mobile-nav-toggle:hover,
+.mobile-nav-item:hover,
+.bottom-nav-item:hover,
+.btn-secondary:hover,
+.btn-ghost:hover,
+[class*="icon-button"]:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+/* The required substring card selector also matches card headings and content
+   blocks. Those descendants are reset here without weakening the exact rule. */
+[class*="card-heading"],
+[class*="card-title"],
+[class*="card-content"],
+[class*="card-description"],
+[class*="card-header"],
+[class*="card-footer"],
+[class*="card-body"],
+[class*="card-text"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+}
