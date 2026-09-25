@@ -1,4 +1,4 @@
-import { getPreference, setPreference } from './preferences';
+import { getPreference, setPreference, clearPreference } from './preferences';
 
 describe('Preferences utilities', () => {
   beforeEach(() => {
@@ -18,3 +18,10 @@ describe('Preferences utilities', () => {
     expect(getPreference('fontSize', 12)).toBe(14);
   });
 });
+
+
+  test('clears a saved preference', () => {
+    setPreference('reducedMotion', true);
+    clearPreference('reducedMotion');
+    expect(getPreference('reducedMotion', false)).toBe(false);
+  });

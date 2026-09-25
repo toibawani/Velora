@@ -14,3 +14,11 @@ export const setPreference = (key, value) => {
     console.error('Failed to save preference');
   }
 };
+
+export const clearPreference = (key) => {
+  try {
+    localStorage.removeItem(`velora_pref_${key}`);
+  } catch {
+    console.error('Failed to clear preference');
+  }
+};
