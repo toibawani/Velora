@@ -70,17 +70,24 @@ const INITIAL_TOPICS = [
   }
 ];
 
+const isTopic = (topic) => topic && typeof topic.id === 'string' && typeof topic.concept === 'string' && Number.isFinite(topic.retentionScore);
+const validTopics = (value) => Array.isArray(value) && value.every(isTopic);
+
+const cloneInitialTopics = () => INITIAL_TOPICS.map((topic) => ({ ...topic }));
+
 export const getRevisionSchedule = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_TOPICS));
-      return INITIAL_TOPICS;
+      return cloneInitialTopics();
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (!validTopics(parsed)) throw new Error('Invalid revision schedule');
+    return parsed;
   } catch (e) {
     console.warn('LocalStorage unavailable, returning default revision topics', e);
-    return INITIAL_TOPICS;
+    return cloneInitialTopics();
   }
 };
 
@@ -93,7 +100,7 @@ export const saveRevisionSchedule = (topics) => {
 };
 
 export const calculateOverallRetention = (topics = getRevisionSchedule()) => {
-  if (!topics.length) return 80;
+  if (!Array.isArray(topics) || !topics.length) return 0;
   const total = topics.reduce((sum, item) => sum + item.retentionScore, 0);
   return Math.round(total / topics.length);
 };
