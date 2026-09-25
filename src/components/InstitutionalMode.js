@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/InstitutionalMode.css';
 
 /**
@@ -11,6 +12,7 @@ import '../styles/InstitutionalMode.css';
 function InstitutionalMode({ onBack }) {
   const [activeRole, setActiveRole] = useState('educator'); // 'educator' | 'parent'
   const [selectedAgeBand, setSelectedAgeBand] = useState('high-school');
+  const learningData = getAnalyticsData();
 
   const educatorGuides = [
     {
@@ -176,27 +178,27 @@ function InstitutionalMode({ onBack }) {
               <div className="parent-stat-box">
                 <span className="stat-eyebrow">Educational Value Index</span>
                 <div className="stat-main-row">
-                  <span className="stat-score-large">98/100</span>
+                  <span className="stat-score-large">Not measured</span>
                 </div>
                 <p className="stat-sub-expl">
-                  Top tier cognitive enrichment. 100% time spent on physics, logic, and history.
+                  Focus state is not yet measured. It will appear after a learner records a study session.
                 </p>
               </div>
 
               <div className="parent-stat-box">
                 <span className="stat-eyebrow">Focused Learning Time</span>
                 <div className="stat-main-row">
-                  <span className="stat-score-large">24.5 hrs</span>
+                  <span className="stat-score-large">{learningData.totalHoursStudied} hrs</span>
                 </div>
                 <p className="stat-sub-expl">
-                  Equivalent to 3 weeks of high school advanced science tutoring.
+                  Recorded locally from the learner’s actual session history.
                 </p>
               </div>
 
               <div className="parent-stat-box">
                 <span className="stat-eyebrow">Attention & Flow State</span>
                 <div className="stat-main-row">
-                  <span className="stat-score-large">High (42m avg)</span>
+                  <span className="stat-score-large">Not measured</span>
                 </div>
                 <p className="stat-sub-expl">
                   Uninterrupted deep focus sessions without algorithmic distractions.
