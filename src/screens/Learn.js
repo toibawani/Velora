@@ -39,8 +39,10 @@ import SocialProof from '../components/SocialProof';
 import EmptyState from '../components/EmptyState';
 import { trackEvent } from '../utils/analytics';
 import { measurePerformance } from '../utils/performance';
+import LessonReader from '../components/LessonReader';
+import { CURRICULUM, getTopic } from '../data/curriculum';
 
-function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView }) {
+function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, showToast }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [activeGame, setActiveGame] = useState({
@@ -54,97 +56,19 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     trackEvent('learning_started', { subject: selectedSubject, view: currentView });
   }, [selectedSubject, currentView]);
 
-  const subjectData = {
-    physics: {
-      name: 'Physics',
-      icon: Atom,
-      color: '#4f7df3',
-      description: 'Explore the fundamental laws governing spacetime, matter, and energy',
-      modules: [
-        {
-          id: 'classical-mechanics',
-          name: 'Classical Mechanics',
-          status: 'in-progress',
-          progress: 65,
-          topics: [
-            { id: 'newtons-laws', name: "Newton's Laws & Inertial Frames", lessons: 5 },
-            { id: 'forces', name: 'Forces & Equilibrium', lessons: 4 },
-            { id: 'work-energy', name: 'Work, Energy & Conservative Fields', lessons: 6 },
-          ],
-        },
-        {
-          id: 'modern-physics',
-          name: 'Modern & Relativistic Physics',
-          status: 'in-progress',
-          progress: 40,
-          topics: [
-            { id: 'relativity', name: 'Special & General Relativity', lessons: 7 },
-            { id: 'quantum', name: 'Quantum States & Superposition', lessons: 8 },
-          ],
-        },
-      ],
-    },
-    philosophy: {
-      name: 'Philosophy',
-      icon: Brain,
-      color: '#af52de',
-      description: 'Dive into epistemic, ethical, and metaphysical frameworks',
-      modules: [
-        {
-          id: 'ancient-philosophy',
-          name: 'Classical Antiquity',
-          status: 'in-progress',
-          progress: 45,
-          topics: [
-            { id: 'socrates', name: 'Socratic Method & Platonic Forms', lessons: 4 },
-            { id: 'aristotle', name: 'Aristotelian Logic & Telos', lessons: 5 },
-          ],
-        },
-        {
-          id: 'modern-philosophy',
-          name: 'Modern Rationalism & Empiricism',
-          status: 'not-started',
-          progress: 0,
-          topics: [
-            { id: 'descartes', name: 'Cartesian Doubt & Cogito', lessons: 3 },
-            { id: 'kant', name: 'Kantian Transcendental Idealism', lessons: 4 },
-          ],
-        },
-      ],
-    },
-    history: {
-      name: 'History',
-      icon: Landmark,
-      color: '#ff9f0a',
-      description: 'Understand the civilizational catalysts shaping human history',
-      modules: [
-        {
-          id: 'ancient-history',
-          name: 'Ancient Civilizations',
-          status: 'completed',
-          progress: 100,
-          topics: [
-            { id: 'egypt', name: 'The Nile River & Monumental Architecture', lessons: 6 },
-            { id: 'rome', name: 'Roman Republic & Imperial Governance', lessons: 7 },
-          ],
-        },
-        {
-          id: 'medieval',
-          name: 'The Middle Ages & Renaissance',
-          status: 'in-progress',
-          progress: 35,
-          topics: [
-            { id: 'dark-ages', name: 'Feudal Structure & Monastic Scholarship', lessons: 5 },
-            { id: 'renaissance', name: 'Scientific Revival & Humanism', lessons: 6 },
-          ],
-        },
-      ],
-    },
+  const subjectRecord = measurePerformance('resolve_subject_data', () => CURRICULUM[selectedSubject || 'physics']);
+  const subjectIcons = { physics: Atom, philosophy: Brain, history: Landmark };
+  const subject = subjectRecord && {
+    ...subjectRecord,
+    icon: subjectIcons[selectedSubject || 'physics'],
+    modules: subjectRecord.modules.map((module, index) => ({
+      ...module,
+      name: module.title,
+      status: index === 0 ? 'in-progress' : 'not-started',
+      progress: 0,
+      topics: module.topics.map((topic) => ({ ...topic, name: topic.title, lessons: topic.sections.length })),
+    })),
   };
-
-  const subject = measurePerformance('resolve_subject_data', () => {
-    return subjectData[selectedSubject || 'physics'];
-  });
   if (!subject) return null;
 
   const handleBack = () => {
@@ -193,6 +117,11 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
         return '#666666';
     }
   };
+
+  // View: Full curriculum lesson
+  if (currentView === 'lesson' && selectedTopic) {
+    return <LessonReader topic={selectedTopic} subject={selectedSubject || 'physics'} onBack={handleBack} showToast={showToast} />;
+  }
 
   // View: Flow State Game
   if (currentView === 'playing-game') {
@@ -384,14 +313,11 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                             key={topic.id}
                             className="topic-btn"
                             onClick={() => {
-                              setSelectedTopic(topic);
-                              startFlowGame({
-                                name: topic.name,
-                                type: 'quiz',
-                            difficulty: 'Intermediate',
-                            duration: 10
-                          });
-                        }}
+                              const curriculumTopic = getTopic(selectedSubject || 'physics', topic.id);
+                              setSelectedTopic(curriculumTopic || topic);
+                              trackEvent('lesson_opened', { subject: selectedSubject, topic: topic.id });
+                              setCurrentView('lesson');
+                            }}
                       >
                         <span className="topic-name">{topic.name}</span>
                         <span className="topic-lessons">
