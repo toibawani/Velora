@@ -18,4 +18,11 @@ describe('Error utilities', () => {
     const err = new VeloraError('test', 'NETWORK_ERROR', { url: '/api' });
     expect(() => logError(err)).not.toThrow();
   });
+
+  test('redacts private fields before logging', () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    logError(new VeloraError('test', 'AUTH_FAILED', { email: 'person@example.com', password: 'secret', attempt: 1 }));
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ details: { attempt: 1 } }));
+    spy.mockRestore();
+  });
 });
