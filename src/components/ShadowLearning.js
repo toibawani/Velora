@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/ShadowLearning.css';
 
-function ShadowLearning({ topic }) {
+function ShadowLearning({ topic, onNotify }) {
   const [myNote, setMyNote] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [anonymousNotes, setAnonymousNotes] = useState([
@@ -27,7 +27,7 @@ function ShadowLearning({ topic }) {
 
   const handleSubmitNote = () => {
     if (myNote.trim().length < 20) {
-      alert('Make it at least 20 characters (aim for 1 sentence!)');
+      if (onNotify) onNotify('Write at least 20 characters so another learner can follow your idea.', 'error');
       return;
     }
 
@@ -43,6 +43,7 @@ function ShadowLearning({ topic }) {
 
     setSubmitted(true);
     setMyNote('');
+    if (onNotify) onNotify('Your note is now part of the community conversation.', 'success');
 
     setTimeout(() => setSubmitted(false), 3000);
   };

@@ -192,6 +192,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       <ShadowLearning
         topic={selectedTopic}
         onBack={handleBack}
+        onNotify={showToast}
       />
     );
   }
