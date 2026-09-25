@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/DopamineDebt.css';
 
-function DopamineDebt({ user, studyStreak }) {
+function DopamineDebt({ user, studyStreak, onNotify }) {
   const [debtBalance, setDebtBalance] = useState(0);
   const [offTokens, setOffTokens] = useState(2);
   const [streakHistory, setStreakHistory] = useState([
@@ -28,7 +28,7 @@ function DopamineDebt({ user, studyStreak }) {
 
   const handlePayDebt = () => {
     // User must do harder session to pay debt
-    alert('💪 Complete a hard review session (30 min) to pay off your ' + debtBalance + ' XP debt!');
+    if (onNotify) onNotify(`Complete a 30-minute review session to clear ${debtBalance} XP of learning debt.`, 'info');
   };
 
   const playSound = (type) => {
