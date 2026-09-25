@@ -64,17 +64,24 @@ const DEFAULT_ANALYTICS = {
   ]
 };
 
+const cloneDefault = () => JSON.parse(JSON.stringify(DEFAULT_ANALYTICS));
+
+const isAnalyticsShape = (value) => value && typeof value === 'object' && Array.isArray(value.topicTimeDistribution) && Array.isArray(value.weeklyActivity);
+
 export const getAnalyticsData = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ANALYTICS));
-      return DEFAULT_ANALYTICS;
+      const defaults = cloneDefault();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults));
+      return defaults;
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (!isAnalyticsShape(parsed)) throw new Error('Invalid analytics schema');
+    return { ...cloneDefault(), ...parsed };
   } catch (e) {
-    console.warn('LocalStorage unavailable, returning default analytics', e);
-    return DEFAULT_ANALYTICS;
+    console.warn('LocalStorage unavailable or invalid, returning default analytics', e);
+    return cloneDefault();
   }
 };
 
