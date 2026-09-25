@@ -1,7 +1,7 @@
 export const validateEmail = (email) => {
-  // More lenient validation for testing - just requires @ and some characters
-  const regex = /^[^\s@]+@[^\s@]+$/;
-  return regex.test(email);
+  if (typeof email !== 'string') return false;
+  const normalized = email.trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(normalized);
 };
 
 export const validatePassword = (password) => {

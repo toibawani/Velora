@@ -26,7 +26,7 @@ const DEFAULT_ANALYTICS = {
   topicTimeDistribution: [
     { topic: 'General Relativity & Gravity', hours: 7.2, subject: 'physics', color: '#4f7df3' },
     { topic: 'Event Horizons & Singularities', hours: 6.5, subject: 'physics', color: '#4f7df3' },
-    { topic: 'Socratic Method & Epistemology', hours: 4.8, subject: 'philosophy', color: '#af52de' },
+    { topic: 'Socratic Method & Epistemology', hours: 4.8, subject: 'philosophy', color: '#4f7df3' },
     { topic: 'Ancient Egyptian Astronomy', hours: 3.5, subject: 'history', color: '#ff9f0a' },
     { topic: 'Quantum Superposition', hours: 2.5, subject: 'physics', color: '#4f7df3' }
   ],
@@ -99,7 +99,7 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
       topic: topicName,
       hours: parseFloat(hours.toFixed(1)),
       subject,
-      color: subject === 'physics' ? '#4f7df3' : subject === 'philosophy' ? '#af52de' : '#ff9f0a'
+      color: subject === 'physics' ? '#4f7df3' : subject === 'philosophy' ? '#4f7df3' : '#ff9f0a'
     });
   }
   
