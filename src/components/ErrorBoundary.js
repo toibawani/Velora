@@ -13,12 +13,15 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
+    try {
+      localStorage.setItem('velora_last_error', JSON.stringify({ message: error.message, timestamp: new Date().toISOString() }));
+    } catch {
+      // Storage may be unavailable in private browsing; the fallback still works.
+    }
     this.setState({ errorInfo });
   }
 
   handleReset = () => {
-    localStorage.clear();
-    sessionStorage.clear();
     window.location.reload();
   };
 
@@ -48,7 +51,7 @@ class ErrorBoundary extends React.Component {
                 onClick={this.handleReset}
                 className="error-button primary"
               >
-                Clear Data & Refresh
+                Refresh without clearing data
               </button>
               <button 
                 onClick={() => window.location.reload()}

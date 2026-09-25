@@ -1,6 +1,9 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import './App.css';
-import { getPreference, setPreference } from './utils/preferences';
+import LoadingCard from './components/LoadingCard';
+import CommandPalette from './components/CommandPalette';
+import KeyboardHelp from './components/KeyboardHelp';
+import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 
 // Core Landing / Auth Screens (loaded directly for instant initial render)
 import SplashScreen from './screens/Splash';
@@ -30,34 +33,10 @@ const JourneyScreen = lazy(() => import('./screens/Journey'));
  */
 function ScreenLoader() {
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'var(--bg-primary, #111111)',
-      color: 'var(--text-secondary, #a0a0a0)',
-      fontFamily: "var(--font-sans, 'Inter', -apple-system, sans-serif)",
-      gap: '16px'
-    }}>
-      <div style={{
-        width: '28px',
-        height: '28px',
-        border: '2px solid rgba(255, 255, 255, 0.1)',
-        borderTopColor: 'var(--accent-primary, #667eea)',
-        borderRadius: '50%',
-        animation: 'spin 0.8s cubic-bezier(0.16, 1, 0.3, 1) infinite'
-      }} />
-      <span style={{ fontSize: '0.85rem', letterSpacing: '0.04em', textTransform: 'uppercase', fontWeight: 600 }}>
-        Preparing your workspace...
-      </span>
-      <style>{`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
-    </div>
+    <main className="screen-loader" aria-label="Preparing your learning space" aria-busy="true">
+      <div className="screen-loader-heading"><span className="screen-loader-line screen-loader-title" /><span className="screen-loader-line screen-loader-short" /></div>
+      <LoadingCard count={3} label="Preparing your learning space" />
+    </main>
   );
 }
 
@@ -68,30 +47,28 @@ function App() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [learnView, setLearnView] = useState('overview');
   const [toast, setToast] = useState(null);
-  const [darkMode, setDarkMode] = useState(() => 
-    getPreference('darkMode', false)
-  );
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [keyboardHelpOpen, setKeyboardHelpOpen] = useState(false);
 
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
   };
 
-  useEffect(() => {
-    setPreference('darkMode', darkMode);
-    if (darkMode) {
-      document.documentElement.style.colorScheme = 'dark';
-    } else {
-      document.documentElement.style.colorScheme = 'light';
-    }
-  }, [darkMode]);
+  useKeyboardShortcuts({
+    'cmd+k': () => setCommandPaletteOpen(true),
+    'cmd+/': () => setKeyboardHelpOpen((open) => !open),
+    escape: () => { setCommandPaletteOpen(false); setKeyboardHelpOpen(false); }
+  });
 
   const handleLogin = (email, password) => {
     setUser({ email, name: email.split('@')[0] });
     setScreen('universe');
+    showToast('Welcome back. Pick up where your curiosity left off.', 'success');
   };
 
   const handleRegister = (email, password, name) => {
     setUser({ email, name });
+    showToast('Your account is ready. Welcome to VELORA.', 'success');
     // Show onboarding tour for new users
     const alreadyOnboarded = localStorage.getItem('velora_onboarding_done');
     if (!alreadyOnboarded) {
@@ -143,6 +120,7 @@ function App() {
             setSelectedSubject={setSelectedSubject}
             initialView={learnView}
             setInitialView={setLearnView}
+            showToast={showToast}
           />
         )}
 
@@ -197,6 +175,11 @@ function App() {
             onClose={() => setToast(null)}
           />
         )}
+        <CommandPalette isOpen={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} onNavigate={(nextScreen) => {
+          if (nextScreen === 'learn' && !selectedSubject) setSelectedSubject('physics');
+          setScreen(nextScreen);
+        }} />
+        <KeyboardHelp isOpen={keyboardHelpOpen} onClose={() => setKeyboardHelpOpen(false)} />
       </Suspense>
       </div>
     </ErrorBoundary>

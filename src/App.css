@@ -118,7 +118,18 @@ textarea:focus:not(:focus-visible) {
   outline: none;
 }
 
-/* ==================== ENTRANCE ANIMATIONS ==================== */
+/* A quiet, readable shell for lazy screens. */
+.screen-loader {
+  width: min(100% - 2rem, 1080px);
+  margin: 0 auto;
+  padding: clamp(4rem, 12vh, 8rem) 0;
+}
+.screen-loader-heading { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-4); }
+.screen-loader-line { display: block; height: 1rem; background: var(--bg-tertiary); border-radius: var(--radius-xs); animation: loader-pulse 1.5s ease-in-out infinite; }
+.screen-loader-title { width: min(52%, 360px); height: 2.5rem; }
+.screen-loader-short { width: min(76%, 520px); }
+@keyframes loader-pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
 @keyframes page-enter {
   from {
     opacity: 0;

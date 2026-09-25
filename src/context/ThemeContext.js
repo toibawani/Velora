@@ -7,9 +7,12 @@ const THEME_STORAGE_KEY = 'velora_theme_preference';
 /**
  * Determines whether it is currently daytime (7 AM to 7 PM)
  */
-const isDaytime = () => {
-  const hour = new Date().getHours();
-  return hour >= 7 && hour < 19;
+const isSystemDark = () => {
+  try {
+    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+  } catch {
+    return false;
+  }
 };
 
 export function ThemeProvider({ children }) {
@@ -23,10 +26,20 @@ export function ThemeProvider({ children }) {
   });
 
   // Compute actual applied theme ('dark' | 'light') dynamically during render
-  const resolvedTheme = themeMode === 'auto' ? (isDaytime() ? 'light' : 'dark') : themeMode;
+  const [systemDark, setSystemDark] = React.useState(isSystemDark);
+  const resolvedTheme = themeMode === 'auto' ? (systemDark ? 'dark' : 'light') : themeMode;
+
+  useEffect(() => {
+    if (themeMode !== 'auto' || !window.matchMedia) return undefined;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (event) => setSystemDark(event.matches);
+    media.addEventListener?.('change', handleChange);
+    return () => media.removeEventListener?.('change', handleChange);
+  }, [themeMode]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', resolvedTheme);
+    document.documentElement.style.colorScheme = resolvedTheme;
     document.body.setAttribute('data-theme', resolvedTheme);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, themeMode);

@@ -1,0 +1,19 @@
+.command-palette-backdrop { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; align-items: flex-start; justify-content: center; padding: 12vh var(--space-4) var(--space-4); background: rgba(0, 0, 0, 0.42); }
+.command-palette { width: min(100%, 620px); overflow: hidden; background: var(--bg-elevated); border: 1px solid var(--border-strong); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); animation: command-palette-in 180ms ease-out; }
+.command-search-row { display: flex; align-items: center; gap: var(--space-3); min-height: 64px; padding: var(--space-3) var(--space-5); border-bottom: 1px solid var(--border-default); color: var(--text-secondary); }
+.command-search-row input { flex: 1; min-width: 0; min-height: 48px; border: 0; outline: 0; background: transparent; color: var(--text-primary); font: 400 1rem var(--font-body); }
+.command-close { width: 48px; height: 48px; padding: 0; color: var(--text-secondary); background: transparent; border: 0; }
+.command-results { padding: var(--space-3); }
+.command-result { display: flex; align-items: center; width: 100%; gap: var(--space-3); min-height: 64px; padding: var(--space-3) var(--space-4); color: var(--text-primary); text-align: left; background: transparent; border: 0; border-radius: var(--radius-md); }
+.command-result:hover, .command-result:focus-visible { background: var(--bg-hover); }
+.command-result-icon { display: grid; place-items: center; width: 36px; height: 36px; color: var(--accent-primary); background: var(--bg-tertiary); border-radius: var(--radius-sm); }
+.command-result span:nth-child(2) { display: flex; flex: 1; flex-direction: column; gap: 2px; }
+.command-result strong { font-size: 0.9375rem; }
+.command-result small { color: var(--text-secondary); font-size: 0.8125rem; }
+.command-enter { color: var(--text-tertiary); font-size: 0.75rem; }
+.command-empty { padding: var(--space-8) var(--space-4); text-align: center; color: var(--text-secondary); }
+.command-footer { display: flex; justify-content: space-between; padding: var(--space-3) var(--space-5); border-top: 1px solid var(--border-default); color: var(--text-tertiary); font-size: 0.75rem; }
+.command-footer span { display: inline-flex; align-items: center; gap: 4px; }
+@keyframes command-palette-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 480px) { .command-palette-backdrop { padding-top: 8vh; } .command-footer { display: none; } }
+@media (prefers-reduced-motion: reduce) { .command-palette { animation: none; } }

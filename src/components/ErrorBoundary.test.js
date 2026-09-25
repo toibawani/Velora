@@ -17,7 +17,8 @@ test('renders fallback UI when child component throws', () => {
   );
 
   expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-  expect(screen.getByText('Clear Data & Refresh')).toBeInTheDocument();
+  expect(screen.getByText('Refresh without clearing data')).toBeInTheDocument();
+  expect(screen.getByText('Refresh Page')).toBeInTheDocument();
   
   spy.mockRestore();
 });
