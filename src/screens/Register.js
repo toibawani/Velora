@@ -51,7 +51,7 @@ function Register({ setScreen, onRegister, showToast }) {
       }
       return;
     }
-    onRegister(email, password, name);
+    onRegister(email.trim().toLowerCase(), password, name.trim());
   };
 
   return (

@@ -35,7 +35,7 @@ function Login({ setScreen, onLogin, showToast }) {
       }
       return;
     }
-    onLogin(email, password);
+    onLogin(email.trim().toLowerCase(), password);
   };
 
   return (
