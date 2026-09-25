@@ -336,7 +336,7 @@
 }
 
 .board-user-row.highlight-user {
-  background: rgba(109, 40, 217, 0.08);
+  background: rgba(102, 126, 234, 0.08);
   border-left: 3px solid var(--accent-primary);
 }
 

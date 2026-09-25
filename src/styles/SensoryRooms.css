@@ -102,7 +102,7 @@
   height: 100%;
   border-radius: 50%;
   border: 2px solid rgba(102, 126, 234, 0.4);
-  background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, rgba(0,0,0,0) 70%);
+  background: rgba(102, 126, 234, 0.12);
   transition: transform 3.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 3.8s ease;
 }
 

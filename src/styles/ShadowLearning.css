@@ -78,7 +78,7 @@
 }
 
 .btn-submit-note.submitted {
-  background: linear-gradient(135deg, #2E7D32 0%, #1D9E75 100%);
+  background: #2E7D32;
 }
 
 .community-notes {
@@ -91,7 +91,7 @@
 }
 
 .top-note {
-  background: linear-gradient(135deg, #FFFAF0 0%, #FFF3E0 100%);
+  background: #fff8ed;
   padding: 2rem;
   border-radius: 12px;
   border: 2px solid #FFB74D;
@@ -103,7 +103,7 @@
   position: absolute;
   top: -12px;
   left: 1rem;
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  background: #b45309;
   color: white;
   padding: 6px 12px;
   border-radius: 20px;
@@ -186,7 +186,7 @@
 
 .shadow-note {
   padding: 1rem;
-  background: linear-gradient(135deg, #F8FBFF 0%, #FFF8F5 100%);
+  background: #f5f8fc;
   border-radius: 8px;
   border-left: 4px solid #667eea;
 }

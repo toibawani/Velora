@@ -54,7 +54,7 @@ function LearningStories({ onSelectStoryTopic }) {
       subtitle: 'How Socratic aporia, Plato’s cave, and Aristotle’s telos govern modern AI ethics and digital reality.',
       author: 'VELORA Philosophical Studies',
       readTime: '7 min narrative',
-      color: '#af52de',
+      color: '#4f7df3',
       icon: '🏛️',
       chapters: [
         {

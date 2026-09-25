@@ -25,7 +25,7 @@ function SocialProof({ onSelectTopic }) {
       domain: 'Theoretical Physics',
       learnersCount: '1,247 mastered this month',
       icon: '🌌',
-      color: '#af52de'
+      color: '#4f7df3'
     },
     {
       id: 'determinism-free-will',

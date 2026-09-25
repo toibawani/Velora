@@ -56,7 +56,7 @@ function GameHub({ setScreen }) {
       type: 'duel',
       description: 'Discriminate between subtle conceptual nuances with precision',
       icon: FileText,
-      color: '#af52de',
+      color: '#4f7df3',
       difficulty: 'Medium',
       duration: '8 mins',
     },

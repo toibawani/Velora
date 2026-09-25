@@ -132,7 +132,7 @@ function Analytics({ setScreen, user }) {
                     <span className="style-pct">{analytics.learningStyle.textual}%</span>
                   </div>
                   <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.textual}%`, background: '#af52de' }}></div>
+                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.textual}%`, background: '#4f7df3' }}></div>
                   </div>
                 </div>
 

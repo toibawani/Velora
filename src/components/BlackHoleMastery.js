@@ -27,7 +27,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'gravity',
       title: "Einstein's Gravity",
       icon: '⬇️',
-      color: '#1D9E75',
+      color: '#4f7df3',
       content: 'Mass curves spacetime. Objects follow the straightest path in curved geometry.',
       duration: '12 mins',
     },
@@ -43,7 +43,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'event-horizon',
       title: 'The Event Horizon',
       icon: '🔴',
-      color: '#FFA500',
+      color: '#F39C12',
       content: 'The point of no return. Escape velocity exceeds the speed of light.',
       duration: '13 mins',
     },
@@ -434,14 +434,8 @@ function SpaceBasicsVisual() {
   return (
     <div className="visual-container">
       <svg viewBox="0 0 400 300" className="visual-svg">
-        <defs>
-          <linearGradient id="spaceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#667eea" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#667eea" stopOpacity="0.05" />
-          </linearGradient>
-        </defs>
-
-        {/* 3D Axes */}
+        {/* Objects in space */}
+        <circle cx="200" cy="150" r="30" fill="#263b72" stroke="#667eea" strokeWidth="2" />
         <line x1="200" y1="250" x2="200" y2="50" stroke="#667eea" strokeWidth="2" />
         <line x1="200" y1="250" x2="350" y2="250" stroke="#667eea" strokeWidth="2" />
         <line x1="200" y1="250" x2="130" y2="300" stroke="#1D9E75" strokeWidth="2" />
@@ -458,7 +452,7 @@ function SpaceBasicsVisual() {
         </text>
 
         {/* Objects in space */}
-        <circle cx="200" cy="150" r="30" fill="url(#spaceGrad)" stroke="#667eea" strokeWidth="2" />
+        {/* Objects in space */}
         <text x="200" y="160" fontSize="12" fill="white" textAnchor="middle">
           Object
         </text>
@@ -480,19 +474,12 @@ function RubberSheetVisual() {
     <div className="visual-container">
       <svg viewBox="0 0 400 300" className="visual-svg">
         {/* Rubber sheet */}
-        <defs>
-          <radialGradient id="sheetGrad" cx="50%" cy="30%">
-            <stop offset="0%" stopColor="#FFD700" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#FFA500" stopOpacity="0.2" />
-          </radialGradient>
-        </defs>
-
         {/* Curved surface */}
         <path
           d="M 50 80 Q 100 100 150 110 T 350 80"
-          stroke="rgba(255, 215, 0, 0.5)"
+          stroke="#b45309"
           strokeWidth="2"
-          fill="url(#sheetGrad)"
+          fill="#5b3212"
         />
 
         {/* Bowling ball */}
@@ -531,8 +518,8 @@ function EventHorizonVisual() {
         </text>
 
         {/* Photon sphere */}
-        <circle cx="200" cy="200" r="145" fill="none" stroke="#FFD700" strokeWidth="2" opacity="0.5" />
-        <text x="360" y="210" fontSize="11" fill="#FFD700">
+        <circle cx="200" cy="200" r="145" fill="none" stroke="#F39C12" strokeWidth="2" opacity="0.5" />
+        <text x="360" y="210" fontSize="11" fill="#F39C12">
           Photon Sphere
         </text>
 
@@ -553,8 +540,8 @@ function EventHorizonVisual() {
         </text>
 
         {/* Escape velocity lines */}
-        <line x1="200" y1="200" x2="200" y2="60" stroke="#FFD700" strokeWidth="1" opacity="0.3" />
-        <text x="210" y="130" fontSize="10" fill="#FFD700" opacity="0.6">
+        <line x1="200" y1="200" x2="200" y2="60" stroke="#F39C12" strokeWidth="1" opacity="0.3" />
+        <text x="210" y="130" fontSize="10" fill="#F39C12" opacity="0.6">
           Escape Velocity = Speed of Light
         </text>
       </svg>
@@ -580,19 +567,19 @@ function SingularityVisual() {
         })}
 
         {/* Singularity point */}
-        <circle cx="200" cy="200" r="3" fill="#FF00FF" />
-        <text x="200" y="220" fontSize="12" fill="#FF00FF" fontWeight="bold" textAnchor="middle">
+        <circle cx="200" cy="200" r="3" fill="#E74C3C" />
+        <text x="200" y="220" fontSize="12" fill="#E74C3C" fontWeight="bold" textAnchor="middle">
           Singularity
         </text>
 
         {/* Person being spaghettified */}
         <g opacity="0.7">
-          <circle cx="200" cy="80" r="8" fill="#FFD700" />
-          <line x1="200" y1="88" x2="200" y2="130" stroke="#FFD700" strokeWidth="4" />
-          <circle cx="200" cy="150" r="4" fill="#FFD700" />
+          <circle cx="200" cy="80" r="8" fill="#F39C12" />
+          <line x1="200" y1="88" x2="200" y2="130" stroke="#F39C12" strokeWidth="4" />
+          <circle cx="200" cy="150" r="4" fill="#F39C12" />
         </g>
 
-        <text x="220" y="110" fontSize="11" fill="#FFD700">
+        <text x="220" y="110" fontSize="11" fill="#F39C12">
           Being Stretched
         </text>
 
@@ -610,14 +597,7 @@ function FrameDraggingVisual() {
     <div className="visual-container">
       <svg viewBox="0 0 400 400" className="visual-svg">
         {/* Spinning black hole */}
-        <defs>
-          <radialGradient id="bhGrad" cx="40%" cy="40%">
-            <stop offset="0%" stopColor="#FF00FF" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#0000FF" stopOpacity="0.3" />
-          </radialGradient>
-        </defs>
-
-        <circle cx="200" cy="200" r="60" fill="url(#bhGrad)" />
+        <circle cx="200" cy="200" r="60" fill="#263b72" />
 
         {/* Ergosphere */}
         <ellipse cx="200" cy="200" rx="120" ry="100" fill="none" stroke="#00FFFF" strokeWidth="2" opacity="0.7" />
@@ -635,8 +615,8 @@ function FrameDraggingVisual() {
         </text>
 
         {/* Spacecraft using Penrose process */}
-        <circle cx="250" cy="140" r="6" fill="#FFD700" />
-        <text x="270" y="145" fontSize="10" fill="#FFD700">
+        <circle cx="250" cy="140" r="6" fill="#F39C12" />
+        <text x="270" y="145" fontSize="10" fill="#F39C12">
           Ship (gaining energy)
         </text>
       </svg>

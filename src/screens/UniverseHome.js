@@ -54,7 +54,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
       id: 'philosophy',
       name: 'Philosophy',
       icon: Brain,
-      color: '#af52de',
+      color: '#4f7df3',
       description: 'Explore epistemology, ethical frameworks, and the philosophy of science',
       progress: '45% complete'
     },

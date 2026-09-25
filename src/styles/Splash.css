@@ -27,11 +27,7 @@
   transform: translate(-50%, -50%);
   width: 800px;
   height: 500px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(79, 125, 243, 0.05) 0%,
-    transparent 65%
-  );
+  background: transparent;
   pointer-events: none;
 }
 

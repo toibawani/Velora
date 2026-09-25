@@ -224,12 +224,8 @@ function RelativityLab({ onBack }) {
       const horizonRadius = Math.max(14, Math.min(36, 12 + logMass * 1.5));
       const coreY = centerY + curvatureIntensity * 0.75;
 
-      // Glow / accretion boundary
-      const grad = ctx.createRadialGradient(centerX, coreY, horizonRadius * 0.8, centerX, coreY, horizonRadius * 2.2);
-      grad.addColorStop(0, 'rgba(245, 158, 11, 0.8)');
-      grad.addColorStop(0.5, 'rgba(234, 88, 12, 0.3)');
-      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = grad;
+      // Solid accretion boundary keeps the lab readable and avoids a glow effect.
+      ctx.fillStyle = 'rgba(234, 88, 12, 0.35)';
       ctx.beginPath();
       ctx.arc(centerX, coreY, horizonRadius * 2.2, 0, Math.PI * 2);
       ctx.fill();

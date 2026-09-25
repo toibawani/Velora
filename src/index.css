@@ -8,40 +8,19 @@
 
 @import url('./styles/design-tokens.css');
 
-/* ─── Typefaces ─────────────────────────────────────────────────────────── */
-/* 1. General Sans (self-hosted, 400 + 500 only — these two weights ship
-      in src/fonts/ and always load offline / without network) */
-@font-face {
-  font-family: 'General Sans';
-  src: url('./fonts/GeneralSans-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'General Sans';
-  src: url('./fonts/GeneralSans-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
+/* Inter is the single product typeface. The system stack keeps the app readable offline. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-/* 2. Plus Jakarta Sans (Google Fonts, variable — covers 400 through 800,
-      fills in as the body font when weights above 500 are needed, or
-      as the complete fallback if General Sans fails to load) */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
-/* ─── Core variable overrides: font stacks ──────────────────────────────── */
 :root {
-  /* Body / UI text — General Sans local first, Jakarta as network fallback */
-  --font-body:    'General Sans', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  /* Headings and display labels — Plus Jakarta Sans for expressive weight range */
-  --font-display: 'Plus Jakarta Sans', 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  /* Monospace (inline code, formula blocks, data) */
-  --font-mono:    'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Liberation Mono', monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
 }
 
 /* ─── Colour tokens (defined by task brief — do not change) ──────────────── */
+/* System dark is represented by ThemeContext's resolved data-theme attribute. */
+
 :root {
   --color-bg: #FAFAFA;
   --color-text: #111111;
@@ -146,6 +125,6 @@ a:hover {
 
 /* ─── Selection ──────────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(109, 40, 217, 0.15);
+  background: rgba(102, 126, 234, 0.16);
   color: var(--text-primary);
 }
