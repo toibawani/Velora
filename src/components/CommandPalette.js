@@ -20,6 +20,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
   }, [query]);
 
   useEffect(() => {
+    setActiveIndex(0);
+  }, [query]);
+
+  useEffect(() => {
     if (!isOpen) return undefined;
     setQuery('');
     setActiveIndex(0);
