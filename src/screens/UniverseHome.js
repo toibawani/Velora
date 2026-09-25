@@ -218,6 +218,10 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
                   onMouseEnter={() => setHoveredSubject(subject.id)}
                   onMouseLeave={() => setHoveredSubject(null)}
                   onClick={() => handleSubjectClick(subject.id)}
+                  onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); handleSubjectClick(subject.id); } }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Explore ${subject.name}`}
                   style={{
                     borderColor: hoveredSubject === subject.id ? subject.color : undefined
                   }}
