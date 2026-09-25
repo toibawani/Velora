@@ -1,9 +1,10 @@
 import React from 'react';
+import './ErrorBoundary.css';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
   static getDerivedStateFromError(error) {
@@ -12,32 +13,51 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
+    this.setState({ errorInfo });
   }
+
+  handleReset = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.reload();
+  };
 
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '2rem', textAlign: 'center' }} role="alert">
-          <h2>Something went wrong</h2>
-          <p style={{ color: '#6f6f6f', margin: '1rem 0' }}>
-            Try refreshing the page. If it persists, clear localStorage.
-          </p>
-          <button
-            onClick={() => {
-              localStorage.clear();
-              window.location.reload();
-            }}
-            style={{
-              padding: '10px 20px',
-              background: '#667eea',
-              color: 'white',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-            }}
-          >
-            Clear Data & Refresh
-          </button>
+        <div className="error-boundary" role="alert">
+          <div className="error-boundary-content">
+            <div className="error-icon">⚠️</div>
+            <h1 className="error-title">Something went wrong</h1>
+            <p className="error-message">
+              VELORA encountered an unexpected error. This might be a temporary issue.
+            </p>
+            
+            {this.state.error && (
+              <details className="error-details">
+                <summary>Error details</summary>
+                <pre className="error-stack">
+                  {this.state.error.toString()}
+                  {this.state.errorInfo && this.state.errorInfo.componentStack}
+                </pre>
+              </details>
+            )}
+            
+            <div className="error-actions">
+              <button 
+                onClick={this.handleReset}
+                className="error-button primary"
+              >
+                Clear Data & Refresh
+              </button>
+              <button 
+                onClick={() => window.location.reload()}
+                className="error-button secondary"
+              >
+                Refresh Page
+              </button>
+            </div>
+          </div>
         </div>
       );
     }
