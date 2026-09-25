@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import '../styles/LearningAnalyticsDash.css';
 
 const DEFAULT_STATS = {
-  totalHours: 12.5,
-  topicsCompleted: 8,
-  retentionScore: 73,
-  currentStreak: 7,
-  bestLearningTime: '2:00 PM - 4:00 PM',
-  strugglingTopics: ['Wave-Particle Duality', 'Quantum Entanglement'],
-  weeklyData: [3, 5, 4, 6, 7, 5, 4]
+  totalHours: 0,
+  topicsCompleted: 0,
+  retentionScore: 0,
+  currentStreak: 0,
+  bestLearningTime: 'Not enough data yet',
+  strugglingTopics: [],
+  weeklyData: [0, 0, 0, 0, 0, 0, 0]
 };
 
 const isValidStats = (value) => value && typeof value === 'object' && Array.isArray(value.weeklyData) && value.weeklyData.length === 7 && value.weeklyData.every(Number.isFinite);
@@ -91,13 +91,13 @@ function LearningAnalyticsDash() {
         <div className="insight-item">
           <span className="insight-icon">💡</span>
           <p className="insight-text">
-            You learn best from <strong>{stats.bestLearningTime}</strong>. Schedule tough topics then.
+            You learn best from <strong>{stats.bestLearningTime}</strong>.
           </p>
         </div>
         <div className="insight-item">
           <span className="insight-icon">⚠️</span>
           <p className="insight-text">
-            Struggling with: <strong>{stats.strugglingTopics.join(', ')}</strong>
+            Struggling with: <strong>{stats.strugglingTopics.length ? stats.strugglingTopics.join(', ') : 'No struggling topics recorded yet.'}</strong>
           </p>
         </div>
         <div className="insight-item">
