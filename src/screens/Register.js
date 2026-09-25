@@ -60,48 +60,62 @@ function Register({ setScreen, onRegister, showToast }) {
 
         <form onSubmit={handleSubmit} className="auth-form" noValidate>
           <div className="form-group">
-            <label>Full name</label>
+            <label htmlFor="register-name">Full name</label>
             <input
-              type="text"
+              id="register-name"
+              name="name"
+              autoComplete="name"
               placeholder="Your name"
               value={name}
               onChange={handleNameChange}
+              aria-invalid={Boolean(nameError)}
+              aria-describedby={nameError ? 'register-name-error' : undefined}
               required
             />
             {nameError && (
-              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="register-name-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
                 {nameError}
               </span>
             )}
           </div>
 
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="register-email">Email</label>
             <input
+              id="register-email"
+              name="email"
+              autoComplete="email"
               type="email"
               placeholder="you@example.com"
               value={email}
               onChange={handleEmailChange}
+              aria-invalid={Boolean(emailError)}
+              aria-describedby={emailError ? 'register-email-error' : undefined}
               required
             />
             {emailError && (
-              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="register-email-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
                 {emailError}
               </span>
             )}
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="register-password">Password</label>
             <input
+              id="register-password"
+              name="password"
+              autoComplete="new-password"
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
+              aria-invalid={Boolean(passwordError)}
+              aria-describedby={passwordError ? 'register-password-error' : undefined}
               required
             />
             {passwordError && (
-              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="register-password-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
                 {passwordError}
               </span>
             )}
