@@ -21,4 +21,5 @@ describe('analytics storage', () => {
     expect(recordStudySession('Stoicism', 2000)).toBe(false);
     expect(recordStudySession('Stoicism', 15, 'philosophy')).toBe(true);
     expect(getAnalyticsData().topicTimeDistribution.some((item) => item.topic === 'Stoicism')).toBe(true);
+    expect(getAnalyticsData().weeklyActivity.some((item) => item.sessions === 1)).toBe(true);
   });

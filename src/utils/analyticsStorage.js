@@ -65,6 +65,14 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
   data.totalHoursStudied = parseFloat((data.totalHoursStudied + hours).toFixed(1));
   
   const existingTopic = data.topicTimeDistribution.find(t => t.topic === topicName);
+  const day = new Date().toLocaleDateString('en-US', { weekday: 'short' });
+  const todayActivity = data.weeklyActivity.find((item) => item.day === day);
+  if (todayActivity) {
+    todayActivity.hours = parseFloat((todayActivity.hours + hours).toFixed(2));
+    todayActivity.sessions += 1;
+  } else {
+    data.weeklyActivity.push({ day, hours: parseFloat(hours.toFixed(2)), sessions: 1 });
+  }
   if (existingTopic) {
     existingTopic.hours = parseFloat((existingTopic.hours + hours).toFixed(1));
   } else {
