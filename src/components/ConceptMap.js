@@ -84,6 +84,13 @@ function ConceptMap({ subject }) {
     setSelectedNode(selectedNode === nodeId ? null : nodeId);
   };
 
+  const handleNodeKeyDown = (event, nodeId) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleNodeClick(nodeId);
+    }
+  };
+
   return (
     <div className="concept-map">
       <div className="map-header">
@@ -131,6 +138,10 @@ function ConceptMap({ subject }) {
               key={node.id}
               className={`concept-node ${selectedNode === node.id ? 'selected' : ''}`}
               onClick={() => handleNodeClick(node.id)}
+               onKeyDown={(event) => handleNodeKeyDown(event, node.id)}
+               role="button"
+               tabIndex={0}
+               aria-label={`Explore ${node.label}`}
               style={{ cursor: 'pointer' }}
             >
               <circle
