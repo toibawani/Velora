@@ -8,6 +8,8 @@
  */
 
 const STORAGE_KEY = 'velora_revision_schedule';
+const DAY = 86400000;
+const daysAgo = (days, hour = 18) => new Date(Date.now() - days * DAY).setHours(hour, 0, 0, 0);
 
 const INITIAL_TOPICS = [
   {
@@ -17,7 +19,7 @@ const INITIAL_TOPICS = [
     subject: 'physics',
     initialMastery: 62,
     decayRate: 0.08,
-    lastStudied: '2026-08-21T18:00:00.000Z',
+    lastStudied: new Date(daysAgo(4)).toISOString(),
     struggleSignals: 2,
     retentionScore: 73,
     nextSession: 'Tuesday at 2:00 PM',
@@ -31,7 +33,7 @@ const INITIAL_TOPICS = [
     subject: 'physics',
     initialMastery: 85,
     decayRate: 0.04,
-    lastStudied: '2026-08-19T20:00:00.000Z',
+    lastStudied: new Date(daysAgo(6, 20)).toISOString(),
     struggleSignals: 0,
     retentionScore: 91,
     nextSession: 'Friday at 8:00 PM',
@@ -45,7 +47,7 @@ const INITIAL_TOPICS = [
     subject: 'philosophy',
     initialMastery: 70,
     decayRate: 0.06,
-    lastStudied: '2026-08-20T14:30:00.000Z',
+    lastStudied: new Date(daysAgo(5, 14)).toISOString(),
     struggleSignals: 1,
     retentionScore: 82,
     nextSession: 'Tomorrow at 7:30 PM',
@@ -59,7 +61,7 @@ const INITIAL_TOPICS = [
     subject: 'history',
     initialMastery: 95,
     decayRate: 0.03,
-    lastStudied: '2026-08-15T10:00:00.000Z',
+    lastStudied: new Date(daysAgo(10, 10)).toISOString(),
     struggleSignals: 0,
     retentionScore: 94,
     nextSession: 'Next Week at 11:00 AM',
