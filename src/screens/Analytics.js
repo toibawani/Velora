@@ -176,7 +176,7 @@ function Analytics({ setScreen, user }) {
               <p className="card-subhead">Total dedicated study distribution across topics.</p>
 
               <div className="topic-dist-list">
-                {analytics.topicTimeDistribution.map((item, idx) => (
+                {analytics.topicTimeDistribution.length === 0 ? <p className="analytics-empty-note">No topic distribution yet. Open a lesson to start building it.</p> : analytics.topicTimeDistribution.map((item, idx) => (
                   <div key={idx} className="topic-dist-item">
                     <div className="dist-title-row">
                       <span className="dist-topic-name">{item.topic}</span>
@@ -204,7 +204,7 @@ function Analytics({ setScreen, user }) {
               </p>
 
               <div className="struggle-items-list">
-                {analytics.struggledConcepts.map((item, idx) => (
+                {analytics.struggledConcepts.length === 0 ? <p className="analytics-empty-note">No reinforcement notes yet. That is a good baseline, not a failure.</p> : analytics.struggledConcepts.map((item, idx) => (
                   <div key={idx} className="struggle-card-item">
                     <div className="struggle-badge-row">
                       <span className="struggle-concept-title">{item.concept}</span>

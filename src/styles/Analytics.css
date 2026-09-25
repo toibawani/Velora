@@ -126,7 +126,8 @@
   box-shadow: none;
 }
 
-/* Primary Metrics Grid */
+.analytics-scope-note { color: var(--text-tertiary); font-size: 0.8125rem; }
+
 .analytics-metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -218,7 +219,8 @@
   color: var(--text-secondary);
 }
 
-/* Learning Style Bars */
+.analytics-empty-note { padding: var(--space-6); color: var(--text-secondary); background: var(--bg-primary); border: 1px dashed var(--border-default); border-radius: var(--radius-md); }
+
 .style-bars-list {
   display: flex;
   flex-direction: column;
