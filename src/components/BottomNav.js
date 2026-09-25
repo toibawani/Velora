@@ -28,6 +28,7 @@ function BottomNav({ currentScreen, setScreen }) {
               key={item.id}
               className={`mobile-nav-btn ${isActive ? 'active' : ''}`}
               onClick={() => setScreen(item.id)}
+              aria-current={isActive ? 'page' : undefined}
             >
               <span className="mobile-nav-icon">
                 <Icon
