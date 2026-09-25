@@ -88,11 +88,20 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
   const step = STEPS[stepIdx];
   const isLast = stepIdx === STEPS.length - 1;
 
+  const persistPreferences = (domain, style, time) => {
+    try {
+      localStorage.setItem('velora_onboarding_preferences', JSON.stringify({ domain, style, time }));
+    } catch {
+      // The flow remains usable if storage is unavailable.
+    }
+  };
+
   const handleNext = () => {
     if (step.id === 'domain' && selectedDomain) {
       setSelectedSubject?.(selectedDomain);
     }
     if (isLast) {
+      persistPreferences(selectedDomain, selectedStyle, selectedTime);
       markOnboardingComplete();
       onComplete?.();
     } else {
@@ -138,6 +147,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
               <button
                 key={opt.id}
                 className={`onboarding-option-card ${selectedDomain === opt.id ? 'selected' : ''}`}
+                 aria-pressed={selectedDomain === opt.id}
                 onClick={() => setSelectedDomain(opt.id)}
               >
                 <span className="opt-emoji">{opt.emoji}</span>
@@ -155,6 +165,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
               <button
                 key={opt.id}
                 className={`onboarding-option-card ${selectedStyle === opt.id ? 'selected' : ''}`}
+                 aria-pressed={selectedStyle === opt.id}
                 onClick={() => setSelectedStyle(opt.id)}
               >
                 <span className="opt-emoji">{opt.emoji}</span>
@@ -171,6 +182,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
             {step.timeOptions.map(t => (
               <button
                 key={t}
+                 aria-pressed={selectedTime === t}
                 className={`time-option-btn ${selectedTime === t ? 'selected' : ''}`}
                 onClick={() => setSelectedTime(t)}
               >
