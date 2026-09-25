@@ -15,14 +15,13 @@ function SplashScreen({ setScreen }) {
         <div className="splash-brand">
           <h1 className="splash-wordmark">VELORA</h1>
           <p className="splash-tagline">
-            Learn differently. Think deeply.
+            Learn what stays with you.
           </p>
         </div>
 
         {/* Value proposition */}
         <p className="splash-description">
-          An immersive learning experience for Physics, Philosophy,
-          Chemistry, Biology, History, and Mathematics.
+          A calm learning space for physics, philosophy, and history—built for people who want to understand the why, not just pass the test.
         </p>
 
         {/* Actions */}
