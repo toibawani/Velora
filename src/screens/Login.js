@@ -44,32 +44,42 @@ function Login({ setScreen, onLogin, showToast }) {
 
         <form onSubmit={handleSubmit} className="auth-form" noValidate>
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="login-email">Email</label>
             <input
+              id="login-email"
+              name="email"
+              autoComplete="email"
               type="email"
               placeholder="you@example.com"
               value={email}
               onChange={handleEmailChange}
+              aria-invalid={Boolean(emailError)}
+              aria-describedby={emailError ? 'login-email-error' : undefined}
               required
             />
             {emailError && (
-              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="login-email-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
                 {emailError}
               </span>
             )}
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="login-password">Password</label>
             <input
+              id="login-password"
+              name="password"
+              autoComplete="current-password"
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
+              aria-invalid={Boolean(passwordError)}
+              aria-describedby={passwordError ? 'login-password-error' : undefined}
               required
             />
             {passwordError && (
-              <span className="auth-field-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="login-password-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
                 {passwordError}
               </span>
             )}
