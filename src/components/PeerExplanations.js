@@ -140,24 +140,30 @@ function PeerExplanations({ topic, onNotify }) {
 
                 <div className="vote-buttons">
                   <button
-                    className="vote-btn clear"
+                    className={`vote-btn clear ${userVotes[`${exp.id}-clear`] ? 'voted' : ''}`}
                     onClick={() => handleVote(exp.id, 'clear')}
+                     disabled={Boolean(userVotes[`${exp.id}-clear`])}
+                     aria-label="Vote clear"
                   >
                     <span className="vote-icon">🎯</span>
                     <span className="vote-count">{exp.votes.clear}</span>
                   </button>
 
                   <button
-                    className="vote-btn funny"
+                    className={`vote-btn funny ${userVotes[`${exp.id}-funny`] ? 'voted' : ''}`}
                     onClick={() => handleVote(exp.id, 'funny')}
+                     disabled={Boolean(userVotes[`${exp.id}-funny`])}
+                     aria-label="Vote funny"
                   >
                     <span className="vote-icon">😄</span>
                     <span className="vote-count">{exp.votes.funny}</span>
                   </button>
 
                   <button
-                    className="vote-btn mindBending"
+                    className={`vote-btn mindBending ${userVotes[`${exp.id}-mindBending`] ? 'voted' : ''}`}
                     onClick={() => handleVote(exp.id, 'mindBending')}
+                     disabled={Boolean(userVotes[`${exp.id}-mindBending`])}
+                     aria-label="Vote mind-bending"
                   >
                     <span className="vote-icon">🤯</span>
                     <span className="vote-count">{exp.votes.mindBending}</span>

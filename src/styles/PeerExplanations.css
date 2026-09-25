@@ -142,10 +142,7 @@
   transition: all 0.2s ease;
 }
 
-.vote-btn:hover {
-  border-color: #d0d0d0;
-  transform: translateY(-2px);
-}
+.vote-btn.voted, .vote-btn:disabled { opacity: 0.55; cursor: default; transform: none; }
 
 .vote-icon {
   font-size: 1rem;
