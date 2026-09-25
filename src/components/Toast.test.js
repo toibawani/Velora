@@ -14,6 +14,11 @@ test('renders toast with message and dismiss button', () => {
   expect(screen.getByRole('button', { name: /dismiss/i })).toBeInTheDocument();
 });
 
+test('announces errors assertively', () => {
+  render(<Toast message="Something failed" type="error" onClose={() => {}} />);
+  expect(screen.getByRole('alert')).toHaveAttribute('aria-live', 'assertive');
+});
+
 test('calls onClose after default duration', () => {
   const mockClose = jest.fn();
   render(
