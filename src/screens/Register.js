@@ -17,23 +17,39 @@ function Register({ setScreen, onRegister, showToast }) {
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [touched, setTouched] = useState({ name: false, email: false, password: false });
 
   const handleNameChange = (e) => {
     const value = e.target.value;
     setName(value);
-    setNameError(getErrorMessage('Username', value));
+    if (touched.name) setNameError(getErrorMessage('Username', value));
+  };
+
+  const handleNameBlur = () => {
+    setTouched((current) => ({ ...current, name: true }));
+    setNameError(getErrorMessage('Username', name));
   };
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
-    setEmailError(getErrorMessage('Email', value));
+    if (touched.email) setEmailError(getErrorMessage('Email', value));
+  };
+
+  const handleEmailBlur = () => {
+    setTouched((current) => ({ ...current, email: true }));
+    setEmailError(getErrorMessage('Email', email));
   };
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setPasswordError(getErrorMessage('Password', value));
+    if (touched.password) setPasswordError(getErrorMessage('Password', value));
+  };
+
+  const handlePasswordBlur = () => {
+    setTouched((current) => ({ ...current, password: true }));
+    setPasswordError(getErrorMessage('Password', password));
   };
 
   const handleSubmit = (e) => {
@@ -70,12 +86,13 @@ function Register({ setScreen, onRegister, showToast }) {
               placeholder="Your name"
               value={name}
               onChange={handleNameChange}
+              onBlur={handleNameBlur}
               aria-invalid={Boolean(nameError)}
               aria-describedby={nameError ? 'register-name-error' : undefined}
               required
             />
             {nameError && (
-              <span className="auth-field-error" id="register-name-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="register-name-error">
                 {nameError}
               </span>
             )}
@@ -91,12 +108,13 @@ function Register({ setScreen, onRegister, showToast }) {
               placeholder="you@example.com"
               value={email}
               onChange={handleEmailChange}
+              onBlur={handleEmailBlur}
               aria-invalid={Boolean(emailError)}
               aria-describedby={emailError ? 'register-email-error' : undefined}
               required
             />
             {emailError && (
-              <span className="auth-field-error" id="register-email-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="register-email-error">
                 {emailError}
               </span>
             )}
@@ -112,6 +130,7 @@ function Register({ setScreen, onRegister, showToast }) {
               placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
+              onBlur={handlePasswordBlur}
               aria-invalid={Boolean(passwordError)}
               aria-describedby={passwordError ? 'register-password-error' : undefined}
               required
@@ -120,7 +139,7 @@ function Register({ setScreen, onRegister, showToast }) {
               {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
             </button>
             {passwordError && (
-              <span className="auth-field-error" id="register-password-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="register-password-error">
                 {passwordError}
               </span>
             )}
@@ -133,12 +152,14 @@ function Register({ setScreen, onRegister, showToast }) {
 
         <div className="auth-footer">
           <button
+            type="button"
             onClick={() => setScreen('login')}
             className="auth-link"
           >
             Already have an account? <span>Sign in</span>
           </button>
           <button
+            type="button"
             onClick={() => setScreen('splash')}
             className="auth-back"
           >

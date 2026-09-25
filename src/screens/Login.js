@@ -9,17 +9,28 @@ function Login({ setScreen, onLogin, showToast }) {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [touched, setTouched] = useState({ email: false, password: false });
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
-    setEmailError(getErrorMessage('Email', value));
+    if (touched.email) setEmailError(getErrorMessage('Email', value));
+  };
+
+  const handleEmailBlur = () => {
+    setTouched((current) => ({ ...current, email: true }));
+    setEmailError(getErrorMessage('Email', email));
   };
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setPasswordError(getErrorMessage('Password', value));
+    if (touched.password) setPasswordError(getErrorMessage('Password', value));
+  };
+
+  const handlePasswordBlur = () => {
+    setTouched((current) => ({ ...current, password: true }));
+    setPasswordError(getErrorMessage('Password', password));
   };
 
   const handleSubmit = (e) => {
@@ -55,12 +66,13 @@ function Login({ setScreen, onLogin, showToast }) {
               placeholder="you@example.com"
               value={email}
               onChange={handleEmailChange}
+              onBlur={handleEmailBlur}
               aria-invalid={Boolean(emailError)}
               aria-describedby={emailError ? 'login-email-error' : undefined}
               required
             />
             {emailError && (
-              <span className="auth-field-error" id="login-email-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="login-email-error">
                 {emailError}
               </span>
             )}
@@ -76,6 +88,7 @@ function Login({ setScreen, onLogin, showToast }) {
               placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
+              onBlur={handlePasswordBlur}
               aria-invalid={Boolean(passwordError)}
               aria-describedby={passwordError ? 'login-password-error' : undefined}
               required
@@ -84,7 +97,7 @@ function Login({ setScreen, onLogin, showToast }) {
               {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
             </button>
             {passwordError && (
-              <span className="auth-field-error" id="login-password-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
+              <span className="auth-field-error" id="login-password-error">
                 {passwordError}
               </span>
             )}
@@ -97,12 +110,14 @@ function Login({ setScreen, onLogin, showToast }) {
 
         <div className="auth-footer">
           <button
+            type="button"
             onClick={() => setScreen('register')}
             className="auth-link"
           >
             Don't have an account? <span>Sign up</span>
           </button>
           <button
+            type="button"
             onClick={() => setScreen('splash')}
             className="auth-back"
           >

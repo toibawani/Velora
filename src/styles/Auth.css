@@ -1,46 +1,39 @@
 /* ==========================================================================
-   Auth.css — Premium Login & Registration Screens
-   --------------------------------------------------------------------------
-   Centered card design with full token system, focus rings, smooth
-   transitions, and a subtle ambient glow. Works in both light and dark mode.
+   Auth — calm, high-trust account access
    ========================================================================== */
 
-/* ==================== CONTAINER ==================== */
 .auth-container {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-primary);
-  padding: var(--space-8);
+  padding: clamp(1.5rem, 5vw, 4rem);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
-/* Ambient glow behind card */
+/* A quiet border gives the form presence without decoration or glow. */
 .auth-container::before {
   content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -55%);
-  width: 600px;
-  height: 400px;
-  background: transparent;
+  position: fixed;
+  inset: clamp(1rem, 3vw, 2.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
   pointer-events: none;
 }
 
-/* ==================== CARD ==================== */
 .auth-card {
   position: relative;
-  max-width: 440px;
   width: 100%;
-  padding: var(--space-10);
+  max-width: 460px;
+  padding: clamp(2rem, 6vw, 3rem);
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
-  animation: auth-card-appear 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  box-shadow: var(--shadow-lg);
+  animation: auth-card-appear 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes auth-card-appear {
@@ -54,35 +47,38 @@
   }
 }
 
-/* Logo/Brand mark at top */
+/* ==================== BRAND & TYPE ==================== */
 .auth-card::before {
   content: 'VELORA';
   display: block;
-  font-size: 0.85rem;
+  margin-bottom: var(--space-8);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
   font-weight: 900;
-  letter-spacing: 0.12em;
-  color: var(--text-tertiary);
-  margin-bottom: var(--space-6);
+  letter-spacing: 0.18em;
+  line-height: 1;
   text-align: center;
 }
 
-/* ==================== TYPOGRAPHY ==================== */
 .auth-title {
-  font-family: var(--font-sans);
-  font-size: 1.7rem;
-  font-weight: 800;
+  margin: 0;
   color: var(--text-primary);
-  letter-spacing: -0.03em;
-  margin: 0 0 var(--space-1) 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 5vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
   text-align: center;
 }
 
 .auth-subtitle {
-  font-size: 0.925rem;
+  margin: var(--space-3) 0 var(--space-8);
   color: var(--text-secondary);
-  margin: 0 0 var(--space-8) 0;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.6;
   text-align: center;
-  line-height: var(--leading-normal);
 }
 
 /* ==================== FORM ==================== */
@@ -90,7 +86,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
-  margin-bottom: var(--space-5);
+  margin: 0;
 }
 
 .form-group {
@@ -101,78 +97,117 @@
 }
 
 .form-group label {
+  color: var(--text-secondary);
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--text-secondary);
   letter-spacing: 0.01em;
+  line-height: 1.4;
 }
 
 .form-group input {
-  width: 100%;
   box-sizing: border-box;
-  padding: 12px 16px;
-  min-height: 48px;
+  width: 100%;
+  min-height: 54px;
+  padding: 0 1rem;
+  overflow: visible;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  font-family: var(--font-sans);
-  font-size: 16px;
   color: var(--text-primary);
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
   text-overflow: clip;
-  overflow: visible;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
 .form-group input::placeholder {
   color: var(--text-tertiary);
+  opacity: 1;
+}
+
+.form-group input:hover {
+  border-color: var(--border-strong);
+}
+
+.form-group input[aria-invalid='true'] {
+  border-color: var(--color-error);
 }
 
 .form-group input:focus-visible {
-  outline: 2px solid #667eea;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
 }
 
 .form-group input:focus:not(:focus-visible) {
   outline: none;
 }
 
-  .password-toggle { position: absolute; right: var(--space-2); bottom: 0; width: 48px; height: 48px; padding: 0; color: var(--text-secondary); background: transparent; border: 0; }
-  .password-toggle:hover { color: var(--text-primary); background: var(--bg-hover); }
+.auth-field-error {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--color-error);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
 
+.password-toggle {
+  position: absolute;
+  right: var(--space-1);
+  bottom: 0;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-secondary);
+}
+
+.password-toggle:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  box-shadow: none;
+}
+
+/* ==================== BUTTONS ==================== */
 .btn {
-  width: 100%;
-  padding: 12px 20px;
-  min-height: 48px;
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background-color 0.15s ease;
-  border: none;
-  text-align: center;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 0.875rem 1.25rem;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-align: center;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
 }
 
 .btn-primary {
   background: var(--accent-primary);
   color: var(--text-inverse);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
 }
 
 .btn-primary:hover {
   background: var(--accent-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+  transform: translateY(-1px);
 }
 
 .btn-primary:active {
-  transform: scale(0.98) translateY(0);
-  box-shadow: none;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.18);
+  transform: translateY(1px) scale(0.99);
 }
 
 .btn-secondary {
@@ -182,14 +217,14 @@
 }
 
 .btn-secondary:hover {
+  background: var(--bg-tertiary);
   border-color: var(--border-strong);
   color: var(--text-primary);
-  background: var(--bg-tertiary);
   transform: translateY(-1px);
 }
 
 .btn-secondary:active {
-  transform: scale(0.98);
+  transform: translateY(1px) scale(0.99);
 }
 
 .btn-full {
@@ -210,57 +245,60 @@
   background: var(--bg-tertiary);
 }
 
-/* ==================== FOOTER LINKS ==================== */
+/* ==================== FOOTER ==================== */
 .auth-footer {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
+  gap: var(--space-1);
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-subtle);
 }
 
-.auth-link {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-  cursor: pointer;
-  text-align: center;
-  padding: 8px;
-  transition: color 0.2s ease;
-  font-weight: 500;
-  min-height: 44px;
+button.auth-link,
+button.auth-back {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.625rem 0.75rem;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 160ms ease, color 160ms ease;
 }
 
-.auth-link:hover {
+button.auth-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+button.auth-link span {
+  margin-left: 0.3rem;
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+
+button.auth-back {
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+button.auth-link:hover,
+button.auth-back:hover {
+  background: var(--bg-hover);
+  box-shadow: none;
   color: var(--text-primary);
 }
 
-.auth-link span {
-  color: var(--accent-primary);
-  font-weight: 700;
-  margin-left: 4px;
-}
-
-.auth-back {
-  background: transparent;
-  border: none;
-  color: var(--text-tertiary);
-  font-size: 0.8125rem;
-  cursor: pointer;
-  text-align: center;
-  padding: 8px;
-  transition: color 0.2s ease;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.auth-back:hover {
-  color: var(--text-secondary);
+button.auth-link:hover span {
+  color: var(--accent-primary-hover);
 }
 
 /* Divider */
@@ -284,17 +322,19 @@
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .auth-container {
-    padding: var(--space-4);
     align-items: flex-start;
     padding-top: var(--space-12);
   }
 
-  .auth-card {
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
+  .auth-container::before {
+    inset: 0.75rem;
   }
 
-  .form-group input {
-    font-size: 1rem; /* 16px ensures no browser auto-zoom on iOS */
+  .auth-card {
+    padding: var(--space-6);
+  }
+
+  .auth-card::before {
+    margin-bottom: var(--space-6);
   }
 }
