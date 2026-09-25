@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock } from 'lucide-react';
 import PeerExplanations from './PeerExplanations';
 import ConceptMap from './ConceptMap';
 import SmartReviewPlanner from './SmartReviewPlanner';
 import { trackEvent } from '../utils/analytics';
 import { getReviewItems, addReviewItem, removeReviewItem } from '../utils/reviewPlanner';
+import { recordStudySession } from '../utils/analyticsStorage';
 import '../styles/LessonReader.css';
 
 function LessonReader({ topic, subject, onBack, showToast }) {
   const [saved, setSaved] = useState(() => topic ? getReviewItems().some((item) => item.id === `${subject}:${topic.id}`) : false);
+  const openedAt = useRef(Date.now());
+  useEffect(() => {
+    openedAt.current = Date.now();
+  }, [subject, topic?.id]);
+  useEffect(() => () => {
+    const minutes = Math.max(1, Math.round((Date.now() - openedAt.current) / 60000));
+    if (topic?.title) recordStudySession(topic.title, minutes, subject);
+  }, [subject, topic?.title]);
   if (!topic) return null;
 
   const toggleSaved = () => {
