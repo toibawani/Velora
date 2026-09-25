@@ -13,6 +13,8 @@ import '../styles/Analytics.css';
 function Analytics({ setScreen, user }) {
   const [analytics, setAnalytics] = useState(getAnalyticsData());
   const [selectedTimeframe, setSelectedTimeframe] = useState('week');
+  const hasActivity = analytics.totalHoursStudied > 0 || analytics.topicTimeDistribution.length > 0;
+  const domainCount = new Set(analytics.topicTimeDistribution.map((item) => item.subject)).size;
 
   useEffect(() => {
     trackEvent('screen_view', { screen: 'analytics' });
@@ -66,7 +68,7 @@ function Analytics({ setScreen, user }) {
               <span className="metric-big-num">{analytics.totalHoursStudied}</span>
               <span className="metric-unit">hrs</span>
             </div>
-            <span className="metric-subtext">Across 3 core domains</span>
+            <span className="metric-subtext">{hasActivity ? `Across ${domainCount || 1} learning domain${domainCount === 1 ? '' : 's'}` : 'No sessions recorded yet'}</span>
           </div>
 
           <div className="metric-box">
@@ -75,7 +77,7 @@ function Analytics({ setScreen, user }) {
               <span className="metric-big-num">{analytics.currentStreak}</span>
               <span className="metric-unit">days</span>
             </div>
-            <span className="metric-subtext">Consistent daily exploration</span>
+            <span className="metric-subtext">{hasActivity ? 'Recorded from local activity' : 'Record a session to begin'}</span>
           </div>
 
           <div className="metric-box">
@@ -90,9 +92,9 @@ function Analytics({ setScreen, user }) {
           <div className="metric-box">
             <span className="metric-caption">Cognitive Velocity</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">+18%</span>
+              <span className="metric-big-num">{hasActivity ? 'Baseline' : '—'}</span>
             </div>
-            <span className="metric-subtext">Faster retention vs baseline</span>
+            <span className="metric-subtext">{hasActivity ? 'A baseline for future comparisons' : 'No comparison yet'}</span>
           </div>
         </section>
 
@@ -140,7 +142,7 @@ function Analytics({ setScreen, user }) {
               </div>
 
               <div className="recommendation-pill">
-                💡 <strong>Optimized Advice:</strong> You absorb concepts 45% faster when starting with interactive visual models before reading formal mathematical proofs.
+                {hasActivity ? <>💡 <strong>Pattern forming:</strong> Keep exploring and revisit this page after a few real sessions.</> : <>💡 <strong>Start with one question:</strong> Read a lesson, then let your activity build the first baseline.</>}
               </div>
             </div>
 
@@ -175,7 +177,7 @@ function Analytics({ setScreen, user }) {
               </div>
 
               <p className="peak-tip">
-                🕒 <strong>Best Time to Learn:</strong> We recommend scheduling complex topics like <em>General Relativity</em> around <strong>8:00 PM</strong> for optimal mental clarity.
+                {hasActivity ? <>🕒 <strong>Pattern forming:</strong> Your best learning time will appear after more sessions.</> : <>🕒 <strong>No best time yet:</strong> Your activity is still too small to identify a pattern.</>}
               </p>
             </div>
           </div>
