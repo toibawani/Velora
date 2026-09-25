@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Home, BookOpen, Users, BarChart3, LogOut } from 'lucide-react';
 import '../styles/MobileNav.css';
 
 function MobileNav({ currentScreen, setScreen, onLogout }) {
   const [isOpen, setIsOpen] = useState(false);
+  const toggleRef = useRef(null);
 
   const navItems = [
     { name: 'Home', screen: 'universe', icon: Home },
@@ -32,6 +33,7 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      toggleRef.current?.focus();
     }
     return () => {
       document.body.style.overflow = '';
@@ -54,6 +56,7 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
     <>
       <button
         className="mobile-nav-toggle"
+        ref={toggleRef}
         onClick={() => setIsOpen(true)}
         aria-label="Open mobile navigation"
         aria-expanded={isOpen}
