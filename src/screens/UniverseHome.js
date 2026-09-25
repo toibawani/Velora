@@ -5,6 +5,7 @@ import SocialProof from '../components/SocialProof';
 import ReferralModal from '../components/ReferralModal';
 import CertificateModal from '../components/CertificateModal';
 import ThemeToggle from '../components/ThemeToggle';
+import LoadingCard from '../components/LoadingCard';
 import { trackEvent } from '../utils/analytics';
 import useKeyboardShortcuts from '../hooks/useKeyboardShortcuts';
 import '../styles/UniverseHome.css';
@@ -20,6 +21,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
   const [hoveredSubject, setHoveredSubject] = useState(null);
   const [showReferral, setShowReferral] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useKeyboardShortcuts({
     escape: () => {
@@ -30,6 +32,13 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
 
   useEffect(() => {
     trackEvent('screen_view', { screen: 'universe', user: user?.name });
+    
+    // Simulate initial data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    
+    return () => clearTimeout(timer);
   }, [user]);
 
   const subjects = [
@@ -115,17 +124,21 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
 
       {/* Main Content */}
       <main className="uh-main">
-        <div className="uh-hero-header">
-          <h1 className="uh-hero-title">Academic Universe</h1>
-          <p className="uh-hero-subtitle">
-            Curated curriculum spanning relativistic spacetime, epistemology, and historical revivals.
-          </p>
-        </div>
+        {isLoading ? (
+          <LoadingCard count={3} label="Loading universe" />
+        ) : (
+          <>
+            <div className="uh-hero-header">
+              <h1 className="uh-hero-title">Academic Universe</h1>
+              <p className="uh-hero-subtitle">
+                Curated curriculum spanning relativistic spacetime, epistemology, and historical revivals.
+              </p>
+            </div>
 
-        {/* Daily Spark */}
-        <section className="uh-daily-spark">
-          <DailySpark />
-        </section>
+            {/* Daily Spark */}
+            <section className="uh-daily-spark">
+              <DailySpark />
+            </section>
 
         {/* Feature Spotlight Banner */}
         <section className="uh-spotlight-section">
@@ -246,6 +259,8 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
           <h2 className="uh-section-title">Community & Momentum</h2>
           <SocialProof onSelectTopic={() => { setSelectedSubject('physics'); setScreen('learn'); }} />
         </section>
+          </>
+        )}
       </main>
 
       {/* Referral Modal */}
