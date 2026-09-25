@@ -77,7 +77,7 @@ function LandingPage({ setScreen }) {
 
   const domains = [
     { name: 'Astrophysics', color: '#4f7df3' },
-    { name: 'Philosophy', color: '#6D28D9' },
+    { name: 'Philosophy', color: '#667eea' },
     { name: 'History', color: '#b45309' },
     { name: 'Mathematics', color: '#0f766e' },
     { name: 'Quantum Physics', color: '#15803d' },
