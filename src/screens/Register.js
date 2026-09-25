@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import '../styles/Auth.css';
 import { getErrorMessage } from '../utils/validation';
 
@@ -15,6 +16,7 @@ function Register({ setScreen, onRegister, showToast }) {
   const [passwordError, setPasswordError] = useState('');
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleNameChange = (e) => {
     const value = e.target.value;
@@ -106,7 +108,7 @@ function Register({ setScreen, onRegister, showToast }) {
               id="register-password"
               name="password"
               autoComplete="new-password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
@@ -114,6 +116,9 @@ function Register({ setScreen, onRegister, showToast }) {
               aria-describedby={passwordError ? 'register-password-error' : undefined}
               required
             />
+            <button type="button" className="password-toggle" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
+              {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+            </button>
             {passwordError && (
               <span className="auth-field-error" id="register-password-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
                 {passwordError}

@@ -94,6 +94,7 @@
 }
 
 .form-group {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -137,7 +138,9 @@
   outline: none;
 }
 
-/* ==================== BUTTONS ==================== */
+  .password-toggle { position: absolute; right: var(--space-2); bottom: 0; width: 48px; height: 48px; padding: 0; color: var(--text-secondary); background: transparent; border: 0; }
+  .password-toggle:hover { color: var(--text-primary); background: var(--bg-hover); }
+
 .btn {
   width: 100%;
   padding: 12px 20px;
