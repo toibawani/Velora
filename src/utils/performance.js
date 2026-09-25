@@ -23,11 +23,20 @@ export const measurePerformance = (name, fn) => {
 
 export const measureAsync = async (name, fn) => {
   const start = performance.now();
-  const result = await fn();
-  const duration = performance.now() - start;
-  recordSlowOperation(name, duration, 200);
-  if (duration > 200) console.warn(`[perf] Slow async operation: ${name} took ${duration.toFixed(2)}ms`);
-  return result;
+  try {
+    const result = await fn();
+    const duration = performance.now() - start;
+    recordSlowOperation(name, duration, 200);
+    if (duration > 200) console.warn(`[perf] Slow async operation: ${name} took ${duration.toFixed(2)}ms`);
+    return result;
+  } catch (error) {
+    try {
+      localStorage.setItem('velora_last_operation_error', JSON.stringify({ name, message: error.message, timestamp: new Date().toISOString() }));
+    } catch {
+      // Error telemetry must not mask the original failure.
+    }
+    throw error;
+  }
 };
 
 export const getPerformanceLog = () => {
