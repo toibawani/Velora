@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/LearningAnalyticsDash.css';
 
+const DEFAULT_STATS = {
+  totalHours: 12.5,
+  topicsCompleted: 8,
+  retentionScore: 73,
+  currentStreak: 7,
+  bestLearningTime: '2:00 PM - 4:00 PM',
+  strugglingTopics: ['Wave-Particle Duality', 'Quantum Entanglement'],
+  weeklyData: [3, 5, 4, 6, 7, 5, 4]
+};
+
+const isValidStats = (value) => value && typeof value === 'object' && Array.isArray(value.weeklyData) && value.weeklyData.length === 7 && value.weeklyData.every(Number.isFinite);
+
 function LearningAnalyticsDash() {
   const [stats, setStats] = useState(() => {
-    const saved = localStorage.getItem('velora_analytics');
-    return saved
-      ? JSON.parse(saved)
-      : {
-          totalHours: 12.5,
-          topicsCompleted: 8,
-          retentionScore: 73,
-          currentStreak: 7,
-          bestLearningTime: '2:00 PM - 4:00 PM',
-          strugglingTopics: ['Wave-Particle Duality', 'Quantum Entanglement'],
-          weeklyData: [3, 5, 4, 6, 7, 5, 4],
-        };
+    try {
+      const saved = JSON.parse(localStorage.getItem('velora_analytics') || 'null');
+      return isValidStats(saved) ? { ...DEFAULT_STATS, ...saved } : { ...DEFAULT_STATS };
+    } catch {
+      return { ...DEFAULT_STATS };
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem('velora_analytics', JSON.stringify(stats));
+    try {
+      localStorage.setItem('velora_analytics', JSON.stringify(stats));
+    } catch {
+      // Keep the in-memory dashboard usable when storage is unavailable.
+    }
   }, [stats]);
 
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const maxHours = Math.max(...stats.weeklyData);
+  const maxHours = Math.max(1, ...stats.weeklyData);
 
   return (
     <div className="analytics-dash">
