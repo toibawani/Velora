@@ -44,7 +44,6 @@ export const getAnalyticsData = () => {
     if (!isAnalyticsShape(parsed)) throw new Error('Invalid analytics schema');
     return { ...cloneDefault(), ...parsed };
   } catch (e) {
-    console.warn('LocalStorage unavailable or invalid, returning default analytics', e);
     return cloneDefault();
   }
 };

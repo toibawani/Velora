@@ -14,6 +14,14 @@ describe('analytics storage', () => {
     expect(getAnalyticsData().totalHoursStudied).toBe(0);
   });
 
+  test('does not expose recovery details in analytics storage', () => {
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    localStorage.setItem('velora_learning_analytics', '{not-json');
+    getAnalyticsData();
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
   test('accumulates repeated sessions on the same day', () => {
     recordStudySession('Stoicism', 15, 'philosophy');
     recordStudySession('Stoicism', 15, 'philosophy');
