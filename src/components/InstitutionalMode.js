@@ -60,12 +60,14 @@ function InstitutionalMode({ onBack }) {
         <div className="role-switch-pills">
           <button
             className={`role-pill ${activeRole === 'educator' ? 'active' : ''}`}
+            aria-pressed={activeRole === 'educator'}
             onClick={() => setActiveRole('educator')}
           >
             🎓 Educator Mode
           </button>
           <button
             className={`role-pill ${activeRole === 'parent' ? 'active' : ''}`}
+            aria-pressed={activeRole === 'parent'}
             onClick={() => setActiveRole('parent')}
           >
             👨‍👧 Parent Insights
