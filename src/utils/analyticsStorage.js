@@ -25,28 +25,6 @@ const DEFAULT_ANALYTICS = {
   },
   topicTimeDistribution: [],
   struggledConcepts: [],
-    {
-      concept: 'Spacetime Geodesics & Curvature Tensor',
-      topic: 'General Relativity',
-      subject: 'physics',
-      struggleLevel: 'High',
-      recommendation: 'Try our visual AI Whiteboard to map non-Euclidean geodesics step-by-step.'
-    },
-    {
-      concept: 'Hawking Radiation & Virtual Particle Entanglement',
-      topic: 'Quantum Mechanics',
-      subject: 'physics',
-      struggleLevel: 'Medium',
-      recommendation: 'Revisit the Event Horizon micro-lesson and complete the causal chain game.'
-    },
-    {
-      concept: 'Kantian Noumena vs. Phenomena',
-      topic: 'Transcendental Idealism',
-      subject: 'philosophy',
-      struggleLevel: 'Medium',
-      recommendation: 'Review the Sketchbook card comparing subjective perception with physical reality.'
-    }
-  ],
   weeklyActivity: []
 };
 
