@@ -7,6 +7,9 @@ const THEME_STORAGE_KEY = 'velora_theme_preference';
 /**
  * Determines whether it is currently daytime (7 AM to 7 PM)
  */
+const THEME_MODES = ['dark', 'light', 'auto'];
+const normalizeThemeMode = (value) => THEME_MODES.includes(value) ? value : 'auto';
+
 const isSystemDark = () => {
   try {
     return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
@@ -19,7 +22,7 @@ export function ThemeProvider({ children }) {
   // Mode: 'dark' | 'light' | 'auto'
   const [themeMode, setThemeMode] = useState(() => {
     try {
-      return localStorage.getItem(THEME_STORAGE_KEY) || 'auto';
+      return normalizeThemeMode(localStorage.getItem(THEME_STORAGE_KEY));
     } catch {
       return 'auto';
     }
