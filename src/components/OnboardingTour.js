@@ -14,6 +14,16 @@ import '../styles/OnboardingTour.css';
  * Stored in localStorage to never show twice.
  */
 
+const ONBOARDING_KEY = 'velora_onboarding_done';
+
+const markOnboardingComplete = () => {
+  try {
+    localStorage.setItem(ONBOARDING_KEY, '1');
+  } catch {
+    // Onboarding should still complete when storage is unavailable.
+  }
+};
+
 const STEPS = [
   {
     id: 'welcome',
@@ -83,7 +93,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
       setSelectedSubject?.(selectedDomain);
     }
     if (isLast) {
-      localStorage.setItem('velora_onboarding_done', '1');
+      markOnboardingComplete();
       onComplete?.();
     } else {
       setStepIdx(prev => prev + 1);
@@ -182,7 +192,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
         {stepIdx > 0 && !isLast && (
           <button
             className="onboarding-skip-link"
-            onClick={() => { localStorage.setItem('velora_onboarding_done', '1'); onComplete?.(); }}
+            onClick={() => { markOnboardingComplete(); onComplete?.(); }}
           >
             Skip setup
           </button>
