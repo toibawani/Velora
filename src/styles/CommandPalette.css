@@ -5,7 +5,8 @@
 .command-close { width: 48px; height: 48px; padding: 0; color: var(--text-secondary); background: transparent; border: 0; }
 .command-results { padding: var(--space-3); }
 .command-result { display: flex; align-items: center; width: 100%; gap: var(--space-3); min-height: 64px; padding: var(--space-3) var(--space-4); color: var(--text-primary); text-align: left; background: transparent; border: 0; border-radius: var(--radius-md); }
-.command-result:hover, .command-result:focus-visible { background: var(--bg-hover); }
+.command-result:hover, .command-result:focus-visible, .command-result.active { background: var(--bg-hover); }
+.command-result.active { box-shadow: inset 3px 0 0 var(--accent-primary); }
 .command-result-icon { display: grid; place-items: center; width: 36px; height: 36px; color: var(--accent-primary); background: var(--bg-tertiary); border-radius: var(--radius-sm); }
 .command-result span:nth-child(2) { display: flex; flex: 1; flex-direction: column; gap: 2px; }
 .command-result strong { font-size: 0.9375rem; }
