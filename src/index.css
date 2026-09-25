@@ -1,32 +1,17 @@
 /* ==========================================================================
    VELORA — Global Styles
    --------------------------------------------------------------------------
-   Import order: tokens → fonts → base resets.
-   Do NOT add colour variables here; they live in design-tokens.css.
-   Do NOT modify the @font-face blocks or the :root colour vars below.
+   Self-hosted Inter is imported before this file in index.js. Product tokens
+   live in design-tokens.css; this file owns the reset and global type scale.
    ========================================================================== */
 
 @import url('./styles/design-tokens.css');
-
-/* Inter is the single product typeface. The system stack keeps the app readable offline. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
-}
-
-/* ─── Colour tokens (defined by task brief — do not change) ──────────────── */
-/* System dark is represented by ThemeContext's resolved data-theme attribute. */
-
-:root {
-  --color-bg: #FAFAFA;
-  --color-text: #111111;
-  --color-text-muted: #666666;
-  --color-accent: #667eea;
-  --color-border: #E5E5E5;
 }
 
 /* ─── Base reset ────────────────────────────────────────────────────────── */
@@ -125,6 +110,6 @@ a:hover {
 
 /* ─── Selection ──────────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(102, 126, 234, 0.16);
+  background: rgba(37, 99, 235, 0.16);
   color: var(--text-primary);
 }

@@ -106,15 +106,15 @@
 }
 
 .splash-btn-primary {
-  background: var(--accent-blue, #4f7df3);
-  color: #ffffff;
-  box-shadow: 0 4px 16px rgba(79, 125, 243, 0.22);
+  background: var(--accent-blue);
+  color: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
 }
 
 .splash-btn-primary:hover {
-  background: #3d6ce0;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(79, 125, 243, 0.32);
+  background: var(--accent-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
 }
 
 .splash-btn-secondary {

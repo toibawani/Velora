@@ -6,7 +6,7 @@
 
 :root {
   --color-primary: var(--color-accent);
-  --color-primary-dark: #5568d3;
+  --color-primary-dark: #1D4ED8;
   --color-primary-light: var(--color-bg);
 
   --color-bg-light: var(--color-bg);
@@ -46,7 +46,7 @@ button {
 }
 
 button:hover {
-  background: #5568d3;
+  background: var(--accent-primary-hover);
   box-shadow: var(--shadow-hover);
 }
 

@@ -57,13 +57,16 @@ The app opens at **http://localhost:3000** automatically. Hot module reload is a
 
 ## 5. Verify fonts load correctly
 
-In your browser DevTools → Network tab → filter by `woff2`:
+In your browser DevTools → Network tab, filter by `woff2`:
 
-- `GeneralSans-Regular.woff2` — should return **200** (served locally from `src/fonts/`)
-- `GeneralSans-Medium.woff2` — should return **200** (served locally)
-- `Plus+Jakarta+Sans` — loaded from Google Fonts CDN (requires network)
+- `inter-latin-400-normal.woff2`
+- `inter-latin-500-normal.woff2`
+- `inter-latin-600-normal.woff2`
+- `inter-latin-700-normal.woff2`
+- `inter-latin-800-normal.woff2`
+- `inter-latin-900-normal.woff2`
 
-If Plus Jakarta Sans fails to load (offline), the UI falls back gracefully to General Sans at every weight.
+Each file is bundled through `@fontsource/inter` and should return **200** without contacting a third-party font CDN.
 
 ---
 
@@ -101,4 +104,4 @@ Access at **http://localhost:3000**.
 | Port 3000 in use | `npm start` will auto-prompt for port 3001 — say Yes |
 | Blank white screen | Check browser console for missing import; most likely a renamed/deleted CSS file |
 | `react-scripts: command not found` | `node_modules/.bin` not in PATH — run `npx react-scripts start` instead |
-| General Sans not rendering | Font files in `src/fonts/` must be committed — check with `git ls-files src/fonts/` |
+| Inter not rendering | Run `npm install` and confirm the six `inter-latin-*.woff2` requests return 200 in DevTools |
