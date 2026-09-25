@@ -75,7 +75,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       id: 'information-paradox',
       title: 'Information Paradox',
       icon: '❓',
-      color: '#9B59B6',
+      color: '#667eea',
       content: 'The greatest unsolved problem. Is information destroyed?',
       duration: '15 mins',
     },

@@ -115,9 +115,11 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 16px;
   color: var(--text-primary);
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  text-overflow: clip;
+  overflow: visible;
 }
 
 .form-group input::placeholder {
