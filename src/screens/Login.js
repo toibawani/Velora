@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import '../styles/Auth.css';
 import { getErrorMessage } from '../utils/validation';
 
@@ -7,6 +8,7 @@ function Login({ setScreen, onLogin, showToast }) {
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -70,7 +72,7 @@ function Login({ setScreen, onLogin, showToast }) {
               id="login-password"
               name="password"
               autoComplete="current-password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
@@ -78,6 +80,9 @@ function Login({ setScreen, onLogin, showToast }) {
               aria-describedby={passwordError ? 'login-password-error' : undefined}
               required
             />
+            <button type="button" className="password-toggle" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
+              {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+            </button>
             {passwordError && (
               <span className="auth-field-error" id="login-password-error" style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
                 {passwordError}
