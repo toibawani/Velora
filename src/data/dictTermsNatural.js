@@ -37,7 +37,7 @@ export const PHYSICS_TERMS = [
     explanation: 'Shine light on a metal and electrons pop loose. The strange part is that a dimmer light with a higher frequency throws them off harder, while a brighter light of the same frequency throws off exactly as many and no more.',
     example: 'Einstein explained this in 1905 by insisting light comes in discrete packets. Make the packets energetic enough and they knock electrons free; add more of them and you only get more electrons, not faster ones.',
     source: 'Einstein, "On a Heuristic Viewpoint Concerning the Production and Transformation of Light" (1905)',
-    sourceUrl: 'https://www.britannica.com/science/photoelectric-effect',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Photoelectric_effect',
   },
   {
     id: 'wave-particle-duality',
@@ -59,7 +59,7 @@ export const PHYSICS_TERMS = [
     explanation: 'Light changes speed when it moves between materials of different density, and because it changes speed it changes direction. The bend is always toward the slower medium, and it is why lenses can focus and why the whole of optics exists.',
     example: 'A pencil half-submerged in water looks broken at the waterline. The light coming from the submerged part is bent on the way out, so your brain places that part higher than it really is.',
     source: 'Snell, "Cyclometricus" (1621)',
-    sourceUrl: 'https://www.britannica.com/science/refraction',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Refraction',
   },
 
   {
@@ -71,7 +71,7 @@ export const PHYSICS_TERMS = [
     explanation: 'A magnetic field is the region around a magnet where a compass needle would turn to line up with it. It has both a direction and a strength at every point, and it is what lets a motor push and a generator pull.',
     example: 'The Earth has one, tilted about 11 degrees from its rotation axis, which is why a compass in Alaska points at the geographic north pole rather than the true magnetic one.',
     source: 'Maxwell, "On Faraday Law of Induction" (1865)',
-    sourceUrl: 'https://www.britannica.com/science/magnetic-field',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Magnetic_field',
   },
   {
     id: 'electromagnetic-induction',
@@ -93,7 +93,7 @@ export const PHYSICS_TERMS = [
     explanation: 'Push harder on a wire and more current runs through it; make it harder for current to pass and less does. Ohm found that relationship is linear, which sounds dull until you realise it means circuits are actually calculable.',
     example: 'Halving the resistance of a bulb on a fixed supply doubles its current, and therefore its power, which is why bulbs fail most often the moment a dimmer switch is turned up.',
     source: 'Ohm, "Die galvanische Kette" (1827)',
-    sourceUrl: 'https://www.britannica.com/science/Ohms-law',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Ohm%27s_law',
   },
   {
     id: 'double-slit-experiment',
@@ -115,7 +115,7 @@ export const PHYSICS_TERMS = [
     explanation: 'A heavy nucleus that absorbs a slow neutron can break into two smaller ones, release more neutrons, and those go on to split further nuclei. A chain reaction is exactly that, and the energy released is mostly the mass that vanished.',
     example: 'A kilogram of uranium releasing fission energy gives about eight times the energy of burning a kilogram of coal. What is doing the work is E equals mc squared, applied to a mass difference of roughly 0.1 percent.',
     source: 'Hahn and Strassmann, paper on uranium fission (1939)',
-    sourceUrl: 'https://www.britannica.com/science/nuclear-fission',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Nuclear_fission',
   },
   {
     id: 'radioactivity',
@@ -126,7 +126,7 @@ export const PHYSICS_TERMS = [
     explanation: 'An unstable nucleus throws off a particle or a burst of energy and becomes something more stable, repeating until it reaches a form that holds still. The rate is a fixed property of each isotope, and it does not care about temperature, pressure, or what the atom is doing.',
     example: 'Carbon-14 has a half-life near 5,730 years, so wood dated to 6,000 years old is about half decayed. Cobalt-60, used to sterilise equipment, halves in about five years and is still giving off heat years later.',
     source: 'Becquerel, "Rayons emis par l uranium" (1896)',
-    sourceUrl: 'https://www.britannica.com/science/radioactivity',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Radioactivity',
   },
   {
     id: 'equivalence-principle',
@@ -151,7 +151,7 @@ export const CHEMISTRY_TERMS = [
     explanation: 'When a metal atom gives an electron to a non-metal, both end up more stable as ions with full outer shells. The attraction between the resulting positive and negative ions is what holds a crystal together.',
     example: 'Sodium chloride is just sodium ions and chloride ions in a repeating cube. Cut a grain of table salt in half and you have half as much salt; the arrangement extends beyond anything you can hold.',
     source: 'Kossel, "Valence and the periodic law" (1916)',
-    sourceUrl: 'https://www.britannica.com/science/ionic-compound',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Ionic_bonding',
   },
   {
     id: 'covalent-bonding',
@@ -184,7 +184,7 @@ export const CHEMISTRY_TERMS = [
     explanation: 'Oxidation is losing electrons and reduction is gaining them, and they always happen together because the electrons have to go somewhere. The two words are defined by electron flow, not by oxygen, despite what the names suggest.',
     example: 'Iron rusting is iron atoms losing electrons to oxygen. Your car battery discharging is the same pair of reactions run backwards, which is why charging a battery is a matter of pushing electrons back up the hill.',
     source: 'Lavoisier, "Recherches sur la combustion en general" (1772)',
-    sourceUrl: 'https://www.britannica.com/science/oxidation-reduction-reaction',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Redox',
   },
   {
     id: 'le-chatelier',
@@ -231,7 +231,7 @@ export const CHEMISTRY_TERMS_MORE = [
     explanation: 'Atoms are generally keen to reach a full outer shell, and the electrons in that outermost shell are the ones available for bonding. Change which shell is the outside one and you change the element completely.',
     example: 'Sodium has one outer electron and gives it away easily, making it violently reactive. Neon has a full outer shell and has nothing to offer anyone, which is why it sits in a jar and does nothing at all.',
     source: 'Kossel, "Valence and the periodic law" (1916)',
-    sourceUrl: 'https://www.britannica.com/science/valence',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Valence_(chemistry)',
   },
   {
     id: 'free-radical',

@@ -56,3 +56,19 @@ describe('Curious Dictionary data', () => {
     });
   });
 });
+
+describe('Curious Dictionary source links', () => {
+  // Britannica sits behind a bot challenge that answers 403 to anything that
+  // is not a real browser session, which means a broken link there is
+  // indistinguishable from a working one and cannot be verified. A link that
+  // cannot be checked is a link that should not ship, so these hosts are
+  // blocked rather than merely discouraged.
+  const UNVERIFIABLE_HOSTS = ['britannica.com', 'newspapers.com', 'jstor.org'];
+
+  test('no source points at a host that cannot be checked', () => {
+    const blocked = CURIOUS_TERMS.filter((t) =>
+      UNVERIFIABLE_HOSTS.some((host) => t.sourceUrl.includes(host))
+    ).map((t) => `${t.id}: ${t.sourceUrl}`);
+    expect(blocked).toEqual([]);
+  });
+});
