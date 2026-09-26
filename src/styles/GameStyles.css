@@ -789,3 +789,20 @@
   margin: 0.15rem 0;
   font-size: 0.875rem;
 }
+
+.quiz-explanation {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #6E5846);
+}
+
+.result-right {
+  font-weight: 600;
+  margin: 0;
+}
+
+.result-wrong {
+  font-weight: 600;
+  margin: 0;
+}

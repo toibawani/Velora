@@ -28,13 +28,13 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
   const games = [
     {
       id: 'quiz',
-      name: 'Quantum Concepts Quiz',
+      name: 'Concept Check',
       type: 'quiz',
-      description: 'Test and sharpen fundamental principles of modern physics',
+      description: 'Ten questions across physics, chemistry and biology, each with the reasoning behind the answer',
       icon: Target,
-      color: '#2563EB',
-      difficulty: 'Intermediate',
-      duration: '10 mins',
+      color: '#8C4A2F',
+      difficulty: 'Mixed',
+      duration: '5 mins',
     },
     {
       id: 'scrabble',
