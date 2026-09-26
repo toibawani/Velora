@@ -76,13 +76,20 @@ const PLATES = [
 
 /** Matches a media query and stays in step with it. */
 function useMediaQuery(query) {
-  const [matches, setMatches] = useState(false);
+  // Resolved during the first render rather than in an effect, so the very
+  // first paint already honours the preference instead of animating once and
+  // then swapping.
+  const [matches, setMatches] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia(query).matches
+  );
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return undefined;
     const list = window.matchMedia(query);
     const sync = () => setMatches(list.matches);
-    sync();
     list.addEventListener('change', sync);
     return () => list.removeEventListener('change', sync);
   }, [query]);

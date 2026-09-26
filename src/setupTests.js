@@ -11,7 +11,10 @@ if (typeof window !== 'undefined' && window.HTMLCanvasElement) {
     clearRect: () => {},
     getImageData: (x, y, w, h) => ({ data: new Array(w * h * 4) }),
     putImageData: () => {},
-    createImageData: () => [],
+    // A real ImageData carries a pixel buffer of w*h*4 bytes. Returning a
+    // bare array breaks any canvas code that writes pixels, which is how the
+    // wave simulation went unnoticed.
+    createImageData: (w = 1, h = 1) => ({ width: w, height: h, data: new Uint8ClampedArray(w * h * 4) }),
     setTransform: () => {},
     scale: () => {},
     drawImage: () => {},
@@ -31,6 +34,7 @@ if (typeof window !== 'undefined' && window.HTMLCanvasElement) {
     measureText: () => ({ width: 0 }),
     transform: () => {},
     resetTransform: () => {},
+    drawImage: () => {},
     createRadialGradient: () => ({
       addColorStop: () => {},
     }),
