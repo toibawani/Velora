@@ -699,8 +699,8 @@
 }
 
 .hero-plates-copy {
-  max-width: 40ch;
-  margin-bottom: var(--space-10);
+  max-width: 34ch;
+  margin-bottom: var(--space-6);
 }
 
 .hero-plates-heading {

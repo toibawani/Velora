@@ -22,28 +22,33 @@ import '../../styles/ui/StackSpread.css';
 
 const PLATE_BASE = `${process.env.PUBLIC_URL}/hero-plates`;
 
-/** A tidy four-across grid, jittered enough that it does not look printed. */
+/**
+ * A tidy four-across grid, jittered enough that it does not look printed.
+ * The rows sit at plus and minus 26% because the plates are 4:5, which makes
+ * them taller than a comfortable reading gap. Closer together and the second
+ * row hides behind the first.
+ */
 const SPREAD = [
-  { x: -30, y: -13, r: -3, w: 19 },
-  { x: -10, y: -15, r: 2, w: 17 },
-  { x: 10, y: -14, r: -2, w: 18 },
-  { x: 30, y: -12, r: 3, w: 16 },
-  { x: -30, y: 15, r: 3, w: 17 },
-  { x: -10, y: 14, r: -3, w: 18 },
-  { x: 10, y: 16, r: 2, w: 16 },
-  { x: 30, y: 13, r: -3, w: 19 },
+  { x: -30, y: -26, r: -3, w: 19 },
+  { x: -10, y: -28, r: 2, w: 17 },
+  { x: 10, y: -27, r: -2, w: 18 },
+  { x: 30, y: -25, r: 3, w: 16 },
+  { x: -30, y: 27, r: 3, w: 17 },
+  { x: -10, y: 25, r: -3, w: 18 },
+  { x: 10, y: 28, r: 2, w: 16 },
+  { x: 30, y: 26, r: -3, w: 19 },
 ];
 
 /** Two across and four down, so the grid still reads on a narrow phone. */
 const SPREAD_COMPACT = [
-  { x: -23, y: -30, r: -3, w: 41 },
-  { x: 23, y: -30, r: 2, w: 41 },
-  { x: -23, y: -10, r: 2, w: 41 },
-  { x: 23, y: -10, r: -2, w: 41 },
-  { x: -23, y: 10, r: -2, w: 41 },
-  { x: 23, y: 10, r: 3, w: 41 },
-  { x: -23, y: 30, r: 3, w: 41 },
-  { x: 23, y: 30, r: -3, w: 41 },
+  { x: -23, y: -33, r: -3, w: 40 },
+  { x: 23, y: -33, r: 2, w: 40 },
+  { x: -23, y: -11, r: 2, w: 40 },
+  { x: 23, y: -11, r: -2, w: 40 },
+  { x: -23, y: 11, r: -2, w: 40 },
+  { x: 23, y: 11, r: 3, w: 40 },
+  { x: -23, y: 33, r: 3, w: 40 },
+  { x: 23, y: 33, r: -3, w: 40 },
 ];
 
 /** The resting pose: a leaning pile, so the hero is not eight neat squares. */

@@ -15,7 +15,8 @@
 .stack-field-stage {
   position: relative;
   width: 100%;
-  height: clamp(420px, 56vw, 560px);
+  /* Tall enough for two rows of 4:5 plates plus a gap between them. */
+  height: clamp(520px, 60vw, 620px);
   /* Confine the fan's own repaint area. */
   contain: layout paint;
   touch-action: pan-y;
@@ -93,7 +94,9 @@
   }
 
   .stack-field-stage {
-    height: clamp(460px, 118vw, 620px);
+    /* Four rows of 4:5 plates, so the phone needs a taller stage than the
+       two-row desktop layout. */
+    height: clamp(640px, 205vw, 800px);
   }
 
   .stack-field-note {
