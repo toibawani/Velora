@@ -70,7 +70,12 @@ function App() {
     setUser({ email, name });
     showToast('Your account is ready. Welcome to VELORA.', 'success');
     // Show onboarding tour for new users
-    const alreadyOnboarded = localStorage.getItem('velora_onboarding_done');
+    let alreadyOnboarded = false;
+    try {
+      alreadyOnboarded = Boolean(localStorage.getItem('velora_onboarding_done'));
+    } catch {
+      alreadyOnboarded = false;
+    }
     if (!alreadyOnboarded) {
       setScreen('universe');
       setShowOnboarding(true);

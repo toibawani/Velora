@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EmptyState from './EmptyState';
+import { sanitizeText } from '../utils/sanitize';
+import { safeGet, safeSet } from '../utils/storage';
 import '../styles/PeerExplanations.css';
 
 const DEFAULT_EXPLANATIONS = [
@@ -12,11 +14,9 @@ const storageKey = (topic) => `velora_explanations_${topic.toLowerCase().replace
 
 function PeerExplanations({ topic, onNotify }) {
   const [explanations, setExplanations] = useState(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(storageKey(topic)) || 'null');
-      if (Array.isArray(saved) && saved.every((item) => item && typeof item.text === 'string' && item.votes)) return saved;
-    } catch {
-      // Fall back to the starter explanations when the local cache is damaged.
+    const saved = safeGet(storageKey(topic), null);
+    if (Array.isArray(saved) && saved.every((item) => item && typeof item.text === 'string' && item.votes)) {
+      return saved.map(item => ({ ...item, text: sanitizeText(item.text) }));
     }
     return DEFAULT_EXPLANATIONS;
   });
@@ -26,16 +26,13 @@ function PeerExplanations({ topic, onNotify }) {
   const [userVotes, setUserVotes] = useState({});
 
   useEffect(() => {
-    try {
-      localStorage.setItem(storageKey(topic), JSON.stringify(explanations));
-    } catch {
-      // Explanations remain usable for this session if persistence is unavailable.
-    }
+    safeSet(storageKey(topic), explanations);
   }, [explanations, topic]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const text = newExplanation.trim();
+    const rawText = newExplanation.trim();
+    const text = sanitizeText(rawText);
     if (text.length < 10) {
       setInputError('Add a little more detail so another learner can follow your thinking.');
       return;
