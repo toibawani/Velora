@@ -1,46 +1,45 @@
 :root {
-  --bg-main: #0B0F17;
-  --bg-surface: rgba(255, 255, 255, 0.03);
-  --bg-surface-hover: rgba(255, 255, 255, 0.06);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --text-primary: #F3F4F6;
-  --text-secondary: #9CA3AF;
-  --accent-primary: #6366F1;
-  --accent-hover: #4F46E5;
+  --bg-main: #F6EFE4;
+  --bg-surface: #FFF9F1;
+  --bg-surface-hover: #F3E6D4;
+  --border-color: rgba(62, 39, 24, 0.12);
+  --text-primary: #2C2118;
+  --text-secondary: #6E5846;
+  --accent-primary: #8C4A2F;
+  --accent-hover: #6E3822;
 }
 
 body {
   background-color: var(--bg-main) !important;
   color: var(--text-primary) !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
 }
 
-/* Force dark theme layout containers */
+/* Layout containers inherit the page instead of painting a second surface. */
 div, section, main {
   background-color: transparent;
 }
 
-/* Global Button Override */
+/* Global button override — warm espresso, never indigo. */
 button {
   background-color: var(--accent-primary) !important;
-  color: #FFFFFF !important;
-  border-radius: 8px !important;
+  color: #FFF8F1 !important;
+  border-radius: 999px !important;
   border: none !important;
   padding: 10px 18px !important;
-  font-weight: 500 !important;
-  transition: all 0.2s ease !important;
+  font-weight: 560 !important;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 button:hover {
   background-color: var(--accent-hover) !important;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
+  box-shadow: 0 8px 18px rgba(92, 52, 32, 0.16) !important;
 }
 
-/* Global Card Styling Override */
+/* Global card styling override. */
 .card, [class*="card"], [class*="Card"] {
   background: var(--bg-surface) !important;
   border: 1px solid var(--border-color) !important;
-  backdrop-filter: blur(12px);
-  border-radius: 12px !important;
+  border-radius: 22px !important;
   color: var(--text-primary) !important;
 }

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, Search, X, BookOpen, ExternalLink, Sparkles } from 'lucide-react';
+import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
 import { DICTIONARY_SUBJECTS, CURIOUS_TERMS } from '../data/curiousDictionaryData';
 import '../styles/Dictionary.css';
 

@@ -2,69 +2,69 @@
 :root[data-theme='light'],
 :root[data-theme='dark'] {
 
-  --color-bg: #0B0F17;
-  --color-text: #F3F4F6;
-  --color-text-muted: #9CA3AF;
-  --color-accent: #A5B4FC;
-  --color-border: rgba(255, 255, 255, 0.12);
+  --color-bg: #F6EFE4;
+  --color-text: #2C2118;
+  --color-text-muted: #6E5846;
+  --color-accent: #8C4A2F;
+  --color-border: rgba(62, 39, 24, 0.12);
 
-  --bg-primary: #0B0F17;
-  --bg-secondary: rgba(255, 255, 255, 0.03);
-  --bg-tertiary: rgba(255, 255, 255, 0.06);
-  --bg-elevated: #111722;
-  --bg-hover: rgba(255, 255, 255, 0.08);
-  --bg-active: rgba(255, 255, 255, 0.11);
+  --bg-primary: #F6EFE4;
+  --bg-secondary: #F3E6D4;
+  --bg-tertiary: #EAD9C4;
+  --bg-elevated: #FFF9F1;
+  --bg-hover: #F0E2D0;
+  --bg-active: #E7D3BB;
 
-  --text-primary: #F3F4F6;
-  --text-secondary: #B8C0CC;
-  --text-tertiary: #929BAA;
-  --text-inverse: #0B0F17;
+  --text-primary: #2C2118;
+  --text-secondary: #6B5644;
+  --text-tertiary: #8A7260;
+  --text-inverse: #FFF8F1;
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-default: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.24);
+  --border-subtle: rgba(62, 39, 24, 0.08);
+  --border-default: rgba(62, 39, 24, 0.12);
+  --border-strong: rgba(62, 39, 24, 0.24);
 
-  --accent-primary: #6366F1;
-  --accent-primary-hover: #4F46E5;
-  --accent-blue: #6366F1;
-  --accent-blue-hover: #4F46E5;
-  --accent-green: #4ADE80;
-  --accent-green-hover: #22C55E;
-  --accent-orange: #FB923C;
-  --accent-red: #F87171;
-  --accent-red-hover: #EF4444;
-  --accent-teal: #2DD4BF;
-  --accent-gold: #FBBF24;
+  --accent-primary: #8C4A2F;
+  --accent-primary-hover: #6E3822;
+  --accent-blue: #8C4A2F;
+  --accent-blue-hover: #6E3822;
+  --accent-green: #3F6B4A;
+  --accent-green-hover: #2F5238;
+  --accent-orange: #C2643A;
+  --accent-red: #A33B32;
+  --accent-red-hover: #842E27;
+  --accent-teal: #3E6A62;
+  --accent-gold: #A56A2A;
 
-  --color-success: #4ADE80;
-  --color-warning: #FB923C;
-  --color-error: #F87171;
-  --color-info: #A5B4FC;
+  --color-success: #3F6B4A;
+  --color-warning: #A56A2A;
+  --color-error: #A33B32;
+  --color-info: #8C4A2F;
 
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-display: "Fraunces", "Source Serif 4", Georgia, serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
   --radius-full: 999px;
 
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 10px 24px rgba(0, 0, 0, 0.36);
-  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.42);
-  --shadow-hover: 0 12px 30px rgba(79, 70, 229, 0.2);
+  --shadow-xs: 0 1px 2px rgba(62, 39, 24, 0.05);
+  --shadow-sm: 0 8px 20px rgba(62, 39, 24, 0.06);
+  --shadow-md: 0 16px 36px rgba(62, 39, 24, 0.08);
+  --shadow-lg: 0 28px 60px rgba(62, 39, 24, 0.12);
+  --shadow-hover: 0 12px 28px rgba(92, 52, 32, 0.12);
 
   --ease-standard: ease-out;
   --duration-fast: 150ms;
   --duration-normal: 200ms;
-  --tracking-tight: -0.02em;
-  --tracking-wide: 0.04em;
-  --leading-tight: 1.2;
+  --tracking-tight: -0.03em;
+  --tracking-wide: 0.08em;
+  --leading-tight: 1.05;
   --leading-normal: 1.6;
   --space-1: 4px;
   --space-2: 8px;
@@ -82,12 +82,12 @@ html,
 body,
 #root,
 .app {
-  background: #0B0F17;
-  color: #F3F4F6;
+  background: #F6EFE4;
+  color: #2C2118;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif !important;
 }
 
 button:focus-visible,
@@ -95,7 +95,7 @@ input:focus-visible,
 textarea:focus-visible,
 a:focus-visible,
 [role="button"]:focus-visible {
-  outline: 2px solid #A5B4FC;
+  outline: 2px solid #8C4A2F;
   outline-offset: 3px;
 }
 
@@ -112,8 +112,8 @@ a:focus-visible,
 .btn-ghost,
 [class*="icon-button"] {
   background: transparent !important;
-  color: #B8C0CC !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #6B5644 !important;
+  border: 1px solid rgba(62, 39, 24, 0.14) !important;
   box-shadow: none !important;
 }
 
@@ -127,8 +127,8 @@ a:focus-visible,
 .btn-secondary:hover,
 .btn-ghost:hover,
 [class*="icon-button"]:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  color: #FFFFFF !important;
+  background: rgba(140, 74, 47, 0.08) !important;
+  color: #2C2118 !important;
   box-shadow: none !important;
 }
 
