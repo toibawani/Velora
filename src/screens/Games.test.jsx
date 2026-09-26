@@ -41,3 +41,45 @@ describe('Game hub listings', () => {
     });
   });
 });
+
+describe('Game hub keyboard access', () => {
+  // Each card was a div with an onClick, which is not focusable and has no
+  // role, so the whole grid could only be used with a mouse.
+  test('every game card is a real button', () => {
+    const { container } = render(<GameHub setScreen={() => {}} />);
+    const cards = [...container.querySelectorAll('.game-card-large')];
+
+    expect(cards).toHaveLength(6);
+    const names = cards.map((c) => c.textContent);
+    ['Concept Check', 'Knowledge Chain', 'Concept Scrabble', 'Definition Duel', 'Concept Puzzle', 'Relativity Lab'].forEach(
+      (name) => expect(names.join(' ')).toMatch(new RegExp(name, 'i'))
+    );
+
+    cards.forEach((card) => {
+      expect(card.tagName).toBe('BUTTON');
+      expect(card).toHaveAttribute('type', 'button');
+    });
+  });
+
+  test('a card can be activated from the keyboard', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const card = screen.getByRole('button', { name: /Concept Check/i });
+
+    // A div with onClick is not focusable, so this was impossible.
+    card.focus();
+    expect(card).toHaveFocus();
+  });
+
+  test('no card is a clickable div', () => {
+    const { container } = render(<GameHub setScreen={() => {}} />);
+    const cards = container.querySelectorAll('.game-card-large');
+    cards.forEach((card) => expect(card.tagName).toBe('BUTTON'));
+  });
+
+  test('there is no nested button inside the card any more', () => {
+    const { container } = render(<GameHub setScreen={() => {}} />);
+    container
+      .querySelectorAll('.game-card-large button')
+      .forEach((inner) => expect(inner).toBeNull());
+  });
+});

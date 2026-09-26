@@ -189,11 +189,16 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
         {games.map((game) => {
           const GameIcon = game.icon;
           return (
-            <div
+            // A div with an onClick is not focusable, has no role, and cannot
+            // be activated by keyboard, so the entire games grid was mouse
+            // only. The inner "Start Session" button did nothing on its own
+            // and relied on the click bubbling up to the div.
+            <button
+              type="button"
               key={game.id}
               className="game-card-large"
               onClick={() => setSelectedGame(game.id)}
-              style={{ '--game-color': game.color }}
+              style={{ '--game-color': game.color, textAlign: 'left' }}
             >
               <div className="game-card-header">
                 <span className="game-icon-large" style={{ display: 'flex', alignItems: 'center' }}>
@@ -214,11 +219,11 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
                 )}
               </div>
 
-              <button className="play-btn-large" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                <span>Start Session</span>
+              <span className="play-btn-large" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <span>Start session</span>
                 <ArrowRight size={14} strokeWidth={1.5} />
-              </button>
-            </div>
+              </span>
+            </button>
           );
         })}
       </main>
