@@ -8,13 +8,34 @@ import React, { useState } from 'react';
  * - 1-click native sharing to WhatsApp, X (Twitter), LinkedIn, and Instagram Stories
  * - Pre-filled viral copy with link attribution
  */
-function ShareAchievementModal({ isOpen, onClose, milestone = 'Black Holes Mastery', score = '100% Concept Retention', userName = 'Explorer' }) {
+/**
+ * Nothing here claims mastery or a perfect score by default any more. The
+ * defaults used to be "Black Holes Mastery" and "100% Concept Retention", so
+ * a caller that forgot to pass a score produced a certificate asserting the
+ * user had retained everything. The share text also said "I just mastered
+ * this" and "exploring deep astrophysics" for any game at all, including the
+ * word puzzle.
+ *
+ * `completed` is how many items the user actually attempted, which is what
+ * lets a zero be reported as a zero rather than dressed up.
+ */
+function ShareAchievementModal({
+  isOpen,
+  onClose,
+  milestone = 'Session complete',
+  score = '',
+  userName = '',
+  completed = null,
+}) {
   const [copiedText, setCopiedText] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
 
   if (!isOpen) return null;
 
-  const shareCopy = `I just mastered ${milestone} on VELORA 🌌 Exploring deep astrophysics through interactive visual simulations: https://velora.app`;
+  const parts = [`I just worked through ${milestone} on VELORA`];
+  if (score) parts.push(score);
+  else if (completed !== null) parts.push(`${completed} item${completed === 1 ? '' : 's'}`);
+  const shareCopy = `${parts.join(', ')}: https://velora.app`;
 
   const handleShare = (platform) => {
     const encodedText = encodeURIComponent(shareCopy);
@@ -48,7 +69,16 @@ function ShareAchievementModal({ isOpen, onClose, milestone = 'Black Holes Maste
       <div className="share-modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="share-modal-header">
-          <span className="milestone-badge-tag">🏆 MILESTONE UNLOCKED</span>
+          {/* Only celebrate something that happened. This said
+              "MILESTONE UNLOCKED" on every share, including runs where the
+              user got nothing right. */}
+          <span className="milestone-badge-tag">
+            {completed === 0
+              ? 'SESSION STARTED'
+              : score && !/^0 of /.test(score)
+                ? 'MILESTONE REACHED'
+                : 'SESSION COMPLETE'}
+          </span>
           <button className="share-close-btn" onClick={onClose}>×</button>
         </div>
 
@@ -69,7 +99,9 @@ function ShareAchievementModal({ isOpen, onClose, milestone = 'Black Holes Maste
           </div>
 
           <h2 className="milestone-achievement-name">{milestone}</h2>
-          <span className="achievement-recipient">Awarded to {userName} · {score}</span>
+          <span className="achievement-recipient">
+            {[userName, score].filter(Boolean).join(' \u00b7 ') || 'No score recorded for this session'}
+          </span>
           <p className="achievement-blurb">
             Mastered mathematical escape velocities, spacetime curvature tensors, and event horizon optics.
           </p>

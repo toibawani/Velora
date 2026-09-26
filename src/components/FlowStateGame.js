@@ -88,6 +88,16 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
     }
   ];
 
+  // What the user actually got right. The share modal used to be handed a
+  // hardcoded "3/3 Stars Comprehension" and printed it on a certificate,
+  // so a run with none correct still produced a perfect score to post.
+  const quizCorrect = quizQuestions.filter(
+    (q) => selectedAnswers[q.id] === q.correct
+  ).length;
+  const quizAnswered = quizQuestions.filter(
+    (q) => selectedAnswers[q.id] !== undefined
+  ).length;
+
   // Content for Chain mode (connecting steps in a causal loop)
   const chainSteps = [
     { id: 'c1', label: 'Massive Star Exhausts Nuclear Fuel', order: 1 },
@@ -508,8 +518,9 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
       <ShareAchievementModal
         isOpen={showShareModal}
         onClose={() => setShowShareModal(false)}
-        milestone={`${gameName} Mastery`}
-        score="3/3 Stars Comprehension"
+        milestone={gameName}
+        score={`${quizCorrect} of ${quizQuestions.length} correct`}
+        completed={quizAnswered}
       />
     </div>
   );
