@@ -10,7 +10,19 @@ import {
   ArrowDown,
   Info
 } from 'lucide-react';
-import '../styles/PhysicsSimulations.css';
+import {
+  G,
+  predictedFallTime,
+  predictedAirborneTime,
+  frictionFor,
+  netAcceleration,
+  maxHeight,
+  hangTime,
+  projectileRange,
+  circularSpeed,
+  escapeSpeed,
+  orbitType,
+} from '../utils/physics';
 
 /**
  * Read the reduced-motion preference live rather than once at module load, so
@@ -84,9 +96,10 @@ function NewtonSecondLawSim() {
 
   // Friction coefficient
   const mu = frictionEnabled ? 0.18 : 0;
+  const activeFriction = frictionFor(force, frictionEnabled, mu);
   const normalForce = mass * 9.8;
   const frictionForce = mu * normalForce;
-  const currentAcc = mass > 0 ? (force > 0 ? (force - (frictionEnabled ? Math.min(force, frictionForce) : 0)) / mass : 0) : 0;
+  const currentAcc = force > 0 ? netAcceleration(force, mass, activeFriction) : 0;
 
   useEffect(() => {
     setAcceleration(currentAcc);
@@ -329,9 +342,9 @@ function ProjectileMotionSim() {
   const animRef = useRef(null);
 
   const rad = (angle * Math.PI) / 180;
-  const theoreticalMaxH = (Math.pow(velocity * Math.sin(rad), 2)) / (2 * gravity);
-  const theoreticalHangTime = (2 * velocity * Math.sin(rad)) / gravity;
-  const theoreticalRange = (Math.pow(velocity, 2) * Math.sin(2 * rad)) / gravity;
+  const theoreticalMaxH = maxHeight(velocity, angle, gravity);
+  const theoreticalHangTime = hangTime(velocity, angle, gravity);
+  const theoreticalRange = projectileRange(velocity, angle, gravity);
 
   const fire = () => {
     if (animRef.current) cancelAnimationFrame(animRef.current);
@@ -581,11 +594,15 @@ function FreeFallSim() {
     let tCannon = null;
     let tFeather = null;
 
-    const g = 9.8;
-    // Vacuum time: t = sqrt(2h/g)
-    const tVac = Math.sqrt((2 * height) / g);
-    // In air, feather reaches low terminal velocity (~2 m/s), cannonball barely affected
-    const tFeatherAir = height / 3.2;
+    const g = G;
+    // The textbook prediction, kept next to the simulation so the two can be
+    // compared instead of the simulation quietly standing in for the maths.
+    const predicted = {
+      cannon: predictedFallTime(height),
+      feather: environment === 'vacuum'
+        ? predictedFallTime(height)
+        : predictedAirborneTime(height),
+    };
 
     const step = (now) => {
       const t = (now - startT) / 1000;
@@ -619,6 +636,8 @@ function FreeFallSim() {
         setLandedTimes({
           cannon: tCannon.toFixed(3),
           feather: tFeather.toFixed(3),
+          predictedCannon: predicted.cannon.toFixed(3),
+          predictedFeather: predicted.feather.toFixed(3),
         });
         return;
       }
@@ -713,11 +732,27 @@ function FreeFallSim() {
           </div>
           <div className="sim-telemetry-item">
             <span className="telemetry-label">Iron Ball Fall Time</span>
-            <span className="telemetry-val">{landedTimes ? `${landedTimes.cannon}s` : `${timePassed.toFixed(2)}s`}</span>
+            <span className="telemetry-val">
+              {landedTimes ? `${landedTimes.cannon}s` : `${timePassed.toFixed(2)}s`}
+              {landedTimes && (
+                <small className="telemetry-sub">
+                  t = &radic;(2h/g) predicts {landedTimes.predictedCannon}s
+                </small>
+              )}
+            </span>
           </div>
           <div className="sim-telemetry-item">
             <span className="telemetry-label">Feather Fall Time</span>
-            <span className="telemetry-val">{landedTimes ? `${landedTimes.feather}s` : (environment === 'air' ? 'Floating...' : `${timePassed.toFixed(2)}s`)}</span>
+            <span className="telemetry-val">
+              {landedTimes ? `${landedTimes.feather}s` : (environment === 'air' ? 'Floating...' : `${timePassed.toFixed(2)}s`)}
+              {landedTimes && (
+                <small className="telemetry-sub">
+                  {environment === 'vacuum'
+                    ? `vacuum predicts ${landedTimes.predictedFeather}s`
+                    : `terminal velocity predicts ${landedTimes.predictedFeather}s`}
+                </small>
+              )}
+            </span>
           </div>
         </div>
       </div>
@@ -1001,11 +1036,11 @@ function OrbitalMechanicsSim() {
 
   const centerX = 300;
   const centerY = 110;
-  const GM = 380; // gravitational parameter
+  const GM = 380; // gravitational parameter, in arbitrary display units
 
   const resetOrbit = useCallback((targetRadius = 85, speedFactor = 1.0) => {
     const r = targetRadius;
-    const vCirc = Math.sqrt(GM / r) * speedFactor;
+    const vCirc = circularSpeed(GM, r) * speedFactor;
     posRef.current = { x: 0, y: -r, vx: vCirc, vy: 0 };
     setAltitude(targetRadius);
     setSpeedMultiplier(speedFactor);
@@ -1069,10 +1104,10 @@ function OrbitalMechanicsSim() {
 
         // Status
         const currentSpeed = Math.sqrt(newVx * newVx + newVy * newVy);
-        const escapeSpeed = Math.sqrt((2 * GM) / r);
-        if (currentSpeed >= escapeSpeed * 0.98) {
+        const vEscape = escapeSpeed(GM, r);
+        if (currentSpeed >= vEscape * 0.98) {
           setOrbitStatus('Approaching Escape Velocity');
-        } else if (Math.abs(currentSpeed - Math.sqrt(GM / r)) < 0.2) {
+        } else if (orbitType(currentSpeed, GM, r) === 'circular') {
           setOrbitStatus('Near-Circular Kepler Orbit');
         } else {
           setOrbitStatus('Eccentric Elliptical Orbit');

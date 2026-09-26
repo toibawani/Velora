@@ -274,6 +274,18 @@
   color: var(--accent-primary, #8C4A2F);
 }
 
+/* The textbook prediction shown under a measured value, so the two can be
+   compared rather than the simulation standing in for the maths. */
+.telemetry-sub {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-secondary, #6E5846);
+}
+
 /* Parameters & Sliders */
 .sim-params-grid {
   display: grid;

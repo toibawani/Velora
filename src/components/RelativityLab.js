@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import '../styles/RelativityLab.css';
 
 // Fundamental physical constants (SI Units)
 const G = 6.6743e-11; // m^3 kg^-1 s^-2

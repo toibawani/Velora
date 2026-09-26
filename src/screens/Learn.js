@@ -21,6 +21,7 @@ import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
 import BlackHoleMastery from '../components/BlackHoleMastery';
 import RelativityLab from '../components/RelativityLab';
+import PhysicsSimulations from '../components/PhysicsSimulations';
 import FlowStateGame from '../components/FlowStateGame';
 import AIWhiteboard from '../components/AIWhiteboard';
 import CreatorStudio from '../components/CreatorStudio';
@@ -232,6 +233,22 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     );
   }
 
+  // View: Interactive Physics Simulations Laboratory
+  if (currentView === 'physics-sims') {
+    return (
+      <div className="learn-container">
+        <header className="learn-header">
+          <button className="learn-back-btn" onClick={handleBack}>
+            ← Back to Curriculum
+          </button>
+          <h1 className="learn-title">Interactive Physics Laboratory</h1>
+          <div style={{ width: '60px' }}></div>
+        </header>
+        <PhysicsSimulations onBack={handleBack} />
+      </div>
+    );
+  }
+
   const SubjectIconHeader = subject.icon;
 
   // Main Overview
@@ -252,6 +269,35 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       <main className="learn-main">
         {/* Mastery Path */}
         <MasteryPath selectedSubject={selectedSubject || 'physics'} />
+
+            {/* Interactive Physics Simulations (for Physics) */}
+            {(selectedSubject === 'physics' || !selectedSubject) && (
+              <section className="learn-section">
+                <div
+                  className="card p-6 border border-[#3E2718]/15 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[#FFF9F1] shadow-sm mb-6"
+                  style={{ background: '#FFF9F1', padding: '1.5rem', borderRadius: '18px', border: '1px solid rgba(62, 39, 24, 0.12)' }}
+                >
+                  <div>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8C4A2F', display: 'block', marginBottom: '4px' }}>
+                      Interactive Laboratory
+                    </span>
+                    <h3 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: '1.35rem', margin: '0 0 6px', color: '#2C2118' }}>
+                      Physics in Motion: 5 Hands-On Simulations
+                    </h3>
+                    <p style={{ margin: 0, fontSize: '0.92rem', color: '#6E5846', maxWidth: '640px' }}>
+                      Test Newton's second law on a live track, angle ballistic projectiles, drop objects in a vacuum chamber, watch ripple waves interfere, and fire thruster burns in Keplerian orbit.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentView('physics-sims')}
+                    style={{ whiteSpace: 'nowrap', backgroundColor: '#8C4A2F', color: '#FFF8F1', borderRadius: '999px', padding: '10px 20px', fontWeight: 600, border: 'none', cursor: 'pointer' }}
+                  >
+                    Open Physics Lab →
+                  </button>
+                </div>
+              </section>
+            )}
 
             {/* Black Holes Special (for Physics) */}
             {(selectedSubject === 'physics' || !selectedSubject) && (

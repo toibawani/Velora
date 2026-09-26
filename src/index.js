@@ -17,6 +17,13 @@ import './styles/design-tokens.css';
 import './index.css';
 import App from './App';
 import './styles/global-compat.css';
+// Imported here in one fixed order rather than from each component. They
+// cascade against each other, and letting the order depend on which component
+// happened to load first made that order vary between builds.
+import './styles/FlowStateGame.css';
+import './styles/PhysicsSimulations.css';
+import './styles/RelativityLab.css';
+import './styles/ShareAchievementModal.css';
 import { ThemeProvider } from './context/ThemeContext';
 import reportWebVitals from './reportWebVitals';
 

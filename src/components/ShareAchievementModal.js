@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../styles/ShareAchievementModal.css';
 
 /**
  * ShareAchievementModal Component

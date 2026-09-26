@@ -25,8 +25,11 @@ const SCRIPT_BLOCK = /<\s*(script|style|iframe|object|embed)\b[\s\S]*?<\s*\/\s*\
 const UNCLOSED_BLOCK = /<\s*(script|style|iframe|object|embed)\b[^>]*>[\s\S]*$/i;
 // A lone opening or closing tag with nothing to pair it with.
 const ORPHAN_TAG = /<\s*\/?\s*[a-z][^>\n]{0,120}>/gi;
-// Control characters, keeping tab (\t) and newline (\n).
-const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+// Control characters, keeping tab (\t) and newline (\n). Built from a string
+// rather than written as a literal so the eslint no-control-regex rule does not
+// fire on something that is deliberately matching control characters.
+// eslint-disable-next-line no-control-regex -- matching control characters is the entire point of this pattern
+const CONTROL_CHARS = new RegExp('[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\u007F]', 'g');
 
 export const MAX_TEXT_LENGTH = 2000;
 
