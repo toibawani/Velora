@@ -39,3 +39,29 @@ if (typeof window !== 'undefined' && window.HTMLCanvasElement) {
     }),
   });
 }
+
+/* jsdom ships no matchMedia, and motion reads the reduced-motion preference
+   once when its module first loads. The stub has to exist before any component
+   import, and the preferences are read from a global so a test can change them
+   and then re-import the component it wants to exercise. */
+global.__veloraMediaPrefs = global.__veloraMediaPrefs || {};
+window.matchMedia = (query) => {
+  const prefs = global.__veloraMediaPrefs || {};
+  const matches = /prefers-reduced-motion/.test(query)
+    ? Boolean(prefs.reduce)
+    : /\(pointer: fine\)/.test(query)
+      ? prefs.fine !== false
+      : /max-width/.test(query)
+        ? Boolean(prefs.compact)
+        : false;
+  return {
+    matches,
+    media: query,
+    onchange: null,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  };
+};

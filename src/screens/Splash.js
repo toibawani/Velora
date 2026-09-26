@@ -40,7 +40,11 @@ function SplashScreen({ setScreen }) {
           </button>
         </div>
 
-        {/* Footer micro-copy */}
+        {/* Someone who wants a look before committing to a form should get one. */}
+        <button className="splash-browse" type="button" onClick={() => setScreen('landing')}>
+          Look around first
+        </button>
+
         <p className="splash-footer">
           Free for everyone. No credit card required.
         </p>

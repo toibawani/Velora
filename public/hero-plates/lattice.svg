@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="400" height="520" role="img" aria-label="A cubic crystal lattice of bonded atoms">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#8C4A2F" stroke-width="1" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="520" fill="#FFF9F1"/>
+  <rect width="400" height="520" fill="url(#hatch)"/>
+  <rect x="12" y="12" width="376" height="496" fill="none" stroke="#8C4A2F" stroke-opacity="0.32" stroke-width="1.5"/>
+<line x1="110" y1="170" x2="200" y2="170" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="110" y1="170" x2="110" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="170" x2="110" y2="170" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="170" x2="290" y2="170" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="170" x2="200" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="290" y1="170" x2="200" y2="170" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="290" y1="170" x2="290" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="110" y1="260" x2="110" y2="170" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="110" y1="260" x2="200" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="110" y1="260" x2="110" y2="350" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="260" x2="200" y2="170" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="260" x2="110" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="260" x2="290" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="260" x2="200" y2="350" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="290" y1="260" x2="290" y2="170" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="290" y1="260" x2="200" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="290" y1="260" x2="290" y2="350" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="110" y1="350" x2="110" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="110" y1="350" x2="200" y2="350" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="350" x2="200" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="350" x2="110" y2="350" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="200" y1="350" x2="290" y2="350" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="290" y1="350" x2="290" y2="260" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/><line x1="290" y1="350" x2="200" y2="350" stroke="#6E5846" stroke-width="1.5" opacity="0.45"/>
+  <circle cx="110" cy="170" r="12" fill="#2C2118" opacity="0.7"/>
+  <circle cx="200" cy="170" r="12" fill="#2C2118" opacity="0.7"/>
+  <circle cx="290" cy="170" r="12" fill="#2C2118" opacity="0.7"/>
+  <circle cx="110" cy="260" r="12" fill="#2C2118" opacity="0.7"/>
+  <circle cx="200" cy="260" r="20" fill="#8C4A2F" opacity="1"/>
+  <circle cx="290" cy="260" r="12" fill="#2C2118" opacity="0.7"/>
+  <circle cx="110" cy="350" r="12" fill="#2C2118" opacity="0.7"/>
+  <circle cx="200" cy="350" r="12" fill="#2C2118" opacity="0.7"/>
+  <circle cx="290" cy="350" r="12" fill="#2C2118" opacity="0.7"/>
+  <text x="40" y="412" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">same atom, nine ways</text>
+  <line x1="28" y1="470" x2="372" y2="470" stroke="#8C4A2F" stroke-opacity="0.22" stroke-width="1"/>
+  <text x="28" y="490" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">PLATE 8 &#183; VELORA</text>
+</svg>

@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 import StackSpread from '../components/ui/StackSpread';
 import '../styles/LandingPage.css';
-import '../styles/ui/StackSpread.css';
 
 /**
  * LandingPage Screen
@@ -77,15 +76,6 @@ function LandingPage({ setScreen }) {
     },
   ];
 
-  const domains = [
-    { name: 'Astrophysics', color: '#2563EB' },
-    { name: 'Philosophy', color: '#2563EB' },
-    { name: 'History', color: '#b45309' },
-    { name: 'Mathematics', color: '#0f766e' },
-    { name: 'Quantum Physics', color: '#15803d' },
-    { name: 'Biology', color: '#b91c1c' },
-  ];
-
   const compareRows = [
     ['Content depth', 'Survey-level overview', 'Research paper distillations'],
     ['Learning mode', 'Passive video watching', 'Interactive simulations'],
@@ -119,7 +109,7 @@ function LandingPage({ setScreen }) {
       <section className="landing-hero">
         <div className="hero-left">
           <div className="hero-eyebrow">
-            <span className="hero-badge">1,400+ curious minds exploring</span>
+            <span className="hero-badge">Eight fields, and no timer</span>
           </div>
 
           <h1 className="hero-headline">
@@ -129,9 +119,9 @@ function LandingPage({ setScreen }) {
           </h1>
 
           <p className="hero-subline">
-            VELORA reimagines education as an immersive intellectual cosmos.
-            Explore physics, philosophy, and history through real science,
-            animated simulations, and meaningful peer discourse.
+            A dictionary you can search, simulations you can push around, and
+            arguments you are allowed to disagree with. Physics through political
+            science, all the way across, at whatever pace you actually read at.
           </p>
 
           <div className="hero-cta-row">
@@ -144,48 +134,18 @@ function LandingPage({ setScreen }) {
           </div>
         </div>
 
-        <div className="hero-right">
-          <div className="hero-stat-stack">
-            <div className="hero-stat-card hero-stat-card--main">
-              <span className="hero-stat-number">1,400+</span>
-              <span className="hero-stat-label">Scholars active this week</span>
-            </div>
-            <div className="hero-stat-card">
-              <span className="hero-stat-number">94%</span>
-              <span className="hero-stat-label">Report deeper understanding vs. video lectures</span>
-            </div>
-            <div className="hero-stat-card">
-              <span className="hero-stat-number">6</span>
-              <span className="hero-stat-label">Scientific domains, 200+ modules</span>
-            </div>
-          </div>
-
-          <div className="hero-domains-strip">
-            {domains.map(d => (
-              <div
-                key={d.name}
-                className="hero-domain-pill"
-                style={{ borderColor: `${d.color}40`, color: d.color }}
-              >
-                {d.name}
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
-      {/* Stack Spread Visual — Interactive card scatter */}
-      <section className="landing-section stack-spread-section">
-        <div className="section-inner">
-          <div className="section-header-asymm">
-            <span className="section-label">HOW IDEAS CONNECT</span>
-            <h2 className="section-heading">Physics bleeds into philosophy. History explains the math.</h2>
-            <p className="section-intro-copy">
-              When you stop studying for a test, subjects stop having fences. A thought in thermodynamics helps you see why societies evolve, and an ancient argument in Athens changes how you read quantum mechanics.
-            </p>
-          </div>
-          <StackSpread />
+      {/* The plate field. Below the fold it tidies itself as you scroll. */}
+      <section className="hero-plates-section" aria-labelledby="plate-field-title">
+        <div className="hero-plates-copy">
+          <p className="section-label">WHAT YOU GET</p>
+          <h2 id="plate-field-title" className="hero-plates-heading">
+            A dictionary, a simulator, and an honest argument — for people who&rsquo;d
+            rather understand than be quizzed.
+          </h2>
         </div>
+        <StackSpread />
       </section>
 
       {/* What Makes It Different — Asymmetric bento */}

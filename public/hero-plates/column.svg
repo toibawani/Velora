@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="400" height="520" role="img" aria-label="A fluted classical column, capital and base">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#8C4A2F" stroke-width="1" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="520" fill="#FFF9F1"/>
+  <rect width="400" height="520" fill="url(#hatch)"/>
+  <rect x="12" y="12" width="376" height="496" fill="none" stroke="#8C4A2F" stroke-opacity="0.32" stroke-width="1.5"/>
+<line x1="116" y1="150" x2="284" y2="150" stroke="#2C2118" stroke-width="3" opacity="1"/>
+  <line x1="126" y1="166" x2="274" y2="166" stroke="#8C4A2F" stroke-width="2" opacity="1"/>
+  <line x1="134" y1="180" x2="266" y2="180" stroke="#2C2118" stroke-width="2" opacity="1"/>
+  <line x1="140" y1="196" x2="140" y2="384" stroke="#2C2118" stroke-width="2" opacity="1"/>
+  <line x1="260" y1="196" x2="260" y2="384" stroke="#2C2118" stroke-width="2" opacity="1"/>
+  <line x1="160" y1="196" x2="160" y2="384" stroke="#6E5846" stroke-width="1" opacity="0.32"/><line x1="180" y1="196" x2="180" y2="384" stroke="#6E5846" stroke-width="1" opacity="0.32"/><line x1="200" y1="196" x2="200" y2="384" stroke="#6E5846" stroke-width="1" opacity="0.32"/><line x1="220" y1="196" x2="220" y2="384" stroke="#6E5846" stroke-width="1" opacity="0.32"/><line x1="240" y1="196" x2="240" y2="384" stroke="#6E5846" stroke-width="1" opacity="0.32"/><line x1="260" y1="196" x2="260" y2="384" stroke="#6E5846" stroke-width="1" opacity="0.32"/>
+  <line x1="134" y1="384" x2="266" y2="384" stroke="#2C2118" stroke-width="2" opacity="1"/>
+  <line x1="126" y1="402" x2="274" y2="402" stroke="#8C4A2F" stroke-width="2" opacity="1"/>
+  <line x1="116" y1="418" x2="284" y2="418" stroke="#2C2118" stroke-width="3" opacity="1"/>
+  <text x="40" y="452" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">held up for 2,000 years</text>
+  <line x1="28" y1="470" x2="372" y2="470" stroke="#8C4A2F" stroke-opacity="0.22" stroke-width="1"/>
+  <text x="28" y="490" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">PLATE 5 &#183; VELORA</text>
+</svg>

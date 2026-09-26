@@ -1,95 +1,115 @@
 /* ==========================================================================
-   StackSpread Component Styles
+   StackSpread — the hero plate field
    --------------------------------------------------------------------------
-   Scroll-driven card scatter effect using VELORA design tokens.
-   Integrated with the landing page hero section.
+   Colour comes from the app tokens so this follows the theme rather than
+   pinning its own palette. Position is transform-only, so scrolling the hero
+   never triggers layout or paint on the cards.
    ========================================================================== */
 
-.stack-spread-container {
+.stack-field {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 var(--space-8);
+}
+
+.stack-field-stage {
   position: relative;
   width: 100%;
-  height: 600px;
-  max-height: 70vh;
-  margin: var(--space-8) 0;
-  perspective: 1000px;
+  height: clamp(420px, 56vw, 560px);
+  /* Confine the fan's own repaint area. */
+  contain: layout paint;
+  touch-action: pan-y;
+}
+
+.stack-plate {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /* Centre on the pivot point, then let the motion values offset from there. */
+  /* Centring uses the standalone `translate` property on purpose: motion
+     writes its own `transform` inline, and the two compose. */
+  translate: -50% -50%;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  border-radius: var(--radius-sm, 8px);
+  background: var(--bg-elevated, #fff);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
   overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .stack-spread-container {
-    height: 400px;
-    max-height: 50vh;
-    margin: var(--space-6) 0;
+.stack-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 400 / 520;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.stack-plate-tag {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 3px 8px;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #666);
+  background: var(--bg-elevated, #fff);
+  border-top: 1px solid var(--border-subtle, #e5e5e5);
+  border-right: 1px solid var(--border-subtle, #e5e5e5);
+  border-top-right-radius: var(--radius-sm, 8px);
+  opacity: 0;
+  transition: opacity 160ms ease-out;
+}
+
+/* The subject name is there for a pointer, not for a still image. */
+@media (hover: hover) and (pointer: fine) {
+  .stack-plate:hover { z-index: 50 !important; }
+  .stack-plate:hover .stack-plate-tag { opacity: 1; }
+}
+
+/* The still render has nothing to animate, so it should not be holding open a
+   compositor layer for eight cards that will never move. */
+.stack-field--still .stack-plate {
+  will-change: auto;
+}
+
+.stack-field-note {
+  margin: var(--space-4) auto 0;
+  max-width: 46ch;
+  text-align: center;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #666);
+}
+
+@media (max-width: 720px) {
+  .stack-field {
+    padding: 0 var(--space-5);
+  }
+
+  .stack-field-stage {
+    height: clamp(460px, 118vw, 620px);
+  }
+
+  .stack-field-note {
+    text-align: left;
   }
 }
 
-.stack-spread-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* Nothing here should be moving anyway under this setting, but the hover tag
+   and any future transition should not compete for attention either. */
+@media (prefers-reduced-motion: reduce) {
+  .stack-plate,
+  .stack-plate-tag {
+    transition: none;
+  }
 
-.stack-card {
-  position: absolute;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-default);
-  will-change: transform;
-}
-
-.stack-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Reduced motion static fallback */
-.stack-spread-reduced {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stack-card-static {
-  position: absolute;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-default);
-  width: 200px;
-  height: 280px;
-  max-width: 200px;
-  max-height: 280px;
-}
-
-.stack-card-static img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Loading state for images */
-.stack-card img:not([src]),
-.stack-card img[src=""] {
-  background: var(--bg-secondary);
-}
-
-/* Dark mode adjustments */
-:root[data-theme='dark'] .stack-card,
-:root[data-theme='dark'] .stack-card-static {
-  box-shadow: var(--shadow-lg);
-  border-color: var(--border-strong);
+  .stack-plate-tag {
+    opacity: 1;
+  }
 }

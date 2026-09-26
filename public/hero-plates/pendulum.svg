@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="400" height="520" role="img" aria-label="A pendulum swinging through its arc, with the two extremes ghosted">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#8C4A2F" stroke-width="1" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="520" fill="#FFF9F1"/>
+  <rect width="400" height="520" fill="url(#hatch)"/>
+  <rect x="12" y="12" width="376" height="496" fill="none" stroke="#8C4A2F" stroke-opacity="0.32" stroke-width="1.5"/>
+<circle cx="200" cy="96" r="6" fill="#2C2118" opacity="1"/>
+  <path d="M 84.27001724768357 333.2816282229801 A 264 264 0 0 1 315.72998275231646 333.2816282229801" fill="none" stroke="#8C4A2F" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="4 6"/>
+  <line x1="200" y1="96" x2="84.27001724768357" y2="333.2816282229801" stroke="#6E5846" stroke-width="1.5" opacity="0.45" stroke-dasharray="5 6"/>
+  <line x1="200" y1="96" x2="315.72998275231646" y2="333.2816282229801" stroke="#6E5846" stroke-width="1.5" opacity="0.45" stroke-dasharray="5 6"/>
+  <line x1="200" y1="96" x2="200" y2="360" stroke="#2C2118" stroke-width="3" opacity="1"/>
+  <circle cx="84.27001724768357" cy="333.2816282229801" r="14" fill="#6E5846" opacity="0.28"/>
+  <circle cx="315.72998275231646" cy="333.2816282229801" r="14" fill="#6E5846" opacity="0.28"/>
+  <circle cx="200" cy="360" r="18" fill="#8C4A2F" opacity="1"/>
+  <line x1="200" y1="388" x2="200" y2="440" stroke="#6E5846" stroke-width="1" opacity="0.28" stroke-dasharray="3 7"/>
+  <text x="40" y="436" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">same length,</text>
+  <text x="40" y="452" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">one beat per swing</text>
+  <line x1="28" y1="470" x2="372" y2="470" stroke="#8C4A2F" stroke-opacity="0.22" stroke-width="1"/>
+  <text x="28" y="490" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">PLATE 1 &#183; VELORA</text>
+</svg>

@@ -176,3 +176,23 @@
     font-size: 0.85rem;
   }
 }
+/* The "look around" route. Under the global filled-button rule this has to opt
+   back out explicitly, the same way the other secondary actions do. */
+.splash .splash-browse {
+  background: transparent !important;
+  color: var(--text-secondary, #6B5644) !important;
+  border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12)) !important;
+  box-shadow: none !important;
+  padding: 9px 18px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+.splash .splash-browse:hover {
+  background: rgba(140, 74, 47, 0.08) !important;
+  color: var(--text-primary, #2C2118) !important;
+  border-color: var(--border-strong, rgba(62, 39, 24, 0.24)) !important;
+  box-shadow: none !important;
+}

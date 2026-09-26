@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="400" height="520" role="img" aria-label="A DNA double helix with rungs between the strands">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#8C4A2F" stroke-width="1" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="520" fill="#FFF9F1"/>
+  <rect width="400" height="520" fill="url(#hatch)"/>
+  <rect x="12" y="12" width="376" height="496" fill="none" stroke="#8C4A2F" stroke-opacity="0.32" stroke-width="1.5"/>
+<path d="M 200.0 130.0 L 229.0 136.0 L 255.3 142.0 L 276.0 148.0 L 289.4 154.0 L 294.0 160.0 L 289.4 166.0 L 276.0 172.0 L 255.3 178.0 L 229.0 184.0 L 200.0 190.0 L 171.0 196.0 L 144.7 202.0 L 124.0 208.0 L 110.6 214.0 L 106.0 220.0 L 110.6 226.0 L 124.0 232.0 L 144.7 238.0 L 171.0 244.0 L 200.0 250.0 L 229.0 256.0 L 255.3 262.0 L 276.0 268.0 L 289.4 274.0 L 294.0 280.0 L 289.4 286.0 L 276.0 292.0 L 255.3 298.0 L 229.0 304.0 L 200.0 310.0 L 171.0 316.0 L 144.7 322.0 L 124.0 328.0 L 110.6 334.0 L 106.0 340.0 L 110.6 346.0 L 124.0 352.0 L 144.7 358.0 L 171.0 364.0 L 200.0 370.0 L 229.0 376.0 L 255.3 382.0 L 276.0 388.0 L 289.4 394.0 L 294.0 400.0 L 289.4 406.0 L 276.0 412.0 L 255.3 418.0 L 229.0 424.0 L 200.0 430.0 " fill="none" stroke="#8C4A2F" stroke-width="3"/>
+  <path d="M 200.0 130.0 L 171.0 136.0 L 144.7 142.0 L 124.0 148.0 L 110.6 154.0 L 106.0 160.0 L 110.6 166.0 L 124.0 172.0 L 144.7 178.0 L 171.0 184.0 L 200.0 190.0 L 229.0 196.0 L 255.3 202.0 L 276.0 208.0 L 289.4 214.0 L 294.0 220.0 L 289.4 226.0 L 276.0 232.0 L 255.3 238.0 L 229.0 244.0 L 200.0 250.0 L 171.0 256.0 L 144.7 262.0 L 124.0 268.0 L 110.6 274.0 L 106.0 280.0 L 110.6 286.0 L 124.0 292.0 L 144.7 298.0 L 171.0 304.0 L 200.0 310.0 L 229.0 316.0 L 255.3 322.0 L 276.0 328.0 L 289.4 334.0 L 294.0 340.0 L 289.4 346.0 L 276.0 352.0 L 255.3 358.0 L 229.0 364.0 L 200.0 370.0 L 171.0 376.0 L 144.7 382.0 L 124.0 388.0 L 110.6 394.0 L 106.0 400.0 L 110.6 406.0 L 124.0 412.0 L 144.7 418.0 L 171.0 424.0 L 200.0 430.0 " fill="none" stroke="#3E6A62" stroke-width="3"/>
+  <line x1="294" y1="160" x2="106" y2="160" stroke="#6E5846" stroke-width="2" opacity="0.55"/><line x1="106" y1="220" x2="294" y2="220" stroke="#6E5846" stroke-width="2" opacity="0.55"/><line x1="294" y1="280" x2="106" y2="280" stroke="#6E5846" stroke-width="2" opacity="0.55"/><line x1="106" y1="340" x2="294" y2="340" stroke="#6E5846" stroke-width="2" opacity="0.55"/><line x1="294" y1="400" x2="106" y2="400" stroke="#6E5846" stroke-width="2" opacity="0.55"/>
+  <text x="40" y="60" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">two strands,</text>
+  <text x="40" y="78" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">four letters</text>
+  <line x1="28" y1="470" x2="372" y2="470" stroke="#8C4A2F" stroke-opacity="0.22" stroke-width="1"/>
+  <text x="28" y="490" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#6E5846">PLATE 7 &#183; VELORA</text>
+</svg>
