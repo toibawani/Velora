@@ -25,68 +25,70 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
   // unless you found this checkbox and turned it off.
   const [useFlowMode, setUseFlowMode] = useState(false);
 
+  // Names, colours and time limits are taken from what these games actually
+  // do. The durations used to be invented: Definition Duel is a 60 second
+  // round advertised as 8 minutes, and Knowledge Chain has no clock at all
+  // and claimed 12. The colours were blue, green, orange and teal, in a
+  // palette the stylesheet explicitly describes as warm espresso, never
+  // indigo.
   const games = [
     {
       id: 'quiz',
       name: 'Concept Check',
       type: 'quiz',
-      description: 'Ten questions across physics, chemistry and biology, each with the reasoning behind the answer',
+      description: 'Ten questions across physics, chemistry and biology, with the reasoning behind each answer',
       icon: Target,
       color: '#8C4A2F',
       difficulty: 'Mixed',
-      duration: '5 mins',
     },
     {
       id: 'scrabble',
-      name: 'Singularity Concept Scrabble',
+      name: 'Concept Scrabble',
       type: 'scrabble',
-      description: 'Assemble key scientific terminology from constituent root letters',
+      description: 'Build scientific terms from a rack of letters',
       icon: Type,
-      color: '#34c759',
+      color: '#A05A2C',
       difficulty: 'Easy',
-      duration: '8 mins',
     },
     {
       id: 'chain',
-      name: 'Cosmic Collapse Knowledge Chain',
+      name: 'Knowledge Chain',
       type: 'chain',
-      description: 'Order sequential causality in gravitational and quantum phenomena',
+      description: 'Put four concepts in the order where each one causes the next',
       icon: Link2,
-      color: '#ff9f0a',
-      difficulty: 'Advanced',
-      duration: '12 mins',
+      color: '#7A4B2A',
+      difficulty: 'Medium',
     },
     {
       id: 'duel',
       name: 'Definition Duel',
       type: 'duel',
-      description: 'Discriminate between subtle conceptual nuances with precision',
+      description: 'Type the term a definition describes, against a 60 second clock',
       icon: FileText,
-      color: '#2563EB',
+      color: '#8C4A2F',
       difficulty: 'Medium',
-      duration: '8 mins',
+      fixedLength: '60 seconds',
     },
     {
       id: 'puzzle',
-      name: 'Word & Principle Puzzle',
+      name: 'Concept Puzzle',
       type: 'puzzle',
-      description: 'Fill in critical conceptual blanks to synthesize full physical laws',
+      description: 'Fill in the missing term in a definition',
       icon: Puzzle,
-      color: '#30d5c8',
+      color: '#6B5644',
       difficulty: 'Easy',
-      duration: '6 mins',
     },
     {
       id: 'relativity',
-      name: 'Spacetime & Relativity Laboratory',
+      name: 'Relativity Lab',
       type: 'simulation',
-      description: 'Interact with gravitational metric funnels, time dilation, and event horizons',
+      description: 'Play with time dilation, length contraction and event horizons',
       icon: Orbit,
-      color: '#2563EB',
+      color: '#7A4B2A',
       difficulty: 'Advanced',
-      duration: '15 mins',
     },
   ];
+
 
   // Render selected game in Flow State or Classic mode
   if (selectedGame) {
@@ -102,7 +104,7 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
           gameName={activeGameConfig.name}
           gameType={activeGameConfig.type}
           difficulty={activeGameConfig.difficulty}
-          duration={parseInt(activeGameConfig.duration, 10) || 10}
+          duration={parseInt(activeGameConfig.fixedLength, 10) || 10}
           onBack={() => setSelectedGame(null)}
         />
       );
@@ -204,10 +206,12 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
 
               <div className="game-meta-row">
                 <span className="game-difficulty">{game.difficulty}</span>
-                <span className="game-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <Clock size={12} strokeWidth={1.5} />
-                  <span>{game.duration}</span>
-                </span>
+                {game.fixedLength && (
+                  <span className="game-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                    <Clock size={12} strokeWidth={1.5} />
+                    <span>{game.fixedLength}</span>
+                  </span>
+                )}
               </div>
 
               <button className="play-btn-large" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
