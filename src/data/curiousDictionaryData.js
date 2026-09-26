@@ -67,10 +67,15 @@ export const CURIOUS_TERMS = [
     term: 'Event Horizon',
     subject: 'physics',
     letter: 'E',
-    tagline: 'The boundary where space falls inward faster than light can swim out.',
+    tagline: 'The line where escaping needs more energy than a photon has left.',
     explanation: 'The event horizon is not a solid wall or physical surface in space. It is a mathematical perimeter around a collapsed star where the gravitational pull steepens so much that the escape velocity exceeds the speed of light.',
     example: 'Think of a swimmer on a calm river upstream from a waterfall. As the current quickens, there comes an exact line where the water flows faster than the swimmer’s top stroke. Cross that line, and swimming backwards is physically impossible.',
-    source: 'Schwarzschild, On the Gravitational Field of a Mass Point (1916)'
+    source: 'Schwarzschild, On the Gravitational Field of a Mass Point (1916)',
+    // VERIFY: no sourceUrl yet. The escape-velocity statement is right for a
+    // non-rotating body; a rotating (Kerr) black hole has no surface to swim
+    // out from, and the next pass should either restrict this to the simple
+    // case in the copy or cite something that covers both.
+    verified: false
   },
 
   // ==================== BIOLOGY ====================
@@ -163,10 +168,12 @@ export const CURIOUS_TERMS = [
     term: 'Falsifiability',
     subject: 'philosophy',
     letter: 'F',
-    tagline: 'The rule that an idea is only scientific if you can imagine evidence that could disprove it.',
-    explanation: 'Karl Popper argued that science doesn’t advance by piling up confirmations; it advances by attempting to demolish theories. If an explanation is formulated so loosely that no conceivable observation could ever contradict it, it isn’t science—it’s dogma.',
+    tagline: 'Popper’s proposal for telling science apart from things that only look like it — and the argument that has been going on ever since.',
+    explanation: 'Karl Popper argued that science doesn’t advance by piling up confirmations; it advances by trying to break its own theories. If an explanation is worded so loosely that no observation could ever contradict it, it cannot be checked, and to him that made it dogma rather than knowledge. He offered this as a way to draw a line, not as a finished rule, and a lot has been argued with it since: Thomas Kuhn thought real science is not much like that, and Imre Lakatos argued that theories are judged as they develop rather than in single decisive tests.',
     example: 'The claim "all swans are white" is a testable scientific statement because finding a single black swan in Australia immediately disproves it. The claim "everything that happens is secretly meant to be" cannot be tested, because any outcome is retroactively claimed as part of the plan.',
-    source: 'Karl Popper, The Logic of Scientific Discovery (1934)'
+    source: 'Karl Popper, The Logic of Scientific Discovery (1934)',
+    sourceUrl: 'https://plato.stanford.edu/entries/popper/',
+    verified: true
   },
   {
     id: 'veil-of-ignorance',
@@ -215,10 +222,15 @@ export const CURIOUS_TERMS = [
     term: 'Peace of Westphalia',
     subject: 'history',
     letter: 'P',
-    tagline: 'The 1648 pact that invented the modern concept of independent nation-states.',
-    explanation: 'Ending decades of catastrophic religious slaughter across central Europe (the Thirty Years’ War), Westphalia established the principle that each sovereign ruler decides their country’s domestic laws and religion without outside empire interference. It laid the foundation for modern international law.',
-    example: 'Before Westphalia, a French or Habsburg monarch felt entitled to invade a neighboring territory simply because its citizens practiced a different Christian confession; Westphalia made state borders legally sovereign.',
-    source: 'Treaties of Münster and Osnabrück (1648)'
+    tagline: 'The 1648 treaties that ended the Thirty Years’ War, and that we keep crediting with inventing the modern state.',
+    explanation: 'Two peace treaties signed in October 1648 in Osnabrück and Münster ended the Thirty Years’ War, which had killed somewhere between 4.5 and 8 million people in central Europe. They are often called the origin of “Westphalian sovereignty” — the idea that each state runs its own affairs without outside interference. Historians disagree about how much to credit them with: the treaties say very little about sovereignty, and the famous framing largely dates from later centuries. What they unambiguously did was end a war.',
+    example: 'Read the actual text and you find settlement terms — armies disbanding, territorial clauses, an amnesty. The famous claim that Westphalia “invented the modern nation-state” is something later thinkers built on top of it, which makes it a useful idea and a shaky citation.',
+    source: 'Treaties of Münster and Osnabrück (1648)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Peace_of_Westphalia',
+    // VERIFY: the casualty range and the "4.5 to 8 million" figure come from the
+    // Wikipedia summary above. Worth checking against a scholarly history before
+    // this is treated as settled.
+    verified: true
   },
 
   // ==================== POLITICAL SCIENCE ====================

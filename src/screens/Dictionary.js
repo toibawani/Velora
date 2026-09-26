@@ -209,8 +209,24 @@ function Dictionary({ setScreen }) {
 
                     {entry.source && (
                       <div className="entry-source-row">
-                        <span className="source-label">Primary Context & Foundation:</span>
-                        <span className="source-text">{entry.source}</span>
+                        <span className="source-label">Where this comes from:</span>
+                        {entry.sourceUrl ? (
+                          <a
+                            className="source-text source-link"
+                            href={entry.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {entry.source}
+                          </a>
+                        ) : (
+                          <span className="source-text">{entry.source}</span>
+                        )}
+                        {entry.verified === false && (
+                          <span className="source-flag" title="This entry has not been checked against its source yet.">
+                            not checked yet
+                          </span>
+                        )}
                       </div>
                     )}
                   </div>

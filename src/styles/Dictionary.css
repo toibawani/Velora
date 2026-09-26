@@ -444,3 +444,28 @@
   background: var(--bg-hover);
   border-color: var(--border-strong);
 }
+
+/* A source you can actually open, and an honest label on the ones you cannot. */
+.source-link {
+  color: var(--accent-primary, #8C4A2F);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.source-link:hover {
+  color: var(--accent-hover, #6E3822);
+}
+
+.source-flag {
+  margin-left: 8px;
+  padding: 1px 7px;
+  font-size: 0.6875rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #6B5644);
+  background: var(--bg-surface-hover, #F3E6D4);
+  border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12));
+  border-radius: 999px;
+  cursor: help;
+}
