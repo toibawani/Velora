@@ -3,6 +3,7 @@ import {
   ArrowRight,
   BarChart3,
   BookOpen,
+  BookText,
   ChevronDown,
   Compass,
   Gamepad2,
@@ -150,8 +151,8 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
     : activeField.disciplines;
 
   return (
-    <div className="universe-home bg-[#0B0F17] min-h-screen text-gray-100">
-      <header className="uh-header bg-[#0B0F17]/80 backdrop-blur-md border-b border-white/10">
+    <div className="universe-home bg-[#F6EFE4] min-h-screen text-[#2C2118]">
+      <header className="uh-header bg-[#F6EFE4]/85 backdrop-blur-md border-b border-[#3E2718]/10">
         <button className="uh-brand" type="button" onClick={() => setScreen('universe')} aria-label="VELORA home">
           <span className="uh-brand-mark">V</span>
           <span><strong>VELORA</strong><small>The knowledge atlas</small></span>
@@ -160,6 +161,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
         <nav className="uh-nav-links" aria-label="Primary navigation">
           <button type="button" className="uh-nav-item active" onClick={() => setScreen('universe')}><Home size={16} /> Atlas</button>
           <button type="button" className="uh-nav-item" onClick={() => { setSelectedSubject('physics'); setScreen('learn'); }}><BookOpen size={16} /> Learn</button>
+          <button type="button" className="uh-nav-item" onClick={() => setScreen('dictionary')}><BookText size={16} /> Curious Dictionary</button>
           <button type="button" className="uh-nav-item" onClick={() => setScreen('analytics')}><BarChart3 size={16} /> Progress</button>
           <button type="button" className="uh-nav-item" onClick={() => setScreen('games')}><Gamepad2 size={16} /> Games</button>
         </nav>
@@ -179,7 +181,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
             <div className="uh-hero-actions">
               <button
                 type="button"
-                className="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-4 py-2 rounded-lg shadow-lg shadow-indigo-600/20 transition-all"
+                className="uh-primary bg-[#8C4A2F] hover:bg-[#6E3822] text-[#FFF8F1] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[#8C4A2F]/20 transition-all"
                 onClick={scrollToAtlas}
               >
                 Explore the atlas <ArrowRight size={17} />
@@ -203,7 +205,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
           <div className="uh-section-heading-row">
             <div>
               <p className="uh-eyebrow">The knowledge hierarchy</p>
-              <h2 id="atlas-heading" className="font-serif text-2xl font-light tracking-wide text-white">Explore the fields of human thought</h2>
+              <h2 id="atlas-heading" className="font-serif text-2xl font-light tracking-wide text-[#2C2118]">Explore the fields of human thought</h2>
             </div>
             <p>Choose a field, open a discipline, select a subfield, then choose a topic to preview its place in the whole.</p>
           </div>
@@ -277,7 +279,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
                   return (
                     <article
                       key={discipline.id}
-                      className={`uh-discipline-card bg-white/[0.03] border border-white/10 rounded-xl p-6 hover:border-indigo-500/50 transition-all ${isActive ? 'active' : ''}`}
+                      className={`uh-discipline-card bg-[#FFF9F1] border border-[#3E2718]/10 rounded-3xl p-6 hover:border-[#8C4A2F]/40 transition-all ${isActive ? 'active' : ''}`}
                     >
                       <button
                         type="button"
@@ -342,7 +344,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
           </div>
           <button
             type="button"
-            className="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-4 py-2 rounded-lg shadow-lg shadow-indigo-600/20 transition-all"
+            className="uh-primary bg-[#8C4A2F] hover:bg-[#6E3822] text-[#FFF8F1] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[#8C4A2F]/20 transition-all"
             onClick={openLearningPath}
           >
             {lessonFieldId ? 'Open learning path' : 'Keep this path'} <ArrowRight size={17} />
@@ -352,7 +354,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
         <section className="uh-method-section" aria-labelledby="method-title">
           <div>
             <p className="uh-eyebrow">A knowledge system that compounds</p>
-            <h2 id="method-title" className="font-serif text-2xl font-light tracking-wide text-white">One idea should open the next.</h2>
+            <h2 id="method-title" className="font-serif text-2xl font-light tracking-wide text-[#2C2118]">One idea should open the next.</h2>
           </div>
           <div className="uh-method-grid">
             <article><span>01</span><h3>Start broad</h3><p>See how the major field connects ideas across centuries and disciplines.</p></article>

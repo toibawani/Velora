@@ -1,7 +1,8 @@
 /* ==========================================================================
-   Dictionary.css — Scientific & Philosophical Lexicon Styles
+   Curious Dictionary — Top-Level Destination Styles
    --------------------------------------------------------------------------
-   Disciplined, distraction-free encyclopedia with sharp borders & code blocks.
+   Disciplined, human-first reference system.
+   Inter typeface, generous margins, sharp subtle borders, accessible touch targets.
    ========================================================================== */
 
 .dictionary-console {
@@ -24,6 +25,15 @@
   z-index: var(--z-sticky);
 }
 
+@media (max-width: 768px) {
+  .dict-navbar {
+    padding: var(--space-3) var(--space-4);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
 .dict-nav-left {
   display: flex;
   align-items: center;
@@ -37,9 +47,9 @@
 
 .dict-title {
   margin: 0;
-  font-size: 1.125rem;
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-tight);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
@@ -55,8 +65,11 @@
   padding: 6px 14px;
   border-radius: var(--radius-full);
   font-size: 0.8125rem;
-  font-weight: var(--weight-medium);
+  font-weight: 500;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   transition: all var(--duration-fast) var(--ease-standard);
 }
 
@@ -72,11 +85,12 @@
   border: 1px solid var(--border-default);
   padding: 4px 12px;
   border-radius: var(--radius-full);
+  white-space: nowrap;
 }
 
 /* Main Layout */
 .dict-main-layout {
-  max-width: 920px;
+  max-width: 960px;
   margin: 0 auto;
   padding: var(--space-8) var(--space-4) var(--space-20);
   display: flex;
@@ -84,7 +98,7 @@
   gap: var(--space-6);
 }
 
-/* Search & Filters Card */
+/* Search & Filter Controls */
 .dict-controls-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
@@ -101,7 +115,7 @@
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-full);
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   gap: var(--space-2);
   transition: border-color var(--duration-fast) var(--ease-standard);
 }
@@ -110,9 +124,9 @@
   border-color: var(--accent-primary);
 }
 
-.search-icon {
-  font-size: 1rem;
+.search-icon-svg {
   color: var(--text-tertiary);
+  flex-shrink: 0;
 }
 
 .dict-search-input {
@@ -125,70 +139,96 @@
   outline: none;
 }
 
+.dict-search-input::placeholder {
+  color: var(--text-tertiary);
+}
+
 .search-clear-btn {
   background: transparent;
   border: none;
   color: var(--text-tertiary);
-  font-size: 0.875rem;
   cursor: pointer;
-}
-
-.dict-filters-row {
+  padding: 4px;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
 }
 
-.subject-pills-row {
+.search-clear-btn:hover {
+  color: var(--text-primary);
+}
+
+/* Subject Horizontal Scroll / Wrap */
+.dict-subject-scroll {
   display: flex;
   gap: var(--space-2);
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .sub-filter-pill {
-  background: transparent;
+  background: var(--bg-primary);
   border: 1px solid var(--border-default);
   color: var(--text-secondary);
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: var(--weight-medium);
+  font-size: 0.8125rem;
+  font-weight: 500;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   transition: all var(--duration-fast) var(--ease-standard);
 }
 
 .sub-filter-pill:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
+  border-color: var(--border-strong);
 }
 
 .sub-filter-pill.active {
   background: var(--text-primary);
   color: var(--text-inverse);
   border-color: var(--text-primary);
-  font-weight: var(--weight-semibold);
+  font-weight: 600;
 }
 
+.sub-count {
+  font-size: 0.6875rem;
+  background: rgba(0, 0, 0, 0.08);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+}
+
+.sub-filter-pill.active .sub-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--text-inverse);
+}
+
+/* Alphabet Jump Bar */
 .alphabet-selector-strip {
   display: flex;
   gap: 3px;
   flex-wrap: wrap;
   border-top: 1px solid var(--border-subtle);
   padding-top: var(--space-3);
+  align-items: center;
 }
 
 .letter-pill {
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  width: 26px;
-  height: 26px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 4px;
   border-radius: var(--radius-xs);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: var(--weight-semibold);
+  font-size: 0.8125rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
 }
@@ -205,7 +245,8 @@
 
 .letter-pill.disabled {
   color: var(--border-strong);
-  cursor: default;
+  cursor: not-allowed;
+  opacity: 0.4;
 }
 
 /* Entries Stream */
@@ -225,156 +266,181 @@
   flex-direction: column;
   gap: var(--space-3);
   transition: border-color var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard);
+              box-shadow var(--duration-fast) var(--ease-standard);
 }
 
 .lexicon-entry-card:hover {
   border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
 }
 
 .entry-head-row {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  align-items: flex-start;
+  gap: var(--space-3);
 }
 
 .entry-title-wrap {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: var(--space-3);
 }
 
+.entry-letter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
 .entry-term {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-tight);
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
-.entry-pronunciation {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  color: var(--text-tertiary);
+.entry-tagline {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-style: italic;
 }
 
 .entry-domain-badge {
   font-size: 0.6875rem;
-  font-weight: var(--weight-bold);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  padding: 2px 8px;
-  border-radius: var(--radius-xs);
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  white-space: nowrap;
 }
 
-.entry-domain-badge.domain-physics {
-  color: var(--color-physics);
-  background: rgba(29, 155, 240, 0.1);
-  border: 1px solid rgba(29, 155, 240, 0.25);
+.domain-physics { color: #0284c7; border-color: rgba(2, 132, 199, 0.3); }
+.domain-biology { color: #16a34a; border-color: rgba(22, 163, 74, 0.3); }
+.domain-chemistry { color: #ea580c; border-color: rgba(234, 88, 12, 0.3); }
+.domain-philosophy { color: #7c3aed; border-color: rgba(124, 58, 237, 0.3); }
+.domain-history { color: #b45309; border-color: rgba(180, 83, 9, 0.3); }
+.domain-political-science { color: #0f766e; border-color: rgba(15, 118, 110, 0.3); }
+.domain-mathematics { color: #2563eb; border-color: rgba(37, 99, 235, 0.3); }
+.domain-psychology { color: #be185d; border-color: rgba(190, 24, 93, 0.3); }
+.domain-economics { color: #4338ca; border-color: rgba(67, 56, 202, 0.3); }
+
+.entry-body-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
 }
 
-.entry-domain-badge.domain-philosophy {
-  color: var(--color-philosophy);
-  background: rgba(120, 86, 255, 0.1);
-  border: 1px solid rgba(120, 86, 255, 0.25);
-}
-
-.entry-domain-badge.domain-mathematics {
-  color: var(--color-mathematics);
-  background: rgba(20, 184, 166, 0.1);
-  border: 1px solid rgba(20, 184, 166, 0.25);
-}
-
-.entry-definition {
+.entry-explanation {
   margin: 0;
   font-size: 0.9375rem;
-  line-height: var(--leading-relaxed);
+  line-height: 1.65;
   color: var(--text-primary);
 }
 
 .entry-analogy-box {
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
-  border-left: 3px solid var(--accent-primary);
+  border-left: 3px solid var(--text-primary);
   border-radius: var(--radius-sm);
   padding: var(--space-3) var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .analogy-label {
   font-size: 0.6875rem;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  font-weight: var(--weight-bold);
-  color: var(--accent-primary);
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .analogy-text {
   margin: 0;
   font-size: 0.875rem;
-  line-height: var(--leading-normal);
+  line-height: 1.55;
   color: var(--text-secondary);
 }
 
-.entry-formalism-box {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  padding: var(--space-3) var(--space-4);
+.entry-source-row {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
-.formalism-label {
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  color: var(--text-tertiary);
-  font-weight: var(--weight-semibold);
-}
-
-.formalism-code {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-primary);
-  letter-spacing: 0.02em;
-}
-
-.entry-footer-row {
-  display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-2);
   padding-top: var(--space-2);
   border-top: 1px solid var(--border-subtle);
-  flex-wrap: wrap;
-}
-
-.related-label {
   font-size: 0.75rem;
+}
+
+.source-label {
   color: var(--text-tertiary);
+  font-weight: 600;
 }
 
-.related-tags-row {
-  display: flex;
-  gap: var(--space-1);
-  flex-wrap: wrap;
-}
-
-.related-tag {
-  font-size: 0.6875rem;
+.source-text {
   color: var(--text-secondary);
-  background: var(--bg-tertiary);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
+  font-style: italic;
 }
 
+/* Empty State */
 .dict-empty-state {
-  padding: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-6);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
   text-align: center;
+  gap: var(--space-3);
+}
+
+.dict-empty-state h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+}
+
+.dict-empty-state p {
+  margin: 0;
+  font-size: 0.875rem;
   color: var(--text-secondary);
+  max-width: 380px;
+}
+
+.dict-reset-filter-btn {
+  margin-top: var(--space-2);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.dict-reset-filter-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
 }

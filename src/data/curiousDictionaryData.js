@@ -1,0 +1,311 @@
+/**
+ * Curious Dictionary Data
+ * 
+ * Written for genuinely curious minds (ages 15 to 80).
+ * No AI jargon ("seamless", "revolutionary").
+ * Clear, concrete examples, genuine historical/philosophical context,
+ * and conversational clarity: explain why something matters before what it is.
+ */
+
+export const DICTIONARY_SUBJECTS = [
+  { id: 'all', name: 'All Subjects' },
+  { id: 'physics', name: 'Physics' },
+  { id: 'biology', name: 'Biology' },
+  { id: 'chemistry', name: 'Chemistry' },
+  { id: 'philosophy', name: 'Philosophy' },
+  { id: 'history', name: 'History' },
+  { id: 'political-science', name: 'Political Science' },
+  { id: 'mathematics', name: 'Mathematics' },
+  { id: 'psychology', name: 'Psychology' },
+  { id: 'economics', name: 'Economics' },
+];
+
+export const CURIOUS_TERMS = [
+  // ==================== PHYSICS ====================
+  {
+    id: 'momentum',
+    term: 'Momentum',
+    subject: 'physics',
+    letter: 'M',
+    tagline: 'How hard something is to bring to a dead stop.',
+    explanation: 'Momentum is how hard something is to stop. A truck going 5 mph and a bicycle going 60 mph might have similar momentum — mass and speed both count. It’s why a slow-moving freight train can crush a car it barely seems to be touching.',
+    example: 'A 0.145 kg baseball flying at 95 mph carries enough momentum to break fingers, while a pebble with identical speed barely stings.',
+    source: 'Newton, Philosophiae Naturalis Principia Mathematica (1687)'
+  },
+  {
+    id: 'inertia',
+    term: 'Inertia',
+    subject: 'physics',
+    letter: 'I',
+    tagline: 'The universe’s stubborn refusal to change without an external push.',
+    explanation: 'Inertia is matter’s reluctance to alter whatever it is already doing. If it is sitting still on your kitchen counter, it stays there until nudged; if it is hurtling through empty interstellar void, it continues forever until a gravitational field or collision interrupts it.',
+    example: 'When a subway car suddenly brakes and your upper body lurches forward, that isn’t a phantom force pushing you—it’s your own mass trying to maintain the 30 mph it was traveling a second ago.',
+    source: 'Galileo Galilei, Dialogue Concerning the Two Chief World Systems (1632)'
+  },
+  {
+    id: 'entropy-phys',
+    term: 'Entropy',
+    subject: 'physics',
+    letter: 'E',
+    tagline: 'The one-way arrow of time measured in microscopic disorder.',
+    explanation: 'Entropy counts how many microscopic ways a system can be arranged without changing what it looks like on the outside. Because there are vastly more ways for atoms to be scattered randomly than aligned neatly, energy naturally disperses and processes run in only one direction.',
+    example: 'Drop an egg on tile: there is only one atomic arrangement that forms an unbroken shell, but billions of ways for yolk and albumen to splat across the floor. You will never see the mess spontaneously reassemble.',
+    source: 'Ludwig Boltzmann, Lectures on Gas Theory (1896)'
+  },
+  {
+    id: 'superposition',
+    term: 'Superposition',
+    subject: 'physics',
+    letter: 'S',
+    tagline: 'Being in multiple possibilities until an interaction forces a choice.',
+    explanation: 'In quantum physics, small things like electrons or photons don’t exist at a single sharp point in space until they interact with something. Instead, their wave of probabilities allows them to occupy a mixture of distinct states at the same time.',
+    example: 'Sound waves from two violins pass through the same pocket of air simultaneously without smashing each other; until measured, a particle behaves with that exact same overlapping wave nature.',
+    source: 'Dirac, The Principles of Quantum Mechanics (1930)'
+  },
+  {
+    id: 'event-horizon',
+    term: 'Event Horizon',
+    subject: 'physics',
+    letter: 'E',
+    tagline: 'The boundary where space falls inward faster than light can swim out.',
+    explanation: 'The event horizon is not a solid wall or physical surface in space. It is a mathematical perimeter around a collapsed star where the gravitational pull steepens so much that the escape velocity exceeds the speed of light.',
+    example: 'Think of a swimmer on a calm river upstream from a waterfall. As the current quickens, there comes an exact line where the water flows faster than the swimmer’s top stroke. Cross that line, and swimming backwards is physically impossible.',
+    source: 'Schwarzschild, On the Gravitational Field of a Mass Point (1916)'
+  },
+
+  // ==================== BIOLOGY ====================
+  {
+    id: 'epigenetics',
+    term: 'Epigenetics',
+    subject: 'biology',
+    letter: 'E',
+    tagline: 'Sticky chemical bookmarks that turn your fixed genes on or off.',
+    explanation: 'You inherit an unchangeable DNA sequence from your parents, but your cells don’t read every page all the time. Epigenetics describes chemical tags (like methyl groups) that attach to your chromosomes, switching specific genes on or off in response to diet, stress, or age.',
+    example: 'A brain neuron and an epidermal skin cell inside your body carry the exact same genetic blueprint. What makes one send electrical pulses and the other produce protective keratin is simply which epigenetic switches are flipped.',
+    source: 'C.H. Waddington, The Epigenetics of Embryology (1942)'
+  },
+  {
+    id: 'homeostasis',
+    term: 'Homeostasis',
+    subject: 'biology',
+    letter: 'H',
+    tagline: 'The constant internal balancing act required to stay alive.',
+    explanation: 'Living bodies are open systems constantly threatened by a fluctuating environment. Homeostasis is the web of negative feedback loops—sweating when hot, shivering when cold, releasing insulin when sugar spikes—that keeps your internal chemistry in a razor-thin safe band.',
+    example: 'Your internal core temperature fluctuates barely one degree whether you are hiking in Death Valley or sitting in an air-conditioned library.',
+    source: 'Walter B. Cannon, The Wisdom of the Body (1932)'
+  },
+  {
+    id: 'natural-selection',
+    term: 'Natural Selection',
+    subject: 'biology',
+    letter: 'N',
+    tagline: 'Differential survival: traits that help an organism reproduce become more common.',
+    explanation: 'Natural selection is not a conscious force or an ambition to build "better" creatures. It is simple math: organisms born with traits that help them survive long enough to have offspring pass those traits down, while less advantageous variations slowly fade out.',
+    example: 'During the British Industrial Revolution, soot darkened tree bark across Manchester. Light-colored peppered moths became easy prey for birds, while rare dark mutants survived and multiplied until almost all moths in the city were black.',
+    source: 'Charles Darwin, On the Origin of Species (1859)'
+  },
+  {
+    id: 'allopatric-speciation',
+    term: 'Allopatric Speciation',
+    subject: 'biology',
+    letter: 'A',
+    tagline: 'How geographic isolation splits one family into two separate species.',
+    explanation: 'When a single population gets physically cut in half by a rising mountain range, a diverted river, or continental drift, the two groups can no longer mate. Over generations of separate mutations and adaptations, they become genetically distinct species that cannot interbreed.',
+    example: 'The Kaibab squirrel on the North Rim of the Grand Canyon and the Abert squirrel on the South Rim share a common ancestor, but centuries separated by the canyon chasm turned them into distinct sub-species with different coats and diets.',
+    source: 'Ernst Mayr, Systematics and the Origin of Species (1942)'
+  },
+
+  // ==================== CHEMISTRY ====================
+  {
+    id: 'activation-energy',
+    term: 'Activation Energy',
+    subject: 'chemistry',
+    letter: 'A',
+    tagline: 'The energetic hill molecules must climb before a reaction can roll downhill.',
+    explanation: 'Even reactions that release enormous amounts of energy (like burning paper or wood) don’t happen spontaneously at room temperature. Activation energy is the initial push required to break existing chemical bonds before new, more stable bonds can form.',
+    example: 'A dry match head contains plenty of chemical energy to sustain a flame, but it will sit quietly on a table for decades until friction against the strike strip supplies the spark of activation energy.',
+    source: 'Svante Arrhenius, Zeitschrift für Physikalische Chemie (1889)'
+  },
+  {
+    id: 'electronegativity',
+    term: 'Electronegativity',
+    subject: 'chemistry',
+    letter: 'E',
+    tagline: 'How greedily an atom pulls shared electrons toward its own nucleus.',
+    explanation: 'In a covalent chemical bond, atoms share electrons like two children holding a rope. Electronegativity measures how strongly one atom tugs the electron cloud toward itself, creating partial electrical charges on opposite ends of the molecule.',
+    example: 'In a water molecule (H2O), oxygen is far more electronegative than hydrogen. It hoards the negative electrons, giving water its polar clinginess—which is why water beads on glass and dissolves salt so easily.',
+    source: 'Linus Pauling, The Nature of the Chemical Bond (1939)'
+  },
+  {
+    id: 'catalysis',
+    term: 'Catalysis',
+    subject: 'chemistry',
+    letter: 'C',
+    tagline: 'A helper that speeds up a reaction without getting consumed in the fire.',
+    explanation: 'A catalyst offers an alternate chemical route with a lower energetic hurdle. It guides reactant molecules into the exact alignment needed to bond, then slips away unchanged, ready to repeat the process millions of times per second.',
+    example: 'Your car’s catalytic converter uses platinum and rhodium meshes to turn toxic carbon monoxide and unburnt hydrocarbons into harmless carbon dioxide and nitrogen before they exit the tailpipe.',
+    source: 'Jöns Jacob Berzelius, Edinburgh New Philosophical Journal (1836)'
+  },
+
+  // ==================== PHILOSOPHY ====================
+  {
+    id: 'epistemology-phil',
+    term: 'Epistemology',
+    subject: 'philosophy',
+    letter: 'E',
+    tagline: 'The branch of philosophy investigating how we know what is actually true.',
+    explanation: 'Epistemology asks: what is the difference between genuinely knowing something and merely having a strong hunch that happens to be right? It probes perception, sensory evidence, logical deduction, and the limits of human certainty.',
+    example: 'If a broken watch happens to show 3:15 right when you look at it at 3:15, your belief that it is 3:15 was true, but did you really "know" it? Philosophers use this to prove knowledge requires proper justification.',
+    source: 'Plato, Theaetetus (c. 369 BCE)'
+  },
+  {
+    id: 'falsifiability-phil',
+    term: 'Falsifiability',
+    subject: 'philosophy',
+    letter: 'F',
+    tagline: 'The rule that an idea is only scientific if you can imagine evidence that could disprove it.',
+    explanation: 'Karl Popper argued that science doesn’t advance by piling up confirmations; it advances by attempting to demolish theories. If an explanation is formulated so loosely that no conceivable observation could ever contradict it, it isn’t science—it’s dogma.',
+    example: 'The claim "all swans are white" is a testable scientific statement because finding a single black swan in Australia immediately disproves it. The claim "everything that happens is secretly meant to be" cannot be tested, because any outcome is retroactively claimed as part of the plan.',
+    source: 'Karl Popper, The Logic of Scientific Discovery (1934)'
+  },
+  {
+    id: 'veil-of-ignorance',
+    term: 'Veil of Ignorance',
+    subject: 'philosophy',
+    letter: 'V',
+    tagline: 'A thought experiment: how would you design society if you didn’t know who you’d be born as?',
+    explanation: 'Philosopher John Rawls asked us to imagine gathering to write the rules of justice while blinded to our own future: you don’t know whether you’ll be rich or poor, healthy or disabled, a majority or a persecuted minority. Under this veil, rational people naturally choose laws that protect the most vulnerable.',
+    example: 'When two siblings split a cake, the fairest system is for one child to slice and the other to pick first. The slicer, ignorant of which piece they will receive, cuts both with absolute precision.',
+    source: 'John Rawls, A Theory of Justice (1971)'
+  },
+  {
+    id: 'categorical-imperative',
+    term: 'Categorical Imperative',
+    subject: 'philosophy',
+    letter: 'C',
+    tagline: 'Act only on principles you would want every human being on Earth to follow.',
+    explanation: 'Immanuel Kant rejected the idea that ethics is about weighing good or bad consequences. Instead, he argued that duty requires acting only on rules that wouldn’t destroy society if everybody adopted them as universal law.',
+    example: 'Can you tell a lie to get out of a tight spot? If everyone lied whenever convenient, the very concept of a promise would collapse, making your lie useless. Therefore, Kant argued, deception is fundamentally irrational.',
+    source: 'Immanuel Kant, Groundwork of the Metaphysics of Morals (1785)'
+  },
+
+  // ==================== HISTORY ====================
+  {
+    id: 'columbian-exchange',
+    term: 'Columbian Exchange',
+    subject: 'history',
+    letter: 'C',
+    tagline: 'The global biological earthquake triggered when two worlds collided in 1492.',
+    explanation: 'When ships linked the Americas with Afro-Eurasia after 1492, they carried more than gold and soldiers: they transferred crops, livestock, and microbes that remapped human ecology. Millions of Indigenous Americans died from Eurasian diseases, while American crops fueled population booms across Europe and Asia.',
+    example: 'Before this exchange, Italy had no tomatoes, Ireland had no potatoes, Switzerland had no chocolate, and North America had neither horses nor honeybees.',
+    source: 'Alfred W. Crosby, The Columbian Exchange (1972)'
+  },
+  {
+    id: 'primary-source',
+    term: 'Primary Source',
+    subject: 'history',
+    letter: 'P',
+    tagline: 'Direct, unfiltered evidence created by someone who was actually in the room.',
+    explanation: 'A primary source is a firsthand artifact from the time period under study—letters, tax rolls, papyrus fragments, diary entries, photographs, or legal codes. Unlike textbook summaries written decades later, primary sources preserve the actual fears, biases, and language of living witnesses.',
+    example: 'A diary kept by a soldier during the Battle of the Somme is a primary source; a chapter in a 2024 university textbook analyzing trench warfare is a secondary source.',
+    source: 'Marc Bloch, The Historian’s Craft (1949)'
+  },
+  {
+    id: 'treaty-of-westphalia',
+    term: 'Peace of Westphalia',
+    subject: 'history',
+    letter: 'P',
+    tagline: 'The 1648 pact that invented the modern concept of independent nation-states.',
+    explanation: 'Ending decades of catastrophic religious slaughter across central Europe (the Thirty Years’ War), Westphalia established the principle that each sovereign ruler decides their country’s domestic laws and religion without outside empire interference. It laid the foundation for modern international law.',
+    example: 'Before Westphalia, a French or Habsburg monarch felt entitled to invade a neighboring territory simply because its citizens practiced a different Christian confession; Westphalia made state borders legally sovereign.',
+    source: 'Treaties of Münster and Osnabrück (1648)'
+  },
+
+  // ==================== POLITICAL SCIENCE ====================
+  {
+    id: 'separation-of-powers',
+    term: 'Separation of Powers',
+    subject: 'political-science',
+    letter: 'S',
+    tagline: 'Dividing government into competing branches so no single person holds total sway.',
+    explanation: 'Montesquieu observed that any person given unchecked power will naturally abuse it. By splitting government into three distinct branches—legislative (makes laws), executive (enforces laws), and judicial (interprets laws)—each branch checks the ambitions of the others.',
+    example: 'In the United States, Congress passes a budget, the President can veto it, Congress can override the veto with a two-thirds majority, and the Supreme Court can strike the resulting statute down if it violates constitutional rights.',
+    source: 'Baron de Montesquieu, The Spirit of the Laws (1748)'
+  },
+  {
+    id: 'tragedy-of-the-commons',
+    term: 'Tragedy of the Commons',
+    subject: 'political-science',
+    letter: 'T',
+    tagline: 'When individually rational self-interest leads to collective ruin of shared resources.',
+    explanation: 'When a resource is open to everyone with no property boundaries or collective rules—like ocean fish stocks, clean air, or public pastures—every user gains 100% of the benefit from taking one more unit, while sharing the degradation with everyone else. Left unregulated, ruin is the logical destination.',
+    example: 'Overfishing in international waters: if a boat skipper holds back out of environmental concern, other trawlers simply take those fish anyway. Without binding international treaties, everyone rushes to harvest until the fishery collapses.',
+    source: 'Garrett Hardin, Science (1968) / Elinor Ostrom, Governing the Commons (1990)'
+  },
+
+  // ==================== MATHEMATICS ====================
+  {
+    id: 'bayes-theorem',
+    term: 'Bayes’ Theorem',
+    subject: 'mathematics',
+    letter: 'B',
+    tagline: 'The mathematical rule for how much you should update your belief when new evidence lands.',
+    explanation: 'Bayes’ theorem calculates the probability that a hypothesis is true given new data. It reminds us that evidence cannot be judged in a vacuum: you must factor in how common or rare the situation was beforehand (the prior probability).',
+    example: 'If a rare disease affects 1 in 10,000 people and a test is 99% accurate, testing positive does NOT mean you have a 99% chance of being sick. Because the disease is so rare, false positives will still outnumber true cases by roughly 100 to 1.',
+    source: 'Thomas Bayes, An Essay towards solving a Problem in the Doctrine of Chances (1763)'
+  },
+  {
+    id: 'central-limit-theorem',
+    term: 'Central Limit Theorem',
+    subject: 'mathematics',
+    letter: 'C',
+    tagline: 'Why the bell curve appears almost everywhere in nature and statistics.',
+    explanation: 'If you take independent random samples from almost any population—even one that looks wildly skewed, flat, or weird—and calculate their averages, the distribution of those averages will inevitably form a smooth, symmetric bell curve (normal distribution).',
+    example: 'Roll a single die and every number (1 to 6) has an equal 16.7% flat chance. But roll 100 dice and add their sum: almost every roll clusters around 350, with extreme sums like 100 or 600 becoming vanishingly rare.',
+    source: 'Pierre-Simon Laplace, Théorie analytique des probabilités (1812)'
+  },
+
+  // ==================== PSYCHOLOGY ====================
+  {
+    id: 'cognitive-dissonance',
+    term: 'Cognitive Dissonance',
+    subject: 'psychology',
+    letter: 'C',
+    tagline: 'The psychological itch you feel when your actions clash with your beliefs.',
+    explanation: 'When people hold two contradictory thoughts, or behave in a way that directly contradicts their self-image, their brain experiences genuine discomfort. Rather than admitting fault or changing stubborn habits, people will often invent elaborate rationalizations to soothe the tension.',
+    example: 'Aesop’s fable of the fox who leaps repeatedly for high-hanging grapes and fails: rather than admit he isn’t tall or athletic enough, he walks away insisting the grapes were sour anyway.',
+    source: 'Leon Festinger, A Theory of Cognitive Dissonance (1957)'
+  },
+  {
+    id: 'confirmation-bias',
+    term: 'Confirmation Bias',
+    subject: 'psychology',
+    letter: 'C',
+    tagline: 'Our subconscious habit of collecting facts that agree with us and discarding the rest.',
+    explanation: 'The human brain is an efficient lawyer for its own preconceived notions. We quickly notice, remember, and amplify pieces of information that validate what we already suspect, while scrutinizing or instantly forgetting evidence that proves us wrong.',
+    example: 'If you believe full moons make hospital emergency rooms chaotic, you will take vivid mental note of every unruly patient during a full moon, but completely ignore busy nights during a crescent moon.',
+    source: 'Peter Wason, Quarterly Journal of Experimental Psychology (1960)'
+  },
+
+  // ==================== ECONOMICS ====================
+  {
+    id: 'opportunity-cost',
+    term: 'Opportunity Cost',
+    subject: 'economics',
+    letter: 'O',
+    tagline: 'The real price of anything is what you gave up to get it.',
+    explanation: 'Because time and resources are strictly finite, choosing one path always means sacrificing the next best alternative. Economists measure true cost not just in dollars handed over, but in the unlived opportunities forfeited by that choice.',
+    example: 'If you spend an evening studying physics, the dollar cost is zero, but the opportunity cost is the two-hour dinner with your closest friend or the progress you could have made on your novel.',
+    source: 'Friedrich von Wieser, Theorie der gesellschaftlichen Wirtschaft (1914)'
+  },
+  {
+    id: 'comparative-advantage',
+    term: 'Comparative Advantage',
+    subject: 'economics',
+    letter: 'C',
+    tagline: 'Why people and nations benefit from trading even when one is better at everything.',
+    explanation: 'Even if an expert lawyer is faster at typing legal briefs than their assistant, it makes economic sense for the lawyer to delegate the typing. The lawyer’s time is better spent on high-value casework where their relative advantage is greatest.',
+    example: 'David Ricardo proved that if Portugal is better at making both wine and cloth than England, both nations still get richer by having Portugal concentrate on wine and England on cloth and trading between themselves.',
+    source: 'David Ricardo, Principles of Political Economy and Taxation (1817)'
+  }
+];

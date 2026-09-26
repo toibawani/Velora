@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Home, BookOpen, Users, BarChart3, LogOut } from 'lucide-react';
+import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut } from 'lucide-react';
 import '../styles/MobileNav.css';
 
 function MobileNav({ currentScreen, setScreen, onLogout }) {
@@ -9,6 +9,7 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
   const navItems = [
     { name: 'Home', screen: 'universe', icon: Home },
     { name: 'Learn', screen: 'learn', icon: BookOpen },
+    { name: 'Curious Dictionary', screen: 'dictionary', icon: BookText },
     { name: 'Flow Games', screen: 'games', icon: () => '🎮' },
     { name: 'Analytics', screen: 'analytics', icon: BarChart3 },
     { name: 'Community', screen: 'community', icon: Users },
