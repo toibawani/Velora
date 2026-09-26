@@ -36,9 +36,15 @@ function SensoryRooms({ topic, onBack }) {
   // Pomodoro Focus Timer State (25 minutes = 1500s)
   const [secondsRemaining, setSecondsRemaining] = useState(25 * 60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const timerDeadlineRef = useRef(null);
+  const pausedAtRef = useRef(0);
 
   // Box Breathing cycle state: 'inhale' | 'hold' | 'exhale' | 'pause'
   const [breathPhase, setBreathPhase] = useState('inhale');
+  // Off until asked for. It cycled from the moment the screen mounted, with no
+  // way to stop it, and an animation the user cannot dismiss is the opposite
+  // of a calm space.
+  const [breathing, setBreathing] = useState(false);
 
   // Initialize or resume AudioContext on user interaction
   const getAudioContext = () => {
@@ -54,7 +60,7 @@ function SensoryRooms({ topic, onBack }) {
     return audioCtxRef.current;
   };
 
-  // Toggle Cosmic 432Hz Drone
+  // Toggle the low 432 Hz drone
   const toggleDrone = () => {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -73,7 +79,7 @@ function SensoryRooms({ topic, onBack }) {
       }
       setActiveSounds((prev) => ({ ...prev, drone: false }));
     } else {
-      // Start Cosmic Drone (432Hz fundamental + 108Hz sub-bass through low-pass biquad filter)
+      // Start the drone (432Hz fundamental + 108Hz sub-bass through low-pass biquad filter)
       const osc1 = ctx.createOscillator();
       const oscSub = ctx.createOscillator();
       const filter = ctx.createBiquadFilter();
@@ -131,7 +137,7 @@ function SensoryRooms({ topic, onBack }) {
       oscL.frequency.setValueAtTime(216, ctx.currentTime); // Left ear
 
       oscR.type = 'sine';
-      oscR.frequency.setValueAtTime(226, ctx.currentTime); // Right ear (10Hz delta = Alpha state)
+      oscR.frequency.setValueAtTime(226, ctx.currentTime); // Right ear; the 10 Hz difference is the perceived beat
 
       // Connect L to channel 0 and R to channel 1
       oscL.connect(merger, 0, 0);
@@ -215,26 +221,50 @@ function SensoryRooms({ topic, onBack }) {
 
   // Breathing pacer cycle (4s inhale, 4s hold, 4s exhale, 4s hold)
   useEffect(() => {
+    if (!breathing) return undefined;
     const phases = ['inhale', 'hold', 'exhale', 'hold'];
     let idx = 0;
+    setBreathPhase(phases[0]);
     const interval = setInterval(() => {
       idx = (idx + 1) % phases.length;
       setBreathPhase(phases[idx]);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [breathing]);
 
   // Pomodoro Focus Countdown Timer
+  // Wall-clock deadline, as everywhere else in the app. A counter ticking once
+  // a second keeps running in a backgrounded tab, so the focus block lasted
+  // longer than 25 minutes for anyone who looked away.
   useEffect(() => {
-    let timer;
-    if (isTimerRunning && secondsRemaining > 0) {
-      timer = setInterval(() => {
-        setSecondsRemaining((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [isTimerRunning, secondsRemaining]);
+    if (!isTimerRunning) return undefined;
+
+    const tick = () => {
+      const left = Math.max(0, Math.ceil(((timerDeadlineRef.current || 0) - Date.now()) / 1000));
+      setSecondsRemaining(left);
+      if (left === 0) setIsTimerRunning(false);
+    };
+
+    tick();
+    const timer = setInterval(tick, 250);
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        pausedAtRef.current = Date.now();
+      } else if (pausedAtRef.current) {
+        timerDeadlineRef.current += Date.now() - pausedAtRef.current;
+        pausedAtRef.current = 0;
+        tick();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [isTimerRunning]);
 
   // Clean up Web Audio on component unmount
   useEffect(() => {
@@ -265,7 +295,8 @@ function SensoryRooms({ topic, onBack }) {
             <span>🏛️</span> Deep Focus Sensory Room
           </h1>
           <p className="sr-subtitle">
-            Acoustic resonance and cognitive isolation designed for effortless scientific flow state.
+            Tones, a breathing pacer and a focus timer. They are here to take up
+            the space a distracting sound would.
           </p>
         </div>
       </header>
@@ -278,14 +309,34 @@ function SensoryRooms({ topic, onBack }) {
             <div className={`sr-aura-ring ${breathPhase}`} />
             <div className="sr-timer-center">
               <span className="sr-timer-digits">{formatTimer(secondsRemaining)}</span>
-              <span className="sr-breath-cue">{breathPhase}</span>
+              <span className="sr-breath-cue">
+                {breathing ? breathPhase : 'breathing paused'}
+              </span>
+              <button
+                type="button"
+                className="sr-breath-toggle"
+                onClick={() => setBreathing((v) => !v)}
+                aria-pressed={breathing}
+              >
+                {breathing ? 'Stop pacer' : 'Start pacer'}
+              </button>
             </div>
           </div>
 
           <div className="sr-timer-controls">
             <button
               className="sr-btn-primary"
-              onClick={() => setIsTimerRunning(!isTimerRunning)}
+              onClick={() => {
+                if (isTimerRunning) {
+                  setIsTimerRunning(false);
+                } else {
+                  // Re-arming on start, so pausing and resuming does not
+                  // restart the block or bank the remaining time.
+                  timerDeadlineRef.current = Date.now() + secondsRemaining * 1000;
+                  pausedAtRef.current = 0;
+                  setIsTimerRunning(true);
+                }
+              }}
             >
               {isTimerRunning ? 'Pause Session' : 'Start Focus Block'}
             </button>
@@ -316,8 +367,11 @@ function SensoryRooms({ topic, onBack }) {
               <div className="sr-sound-info">
                 <span className="sr-sound-icon">🌌</span>
                 <div>
-                  <h3 className="sr-sound-name">Cosmic Harmonic (432 Hz)</h3>
-                  <p className="sr-sound-desc">Deep resonant fundamental + 108Hz grounding sub-bass</p>
+                  <h3 className="sr-sound-name">Low Drone (432 Hz)</h3>
+                  <p className="sr-sound-desc">
+                    A 432 Hz tone with a 108 Hz sub-octave, through a low-pass filter.
+                    Nothing about 432 Hz is special; it is a frequency.
+                  </p>
                 </div>
               </div>
               <div className="sr-sound-actions">
@@ -346,8 +400,13 @@ function SensoryRooms({ topic, onBack }) {
               <div className="sr-sound-info">
                 <span className="sr-sound-icon">🎧</span>
                 <div>
-                  <h3 className="sr-sound-name">Binaural Alpha Waves (10 Hz)</h3>
-                  <p className="sr-sound-desc">Stereo pulse entraining calm focus (Headphones recommended)</p>
+                  <h3 className="sr-sound-name">Binaural Beat (10 Hz)</h3>
+                  <p className="sr-sound-desc">
+                    216 Hz in one ear and 226 Hz in the other, which your brain
+                    perceives as a 10 Hz pulse. People report it as calming; the
+                    evidence that it changes your brain state is weak. Headphones
+                    required, or there is no beat.
+                  </p>
                 </div>
               </div>
               <div className="sr-sound-actions">

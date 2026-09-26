@@ -302,3 +302,18 @@
   align-items: center;
   gap: var(--space-3);
 }
+.sr-breath-toggle {
+  margin-top: 0.5rem;
+  background: transparent;
+  border: 1px solid rgba(62, 39, 24, 0.18);
+  color: #6B5644;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.sr-breath-toggle:hover {
+  background: rgba(140, 74, 47, 0.08);
+  color: #2C2118;
+}
