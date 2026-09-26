@@ -11,6 +11,7 @@ import '../styles/ShareAchievementModal.css';
  */
 function ShareAchievementModal({ isOpen, onClose, milestone = 'Black Holes Mastery', score = '100% Concept Retention', userName = 'Explorer' }) {
   const [copiedText, setCopiedText] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
 
   if (!isOpen) return null;
 
@@ -28,9 +29,19 @@ function ShareAchievementModal({ isOpen, onClose, milestone = 'Black Holes Maste
   };
 
   const handleCopyCaption = () => {
-    navigator.clipboard?.writeText(shareCopy);
-    setCopiedText(true);
-    setTimeout(() => setCopiedText(false), 3000);
+    // No clipboard API on a plain http:// origin, and the old code reported
+    // success anyway.
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      setCopyFailed(true);
+      return;
+    }
+    navigator.clipboard.writeText(shareCopy)
+      .then(() => {
+        setCopiedText(true);
+        setCopyFailed(false);
+        setTimeout(() => setCopiedText(false), 3000);
+      })
+      .catch(() => setCopyFailed(true));
   };
 
   return (
@@ -85,6 +96,14 @@ function ShareAchievementModal({ isOpen, onClose, milestone = 'Black Holes Maste
             {copiedText ? '✓ Caption Copied!' : 'Copy Text for Instagram'}
           </button>
         </div>
+
+        {copyFailed && (
+          <p className="share-copy-fallback" role="status">
+            The browser would not let this page use the clipboard, which usually
+            means the site is not on https. Select the text above and copy it by
+            hand.
+          </p>
+        )}
       </div>
     </div>
   );

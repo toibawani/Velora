@@ -182,3 +182,14 @@
 .viral-btn.linkedin:hover {
   background: rgba(0, 119, 181, 0.2);
 }
+
+.share-copy-fallback {
+  margin: var(--space-4, 16px) 0 0;
+  padding: 10px 12px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #6B5644);
+  background: var(--bg-secondary, #F3E6D4);
+  border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12));
+  border-radius: var(--radius-sm, 12px);
+}

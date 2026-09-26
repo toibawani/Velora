@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EmptyState from './EmptyState';
 import { sanitizeText } from '../utils/sanitize';
 import { safeGet, safeSet } from '../utils/storage';
@@ -12,11 +12,47 @@ const DEFAULT_EXPLANATIONS = [
 
 const storageKey = (topic) => `velora_explanations_${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
+const VOTE_TYPES = ['clear', 'funny', 'mindBending'];
+
+/**
+ * Stored explanations arrive from a previous version of this app, from a
+ * half-finished write, or from someone poking at devtools. The old check only
+ * asked whether `votes` was truthy, so `votes: {}` and `votes: "yes"` both
+ * passed, and then every counter rendered NaN and the sort comparator returned
+ * NaN, which left the list in whatever order it started in.
+ */
+const isValidVotes = (votes) =>
+  votes &&
+  typeof votes === 'object' &&
+  !Array.isArray(votes) &&
+  VOTE_TYPES.every((type) => Number.isFinite(votes[type]) && votes[type] >= 0);
+
+const isValidExplanation = (item) =>
+  item &&
+  typeof item.text === 'string' &&
+  item.text.trim().length > 0 &&
+  item.text.length <= 400 &&
+  isValidVotes(item.votes) &&
+  (item.id === undefined || typeof item.id === 'string' || typeof item.id === 'number') &&
+  (item.timestamp === undefined || typeof item.timestamp === 'string');
+
+/** Drop anything malformed rather than letting one bad row poison the list. */
+const readExplanations = (stored) =>
+  Array.isArray(stored) ? stored.filter(isValidExplanation) : null;
+
 function PeerExplanations({ topic, onNotify }) {
   const [explanations, setExplanations] = useState(() => {
-    const saved = safeGet(storageKey(topic), null);
-    if (Array.isArray(saved) && saved.every((item) => item && typeof item.text === 'string' && item.votes)) {
-      return saved.map(item => ({ ...item, text: sanitizeText(item.text) }));
+    const saved = readExplanations(safeGet(storageKey(topic), null));
+    if (saved && saved.length) {
+      return saved.map((item) => ({
+        ...item,
+        votes: { ...Object.fromEntries(VOTE_TYPES.map((type) => [type, item.votes[type]])) },
+        text: sanitizeText(item.text),
+        // Rows written before this screen kept no timestamp. Falling back to
+        // now is better than letting an Invalid Date reach the formatter,
+        // which used to render the literal string "NaNd ago".
+        timestamp: Number.isFinite(Date.parse(item.timestamp)) ? item.timestamp : new Date().toISOString(),
+      }));
     }
     return DEFAULT_EXPLANATIONS;
   });
@@ -24,6 +60,7 @@ function PeerExplanations({ topic, onNotify }) {
   const [newExplanation, setNewExplanation] = useState('');
   const [inputError, setInputError] = useState('');
   const [userVotes, setUserVotes] = useState({});
+  const submittingRef = useRef(false);
 
   useEffect(() => {
     safeSet(storageKey(topic), explanations);
@@ -31,52 +68,57 @@ function PeerExplanations({ topic, onNotify }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // Someone mashing the button, or a form submitted twice by a stuck enter
+    // key, should not produce two identical posts.
+    if (submittingRef.current) return;
     const rawText = newExplanation.trim();
     const text = sanitizeText(rawText);
     if (text.length < 10) {
       setInputError('Add a little more detail so another learner can follow your thinking.');
+      submittingRef.current = false;
       return;
     }
     if (text.length > 200) {
       setInputError('Keep your explanation to 200 characters or fewer.');
+      submittingRef.current = false;
       return;
     }
 
     const explanation = { id: Date.now(), text, votes: { clear: 0, funny: 0, mindBending: 0 }, timestamp: new Date().toISOString() };
-    setExplanations([explanation, ...explanations]);
+    submittingRef.current = true;
+    setExplanations((current) => [explanation, ...current]);
     setNewExplanation('');
     setInputError('');
     if (onNotify) onNotify('Your explanation is now part of the conversation.', 'success');
   };
 
   const handleVote = (id, voteType) => {
+    if (!VOTE_TYPES.includes(voteType)) return;
     const key = `${id}-${voteType}`;
     if (userVotes[key]) {
       if (onNotify) onNotify('You have already voted on this explanation.', 'info');
       return;
     }
 
-    setExplanations(
-      explanations.map((exp) =>
+    // Functional update, so two quick clicks cannot both read the same list and
+    // one of the votes goes missing.
+    setExplanations((current) =>
+      current.map((exp) =>
         exp.id === id
-          ? {
-              ...exp,
-              votes: {
-                ...exp.votes,
-                [voteType]: exp.votes[voteType] + 1,
-              },
-            }
+          ? { ...exp, votes: { ...exp.votes, [voteType]: (exp.votes[voteType] || 0) + 1 } }
           : exp
       )
     );
 
-    setUserVotes({ ...userVotes, [key]: true });
+    setUserVotes((current) => ({ ...current, [key]: true }));
   };
 
   const getTimeAgo = (timestamp) => {
-    const now = new Date();
-    const date = new Date(timestamp);
-    const diff = now - date;
+    const diff = Date.now() - Date.parse(timestamp);
+    // A missing or unparseable date is not worth a crash or a "NaNd ago".
+    if (!Number.isFinite(diff)) return 'recently';
+    if (diff < 0) return 'just now';
+
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
@@ -93,7 +135,10 @@ function PeerExplanations({ topic, onNotify }) {
     <div className="peer-explanations">
       <div className="explanations-header">
         <h2 className="explanations-title">How Others Explain This</h2>
-        <p className="explanations-subtitle">Anonymous peer learning - vote on clarity</p>
+        <p className="explanations-subtitle">
+          Kept in this browser for now. Sharing them between people needs a server
+          and someone to read them first.
+        </p>
       </div>
 
       <form id="peer-explanation-form" className="explanation-input-box" onSubmit={handleSubmit}>
@@ -101,7 +146,11 @@ function PeerExplanations({ topic, onNotify }) {
           className="explanation-input"
           placeholder="Explain this concept in 1-2 sentences. Be clear, be creative!"
           value={newExplanation}
-          onChange={(e) => { setNewExplanation(e.target.value); setInputError(''); }}
+          onChange={(e) => {
+            setNewExplanation(e.target.value);
+            setInputError('');
+            submittingRef.current = false;
+          }}
           maxLength={200}
           aria-invalid={Boolean(inputError)}
           aria-describedby={inputError ? 'peer-explanation-error' : undefined}

@@ -315,3 +315,26 @@
   color: var(--text-primary);
   border-color: var(--border-strong);
 }
+
+/* Shown when the clipboard could not be used. The old button said "Copied"
+   on any origin that blocks the clipboard API, which is every plain http
+   deployment. */
+.cert-copy-fallback {
+  margin: var(--space-4, 16px) 0 0;
+  padding: 10px 12px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #6B5644);
+  background: var(--bg-secondary, #F3E6D4);
+  border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12));
+  border-radius: var(--radius-sm, 12px);
+}
+
+.cert-copy-fallback code {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  word-break: break-all;
+  user-select: all;
+}

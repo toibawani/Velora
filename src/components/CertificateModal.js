@@ -12,6 +12,7 @@ import '../styles/CertificateModal.css';
  */
 function CertificateModal({ isOpen, onClose, userName = 'Explorer', domain = 'Astrophysics & General Relativity' }) {
   const [copiedLink, setCopiedLink] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const certId = 'VEL-2026-ASTRO-8942';
   const issueDate = 'August 2026';
   const verifyUrl = `https://velora.app/verify/${certId}`;
@@ -25,9 +26,21 @@ function CertificateModal({ isOpen, onClose, userName = 'Explorer', domain = 'As
   };
 
   const handleCopyVerification = () => {
-    navigator.clipboard?.writeText(verifyUrl);
-    setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 3000);
+    // navigator.clipboard does not exist at all on a plain http:// origin, and
+    // that includes anything not served from localhost. The old code used
+    // `?.` and then claimed success regardless, so the button said "Copied" on
+    // exactly the deployments where nothing was copied.
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      setCopyFailed(true);
+      return;
+    }
+    navigator.clipboard.writeText(verifyUrl)
+      .then(() => {
+        setCopiedLink(true);
+        setCopyFailed(false);
+        setTimeout(() => setCopiedLink(false), 3000);
+      })
+      .catch(() => setCopyFailed(true));
   };
 
   const handlePrint = () => {
@@ -116,6 +129,16 @@ function CertificateModal({ isOpen, onClose, userName = 'Explorer', domain = 'As
             Download / Print PDF
           </button>
         </div>
+
+        {/* If the copy did not happen, say so and show the text, so the person
+            can still select it by hand instead of wondering what went wrong. */}
+        {copyFailed && (
+          <p className="cert-copy-fallback" role="status">
+            Your browser would not let the page use the clipboard here, which
+            usually means the site is not on https. Copy this by hand:{' '}
+            <code>{verifyUrl}</code>
+          </p>
+        )}
       </div>
     </div>
   );
