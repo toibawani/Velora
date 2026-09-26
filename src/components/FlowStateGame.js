@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Target,
@@ -27,20 +27,60 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [revealedExplanations, setRevealedExplanations] = useState({});
-  const [timeLeft, setTimeLeft] = useState(duration * 60);
+  // A missing or unparseable duration used to make this NaN, and the timer
+  // then compared NaN > 0 forever and never ended the session.
+  const totalSeconds = Number.isFinite(duration) && duration > 0 ? Math.floor(duration * 60) : 600;
+  const [timeLeft, setTimeLeft] = useState(totalSeconds);
+  const deadlineRef = useRef(null);
+  const pausedAtRef = useRef(0);
   const [reflection, setReflection] = useState('');
   const [savedReflection, setSavedReflection] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
 
-  // Timer countdown during flow state
+  // A wall-clock deadline rather than a counter that ticks once a second. A
+  // counter keeps running in a backgrounded tab, which handed out free time
+  // to anyone who switched away, and a laptop that slept mid-session came
+  // back with the full duration still on the clock. The pause on hidden is
+  // the same one the physics simulations use.
   useEffect(() => {
-    if (gameState === 'playing' && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(prev => prev - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && gameState === 'playing') {
-      setGameState('complete');
+    if (gameState !== 'playing') return undefined;
+
+    const tick = () => {
+      const left = Math.max(
+        0,
+        Math.ceil(((deadlineRef.current || 0) - Date.now()) / 1000)
+      );
+      setTimeLeft(left);
+      if (left === 0) setGameState('complete');
+    };
+
+    // Arm the deadline as the session starts, not on every re-run of this
+    // effect, so the clock cannot be extended by re-entering the playing
+    // state.
+    if (!deadlineRef.current) {
+      deadlineRef.current = Date.now() + totalSeconds * 1000;
+      setTimeLeft(totalSeconds);
     }
-  }, [timeLeft, gameState]);
+
+    tick();
+    const timer = setInterval(tick, 250);
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        pausedAtRef.current = Date.now();
+      } else if (pausedAtRef.current) {
+        deadlineRef.current += Date.now() - pausedAtRef.current;
+        pausedAtRef.current = 0;
+        tick();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [gameState, totalSeconds]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -189,7 +229,12 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
 
                 <button
                   className="flow-action-btn primary"
-                  onClick={() => setGameState('playing')}
+                  onClick={() => {
+                    deadlineRef.current = null;
+                    pausedAtRef.current = 0;
+                    setTimeLeft(totalSeconds);
+                    setGameState('playing');
+                  }}
                   style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                 >
                   <span>Begin Flow Session</span>
