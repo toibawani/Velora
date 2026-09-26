@@ -239,3 +239,13 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
+.streak-caption {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6E5846);
+}
+
+.day-marker.today {
+  outline: 1px solid var(--border-strong, #B9A894);
+  outline-offset: 1px;
+}

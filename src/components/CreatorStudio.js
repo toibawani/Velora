@@ -11,21 +11,13 @@ function CreatorStudio({ topic, onBack }) {
   const handleSaveNote = () => {
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
-    playSound('success');
   };
 
   const addFlashcard = () => {
     if (currentFlashcard.q && currentFlashcard.a) {
       setFlashcards([...flashcards, currentFlashcard]);
       setCurrentFlashcard({ q: '', a: '' });
-      playSound('success');
     }
-  };
-
-  const playSound = (type) => {
-    // In production, use Web Audio API or audio files
-    // For now, just visual feedback
-    console.log(`Sound: ${type}`);
   };
 
   return (

@@ -1,38 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import '../styles/DopamineDebt.css';
+
+const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+/**
+ * The last seven days, ending today, worked out from the real calendar.
+ *
+ * This used to be a hardcoded array with Monday to Friday marked as studied,
+ * shown to everyone identically, which meant a brand new account looked like
+ * it had studied five days running. A streak of N now lights the last N days
+ * counting today, so the dots always agree with the number in the caption.
+ */
+const buildWeek = (streak) => {
+  const today = new Date();
+  const streakDays = Number.isFinite(streak) ? Math.max(0, Math.floor(streak)) : 0;
+
+  return Array.from({ length: 7 }, (_, offset) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - (6 - offset));
+    const isToday = offset === 6;
+    const studied = offset >= 7 - streakDays;
+    return { day: DAY_LABELS[date.getDay()], studied, isToday };
+  });
+};
 
 function DopamineDebt({ user, studyStreak, onNotify }) {
   const [debtBalance, setDebtBalance] = useState(0);
   const [offTokens, setOffTokens] = useState(2);
-  const [streakHistory, setStreakHistory] = useState([
-    { day: 'Mon', studied: true },
-    { day: 'Tue', studied: true },
-    { day: 'Wed', studied: true },
-    { day: 'Thu', studied: true },
-    { day: 'Fri', studied: true },
-    { day: 'Sat', studied: false },
-    { day: 'Sun', studied: false },
-  ]);
+  const streakHistory = useMemo(() => buildWeek(studyStreak), [studyStreak]);
 
   const handleTakeBreak = () => {
     if (offTokens > 0) {
       setOffTokens(offTokens - 1);
-      // Use token, streak protected
-      playSound('success');
     } else {
-      // No token, incur debt
       setDebtBalance(debtBalance + 10);
-      playSound('debt');
     }
   };
 
   const handlePayDebt = () => {
     // User must do harder session to pay debt
     if (onNotify) onNotify(`Complete a 30-minute review session to clear ${debtBalance} XP of learning debt.`, 'info');
-  };
-
-  const playSound = (type) => {
-    console.log(`Sound: ${type}`);
   };
 
   return (
@@ -46,15 +53,22 @@ function DopamineDebt({ user, studyStreak, onNotify }) {
       <div className="streak-visual">
         <h4>Your Week</h4>
         <div className="streak-days">
-          {streakHistory.map((day, idx) => (
-            <div key={idx} className={`day-marker ${day.studied ? 'studied' : 'debt'}`}>
+          {streakHistory.map((day) => (
+            <div
+              key={day.day}
+              className={`day-marker ${day.studied ? 'studied' : 'debt'}${day.isToday ? ' today' : ''}`}
+              title={day.isToday ? `${day.day}, today` : day.studied ? `${day.day}, studied` : `${day.day}, not studied`}
+            >
               <span className="day-label">{day.day}</span>
-              <span className="day-indicator">
-                {day.studied ? '🔥' : '⏳'}
-              </span>
+              <span className="day-indicator">{day.studied ? '🔥' : '⏳'}</span>
             </div>
           ))}
         </div>
+        <p className="streak-caption">
+          {studyStreak > 0
+            ? `A current streak of ${studyStreak} ${studyStreak === 1 ? 'day' : 'days'}.`
+            : 'No streak running. Studying today starts one.'}
+        </p>
       </div>
 
       {/* Debt/Balance Display */}
