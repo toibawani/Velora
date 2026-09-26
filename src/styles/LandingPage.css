@@ -331,6 +331,13 @@
   color: var(--color-text);
 }
 
+.section-intro-copy {
+  margin: var(--space-4) 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
 /* ==================== PILLARS — Bento Grid ==================== */
 .pillars-bento {
   display: grid;
@@ -628,6 +635,12 @@
   margin: 0;
   font-size: 0.8125rem;
   color: var(--text-tertiary);
+}
+
+/* ==================== STACK SPREAD SECTION ==================== */
+.stack-spread-section {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-primary);
 }
 
 /* ==================== FOOTER ==================== */

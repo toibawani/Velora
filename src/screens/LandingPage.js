@@ -10,7 +10,9 @@ import {
   Check,
   X,
 } from 'lucide-react';
+import StackSpread from '../components/ui/StackSpread';
 import '../styles/LandingPage.css';
+import '../styles/ui/StackSpread.css';
 
 /**
  * LandingPage Screen
@@ -169,6 +171,20 @@ function LandingPage({ setScreen }) {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Stack Spread Visual — Interactive card scatter */}
+      <section className="landing-section stack-spread-section">
+        <div className="section-inner">
+          <div className="section-header-asymm">
+            <span className="section-label">HOW IDEAS CONNECT</span>
+            <h2 className="section-heading">Physics bleeds into philosophy. History explains the math.</h2>
+            <p className="section-intro-copy">
+              When you stop studying for a test, subjects stop having fences. A thought in thermodynamics helps you see why societies evolve, and an ancient argument in Athens changes how you read quantum mechanics.
+            </p>
+          </div>
+          <StackSpread />
         </div>
       </section>
 

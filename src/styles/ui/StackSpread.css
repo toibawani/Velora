@@ -1,0 +1,95 @@
+/* ==========================================================================
+   StackSpread Component Styles
+   --------------------------------------------------------------------------
+   Scroll-driven card scatter effect using VELORA design tokens.
+   Integrated with the landing page hero section.
+   ========================================================================== */
+
+.stack-spread-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  max-height: 70vh;
+  margin: var(--space-8) 0;
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .stack-spread-container {
+    height: 400px;
+    max-height: 50vh;
+    margin: var(--space-6) 0;
+  }
+}
+
+.stack-spread-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stack-card {
+  position: absolute;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  will-change: transform;
+}
+
+.stack-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Reduced motion static fallback */
+.stack-spread-reduced {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stack-card-static {
+  position: absolute;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  width: 200px;
+  height: 280px;
+  max-width: 200px;
+  max-height: 280px;
+}
+
+.stack-card-static img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Loading state for images */
+.stack-card img:not([src]),
+.stack-card img[src=""] {
+  background: var(--bg-secondary);
+}
+
+/* Dark mode adjustments */
+:root[data-theme='dark'] .stack-card,
+:root[data-theme='dark'] .stack-card-static {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
+}
