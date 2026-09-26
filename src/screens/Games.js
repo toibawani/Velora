@@ -7,6 +7,8 @@ import DefinitionDuel from '../games/DefinitionDuel';
 import KnowledgeChain from '../games/KnowledgeChain';
 import WordPuzzle from '../games/WordPuzzle';
 import RelativityLab from '../components/RelativityLab';
+import PhysicsSimulations from '../components/PhysicsSimulations';
+import BrainGames from '../components/BrainGames';
 import '../styles/Games.css';
 
 /**
@@ -15,7 +17,8 @@ import '../styles/Games.css';
  * Offers both classic interactive modes and distraction-free Flow State learning
  * sessions tailored for deep conceptual mastery.
  */
-function GameHub({ setScreen }) {
+function GameHub({ setScreen, initialTab = 'classic' }) {
+  const [hubTab, setHubTab] = useState(initialTab); // 'brain' | 'sims' | 'classic'
   const [selectedGame, setSelectedGame] = useState(null);
   const [useFlowMode, setUseFlowMode] = useState(true);
 
@@ -121,28 +124,60 @@ function GameHub({ setScreen }) {
         <button className="back-btn-games" onClick={() => setScreen('universe')}>
           ← Return to Universe
         </button>
-        <h1 className="games-main-title">Interactive Learning Experiences</h1>
-        <div className="flow-mode-switch">
-          <label className="mode-switch-label">
-            <input
-              type="checkbox"
-              checked={useFlowMode}
-              onChange={(e) => setUseFlowMode(e.target.checked)}
-            />
-            <span className="mode-text">Flow State Mode</span>
-          </label>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            className={`pill-btn ${hubTab === 'brain' ? 'active' : ''}`}
+            onClick={() => { setHubTab('brain'); setSelectedGame(null); }}
+            style={{ padding: '6px 16px', fontSize: '0.85rem' }}
+          >
+            🧠 Brain Games
+          </button>
+          <button
+            type="button"
+            className={`pill-btn ${hubTab === 'sims' ? 'active' : ''}`}
+            onClick={() => { setHubTab('sims'); setSelectedGame(null); }}
+            style={{ padding: '6px 16px', fontSize: '0.85rem' }}
+          >
+            ⚡ Physics Simulations
+          </button>
+          <button
+            type="button"
+            className={`pill-btn ${hubTab === 'classic' ? 'active' : ''}`}
+            onClick={() => { setHubTab('classic'); setSelectedGame(null); }}
+            style={{ padding: '6px 16px', fontSize: '0.85rem' }}
+          >
+            🧩 Concept Puzzles
+          </button>
         </div>
+        {hubTab === 'classic' && (
+          <div className="flow-mode-switch">
+            <label className="mode-switch-label">
+              <input
+                type="checkbox"
+                checked={useFlowMode}
+                onChange={(e) => setUseFlowMode(e.target.checked)}
+              />
+              <span className="mode-text">Flow State Mode</span>
+            </label>
+          </div>
+        )}
       </header>
 
-      {/* Hero */}
-      <section className="games-hero">
-        <div className="hero-content">
-          <h2>Master Concepts Through Deep Interaction</h2>
-          <p>
-            Engage with scientific frameworks directly. No artificial scoreboards—only focus, clarity, and reflection.
-          </p>
-        </div>
-      </section>
+      {hubTab === 'brain' && <BrainGames onBack={() => setScreen('universe')} />}
+      {hubTab === 'sims' && <PhysicsSimulations onBack={() => setScreen('universe')} />}
+
+      {hubTab === 'classic' && (
+        <>
+          {/* Hero */}
+          <section className="games-hero">
+            <div className="hero-content">
+              <h2>Master Concepts Through Deep Interaction</h2>
+              <p>
+                Engage with scientific frameworks directly. No artificial scoreboards—only focus, clarity, and reflection.
+              </p>
+            </div>
+          </section>
 
       {/* Games Grid */}
       <main className="games-grid-main">
@@ -203,8 +238,10 @@ function GameHub({ setScreen }) {
           </div>
         </div>
       </section>
-    </div>
-  );
+      </>
+    )}
+  </div>
+);
 }
 
 export default GameHub;
