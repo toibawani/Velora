@@ -6,6 +6,8 @@
  * Zero tracking pixels, zero external telemetry, zero surveillance.
  */
 
+import { safeGet, safeSet, safeRemove } from './storage';
+
 const STORAGE_KEY = 'velora_learning_analytics';
 
 const DEFAULT_ANALYTICS = {
@@ -33,27 +35,23 @@ const cloneDefault = () => JSON.parse(JSON.stringify(DEFAULT_ANALYTICS));
 const isAnalyticsShape = (value) => value && typeof value === 'object' && Array.isArray(value.topicTimeDistribution) && Array.isArray(value.weeklyActivity);
 
 export const getAnalyticsData = () => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      const defaults = cloneDefault();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults));
-      return defaults;
-    }
-    const parsed = JSON.parse(raw);
-    if (!isAnalyticsShape(parsed)) throw new Error('Invalid analytics schema');
-    return { ...cloneDefault(), ...parsed };
-  } catch (e) {
-    return cloneDefault();
+  const raw = safeGet(STORAGE_KEY, null);
+  if (!raw) {
+    const defaults = cloneDefault();
+    safeSet(STORAGE_KEY, defaults);
+    return defaults;
   }
+  if (!isAnalyticsShape(raw)) {
+    // Invalid schema - return defaults and fix storage
+    const defaults = cloneDefault();
+    safeSet(STORAGE_KEY, defaults);
+    return defaults;
+  }
+  return { ...cloneDefault(), ...raw };
 };
 
 export const saveAnalyticsData = (data) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch (e) {
-    console.error('Failed to save analytics', e);
-  }
+  safeSet(STORAGE_KEY, data);
 };
 
 export const recordStudySession = (topicName, minutes, subject = 'physics') => {
@@ -88,9 +86,5 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
 };
 
 export const clearAnalyticsData = () => {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch (e) {
-    console.error('Failed to clear analytics', e);
-  }
+  safeRemove(STORAGE_KEY);
 };

@@ -1,4 +1,5 @@
 import { getAnalyticsData, recordStudySession } from './analyticsStorage';
+import { safeSet } from './storage';
 
 describe('analytics storage', () => {
   beforeEach(() => localStorage.clear());
@@ -10,8 +11,15 @@ describe('analytics storage', () => {
   });
 
   test('recovers when the stored schema is invalid', () => {
-    localStorage.setItem('velora_learning_analytics', JSON.stringify({ totalHoursStudied: 2 }));
+    safeSet('velora_learning_analytics', { totalHoursStudied: 2 });
     expect(getAnalyticsData().totalHoursStudied).toBe(0);
+  });
+
+  test('recovers when storage contains corrupted JSON', () => {
+    localStorage.setItem('velora_learning_analytics', '{not-json');
+    const data = getAnalyticsData();
+    expect(data.totalHoursStudied).toBe(0);
+    expect(Array.isArray(data.topicTimeDistribution)).toBe(true);
   });
 
   test('does not expose recovery details in analytics storage', () => {

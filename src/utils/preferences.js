@@ -1,24 +1,13 @@
+import { safeGet, safeSet, safeRemove } from './storage';
+
 export const getPreference = (key, defaultValue) => {
-  try {
-    const saved = localStorage.getItem(`velora_pref_${key}`);
-    return saved !== null ? JSON.parse(saved) : defaultValue;
-  } catch {
-    return defaultValue;
-  }
+  return safeGet(`velora_pref_${key}`, defaultValue);
 };
 
 export const setPreference = (key, value) => {
-  try {
-    localStorage.setItem(`velora_pref_${key}`, JSON.stringify(value));
-  } catch {
-    console.error('Failed to save preference');
-  }
+  safeSet(`velora_pref_${key}`, value);
 };
 
 export const clearPreference = (key) => {
-  try {
-    localStorage.removeItem(`velora_pref_${key}`);
-  } catch {
-    console.error('Failed to clear preference');
-  }
+  safeRemove(`velora_pref_${key}`);
 };

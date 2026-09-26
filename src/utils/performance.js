@@ -1,15 +1,13 @@
+import { safeGet, safeSet } from './storage';
+
 const MAX_LOGGED_SLOW_OPERATIONS = 50;
 const PERFORMANCE_KEY = 'velora_performance_log';
 
 const recordSlowOperation = (name, duration, threshold) => {
   if (duration <= threshold) return;
-  try {
-    const current = JSON.parse(localStorage.getItem(PERFORMANCE_KEY) || '[]');
-    current.push({ name, duration: Number(duration.toFixed(2)), timestamp: new Date().toISOString() });
-    localStorage.setItem(PERFORMANCE_KEY, JSON.stringify(current.slice(-MAX_LOGGED_SLOW_OPERATIONS)));
-  } catch {
-    // Telemetry must never interrupt a learner.
-  }
+  const current = safeGet(PERFORMANCE_KEY, []);
+  current.push({ name, duration: Number(duration.toFixed(2)), timestamp: new Date().toISOString() });
+  safeSet(PERFORMANCE_KEY, current.slice(-MAX_LOGGED_SLOW_OPERATIONS));
 };
 
 export const measurePerformance = (name, fn) => {
@@ -30,15 +28,11 @@ export const measureAsync = async (name, fn) => {
     if (duration > 200) console.warn(`[perf] Slow async operation: ${name} took ${duration.toFixed(2)}ms`);
     return result;
   } catch (error) {
-    try {
-      localStorage.setItem('velora_last_operation_error', JSON.stringify({ name, message: error.message, timestamp: new Date().toISOString() }));
-    } catch {
-      // Error telemetry must not mask the original failure.
-    }
+    safeSet('velora_last_operation_error', { name, message: error.message, timestamp: new Date().toISOString() });
     throw error;
   }
 };
 
 export const getPerformanceLog = () => {
-  try { return JSON.parse(localStorage.getItem(PERFORMANCE_KEY) || '[]'); } catch { return []; }
+  return safeGet(PERFORMANCE_KEY, []);
 };

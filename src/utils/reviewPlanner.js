@@ -1,3 +1,5 @@
+import { safeGet, safeSet } from './storage';
+
 const STORAGE_KEY = 'velora_reviews';
 const DAY = 86400000;
 
@@ -6,22 +8,13 @@ const DEFAULT_REVIEW_ITEMS = [];
 const isValidItem = (item) => item && typeof item.id === 'string' && typeof item.topic === 'string' && typeof item.subject === 'string' && !Number.isNaN(Date.parse(item.nextReview));
 
 export const getReviewItems = () => {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-    if (Array.isArray(parsed)) return parsed.filter(isValidItem).map((item) => ({ ...item, retention: Math.max(0, Math.min(100, Number(item.retention) || 0)) }));
-  } catch {
-    // A damaged local cache should never prevent a learner from opening a lesson.
-  }
+  const parsed = safeGet(STORAGE_KEY, null);
+  if (Array.isArray(parsed)) return parsed.filter(isValidItem).map((item) => ({ ...item, retention: Math.max(0, Math.min(100, Number(item.retention) || 0)) }));
   return DEFAULT_REVIEW_ITEMS;
 };
 
 export const saveReviewItems = (items) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    return true;
-  } catch {
-    return false;
-  }
+  return safeSet(STORAGE_KEY, items);
 };
 
 export const addReviewItem = (topic, subject = 'physics') => {
