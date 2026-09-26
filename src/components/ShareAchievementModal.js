@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { copyText, COPY_OK } from '../utils/clipboard';
 
 /**
  * ShareAchievementModal Component
@@ -29,6 +30,9 @@ function ShareAchievementModal({
 }) {
   const [copiedText, setCopiedText] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
+  const resetCopiedRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(resetCopiedRef.current), []);
 
   if (!isOpen) return null;
 
@@ -48,20 +52,19 @@ function ShareAchievementModal({
     }
   };
 
-  const handleCopyCaption = () => {
-    // No clipboard API on a plain http:// origin, and the old code reported
-    // success anyway.
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+  const handleCopyCaption = async () => {
+    // The shared helper knows the two ways this fails: no clipboard API at
+    // all on a plain http:// origin, and a rejected write when permission is
+    // refused. The old code used `?.` and claimed success regardless.
+    const result = await copyText(shareCopy);
+    if (result === COPY_OK) {
+      setCopiedText(true);
+      setCopyFailed(false);
+      resetCopiedRef.current = setTimeout(() => setCopiedText(false), 3000);
+    } else {
+      setCopiedText(false);
       setCopyFailed(true);
-      return;
     }
-    navigator.clipboard.writeText(shareCopy)
-      .then(() => {
-        setCopiedText(true);
-        setCopyFailed(false);
-        setTimeout(() => setCopiedText(false), 3000);
-      })
-      .catch(() => setCopyFailed(true));
   };
 
   return (

@@ -1,58 +1,60 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import CertificateModal from './CertificateModal';
 import ShareAchievementModal from './ShareAchievementModal';
+
+// These used to run against CertificateModal, which is gone. It was the only
+// importer of that component, so the clipboard behaviour it had been fixed
+// for had no remaining coverage at all. The behaviour is now tested against
+// the modal that actually ships, and directly in utils/clipboard.test.js.
+
+const setClipboard = (value) => {
+  Object.defineProperty(navigator, 'clipboard', { value, configurable: true, writable: true });
+};
 
 describe('Copy buttons when the clipboard is unavailable', () => {
   const originalClipboard = navigator.clipboard;
 
   afterEach(() => {
-    Object.defineProperty(navigator, 'clipboard', { value: originalClipboard, configurable: true, writable: true });
+    Object.defineProperty(navigator, 'clipboard', {
+      value: originalClipboard,
+      configurable: true,
+      writable: true,
+    });
   });
 
-  const setClipboard = (value) => {
-    Object.defineProperty(navigator, 'clipboard', { value, configurable: true, writable: true });
-  };
+  const open = () =>
+    render(<ShareAchievementModal isOpen onClose={() => {}} milestone="Concept Check" />);
 
-  test('the certificate copy button does not claim success with no clipboard API', async () => {
+  test('does not claim success with no clipboard API', async () => {
     setClipboard(undefined);
-    render(<CertificateModal isOpen userName="Ada" />);
+    open();
 
-    fireEvent.click(screen.getByRole('button', { name: /copy verification url/i }));
+    fireEvent.click(screen.getByRole('button', { name: /copy/i }));
 
-    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(/would not let the page use the clipboard/i));
-    expect(screen.queryByText(/link copied/i)).not.toBeInTheDocument();
-    // The URL is on screen so it can still be copied by hand.
-    expect(screen.getByText(/velora\.app\/verify/)).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByRole('status')).toHaveTextContent(
+        /would not let this page use the clipboard/i
+      )
+    );
+    expect(screen.queryByText(/copied/i)).not.toBeInTheDocument();
   });
 
-  test('the certificate copy button does not claim success when the write is rejected', async () => {
+  test('does not claim success when the write is rejected', async () => {
     setClipboard({ writeText: jest.fn().mockRejectedValue(new Error('denied')) });
-    render(<CertificateModal isOpen userName="Ada" />);
+    open();
 
-    fireEvent.click(screen.getByRole('button', { name: /copy verification url/i }));
+    fireEvent.click(screen.getByRole('button', { name: /copy/i }));
 
     await waitFor(() => expect(screen.getByRole('status')).toBeInTheDocument());
-    expect(screen.queryByText(/link copied/i)).not.toBeInTheDocument();
-  });
-
-  test('the certificate copy button does report success when the write works', async () => {
-    setClipboard({ writeText: jest.fn().mockResolvedValue(undefined) });
-    render(<CertificateModal isOpen userName="Ada" />);
-
-    fireEvent.click(screen.getByRole('button', { name: /copy verification url/i }));
-
-    await waitFor(() => expect(screen.getByText(/link copied/i)).toBeInTheDocument());
-    expect(screen.queryByRole('status')).not.toBeInTheDocument();
-  });
-
-  test('the share caption button tells the truth too', async () => {
-    setClipboard(undefined);
-    render(<ShareAchievementModal isOpen />);
-
-    fireEvent.click(screen.getByRole('button', { name: /copy text for instagram/i }));
-
-    await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(/would not let this page use the clipboard/i));
     expect(screen.queryByText(/caption copied/i)).not.toBeInTheDocument();
+  });
+
+  test('does report success when the write works', async () => {
+    setClipboard({ writeText: jest.fn().mockResolvedValue(undefined) });
+    open();
+
+    fireEvent.click(screen.getByRole('button', { name: /copy/i }));
+
+    await waitFor(() => expect(screen.getByText(/caption copied/i)).toBeInTheDocument());
   });
 });

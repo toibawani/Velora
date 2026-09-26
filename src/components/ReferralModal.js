@@ -6,7 +6,7 @@ import '../styles/ReferralModal.css';
  * 
  * Implements a generous, non-paywalled peer referral system.
  * Inviter and invitee both receive a 7-day preview of Pro features (Offline downloads,
- * Verified Certificates, Cognitive Velocity Analytics).
+ * Retention analytics).
  */
 function ReferralModal({ isOpen, onClose, userName = 'Explorer' }) {
   const [copied, setCopied] = useState(false);
@@ -58,18 +58,10 @@ function ReferralModal({ isOpen, onClose, userName = 'Explorer' }) {
           </div>
 
           <div className="perk-box">
-            <span className="perk-icon">📜</span>
-            <div className="perk-info">
-              <h4 className="perk-title">Verified Course Certificates</h4>
-              <p className="perk-desc">Share credentialed completion certificates directly to LinkedIn and portfolio resumes.</p>
-            </div>
-          </div>
-
-          <div className="perk-box">
             <span className="perk-icon">📊</span>
             <div className="perk-info">
-              <h4 className="perk-title">Cognitive Velocity Analytics</h4>
-              <p className="perk-desc">Access deep retention curve modeling and tailored peak-hour learning schedules.</p>
+              <h4 className="perk-title">Retention Analytics</h4>
+              <p className="perk-desc">See which concepts you keep forgetting and when you actually study best.</p>
             </div>
           </div>
         </div>
