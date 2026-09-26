@@ -16,8 +16,13 @@ html {
   scroll-behavior: smooth;
 }
 
-html, body {
-  overflow-x: hidden;
+/* clip rather than hidden: hidden turns the body into a scroll container, and
+   a sticky element then resolves against a box that never scrolls, so every
+   sticky header in the app silently stops sticking. clip contains the
+   horizontal overflow without establishing a scroll container. */
+html,
+body {
+  overflow-x: clip;
   background: var(--color-bg);
   color: var(--color-text);
 }

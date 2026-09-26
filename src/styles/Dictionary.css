@@ -469,3 +469,71 @@
   border-radius: 999px;
   cursor: help;
 }
+
+/* A-Z index, kept in view while the entry list scrolls underneath it. */
+/* Sits just below the sticky navbar rather than at the top of the viewport,
+   where it would disappear behind it. The offset matches the navbar padding
+   and content height; --dict-navbar-h is set to that measured height so the
+   two cannot drift apart if the navbar restyles. */
+.dict-letter-bar {
+  position: sticky;
+  top: var(--dict-navbar-h, 73px);
+  z-index: calc(var(--z-sticky, 100) - 1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--color-bg, #FFF9F1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: 0 2px 8px rgba(44, 33, 24, 0.06);
+}
+
+.dict-letter-bar-label,
+.dict-result-count {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6E5846);
+  white-space: nowrap;
+}
+
+.dict-result-count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The strip now has to scroll on its own rather than wrap, or the bar
+   grows tall enough to eat the viewport on a phone. */
+.dict-letter-bar .alphabet-selector-strip {
+  flex: 1;
+  min-width: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  border-top: none;
+  padding-top: 0;
+}
+
+.dict-letter-bar .letter-pill {
+  flex: 0 0 auto;
+  min-width: 32px;
+  height: 32px;
+}
+
+/* Touch target, since on a phone this is the main way people navigate. */
+@media (max-width: 768px) {
+  .dict-letter-bar .letter-pill {
+    min-width: 44px;
+    height: 44px;
+  }
+}
+
+.letter-count {
+  display: block;
+  font-size: 0.5625rem;
+  line-height: 1;
+  font-weight: 400;
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}

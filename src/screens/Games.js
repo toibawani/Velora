@@ -20,7 +20,10 @@ import '../styles/Games.css';
 function GameHub({ setScreen, initialTab = 'classic' }) {
   const [hubTab, setHubTab] = useState(initialTab); // 'brain' | 'sims' | 'classic'
   const [selectedGame, setSelectedGame] = useState(null);
-  const [useFlowMode, setUseFlowMode] = useState(true);
+  // Off by default. Flow State is a timed question drill, so switching it on by
+  // default meant the six real games underneath could not be reached at all
+  // unless you found this checkbox and turned it off.
+  const [useFlowMode, setUseFlowMode] = useState(false);
 
   const games = [
     {

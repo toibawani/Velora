@@ -20,7 +20,6 @@ const UniverseHome = lazy(() => import('./screens/UniverseHome'));
 const LandingPage = lazy(() => import('./screens/LandingPage'));
 const LearnScreen = lazy(() => import('./screens/Learn'));
 const CommunityScreen = lazy(() => import('./screens/Community'));
-const GlossaryScreen = lazy(() => import('./screens/Glossary'));
 const AnalyticsScreen = lazy(() => import('./screens/Analytics'));
 const DoubtsScreen = lazy(() => import('./screens/Doubts'));
 const ChallengesScreen = lazy(() => import('./screens/Challenges'));
@@ -132,10 +131,6 @@ function App() {
 
         {screen === 'community' && user && (
           <CommunityScreen setScreen={setScreen} />
-        )}
-
-        {screen === 'glossary' && user && (
-          <GlossaryScreen setScreen={setScreen} />
         )}
 
         {screen === 'analytics' && user && (

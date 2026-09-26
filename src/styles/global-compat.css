@@ -110,6 +110,9 @@ a:focus-visible,
 .bottom-nav-item,
 .btn-secondary,
 .btn-ghost,
+.letter-pill:not(.active),
+.sub-filter-pill:not(.active),
+.dict-reset-filter-btn,
 [class*="icon-button"] {
   background: transparent !important;
   color: #6B5644 !important;
@@ -126,6 +129,9 @@ a:focus-visible,
 .bottom-nav-item:hover,
 .btn-secondary:hover,
 .btn-ghost:hover,
+.letter-pill:not(.active):hover,
+.sub-filter-pill:not(.active):hover,
+.dict-reset-filter-btn:hover,
 [class*="icon-button"]:hover {
   background: rgba(140, 74, 47, 0.08) !important;
   color: #2C2118 !important;

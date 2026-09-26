@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
-import { DICTIONARY_SUBJECTS, CURIOUS_TERMS } from '../data/curiousDictionaryData';
+import { DICTIONARY_SUBJECTS, CURIOUS_TERMS } from '../data/dictionaryIndex';
 import '../styles/Dictionary.css';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -10,6 +10,29 @@ function Dictionary({ setScreen }) {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
   const [activeEntryId, setActiveEntryId] = useState(null);
+  const navbarRef = useRef(null);
+
+  // The A-Z bar sticks directly underneath the navbar, so it needs to know
+  // how tall that is. Measured rather than hardcoded, because the navbar
+  // reflows on mobile and a guessed offset leaves the bar tucked under it.
+  useEffect(() => {
+    const el = navbarRef.current;
+    if (!el) return undefined;
+
+    const publish = () => {
+      document.documentElement.style.setProperty(
+        '--dict-navbar-h',
+        `${Math.round(el.getBoundingClientRect().height)}px`
+      );
+    };
+
+    publish();
+    window.addEventListener('resize', publish);
+    return () => {
+      window.removeEventListener('resize', publish);
+      document.documentElement.style.removeProperty('--dict-navbar-h');
+    };
+  }, []);
 
   // Cross-subject search and filtering
   const filteredTerms = useMemo(() => {
@@ -41,21 +64,22 @@ function Dictionary({ setScreen }) {
     }).sort((a, b) => a.term.localeCompare(b.term));
   }, [searchQuery, selectedSubject, selectedLetter]);
 
-  // Which letters have at least one term under the currently selected subject?
-  const availableLetters = useMemo(() => {
-    const letters = new Set();
+  // How many terms sit under each letter, so the bar can say what a click
+  // will produce instead of leaving people to click and find out.
+  const letterCounts = useMemo(() => {
+    const counts = {};
     CURIOUS_TERMS.forEach((item) => {
       if (selectedSubject === 'all' || item.subject === selectedSubject) {
-        letters.add(item.letter);
+        counts[item.letter] = (counts[item.letter] || 0) + 1;
       }
     });
-    return letters;
+    return counts;
   }, [selectedSubject]);
 
   return (
     <div className="dictionary-console">
       {/* Top Navbar */}
-      <header className="dict-navbar">
+      <header className="dict-navbar" ref={navbarRef}>
         <div className="dict-nav-left">
           <button
             type="button"
@@ -128,33 +152,45 @@ function Dictionary({ setScreen }) {
             })}
           </div>
 
-          {/* A-to-Z Alphabet Index */}
+        </section>
+
+        {/* A-to-Z index. Sits outside the controls card so it can stay put
+            while the list scrolls underneath it. */}
+        <div className="dict-letter-bar">
+          <span className="dict-letter-bar-label">Jump to</span>
           <div className="alphabet-selector-strip" role="toolbar" aria-label="Alphabetical Jump Bar">
             <button
               type="button"
               className={`letter-pill ${selectedLetter === 'ALL' ? 'active' : ''}`}
               onClick={() => setSelectedLetter('ALL')}
+              aria-pressed={selectedLetter === 'ALL'}
             >
               All
             </button>
             {ALPHABET.map((char) => {
-              const hasChar = availableLetters.has(char);
+              const count = letterCounts[char] || 0;
               const isSelected = selectedLetter === char;
               return (
                 <button
                   key={char}
                   type="button"
-                  disabled={!hasChar}
-                  className={`letter-pill ${isSelected ? 'active' : ''} ${!hasChar ? 'disabled' : ''}`}
+                  disabled={count === 0}
+                  className={`letter-pill ${isSelected ? 'active' : ''} ${count === 0 ? 'disabled' : ''}`}
                   onClick={() => setSelectedLetter(char)}
-                  aria-label={`Jump to letter ${char}`}
+                  aria-pressed={isSelected}
+                  aria-label={`Jump to ${char}, ${count} ${count === 1 ? 'term' : 'terms'}`}
+                  title={count === 0 ? `No terms under ${char}` : `${count} under ${char}`}
                 >
                   {char}
+                  {count > 0 && <span className="letter-count">{count}</span>}
                 </button>
               );
             })}
           </div>
-        </section>
+          <span className="dict-result-count" role="status">
+            {filteredTerms.length} {filteredTerms.length === 1 ? 'entry' : 'entries'}
+          </span>
+        </div>
 
         {/* Entries Stream */}
         <section className="dict-entries-stream" aria-live="polite">
