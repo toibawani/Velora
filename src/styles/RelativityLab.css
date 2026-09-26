@@ -330,3 +330,15 @@
   line-height: var(--leading-normal);
   margin: 0;
 }
+
+.rel-preset-note {
+  margin: 0.35rem 0 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #6E5846);
+}
+
+.rel-preset-note.is-fictional {
+  color: #8C4A2F;
+  font-weight: 500;
+}

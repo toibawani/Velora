@@ -31,7 +31,10 @@ const PRESETS = [
     icon: '💫',
     massInSolar: 21.2,
     radiusMultiplier: 2.0,
-    note: 'First confirmed stellar-mass black hole discovered in the Milky Way.'
+    // Cygnus X-1 is the leading candidate and has been for fifty years, but
+    // no stellar-mass black hole has been confirmed by direct observation, so
+    // "first confirmed" was overstating it.
+    note: 'The leading stellar-mass black hole candidate, in a binary system over 7,000 light years away.'
   },
   {
     id: 'sag-a',
@@ -39,15 +42,19 @@ const PRESETS = [
     icon: '🌌',
     massInSolar: 4.297e6,
     radiusMultiplier: 1.5,
-    note: 'The supermassive monster at the geometric center of the Milky Way.'
+    note: 'The supermassive black hole at the centre of the Milky Way, about 4.3 million solar masses.'
   },
   {
     id: 'gargantua',
-    name: "Gargantua (Miller's Planet)",
-    icon: '🌊',
+    // Gargantua is fictional. It sat in this list beside the Earth, the Sun
+    // and M87* with the same icon treatment and no mention of that, which
+    // made a film prop look like an observation.
+    name: 'Gargantua (fictional)',
+    icon: '🎬',
     massInSolar: 1.0e8,
     radiusMultiplier: 1.05,
-    note: 'Extreme time dilation: 1 hour on Miller’s planet = 7 Earth years!'
+    isFictional: true,
+    note: 'From the film Interstellar, not an observed object. Its figures come from the script, not from a measurement.'
   },
   {
     id: 'm87',
@@ -55,7 +62,7 @@ const PRESETS = [
     icon: '🔴',
     massInSolar: 6.5e9,
     radiusMultiplier: 2.0,
-    note: 'First black hole directly imaged by the Event Horizon Telescope in 2019.'
+    note: 'The first black hole imaged by the Event Horizon Telescope, in April 2019.'
   }
 ];
 
@@ -69,6 +76,8 @@ function RelativityLab({ onBack }) {
   const [localHours, setLocalHours] = useState(1);
 
   const canvasRef = useRef(null);
+
+  const activePreset = PRESETS.find((p) => p.id === selectedPreset);
 
   // Compute Mass in kg
   const massSolar = Math.pow(10, logMass);
@@ -117,7 +126,9 @@ function RelativityLab({ onBack }) {
 
   // Format Elapsed Time gracefully
   const formatDistantTime = (hours) => {
-    if (!isFinite(hours)) return 'Infinite (Time Stood Still)';
+    // At the horizon the coordinate-time ratio diverges. It does not mean the
+    // clock there has stopped, which is what "Time Stood Still" claimed.
+    if (!isFinite(hours)) return 'Diverges at the horizon';
     if (hours < 24) return `${hours.toFixed(2)} hours`;
     const days = hours / 24;
     if (days < 365) return `${days.toFixed(1)} days (${(hours).toFixed(0)}h)`;
@@ -139,6 +150,15 @@ function RelativityLab({ onBack }) {
     let time = 0;
     let isRunning = true;
 
+    // The grid animated from mount with no way to stop it, and ignored
+    // prefers-reduced-motion entirely. Someone who has asked their operating
+    // system for less motion got the same moving funnel as everyone else.
+    const motionQuery =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+    let pausedForMotion = motionQuery ? motionQuery.matches : false;
+
     const updateSize = () => {
       const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
@@ -156,7 +176,7 @@ function RelativityLab({ onBack }) {
     const render = () => {
       if (!isRunning) return;
 
-      ctx.fillStyle = '#06080d';
+      ctx.fillStyle = '#1A1410';
       ctx.fillRect(0, 0, width, height);
 
       const centerX = width / 2;
@@ -199,7 +219,7 @@ function RelativityLab({ onBack }) {
         for (let c = 0; c < cols; c++) {
           const pt = getPoint(c, r);
           const alpha = Math.max(0.1, 0.45 - (pt.dist / (width * 0.75)));
-          ctx.strokeStyle = `rgba(37, 99, 235, ${alpha})`;
+          ctx.strokeStyle = `rgba(140, 74, 47, ${alpha})`;
           if (c === 0) ctx.moveTo(pt.x, pt.y);
           else ctx.lineTo(pt.x, pt.y);
         }
@@ -212,7 +232,7 @@ function RelativityLab({ onBack }) {
         for (let r = 0; r < rows; r++) {
           const pt = getPoint(c, r);
           const alpha = Math.max(0.1, 0.45 - (pt.dist / (width * 0.75)));
-          ctx.strokeStyle = `rgba(37, 99, 235, ${alpha})`;
+          ctx.strokeStyle = `rgba(140, 74, 47, ${alpha})`;
           if (r === 0) ctx.moveTo(pt.x, pt.y);
           else ctx.lineTo(pt.x, pt.y);
         }
@@ -270,12 +290,59 @@ function RelativityLab({ onBack }) {
       animId = requestAnimationFrame(render);
     };
 
-    render();
+    // One frame with no follow-up request, for the reduced-motion case.
+    const renderOnce = () => {
+      const wasRunning = isRunning;
+      isRunning = true;
+      render();
+      isRunning = wasRunning;
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animId);
+      } else if (!pausedForMotion) {
+        isRunning = true;
+        animId = requestAnimationFrame(render);
+      }
+    };
+
+    const onMotionPrefChange = (e) => {
+      pausedForMotion = e.matches;
+      if (pausedForMotion) {
+        isRunning = false;
+        cancelAnimationFrame(animId);
+        // Still draw one frame, so the lab is not an empty box.
+        renderOnce();
+      } else if (!document.hidden) {
+        isRunning = true;
+        animId = requestAnimationFrame(render);
+      }
+    };
+
+    if (pausedForMotion) {
+      isRunning = false;
+      renderOnce();
+    } else {
+      render();
+    }
+
+    document.addEventListener('visibilitychange', onVisibility);
+    if (motionQuery) {
+      if (motionQuery.addEventListener) motionQuery.addEventListener('change', onMotionPrefChange);
+      else motionQuery.addListener(onMotionPrefChange);
+    }
 
     return () => {
       isRunning = false;
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', updateSize);
+      document.removeEventListener('visibilitychange', onVisibility);
+      if (motionQuery) {
+        if (motionQuery.removeEventListener) motionQuery.removeEventListener('change', onMotionPrefChange);
+        else motionQuery.removeListener(onMotionPrefChange);
+      }
     };
   }, [logMass, radiusRatio]);
 
@@ -298,7 +365,7 @@ function RelativityLab({ onBack }) {
 
       {/* Preset Selector Chips */}
       <div className="rel-presets-bar">
-        <span className="rel-presets-label">Astrophysical Benchmarks:</span>
+        <span className="rel-presets-label">Benchmarks:</span>
         {PRESETS.map((preset) => (
           <button
             key={preset.id}
@@ -309,6 +376,16 @@ function RelativityLab({ onBack }) {
           </button>
         ))}
       </div>
+
+      {/* Every preset carries a written note explaining what the number is.
+          None of them were being displayed, so the explanation existed in the
+          data and nowhere else. */}
+      {activePreset && activePreset.note && (
+        <p className={`rel-preset-note ${activePreset.isFictional ? 'is-fictional' : ''}`} role="note">
+          {activePreset.isFictional && <strong>Not a real object. </strong>}
+          {activePreset.note}
+        </p>
+      )}
 
       {/* Interactive Grid: Visualizer + Controls */}
       <div className="rel-grid">
