@@ -639,3 +639,13 @@
   border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12));
   border-radius: var(--radius-sm, 12px);
 }
+
+.bg-result-source {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+}
+
+.bg-result-source a {
+  color: var(--accent-primary);
+  text-decoration: underline;
+}

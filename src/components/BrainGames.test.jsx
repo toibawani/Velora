@@ -98,3 +98,58 @@ describe('Brain Games', () => {
     expect(stored).toHaveLength(1);
   });
 });
+
+describe('True or Myth accuracy', () => {
+  beforeEach(() => localStorage.clear());
+
+  const openMyth = () => {
+    render(<BrainGames onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('tab', { name: /True\/Myth/i }));
+  };
+
+  const answer = (choice) =>
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: choice ? /it’s real/i : /it’s a myth/i,
+      })
+    );
+
+  const advanceTo = (idx) => {
+    for (let i = 0; i < idx; i += 1) {
+      answer(false);
+      fireEvent.click(screen.getByRole('button', { name: /next intuition check/i }));
+    }
+  };
+
+  // The old text claimed gravity pulls "four thousand times harder" on a
+  // 20 kg ball than on a falcon feather, and the rewrite nearly shipped
+  // "forty thousand" instead. Both numbers were invented. The honest version
+  // states the principle and names the real demonstration without a ratio.
+  test('the feather drop names the principle instead of an invented ratio', () => {
+    openMyth();
+    advanceTo(1); // cathedral glass first, the feather is question two
+    answer(true);
+    expect(screen.getByText(/equivalence principle/i)).toBeInTheDocument();
+    expect(screen.getByText(/geologist/i)).toBeInTheDocument();
+    expect(screen.queryByText(/four thousand|forty thousand/i)).not.toBeInTheDocument();
+  });
+
+  // The Napoleon explanation used to convert French inches to modern units
+  // in one step and never mention that the English reader's "five foot two"
+  // was measuring with a different inch.
+  test('the Napoleon answer no longer mixes up the two inch units', () => {
+    openMyth();
+    advanceTo(5); // Napoleon is the last of the six claims
+    answer(false);
+    expect(screen.getByText(/French and English inches were different lengths/i)).toBeInTheDocument();
+  });
+
+  test('every answered claim offers a source to check', () => {
+    openMyth();
+    answer(false);
+    expect(screen.getByRole('link', { name: /read more/i })).toHaveAttribute(
+      'href',
+      expect.stringContaining('https://')
+    );
+  });
+});
