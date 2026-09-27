@@ -177,9 +177,9 @@
 }
 
 .bounty-chip.active {
-  background: rgba(37, 99, 235, 0.1);
+  background: var(--accent-soft);
   color: var(--accent-primary);
-  border-color: rgba(37, 99, 235, 0.35);
+  border-color: var(--accent-line);
   font-weight: var(--weight-semibold);
 }
 

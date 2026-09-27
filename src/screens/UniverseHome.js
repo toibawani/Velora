@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
 import { trackEvent } from '../utils/analytics';
+import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
 
 const FIELD_ICONS = {
@@ -168,6 +169,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
 
         <div className="uh-header-actions">
           <span className="uh-user-greeting">Welcome, {user?.name || 'scholar'}</span>
+          <ThemeToggle />
           <button type="button" className="uh-icon-button" onClick={onLogout} aria-label="Sign out"><LogOut size={17} /></button>
         </div>
       </header>

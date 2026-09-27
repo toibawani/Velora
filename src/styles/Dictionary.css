@@ -240,7 +240,7 @@
 
 .letter-pill.active {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--accent-contrast);
 }
 
 .letter-pill.disabled {
@@ -331,15 +331,15 @@
   white-space: nowrap;
 }
 
-.domain-physics { color: #0284c7; border-color: rgba(2, 132, 199, 0.3); }
-.domain-biology { color: #16a34a; border-color: rgba(22, 163, 74, 0.3); }
-.domain-chemistry { color: #ea580c; border-color: rgba(234, 88, 12, 0.3); }
-.domain-philosophy { color: #7c3aed; border-color: rgba(124, 58, 237, 0.3); }
-.domain-history { color: #b45309; border-color: rgba(180, 83, 9, 0.3); }
-.domain-political-science { color: #0f766e; border-color: rgba(15, 118, 110, 0.3); }
-.domain-mathematics { color: #2563eb; border-color: rgba(37, 99, 235, 0.3); }
-.domain-psychology { color: #be185d; border-color: rgba(190, 24, 93, 0.3); }
-.domain-economics { color: #4338ca; border-color: rgba(67, 56, 202, 0.3); }
+.domain-physics { color: var(--subject-physics); border-color: var(--border-subtle); }
+.domain-biology { color: var(--subject-biology); border-color: var(--border-subtle); }
+.domain-chemistry { color: var(--subject-chemistry); border-color: var(--border-subtle); }
+.domain-philosophy { color: var(--subject-philosophy); border-color: var(--border-subtle); }
+.domain-history { color: var(--subject-history); border-color: var(--border-subtle); }
+.domain-political-science { color: var(--subject-political-science); border-color: var(--border-subtle); }
+.domain-mathematics { color: var(--subject-mathematics); border-color: var(--border-subtle); }
+.domain-psychology { color: var(--subject-psychology); border-color: var(--border-subtle); }
+.domain-economics { color: var(--subject-economics); border-color: var(--border-subtle); }
 
 .entry-body-content {
   display: flex;
@@ -447,14 +447,14 @@
 
 /* A source you can actually open, and an honest label on the ones you cannot. */
 .source-link {
-  color: var(--accent-primary, #8C4A2F);
+  color: var(--accent-primary, var(--accent-primary));
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
 }
 
 .source-link:hover {
-  color: var(--accent-hover, #6E3822);
+  color: var(--accent-hover, var(--accent-primary-hover));
 }
 
 .source-flag {
@@ -463,9 +463,9 @@
   font-size: 0.6875rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--text-secondary, #6B5644);
-  background: var(--bg-surface-hover, #F3E6D4);
-  border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12));
+  color: var(--text-secondary, var(--text-secondary));
+  background: var(--bg-surface-hover, var(--bg-tertiary));
+  border: 1px solid var(--border-default, var(--border-default));
   border-radius: 999px;
   cursor: help;
 }
@@ -484,16 +484,16 @@
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   margin-bottom: var(--space-4);
-  background: var(--color-bg, #FFF9F1);
+  background: var(--color-bg, var(--bg-elevated));
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md, 8px);
-  box-shadow: 0 2px 8px rgba(44, 33, 24, 0.06);
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 .dict-letter-bar-label,
 .dict-result-count {
   font-size: 0.75rem;
-  color: var(--text-secondary, #6E5846);
+  color: var(--text-secondary, var(--text-secondary));
   white-space: nowrap;
 }
 

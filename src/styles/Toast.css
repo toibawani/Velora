@@ -27,7 +27,7 @@
 }
 
 .toast-info {
-  border-left: 3px solid #2563EB;
+  border-left: 3px solid var(--accent-primary);
 }
 
 .toast span {

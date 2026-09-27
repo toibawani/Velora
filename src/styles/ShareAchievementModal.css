@@ -81,7 +81,7 @@
 .milestone-badge-svg {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.3));
+  filter: drop-shadow(0 4px 12px var(--accent-line));
 }
 
 .milestone-achievement-name {
@@ -95,7 +95,7 @@
 .achievement-recipient {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #2563EB;
+  color: var(--accent-primary);
 }
 
 .achievement-blurb {
@@ -188,8 +188,8 @@
   padding: 10px 12px;
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: var(--text-secondary, #6B5644);
-  background: var(--bg-secondary, #F3E6D4);
+  color: var(--text-secondary, var(--text-secondary));
+  background: var(--bg-secondary, var(--bg-tertiary));
   border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12));
   border-radius: var(--radius-sm, 12px);
 }

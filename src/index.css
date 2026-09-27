@@ -1,18 +1,21 @@
+/* These names predate the token system and are still referenced by feature
+   CSS. They now alias the semantic roles from design-tokens.css instead of
+   re-declaring raw hex — the old duplicate :root block here silently won
+   against design-tokens.css (same names, later import), which is how dark
+   mode ended up painting cream-on-cream. Aliasing instead of re-declaring
+   keeps design-tokens.css the only place a color is chosen. */
 :root {
-  --bg-main: #F6EFE4;
-  --bg-surface: #FFF9F1;
-  --bg-surface-hover: #F3E6D4;
-  --border-color: rgba(62, 39, 24, 0.12);
-  --text-primary: #2C2118;
-  --text-secondary: #6E5846;
-  --accent-primary: #8C4A2F;
-  --accent-hover: #6E3822;
+  --bg-main: var(--bg-primary);
+  --bg-surface: var(--bg-elevated);
+  --bg-surface-hover: var(--bg-tertiary);
+  --border-color: var(--border-default);
+  --accent-hover: var(--accent-primary-hover);
 }
 
 body {
   background-color: var(--bg-main) !important;
   color: var(--text-primary) !important;
-  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-family: var(--font-reading);
 }
 
 /* Layout containers inherit the page instead of painting a second surface. */
@@ -20,10 +23,10 @@ div, section, main {
   background-color: transparent;
 }
 
-/* Global button override — warm espresso, never indigo. */
+/* Global button override — warm sienna, never indigo. */
 button {
   background-color: var(--accent-primary) !important;
-  color: #FFF8F1 !important;
+  color: var(--accent-contrast) !important;
   border-radius: 999px !important;
   border: none !important;
   padding: 10px 18px !important;
@@ -33,7 +36,7 @@ button {
 
 button:hover {
   background-color: var(--accent-hover) !important;
-  box-shadow: 0 8px 18px rgba(92, 52, 32, 0.16) !important;
+  box-shadow: 0 8px 18px var(--accent-shadow) !important;
 }
 
 /* Global card styling override. */

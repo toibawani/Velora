@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { sanitizeText } from '../utils/sanitize';
 import { safeGet, safeSet } from '../utils/storage';
+import { trackEvent } from '../utils/analytics';
 import '../styles/BrainGames.css';
 
 /**
@@ -294,6 +295,7 @@ function TrueOrMythGame() {
     setSelectedAnswer(choice);
     setIsAnswered(true);
     setTotalAnswered((prev) => prev + 1);
+    trackEvent('myth_question_answered', { subject: question.subject, correct: isCorrect });
 
     if (isCorrect) {
       const nextStreak = streak + 1;

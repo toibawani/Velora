@@ -335,10 +335,10 @@
   margin: 0.35rem 0 1rem;
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: var(--text-secondary, #6E5846);
+  color: var(--text-secondary, var(--text-secondary));
 }
 
 .rel-preset-note.is-fictional {
-  color: #8C4A2F;
+  color: var(--accent-primary);
   font-weight: 500;
 }

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import UniverseHome from './UniverseHome';
+import { ThemeProvider } from '../context/ThemeContext';
 
 const renderUniverse = (overrides = {}) => {
   const props = {
@@ -12,7 +13,11 @@ const renderUniverse = (overrides = {}) => {
     ...overrides,
   };
 
-  render(<UniverseHome {...props} />);
+  render(
+    <ThemeProvider>
+      <UniverseHome {...props} />
+    </ThemeProvider>
+  );
   return props;
 };
 
@@ -58,5 +63,28 @@ describe('editorial knowledge atlas', () => {
     expect(setSelectedSubject).toHaveBeenCalledWith('physics');
     expect(setLearnView).toHaveBeenCalledWith('overview');
     expect(setScreen).toHaveBeenCalledWith('learn');
+  });
+});
+
+describe('theme control in the header', () => {
+  afterEach(() => {
+    localStorage.removeItem('velora_theme_preference');
+    document.documentElement.removeAttribute('data-theme');
+    document.body.removeAttribute('data-theme');
+  });
+
+  test('defaults to Auto and switches the document to dark when Dark is pressed', () => {
+    renderUniverse();
+
+    const auto = screen.getByRole('button', { name: /Auto/ });
+    const dark = screen.getByRole('button', { name: /Dark/ });
+    expect(auto).toHaveAttribute('aria-pressed', 'true');
+    expect(dark).toHaveAttribute('aria-pressed', 'false');
+
+    fireEvent.click(dark);
+
+    expect(dark).toHaveAttribute('aria-pressed', 'true');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(localStorage.getItem('velora_theme_preference')).toBe('dark');
   });
 });

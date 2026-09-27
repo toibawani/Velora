@@ -1,23 +1,26 @@
 /* ==========================================================================
    VELORA Design Tokens
    --------------------------------------------------------------------------
-   Single source of truth for the visual language.
-   Production-ready, distraction-free study interface.
-   Sharp 1px borders, matte surfaces, 6-8px border radii, zero neon glow.
+   Single source of truth for the visual language. Every component should
+   reference these roles (surface, text, accent, border) — never a raw hex —
+   so both themes stay correct without touching feature CSS.
+
+   The light theme is VELORA's warm editorial palette (cream paper, espresso
+   type, sienna accent). The dark theme is the same identity dimmed rather
+   than inverted: deep espresso surfaces, warm off-white ink, and lifted
+   accents so text keeps WCAG AA contrast on the dark ground.
+
+   Contrast values quoted below are measured against the surface each role
+   is meant to sit on (page #F6EFE4 / #171009, card #FFF9F1 / #241A12).
    ========================================================================== */
 
 :root {
-  /* ---- Core Tokens ---- */
-  --color-bg: #FAFAFA;
-  --color-text: #111111;
-  --color-text-muted: #666666;
-  --color-accent: #2563EB;
-  --color-border: #E5E5E5;
-
   /* ---- Typography ---- */
   --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-ui:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-reading: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-display: 'Fraunces', 'Source Serif 4', Georgia, serif;
   --font-mono:    'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
 
   --weight-regular: 400;
@@ -34,53 +37,89 @@
   --tracking-normal: 0;
   --tracking-wide: 0.04em;
 
-  /* ---- Surfaces (Matte Light Baseline) ---- */
-  --bg-primary: var(--color-bg);
-  --bg-secondary: #f4f4f4;
-  --bg-tertiary: #ededed;
-  --bg-elevated: #ffffff;
-  --bg-hover: #eaeaea;
-  --bg-active: #e2e2e2;
+  /* ---- Surfaces (warm paper baseline) ---- */
+  --bg-primary: #F6EFE4;   /* page ground */
+  --bg-secondary: #F3EAE0; /* recessed bands, rails */
+  --bg-tertiary: #F3E6D4;  /* pressed / stronger wash */
+  --bg-elevated: #FFF9F1;  /* raised cards */
+  --bg-hover: #F3E6D4;
+  --bg-active: #EAD9C4;
+  --bg-overlay: rgba(44, 33, 24, 0.45); /* scrims behind drawers & modals */
 
   /* ---- Text ---- */
-  --text-primary: var(--color-text);
-  --text-secondary: var(--color-text-muted);
-  --text-tertiary: var(--color-text-muted);
-  --text-inverse: var(--color-bg);
+  --text-primary: #2C2118;   /* 13.7:1 on page */
+  --text-secondary: #6E5846; /* 5.8:1 on page */
+  --text-tertiary: #77604C;  /* 4.7:1 on page, small labels only */
+  --text-inverse: #FFF8F1;
 
-  /* ---- Borders ---- */
-  --border-subtle: var(--color-border);
-  --border-default: var(--color-border);
-  --border-strong: #d4d4d4;
+  /* ---- Borders (espresso at low alpha over paper) ---- */
+  --border-subtle: rgba(62, 39, 24, 0.1);
+  --border-default: rgba(62, 39, 24, 0.14);
+  --border-strong: rgba(62, 39, 24, 0.24);
 
-  /* ---- Brand Accent (Solid, Zero Gradients, Zero Clutter) ---- */
-  --accent-primary: var(--color-accent);
-  --accent-primary-hover: #1D4ED8;
-  --accent-blue: var(--color-accent);
-  --accent-blue-hover: #1D4ED8;
-  --accent-green: #15803d;
-  --accent-green-hover: #166534;
-  --accent-orange: #c2410c;
-  --accent-red: #b91c1c;
-  --accent-red-hover: #991b1b;
-  --accent-teal: #0f766e;
-  --accent-gold: #b45309;
+  /* ---- Brand accent (sienna). Solid, zero gradients. ---- */
+  --accent-primary: #8C4A2F;        /* 5.5:1 on page, 5.9:1 with paper text on it */
+  --accent-primary-hover: #6E3822;
+  --accent-contrast: #FFF8F1;       /* text drawn ON the accent */
+  --accent-soft: rgba(140, 74, 47, 0.08);   /* selected tints */
+  --accent-line: rgba(140, 74, 47, 0.4);    /* hover borders */
+  --accent-shadow: rgba(140, 74, 47, 0.2);  /* lift shadows under accent buttons */
+  --ring: #8C4A2F;                  /* focus-visible outline color */
 
-  /* ---- Subject Identity Tokens ---- */
-  --color-physics: var(--color-accent);
-  --color-chemistry: #15803d;
-  --color-biology: #b91c1c;
-  --color-philosophy: var(--color-accent);
-  --color-history: #c2410c;
-  --color-mathematics: #0f766e;
+  /* ---- Derived roles used by feature CSS ---- */
+  --bg-glass: rgba(255, 249, 241, 0.72);        /* blurred sticky bars */
+  --bg-glass-strong: rgba(246, 239, 228, 0.86);
+  --wash: rgba(62, 39, 24, 0.06);               /* quiet background tints */
+  --shadow-color: rgba(62, 39, 24, 0.1);        /* raw color for custom shadows */
+  --ambient-warm: rgba(196, 122, 74, 0.18);     /* page-corner glows */
+  --ambient-light: rgba(232, 196, 154, 0.45);
+  --inverse-surface: #2C2118;                   /* espresso bands (dark hero) */
+  --inverse-text: #FFF8F1;                      /* text on those bands */
+  --success-line: rgba(47, 82, 56, 0.3);        /* tinted hairline borders */
+  --warning-line: rgba(138, 86, 32, 0.3);
+  --danger-line: rgba(163, 59, 50, 0.28);
 
-  /* ---- Functional Semantic Colors ---- */
-  --color-success: #15803d;
-  --color-warning: #c2410c;
-  --color-error: #b91c1c;
-  --color-info: var(--color-accent);
+  /* Legacy aliases kept so older component CSS keeps resolving */
+  --color-accent: var(--accent-primary);
+  --accent-blue: var(--accent-primary);
+  --accent-blue-hover: var(--accent-primary-hover);
 
-  /* ---- Standard 8px Spatial Grid ---- */
+  /* ---- Functional semantic colors (warm-tuned, AA on paper/card) ---- */
+  --color-success: #2F5238;
+  --color-success-hover: #3F6B4A;
+  --color-success-soft: #EAF4EE;
+  --color-warning: #8A5620;
+  --color-warning-soft: #F6E3C8;
+  --color-error: #A33B32;
+  --color-error-hover: #842E27;
+  --color-error-soft: #FDF1F0;
+  --color-info: #8C4A2F;
+  --accent-green: var(--color-success);
+  --accent-green-hover: var(--color-success-hover);
+  --accent-orange: var(--color-warning);
+  --accent-red: var(--color-error);
+  --accent-red-hover: var(--color-error-hover);
+  --accent-teal: #3E6A62;
+  --accent-gold: #A56A2A;
+
+  /* ---- Subject identity (nine dictionary subjects, no purple) ---- */
+  --subject-physics: #1F4E79;
+  --subject-chemistry: #A85529;
+  --subject-biology: #A33B32;
+  --subject-philosophy: #6E3822;
+  --subject-history: #8A5620;
+  --subject-political-science: #4E3A2C;
+  --subject-mathematics: #3E6A62;
+  --subject-psychology: #2F5238;
+  --subject-economics: #8C4A2F;
+  --color-physics: var(--subject-physics);
+  --color-chemistry: var(--subject-chemistry);
+  --color-biology: var(--subject-biology);
+  --color-philosophy: var(--subject-philosophy);
+  --color-history: var(--subject-history);
+  --color-mathematics: var(--subject-mathematics);
+
+  /* ---- Standard 8px spatial grid ---- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -92,7 +131,7 @@
   --space-12: 48px;
   --space-16: 64px;
 
-  /* ---- Controlled Sharp Radii (6-8px per production rules) ---- */
+  /* ---- Radii ---- */
   --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -100,20 +139,20 @@
   --radius-xl: 8px;
   --radius-full: 8px;
 
-  /* ---- Clean Elevation (3-tier shadow scale) ---- */
+  /* ---- Elevation (warm-tinted, 3-tier) ---- */
   --shadow-none: none;
-  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-xs: 0 1px 3px rgba(62, 39, 24, 0.06);
+  --shadow-sm: 0 2px 8px rgba(62, 39, 24, 0.07);
+  --shadow-md: 0 4px 12px rgba(62, 39, 24, 0.11);
+  --shadow-lg: 0 8px 24px rgba(62, 39, 24, 0.14);
+  --shadow-hover: 0 4px 12px rgba(62, 39, 24, 0.11);
 
-  /* ---- Precision Transitions ---- */
+  /* ---- Transitions ---- */
   --ease-standard: ease-out;
   --duration-fast: 150ms;
   --duration-normal: 200ms;
 
-  /* ---- Layer Depth Scale ---- */
+  /* ---- Layer depth ---- */
   --z-dropdown: 100;
   --z-sticky: 200;
   --z-modal-backdrop: 300;
@@ -121,37 +160,155 @@
   --z-toast: 500;
 }
 /* ==========================================================================
-   Dark Mode — contrast-aware token overrides
+   Dark theme — the same identity dimmed, not a different design.
+   Text stays warm off-white; the sienna accent LIFTS (darker browns vanish
+   against espresso) so it stays readable and clickable.
    ========================================================================== */
 /* Explicit theme selection wins over the operating system preference. */
 :root[data-theme='dark'] {
-  --color-bg: #111111;
-  --color-text: #F5F5F5;
-  --color-text-muted: #A8A8A8;
-  --color-border: #2a2a2a;
-  --bg-primary: #0D0D0D;
-  --bg-secondary: #1A1A1A;
-  --bg-tertiary: #242424;
-  --bg-elevated: #1F1F1F;
-  --bg-hover: #292929;
-  --bg-active: #323232;
-  --text-primary: #F5F5F5;
-  --text-secondary: #B8B8B8;
-  --text-tertiary: #8F8F8F;
-  --text-inverse: #FFFFFF;
-  --border-subtle: #262626;
-  --border-default: #333333;
-  --border-strong: #484848;
-  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.25);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.50);
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.40);
+  /* Legacy generic roles */
+  --color-bg: #171009;
+  --color-text: #F2E9DD;
+  --color-text-muted: #B8A48D;
+  --color-border: rgba(242, 233, 221, 0.14);
+
+  --bg-primary: #171009;
+  --bg-secondary: #1F1610;
+  --bg-tertiary: #2A1E15;
+  --bg-elevated: #241A12;
+  --bg-hover: #2F2318;
+  --bg-active: #38291D;
+  --bg-overlay: rgba(0, 0, 0, 0.62);
+
+  --text-primary: #F2E9DD;   /* 15.6:1 on page */
+  --text-secondary: #C4B09B; /* 8.6:1 on page */
+  --text-tertiary: #A08B78;  /* 5.4:1 on page */
+  --text-inverse: #171009;
+
+  --border-subtle: rgba(242, 233, 221, 0.12);
+  --border-default: rgba(242, 233, 221, 0.18);
+  --border-strong: rgba(242, 233, 221, 0.3);
+
+  --accent-primary: #D98E63;         /* 6.1:1 on page */
+  --accent-primary-hover: #E4A37E;
+  --accent-contrast: #171009;        /* dark ink on the lifted accent */
+  --accent-soft: rgba(217, 142, 99, 0.14);
+  --accent-line: rgba(217, 142, 99, 0.5);
+  --accent-shadow: rgba(0, 0, 0, 0.5);
+  --ring: #E4A37E;
+
+  --bg-glass: rgba(36, 26, 18, 0.78);
+  --bg-glass-strong: rgba(23, 16, 9, 0.88);
+  --wash: rgba(242, 233, 221, 0.05);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --ambient-warm: rgba(217, 142, 99, 0.12);
+  --ambient-light: rgba(217, 142, 99, 0.06);
+  --inverse-surface: #120C07;
+  --inverse-text: #F2E9DD;
+  --success-line: rgba(140, 199, 158, 0.4);
+  --warning-line: rgba(232, 178, 92, 0.4);
+  --danger-line: rgba(240, 161, 154, 0.4);
+
+  --color-success: #8CC79E;
+  --color-success-hover: #A5D6B4;
+  --color-success-soft: rgba(140, 199, 158, 0.14);
+  --color-warning: #E8B25C;
+  --color-warning-soft: rgba(232, 178, 92, 0.14);
+  --color-error: #F0A19A;
+  --color-error-hover: #F5B8B2;
+  --color-error-soft: rgba(240, 161, 154, 0.14);
+  --color-info: #D98E63;
+  --accent-teal: #7FB8AE;
+  --accent-gold: #E8B25C;
+
+  --subject-physics: #8FB8DC;
+  --subject-chemistry: #E09A6A;
+  --subject-biology: #E4847B;
+  --subject-philosophy: #D9A284;
+  --subject-history: #E8B25C;
+  --subject-political-science: #C9B8A8;
+  --subject-mathematics: #7FB8AE;
+  --subject-psychology: #7BBE8F;
+  --subject-economics: #D9906E;
+
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
+/* An explicit "light" pick must win even while the OS is in dark mode.
+   The values are the :root defaults, restated here so the specificity of
+   this selector beats a previously applied dark block. */
 :root[data-theme='light'] {
-  --color-bg: #FAFAFA;
-  --color-text: #111111;
-  --color-text-muted: #666666;
-  --color-border: #E5E5E5;
+  --color-bg: #F6EFE4;
+  --color-text: #2C2118;
+  --color-text-muted: #6E5846;
+  --color-border: rgba(62, 39, 24, 0.14);
+
+  --bg-primary: #F6EFE4;
+  --bg-secondary: #F3EAE0;
+  --bg-tertiary: #F3E6D4;
+  --bg-elevated: #FFF9F1;
+  --bg-hover: #F3E6D4;
+  --bg-active: #EAD9C4;
+  --bg-overlay: rgba(44, 33, 24, 0.45);
+
+  --text-primary: #2C2118;
+  --text-secondary: #6E5846;
+  --text-tertiary: #77604C;
+  --text-inverse: #FFF8F1;
+
+  --border-subtle: rgba(62, 39, 24, 0.1);
+  --border-default: rgba(62, 39, 24, 0.14);
+  --border-strong: rgba(62, 39, 24, 0.24);
+
+  --accent-primary: #8C4A2F;
+  --accent-primary-hover: #6E3822;
+  --accent-contrast: #FFF8F1;
+  --accent-soft: rgba(140, 74, 47, 0.08);
+  --accent-line: rgba(140, 74, 47, 0.4);
+  --accent-shadow: rgba(140, 74, 47, 0.2);
+  --ring: #8C4A2F;
+
+  --bg-glass: rgba(255, 249, 241, 0.72);
+  --bg-glass-strong: rgba(246, 239, 228, 0.86);
+  --wash: rgba(62, 39, 24, 0.06);
+  --shadow-color: rgba(62, 39, 24, 0.1);
+  --ambient-warm: rgba(196, 122, 74, 0.18);
+  --ambient-light: rgba(232, 196, 154, 0.45);
+  --inverse-surface: #2C2118;
+  --inverse-text: #FFF8F1;
+  --success-line: rgba(47, 82, 56, 0.3);
+  --warning-line: rgba(138, 86, 32, 0.3);
+  --danger-line: rgba(163, 59, 50, 0.28);
+
+  --color-success: #2F5238;
+  --color-success-hover: #3F6B4A;
+  --color-success-soft: #EAF4EE;
+  --color-warning: #8A5620;
+  --color-warning-soft: #F6E3C8;
+  --color-error: #A33B32;
+  --color-error-hover: #842E27;
+  --color-error-soft: #FDF1F0;
+  --color-info: #8C4A2F;
+  --accent-teal: #3E6A62;
+  --accent-gold: #A56A2A;
+
+  --subject-physics: #1F4E79;
+  --subject-chemistry: #A85529;
+  --subject-biology: #A33B32;
+  --subject-philosophy: #6E3822;
+  --subject-history: #8A5620;
+  --subject-political-science: #4E3A2C;
+  --subject-mathematics: #3E6A62;
+  --subject-psychology: #2F5238;
+  --subject-economics: #8C4A2F;
+
+  --shadow-xs: 0 1px 3px rgba(62, 39, 24, 0.06);
+  --shadow-sm: 0 2px 8px rgba(62, 39, 24, 0.07);
+  --shadow-md: 0 4px 12px rgba(62, 39, 24, 0.11);
+  --shadow-lg: 0 8px 24px rgba(62, 39, 24, 0.14);
+  --shadow-hover: 0 4px 12px rgba(62, 39, 24, 0.11);
 }
