@@ -319,6 +319,195 @@ button.auth-link:hover span {
   background: var(--border-subtle);
 }
 
+/* ==================== MULTI-STEP FORM ==================== */
+.auth-card--multi-step {
+  max-width: 520px;
+}
+
+.step-indicator {
+  margin-bottom: var(--space-6);
+}
+
+.step-indicator-bar {
+  position: relative;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+}
+
+.step-indicator-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--accent-primary);
+  transition: width 300ms ease;
+}
+
+.step-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.step-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  transition: color 200ms ease;
+}
+
+.step-label.active {
+  color: var(--text-primary);
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  transition: all 200ms ease;
+}
+
+.step-label.active .step-number {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--text-inverse);
+}
+
+.step-text {
+  white-space: nowrap;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.step-heading {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  outline: none;
+}
+
+.step-heading:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.step-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.step-actions--two {
+  justify-content: space-between;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-strength-meter {
+  margin-top: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.strength-bar {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  height: 4px;
+}
+
+.strength-segment {
+  flex: 1;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  transition: background-color 200ms ease;
+}
+
+.strength-segment.filled {
+  background: var(--color-warning);
+}
+
+.strength-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.subject-selection-grid,
+.goal-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.subject-pill,
+.goal-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.subject-pill:hover,
+.goal-pill:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.subject-pill.selected,
+.goal-pill.selected {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.goal-selection-grid {
+  grid-template-columns: 1fr;
+}
+
+.goal-pill {
+  justify-content: flex-start;
+  min-height: 48px;
+  text-align: left;
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 480px) {
   .auth-container {
@@ -336,5 +525,17 @@ button.auth-link:hover span {
 
   .auth-card::before {
     margin-bottom: var(--space-6);
+  }
+
+  .subject-selection-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .step-text {
+    display: none;
+  }
+
+  .step-label {
+    justify-content: center;
   }
 }
