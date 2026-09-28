@@ -65,8 +65,8 @@ function App() {
     showToast('Welcome back. Pick up where your curiosity left off.', 'success');
   };
 
-  const handleRegister = (email, password, name) => {
-    setUser({ email, name });
+  const handleRegister = (email, password, name, phone, preferences) => {
+    setUser({ email, name, phone, preferences });
     showToast('Your account is ready. Welcome to VELORA.', 'success');
     // Show onboarding tour for new users
     let alreadyOnboarded = false;
