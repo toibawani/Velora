@@ -113,15 +113,15 @@ function LandingPage({ setScreen }) {
           </div>
 
           <h1 className="hero-headline">
-            Learning is<br />
-            <em className="hero-accent">exploration,</em><br />
-            not memorization.
+            Actually understand<br />
+            <em className="hero-accent">how things work,</em><br />
+            not just what to memorize.
           </h1>
 
           <p className="hero-subline">
-            A dictionary you can search, simulations you can push around, and
-            arguments you are allowed to disagree with. Physics through political
-            science, all the way across, at whatever pace you actually read at.
+            Physics simulations you can push around, a dictionary written for humans
+            instead of test-takers, and philosophy discussions where disagreement
+            is allowed. Nine subjects, at whatever pace you actually read.
           </p>
 
           <div className="hero-cta-row">
@@ -141,8 +141,8 @@ function LandingPage({ setScreen }) {
         <div className="hero-plates-copy">
           <p className="section-label">WHAT YOU GET</p>
           <h2 id="plate-field-title" className="hero-plates-heading">
-            A dictionary, a simulator, and an honest argument — for people who&rsquo;d
-            rather understand than be quizzed.
+            A dictionary, physics simulations you can nudge, and philosophy
+            discussions where you can actually disagree.
           </h2>
         </div>
         <StackSpread />
