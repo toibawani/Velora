@@ -1,9 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-<<<<<<< /Users/apple/velora/src/screens/Register.tsx
-import { Eye, EyeOff, ArrowLeft, ArrowRight, Check, X } from 'lucide-react';
-=======
 import { Eye, EyeOff, ArrowLeft, ArrowRight, Check } from 'lucide-react';
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/screens/Register.tsx
 import '../styles/Auth.css';
 
 /**
@@ -127,15 +123,8 @@ function Register({ setScreen, onRegister, showToast }: RegisterProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Step 3: Preferences
-<<<<<<< /Users/apple/velora/src/screens/Register.tsx
-  const [step3, setStep3] = useState<StepState>({
-    values: { subjects: '', learningGoals: '' },
-    errors: { subjects: '', learningGoals: '' },
-    touched: { subjects: false, learningGoals: false },
-  });
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/screens/Register.tsx
+  // Step 3: Preferences — selections live in dedicated arrays rather than a
+  // StepState bag, because these are multi-select chips, not text fields.
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
 

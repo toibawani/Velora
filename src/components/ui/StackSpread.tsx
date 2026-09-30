@@ -1,25 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-import { spring, SpringState, SpringConfig } from '../../utils/spring';
-=======
 import { advanceSpring, SpringState, SpringConfig } from '../../utils/spring';
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-import { advanceSpring, SpringState, SpringConfig } from '../../utils/spring';
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-import { advanceSpring, SpringState, SpringConfig } from '../../utils/spring';
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-import { advanceSpring, SpringState, SpringConfig } from '../../utils/spring';
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-import { advanceSpring, SpringState, SpringConfig } from '../../utils/spring';
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
 import '../../styles/ui/StackSpread.css';
 
 /**
@@ -93,31 +73,7 @@ const PLATES = [
   { file: 'prism.svg', subject: 'Optics', alt: 'A white beam entering a prism and leaving as a spread of separate colours.' },
   { file: 'orbit.svg', subject: 'Astronomy', alt: 'A planet on an elliptical path with the star sitting off-centre at one focus, and an arrow showing the direction of travel.' },
   { file: 'column.svg', subject: 'Philosophy', alt: 'A fluted column with a capital and a base, drawn as a simple outline.' },
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-  { file: 'manuscript.svg', subject: 'History', alt: 'A page of text with a reader's note marked in the margin.' },
-=======
   { file: 'manuscript.svg', subject: 'History', alt: 'A page of text with a reader\'s note marked in the margin.' },
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-  { file: 'manuscript.svg', subject: 'History', alt: 'A page of text with a reader\'s note marked in the margin.' },
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-  { file: 'manuscript.svg', subject: 'History', alt: 'A page of text with a reader\'s note marked in the margin.' },
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-  { file: 'manuscript.svg', subject: 'History', alt: 'A page of text with a reader\'s note marked in the margin.' },
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-  { file: 'manuscript.svg', subject: 'History', alt: 'A page of text with a reader\'s note marked in the margin.' },
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-  { file: 'manuscript.svg', subject: 'History', alt: 'A page of text with a reader\'s note marked in the margin.' },
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
   { file: 'helix.svg', subject: 'Biology', alt: 'Two strands crossing each other repeatedly and joined by short rungs.' },
   { file: 'lattice.svg', subject: 'Chemistry', alt: 'A grid of nine atoms joined by bonds, with the middle one picked out.' },
 ];
@@ -262,27 +218,7 @@ export default function StackSpread(_props: StackSpreadProps) {
   // Measure stage size
   useEffect(() => {
     const node = containerRef.current;
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-    if (!node) return;
-=======
     if (!node) return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    if (!node) return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    if (!node) return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    if (!node) return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    if (!node) return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
 
     const measure = () => {
       const rect = node.getBoundingClientRect();
@@ -296,26 +232,7 @@ export default function StackSpread(_props: StackSpreadProps) {
       observer.observe(node);
       return () => observer.disconnect();
     }
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-=======
     return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
-    return undefined;
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
   }, []);
 
   // Scroll tracking
@@ -375,104 +292,20 @@ export default function StackSpread(_props: StackSpreadProps) {
         const state = springStatesRef.current[index];
         const target = scrollProgressRef.current;
         
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-        // Apply spring physics
-        const newState = spring(
-          { value: state.value, velocity: state.velocity },
-          target,
-          SPRING_CONFIG,
-          deltaTime
-        );
-        
-        springStatesRef.current[index] = newState;
-        
-        // The transform value goes from 1 (at rest) to 0 (spread)
-        const t = 1 - newState.value;
-=======
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
         // Apply spring physics (mutates state in place)
         advanceSpring(state, target, SPRING_CONFIG, deltaTime);
         
         // The transform value goes from 1 (at rest) to 0 (spread)
         const t = 1 - state.value;
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
         
         return { x: 0, y: 0, r: t };
       });
 
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-      // Update pointer springs
-      const pointerState = spring(
-        pointerSpringRef.current,
-        targetPointerXRef.current,
-        POINTER_SPRING_CONFIG,
-        deltaTime
-      );
-      pointerSpringRef.current = pointerState;
-
-      const pointerYState = spring(
-        pointerYSpringRef.current,
-        targetPointerYRef.current,
-        POINTER_SPRING_CONFIG,
-        deltaTime
-      );
-      pointerYSpringRef.current = pointerYState;
-
-      setPointerOffset({ x: pointerState.value, y: pointerYState.value });
-=======
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
       // Update pointer springs (mutates in place)
       advanceSpring(pointerSpringRef.current, targetPointerXRef.current, POINTER_SPRING_CONFIG, deltaTime);
       advanceSpring(pointerYSpringRef.current, targetPointerYRef.current, POINTER_SPRING_CONFIG, deltaTime);
 
       setPointerOffset({ x: pointerSpringRef.current.value, y: pointerYSpringRef.current.value });
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
-<<<<<<< /Users/apple/velora/src/components/ui/StackSpread.tsx
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
-=======
->>>>>>> /Users/apple/.windsurf/worktrees/velora/velora-granite-boole/src/components/ui/StackSpread.tsx
       setTransforms(newTransforms);
 
       animationFrameRef.current = requestAnimationFrame(animate);
