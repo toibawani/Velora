@@ -73,11 +73,14 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
   if (existingTopic) {
     existingTopic.hours = parseFloat((existingTopic.hours + hours).toFixed(1));
   } else {
+    // No colour here on purpose. A hex written into localStorage outlives every
+    // palette change made in CSS, and the two branches that used to set one
+    // resolved to the same blue anyway. Which colour a bar wears is a rendering
+    // question, and the renderer answers it from the subject tokens.
     data.topicTimeDistribution.push({
       topic: topicName,
       hours: parseFloat(hours.toFixed(1)),
-      subject,
-      color: subject === 'physics' ? '#2563EB' : subject === 'philosophy' ? '#2563EB' : '#ff9f0a'
+      subject
     });
   }
   

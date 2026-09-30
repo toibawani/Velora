@@ -44,4 +44,14 @@ describe('analytics storage', () => {
     expect(recordStudySession('Stoicism', 15, 'philosophy')).toBe(true);
     expect(getAnalyticsData().topicTimeDistribution.some((item) => item.topic === 'Stoicism')).toBe(true);
   });
+
+  // A colour written here would be a hex that survives every later change to
+  // the palette, because localStorage does not re-read the stylesheet.
+  test('records what was studied and leaves the colour to the stylesheet', () => {
+    recordStudySession('Bayesian Updating', 30, 'philosophy');
+    const entry = getAnalyticsData().topicTimeDistribution.find((item) => item.topic === 'Bayesian Updating');
+    expect(entry.subject).toBe('philosophy');
+    expect(entry.hours).toBe(0.5);
+    expect(entry.color).toBeUndefined();
+  });
 });
