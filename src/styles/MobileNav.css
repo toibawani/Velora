@@ -124,6 +124,15 @@
   transition: all var(--duration-fast) var(--ease-standard);
   font-family: var(--font-sans);
   position: relative;
+
+  /* The gap lives here rather than as a margin on each icon: the icons came
+     from two different code paths, one inline-styled and one not, so they did
+     not line up with each other. One row layout makes the labels line up on
+     every entry, including a long translated label that wraps. */
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
 }
 
 .mobile-nav-item:hover {
@@ -151,6 +160,10 @@
   margin: var(--space-4);
   border-radius: var(--radius-md);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   font-weight: var(--weight-semibold);
   font-family: var(--font-sans);
   font-size: 0.9375rem;

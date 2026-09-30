@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut } from 'lucide-react';
+import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut, Gamepad2, Trophy } from 'lucide-react';
 import '../styles/MobileNav.css';
 
 function MobileNav({ currentScreen, setScreen, onLogout }) {
@@ -10,10 +10,10 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
     { name: 'Home', screen: 'universe', icon: Home },
     { name: 'Learn', screen: 'learn', icon: BookOpen },
     { name: 'Curious Dictionary', screen: 'dictionary', icon: BookText },
-    { name: 'Flow Games', screen: 'games', icon: () => '🎮' },
+    { name: 'Flow Games', screen: 'games', icon: Gamepad2 },
     { name: 'Analytics', screen: 'analytics', icon: BarChart3 },
     { name: 'Community', screen: 'community', icon: Users },
-    { name: 'Challenges', screen: 'challenges', icon: () => '🏆' },
+    { name: 'Challenges', screen: 'challenges', icon: Trophy },
   ];
 
   // Close nav on escape key
@@ -93,7 +93,6 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
         <nav className="mobile-nav-list" aria-label="Main navigation">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isEmoji = typeof Icon === 'function' && Icon().length === 1;
             return (
               <button
                 key={item.screen}
@@ -101,11 +100,7 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
                 onClick={() => handleNavClick(item.screen)}
                 aria-current={currentScreen === item.screen ? 'page' : undefined}
               >
-                {isEmoji ? (
-                  <span style={{ marginRight: '12px', fontSize: '1.25rem' }}>{Icon()}</span>
-                ) : (
-                  <Icon size={20} strokeWidth={2} style={{ marginRight: '12px' }} />
-                )}
+                <Icon size={20} strokeWidth={2} aria-hidden="true" />
                 {item.name}
               </button>
             );
@@ -118,7 +113,7 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
             onClick={handleLogout}
             aria-label="Log out"
           >
-            <LogOut size={20} strokeWidth={2} style={{ marginRight: '8px' }} />
+            <LogOut size={20} strokeWidth={2} />
             Logout
           </button>
         )}
