@@ -252,6 +252,30 @@
   height: 100%;
   border-radius: var(--radius-xs);
   transition: width var(--duration-normal) var(--ease-standard);
+
+  /* The colour used to be written inline per bar, in hexes from a palette that
+     is not this one. A bar with no colour of its own is a bar that follows the
+     theme, which is the only reason the dark theme works on this screen. */
+  background: var(--accent-primary);
+}
+
+/* Flow-state work is the one style the screen singles out, and gold is the
+   token for it rather than the orange the inline style carried. */
+.style-item--flow .bar-fill {
+  background: var(--accent-gold);
+}
+
+.style-name {
+  /* The label carries an icon now, so the row is flex and the icon stops
+     itself from shrinking when a subject name runs long. */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.style-name > svg {
+  flex-shrink: 0;
 }
 
 .recommendation-pill {
@@ -262,6 +286,15 @@
   font-size: 0.8125rem;
   line-height: var(--leading-normal);
   color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.recommendation-pill > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent-gold);
 }
 
 /* Peak Hours Grid */
@@ -312,6 +345,15 @@
   font-size: 0.8125rem;
   color: var(--text-secondary);
   line-height: var(--leading-normal);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.peak-tip > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--text-muted);
 }
 
 /* Domain Time Distribution */
@@ -392,6 +434,15 @@
   font-size: 0.8125rem;
   line-height: var(--leading-normal);
   color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.struggle-remedy-text > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent-primary);
 }
 
 /* Footer Actions */

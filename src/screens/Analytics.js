@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Shield, Palette, BookOpen, Zap, Lightbulb, Clock, Target } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import { trackEvent } from '../utils/analytics';
 import '../styles/Analytics.css';
@@ -29,7 +30,7 @@ function Analytics({ setScreen, user }) {
         </button>
         <h1 className="analytics-brand-title">Personal Learning Analytics</h1>
         <div className="analytics-privacy-badge">
-          <span className="shield-icon">🛡️</span>
+          <Shield size={14} aria-hidden="true" />
           <span>100% On-Device & Private</span>
         </div>
       </header>
@@ -98,37 +99,40 @@ function Analytics({ setScreen, user }) {
               <div className="style-bars-list">
                 <div className="style-item">
                   <div className="style-header-row">
-                    <span className="style-name">🎨 Visual & Spatial (Canvas, SVG diagrams)</span>
+                    <span className="style-name"><Palette size={14} aria-hidden="true" /> Visual & Spatial (Canvas, SVG diagrams)</span>
                     <span className="style-pct">{analytics.learningStyle.visual}%</span>
                   </div>
                   <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.visual}%`, background: '#2563EB' }}></div>
+                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.visual}%` }}></div>
                   </div>
                 </div>
 
                 <div className="style-item">
                   <div className="style-header-row">
-                    <span className="style-name">📖 Textual & Conceptual (Articles, Notes)</span>
+                    <span className="style-name"><BookOpen size={14} aria-hidden="true" /> Textual & Conceptual (Articles, Notes)</span>
                     <span className="style-pct">{analytics.learningStyle.textual}%</span>
                   </div>
                   <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.textual}%`, background: '#2563EB' }}></div>
+                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.textual}%` }}></div>
                   </div>
                 </div>
 
-                <div className="style-item">
+                <div className="style-item style-item--flow">
                   <div className="style-header-row">
-                    <span className="style-name">⚡ Flow-State & Interactive (Scrabble, Chains)</span>
+                    <span className="style-name"><Zap size={14} aria-hidden="true" /> Flow-State & Interactive (Scrabble, Chains)</span>
                     <span className="style-pct">{analytics.learningStyle.interactive}%</span>
                   </div>
                   <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.interactive}%`, background: '#ff9f0a' }}></div>
+                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.interactive}%` }}></div>
                   </div>
                 </div>
               </div>
 
               <div className="recommendation-pill">
-                {hasActivity ? <>💡 <strong>Pattern forming:</strong> Keep exploring and revisit this page after a few real sessions.</> : <>💡 <strong>Start with one question:</strong> Read a lesson, then let your activity build the first baseline.</>}
+                <Lightbulb size={14} aria-hidden="true" />
+                <span>
+                  {hasActivity ? <><strong>Pattern forming:</strong> Keep exploring and revisit this page after a few real sessions.</> : <><strong>Start with one question:</strong> Read a lesson, then let your activity build the first baseline.</>}
+                </span>
               </div>
             </div>
 
@@ -163,7 +167,10 @@ function Analytics({ setScreen, user }) {
               </div>
 
               <p className="peak-tip">
-                {hasActivity ? <>🕒 <strong>Pattern forming:</strong> Your best learning time will appear after more sessions.</> : <>🕒 <strong>No best time yet:</strong> Your activity is still too small to identify a pattern.</>}
+                <Clock size={14} aria-hidden="true" />
+                <span>
+                  {hasActivity ? <><strong>Pattern forming:</strong> Your best learning time will appear after more sessions.</> : <><strong>No best time yet:</strong> Your activity is still too small to identify a pattern.</>}
+                </span>
               </p>
             </div>
           </div>
@@ -176,8 +183,8 @@ function Analytics({ setScreen, user }) {
               <p className="card-subhead">Total dedicated study distribution across topics.</p>
 
               <div className="topic-dist-list">
-                {analytics.topicTimeDistribution.length === 0 ? <p className="analytics-empty-note">No topic distribution yet. Open a lesson to start building it.</p> : analytics.topicTimeDistribution.map((item, idx) => (
-                  <div key={idx} className="topic-dist-item">
+                {analytics.topicTimeDistribution.length === 0 ? <p className="analytics-empty-note">No topic distribution yet. Open a lesson to start building it.</p> : analytics.topicTimeDistribution.map((item) => (
+                  <div key={item.topic} className="topic-dist-item">
                     <div className="dist-title-row">
                       <span className="dist-topic-name">{item.topic}</span>
                       <span className="dist-hours">{item.hours} hrs</span>
@@ -187,7 +194,11 @@ function Analytics({ setScreen, user }) {
                         className="bar-fill"
                         style={{
                           width: `${Math.min((item.hours / 8) * 100, 100)}%`,
-                          background: item.color || '#2563EB'
+                          // Asked of the subject identity rather than carried in
+                          // from the record: a learner who has saved sessions
+                          // since the colour lived in storage still gets the
+                          // palette that is current today.
+                          background: `var(--subject-${item.subject}, var(--accent-primary))`
                         }}
                       ></div>
                     </div>
@@ -204,8 +215,8 @@ function Analytics({ setScreen, user }) {
               </p>
 
               <div className="struggle-items-list">
-                {analytics.struggledConcepts.length === 0 ? <p className="analytics-empty-note">No reinforcement notes yet. That is a good baseline, not a failure.</p> : analytics.struggledConcepts.map((item, idx) => (
-                  <div key={idx} className="struggle-card-item">
+                {analytics.struggledConcepts.length === 0 ? <p className="analytics-empty-note">No reinforcement notes yet. That is a good baseline, not a failure.</p> : analytics.struggledConcepts.map((item) => (
+                  <div key={`${item.concept}-${item.topic}`} className="struggle-card-item">
                     <div className="struggle-badge-row">
                       <span className="struggle-concept-title">{item.concept}</span>
                       <span className={`struggle-level-tag ${item.struggleLevel.toLowerCase()}`}>
@@ -214,7 +225,8 @@ function Analytics({ setScreen, user }) {
                     </div>
                     <span className="struggle-topic-meta">Domain: {item.topic}</span>
                     <p className="struggle-remedy-text">
-                      🎯 {item.recommendation}
+                      <Target size={14} aria-hidden="true" />
+                      <span>{item.recommendation}</span>
                     </p>
                   </div>
                 ))}
