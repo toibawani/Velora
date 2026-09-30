@@ -8,10 +8,21 @@
 /* ==================== ROOT ==================== */
 .landing-page {
   min-height: 100vh;
-  background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
+
+  /* The glow goes on the background layer rather than on .landing-hero
+     itself: the hero is capped at 1200px, so a gradient painted there ends
+     abruptly at the container edge on a wide screen. Background layers also
+     sit below all content by definition, which a positioned pseudo-element
+     would not - it would paint over the headline it is meant to sit behind.
+     The size pins the glow to the top band so it does not tint the footer. */
+  background-color: var(--bg-primary);
+  background-image: var(--hero-glow);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% 860px;
 }
 
 /* ==================== NAVBAR ==================== */

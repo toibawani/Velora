@@ -54,6 +54,32 @@
   --bg-active: #EAD9C4;
   --bg-overlay: rgba(44, 33, 24, 0.45); /* scrims behind drawers & modals */
 
+  /* ---- Atmosphere ----
+     A flat colour field reads like a screenshot. The cream surfaces are meant
+     to read like paper, and the difference between those two is a grain you
+     notice only when it is missing.
+
+     The tile is an inline SVG rather than a file: no extra request, nothing
+     to 404 in production, and it survives a cache purge. Desaturated with a
+     colour matrix because raw feTurbulence comes out in iridescent colour,
+     which is the opposite of paper.
+
+     Keep the alpha low. Past roughly 0.06 the grain stops being a surface and
+     becomes an object on the page that then has to be contrast-checked. */
+  --texture-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  --texture-paper-alpha: 0.05;
+
+  /* The hero is the one surface allowed to be lit rather than merely
+     coloured. Two off-axis warm glows, low opacity, so the eye arrives at the
+     headline from a direction instead of a uniform wash. These are the only
+     places in the system where a colour is written out instead of referenced,
+     because a glow is not a theme role - it is this lighting, on this panel,
+     and the dark theme needs its own cooler ember rather than a brighter
+     version of the same one. */
+  --hero-glow:
+    radial-gradient(58rem 38rem at 14% -12%, rgba(168, 85, 41, 0.17), transparent 62%),
+    radial-gradient(44rem 30rem at 86% 4%, rgba(165, 106, 42, 0.11), transparent 58%);
+
   /* ---- Text ---- */
   --text-primary: #2C2118;   /* 13.7:1 on page */
   --text-secondary: #6E5846; /* 5.8:1 on page */
@@ -187,6 +213,16 @@
   --bg-hover: #2F2318;
   --bg-active: #38291D;
   --bg-overlay: rgba(0, 0, 0, 0.62);
+
+  /* Dark theme atmosphere. The grain needs to be a touch stronger than in the
+     light theme - black noise over a near-black ground is invisible, so the
+     tile is doing its work at the highlights - and the hero glow is a dimmer,
+     tighter ember. The same 17% sienna that reads as warm daylight on cream
+     reads as a smear on espresso. */
+  --texture-paper-alpha: 0.07;
+  --hero-glow:
+    radial-gradient(56rem 36rem at 14% -12%, rgba(214, 118, 64, 0.13), transparent 60%),
+    radial-gradient(42rem 28rem at 86% 4%, rgba(122, 92, 58, 0.16), transparent 56%);
 
   --text-primary: #F2E9DD;   /* 15.6:1 on page */
   --text-secondary: #C4B09B; /* 8.6:1 on page */

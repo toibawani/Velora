@@ -10,6 +10,26 @@
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
+  position: relative;
+}
+
+/* Paper. The grain has to be its own layer rather than a background-image on
+   the console, because the opacity needs to come from the token, and CSS
+   cannot fade a background-image on its own - the fade would have to be baked
+   into the tile, which would then be one fixed alpha for both themes.
+   z-index: -1 puts it above the console's own background and below its
+   content, so the grain is only ever visible on the bare page ground. Cards
+   and text sit on top unfiltered, which is the whole point: the surface is
+   textured, the ink is not. */
+.dictionary-console::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--texture-paper);
+  background-repeat: repeat;
+  opacity: var(--texture-paper-alpha);
+  pointer-events: none;
 }
 
 /* Navbar */
