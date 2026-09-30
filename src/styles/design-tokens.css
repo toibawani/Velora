@@ -15,14 +15,22 @@
    ========================================================================== */
 
 :root {
-  /* ---- Typography ---- */
-  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-ui:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-reading: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-  --font-display: 'Fraunces', 'Source Serif 4', Georgia, serif;
+  /* ---- Typography ----
+     Two families. Fraunces is the display face and takes the headings; Source
+     Sans 3 is the workhorse behind body copy, UI labels, and anything in a
+     form. Inter used to be named here but was never actually loaded, so every
+     one of these silently fell through to the operating system's default sans
+     - which is a large part of why the app read as generic. */
+  --font-body:    'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans:    'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-ui:      'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Long-form reading is Source Sans 3 too now. The token stays so existing
+     feature CSS does not point at nothing. */
+  --font-reading: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-mono:    'SF Mono', 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
 
+  --weight-light: 300;
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;

@@ -16,7 +16,7 @@ body,
 }
 
 body {
-  font-family: var(--font-reading) !important;
+  font-family: var(--font-body) !important;
 }
 
 button:focus-visible,

@@ -15,7 +15,31 @@
 body {
   background-color: var(--bg-main) !important;
   color: var(--text-primary) !important;
-  font-family: var(--font-reading);
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+}
+
+/* Headings belong to Fraunces everywhere, not only on screens that happen to
+   ask for it. The weights are deliberately far apart from body text: a 400
+   against a 600 of a different family does not read as contrast, but 400
+   against 900 does. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+h1 {
+  font-weight: var(--weight-black);
+}
+
+/* Italic display accents (the emphasized word in the hero headline) want
+   Fraunces' own italic rather than the browser's slanted approximation. */
+h1 em, h2 em, h3 em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-bold);
 }
 
 /* Layout containers inherit the page instead of painting a second surface. */
@@ -30,7 +54,11 @@ button {
   border-radius: 999px !important;
   border: none !important;
   padding: 10px 18px !important;
-  font-weight: 560 !important;
+  font-family: var(--font-ui);
+  /* Was 560, which is not a weight this app loads. Source Sans 3 ships static
+     instances at 300/400/600/700, so 560 resolved to 600 anyway - ask for the
+     weight that actually gets drawn. */
+  font-weight: var(--weight-semibold) !important;
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
