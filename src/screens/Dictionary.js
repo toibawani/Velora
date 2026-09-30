@@ -1,6 +1,12 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
-import { DICTIONARY_SUBJECTS, CURIOUS_TERMS } from '../data/dictionaryIndex';
+import {
+  CURIOUS_TERMS,
+  DICTIONARY_SUBJECTS,
+  countTermsByLetter,
+  countTermsBySubject,
+  selectTerms,
+} from '../data/dictionary';
 import '../styles/Dictionary.css';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -34,44 +40,24 @@ function Dictionary({ setScreen }) {
     };
   }, []);
 
-  // Cross-subject search and filtering
-  const filteredTerms = useMemo(() => {
-    return CURIOUS_TERMS.filter((item) => {
-      // 1. Cross-subject global search
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase().trim();
-        const matchesTerm = item.term.toLowerCase().includes(query);
-        const matchesTagline = item.tagline.toLowerCase().includes(query);
-        const matchesExplanation = item.explanation.toLowerCase().includes(query);
-        const matchesExample = item.example.toLowerCase().includes(query);
-        const matchesSubject = item.subject.toLowerCase().includes(query);
-        if (!matchesTerm && !matchesTagline && !matchesExplanation && !matchesExample && !matchesSubject) {
-          return false;
-        }
-      }
+  // Cross-subject search and filtering. The rules live in the data module so
+  // the counts shown on the letter bar and the subject rail are computed from
+  // the same logic that decides what this list contains - when they are written
+  // twice they drift, and the drift shows up as a pill that says 7 and a list
+  // that holds 6.
+  const filteredTerms = useMemo(
+    () => selectTerms({ query: searchQuery, subject: selectedSubject, letter: selectedLetter }),
+    [searchQuery, selectedSubject, selectedLetter]
+  );
 
-      // 2. Subject filter
-      if (selectedSubject !== 'all' && item.subject !== selectedSubject) {
-        return false;
-      }
-
-      // 3. A-to-Z letter index
-      if (selectedLetter !== 'ALL' && item.letter !== selectedLetter) {
-        return false;
-      }
-
-      return true;
-    }).sort((a, b) => a.term.localeCompare(b.term));
-  }, [searchQuery, selectedSubject, selectedLetter]);
-
-  // How many terms sit under each letter, so the bar can say what a click
-  // will produce instead of leaving people to click and find out.
+  // How many terms sit under each letter, so the bar can say what a click will
+  // produce instead of leaving people to click and find out. Keyed on the
+  // subject only: typing in the search box must not grey out letters, because
+  // the bar indexes the dictionary, not the current result set.
   const letterCounts = useMemo(() => {
     const counts = {};
-    CURIOUS_TERMS.forEach((item) => {
-      if (selectedSubject === 'all' || item.subject === selectedSubject) {
-        counts[item.letter] = (counts[item.letter] || 0) + 1;
-      }
+    ALPHABET.forEach((char) => {
+      counts[char] = countTermsByLetter(char, selectedSubject);
     });
     return counts;
   }, [selectedSubject]);
@@ -131,9 +117,7 @@ function Dictionary({ setScreen }) {
           <div className="dict-subject-scroll">
             {DICTIONARY_SUBJECTS.map((sub) => {
               const isActive = selectedSubject === sub.id;
-              const count = sub.id === 'all'
-                ? CURIOUS_TERMS.length
-                : CURIOUS_TERMS.filter((t) => t.subject === sub.id).length;
+              const count = countTermsBySubject(sub.id);
               return (
                 <button
                   key={sub.id}
