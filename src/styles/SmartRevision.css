@@ -162,3 +162,28 @@
     padding: var(--space-5);
   }
 }
+/* ---- Review list entrance ------------------------------------------------
+   Rows stagger in via animation-delay set in the component. Hover lift is a
+   plain transition, so it stays cheap on a mid-range phone. */
+@keyframes revision-row-enter {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.revision-item {
+  animation: revision-row-enter 180ms var(--ease-standard) both;
+  transition: border-color var(--duration-normal) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard);
+}
+
+.revision-item:hover {
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revision-item {
+    animation: none;
+    transition: none;
+  }
+  .revision-item:hover { transform: none; }
+}

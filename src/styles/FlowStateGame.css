@@ -478,3 +478,21 @@
   display: flex;
   justify-content: flex-end;
 }
+/* ---- Panel transitions ---------------------------------------------------
+   FlowStateGame used to lean on AnimatePresence for the fade between the
+   start, playing, and complete screens. Only one panel is ever mounted, so
+   all that was needed was an entrance: the panels carry distinct keys, which
+   makes React build a fresh node on each state change, and a fresh node
+   replays this animation. */
+@keyframes flow-panel-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.flow-panel {
+  animation: flow-panel-enter 200ms var(--ease-standard) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-panel { animation: none; }
+}

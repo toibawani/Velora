@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import {
   Target,
   Type,
@@ -179,14 +178,10 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
 
   return (
     <div className="flow-game-container">
-      <AnimatePresence mode="wait">
         {gameState === 'start' && (
-          <motion.div
+          <div
             key="start"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="flow-panel"
             style={{ width: '100%' }}
           >
             <header className="flow-nav-header">
@@ -242,16 +237,13 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                 </button>
               </div>
             </main>
-          </motion.div>
+          </div>
         )}
 
         {gameState === 'playing' && (
-          <motion.div
+          <div
             key="playing"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="flow-panel"
             style={{ width: '100%' }}
           >
             <header className="flow-playing-header">
@@ -439,16 +431,13 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                 </div>
               )}
             </main>
-          </motion.div>
+          </div>
         )}
 
         {gameState === 'complete' && (
-          <motion.div
+          <div
             key="complete"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="flow-panel"
             style={{ width: '100%' }}
           >
             <header className="flow-nav-header">
@@ -555,9 +544,8 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                 </div>
               </div>
             </main>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
       {/* Share Achievement Modal */}
       <ShareAchievementModal

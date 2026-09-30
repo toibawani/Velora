@@ -66,3 +66,17 @@
 .velora-empty-action:active {
   transform: scale(0.98);
 }
+
+/* Replaces the old motion/react entrance. */
+@keyframes empty-state-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.velora-empty-state {
+  animation: empty-state-enter 200ms var(--ease-standard) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .velora-empty-state { animation: none; }
+}

@@ -71,13 +71,15 @@
 }
 
 .velora-stat-trend.positive {
-  background: rgba(21, 128, 61, 0.1);
-  color: var(--accent-green);
+  /* Was a hardcoded green tint, which stayed a bright green wash over the
+     dark surface. --color-success-soft is already tuned per theme. */
+  background: var(--color-success-soft);
+  color: var(--color-success);
 }
 
 .velora-stat-trend.warning {
-  background: rgba(217, 119, 6, 0.1);
-  color: var(--accent-orange);
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
 }
 
 .velora-stat-trend.neutral {
@@ -90,4 +92,84 @@
   font-size: 0.8125rem;
   color: var(--text-tertiary);
   line-height: var(--leading-normal);
+}
+
+/* ---- Enter animation -----------------------------------------------------
+   Replaces motion/react's initial/animate pair. Keyed off mount, so it runs
+   once when a card appears rather than on every repaint. */
+@keyframes stat-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.velora-stat-card {
+  animation: stat-card-enter 180ms var(--ease-standard) both;
+}
+
+/* ---- Loading skeleton ----------------------------------------------------
+   The bars are fixed-size, and the card keeps its own min-height, so the real
+   numbers arriving does not move anything on the page. */
+.velora-stat-card.is-loading {
+  min-height: 116px;
+  animation: none;
+}
+
+.skeleton-bar {
+  display: block;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 0%,
+    var(--bg-active) 45%,
+    var(--bg-tertiary) 90%
+  );
+  background-size: 220% 100%;
+  animation: skeleton-sweep 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-sweep {
+  from { background-position: 120% 0; }
+  to   { background-position: -120% 0; }
+}
+
+.skeleton-bar--label { width: 46%; height: 11px; }
+.skeleton-bar--value { width: 38%; height: 30px; }
+.skeleton-bar--desc  { width: 72%; height: 10px; }
+
+/* ---- When the card is a button ------------------------------------------
+   index.css paints every button as a filled sienna pill. This is a card that
+   happens to be clickable, so it has to opt out of that. */
+button.velora-stat-card {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-5) var(--space-6) !important;
+  font-family: var(--font-body);
+  text-align: left;
+  width: 100%;
+}
+
+button.velora-stat-card:hover {
+  background: var(--bg-hover) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+button.velora-stat-card:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .velora-stat-card,
+  .skeleton-bar {
+    animation: none;
+  }
 }

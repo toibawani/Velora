@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
 import { Calendar, RotateCcw, Lightbulb } from 'lucide-react';
 import EmptyState from './EmptyState';
 import '../styles/SmartRevision.css';
@@ -37,20 +36,21 @@ function SmartRevision({ selectedSubject }) {
         <EmptyState
           icon="📚"
           title="No reviews scheduled"
-          description="Complete topics and exercises to unlock cognitive spaced retrieval intervals."
-          actionText="Start Learning"
-          action={() => {}}
+          description="Finish a few topics and the planner will start scheduling retrieval practice for them."
+          actionLabel="Start Learning"
+          onAction={() => {}}
         />
       ) : (
         <div className="revision-list">
+          {/* Each row carries its own animation-delay, so the list arrives top
+              to bottom instead of all at once. Capped at eight rows: past that
+              the last item is waiting on a timer and it stops feeling like
+              motion and starts feeling like lag. */}
           {revisions.map((rev, idx) => (
-            <motion.div
+            <div
               key={idx}
               className="revision-item"
-              initial={{ opacity: 0, y: 3 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.18, delay: idx * 0.04, ease: 'easeOut' }}
+              style={idx < 8 ? { animationDelay: `${idx * 45}ms` } : undefined}
             >
               <div className="revision-info">
                 <h4 className="revision-topic">{rev.topic}</h4>
@@ -88,7 +88,7 @@ function SmartRevision({ selectedSubject }) {
                 <RotateCcw size={13} strokeWidth={1.5} />
                 <span>Review</span>
               </button>
-            </motion.div>
+            </div>
           ))}
         </div>
       )}

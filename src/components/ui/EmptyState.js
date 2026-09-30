@@ -1,11 +1,13 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { HelpCircle } from 'lucide-react';
 import '../../styles/ui/EmptyState.css';
 
 /**
- * EmptyState — Humanized empty state container (21st.dev/shadcn compatible).
- * Replaces jarring blank spaces with informative guidance and actionable cues.
+ * Shown when a list has nothing in it yet, so the screen reads as "nothing
+ * here yet" instead of "broken".
+ *
+ * The enter animation is a CSS keyframe in EmptyState.css. It used to come
+ * from motion/react, which is not a dependency of this project.
  */
 export function EmptyState({
   icon: Icon = HelpCircle,
@@ -16,14 +18,9 @@ export function EmptyState({
   className = ''
 }) {
   return (
-    <motion.div
-      className={`velora-empty-state ${className}`}
-      initial={{ opacity: 0, y: 4 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-    >
+    <div className={`velora-empty-state ${className}`.trim()}>
       <div className="velora-empty-icon-wrapper">
-        <Icon size={28} strokeWidth={1.5} color="var(--color-accent)" />
+        <Icon size={28} strokeWidth={1.5} color="var(--accent-primary)" />
       </div>
 
       <h3 className="velora-empty-title">{title}</h3>
@@ -34,7 +31,7 @@ export function EmptyState({
           {actionLabel}
         </button>
       )}
-    </motion.div>
+    </div>
   );
 }
 

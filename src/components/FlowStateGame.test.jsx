@@ -1,23 +1,7 @@
-// The start screen and the session are swapped inside AnimatePresence with
-// mode="wait", so the incoming screen only mounts once the outgoing exit
-// animation has run to completion. jsdom never runs those frames, so the
-// component is stubbed down to plain elements here. Without this the state
-// updates correctly and the DOM never changes, which looks exactly like a
-// broken component and is not one.
-jest.mock('motion/react', () => ({
-  AnimatePresence: ({ children }) => <div>{children}</div>,
-  motion: new Proxy(
-    {},
-    {
-      get:
-        () =>
-        ({ children, ...props }) => {
-          const { animate, initial, exit, transition, ...rest } = props;
-          return <div {...rest}>{children}</div>;
-        },
-    }
-  ),
-}));
+// FlowStateGame no longer pulls in an animation library, so there is nothing
+// left to stub here. It used to mock motion/react because AnimatePresence
+// would not mount the next panel until jsdom ran an exit animation it never
+// runs; the panels are plain keyed divs now and mount immediately.
 
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
