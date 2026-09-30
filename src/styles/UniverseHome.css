@@ -12,7 +12,7 @@
     radial-gradient(700px 380px at 100% 0%, var(--ambient-light), transparent 55%),
     var(--bg-primary);
   color: var(--text-primary);
-  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-family: var(--font-body);
 }
 
 .universe-home * { box-sizing: border-box; }
@@ -44,7 +44,7 @@
 
 .universe-home .border-b { border-bottom-style: solid; }
 .universe-home .border-\[\#3E2718\]\/10 { border-color: var(--border-default); }
-.universe-home .font-serif { font-family: "Fraunces", "Source Serif 4", Georgia, serif; }
+.universe-home .font-serif { font-family: var(--font-display); }
 .universe-home .text-2xl { font-size: clamp(2rem, 4vw, 3.1rem); }
 .universe-home .font-light { font-weight: 460; }
 .universe-home .tracking-wide { letter-spacing: -0.035em; }
@@ -60,7 +60,7 @@
 .universe-home .hover\:border-\[\#8C4A2F\]\/40:hover { border-color: var(--accent-line); }
 .universe-home .bg-\[\#8C4A2F\] { background: var(--accent-primary) !important; color: var(--accent-contrast) !important; }
 .universe-home .hover\:bg-\[\#6E3822\]:hover { background: var(--accent-primary-hover) !important; }
-.universe-home .font-medium { font-weight: 560; }
+.universe-home .font-medium { font-weight: var(--weight-semibold); }
 .universe-home .shadow-lg { box-shadow: 0 14px 30px var(--shadow-color); }
 
 .uh-header {
@@ -96,15 +96,15 @@
   border-radius: 14px;
   background: var(--inverse-surface);
   color: var(--inverse-text);
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 560;
+  font-weight: var(--weight-semibold);
 }
 .uh-brand > span:last-child { display: grid; gap: 1px; }
 .uh-brand strong {
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 0.95rem;
-  font-weight: 560;
+  font-weight: var(--weight-semibold);
   letter-spacing: 0.16em;
 }
 .uh-brand small { color: var(--text-tertiary); font-size: 0.72rem; font-style: italic; letter-spacing: 0; }
@@ -154,7 +154,7 @@
 .uh-eyebrow {
   margin: 0 0 0.85rem;
   color: var(--accent-primary) !important;
-  font-family: "Source Serif 4", Georgia, serif;
+  font-family: var(--font-body);
   font-size: 0.78rem;
   font-weight: 650;
   font-style: italic;
@@ -166,7 +166,7 @@
   max-width: 11ch;
   margin: 0;
   color: var(--text-primary);
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(3.4rem, 7vw, 6.4rem);
   font-weight: 500;
   letter-spacing: -0.045em;
@@ -203,7 +203,7 @@
 .uh-hero-index dl { display: grid; gap: 0; margin: 0.85rem 0 0.4rem; }
 .uh-hero-index dl div { display: flex; align-items: baseline; justify-content: space-between; padding: 0.72rem 0; border-bottom: 1px solid var(--border-subtle); }
 .uh-hero-index dt { color: var(--text-secondary); font-size: 0.95rem; }
-.uh-hero-index dd { margin: 0; color: var(--text-primary); font-family: "Fraunces", Georgia, serif; font-size: 1.85rem; font-weight: 520; }
+.uh-hero-index dd { margin: 0; color: var(--text-primary); font-family: var(--font-display); font-size: 1.85rem; font-weight: var(--weight-semibold); }
 .uh-hero-index > p:last-child { margin: 0.85rem 0 0; color: var(--text-tertiary); font-size: 0.84rem; font-style: italic; }
 
 .uh-atlas-section { scroll-margin-top: 96px; }
@@ -218,7 +218,7 @@
 .uh-section-heading-row h2 {
   margin: 0;
   color: var(--text-primary);
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--font-display);
   font-weight: 500;
   letter-spacing: -0.04em;
   line-height: 1.02;
@@ -331,9 +331,9 @@
 .uh-field-header h3 {
   margin: 0;
   color: var(--text-primary);
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(2.6rem, 5vw, 4.4rem);
-  font-weight: 520;
+  font-weight: var(--weight-semibold);
   letter-spacing: -0.045em;
   line-height: 0.94;
 }
@@ -371,9 +371,9 @@
 .uh-discipline-trigger > span { display: grid; gap: 2px; }
 .uh-discipline-trigger strong {
   color: var(--text-primary);
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 1.45rem;
-  font-weight: 520;
+  font-weight: var(--weight-semibold);
   letter-spacing: -0.03em;
 }
 .uh-discipline-trigger small { color: var(--text-tertiary); font-size: 0.82rem; }
@@ -450,9 +450,9 @@
 .uh-topic-preview h2 {
   margin: 0;
   color: var(--inverse-text);
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-  font-weight: 520;
+  font-weight: var(--weight-semibold);
   letter-spacing: -0.04em;
   line-height: 0.98;
 }
@@ -461,7 +461,7 @@
 .uh-topic-preview > button:hover { background: var(--inverse-text) !important; }
 
 .uh-method-section { display: grid; grid-template-columns: minmax(220px, 0.7fr) 1.3fr; gap: 2.5rem; padding: 3.5rem 0.2rem 0; }
-.uh-method-section h2 { max-width: 12ch; margin: 0; color: var(--text-primary); font-family: "Fraunces", Georgia, serif; font-weight: 520; letter-spacing: -0.04em; line-height: 1.02; }
+.uh-method-section h2 { max-width: 12ch; margin: 0; color: var(--text-primary); font-family: var(--font-display); font-weight: var(--weight-semibold); letter-spacing: -0.04em; line-height: 1.02; }
 .uh-method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
 .uh-method-grid article {
   padding: 1.15rem 1.05rem 1.2rem;
@@ -469,8 +469,8 @@
   border: 1px solid var(--border-subtle);
   border-radius: 22px;
 }
-.uh-method-grid article > span { color: var(--accent-primary); font-family: "Fraunces", Georgia, serif; font-size: 0.95rem; font-style: italic; }
-.uh-method-grid h3 { margin: 1.4rem 0 0.4rem; color: var(--text-primary); font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; font-weight: 540; }
+.uh-method-grid article > span { color: var(--accent-primary); font-family: var(--font-display); font-size: 0.95rem; font-style: italic; }
+.uh-method-grid h3 { margin: 1.4rem 0 0.4rem; color: var(--text-primary); font-family: var(--font-display); font-size: 1.25rem; font-weight: var(--weight-semibold); }
 .uh-method-grid p { margin: 0; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; }
 
 .uh-footer {
@@ -482,8 +482,8 @@
   justify-content: space-between;
   color: var(--text-tertiary);
 }
-.uh-footer span { color: var(--text-tertiary); font-family: "Fraunces", Georgia, serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.16em; }
-.uh-footer p { margin: 0; font-family: "Fraunces", Georgia, serif; font-size: 0.95rem; font-style: italic; color: var(--text-secondary); }
+.uh-footer span { color: var(--text-tertiary); font-family: var(--font-display); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.16em; }
+.uh-footer p { margin: 0; font-family: var(--font-display); font-size: 0.95rem; font-style: italic; color: var(--text-secondary); }
 
 .universe-home :focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; }
 

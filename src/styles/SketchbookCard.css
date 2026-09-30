@@ -6,7 +6,7 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 1rem;
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  font-family: var(--font-sans);
 }
 
 .sketchbook-selector-bar {

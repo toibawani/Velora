@@ -9,7 +9,7 @@
   padding: 2.25rem;
   margin: 3rem 0;
   text-align: left;
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  font-family: var(--font-sans);
 }
 
 .inst-header-bar {

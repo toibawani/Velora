@@ -14,7 +14,7 @@
   z-index: var(--z-toast, 10000);
   max-width: 360px;
   min-width: 220px;
-  font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+  font-family: var(--font-sans);
   font-size: 0.9rem;
 }
 
