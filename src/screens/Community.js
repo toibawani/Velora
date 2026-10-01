@@ -1,465 +1,262 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { AlertTriangle, MessageCircle, Flag } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { AlertTriangle, ArrowRight, BookOpen, Trash2 } from 'lucide-react';
+import { CURRICULUM } from '../data/curriculum';
 import { trackEvent } from '../utils/analytics';
+import { addNote, addQuestion, findTopic, getQuestions, removeQuestion, topicChoices } from '../utils/questionDesk';
 import '../styles/Community.css';
 
 /**
- * Community Screen — Shared Interest Discussion Rooms & Safe Peer Learning
- * 
- * Features:
- * - Clean, distraction-free Twitter/X-style feed & discussion threads
- * - Subject-specific active rooms & live learner counters
- * - Lightweight client-side safety & moderation checks (spam/toxicity filter)
- * - Thread reply expansions & verified academic badge system
+ * Question desk.
+ *
+ * This screen used to be a discussion forum: four threads written by
+ * "Scholar_409", "RelativityTutor" and "DialecticMind", carrying 242, 187, 134
+ * and 311 votes, stamped "Verified Mentor" and "3h ago", filed into four rooms
+ * with 1,240 to 3,420 members and live counters reading "38 active now". None of
+ * it existed. Velora has no server, no accounts and no way to know that another
+ * person is using it, so every name, vote, badge, member count and "active now"
+ * number on that screen was typed out by hand, and the answers on those threads
+ * were marked expert-verified by the same hand.
+ *
+ * What is left is the only conversation this app can honestly host: the one with
+ * yourself. Write a question down, keep it, add notes to it as you go, and link
+ * it to a lesson that is actually in the curriculum. Entries are stored on this
+ * device and come back next time - the old screen accepted what you wrote and
+ * discarded it on navigation, while making it look like a public post.
  */
 
-const INITIAL_DISCUSSIONS = [
-  {
-    id: 'd1',
-    roomId: 'room-1',
-    topic: 'Black Holes & Spacetime',
-    question: 'Why does the event horizon feel unexceptional to a freely falling observer, but appears extreme to an outside observer?',
-    votes: 242,
-    author: 'Scholar_409',
-    authorRole: 'Peer Contributor',
-    timeAgo: '3h ago',
-    preview: 'The equivalence principle guarantees that physical laws are strictly local. In a sufficiently small frame falling through the horizon, curvature tidal forces are finite, making local physics indistinguishable from flat spacetime.',
-    expertVerified: true,
-    upvotedByYou: false,
-    subject: 'physics',
-    repliesCount: 14,
-    replies: [
-      {
-        id: 'r1-1',
-        author: 'RelativityTutor',
-        role: 'Verified Mentor',
-        timeAgo: '2h ago',
-        content: 'Exactly right. The apparent singularity at r = 2M in Schwarzschild coordinates is a coordinate artifact, completely removable in Eddington-Finkelstein or Kruskal coordinates.'
-      }
-    ]
-  },
-  {
-    id: 'd2',
-    roomId: 'room-1',
-    topic: 'General Relativity',
-    question: 'Can metric expansion of space exceed the speed of light without violating Lorentz invariance?',
-    votes: 187,
-    author: 'CosmoStudent',
-    authorRole: 'Learner',
-    timeAgo: '6h ago',
-    preview: 'Special relativity imposes c as the upper speed limit for information transfer *through* spacetime, whereas cosmic expansion is the dilation of metric geometry itself.',
-    expertVerified: true,
-    upvotedByYou: false,
-    subject: 'physics',
-    repliesCount: 8,
-    replies: []
-  },
-  {
-    id: 'd3',
-    roomId: 'room-3',
-    topic: 'Socratic Epistemology',
-    question: 'Socrates asserts "I know that I know nothing" — does this formulate an epistemic self-refutation?',
-    votes: 134,
-    author: 'DialecticMind',
-    authorRole: 'Philosophy Scholar',
-    timeAgo: '12h ago',
-    preview: 'In the original Greek (Plato’s Apology 21d), Socrates clarifies he does not claim absolute omniscience, but rather recognizes the boundaries of his own epistemic justification.',
-    expertVerified: false,
-    upvotedByYou: false,
-    subject: 'philosophy',
-    repliesCount: 6,
-    replies: []
-  },
-  {
-    id: 'd4',
-    roomId: 'room-2',
-    topic: 'Quantum Mechanics',
-    question: 'Is Schrödinger’s Cat meant to defend superposition or satirize macro-indeterminacy in Copenhagen mechanics?',
-    votes: 311,
-    author: 'WaveFunction',
-    authorRole: 'Verified Mentor',
-    timeAgo: '1d ago',
-    preview: 'Schrödinger formulated the paradox in 1935 explicitly as a reductio ad absurdum to highlight the measurement problem before decoherence theory was developed.',
-    expertVerified: true,
-    upvotedByYou: false,
-    subject: 'physics',
-    repliesCount: 22,
-    replies: []
-  }
-];
+const SUBJECTS = Object.entries(CURRICULUM).map(([id, record]) => ({ id, label: record.name }));
 
-const ROOMS = [
-  { id: 'room-1', name: 'Black Holes & Gravitation', members: 1240, active: 38, desc: 'Penrose diagrams, geodesics, Kerr metric, and horizon physics', subject: 'physics' },
-  { id: 'room-2', name: 'Quantum Information & Waves', members: 2150, active: 64, desc: 'State vectors, entanglement, measurement theory, and Hilbert space', subject: 'physics' },
-  { id: 'room-3', name: 'Classical & Modern Epistemology', members: 890, active: 19, desc: 'Socratic dialogue, rationalism, empiricism, and falsification', subject: 'philosophy' },
-  { id: 'room-4', name: 'Rigorous Mathematical Proofs', members: 3420, active: 112, desc: 'Real analysis, abstract algebra, discrete topologies, and set theory', subject: 'mathematics' }
-];
+const MIN_QUESTION = 15;
 
-// Lightweight client-side safety keywords for academic integrity & constructive discourse
-const PROHIBITED_PATTERNS = [
-  /\b(cheat|exam dump|test bank|leak)\b/i,
-  /\b(hack|dox|hate|scam)\b/i
-];
+const whenLabel = (iso) => {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return 'undated';
+  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+};
 
-function Community({ setScreen }) {
-  const [tab, setTab] = useState('discussions'); // 'discussions' | 'rooms'
-  const [activeRoomFilter, setActiveRoomFilter] = useState(null);
-  const [subjectFilter, setSubjectFilter] = useState('all');
-  const [discussions, setDiscussions] = useState(INITIAL_DISCUSSIONS);
-  const [expandedDiscussionId, setExpandedDiscussionId] = useState(null);
-  const [replyInputs, setReplyInputs] = useState({});
-  const [newQuestion, setNewQuestion] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('physics');
-  const [moderationNotice, setModerationNotice] = useState(null);
-  const [flaggedIds, setFlaggedIds] = useState(new Set());
+function Community({ setScreen, onOpenLesson }) {
+  const [questions, setQuestions] = useState(() => getQuestions());
+  const [draft, setDraft] = useState('');
+  const [draftSubject, setDraftSubject] = useState(SUBJECTS[0].id);
+  const [draftTopic, setDraftTopic] = useState('');
+  const [notice, setNotice] = useState(null);
+  const [noteDrafts, setNoteDrafts] = useState({});
 
   useEffect(() => {
     trackEvent('screen_view', { screen: 'community' });
   }, []);
 
-  // Filtered thread listing
-  const filteredDiscussions = useMemo(() => {
-    return discussions.filter(d => {
-      if (activeRoomFilter && d.roomId !== activeRoomFilter) return false;
-      if (subjectFilter !== 'all' && d.subject !== subjectFilter) return false;
-      return true;
-    });
-  }, [discussions, activeRoomFilter, subjectFilter]);
+  const topicOptions = useMemo(() => topicChoices(draftSubject), [draftSubject]);
 
-  const handleUpvote = (id) => {
-    setDiscussions(prev => prev.map(d => {
-      if (d.id !== id) return d;
-      return {
-        ...d,
-        votes: d.upvotedByYou ? d.votes - 1 : d.votes + 1,
-        upvotedByYou: !d.upvotedByYou
-      };
-    }));
-  };
+  // Choosing a subject invalidates a lesson picked from the previous one.
+  useEffect(() => {
+    setDraftTopic('');
+  }, [draftSubject]);
 
-  const validatePostContent = (text) => {
-    if (text.trim().length < 15) {
-      return 'Questions must be at least 15 characters to foster high-depth discussion.';
-    }
-    for (const pattern of PROHIBITED_PATTERNS) {
-      if (pattern.test(text)) {
-        return 'Post contains keywords flagged by the Academic Integrity & Safety Filter.';
-      }
-    }
-    return null;
-  };
+  const questionTooShort = draft.trim().length > 0 && draft.trim().length < MIN_QUESTION;
 
-  const handlePostQuestion = (e) => {
-    e.preventDefault();
-    const safetyError = validatePostContent(newQuestion);
-    if (safetyError) {
-      setModerationNotice(safetyError);
+  const handleAsk = (event) => {
+    event.preventDefault();
+    const trimmed = draft.trim();
+    if (trimmed.length < MIN_QUESTION) {
+      setNotice(`Write at least ${MIN_QUESTION} characters - a question worth keeping is usually a sentence.`);
       return;
     }
-
-    setModerationNotice(null);
-    const newThread = {
-      id: `d-${Date.now()}`,
-      roomId: activeRoomFilter || 'room-1',
-      topic: `${selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)} Inquiry`,
-      question: newQuestion.trim(),
-      votes: 1,
-      author: 'Scholar_You',
-      authorRole: 'Peer Contributor',
-      timeAgo: 'Just now',
-      preview: '',
-      expertVerified: false,
-      upvotedByYou: true,
-      subject: selectedSubject,
-      repliesCount: 0,
-      replies: []
-    };
-
-    setDiscussions([newThread, ...discussions]);
-    setNewQuestion('');
+    setNotice(null);
+    setQuestions(addQuestion({ question: trimmed, subject: draftSubject, topicId: draftTopic || null }));
+    setDraft('');
+    setDraftTopic('');
+    trackEvent('question_asked', { subject: draftSubject });
   };
 
-  const handleAddReply = (discussionId) => {
-    const text = replyInputs[discussionId] || '';
-    if (!text.trim()) return;
-
-    setDiscussions(prev => prev.map(d => {
-      if (d.id !== discussionId) return d;
-      const newReply = {
-        id: `r-${Date.now()}`,
-        author: 'Scholar_You',
-        role: 'Peer Contributor',
-        timeAgo: 'Just now',
-        content: text.trim()
-      };
-      return {
-        ...d,
-        repliesCount: d.repliesCount + 1,
-        replies: [...d.replies, newReply]
-      };
-    }));
-
-    setReplyInputs(prev => ({ ...prev, [discussionId]: '' }));
+  const handleNote = (questionId) => {
+    const text = noteDrafts[questionId] || '';
+    if (text.trim() === '') return;
+    setQuestions(addNote(questionId, text));
+    setNoteDrafts((prev) => ({ ...prev, [questionId]: '' }));
   };
 
-  const handleFlag = (id) => {
-    setFlaggedIds(prev => new Set(prev).add(id));
+  const handleDelete = (questionId) => {
+    setQuestions(removeQuestion(questionId));
   };
+
+  const noteCount = questions.reduce((total, entry) => total + (entry.notes || []).length, 0);
 
   return (
     <div className="community-page">
-      {/* Top Header */}
       <header className="community-nav-header">
         <div className="comm-header-left">
           <button className="comm-back-btn" onClick={() => setScreen('universe')}>
             ← Back
           </button>
           <div className="comm-header-titles">
-            <h1 className="comm-title">Academic Exchange</h1>
-            <span className="comm-subtitle">High-signal peer discourse & research rooms</span>
+            <h1 className="comm-title">Question Desk</h1>
+            <p className="comm-subtitle">
+              Questions you have written down, and the notes you have added since.
+            </p>
           </div>
         </div>
-        <div className="comm-safety-badge">
-          <span className="safety-dot"></span>
-          <span>Safety & Integrity Active</span>
-        </div>
+        <span className="comm-device-note">Saved on this device</span>
       </header>
 
       <main className="community-main-body">
-        {/* Navigation & Room Tabs */}
-        <div className="comm-top-bar">
-          <div className="comm-tabs-row">
-            <button
-              className={`comm-tab-btn ${tab === 'discussions' ? 'active' : ''}`}
-              onClick={() => { setTab('discussions'); setActiveRoomFilter(null); }}
-            >
-              Threads & Debates
-            </button>
-            <button
-              className={`comm-tab-btn ${tab === 'rooms' ? 'active' : ''}`}
-              onClick={() => setTab('rooms')}
-            >
-              Study Rooms ({ROOMS.length})
-            </button>
-          </div>
-
-          {activeRoomFilter && (
-            <div className="active-room-chip">
-              <span>Room: {ROOMS.find(r => r.id === activeRoomFilter)?.name}</span>
-              <button onClick={() => setActiveRoomFilter(null)} className="chip-remove-btn">×</button>
-            </div>
-          )}
-        </div>
-
-        {/* ===== DISCUSSIONS VIEW ===== */}
-        {tab === 'discussions' && (
-          <div className="discussions-layout">
-            {/* Quick Topic Filter */}
-            <div className="subject-filter-row">
-              {['all', 'physics', 'philosophy', 'mathematics'].map(sub => (
-                <button
-                  key={sub}
-                  className={`filter-pill ${subjectFilter === sub ? 'active' : ''}`}
-                  onClick={() => setSubjectFilter(sub)}
-                >
-                  {sub === 'all' ? 'All Topics' : sub.charAt(0).toUpperCase() + sub.slice(1)}
-                </button>
-              ))}
-            </div>
-
-            {/* Composer Box (Clean Twitter/X style) */}
-            <form className="ask-question-box" onSubmit={handlePostQuestion}>
-              <div className="ask-header-row">
-                <span className="ask-anon-tag">Verified Peer Posting</span>
+        <section className="ask-question-box">
+          <form onSubmit={handleAsk}>
+            <div className="ask-header-row">
+              <h2 className="ask-heading">Ask yourself something</h2>
+              <label className="ask-field-label">
+                Subject
                 <select
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value)}
                   className="ask-subject-select"
+                  value={draftSubject}
+                  onChange={(event) => setDraftSubject(event.target.value)}
                 >
-                  <option value="physics">Physics</option>
-                  <option value="philosophy">Philosophy</option>
-                  <option value="mathematics">Mathematics</option>
+                  {SUBJECTS.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
-              </div>
-
-              <textarea
-                className="ask-textarea"
-                rows="3"
-                placeholder="Pose an analytical question or conceptual paradox..."
-                value={newQuestion}
-                onChange={(e) => {
-                  setNewQuestion(e.target.value);
-                  if (moderationNotice) setModerationNotice(null);
-                }}
-              />
-
-              {moderationNotice && (
-                <div className="comm-alert-box">
-                  <AlertTriangle size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> {moderationNotice}
-                </div>
-              )}
-
-              <div className="ask-footer-row">
-                <span className="char-count-text">
-                  {newQuestion.length}/500 chars
-                </span>
-                <button type="submit" className="ask-submit-btn" disabled={!newQuestion.trim()}>
-                  Publish Thread
-                </button>
-              </div>
-            </form>
-
-            {/* Discussion Feed */}
-            <div className="discussion-cards-stack">
-              {filteredDiscussions.length === 0 ? (
-                <div className="comm-empty-state">
-                  <p>No active discussions found for this topic filter.</p>
-                </div>
-              ) : (
-                filteredDiscussions.map(d => {
-                  const isFlagged = flaggedIds.has(d.id);
-                  const isExpanded = expandedDiscussionId === d.id;
-
-                  if (isFlagged) {
-                    return (
-                      <div key={d.id} className="discussion-card flagged">
-                        <span className="flagged-msg">This thread has been flagged for moderator review.</span>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <article key={d.id} className="discussion-card">
-                      <div className="disc-card-top-row">
-                        <span className="disc-topic-tag">{d.topic}</span>
-                        {d.expertVerified && (
-                          <span className="expert-verified-badge">Peer Verified</span>
-                        )}
-                        <span className="disc-time-ago">{d.timeAgo}</span>
-                      </div>
-
-                      <h2 className="disc-question">{d.question}</h2>
-
-                      {d.preview && (
-                        <p className="disc-preview-snippet">{d.preview}</p>
-                      )}
-
-                      <div className="disc-card-footer">
-                        <div className="disc-author-meta">
-                          <span className="author-name">{d.author}</span>
-                          <span className="author-dot">·</span>
-                          <span className="author-role">{d.authorRole}</span>
-                        </div>
-
-                        <div className="disc-actions">
-                          <button
-                            type="button"
-                            className={`upvote-btn ${d.upvotedByYou ? 'upvoted' : ''}`}
-                            onClick={() => handleUpvote(d.id)}
-                            aria-label="Upvote explanation"
-                          >
-                            ▲ {d.votes}
-                          </button>
-
-                          <button
-                            type="button"
-                            className="reply-toggle-btn"
-                            onClick={() => setExpandedDiscussionId(isExpanded ? null : d.id)}
-                          >
-                            <MessageCircle size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> {d.repliesCount} {d.repliesCount === 1 ? 'Reply' : 'Replies'}
-                          </button>
-
-                          <button
-                            type="button"
-                            className="flag-btn"
-                            onClick={() => handleFlag(d.id)}
-                            title="Report for safety review"
-                            aria-label="Report this discussion for safety review"
-                          >
-                            <Flag size={14} aria-hidden="true" />
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Thread Replies Section */}
-                      {isExpanded && (
-                        <div className="thread-replies-tray">
-                          {d.replies && d.replies.length > 0 ? (
-                            <div className="replies-list">
-                              {d.replies.map(r => (
-                                <div key={r.id} className="reply-item">
-                                  <div className="reply-header">
-                                    <span className="reply-author">{r.author}</span>
-                                    <span className="reply-role-tag">{r.role}</span>
-                                    <span className="reply-time">{r.timeAgo}</span>
-                                  </div>
-                                  <p className="reply-body">{r.content}</p>
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <p className="no-replies-text">No responses yet. Be the first to contribute an answer.</p>
-                          )}
-
-                          <div className="reply-input-row">
-                            <input
-                              type="text"
-                              className="reply-input"
-                              placeholder="Write a concise academic response..."
-                              value={replyInputs[d.id] || ''}
-                              onChange={(e) => setReplyInputs({ ...replyInputs, [d.id]: e.target.value })}
-                              onKeyDown={(e) => { if (e.key === 'Enter') handleAddReply(d.id); }}
-                            />
-                            <button
-                              type="button"
-                              className="reply-submit-btn"
-                              onClick={() => handleAddReply(d.id)}
-                            >
-                              Reply
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </article>
-                  );
-                })
-              )}
+              </label>
+              <label className="ask-field-label">
+                Lesson you think might answer it
+                <select
+                  className="ask-subject-select"
+                  value={draftTopic}
+                  onChange={(event) => setDraftTopic(event.target.value)}
+                >
+                  <option value="">Not sure yet</option>
+                  {topicOptions.map((topic) => (
+                    <option key={topic.id} value={topic.id}>
+                      {topic.title}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
+
+            <textarea
+              className="ask-textarea"
+              placeholder="What is actually confusing you? Not what you read - what you cannot yet resolve."
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              rows={3}
+            />
+
+            <div className="ask-footer-row">
+              <span className={`char-count-text ${questionTooShort ? 'short' : ''}`}>
+                {draft.trim().length === 0
+                  ? 'Nothing written yet'
+                  : `${draft.trim().length} characters`}
+              </span>
+              <button type="submit" className="ask-submit-btn" disabled={questionTooShort}>
+                Keep this question
+              </button>
+            </div>
+          </form>
+        </section>
+
+        {notice && (
+          <div className="comm-alert-box">
+            <AlertTriangle size={16} aria-hidden="true" />
+            <span className="comm-alert-text">{notice}</span>
           </div>
         )}
 
-        {/* ===== STUDY ROOMS VIEW ===== */}
-        {tab === 'rooms' && (
-          <div className="rooms-grid">
-            {ROOMS.map(room => (
-              <div key={room.id} className="room-card">
-                <div className="room-card-header">
-                  <span className="room-subject-tag">{room.subject}</span>
-                  <div className="room-live-indicator">
-                    <span className="live-dot"></span>
-                    <span className="live-count">{room.active} active now</span>
-                  </div>
+        <section className="discussion-cards-stack">
+          <h2 className="stack-heading">
+            {questions.length === 0
+              ? 'No questions yet'
+              : `${questions.length} question${questions.length === 1 ? '' : 's'} · ${noteCount} note${
+                  noteCount === 1 ? '' : 's'
+                }`}
+          </h2>
+
+          {questions.length === 0 && (
+            <p className="stack-empty-text">
+              Nothing here is waiting for you. When you write a question it stays: the same list will be
+              here tomorrow, on this device, with whatever notes you added.
+            </p>
+          )}
+
+          {questions.map((entry) => {
+            const topic = entry.topicId ? findTopic(entry.subject, entry.topicId) : null;
+            return (
+              <article className="discussion-card" key={entry.id}>
+                <div className="disc-card-top-row">
+                  <span className="disc-subject-tag">
+                    {CURRICULUM[entry.subject]?.name || entry.subject}
+                  </span>
+                  <span className="disc-time">{whenLabel(entry.createdAt)}</span>
                 </div>
 
-                <h3 className="room-name">{room.name}</h3>
-                <p className="room-desc">{room.desc}</p>
+                <h3 className="disc-question">{entry.question}</h3>
 
-                <div className="room-footer-row">
-                  <span className="room-members">{room.members.toLocaleString()} members</span>
-                  <button
-                    className="room-join-btn"
-                    onClick={() => {
-                      setActiveRoomFilter(room.id);
-                      setTab('discussions');
+                <div className="disc-lesson-row">
+                  {topic ? (
+                    <>
+                      <span className="disc-lesson-hint">
+                        <BookOpen size={14} aria-hidden="true" />
+                        You pointed at {topic.title}
+                      </span>
+                      {onOpenLesson && (
+                        <button
+                          className="disc-lesson-btn"
+                          onClick={() => onOpenLesson(entry.subject, topic.id)}
+                        >
+                          Open that lesson
+                          <ArrowRight size={14} aria-hidden="true" />
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <span className="disc-lesson-hint">
+                      You have not pointed at a lesson for this one yet.
+                    </span>
+                  )}
+                </div>
+
+                {(entry.notes || []).length > 0 && (
+                  <ul className="notes-list">
+                    {entry.notes.map((note) => (
+                      <li className="note-item" key={note.id}>
+                        <span className="note-body">{note.text}</span>
+                        <span className="note-time">{whenLabel(note.createdAt)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div className="reply-input-row">
+                  <input
+                    type="text"
+                    className="reply-input"
+                    placeholder="Add a note - an answer, a half-thought, what you now think the difficulty is"
+                    value={noteDrafts[entry.id] || ''}
+                    onChange={(event) =>
+                      setNoteDrafts((prev) => ({ ...prev, [entry.id]: event.target.value }))
+                    }
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') handleNote(entry.id);
                     }}
+                  />
+                  <button type="button" className="reply-submit-btn" onClick={() => handleNote(entry.id)}>
+                    Add note
+                  </button>
+                  <button
+                    type="button"
+                    className="disc-discard-btn"
+                    onClick={() => handleDelete(entry.id)}
+                    aria-label={`Discard this question`}
                   >
-                    Enter Room →
+                    <Trash2 size={15} aria-hidden="true" />
+                    <span className="disc-discard-text">Discard</span>
                   </button>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              </article>
+            );
+          })}
+        </section>
       </main>
     </div>
   );
