@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { BookOpen, Rocket } from 'lucide-react';
 import EmptyState from './EmptyState';
 
 describe('EmptyState Component', () => {
   test('renders icon, title, and description correctly', () => {
-    render(
+    const { container } = render(
       <EmptyState
-        icon="📚"
+        icon={<BookOpen size={28} aria-hidden="true" />}
         title="No reviews yet"
         description="Complete topics to unlock smart reviews"
         actionText="Start Learning"
@@ -14,7 +15,9 @@ describe('EmptyState Component', () => {
       />
     );
 
-    expect(screen.getByText('📚')).toBeInTheDocument();
+    // The icon is a component now, so the assertion is on the svg it renders
+    // rather than on a glyph that used to arrive as a font.
+    expect(container.querySelector('.empty-icon svg')).toBeInTheDocument();
     expect(screen.getByText('No reviews yet')).toBeInTheDocument();
     expect(screen.getByText('Complete topics to unlock smart reviews')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /start learning/i })).toBeInTheDocument();
@@ -24,7 +27,7 @@ describe('EmptyState Component', () => {
     const handleAction = jest.fn();
     render(
       <EmptyState
-        icon="🚀"
+        icon={<Rocket size={28} aria-hidden="true" />}
         title="Empty"
         description="Nothing here"
         actionText="Take Action"
