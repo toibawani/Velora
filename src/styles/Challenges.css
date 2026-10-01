@@ -113,12 +113,6 @@
   letter-spacing: 0.05em;
 }
 
-.sprint-deadline-badge {
-  font-size: 0.75rem;
-  color: var(--accent-orange);
-  font-weight: 600;
-}
-
 .sprint-main-heading {
   margin: 0;
   font-size: 1.75rem;
@@ -132,25 +126,6 @@
   font-size: 0.95rem;
   line-height: 1.6;
   color: var(--text-secondary);
-}
-
-.sprint-urgency-banner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(194, 65, 12, 0.08);
-  border: 1px solid rgba(194, 65, 12, 0.22);
-  border-radius: var(--radius-md);
-  padding: 0.85rem 1.25rem;
-}
-
-.urgency-icon {
-  font-size: 1.2rem;
-}
-
-.urgency-text {
-  font-size: 0.88rem;
-  color: var(--accent-orange);
 }
 
 .sprint-progress-wrapper {
@@ -182,42 +157,6 @@
   transition: width var(--duration-normal) var(--ease-standard);
 }
 
-.sprint-enroll-action-row {
-  display: flex;
-  margin-top: var(--space-2);
-}
-
-.sprint-enroll-btn {
-  background: var(--accent-primary);
-  color: var(--text-inverse);
-  border: none;
-  border-radius: var(--radius-md);
-  padding: 10px 22px;
-  font-size: 0.875rem;
-  font-weight: var(--weight-semibold);
-  cursor: pointer;
-  transition: background-color var(--duration-fast) var(--ease-standard),
-              box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-.sprint-enroll-btn:hover {
-  background: var(--accent-primary-hover);
-  box-shadow: var(--shadow-hover);
-}
-
-/* Split Grid */
-.sprint-split-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 2rem;
-}
-
-@media (max-width: 860px) {
-  .sprint-split-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .col-header-title {
   margin: 0 0 1.25rem 0;
   font-size: 1.2rem;
@@ -238,28 +177,17 @@
   border-radius: var(--radius-md);
   padding: 1.15rem 1.25rem;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
 }
 
-.milestone-day-card.completed {
-  border-left: 3px solid var(--accent-green);
-}
-
-.milestone-day-card.in-progress {
-  border-left: 3px solid var(--accent-orange);
-  background: var(--bg-tertiary);
-}
-
-.milestone-day-card.locked {
-  opacity: 0.45;
-}
-
 .day-number-pill {
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--text-secondary);
-  min-width: 48px;
+  white-space: nowrap;
 }
 
 .day-info-block {
@@ -297,82 +225,73 @@
   background: var(--accent-primary-hover);
 }
 
-/* Leaderboard Column */
-.leaderboard-card-box {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-
-.board-header-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.85rem 1.25rem;
-  background: var(--bg-tertiary);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  color: var(--text-tertiary);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.board-rows-list {
+/* Lesson list inside a path. Every row here is a lesson that exists in the
+   curriculum, so the row is a real affordance: read this, then this. */
+.path-step-list {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
 
-.board-user-row {
-  display: flex;
-  justify-content: space-between;
+.path-step {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border-subtle);
+  gap: var(--space-3);
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--border-subtle);
 }
 
-.board-user-row:last-child {
-  border-bottom: none;
-}
-
-.board-user-row.highlight-user {
-  background: var(--accent-soft);
-  border-left: 3px solid var(--accent-primary);
-}
-
-.user-rank-name {
+.path-step-mark {
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.rank-idx {
-  font-weight: 800;
-  font-family: var(--font-mono);
   color: var(--text-tertiary);
-  font-size: 0.85rem;
 }
 
-.user-text-name {
+.path-step.logged .path-step-mark {
+  color: var(--accent-green);
+}
+
+.path-step-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.path-step-title {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
   color: var(--text-primary);
 }
 
-.user-badge-time {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-}
-
-.time-stat {
+.path-step-kicker {
   font-size: 0.78rem;
   color: var(--text-tertiary);
 }
 
-.genesis-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--accent-gold);
+.path-step-meta {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.path-step .start-day-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .path-step {
+    grid-template-columns: auto 1fr;
+  }
+
+  .path-step-meta,
+  .path-step .start-day-btn {
+    grid-column: 2;
+    justify-self: start;
+  }
 }
