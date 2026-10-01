@@ -32,7 +32,7 @@ function makeSelection(field, discipline, parentModule, topic) {
   return { field, discipline, module: parentModule, topic };
 }
 
-function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLogout, showToast }) {
+function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onForgetProfile, showToast }) {
   const initialField = KNOWLEDGE_FIELDS[0];
   const initialDiscipline = initialField.disciplines[0];
   const initialModule = initialDiscipline.modules[0];
@@ -170,7 +170,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onLog
         <div className="uh-header-actions">
           <span className="uh-user-greeting">Welcome, {user?.name || 'scholar'}</span>
           <ThemeToggle />
-          <button type="button" className="uh-icon-button" onClick={onLogout} aria-label="Sign out"><LogOut size={17} /></button>
+          <button type="button" className="uh-icon-button" onClick={onForgetProfile} aria-label="Forget this device profile" title="Removes the name stored in this browser. It is not a sign out."><LogOut size={17} /></button>
         </div>
       </header>
 

@@ -28,15 +28,9 @@ function SplashScreen({ setScreen }) {
         <div className="splash-actions">
           <button
             className="splash-btn splash-btn-primary"
-            onClick={() => setScreen('login')}
+            onClick={() => setScreen('profile')}
           >
-            Sign in
-          </button>
-          <button
-            className="splash-btn splash-btn-secondary"
-            onClick={() => setScreen('register')}
-          >
-            Create account
+            Start learning
           </button>
         </div>
 
@@ -46,7 +40,7 @@ function SplashScreen({ setScreen }) {
         </button>
 
         <p className="splash-footer">
-          Free for everyone. No credit card required.
+          No account, no email, no password. Everything stays in this browser.
         </p>
       </div>
     </div>

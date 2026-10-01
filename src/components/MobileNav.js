@@ -3,7 +3,7 @@ import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut, Gamepad2 }
 import '../styles/MobileNav.css';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 
-function MobileNav({ currentScreen, setScreen, onLogout }) {
+function MobileNav({ currentScreen, setScreen, onForgetProfile }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleRef = useRef(null);
   const drawerRef = useRef(null);
@@ -48,9 +48,9 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
     setIsOpen(false);
   };
 
-  const handleLogout = () => {
-    if (onLogout) {
-      onLogout();
+  const handleForgetProfile = () => {
+    if (onForgetProfile) {
+      onForgetProfile();
       setIsOpen(false);
     }
   };
@@ -110,14 +110,14 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
           })}
         </nav>
 
-        {onLogout && (
+        {onForgetProfile && (
           <button
             className="mobile-nav-logout"
-            onClick={handleLogout}
-            aria-label="Log out"
+            onClick={handleForgetProfile}
+            aria-label="Forget this device profile"
           >
             <LogOut size={20} strokeWidth={2} />
-            Logout
+            Forget this profile
           </button>
         )}
       </div>

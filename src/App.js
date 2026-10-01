@@ -7,8 +7,8 @@ import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 
 // Core Landing / Auth Screens (loaded directly for instant initial render)
 import SplashScreen from './screens/Splash';
-import LoginScreen from './screens/Login';
-import RegisterScreen from './screens/Register';
+import LocalProfileScreen from './screens/LocalProfile';
+import { getProfile, clearProfile } from './utils/localProfile';
 import BottomNav from './components/BottomNav';
 import MobileNav from './components/MobileNav';
 import OnboardingTour from './components/OnboardingTour';
@@ -39,7 +39,10 @@ function ScreenLoader() {
 
 function App() {
   const [screen, setScreen] = useState('splash');
-  const [user, setUser] = useState(null);
+  // The identity here is a name stored in this browser, read once at startup.
+  // Before this, the user object lived only in useState and vanished on
+  // refresh, which is why "Log out" used to end a session that never began.
+  const [user, setUser] = useState(() => getProfile());
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [learnView, setLearnView] = useState('overview');
@@ -68,31 +71,22 @@ function App() {
     escape: () => { setCommandPaletteOpen(false); setKeyboardHelpOpen(false); }
   });
 
-  const handleLogin = (email, password) => {
-    setUser({ email, name: email.split('@')[0] });
+  const handleStart = (profile) => {
+    setUser(profile);
     setScreen('universe');
-    showToast('Welcome back. Pick up where your curiosity left off.', 'success');
-  };
-
-  const handleRegister = (email, password, name, phone, preferences) => {
-    setUser({ email, name, phone, preferences });
-    showToast('Your account is ready. Welcome to VELORA.', 'success');
-    // Show onboarding tour for new users
     let alreadyOnboarded = false;
     try {
       alreadyOnboarded = Boolean(localStorage.getItem('velora_onboarding_done'));
     } catch {
       alreadyOnboarded = false;
     }
-    if (!alreadyOnboarded) {
-      setScreen('universe');
-      setShowOnboarding(true);
-    } else {
-      setScreen('universe');
-    }
+    if (!alreadyOnboarded) setShowOnboarding(true);
   };
 
-  const handleLogout = () => {
+  // Removes the stored name from this device. It is not a sign out: there is no
+  // session to end and no server to tell. The label on the control says so.
+  const handleForgetProfile = () => {
+    clearProfile();
     setUser(null);
     setScreen('splash');
   };
@@ -101,19 +95,15 @@ function App() {
     <ErrorBoundary>
       <div className="app">
         {screen === 'splash' ? null : (
-          <MobileNav currentScreen={screen} setScreen={setScreen} onLogout={handleLogout} />
+          <MobileNav currentScreen={screen} setScreen={setScreen} onForgetProfile={handleForgetProfile} />
         )}
         <Suspense fallback={<ScreenLoader />}>
         {screen === 'splash' && <SplashScreen setScreen={setScreen} />}
 
         {screen === 'landing' && <LandingPage setScreen={setScreen} />}
 
-        {screen === 'login' && (
-          <LoginScreen setScreen={setScreen} onLogin={handleLogin} showToast={showToast} />
-        )}
-
-        {screen === 'register' && (
-          <RegisterScreen setScreen={setScreen} onRegister={handleRegister} showToast={showToast} />
+        {screen === 'profile' && (
+          <LocalProfileScreen setScreen={setScreen} onStart={handleStart} showToast={showToast} />
         )}
 
         {screen === 'universe' && user && (
@@ -122,7 +112,7 @@ function App() {
             setScreen={setScreen}
             setSelectedSubject={setSelectedSubject}
             setLearnView={setLearnView}
-            onLogout={handleLogout}
+            onForgetProfile={handleForgetProfile}
             showToast={showToast}
           />
         )}
@@ -160,7 +150,7 @@ function App() {
           <JourneyScreen setScreen={setScreen} />
         )}
 
-        {user && screen !== 'splash' && screen !== 'login' && screen !== 'register' && screen !== 'landing' && (
+        {user && screen !== 'splash' && screen !== 'profile' && screen !== 'landing' && (
           <BottomNav currentScreen={screen} setScreen={setScreen} />
         )}
 

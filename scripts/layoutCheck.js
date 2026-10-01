@@ -197,13 +197,14 @@ const signIn = async (page, url) => {
   }, SEED);
   await page.goto(url, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('button', { timeout: 20000 });
-  // Walk splash -> landing -> login by clicking whatever the screen offers.
+
+  // Walk splash -> landing -> profile by clicking whatever the screen offers.
   const deadline = Date.now() + 20000;
   while (Date.now() < deadline) {
-    if (await page.$('#login-email')) break;
+    if (await page.$('#profile-name')) break;
     const moved = await page.evaluate(() => {
       const b = [...document.querySelectorAll('button, a')].find((x) =>
-        /sign in|get started|begin|continue|explore/i.test(x.textContent.trim())
+        /start learning|look around|begin your exploration/i.test(x.textContent.trim())
       );
       if (!b) return false;
       b.click();
@@ -212,12 +213,19 @@ const signIn = async (page, url) => {
     if (!moved) await new Promise((r) => setTimeout(r, 400));
     else await new Promise((r) => setTimeout(r, 600));
   }
-  await page.waitForSelector('#login-email', { timeout: 20000 });
-  await page.type('#login-email', 'learner@velora.test');
-  await page.type('#login-password', 'correct-horse');
-  // 'form button' would match the password-visibility toggle first and never
-  // submit, which is how an earlier run "passed" while still sitting on Login.
+  // There is no session to fake: type a name into the real field and submit.
+  await page.waitForSelector('#profile-name', { timeout: 20000 });
+  await page.type('#profile-name', 'Ada Lovelace');
   await page.click('button[type="submit"]');
+  // Step two asks what you are here for. Submit it for real as well.
+  const interests = await page.$('.subject-selection-grid');
+  if (interests) {
+    await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button[type="submit"]')].pop();
+      if (b) b.click();
+    });
+    await new Promise((r) => setTimeout(r, 800));
+  }
   await page.waitForFunction(() => document.querySelectorAll('nav').length > 0, {
     timeout: 20000,
   });

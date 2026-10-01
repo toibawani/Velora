@@ -97,9 +97,8 @@ function LandingPage({ setScreen }) {
             <button className="lp-nav-link">For Educators</button>
           </div>
           <div className="landing-nav-cta">
-            <button className="lp-login-btn" onClick={() => setScreen('login')}>Sign In</button>
-            <button className="lp-cta-btn" onClick={() => setScreen('register')}>
-              Start Exploring <ArrowRight size={14} strokeWidth={2.5} />
+            <button className="lp-cta-btn" onClick={() => setScreen('profile')}>
+              Start Learning <ArrowRight size={14} strokeWidth={2.5} />
             </button>
           </div>
         </div>
@@ -125,11 +124,8 @@ function LandingPage({ setScreen }) {
           </p>
 
           <div className="hero-cta-row">
-            <button className="hero-primary-cta" onClick={() => setScreen('register')}>
+            <button className="hero-primary-cta" onClick={() => setScreen('profile')}>
               Begin Your Exploration
-            </button>
-            <button className="hero-secondary-cta" onClick={() => setScreen('login')}>
-              Already a Scholar? Sign In <ArrowRight size={13} />
             </button>
           </div>
         </div>
