@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Microscope, FileText, MessageCircle, Rocket } from 'lucide-react';
 import '../styles/ExpertMode.css';
 
 /**
@@ -94,7 +95,7 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
       {/* Header Banner */}
       <div className="expert-hero-bar">
         <div className="expert-badge-tag">
-          <span>🔬 EXPERT MODE</span>
+          <span><Microscope size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />EXPERT MODE</span>
         </div>
         <h2 className="expert-hero-title">Academic & Research Deep Dive</h2>
         <p className="expert-hero-sub">
@@ -108,19 +109,19 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
           className={`expert-tab ${activeTab === 'papers' ? 'active' : ''}`}
           onClick={() => setActiveTab('papers')}
         >
-          📄 Research Papers (1-Page)
+          <FileText size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Research Papers (1-Page)
         </button>
         <button
           className={`expert-tab ${activeTab === 'debates' ? 'active' : ''}`}
           onClick={() => setActiveTab('debates')}
         >
-          💬 Peer Debate Prompts
+          <MessageCircle size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Peer Debate Prompts
         </button>
         <button
           className={`expert-tab ${activeTab === 'careers' ? 'active' : ''}`}
           onClick={() => setActiveTab('careers')}
         >
-          🚀 Astrophysics Career Paths
+          <Rocket size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Astrophysics Career Paths
         </button>
       </div>
 
