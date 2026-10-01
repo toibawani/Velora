@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Orbit, TrendingUp, Map as MapIcon, Leaf, Wind, Zap, Atom, Dna, Lightbulb, X } from 'lucide-react';
 import '../styles/Universe.css';
 
 /**
@@ -13,7 +14,7 @@ const INITIAL_CONCEPTS = [
     id: 1,
     name: 'Photosynthesis',
     category: 'biology',
-    icon: '🌿',
+    icon: Leaf,
     position: { x: 140, y: 120 },
     summary: 'Light-dependent conversion of photons to chemical potential energy.'
   },
@@ -21,7 +22,7 @@ const INITIAL_CONCEPTS = [
     id: 2,
     name: 'Cellular Respiration',
     category: 'biology',
-    icon: '💨',
+    icon: Wind,
     position: { x: 260, y: 180 },
     summary: 'Aerobic catabolism of glucose yielding ATP and CO2.'
   },
@@ -29,7 +30,7 @@ const INITIAL_CONCEPTS = [
     id: 3,
     name: 'ATP Synthesis',
     category: 'chemistry',
-    icon: '⚡',
+    icon: Zap,
     position: { x: 380, y: 100 },
     summary: 'Proton gradient driven rotary catalysis via ATP synthase.'
   },
@@ -37,7 +38,7 @@ const INITIAL_CONCEPTS = [
     id: 4,
     name: 'Thermodynamic Entropy',
     category: 'physics',
-    icon: '🌌',
+    icon: Orbit,
     position: { x: 260, y: 280 },
     summary: 'Second law requirement: localized order creates net cosmic disorder.'
   },
@@ -77,7 +78,7 @@ function UniverseBuilder({ topic, onBack }) {
       id: newId,
       name: newConceptName.trim(),
       category: newConceptCategory,
-      icon: newConceptCategory === 'physics' ? '⚛️' : newConceptCategory === 'biology' ? '🧬' : '💡',
+      icon: newConceptCategory === 'physics' ? Atom : newConceptCategory === 'biology' ? Dna : Lightbulb,
       position: {
         x: Math.floor(Math.random() * 300) + 100,
         y: Math.floor(Math.random() * 200) + 80
@@ -125,16 +126,16 @@ function UniverseBuilder({ topic, onBack }) {
         <section className="univ-controls-bar">
           <div className="view-mode-tabs">
             {[
-              { id: 'galaxy', icon: '🌌', label: 'Topology Graph' },
-              { id: 'timeline', icon: '📈', label: 'Epistemic Timeline' },
-              { id: 'map', icon: '🗺️', label: 'Matrix Grid' },
+              { id: 'galaxy', icon: Orbit, label: 'Topology Graph' },
+              { id: 'timeline', icon: TrendingUp, label: 'Epistemic Timeline' },
+              { id: 'map', icon: MapIcon, label: 'Matrix Grid' },
             ].map((mode) => (
               <button
                 key={mode.id}
                 className={`mode-tab-btn ${viewMode === mode.id ? 'active' : ''}`}
                 onClick={() => setViewMode(mode.id)}
               >
-                <span>{mode.icon}</span>
+                <span><mode.icon size={15} aria-hidden="true" /></span>
                 <span>{mode.label}</span>
               </button>
             ))}
@@ -156,7 +157,7 @@ function UniverseBuilder({ topic, onBack }) {
             <div className="add-concept-modal">
               <div className="modal-header">
                 <h3>Add Concept to Knowledge Universe</h3>
-                <button className="modal-close-btn" onClick={() => setIsAddingConcept(false)}>✕</button>
+                <button className="modal-close-btn" aria-label="Close the add concept dialog" onClick={() => setIsAddingConcept(false)}><X size={18} aria-hidden="true" /></button>
               </div>
               <form onSubmit={handleAddConcept} className="add-concept-form">
                 <label>
@@ -250,6 +251,7 @@ function UniverseBuilder({ topic, onBack }) {
               {concepts.map((node) => {
                 const isSelected = selectedConcept?.id === node.id;
                 const nodeColor = CATEGORY_COLORS[node.category] || 'var(--accent-primary)';
+                const NodeIcon = node.icon;
                 return (
                   <g
                     key={node.id}
@@ -263,13 +265,9 @@ function UniverseBuilder({ topic, onBack }) {
                       stroke={nodeColor}
                       strokeWidth={isSelected ? "2.5" : "1.5"}
                     />
-                    <text
-                      y="5"
-                      textAnchor="middle"
-                      fontSize="14"
-                    >
-                      {node.icon}
-                    </text>
+                    {/* Lucide renders an <svg>, so a nested <svg> at the node origin
+                        replaces the emoji glyph that used to sit in a <text> here. */}
+                    <NodeIcon size={16} x={-8} y={-7} color={nodeColor} strokeWidth={1.75} aria-hidden="true" />
                     <text
                       y="36"
                       textAnchor="middle"
@@ -290,10 +288,10 @@ function UniverseBuilder({ topic, onBack }) {
               <div className="node-inspector-drawer">
                 <div className="inspector-head">
                   <div className="inspector-title-row">
-                    <span className="inspector-icon">{selectedConcept.icon}</span>
+                    <span className="inspector-icon"><selectedConcept.icon size={18} aria-hidden="true" /></span>
                     <h3 className="inspector-name">{selectedConcept.name}</h3>
                   </div>
-                  <button className="inspector-close" onClick={() => setSelectedConcept(null)}>✕</button>
+                  <button className="inspector-close" aria-label="Close the node inspector" onClick={() => setSelectedConcept(null)}><X size={16} aria-hidden="true" /></button>
                 </div>
                 <span className="inspector-discipline-tag" style={{ color: CATEGORY_COLORS[selectedConcept.category] }}>
                   {selectedConcept.category.toUpperCase()}
@@ -337,7 +335,7 @@ function UniverseBuilder({ topic, onBack }) {
                   style={{ borderLeft: `3px solid ${CATEGORY_COLORS[concept.category]}` }}
                 >
                   <div className="matrix-item-top">
-                    <span className="matrix-icon">{concept.icon}</span>
+                    <span className="matrix-icon"><concept.icon size={16} aria-hidden="true" /></span>
                     <span className="matrix-cat">{concept.category}</span>
                   </div>
                   <h4 className="matrix-title">{concept.name}</h4>
