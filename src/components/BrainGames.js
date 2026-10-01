@@ -480,6 +480,111 @@ const EXPLAIN_PROMPTS = [
         source: null,
       }
     ]
+  },
+  {
+    id: 'supply-and-demand',
+    term: 'Supply and Demand',
+    subject: 'Economics',
+    targetAudience: 'Explain to someone who has never heard the phrase why the price of anything moves.',
+    keyConcepts: ['price', 'signal', 'expensive', 'buy fewer', 'push', 'plan', 'supply', 'demand'],
+    peerExplanations: [
+      {
+        body:
+          'A price is a signal, not a setting. When tomatoes get expensive, two things happen at once: people buy fewer of them, and people who were sitting on unsold tomatoes plant more. Both movements push the price back down. Nobody planned it, and nobody is in charge.',
+        by: 'VELORA',
+        source: null,
+      },
+      {
+        body:
+          'It is the escalator in the wrong direction. If a shop marks up a scarce item and sells out, the higher price tells every seller in the country to get hold of more of it. More supply and less demand, and the price slides back toward where it started.',
+        by: 'VELORA',
+        source: null,
+      }
+    ]
+  },
+  {
+    id: 'plate-tectonics',
+    term: 'Plate Tectonics',
+    subject: 'Geography',
+    targetAudience: 'Explain to a teenager why there are mountains, why there are earthquakes, and why the continents do not fit a globe.',
+    keyConcepts: ['crust', 'move', 'sea', 'floor', 'push', 'plate', 'slow', 'continent'],
+    peerExplanations: [
+      {
+        body:
+          'The Earth’s surface is broken into plates that ride on a hot, soft layer and move about as fast as your fingernails grow. That is the whole mechanism. Mountains rise where two plates push into each other, trenches open where they pull apart, and earthquakes are the plates catching up after years of strain.',
+        by: 'VELORA',
+        source: null,
+      },
+      {
+        body:
+          'The continents only look wrong because the sea floor moves too. There is rock under the ocean that is younger than almost everything on land, which is exactly what you would expect if the sea floor were being made continuously and pushed out to both sides.',
+        by: 'VELORA',
+        source: null,
+      }
+    ]
+  },
+  {
+    id: 'opportunity-cost',
+    term: 'Opportunity Cost',
+    subject: 'Economics',
+    targetAudience: 'Explain why "it cost nothing" is almost never true, using a decision the listener has actually made.',
+    keyConcepts: ['instead', 'gave up', 'better', 'two prices', 'money', 'free', 'choice', 'question'],
+    peerExplanations: [
+      {
+        body:
+          'Every choice has two prices. One is the money you paid. The other is the best thing you could have had instead, and that second number is the one people skip when they decide something was free.',
+        by: 'VELORA',
+        source: null,
+      },
+      {
+        body:
+          'Two hours on your phone was not free. The question is only whether you gave up something better — the couch, a friend, an hour of sleep — by spending it the way you did. Economics is mostly the discipline of asking that question out loud.',
+        by: 'VELORA',
+        source: null,
+      }
+    ]
+  },
+  {
+    id: 'neuron',
+    term: 'Action Potential',
+    subject: 'Neuroscience',
+    targetAudience: 'Explain to someone who is not a scientist why a nerve fires all-or-nothing and why nerves are slow.',
+    keyConcepts: ['electrical', 'signal', 'jump', 'fibre', 'speed', 'chemical', 'all at once', 'threshold'],
+    peerExplanations: [
+      {
+        body:
+          'A nerve does not send a weak signal for a weak stimulus and a strong one for a strong stimulus. It sends the same electrical spike every time, and the intensity is carried by how many neurons fire and how fast, never by how big one spike is. All or nothing, like a light switch.',
+        by: 'VELORA',
+        source: null,
+      },
+      {
+        body:
+          'The surprise is the speed. Electricity travels fast, but nerves are slow — around a metre per second, which is roughly walking pace. Most of the time is spent waiting for chemical signals to jump between cells, and that is why your reaction time is longer than the distance you think it should take.',
+        by: 'VELORA',
+        source: null,
+      }
+    ]
+  },
+  {
+    id: 'printing-press',
+    term: 'The Printing Press',
+    subject: 'History',
+    targetAudience: 'Explain to someone today why an argument could spread at all before printing, and what changed when it did.',
+    keyConcepts: ['copy', 'argument', 'cheap', 'print', 'letter', 'reach', 'anyone', 'cheaply'],
+    peerExplanations: [
+      {
+        body:
+          'Before print, an argument could only travel as fast and as far as someone was willing to hand-copy it by hand, which made every claim expensive to repeat and therefore easy to drown out. Printing turned a rumour into something you could check, because you could hold the page and compare it with another copy.',
+        by: 'VELORA',
+        source: null,
+      },
+      {
+        body:
+          'Printing did not create disagreement — people had always disagreed. It made the disagreement countable. Once you could print the same page and hand it to someone who had never heard the case, "trust me, I was there" stopped working as an argument.',
+        by: 'VELORA',
+        source: null,
+      }
+    ]
   }
 ];
 

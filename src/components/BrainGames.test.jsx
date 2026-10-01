@@ -195,3 +195,46 @@ describe('no invented people in the game data', () => {
     });
   });
 });
+
+describe('sprint content breadth', () => {
+  test('offers more than three prompts, which is what it had', () => {
+    expect(EXPLAIN_PROMPTS.length).toBeGreaterThanOrEqual(8);
+  });
+
+  test('every prompt has a distinct id and a distinct term', () => {
+    const ids = EXPLAIN_PROMPTS.map((p) => p.id);
+    const terms = EXPLAIN_PROMPTS.map((p) => p.term);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(new Set(terms).size).toBe(terms.length);
+  });
+
+  test('every prompt gives a real mission and at least six intuition cues', () => {
+    EXPLAIN_PROMPTS.forEach((prompt) => {
+      expect(prompt.targetAudience.length).toBeGreaterThan(40);
+      expect(prompt.subject).toBeTruthy();
+      expect(prompt.keyConcepts.length).toBeGreaterThanOrEqual(6);
+      // Cues are matched as plain substrings against what the learner typed,
+      // so a multi-word cue is fine -- 'gave up' fires on 'the price you gave
+      // up'. What cannot work is an empty or single-character cue.
+      prompt.keyConcepts.forEach((cue) => {
+        expect(cue.length).toBeGreaterThan(2);
+      });
+    });
+  });
+
+  test('a plausible good answer actually matches at least two cues', () => {
+    // Guards the cue lists themselves: a list of plausible-sounding words that
+    // no real explanation would contain would show zero intuition cues forever,
+    // which looks like the learner writing badly rather than a broken game.
+    EXPLAIN_PROMPTS.forEach((prompt) => {
+      const sample = prompt.peerExplanations[0].body.toLowerCase();
+      const hits = prompt.keyConcepts.filter((cue) => sample.includes(cue));
+      expect(hits.length).toBeGreaterThanOrEqual(2);
+    });
+  });
+
+  test('spans more than the three subjects it started with', () => {
+    const subjects = new Set(EXPLAIN_PROMPTS.map((p) => p.subject));
+    expect(subjects.size).toBeGreaterThanOrEqual(5);
+  });
+});

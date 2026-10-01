@@ -157,22 +157,31 @@ const playMyth = async (page) => {
 };
 
 const playExplain = async (page) => {
-  const first = await snapshot(page);
-  await page.evaluate(() => {
-    const b = [...document.querySelectorAll('button')].find((x) => /start 30s timer/i.test(x.textContent));
-    if (b) b.click();
-  });
-  await new Promise((r) => setTimeout(r, 600));
-  const started = await snapshot(page);
-  await page.type('textarea', 'momentum is how hard something is to stop, and a heavy thing moving slowly still has lots of it, like a freight train');
-  await new Promise((r) => setTimeout(r, 400));
-  await page.evaluate(() => {
-    const b = [...document.querySelectorAll('button')].find((x) => /submit explanation/i.test(x.textContent));
-    if (b) b.click();
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  const answered = await snapshot(page);
-  return { first, started, answered };
+  const seen = [];
+  for (let i = 0; i < 4; i++) {
+    const label = await page.evaluate(() => {
+      const h = [...document.querySelectorAll('h3')].find(x => /Explain It Back/.test(x.textContent));
+      return h ? h.textContent.trim() : 'NONE';
+    });
+    seen.push(label);
+    {
+      await page.evaluate(() => { const b = [...document.querySelectorAll('button')].find(x => /start 30s timer/i.test(x.textContent)); if (b) b.click(); });
+      await new Promise(r => setTimeout(r, 500));
+      await page.type('textarea', 'momentum is how hard something is to stop and a heavy thing moving slowly still has lots of it');
+      await new Promise(r => setTimeout(r, 300));
+      await page.evaluate(() => { const b = [...document.querySelectorAll('button')].find(x => /submit explanation/i.test(x.textContent)); if (b) b.click(); });
+      await new Promise(r => setTimeout(r, 600));
+    }
+    const hasNext = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find(x => /next concept sprint/i.test(x.textContent));
+      if (!b) return false;
+      b.click();
+      return true;
+    });
+    if (!hasNext) break;
+    await new Promise(r => setTimeout(r, 700));
+  }
+  return { promptsSeen: seen };
 };
 
 const main = async () => {
