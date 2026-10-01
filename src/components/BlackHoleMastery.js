@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Orbit, Clock, ArrowDown, Sparkles, CircleDot, Zap, Radiation, HelpCircle, Image as ImageIcon, Atom } from 'lucide-react';
+import { Orbit, Clock, ArrowDown, Sparkles, Circle, CircleDot, Zap, Radiation, HelpCircle, Image as ImageIcon, Atom } from 'lucide-react';
 import '../styles/BlackHoleMastery.css';
 
 function BlackHoleMastery({ onBack, onOpenLab }) {
@@ -43,7 +43,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'event-horizon',
       title: 'The Event Horizon',
-      icon: CircleDot,
+      icon: Circle,
       color: '#F39C12',
       content: 'The point of no return. Escape velocity exceeds the speed of light.',
       duration: '13 mins',
@@ -51,7 +51,10 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'singularity',
       title: 'The Singularity',
-      icon: '•',
+      // Was the character '•'. It is rendered as <level.icon /> with the rest of
+      // them, and a string there is not a component - React renders it as an
+      // unknown element and the card got no icon at all.
+      icon: CircleDot,
       color: '#000',
       content: 'Infinite density. Zero volume. Where physics breaks down.',
       duration: '9 mins',
@@ -354,6 +357,9 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
   }, []);
 
   const ActiveLevel = levels[currentLevel];
+  // Bound to a capitalised name on purpose. Written as <ActiveLevel.icon /> it
+  // renders nothing at all when the entry is a string, and lint cannot see it.
+  const ActiveIcon = ActiveLevel.icon;
 
   return (
     <div className="black-hole-mastery-container" ref={containerRef}>
@@ -405,7 +411,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
           {/* Detailed Reading View */}
           <div className="detailed-reading-view">
             <h2 className="reading-chapter-title">
-              <ActiveLevel.icon size={20} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />{ActiveLevel.title}
+              <ActiveIcon size={20} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />{ActiveLevel.title}
             </h2>
 
             {detailedContent[levels[currentLevel].id] && (
