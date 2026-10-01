@@ -221,26 +221,6 @@
 
 .analytics-empty-note { padding: var(--space-6); color: var(--text-secondary); background: var(--bg-primary); border: 1px dashed var(--border-default); border-radius: var(--radius-md); }
 
-.style-bars-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
-}
-
-.style-header-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8125rem;
-  font-weight: var(--weight-medium);
-  margin-bottom: var(--space-1);
-  color: var(--text-primary);
-}
-
-.style-pct {
-  font-weight: var(--weight-bold);
-}
-
 .bar-track {
   height: 6px;
   background: var(--bg-tertiary);
@@ -257,25 +237,6 @@
      is not this one. A bar with no colour of its own is a bar that follows the
      theme, which is the only reason the dark theme works on this screen. */
   background: var(--accent-primary);
-}
-
-/* Flow-state work is the one style the screen singles out, and gold is the
-   token for it rather than the orange the inline style carried. */
-.style-item--flow .bar-fill {
-  background: var(--accent-gold);
-}
-
-.style-name {
-  /* The label carries an icon now, so the row is flex and the icon stops
-     itself from shrinking when a subject name runs long. */
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-width: 0;
-}
-
-.style-name > svg {
-  flex-shrink: 0;
 }
 
 .recommendation-pill {
@@ -297,63 +258,41 @@
   color: var(--accent-gold);
 }
 
-/* Peak Hours Grid */
-.peak-hours-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+/* The list of things the screen can no longer claim. A name and the reason it
+   stays blank, set as two lines so the reason reads as the footnote to the
+   claim rather than competing with it. */
+.unmeasured-list {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-3);
-  margin-bottom: var(--space-4);
 }
 
-.peak-hour-box {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
+.unmeasured-list li {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-default);
 }
 
-.peak-hour-box.highlight {
-  border-color: var(--color-accent);
-  background: var(--bg-secondary);
+.unmeasured-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
-.peak-label {
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  font-weight: var(--weight-semibold);
-  color: var(--text-tertiary);
-}
-
-.peak-time {
+.unmeasured-name {
   font-size: 0.9375rem;
   font-weight: var(--weight-bold);
   color: var(--text-primary);
 }
 
-.peak-pct {
-  font-size: 0.75rem;
-  font-weight: var(--weight-semibold);
-  color: var(--accent-primary);
-}
-
-.peak-tip {
-  margin: 0;
+.unmeasured-reason {
   font-size: 0.8125rem;
-  color: var(--text-secondary);
   line-height: var(--leading-normal);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-}
-
-.peak-tip > svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 /* Domain Time Distribution */

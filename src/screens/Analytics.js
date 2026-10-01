@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Palette, BookOpen, Zap, Lightbulb, Clock, Target } from 'lucide-react';
+import { Shield, Lightbulb, Target } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import { trackEvent } from '../utils/analytics';
 import '../styles/Analytics.css';
@@ -11,10 +11,21 @@ import '../styles/Analytics.css';
  * time allocation, struggled concepts, cognitive learning style preferences,
  * and peak focus hours.
  */
+/**
+ * A bar's colour is asked of the subject rather than carried in from the record:
+ * a hex written into localStorage outlives every palette change made in CSS, so
+ * a learner who arrived before the current tokens would still be looking at the
+ * colour from the day they signed up.
+ */
+export const barColor = (subject) =>
+  subject ? `var(--subject-${subject}, var(--accent-primary))` : 'var(--accent-primary)';
+
 function Analytics({ setScreen, user }) {
   const [analytics, setAnalytics] = useState(getAnalyticsData());
   const hasActivity = analytics.totalHoursStudied > 0 || analytics.topicTimeDistribution.length > 0;
   const domainCount = new Set(analytics.topicTimeDistribution.map((item) => item.subject)).size;
+  // Sessions are stored per day, so the count is a sum rather than a field.
+  const sessionTotal = analytics.weeklyActivity.reduce((total, day) => total + (day.sessions || 0), 0);
 
   useEffect(() => {
     trackEvent('screen_view', { screen: 'analytics' });
@@ -59,21 +70,21 @@ function Analytics({ setScreen, user }) {
           </div>
 
           <div className="metric-box">
-            <span className="metric-caption">Active Learning Streak</span>
+            <span className="metric-caption">Sessions Logged</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">{analytics.currentStreak}</span>
-              <span className="metric-unit">days</span>
+              <span className="metric-big-num">{sessionTotal}</span>
+              <span className="metric-unit">closed</span>
             </div>
-            <span className="metric-subtext">{hasActivity ? 'Recorded from local activity' : 'Record a session to begin'}</span>
+            <span className="metric-subtext">Counted when a lesson closes</span>
           </div>
 
           <div className="metric-box">
-            <span className="metric-caption">Mastered Modules</span>
+            <span className="metric-caption">Topics Touched</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">{analytics.topicsCompleted}</span>
+              <span className="metric-big-num">{analytics.topicTimeDistribution.length}</span>
               <span className="metric-unit">topics</span>
             </div>
-            <span className="metric-subtext">Verified with flow quizzes</span>
+            <span className="metric-subtext">Only topics with minutes against them</span>
           </div>
 
           <div className="metric-box">
@@ -89,91 +100,52 @@ function Analytics({ setScreen, user }) {
         <div className="analytics-split-layout">
           {/* Left Column: Learning Style & Peak Hours */}
           <div className="analytics-col">
-            {/* Learning Style Preference */}
+            {/* A panel for the things this app cannot work out, because the
+                alternative was two bars pinned at zero percent under headings
+                that claimed they had been measured from behaviour. */}
             <div className="analytics-card">
-              <h3 className="card-heading">Cognitive Learning Style</h3>
+              <h3 className="card-heading">Not Measured Yet</h3>
               <p className="card-subhead">
-                Based on your interaction with interactive canvases, deep readings, and flow challenges.
+                Two panels used to sit here: a cognitive learning style, and a peak
+                focus window with one box labelled &ldquo;Evening (Peak)&rdquo; while
+                reading zero percent.
               </p>
 
-              <div className="style-bars-list">
-                <div className="style-item">
-                  <div className="style-header-row">
-                    <span className="style-name"><Palette size={14} aria-hidden="true" /> Visual & Spatial (Canvas, SVG diagrams)</span>
-                    <span className="style-pct">{analytics.learningStyle.visual}%</span>
-                  </div>
-                  <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.visual}%` }}></div>
-                  </div>
-                </div>
-
-                <div className="style-item">
-                  <div className="style-header-row">
-                    <span className="style-name"><BookOpen size={14} aria-hidden="true" /> Textual & Conceptual (Articles, Notes)</span>
-                    <span className="style-pct">{analytics.learningStyle.textual}%</span>
-                  </div>
-                  <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.textual}%` }}></div>
-                  </div>
-                </div>
-
-                <div className="style-item style-item--flow">
-                  <div className="style-header-row">
-                    <span className="style-name"><Zap size={14} aria-hidden="true" /> Flow-State & Interactive (Scrabble, Chains)</span>
-                    <span className="style-pct">{analytics.learningStyle.interactive}%</span>
-                  </div>
-                  <div className="bar-track">
-                    <div className="bar-fill" style={{ width: `${analytics.learningStyle.interactive}%` }}></div>
-                  </div>
-                </div>
-              </div>
+              <ul className="unmeasured-list">
+                <li>
+                  <span className="unmeasured-name">Learning style</span>
+                  <span className="unmeasured-reason">
+                    Nothing records which surface a lesson was read on, so there is no
+                    canvas-versus-article split to average into a preference.
+                  </span>
+                </li>
+                <li>
+                  <span className="unmeasured-name">Best time of day</span>
+                  <span className="unmeasured-reason">
+                    Sessions are stored by day, not by hour. There is no clock reading
+                    to put into a bar.
+                  </span>
+                </li>
+                <li>
+                  <span className="unmeasured-name">Topics mastered</span>
+                  <span className="unmeasured-reason">
+                    Mastery needs a result, and closing a lesson is the only thing the
+                    app records today.
+                  </span>
+                </li>
+              </ul>
 
               <div className="recommendation-pill">
                 <Lightbulb size={14} aria-hidden="true" />
                 <span>
-                  {hasActivity ? <><strong>Pattern forming:</strong> Keep exploring and revisit this page after a few real sessions.</> : <><strong>Start with one question:</strong> Read a lesson, then let your activity build the first baseline.</>}
+                  Each of these needs a recorder before it can hold a number. Until one
+                  exists, the four tiles above are what is real: hours, sessions, and the
+                  topics with minutes against them.
                 </span>
               </div>
-            </div>
-
-            {/* Peak Focus Hours */}
-            <div className="analytics-card">
-              <h3 className="card-heading">Peak Focus Hours</h3>
-              <p className="card-subhead">
-                When your cognitive retention and session length are at their highest.
-              </p>
-
-              <div className="peak-hours-grid">
-                <div className="peak-hour-box">
-                  <span className="peak-label">Morning</span>
-                  <span className="peak-time">6 AM – 12 PM</span>
-                  <span className="peak-pct">{analytics.peakHours.morning}%</span>
-                </div>
-                <div className="peak-hour-box">
-                  <span className="peak-label">Afternoon</span>
-                  <span className="peak-time">12 PM – 5 PM</span>
-                  <span className="peak-pct">{analytics.peakHours.afternoon}%</span>
-                </div>
-                <div className="peak-hour-box highlight">
-                  <span className="peak-label">Evening (Peak)</span>
-                  <span className="peak-time">7 PM – 10 PM</span>
-                  <span className="peak-pct">{analytics.peakHours.evening}%</span>
-                </div>
-                <div className="peak-hour-box">
-                  <span className="peak-label">Late Night</span>
-                  <span className="peak-time">10 PM – 2 AM</span>
-                  <span className="peak-pct">{analytics.peakHours.night}%</span>
-                </div>
-              </div>
-
-              <p className="peak-tip">
-                <Clock size={14} aria-hidden="true" />
-                <span>
-                  {hasActivity ? <><strong>Pattern forming:</strong> Your best learning time will appear after more sessions.</> : <><strong>No best time yet:</strong> Your activity is still too small to identify a pattern.</>}
-                </span>
-              </p>
             </div>
           </div>
+
 
           {/* Right Column: Time Distribution & Concepts Needing Revision */}
           <div className="analytics-col">
@@ -194,11 +166,7 @@ function Analytics({ setScreen, user }) {
                         className="bar-fill"
                         style={{
                           width: `${Math.min((item.hours / 8) * 100, 100)}%`,
-                          // Asked of the subject identity rather than carried in
-                          // from the record: a learner who has saved sessions
-                          // since the colour lived in storage still gets the
-                          // palette that is current today.
-                          background: `var(--subject-${item.subject}, var(--accent-primary))`
+                          background: barColor(item.subject)
                         }}
                       ></div>
                     </div>
@@ -211,7 +179,9 @@ function Analytics({ setScreen, user }) {
             <div className="analytics-card">
               <h3 className="card-heading">Concepts Targeted for Reinforcement</h3>
               <p className="card-subhead">
-                Identified automatically from pauses, repeated attempts, or self-reported reflections.
+                Nothing writes to this list yet, so it is empty for everyone. It is
+                where a concept would be held for review once something records that
+                you asked to come back to it.
               </p>
 
               <div className="struggle-items-list">
