@@ -1,113 +1,114 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Clock, Compass } from 'lucide-react';
+import { getAnalyticsData } from '../utils/analyticsStorage';
+import EmptyState from '../components/EmptyState';
 import '../styles/Journey.css';
 
 /**
- * Learning Journey & Epistemic Milestones
- * 
- * High-contrast roadmap tracking daily deep focus sessions,
- * mastery scores, and locked prerequisite units.
+ * Learning Journey
+ *
+ * The screen used to show five milestones - relativistic spacetime, event
+ * horizons, hawking radiation - with mastery scores of 94, 88 and 92 and
+ * focus times beside them. Nothing on the device produced any of it. Every
+ * learner saw the same five achievements, including the one who arrived a
+ * minute ago, so the screen taught people that a progress bar here describes
+ * a character rather than them.
+ *
+ * What is real: LessonReader records a study session when a lesson closes,
+ * so the timeline below is made of minutes actually spent. An empty timeline
+ * is the honest state for someone who has not read anything yet, and it says
+ * so rather than filling itself in.
+ *
+ * What is deliberately absent: mastery scores, and locked units with a
+ * prerequisite rule behind them. Neither is recorded anywhere, and a lock
+ * that no curriculum has decided to place is not a constraint, it is a
+ * decoration shaped like one.
  */
 
-const JOURNEY_DATA = [
-  {
-    day: 'Milestone 01',
-    topic: 'Relativistic Spacetime & Minkowski Metric',
-    icon: '🕳️',
-    status: 'completed',
-    score: 94,
-    time: '45 mins focus'
-  },
-  {
-    day: 'Milestone 02',
-    topic: 'Event Horizons & Null Geodesics',
-    icon: '🌌',
-    status: 'completed',
-    score: 88,
-    time: '50 mins focus'
-  },
-  {
-    day: 'Milestone 03',
-    topic: 'Coordinate vs. Physical Singularities',
-    icon: '⭐',
-    status: 'completed',
-    score: 92,
-    time: '55 mins focus'
-  },
-  {
-    day: 'Milestone 04',
-    topic: 'Frame Dragging & Ergosphere Mechanics',
-    icon: '⚛️',
-    status: 'in-progress',
-    score: 65,
-    time: '30 mins remaining'
-  },
-  {
-    day: 'Milestone 05',
-    topic: 'Hawking Radiation & Black Hole Thermodynamics',
-    icon: '💫',
-    status: 'locked',
-    score: 0,
-    time: 'Prerequisite Locked'
-  },
-];
+// Ordered by where the time went, not as a ranking. The largest session is at
+// the top because that is the question someone asks this screen: what have I
+// actually spent time on.
+const journeyEntries = (analytics) =>
+  [...analytics.topicTimeDistribution].sort((a, b) => b.hours - a.hours);
+
+const pluralise = (count, singular, plural = `${singular}s`) =>
+  `${count} ${count === 1 ? singular : plural}`;
+
+// The distribution accumulates hours per topic rather than counting sessions,
+// but each session was also tallied by day. Both are stored, so the total is a
+// sum rather than a guess.
+const sessionsRecorded = (analytics) =>
+  analytics.weeklyActivity.reduce((total, day) => total + (day.sessions || 0), 0);
 
 function LearningJourney({ setScreen }) {
+  const [analytics] = useState(() => getAnalyticsData());
+  const entries = journeyEntries(analytics);
+
   return (
     <div className="journey-console">
-      {/* Top Navbar */}
       <header className="journey-navbar">
         <div className="journey-nav-left">
           <button className="journey-back-btn" onClick={() => setScreen('universe')}>
             ← Return to Universe
           </button>
           <div className="journey-title-col">
-            <h1 className="journey-title">Epistemic Learning Journey</h1>
-            <span className="journey-sub">Cumulative milestone progress & mastery verification</span>
+            <h1 className="journey-title">Learning Journey</h1>
+            <span className="journey-sub">Sessions this device has recorded</span>
           </div>
         </div>
       </header>
 
       <main className="journey-main-layout">
-        <div className="journey-timeline-feed">
-          {JOURNEY_DATA.map((item, idx) => (
-            <div key={idx} className={`journey-feed-item ${item.status}`}>
-              <div className="journey-node-marker">
-                <span className="marker-icon-symbol">{item.icon}</span>
-              </div>
+        {entries.length === 0 ? (
+          <EmptyState
+            icon={<Compass size={28} />}
+            title="Nothing recorded yet"
+            description="An entry is written here when you close a lesson. Read something and the first one appears - time spent, not time claimed."
+            actionText="Go to Learn"
+            onAction={() => setScreen('learn')}
+          />
+        ) : (
+          <>
+            <section className="journey-summary" aria-label="Recorded totals">
+              <span className="journey-summary-item">
+                <Clock size={15} aria-hidden="true" />
+                {pluralise(analytics.totalHoursStudied, 'hour')} recorded
+              </span>
+              <span className="journey-summary-item">
+                {pluralise(entries.length, 'topic')} touched
+              </span>
+              <span className="journey-summary-item">
+                {pluralise(sessionsRecorded(analytics), 'session')} logged
+              </span>
+            </section>
 
-              <div className="journey-entry-card">
-                <div className="entry-head">
-                  <span className="milestone-day-tag">{item.day}</span>
-                  <span className={`status-badge-tag ${item.status}`}>
-                    {item.status === 'completed' ? '✓ Mastered' : item.status === 'in-progress' ? '● In Progress' : '🔒 Locked'}
-                  </span>
-                </div>
-
-                <h3 className="milestone-topic-title">{item.topic}</h3>
-                
-                {item.status === 'completed' && (
-                  <div className="milestone-stats-row">
-                    <span className="score-stat">Mastery: {item.score}%</span>
-                    <span className="time-stat">⏱️ {item.time}</span>
+            <div className="journey-timeline-feed">
+              {entries.map((item) => (
+                <div key={item.topic} className="journey-feed-item">
+                  <div className="journey-node-marker" aria-hidden="true">
+                    <Clock size={16} />
                   </div>
-                )}
-                
-                {item.status === 'in-progress' && (
-                  <div className="milestone-progress-block">
-                    <div className="progress-mini-track">
-                      <div className="progress-mini-fill" style={{ width: `${item.score}%` }}></div>
+
+                  <div className="journey-entry-card">
+                    {item.subject ? (
+                      <div className="entry-head">
+                        <span className="milestone-day-tag">{item.subject}</span>
+                      </div>
+                    ) : null}
+
+                    <h3 className="milestone-topic-title">{item.topic}</h3>
+
+                    <div className="milestone-stats-row">
+                      <span className="time-stat">
+                        {pluralise(item.hours, 'hour')} recorded
+                      </span>
                     </div>
-                    <span className="progress-mini-label">{item.score}% complete • Resume Module →</span>
                   </div>
-                )}
-
-                {item.status === 'locked' && (
-                  <p className="locked-helper-text">Requires completion of Milestone 04 verification quiz.</p>
-                )}
-              </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </main>
     </div>
   );
