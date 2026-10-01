@@ -28,3 +28,19 @@ jobs:
       # ESLint currently runs over app source only. Every remaining violation is
       # in *.test.* files and is tracked as debt; see the lint job below.
       - run: npm run lint
+
+  layout:
+    name: layout regression (real Chrome, built app)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # jsdom has no layout engine, so element-geometry regressions are invisible
+      # to Jest. This drives the built output in real Chrome at 1440 and 375,
+      # signs in through the real form and walks every screen.
+      - run: npm run test:layout
