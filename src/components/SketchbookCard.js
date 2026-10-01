@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Check, Star, Globe, Zap, Lightbulb } from 'lucide-react';
 import '../styles/SketchbookCard.css';
 
 /**
@@ -219,7 +220,17 @@ function SketchbookCard({ term = 'capillary-action' }) {
                 className={`save-kit-btn ${isSaved ? 'saved' : ''}`}
                 onClick={handleSaveToStudyKit}
               >
-                {isSaved ? '✓ Saved in Study Kit' : '⭐ Save to Study Kit'}
+                {isSaved ? (
+                  <>
+                    <Check size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                    Saved in Study Kit
+                  </>
+                ) : (
+                  <>
+                    <Star size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                    Save to Study Kit
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -252,7 +263,7 @@ function SketchbookCard({ term = 'capillary-action' }) {
 
           {/* Everyday Connection */}
           <div className="definition-section everyday-connection-box">
-            <h3 className="section-title">🌍 Everyday Connection</h3>
+            <h3 className="section-title"><Globe size={16} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />Everyday Connection</h3>
             <p className="section-content">{data.everydayConnection}</p>
           </div>
 
@@ -269,7 +280,7 @@ function SketchbookCard({ term = 'capillary-action' }) {
                 className="challenge-me-trigger-btn"
                 onClick={() => setShowChallenge(true)}
               >
-                ⚡ Challenge Me on {data.term} →
+                <Zap size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Challenge Me on {data.term} →
               </button>
             ) : (
               <div className="interactive-challenge-panel">
@@ -300,7 +311,7 @@ function SketchbookCard({ term = 'capillary-action' }) {
                 </div>
                 {quizAnswer !== null && (
                   <p className="challenge-explanation-text">
-                    💡 {data.challenge.explanation}
+                    <Lightbulb size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />{data.challenge.explanation}
                   </p>
                 )}
               </div>
