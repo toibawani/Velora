@@ -30,11 +30,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
+  /* Without this the long subtitle is the flex item's min-content width, the
+     header cannot shrink, and the whole page scrolls sideways on a phone. */
+  min-width: 0;
 }
 
 .comm-header-titles {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .comm-title {
@@ -209,6 +213,7 @@
 
 .reply-input {
   flex: 1;
+  min-width: 0;
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-full);
@@ -269,6 +274,9 @@
 
 .stack-heading {
   margin: 0 0 var(--space-3);
+  /* The cards below are full width and carry their own padding, so a heading
+     flush to the stack edge sits under the card border. Match the card inset. */
+  padding-left: var(--space-5);
   font-size: 1.05rem;
   font-weight: var(--weight-semibold);
   color: var(--text-primary);
@@ -382,6 +390,21 @@
 }
 
 @media (max-width: 640px) {
+  .community-nav-header {
+    padding: var(--space-3);
+  }
+
+  .ask-footer-row,
+  .reply-input-row {
+    flex-wrap: wrap;
+  }
+
+  /* The note field takes its own line so the two buttons beside it are not
+     squeezed into a row narrower than their own labels. */
+  .reply-input {
+    flex: 1 0 100%;
+  }
+
   .comm-device-note {
     display: none;
   }
