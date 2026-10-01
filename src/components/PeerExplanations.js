@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Lightbulb, Target, Smile, Brain } from 'lucide-react';
 import EmptyState from './EmptyState';
 import { sanitizeText } from '../utils/sanitize';
 import { safeGet, safeSet } from '../utils/storage';
@@ -166,7 +167,7 @@ function PeerExplanations({ topic, onNotify }) {
 
       {sortedExplanations.length === 0 ? (
         <EmptyState
-          icon="💡"
+          icon={<Lightbulb size={28} aria-hidden="true" />}
           title="No peer explanations yet"
           description="Be the first to explain this concept in simple words for your peers."
           actionText="Write First Explanation"
@@ -191,7 +192,7 @@ function PeerExplanations({ topic, onNotify }) {
                      disabled={Boolean(userVotes[`${exp.id}-clear`])}
                      aria-label="Vote clear"
                   >
-                    <span className="vote-icon">🎯</span>
+                    <span className="vote-icon"><Target size={16} aria-hidden="true" /></span>
                     <span className="vote-count">{exp.votes.clear}</span>
                   </button>
 
@@ -201,7 +202,7 @@ function PeerExplanations({ topic, onNotify }) {
                      disabled={Boolean(userVotes[`${exp.id}-funny`])}
                      aria-label="Vote funny"
                   >
-                    <span className="vote-icon">😄</span>
+                    <span className="vote-icon"><Smile size={16} aria-hidden="true" /></span>
                     <span className="vote-count">{exp.votes.funny}</span>
                   </button>
 
@@ -211,7 +212,7 @@ function PeerExplanations({ topic, onNotify }) {
                      disabled={Boolean(userVotes[`${exp.id}-mindBending`])}
                      aria-label="Vote mind-bending"
                   >
-                    <span className="vote-icon">🤯</span>
+                    <span className="vote-icon"><Brain size={16} aria-hidden="true" /></span>
                     <span className="vote-count">{exp.votes.mindBending}</span>
                   </button>
                 </div>
