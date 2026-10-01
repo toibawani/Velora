@@ -2,9 +2,13 @@
    App — Root Container & Global Utilities
    ========================================================================== */
 
-@import './styles/Typography.css';
-@import './styles/Colors.css';
-@import './styles/skeleton.css';
+/* Typography.css, Colors.css and skeleton.css used to be imported here. They
+   were deleted in bfe1770 and these three lines were left behind, so the
+   production build stopped resolving them and only a real build found it - the
+   test suite and tsc both pass with a broken @import. Nothing imported by those
+   three sheets is still reachable: .label, .no-shadow, .btn-secondary,
+   .gradient-text and .skeleton* are unused, and the one .card left in Learn.js
+   overrides every property it set with an inline style. */
 
 * {
   margin: 0;
