@@ -290,9 +290,17 @@
   overflow: hidden;
 }
 
+/* Height comes from the viewBox's own ratio rather than a fixed 440px. The
+   drawing is 540x380 units, so a 440px-tall box asked the SVG to letterbox a
+   380-unit-tall diagram into extra space: the content scaled down to fit the
+   width and sat in a box taller than it needed, and every node and edge label
+   was drawn at fixed user-space coordinates that only lined up at one scale.
+   Matching the ratio means the user-space grid maps to the box exactly, so the
+   labels keep their intended clearance from the nodes they belong to. */
 .topology-svg {
   width: 100%;
-  height: 440px;
+  height: auto;
+  aspect-ratio: 540 / 380;
   display: block;
 }
 

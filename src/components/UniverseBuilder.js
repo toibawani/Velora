@@ -204,7 +204,11 @@ function UniverseBuilder({ topic, onBack }) {
         {/* View 1: Topology Graph (SVG) */}
         {viewMode === 'galaxy' && (
           <div className="graph-card">
-            <svg viewBox="0 0 540 380" className="topology-svg">
+            {/* preserveAspectRatio is stated rather than left at its default so
+                the coordinate space matches the element's ratio. The CSS sets
+                that ratio; this keeps the drawing and its box in agreement if
+                the viewBox ever changes. */}
+            <svg viewBox="0 0 540 380" preserveAspectRatio="xMidYMid meet" className="topology-svg">
               {/* Grid background lines */}
               <defs>
                 <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
