@@ -24,7 +24,19 @@
     "build": "react-scripts build",
     "typecheck": "tsc --noEmit",
     "test": "react-scripts test",
+    "lint": "eslint --max-warnings=0 --ext .js,.jsx,.ts,.tsx src --ignore-pattern '*.test.js' --ignore-pattern '*.test.jsx' --ignore-pattern '*.test.ts' --ignore-pattern '*.test.tsx'",
+    "lint:all": "eslint --max-warnings=0 --ext .js,.jsx,.ts,.tsx src",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 58,
+        "branches": 52,
+        "functions": 52,
+        "lines": 59
+      }
+    }
   },
   "eslintConfig": {
     "extends": [

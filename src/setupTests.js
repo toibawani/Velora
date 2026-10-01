@@ -34,7 +34,6 @@ if (typeof window !== 'undefined' && window.HTMLCanvasElement) {
     measureText: () => ({ width: 0 }),
     transform: () => {},
     resetTransform: () => {},
-    drawImage: () => {},
     createRadialGradient: () => ({
       addColorStop: () => {},
     }),

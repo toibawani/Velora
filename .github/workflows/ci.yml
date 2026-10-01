@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: tsc, jest, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # There was no CI at all until now: the build was broken by three dead
+      # @import lines while 291 tests passed, so a green suite was not evidence.
+      - run: npx tsc --noEmit
+      - run: CI=true npx react-scripts test --watchAll=false --coverage
+      - run: npm run build
+      # ESLint currently runs over app source only. Every remaining violation is
+      # in *.test.* files and is tracked as debt; see the lint job below.
+      - run: npm run lint
