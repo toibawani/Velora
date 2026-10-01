@@ -23,6 +23,10 @@ import '../styles/Challenges.css';
 
 const SUBJECTS = Object.entries(CURRICULUM).map(([id, record]) => ({ id, label: record.name }));
 
+// Minutes are matched to lessons by title, which would orphan logged time if a
+// topic were renamed in the curriculum. No rename path exists - the titles are
+// static data and the reader records the title it was handed - so this is known
+// debt and not a live bug. A rename feature would need a stable topic id here.
 const keyFor = (value) => String(value || '').trim().toLowerCase();
 
 function Challenges({ setScreen, onOpenLesson }) {
