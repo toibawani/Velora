@@ -477,7 +477,8 @@
 }
 
 .matrix-icon {
-  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
 }
 
 .matrix-cat {
