@@ -125,24 +125,37 @@ const record = (name, data) => {
 };
 
 const playConnect = async (page) => {
-  const first = await snapshot(page);
-  // Answer the question by clicking an option, then read the feedback.
-  await page.evaluate(() => {
-    const opts = [...document.querySelectorAll('button')].filter((b) =>
-      /bg-connect-option|bg-option|option/.test(b.className)
-    );
-    if (opts[0]) opts[0].click();
-  });
-  await new Promise((r) => setTimeout(r, 500));
-  const answered = await snapshot(page);
-  const advanced = await page.evaluate(() => {
-    const b = [...document.querySelectorAll('button')].find((x) => /next/i.test(x.textContent));
-    if (!b) return false;
-    b.click();
-    return true;
-  });
-  await new Promise((r) => setTimeout(r, 500));
-  return { first, answered, advanced };
+  const rounds = [];
+  for (let i = 0; i < 3; i++) {
+    const title = await page.evaluate(() => {
+      const h = [...document.querySelectorAll('h3')].find(x => /Connect the Concept/.test(x.textContent));
+      return h ? h.textContent.replace('Connect the Concept: ', '') : 'NONE';
+    });
+    const markers = await page.evaluate(() => [...document.querySelectorAll('.bg-option-btn')].map(b => b.textContent.trim().slice(0, 26)));
+    // click the option whose text matches the known thread for this puzzle
+    const clicked = await page.evaluate(() => {
+      const opts = [...document.querySelectorAll('.bg-option-btn')];
+      const target = opts.find(o => /reproduce itself|trace of it|every other level|arrow of time|negative feedback|updating beliefs/.test(o.textContent));
+      if (!target) return null;
+      target.click();
+      return target.textContent.trim().slice(0, 40);
+    });
+    await new Promise(r => setTimeout(r, 600));
+    const verdict = await page.evaluate(() => {
+      const c = document.querySelector('.bg-result-card');
+      return c ? (c.className.includes('success') ? 'CORRECT' : 'WRONG') : 'none';
+    });
+    rounds.push({ title, firstOption: markers[0], clicked, verdict });
+    const hasNext = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find(x => /next/i.test(x.textContent));
+      if (!b) return false;
+      b.click();
+      return true;
+    });
+    if (!hasNext) break;
+    await new Promise(r => setTimeout(r, 700));
+  }
+  return { rounds };
 };
 
 const playMyth = async (page) => {

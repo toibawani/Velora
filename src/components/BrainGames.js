@@ -29,6 +29,20 @@ import '../styles/BrainGames.css';
 // ============================================================================
 // GAME 1: CONNECT THE CONCEPT
 // ============================================================================
+/**
+ * Fisher-Yates over indices, so the answer is not always option A. Correctness is
+ * stored as the option's own identity rather than its position, which is what
+ * lets the display order change without the answer changing.
+ */
+export const shuffleOptions = (length) => {
+  const order = Array.from({ length }, (_, i) => i);
+  for (let i = order.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+};
+
 const CONNECT_PUZZLES = [
   {
     id: 'dissipation-arrow',
@@ -43,12 +57,12 @@ const CONNECT_PUZZLES = [
     ],
     question: 'What single fundamental thread links all five of these concepts?',
     options: [
-      'The one-way arrow of time and nature’s dissipation of ordered energy',
       'The microscopic behavior of covalent chemical bonds',
+      'The one-way arrow of time and nature’s dissipation of ordered energy',
       'The mathematical foundations of calculus and differential rates',
-      'The human psychological instinct for self-preservation',
+      'The human psychological instinct for self-preservation'
     ],
-    correctIdx: 0,
+    correctIdx: 1,
     insight: 'All five describe the one-way arrow of time. In physics and chemistry, entropy and radioactive decay disperse concentrated energy into random ambient heat. In biology, life survives only by pumping entropy outward into the environment. And 1,700 years before Clausius wrote the second law, Marcus Aurelius built Stoic philosophy around accepting that nature relentlessly unwinds everything composed of matter.',
     hardTerm: 'Stoicism',
   },
@@ -65,12 +79,12 @@ const CONNECT_PUZZLES = [
     ],
     question: 'What core organizational principle connects every one of these systems?',
     options: [
-      'Self-correcting negative feedback systems that push back against destabilizing extremes',
-      'The historical triumph of 18th-century European Enlightenment theory',
       'The strict conservation of mechanical momentum across closed boundaries',
       'Cognitive biases in human decision-making under stress',
+      'Self-correcting negative feedback systems that push back against destabilizing extremes',
+      'The historical triumph of 18th-century European Enlightenment theory'
     ],
-    correctIdx: 0,
+    correctIdx: 2,
     insight: 'Every system here is a self-regulating negative feedback loop. When a parameter gets nudged too high, internal counter-forces push it back down: sweating cools a fever, competition lowers inflated prices, and independent courts strike down executive overreach. Without negative feedback, systems experience runaways and collapse.',
     hardTerm: 'Le Chatelier’s Principle',
   },
@@ -90,11 +104,77 @@ const CONNECT_PUZZLES = [
       'Frameworks for navigating uncertainty and updating beliefs when reality pushes back',
       'Techniques for winning public forensic debates against hostile opponents',
       'The biological architecture of the human prefrontal cortex',
-      'Mathematical limits on computational processing speed',
+      'Mathematical limits on computational processing speed'
     ],
     correctIdx: 0,
     insight: 'These are the premier intellectual tools developed by humanity to overcome our built-in cognitive flaws. Bayes updates our priors, Popper demands we test what could break our ideas, and cognitive dissonance is the internal friction we feel when forced to admit we were wrong.',
     hardTerm: 'Cognitive Dissonance',
+  },
+  {
+    id: 'path-dependence',
+    title: 'Why Things Stay The Way They Are',
+    difficulty: 'Challenging',
+    terms: [
+      { name: 'Path Dependence', subject: 'Economics', clue: 'Once two telephone firms wired different cities, the map of who could call whom was fixed' },
+      { name: 'Lock-In', subject: 'Technology', clue: 'A keyboard layout people keep using because everyone already knows it' },
+      { name: 'The Second Law', subject: 'Physics', clue: 'The universe does not spontaneously undo its own arrangements' },
+      { name: 'Vestigiality', subject: 'Biology', clue: 'A useful organ in an ancestor that is now only a smaller, weaker version of itself' },
+      { name: 'Institutional Inertia', subject: 'Political Science', clue: 'A practice that survives long after the reason for it has gone' },
+    ],
+    question: 'What single idea explains all five of these?',
+    options: [
+      'The tendency of populations to grow without any external limit',
+      'The physical constraint that nothing may travel faster than light',
+      'The moral obligation to treat every person as an end in themselves',
+      'Once a path is chosen, the arrangement it produces tends to reproduce itself'
+    ],
+    correctIdx: 3,
+    insight: 'Each one describes a system that was shaped by an earlier choice and then kept the shape. The physical world does not care what you decided yesterday, which is why the Second Law is the odd one out here in spirit — but even it is a statement about irreversibility, the closest of these to path dependence as a physical fact.',
+    hardTerm: 'Path Dependence',
+  },
+  {
+    id: 'measurement-problem',
+    title: 'Knowing Without Knowing',
+    difficulty: 'Hard',
+    terms: [
+      { name: 'Heisenberg Uncertainty', subject: 'Physics', clue: 'Position and momentum cannot both be known exactly at once' },
+      { name: 'The Problem of Induction', subject: 'Philosophy', clue: 'A turkey fed for a thousand days still cannot prove tomorrow will be fed' },
+      { name: 'The Reliability of Memory', subject: 'Psychology', clue: 'Eyewitnesses are confident and frequently wrong in the same way' },
+      { name: 'Census Error', subject: 'Statistics', clue: 'The count is not the population, and the gap is systematic, not random' },
+      { name: 'The Problem of Other Minds', subject: 'Philosophy of Mind', clue: 'You will never directly observe anyone else’s experience' },
+    ],
+    question: 'What do all five of these have in common?',
+    options: [
+      'You can never directly observe the thing itself, only a trace of it',
+      'They are all solved by collecting more data points',
+      'They are all artefacts of how badly instruments were built in the past',
+      'They are all consequences of the observer being separate from the observed'
+    ],
+    correctIdx: 0,
+    insight: 'In every case the quantity of interest is one step behind observation. You measure a shadow and infer the object, a record and infer the event, a census and infer the true count. It is the same epistemic shape in a physics lab and in a courtroom, which is why the philosophy version was written first.',
+    hardTerm: 'The Problem of Induction',
+  },
+  {
+    id: 'scale-dependence',
+    title: 'The Same Thing, Answered Differently',
+    difficulty: 'Medium',
+    terms: [
+      { name: 'Emergent Behaviour', subject: 'Philosophy of Science', clue: 'Flocking has no leader and still moves as one' },
+      { name: 'Surface Tension', subject: 'Chemistry', clue: 'Water striders stand on water that is also how a needle floats' },
+      { name: 'The Ecological Fallacy', subject: 'Statistics', clue: 'The parts can trend one way while the whole trends another' },
+      { name: 'Contagion', subject: 'Epidemiology', clue: 'An epidemic flattens because of how neighbours are arranged, not who they are' },
+      { name: 'Central Banking', subject: 'Economics', clue: 'A rate cut moves borrowing across the whole economy at once' },
+    ],
+    question: 'What single mistake do all five illustrate?',
+    options: [
+      'Assuming that the parts of a system are independent of the whole',
+      'Assuming that correlation can be established without a control group',
+      'Assuming a rule at one level of description holds at every other level',
+      'Assuming that a measurement taken once will hold forever'
+    ],
+    correctIdx: 2,
+    insight: 'Water does not have a special property at the centimetre scale that explains the needle, and no individual decides to get sick, and no bank lends because the rate changed. Each of these is a case where the rule that works on one scale simply does not transfer, and the error is treating the scale you happen to be standing on as the only real one.',
+    hardTerm: 'Emergent Behaviour',
   },
 ];
 
@@ -105,6 +185,27 @@ function ConnectConceptGame() {
   const [revealedClues, setRevealedClues] = useState({});
 
   const puzzle = CONNECT_PUZZLES[puzzleIdx];
+
+  /**
+   * Every puzzle shipped with correctIdx: 0, so the right answer was always the
+   * first option. A learner who noticed that could score full marks without
+   * reading any of the five concepts, which turns the game into a test of
+   * position rather than of understanding.
+   *
+   * The options are shuffled per play and the puzzle data is written without a
+   * fixed correct index, so the answer is wherever it belongs. Order is
+   * remembered for the lifetime of the screen so that re-rendering, revealing a
+   * clue or answering does not reshuffle the buttons under the learner's finger.
+   */
+  const [optionOrder, setOptionOrder] = useState(() => shuffleOptions(puzzle.options.length));
+
+  useEffect(() => {
+    setOptionOrder(shuffleOptions(puzzle.options.length));
+  }, [puzzleIdx, puzzle.options.length]);
+
+  // The index the learner picked, translated back to the option's own identity.
+  const chosenOptionText =
+    selectedOption === null ? null : puzzle.options[optionOrder[selectedOption]];
 
   const toggleClue = (idx) => {
     setRevealedClues((prev) => ({ ...prev, [idx]: !prev[idx] }));
@@ -123,7 +224,7 @@ function ConnectConceptGame() {
     setPuzzleIdx((prev) => (prev + 1) % CONNECT_PUZZLES.length);
   };
 
-  const isCorrect = selectedOption === puzzle.correctIdx;
+  const isCorrect = chosenOptionText === puzzle.options[puzzle.correctIdx];
 
   return (
     <div className="bg-game-card">
@@ -164,21 +265,22 @@ function ConnectConceptGame() {
       <div className="bg-options-section">
         <h4 className="bg-question-text">{puzzle.question}</h4>
         <div className="bg-options-list">
-          {puzzle.options.map((opt, i) => {
+          {optionOrder.map((optionIndex, position) => {
+            const opt = puzzle.options[optionIndex];
             let stateClass = '';
             if (isAnswered) {
-              if (i === puzzle.correctIdx) stateClass = 'correct';
-              else if (i === selectedOption) stateClass = 'wrong';
+              if (optionIndex === puzzle.correctIdx) stateClass = 'correct';
+              else if (position === selectedOption) stateClass = 'wrong';
             }
             return (
               <button
-                key={i}
+                key={optionIndex}
                 type="button"
-                className={`bg-option-btn ${stateClass} ${selectedOption === i ? 'selected' : ''}`}
-                onClick={() => handleSelect(i)}
+                className={`bg-option-btn ${stateClass} ${position === selectedOption ? 'selected' : ''}`}
+                onClick={() => handleSelect(position)}
                 disabled={isAnswered}
               >
-                <span className="bg-option-marker">{String.fromCharCode(65 + i)}</span>
+                <span className="bg-option-marker">{String.fromCharCode(65 + position)}</span>
                 <span className="bg-option-text">{opt}</span>
               </button>
             );

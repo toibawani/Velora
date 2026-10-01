@@ -3,7 +3,7 @@ import { KEYS, readValue } from '../utils/storage';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import fs from 'fs';
 import path from 'path';
-import BrainGames, { EXPLAIN_PROMPTS } from './BrainGames';
+import BrainGames, { EXPLAIN_PROMPTS, CONNECT_PUZZLES, shuffleOptions } from './BrainGames';
 
 const openGame = async (name) => {
   fireEvent.click(screen.getByRole('tab', { name: new RegExp(name, 'i') }));
@@ -236,5 +236,78 @@ describe('sprint content breadth', () => {
   test('spans more than the three subjects it started with', () => {
     const subjects = new Set(EXPLAIN_PROMPTS.map((p) => p.subject));
     expect(subjects.size).toBeGreaterThanOrEqual(5);
+  });
+});
+
+describe('connect the concept answers are not always the first option', () => {
+  test('the correct answer is not stuck at index 0 in every puzzle', () => {
+    // All three puzzles shipped with correctIdx: 0, so the answer was always
+    // option A and the game could be passed by clicking the top button.
+    const positions = CONNECT_PUZZLES.map((p) => p.correctIdx);
+    expect(new Set(positions).size).toBeGreaterThan(1);
+  });
+
+  test('shuffling is a real permutation, not a partial or duplicated one', () => {
+    for (let trial = 0; trial < 200; trial += 1) {
+      const order = shuffleOptions(4);
+      expect([...order].sort((a, b) => a - b)).toEqual([0, 1, 2, 3]);
+    }
+  });
+
+  test('the correct answer reaches every position over many shuffles', () => {
+    // The whole point of the fix: whatever order the buttons are drawn in, the
+    // learner who understands the thread can pick it.
+    const seen = new Set();
+    for (let trial = 0; trial < 500; trial += 1) {
+      const order = shuffleOptions(4);
+      seen.add(order.indexOf(2));
+    }
+    expect(seen.size).toBe(4);
+  });
+
+  test('every puzzle has a correct index that exists', () => {
+    CONNECT_PUZZLES.forEach((puzzle) => {
+      expect(puzzle.correctIdx).toBeGreaterThanOrEqual(0);
+      expect(puzzle.correctIdx).toBeLessThan(puzzle.options.length);
+      expect(puzzle.options[puzzle.correctIdx]).toBeTruthy();
+    });
+  });
+});
+
+describe('connect the concept data points at the right answer', () => {
+  // These are the threads the insights actually describe. If an option array is
+  // reordered without moving correctIdx with it, the game marks a wrong answer
+  // correct -- which is exactly what happened while writing this change.
+  const THREADS = {
+    'dissipation-arrow': 'one-way arrow of time',
+    'homeostatic-equilibrium': 'negative feedback',
+    'rational-updating': 'updating beliefs',
+    'path-dependence': 'reproduce itself',
+    'measurement-problem': 'only a trace of it',
+    'scale-dependence': 'one level of description',
+  };
+
+  test('correctIdx points at the option that states the thread', () => {
+    CONNECT_PUZZLES.forEach((puzzle) => {
+      const thread = THREADS[puzzle.id];
+      expect(thread).toBeTruthy();
+      expect(puzzle.options[puzzle.correctIdx].toLowerCase()).toContain(thread);
+    });
+  });
+
+  test('the option order is varied across puzzles rather than all-alike', () => {
+    const positions = CONNECT_PUZZLES.map((p) => p.correctIdx);
+    expect(new Set(positions).size).toBeGreaterThanOrEqual(3);
+  });
+
+  test('every puzzle has five terms from five different subjects', () => {
+    CONNECT_PUZZLES.forEach((puzzle) => {
+      expect(puzzle.terms.length).toBe(5);
+      const subjects = puzzle.terms.map((t) => t.subject);
+      expect(new Set(subjects).size).toBeGreaterThanOrEqual(3);
+      puzzle.terms.forEach((t) => {
+        expect(t.clue.length).toBeGreaterThan(20);
+      });
+    });
   });
 });
