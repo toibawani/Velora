@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Orbit, Check } from 'lucide-react';
 import { copyText, COPY_OK } from '../utils/clipboard';
 
 /**
@@ -92,9 +93,7 @@ function ShareAchievementModal({
               <circle cx="80" cy="80" r="72" fill="none" stroke="#2563EB" strokeWidth="3" opacity="0.3" />
               <circle cx="80" cy="80" r="64" fill="#141414" stroke="#2563EB" strokeWidth="2" />
               <circle cx="80" cy="80" r="50" fill="rgba(37, 99, 235, 0.1)" stroke="#34c759" strokeWidth="1.5" strokeDasharray="4 2" />
-              <text x="80" y="74" fontSize="28" textAnchor="middle" dominantBaseline="middle">
-                🌌
-              </text>
+              <Orbit size={34} x={63} y={57} color="#2563EB" strokeWidth={1.5} aria-hidden="true" />
               <text x="80" y="110" fontSize="10" fill="#ffffff" fontWeight="800" textAnchor="middle" letterSpacing="1">
                 VELORA MASTER
               </text>
@@ -127,7 +126,12 @@ function ShareAchievementModal({
             Share on LinkedIn
           </button>
           <button className="viral-btn copy" onClick={handleCopyCaption}>
-            {copiedText ? '✓ Caption Copied!' : 'Copy Text for Instagram'}
+            {copiedText ? (
+              <>
+                <Check size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                Caption Copied!
+              </>
+            ) : 'Copy Text for Instagram'}
           </button>
         </div>
 
