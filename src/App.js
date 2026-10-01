@@ -143,7 +143,7 @@ function App() {
         )}
 
         {screen === 'community' && user && (
-          <CommunityScreen setScreen={setScreen} />
+          <CommunityScreen setScreen={setScreen} onOpenLesson={openLesson} />
         )}
 
         {screen === 'analytics' && user && (
