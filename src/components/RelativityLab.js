@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Globe, Sun, Sparkles, Orbit, Clapperboard, CircleDot, Atom } from 'lucide-react';
 
 // Fundamental physical constants (SI Units)
 const G = 6.6743e-11; // m^3 kg^-1 s^-2
@@ -12,7 +13,7 @@ const PRESETS = [
   {
     id: 'earth',
     name: 'Earth',
-    icon: '🌍',
+    icon: Globe,
     massInSolar: EARTH_MASS / SOLAR_MASS,
     radiusMultiplier: 2.5,
     note: 'Earth compressed to black hole would be ~9mm in radius (smaller than a coin).'
@@ -20,7 +21,7 @@ const PRESETS = [
   {
     id: 'sun',
     name: 'Sun (1 M☉)',
-    icon: '☀️',
+    icon: Sun,
     massInSolar: 1.0,
     radiusMultiplier: 3.0,
     note: '1 Solar mass collapses to an event horizon radius of 2.95 km.'
@@ -28,7 +29,7 @@ const PRESETS = [
   {
     id: 'cygnus-x1',
     name: 'Cygnus X-1',
-    icon: '💫',
+    icon: Sparkles,
     massInSolar: 21.2,
     radiusMultiplier: 2.0,
     // Cygnus X-1 is the leading candidate and has been for fifty years, but
@@ -39,7 +40,7 @@ const PRESETS = [
   {
     id: 'sag-a',
     name: 'Sagittarius A*',
-    icon: '🌌',
+    icon: Orbit,
     massInSolar: 4.297e6,
     radiusMultiplier: 1.5,
     note: 'The supermassive black hole at the centre of the Milky Way, about 4.3 million solar masses.'
@@ -50,7 +51,7 @@ const PRESETS = [
     // and M87* with the same icon treatment and no mention of that, which
     // made a film prop look like an observation.
     name: 'Gargantua (fictional)',
-    icon: '🎬',
+    icon: Clapperboard,
     massInSolar: 1.0e8,
     radiusMultiplier: 1.05,
     isFictional: true,
@@ -59,7 +60,7 @@ const PRESETS = [
   {
     id: 'm87',
     name: 'M87*',
-    icon: '🔴',
+    icon: CircleDot,
     massInSolar: 6.5e9,
     radiusMultiplier: 2.0,
     note: 'The first black hole imaged by the Event Horizon Telescope, in April 2019.'
@@ -355,7 +356,7 @@ function RelativityLab({ onBack }) {
             ← Back to Physics
           </button>
           <h1 className="rel-title">
-            <span>⚛️</span> General Relativity & Spacetime Laboratory
+            <Atom size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />General Relativity & Spacetime Laboratory
           </h1>
           <p className="rel-subtitle">
             Manipulate stellar masses, event horizon metrics, and gravitational time warping in real time.
@@ -372,7 +373,7 @@ function RelativityLab({ onBack }) {
             className={`rel-preset-chip ${selectedPreset === preset.id ? 'active' : ''}`}
             onClick={() => handleSelectPreset(preset)}
           >
-            {preset.icon} {preset.name}
+            <preset.icon size={16} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />{preset.name}
           </button>
         ))}
       </div>
