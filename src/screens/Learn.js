@@ -37,6 +37,7 @@ import LearningStories from '../components/LearningStories';
 import InstitutionalMode from '../components/InstitutionalMode';
 import '../styles/Learn.css';
 import LearningAnalytics from '../components/LearningAnalytics';
+import SelfReportedStyle from '../components/SelfReportedStyle';
 import SmartRevision from '../components/SmartRevision';
 import EmptyState from '../components/EmptyState';
 import { trackEvent } from '../utils/analytics';
@@ -586,6 +587,10 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
             onOpenDiscussion={() => setCurrentView('shadow-learning')}
           />
         </section>
+
+        {/* What the learner told us at setup. Its own card, labelled as a
+            preference, kept apart from the measured snapshot below it. */}
+        <SelfReportedStyle />
 
         {/* Analytics & Smart Revision */}
         <section className="learn-section">
