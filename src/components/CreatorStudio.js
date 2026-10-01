@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Palette, NotebookPen, Brain, Layers, BookOpen, Save, Check, Link2, Plus, X, Upload, Rocket, Sparkles } from 'lucide-react';
 import '../styles/Creator.css';
 
 function CreatorStudio({ topic, onBack }) {
@@ -26,34 +27,37 @@ function CreatorStudio({ topic, onBack }) {
         <button className="learn-back-btn" onClick={onBack}>
           ← Back
         </button>
-        <h1>🎨 Creator Studio</h1>
+        <h1><Palette size={22} aria-hidden="true" style={{ verticalAlign: '-4px', marginRight: 8 }} />Creator Studio</h1>
         <div style={{ width: '60px' }}></div>
       </div>
 
       <div className="creator-container">
         <div className="creator-tabs">
           {[
-            { id: 'notes', icon: '📝', label: 'Notes' },
-            { id: 'mindmap', icon: '🧠', label: 'Mind Map' },
-            { id: 'flashcards', icon: '🎴', label: 'Flashcards' },
-            { id: 'lesson', icon: '📖', label: 'Mini Lesson' },
-          ].map((mode) => (
-            <button
-              key={mode.id}
-              className={`creator-tab ${activeMode === mode.id ? 'active' : ''}`}
-              onClick={() => setActiveMode(mode.id)}
-            >
-              <span className="tab-icon">{mode.icon}</span>
-              <span className="tab-label">{mode.label}</span>
-            </button>
-          ))}
+            { id: 'notes', icon: NotebookPen, label: 'Notes' },
+            { id: 'mindmap', icon: Brain, label: 'Mind Map' },
+            { id: 'flashcards', icon: Layers, label: 'Flashcards' },
+            { id: 'lesson', icon: BookOpen, label: 'Mini Lesson' },
+          ].map((mode) => {
+            const TabIcon = mode.icon;
+            return (
+              <button
+                key={mode.id}
+                className={`creator-tab ${activeMode === mode.id ? 'active' : ''}`}
+                onClick={() => setActiveMode(mode.id)}
+              >
+                <span className="tab-icon"><TabIcon size={18} aria-hidden="true" /></span>
+                <span className="tab-label">{mode.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         <div className="creator-content">
           {/* Notes Mode */}
           {activeMode === 'notes' && (
             <div className="notes-editor">
-              <h2>📝 Create Beautiful Notes</h2>
+              <h2><NotebookPen size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />Create Beautiful Notes</h2>
               <textarea
                 placeholder="Write your notes here... Use #topics to organize"
                 value={noteContent}
@@ -70,7 +74,17 @@ function CreatorStudio({ topic, onBack }) {
                 className={`btn-save-note ${saved ? 'saved' : ''}`}
                 onClick={handleSaveNote}
               >
-                {saved ? '✅ Saved!' : '💾 Save Note'}
+                {saved ? (
+                  <>
+                    <Check size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                    Saved!
+                  </>
+                ) : (
+                  <>
+                    <Save size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                    Save Note
+                  </>
+                )}
               </button>
             </div>
           )}
@@ -78,7 +92,7 @@ function CreatorStudio({ topic, onBack }) {
           {/* Mind Map Mode */}
           {activeMode === 'mindmap' && (
             <div className="mindmap-creator">
-              <h2>🧠 Create a Mind Map</h2>
+              <h2><Brain size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />Create a Mind Map</h2>
               <svg className="mindmap-canvas" viewBox="0 0 600 400">
                 {/* Center circle */}
                 <circle cx="300" cy="200" r="50" fill="#2563EB" />
@@ -103,14 +117,14 @@ function CreatorStudio({ topic, onBack }) {
                 })}
               </svg>
               <p className="mindmap-hint">Click on branches to edit and add connections</p>
-              <button className="btn-share-mindmap">🔗 Share Mind Map</button>
+              <button className="btn-share-mindmap"><Link2 size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Share Mind Map</button>
             </div>
           )}
 
           {/* Flashcards Mode */}
           {activeMode === 'flashcards' && (
             <div className="flashcard-creator">
-              <h2>🎴 Create Flashcards</h2>
+              <h2><Layers size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />Create Flashcards</h2>
               <div className="flashcard-input">
                 <input
                   type="text"
@@ -131,7 +145,7 @@ function CreatorStudio({ topic, onBack }) {
                   rows="3"
                 />
                 <button className="btn-add-card" onClick={addFlashcard}>
-                  ➕ Add Card
+                  <Plus size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Add Card
                 </button>
               </div>
 
@@ -144,15 +158,16 @@ function CreatorStudio({ topic, onBack }) {
                       <div className="card-a">A: {card.a}</div>
                       <button
                         className="btn-remove-card"
+                        aria-label="Remove this flashcard"
                         onClick={() =>
                           setFlashcards(flashcards.filter((_, i) => i !== idx))
                         }
                       >
-                        ✕
+                        <X size={15} aria-hidden="true" />
                       </button>
                     </div>
                   ))}
-                  <button className="btn-publish-cards">📤 Publish Cards</button>
+                  <button className="btn-publish-cards"><Upload size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Publish Cards</button>
                 </div>
               )}
             </div>
@@ -161,7 +176,7 @@ function CreatorStudio({ topic, onBack }) {
           {/* Lesson Mode */}
           {activeMode === 'lesson' && (
             <div className="lesson-creator">
-              <h2>📖 Create a Mini Lesson</h2>
+              <h2><BookOpen size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />Create a Mini Lesson</h2>
               <div className="lesson-form">
                 <input type="text" placeholder="Lesson Title" className="lesson-input" />
                 <textarea
@@ -180,13 +195,13 @@ function CreatorStudio({ topic, onBack }) {
                     <input type="checkbox" /> Make it Public
                   </label>
                 </div>
-                <button className="btn-publish-lesson">🚀 Publish Lesson</button>
+                <button className="btn-publish-lesson"><Rocket size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Publish Lesson</button>
               </div>
             </div>
           )}
         </div>
 
-        {saved && <div className="save-notification">✨ Your work is being saved...</div>}
+        {saved && <div className="save-notification"><Sparkles size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Your work is being saved...</div>}
       </div>
     </div>
   );
