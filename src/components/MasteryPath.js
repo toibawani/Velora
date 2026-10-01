@@ -1,4 +1,5 @@
 import React from 'react';
+import { Timer, Check } from 'lucide-react';
 import '../styles/MasteryPath.css';
 
 /**
@@ -44,7 +45,7 @@ function MasteryPath({ selectedSubject }) {
           <span className="path-overline">Structured Syllabus</span>
           <h2 className="path-title">{path.name}</h2>
         </div>
-        <span className="path-duration-badge">⏱️ {path.duration}</span>
+        <span className="path-duration-badge"><Timer size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />{path.duration}</span>
       </div>
 
       {/* Progress */}
@@ -62,7 +63,7 @@ function MasteryPath({ selectedSubject }) {
         {path.lessons.map((lesson, idx) => (
           <div key={lesson.id} className={`lesson-row-item ${lesson.completed ? 'completed' : ''}`}>
             <div className="lesson-check-indicator">
-              {lesson.completed ? '✓' : idx + 1}
+              {lesson.completed ? <Check size={13} aria-hidden="true" /> : idx + 1}
             </div>
             <div className="lesson-info">
               <h4 className="lesson-title">{lesson.title}</h4>
