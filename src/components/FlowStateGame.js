@@ -10,7 +10,10 @@ import {
   ArrowRight,
   ArrowLeft,
   ChevronUp,
-  ChevronDown
+  ChevronDown,
+  Star,
+  Sparkle,
+  Check
 } from 'lucide-react';
 import ShareAchievementModal from './ShareAchievementModal';
 
@@ -463,9 +466,9 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                 <div className="depth-rating-box">
                   <span className="rating-label">Conceptual Depth Attained</span>
                   <div className="stars-row">
-                    <span className="star active">★</span>
-                    <span className="star active">★</span>
-                    <span className="star active">★</span>
+                    <span className="star active"><Star size={18} fill="currentColor" aria-hidden="true" /></span>
+                    <span className="star active"><Star size={18} fill="currentColor" aria-hidden="true" /></span>
+                    <span className="star active"><Star size={18} fill="currentColor" aria-hidden="true" /></span>
                   </div>
                   <span className="rating-tagline">Mastery Level: Advanced Comprehension</span>
                 </div>
@@ -475,19 +478,19 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                   <h3 className="insights-header-text">Key Scientific Insights Discovered</h3>
                   <div className="insight-card-list">
                     <div className="curated-insight-item">
-                      <span className="insight-bullet">✦</span>
+                      <span className="insight-bullet"><Sparkle size={14} aria-hidden="true" /></span>
                       <p>
                         <strong>Coordinate vs Physical Boundaries:</strong> The event horizon is not a surface of solid matter; it is the mathematical demarcation where light itself cannot outpace spacetime curvature.
                       </p>
                     </div>
                     <div className="curated-insight-item">
-                      <span className="insight-bullet">✦</span>
+                      <span className="insight-bullet"><Sparkle size={14} aria-hidden="true" /></span>
                       <p>
                         <strong>Relativistic Invariance:</strong> Observers falling into a supermassive black hole experience normal local time progression, while external observers see them asymptotically freeze at the horizon.
                       </p>
                     </div>
                     <div className="curated-insight-item">
-                      <span className="insight-bullet">✦</span>
+                      <span className="insight-bullet"><Sparkle size={14} aria-hidden="true" /></span>
                       <p>
                         <strong>Quantum Thermodynamic Balance:</strong> Virtual particle pairs near the horizon lead to net radiation emission, providing a deep link between thermodynamics, quantum theory, and gravitation.
                       </p>
@@ -512,7 +515,12 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                     className="reflection-save-btn"
                     onClick={() => setSavedReflection(true)}
                   >
-                    {savedReflection ? '✓ Saved to Your Study Notebook' : 'Save Reflection Note'}
+                    {savedReflection ? (
+                      <>
+                        <Check size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                        Saved to Your Study Notebook
+                      </>
+                    ) : 'Save Reflection Note'}
                   </button>
                 </div>
 
