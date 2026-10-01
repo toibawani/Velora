@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AlertCircle, Clock, Timer, Lightbulb } from 'lucide-react';
 import { getReviewItems, saveReviewItems, completeReviewItem } from '../utils/reviewPlanner';
 import '../styles/SmartReviewPlanner.css';
 
@@ -27,11 +28,24 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
     return '#E74C3C';
   };
 
+  // Returns the urgency and its wording, so the icon can be chosen from data
+  // rather than encoded into a string that carried the emoji with it.
   const getReviewStatus = (nextReviewDate) => {
     const days = getDaysUntilReview(nextReviewDate);
-    if (days <= 0) return '🔴 Review Now';
-    if (days <= 1) return '🟡 Tomorrow';
-    return `⏱️ In ${days} days`;
+    if (days <= 0) return { tone: 'now', label: 'Review Now' };
+    if (days <= 1) return { tone: 'soon', label: 'Tomorrow' };
+    return { tone: 'later', label: `In ${days} days` };
+  };
+
+  const renderReviewStatus = (nextReviewDate) => {
+    const { tone, label } = getReviewStatus(nextReviewDate);
+    const Icon = tone === 'now' ? AlertCircle : tone === 'soon' ? Clock : Timer;
+    return (
+      <>
+        <Icon size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />
+        {label}
+      </>
+    );
   };
 
   const visibleItems = selectedSubject ? reviewItems.filter((item) => item.subject === selectedSubject) : reviewItems;
@@ -78,7 +92,7 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
                   </span>
                 </div>
 
-                <p className="review-timing">{getReviewStatus(item.nextReview)}</p>
+                <p className="review-timing">{renderReviewStatus(item.nextReview)}</p>
               </div>
 
               <button
@@ -119,7 +133,7 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
           </div>
         </div>
         <p className="info-note">
-          💡 This science-backed method is 3x more effective than cramming!
+          <Lightbulb size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />This science-backed method is 3x more effective than cramming!
         </p>
       </div>
     </div>
