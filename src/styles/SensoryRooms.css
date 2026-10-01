@@ -237,7 +237,8 @@
 }
 
 .sr-sound-icon {
-  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
 }
 
 .sr-sound-name {
