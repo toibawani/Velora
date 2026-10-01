@@ -1,6 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import DefinitionDuel from './DefinitionDuel';
+import fs from 'fs';
+import path from 'path';
+import DefinitionDuel, { DUEL_PAIRS } from './DefinitionDuel';
 
 const answer = (text) => {
   fireEvent.change(screen.getByLabelText(/type the term/i), { target: { value: text } });
@@ -31,13 +33,12 @@ describe('Definition Duel', () => {
   test('finishing every card is not reported as running out of time', () => {
     render(<DefinitionDuel onBack={() => {}} />);
 
-    const answers = [
-      'Black Hole', 'Singularity', 'Photosynthesis', 'Catalyst',
-      'Entropy', 'Gravitational Lensing', 'Event Horizon', 'Predator',
-    ];
-    answers.forEach((word, i) => {
-      answer(word);
-      if (i < answers.length - 1) act(() => jest.advanceTimersByTime(900));
+    // Answer every card in the deck, read from the data rather than a hardcoded
+    // list, so growing the deck does not silently turn this into a test of the
+    // first eight answers.
+    DUEL_PAIRS.forEach((pair, i) => {
+      answer(pair.word);
+      if (i < DUEL_PAIRS.length - 1) act(() => jest.advanceTimersByTime(900));
     });
 
     expect(screen.getByText(/all cards done/i)).toBeInTheDocument();
@@ -84,5 +85,37 @@ describe('Definition Duel', () => {
     fireEvent.change(input, { target: { value: 'Black Hole' } });
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(screen.getByText('Score: 10')).toBeInTheDocument();
+  });
+});
+
+describe('duel content breadth', () => {
+  test('offers enough terms that one sitting is not the whole game', () => {
+    expect(DUEL_PAIRS.length).toBeGreaterThanOrEqual(15);
+  });
+
+  test('no two definitions are the same sentence with different terms swapped', () => {
+    const defs = DUEL_PAIRS.map((p) => p.definition.trim().toLowerCase());
+    expect(new Set(defs).size).toBe(defs.length);
+  });
+
+  test('no term is guessed from a definition that also appears in another game', () => {
+    // Three original definitions were copied verbatim from Concept Scrabble, so
+    // playing both games gave the same three questions twice.
+    const scrabble = fs.readFileSync(path.join(__dirname, 'ConceptScrabble.js'), 'utf8');
+    DUEL_PAIRS.forEach((pair) => {
+      const key = pair.definition.trim().replace(/^(a|an|the)\s+/i, '').toLowerCase();
+      // Compare on the distinctive tail of the sentence rather than the whole
+      // string, so a rewritten opening does not count as duplication.
+      const tail = key.split(' ').slice(-4).join(' ');
+      expect(scrabble.toLowerCase()).not.toContain(tail);
+    });
+  });
+
+  test('spans more than physics, since the original was five space terms of eight', () => {
+    const SPACE = ['black hole', 'singularity', 'event horizon', 'gravitational lensing', 'entropy'];
+    const spaceCount = DUEL_PAIRS.filter((p) =>
+      SPACE.includes(p.word.toLowerCase())
+    ).length;
+    expect(spaceCount).toBeLessThanOrEqual(2);
   });
 });

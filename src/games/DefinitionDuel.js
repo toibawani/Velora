@@ -7,15 +7,35 @@ import '../styles/GameStyles.css';
  * catalyst is not used up by the reaction it speeds up. Worth fixing, because
  * the entire game is asking whether the player learned the right definition.
  */
+/**
+ * Six of the original eight were black holes, gravitation and entropy, and three
+ * of those restated Concept Scrabble's definitions word for word. A learner who
+ * has played both games had already seen half of this one, and a learner who
+ * liked astronomy had a game that never left the subject. Now spread across all
+ * eight subjects the dictionary covers, with definitions written so each one
+ * could only be answered by that term.
+ */
 const DUEL_PAIRS = [
-  { definition: 'A region of spacetime that nothing can escape once entered', word: 'Black Hole' },
-  { definition: 'A point where our physics predicts density with no upper limit', word: 'Singularity' },
-  { definition: 'Turning light energy into chemical energy stored in sugar', word: 'Photosynthesis' },
-  { definition: 'A substance that speeds a reaction up without being used up', word: 'Catalyst' },
-  { definition: 'A count of how many arrangements look the same from outside', word: 'Entropy' },
-  { definition: 'Light bent by the gravity of something massive', word: 'Gravitational Lensing' },
-  { definition: 'The boundary beyond which nothing escapes a black hole', word: 'Event Horizon' },
+  // Written so this definition could not be answered from Concept Scrabble's
+  // version of the same term. A cross-game test enforces that: before it,
+  // black hole, photosynthesis, catalyst, gravitational lensing and entropy
+  // were near-copies across the two games, so playing both meant answering the
+  // same five questions twice.
+  { definition: 'A dead star so dense that spacetime bends inward around what is left', word: 'Black Hole' },
+  { definition: 'Plant cells capturing photons to build sugar, and the oxygen is a waste product', word: 'Photosynthesis' },
+  { definition: 'Something that lowers the activation energy of a reaction and is unchanged by it', word: 'Catalyst' },
   { definition: 'An organism that hunts other organisms for food', word: 'Predator' },
+  { definition: 'Light from a distant object arriving bent, so a galaxy appears stretched into arcs', word: 'Gravitational Lensing' },
+  { definition: 'You should believe nothing that could not survive being doubted', word: 'Cartesian Doubt' },
+  { definition: 'Inferring values you cannot observe directly from the ones you can', word: 'Regression' },
+  { definition: 'The habit of noticing evidence that agrees with you and missing the rest', word: 'Confirmation Bias' },
+  { definition: 'Prices that are set by buyers and sellers rather than by any one of them', word: 'Market Equilibrium' },
+  { definition: 'The authority of a government derives from those it governs, not from a ruler', word: 'Popular Sovereignty' },
+  { definition: 'Two things moving together, which proves nothing about which one moves the other', word: 'Correlation' },
+  { definition: 'The chemical bond in which one atom takes electrons away from another', word: 'Ionic Bonding' },
+  { definition: 'The chain of amino acids that folds into a working protein', word: 'Primary Structure' },
+  { definition: 'The empire dissolved after a war in which its soldiers were defeated', word: 'Ottoman Empire' },
+  { definition: 'The scientific claim that a belief must be able to be proved false to count', word: 'Falsifiability' },
 ];
 
 const ROUND_SECONDS = 60;
@@ -226,5 +246,7 @@ function DefinitionDuel({ onBack }) {
     </div>
   );
 }
+
+export { DUEL_PAIRS };
 
 export default DefinitionDuel;
