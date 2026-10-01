@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Gem, MessageCircle, Star, Circle, Triangle, BadgeCheck } from 'lucide-react';
 import '../styles/Doubts.css';
 
 /**
@@ -81,7 +82,7 @@ function Doubts({ setScreen }) {
           </div>
         </div>
         <div className="doubts-tokens-pill">
-          <span className="token-icon">💎</span>
+          <span className="token-icon"><Gem size={16} aria-hidden="true" /></span>
           <span>{userCoins} Peer Tokens</span>
         </div>
       </header>
@@ -116,7 +117,7 @@ function Doubts({ setScreen }) {
                     className={`bounty-chip ${selectedBounty === amount ? 'active' : ''}`}
                     onClick={() => setSelectedBounty(amount)}
                   >
-                    💎 {amount}
+                    <Gem size={12} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{amount}
                   </button>
                 ))}
               </div>
@@ -137,7 +138,7 @@ function Doubts({ setScreen }) {
                 className="inquiry-submit-btn"
                 disabled={!newQuestionText.trim() || userCoins < selectedBounty}
               >
-                Publish Inquiry (💎 {selectedBounty})
+                Publish Inquiry (<Gem size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 2 }} />{selectedBounty})
               </button>
             </div>
           </form>
@@ -173,15 +174,23 @@ function Doubts({ setScreen }) {
                 <div className="inquiry-card-header">
                   <span className="inquiry-topic-tag">{d.topic}</span>
                   <span className={`status-indicator-tag ${d.status}`}>
-                    {d.status === 'answered' ? '✓ Verified Solution' : '● Open Inquiry'}
+                    {d.status === 'answered' ? (
+                      <>
+                        <BadgeCheck size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Verified Solution
+                      </>
+                    ) : (
+                      <>
+                        <Circle size={11} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Open Inquiry
+                      </>
+                    )}
                   </span>
                 </div>
 
                 <h3 className="inquiry-question">{d.question}</h3>
 
                 <div className="inquiry-meta-row">
-                  <span className="inquiry-bounty-val">💎 {d.bounty} Token Bounty</span>
-                  <span className="inquiry-answers-count">💬 {d.answers} {d.answers === 1 ? 'Answer' : 'Answers'}</span>
+                  <span className="inquiry-bounty-val"><Gem size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{d.bounty} Token Bounty</span>
+                  <span className="inquiry-answers-count"><MessageCircle size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{d.answers} {d.answers === 1 ? 'Answer' : 'Answers'}</span>
                 </div>
 
                 {d.bestAnswer && (
@@ -191,14 +200,14 @@ function Doubts({ setScreen }) {
                         <span className="mentor-name">{d.bestAnswer.author}</span>
                         <span className="mentor-badge">Verified Mentor</span>
                       </div>
-                      <span className="solution-tag">★ Best Explanation</span>
+                      <span className="solution-tag"><Star size={12} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Best Explanation</span>
                     </div>
 
                     <p className="solution-content">{d.bestAnswer.content}</p>
 
                     <div className="solution-footer">
-                      <span className="upvotes-badge">▲ {d.bestAnswer.upvotes} verified</span>
-                      <span className="claimed-badge">💎 {d.bestAnswer.reward} tokens awarded</span>
+                      <span className="upvotes-badge"><Triangle size={11} fill="currentColor" aria-hidden="true" style={{ verticalAlign: '-1px', marginRight: 4 }} />{d.bestAnswer.upvotes} verified</span>
+                      <span className="claimed-badge"><Gem size={12} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{d.bestAnswer.reward} tokens awarded</span>
                     </div>
                   </div>
                 )}
@@ -213,14 +222,14 @@ function Doubts({ setScreen }) {
             <div className="inquiry-card">
               <div className="inquiry-card-header">
                 <span className="inquiry-topic-tag">General Relativity</span>
-                <span className="status-indicator-tag open">● Open Inquiry</span>
+                <span className="status-indicator-tag open"><Circle size={11} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Open Inquiry</span>
               </div>
               <h3 className="inquiry-question">How does gravitational lensing produce Einstein rings rather than simple focal points?</h3>
               <p className="inquiry-desc-preview">
                 Looking for a rigorous optical derivation comparing geometric optics in curved spacetime with classical refraction.
               </p>
               <div className="inquiry-meta-row">
-                <span className="inquiry-bounty-val">💎 100 Token Bounty</span>
+                <span className="inquiry-bounty-val"><Gem size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />100 Token Bounty</span>
                 <button className="answer-cta-btn">Submit Formal Solution →</button>
               </div>
             </div>
@@ -238,8 +247,8 @@ function Doubts({ setScreen }) {
                   <span className="mentor-domain">{m.domain}</span>
                 </div>
                 <div className="mentor-stats-row">
-                  <span className="stat-item">⭐ {m.reputation} Rep</span>
-                  <span className="stat-item">💎 {m.peerTokens} Earned</span>
+                  <span className="stat-item"><Star size={12} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{m.reputation} Rep</span>
+                  <span className="stat-item"><Gem size={12} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{m.peerTokens} Earned</span>
                 </div>
               </div>
             ))}
