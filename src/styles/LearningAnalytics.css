@@ -14,6 +14,17 @@
   letter-spacing: var(--tracking-tight);
 }
 
+/* Which subject the tiles below are counting. The snapshot used to ignore the
+   subject it was given and report the device total, so opening the history tab
+   showed a philosophy learner's hours. */
+.analytics-scope {
+  margin: -1rem 0 1rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -42,7 +53,15 @@
 }
 
 .stat-icon {
-  font-size: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.75rem;
+  color: var(--color-accent);
+}
+
+.stat-icon > svg {
+  display: block;
 }
 
 .stat-label {
@@ -74,7 +93,16 @@
 }
 
 .insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.insight > svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--color-text-muted);
 }
 
 .insight:last-child {
