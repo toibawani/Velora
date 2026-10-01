@@ -45,7 +45,10 @@ const PUZZLES = [
     blanks: 1,
   },
   {
-    hint: 'Two words',
+    // The hint said "Two words" for a one-word answer. The sentence already
+    // contains the word "gravitational", so the blank is the second half of the
+    // phrase and is one word long.
+    hint: 'One word',
     sentence: 'Gravity bends light, and the result is called gravitational _____.',
     word: 'LENSING',
     blanks: 1,
@@ -54,6 +57,54 @@ const PUZZLES = [
     hint: 'One word',
     sentence: 'The energy an object has because it is moving is called _____ energy.',
     word: 'KINETIC',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'The chemical bond in which one atom takes electrons away from another is _____ bonding.',
+    word: 'IONIC',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'The splitting of one heavy nucleus into lighter ones, releasing energy, is called nuclear _____.',
+    word: 'FISSION',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'The change of a gas into liquid happens when it is _____.',
+    word: 'CONDENSED',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'The outward push of a fluid on a surface is called _____ pressure.',
+    word: 'BLOOD',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'The transfer of heat through a solid, metal or empty space with no movement of the substance itself, is _____ conduction.',
+    word: 'THERMAL',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'In statistics, a chance result you would still expect to see fairly often is called _____.',
+    word: 'FLUKE',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Everyone who takes the same wrong medicine gets sick, but the fever spreading person to person is a _____.',
+    word: 'CONTAGION',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'A claim with no evidence and no interest in whether it is true is a _____.',
+    word: 'FABRICATION',
     blanks: 1,
   },
 ];
@@ -225,5 +276,7 @@ function WordPuzzle({ onBack }) {
     </div>
   );
 }
+
+export { PUZZLES };
 
 export default WordPuzzle;
