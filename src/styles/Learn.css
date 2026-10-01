@@ -99,11 +99,6 @@
   border-color: var(--border-strong);
 }
 
-.module-card.locked {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 .module-header {
   display: flex;
   justify-content: space-between;

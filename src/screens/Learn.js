@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Atom,
   Brain,
@@ -15,7 +15,9 @@ import {
   Sparkles,
   Compass,
   Users,
-  BookOpen
+  BookOpen,
+  Hourglass,
+  Circle
 } from 'lucide-react';
 import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
@@ -42,6 +44,7 @@ import { trackEvent } from '../utils/analytics';
 import { measurePerformance } from '../utils/performance';
 import LessonReader from '../components/LessonReader';
 import { CURRICULUM, getTopic } from '../data/curriculum';
+import { getAnalyticsData } from '../utils/analyticsStorage';
 
 function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, showToast }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
@@ -52,23 +55,45 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     difficulty: 'Intermediate',
     duration: 10
   });
+  // Re-read whenever the view changes: a lesson writes its time when the reader
+  // unmounts, and Learn stays mounted the whole time the reader is open.
+  const [learningAnalytics, setLearningAnalytics] = useState(() => getAnalyticsData());
+
+  useEffect(() => {
+    setLearningAnalytics(getAnalyticsData());
+  }, [currentView]);
 
   useEffect(() => {
     trackEvent('learning_started', { subject: selectedSubject, view: currentView });
   }, [selectedSubject, currentView]);
 
-  const subjectRecord = measurePerformance('resolve_subject_data', () => CURRICULUM[selectedSubject || 'physics']);
+  const subjectId = selectedSubject || 'physics';
+  const subjectRecord = measurePerformance('resolve_subject_data', () => CURRICULUM[subjectId]);
   const subjectIcons = { physics: Atom, philosophy: Brain, history: Landmark };
+  // Topic titles the learner has spent real time on in this subject.
+  const loggedTopicKeys = useMemo(() => new Set(
+    (learningAnalytics.topicTimeDistribution || [])
+      .filter((entry) => (entry.subject || 'physics') === subjectId && (entry.hours || 0) > 0)
+      .map((entry) => String(entry.topic || '').trim().toLowerCase())
+  ), [learningAnalytics, subjectId]);
   const subject = subjectRecord && {
     ...subjectRecord,
-    icon: subjectIcons[selectedSubject || 'physics'],
-    modules: subjectRecord.modules.map((module, index) => ({
-      ...module,
-      name: module.title,
-      status: index === 0 ? 'in-progress' : 'not-started',
-      progress: 0,
-      topics: module.topics.map((topic) => ({ ...topic, name: topic.title, lessons: topic.sections.length })),
-    })),
+    icon: subjectIcons[subjectId],
+    modules: subjectRecord.modules.map((module) => {
+      const topics = module.topics.map((topic) => ({ ...topic, name: topic.title, lessons: topic.sections.length }));
+      const loggedTopics = topics.filter((topic) => loggedTopicKeys.has(String(topic.title || '').trim().toLowerCase())).length;
+      return {
+        ...module,
+        name: module.title,
+        loggedTopics,
+        // Started means the learner has time on one of its topics. This used to
+        // be "index === 0", so every subject greeted everyone with the same
+        // module marked in-progress and a progress bar fixed at zero.
+        status: loggedTopics > 0 ? 'in-progress' : 'not-started',
+        progress: topics.length ? Math.round((loggedTopics / topics.length) * 100) : 0,
+        topics,
+      };
+    }),
   };
   if (!subject) return null;
 
@@ -89,35 +114,16 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     setCurrentView('playing-game');
   };
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'completed':
-        return '✓';
-      case 'in-progress':
-        return '⏳';
-      case 'not-started':
-        return '•';
-      case 'locked':
-        return '🔒';
-      default:
-        return '•';
-    }
-  };
+  // Two states are reachable now: a module either has recorded time on one of
+  // its topics or it does not. The completed and locked branches stayed here for
+  // statuses no data ever produced.
+  const getStatusIcon = (status) => (
+    status === 'in-progress'
+      ? <Hourglass size={13} aria-hidden="true" />
+      : <Circle size={13} aria-hidden="true" />
+  );
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'completed':
-        return '#34c759';
-      case 'in-progress':
-        return '#ff9f0a';
-      case 'not-started':
-        return '#666666';
-      case 'locked':
-        return '#444444';
-      default:
-        return '#666666';
-    }
-  };
+  const getStatusColor = (status) => (status === 'in-progress' ? '#ff9f0a' : '#666666');
 
   // View: Full curriculum lesson
   if (currentView === 'lesson' && selectedTopic) {
@@ -320,7 +326,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               <h2 className="section-title">Curated Modules</h2>
               {(!subject.modules || subject.modules.length === 0) ? (
                 <EmptyState
-                  icon="📚"
+                  icon={<BookOpen size={22} aria-hidden="true" />}
                   title="No modules found"
                   description="Complete topics or explore another subject to unlock tailored modules."
                   actionText="Switch Subject"
@@ -340,7 +346,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                             className="module-status"
                             style={{ color: getStatusColor(module.status) }}
                           >
-                            {getStatusIcon(module.status)} {module.status.replace('-', ' ')}
+                            {getStatusIcon(module.status)} {module.loggedTopics > 0 ? `${module.loggedTopics} of ${module.topics.length} topics logged` : 'Not started'}
                           </span>
                         </div>
                         <div className="module-progress">
