@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Users, NotebookPen, Check, Rocket, Trophy, Star, Lightbulb, Smile, Brain, GraduationCap } from 'lucide-react';
 import '../styles/ShadowLearning.css';
 
 function ShadowLearning({ topic, onNotify }) {
@@ -74,11 +75,11 @@ function ShadowLearning({ topic, onNotify }) {
 
   return (
     <div className="shadow-learning-container">
-      <h2>👥 Community Notes: {topic?.name}</h2>
+      <h2><Users size={20} aria-hidden="true" style={{ verticalAlign: '-4px', marginRight: 8 }} />Community Notes: {topic?.name}</h2>
 
       {/* Explain it to a 10-year-old */}
       <div className="my-note-section">
-        <h3>📝 Your Turn to Teach</h3>
+        <h3><NotebookPen size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />Your Turn to Teach</h3>
         <p className="challenge">
           Explain <strong>{topic?.name}</strong> in ONE sentence to a 10-year-old.
           Keep it simple, clear, and memorable!
@@ -96,29 +97,39 @@ function ShadowLearning({ topic, onNotify }) {
             className={`btn-submit-note ${submitted ? 'submitted' : ''}`}
             onClick={handleSubmitNote}
           >
-            {submitted ? '✅ Submitted!' : '🚀 Submit Note'}
+            {submitted ? (
+              <>
+                <Check size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                Submitted!
+              </>
+            ) : (
+              <>
+                <Rocket size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                Submit Note
+              </>
+            )}
           </button>
         </div>
       </div>
 
       {/* Community Votes */}
       <div className="community-notes">
-        <h3>🏆 Best Notes</h3>
+        <h3><Trophy size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />Best Notes</h3>
 
         {/* Top Voted */}
         {topNote && (
           <div className="top-note">
-            <div className="badge">⭐ Most Helpful</div>
+            <div className="badge"><Star size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />Most Helpful</div>
             <p className="note-text">"{topNote.text}"</p>
             <div className="note-votes">
               <span className="vote-count">
-                💡 Clear: {topNote.votes.clear}
+                <Lightbulb size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Clear: {topNote.votes.clear}
               </span>
               <span className="vote-count">
-                😄 Funny: {topNote.votes.funny}
+                <Smile size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Funny: {topNote.votes.funny}
               </span>
               <span className="vote-count">
-                🧠 Memorable: {topNote.votes.memorable}
+                <Brain size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Memorable: {topNote.votes.memorable}
               </span>
             </div>
           </div>
@@ -142,19 +153,19 @@ function ShadowLearning({ topic, onNotify }) {
                     className="vote-btn clear"
                     onClick={() => handleVote(note.id, 'clear')}
                   >
-                    💡 Clear ({note.votes.clear})
+                    <Lightbulb size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Clear ({note.votes.clear})
                   </button>
                   <button
                     className="vote-btn funny"
                     onClick={() => handleVote(note.id, 'funny')}
                   >
-                    😄 Funny ({note.votes.funny})
+                    <Smile size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Funny ({note.votes.funny})
                   </button>
                   <button
                     className="vote-btn memorable"
                     onClick={() => handleVote(note.id, 'memorable')}
                   >
-                    🧠 Memorable ({note.votes.memorable})
+                    <Brain size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Memorable ({note.votes.memorable})
                   </button>
                 </div>
               </div>
@@ -163,7 +174,7 @@ function ShadowLearning({ topic, onNotify }) {
       </div>
 
       <div className="shadow-note">
-        <p>🎓 <strong>Why Anonymity?</strong> Removes ego and fear of being wrong. You learn faster when competing to explain simply, not to show off.</p>
+        <p><GraduationCap size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /><strong>Why Anonymity?</strong> Removes ego and fear of being wrong. You learn faster when competing to explain simply, not to show off.</p>
       </div>
     </div>
   );
