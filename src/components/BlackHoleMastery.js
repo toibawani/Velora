@@ -282,6 +282,19 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     let time = 0;
     let isRunning = true;
 
+    // This canvas is the one animation in the bundle that never consulted
+    // prefers-reduced-motion. RelativityLab, PhysicsSimulations and StackSpread
+    // all check it; this one runs a permanent accretion-disk loop with a moving
+    // grid, which is exactly the kind of continuous peripheral motion that
+    // setting exists to stop. With motion reduced we still draw one frame, so
+    // the black hole is there rather than being a blank canvas.
+    const motionQuery =
+      typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+    let pausedForMotion = motionQuery ? motionQuery.matches : false;
+    if (pausedForMotion) isRunning = false;
+
     const render = () => {
       if (!isRunning) return;
 
@@ -344,15 +357,61 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       ctx.globalAlpha = 1.0;
 
       time++;
-      animationId = requestAnimationFrame(render);
+      // renderOnce() deliberately runs with isRunning forced true; without this
+      // guard that single frame schedules a follow-up and the loop starts anyway.
+      if (!pausedForMotion) animationId = requestAnimationFrame(render);
     };
 
-    render();
+    // One frame with no follow-up request, so a reduced-motion visitor still
+    // sees the rendered system rather than a cleared canvas.
+    const renderOnce = () => {
+      const wasRunning = isRunning;
+      isRunning = true;
+      render();
+      isRunning = wasRunning;
+    };
+
+    if (pausedForMotion) {
+      renderOnce();
+    } else {
+      render();
+    }
+
+    const onMotionPrefChange = (event) => {
+      pausedForMotion = event.matches;
+      if (pausedForMotion) {
+        isRunning = false;
+        cancelAnimationFrame(animationId);
+        renderOnce();
+      } else if (!document.hidden) {
+        isRunning = true;
+        animationId = requestAnimationFrame(render);
+      }
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animationId);
+      } else if (!pausedForMotion) {
+        isRunning = true;
+        animationId = requestAnimationFrame(render);
+      }
+    };
+
+    document.addEventListener('visibilitychange', onVisibility);
+    if (motionQuery && motionQuery.addEventListener) {
+      motionQuery.addEventListener('change', onMotionPrefChange);
+    }
 
     return () => {
       isRunning = false;
       cancelAnimationFrame(animationId);
       resizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+      if (motionQuery && motionQuery.removeEventListener) {
+        motionQuery.removeEventListener('change', onMotionPrefChange);
+      }
     };
   }, []);
 
