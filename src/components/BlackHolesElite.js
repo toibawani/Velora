@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserCheck, Orbit, Atom } from 'lucide-react';
 import '../styles/BlackHolesElite.css';
 
 function BlackHolesElite({ onExploreMasterclass, onOpenLab }) {
@@ -33,7 +34,7 @@ function BlackHolesElite({ onExploreMasterclass, onOpenLab }) {
         <div key={idx} className="elite-section">
           <div className="section-header">
             <h3 className="section-title">{section.title}</h3>
-            <span className="section-expert">👨‍🚀 {section.expert}</span>
+            <span className="section-expert"><UserCheck size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />{section.expert}</span>
           </div>
 
           <p className="section-content">{section.content}</p>
@@ -56,13 +57,13 @@ function BlackHolesElite({ onExploreMasterclass, onOpenLab }) {
             className="cta-button"
             onClick={onExploreMasterclass}
           >
-            🌌 Explore Full Black Holes Masterclass →
+            <Orbit size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Explore Full Black Holes Masterclass →
           </button>
           <button
             className="cta-button secondary"
             onClick={onOpenLab}
           >
-            ⚛️ Launch Relativity Simulation Lab →
+            <Atom size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Launch Relativity Simulation Lab →
           </button>
         </div>
       </div>
