@@ -9,7 +9,8 @@ import {
   Brain,
   Zap,
   Lightbulb,
-  MessageSquare
+  MessageSquare,
+  Check
 } from 'lucide-react';
 import { sanitizeText } from '../utils/sanitize';
 import { safeGet, safeSet } from '../utils/storage';
@@ -666,7 +667,7 @@ function ExplainItBackGame() {
               <div className="bg-intuition-tags">
                 <span>Intuition cues spotted:</span>
                 {matchedConcepts.map((cue) => (
-                  <span key={cue} className="bg-cue-pill">✓ {cue}</span>
+                  <span key={cue} className="bg-cue-pill"><Check size={12} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{cue}</span>
                 ))}
               </div>
             )}
