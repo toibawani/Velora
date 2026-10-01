@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { X } from 'lucide-react';
 import '../styles/ConceptMap.css';
 
 function ConceptMap({ subject }) {
@@ -174,8 +175,8 @@ function ConceptMap({ subject }) {
             <h3 className="detail-title">
               {map.nodes.find((n) => n.id === selectedNode).label}
             </h3>
-            <button className="detail-close" onClick={() => setSelectedNode(null)}>
-              ✕
+            <button className="detail-close" aria-label="Close the concept detail" onClick={() => setSelectedNode(null)}>
+              <X size={16} aria-hidden="true" />
             </button>
           </div>
           <p className="detail-description">
