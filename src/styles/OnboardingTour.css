@@ -70,7 +70,7 @@
 }
 
 .onboarding-illustration {
-  font-size: 3.5rem;
+  color: var(--accent-primary);
   line-height: 1;
   margin: 0.25rem 0;
 }
@@ -148,7 +148,8 @@
 }
 
 .opt-emoji {
-  font-size: 1.6rem;
+  display: inline-flex;
+  color: var(--accent-primary);
 }
 
 .opt-label {

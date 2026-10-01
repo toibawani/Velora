@@ -38,7 +38,6 @@ import InstitutionalMode from '../components/InstitutionalMode';
 import '../styles/Learn.css';
 import LearningAnalytics from '../components/LearningAnalytics';
 import SmartRevision from '../components/SmartRevision';
-import SocialProof from '../components/SocialProof';
 import EmptyState from '../components/EmptyState';
 import { trackEvent } from '../utils/analytics';
 import { measurePerformance } from '../utils/performance';
@@ -586,10 +585,6 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
           <InstitutionalMode />
         </section>
 
-        {/* Community Proof */}
-        <section className="learn-section">
-          <SocialProof />
-        </section>
       </main>
     </div>
   );

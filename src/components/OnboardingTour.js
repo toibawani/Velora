@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Orbit, Telescope, Zap, Sunrise, Sparkles, Moon, Landmark, ScrollText, Ruler, Eye, BookOpen, Gamepad2 } from 'lucide-react';
 import '../styles/OnboardingTour.css';
 
 /**
@@ -27,7 +28,7 @@ const markOnboardingComplete = () => {
 const STEPS = [
   {
     id: 'welcome',
-    illustration: '🌌',
+    illustration: Orbit,
     title: 'Welcome to VELORA.',
     subtitle: 'This is not a boring education app.',
     body: 'VELORA is a living intellectual cosmos. You don\'t passively watch videos here — you explore, discover, and synthesize ideas across physics, philosophy, and history. Expect to feel genuinely absorbed.',
@@ -35,34 +36,34 @@ const STEPS = [
   },
   {
     id: 'domain',
-    illustration: '🔭',
+    illustration: Telescope,
     title: 'Which domain calls to you?',
     subtitle: 'Pick the universe you want to start exploring.',
     body: null,
     cta: 'Set My Domain →',
     options: [
-      { id: 'physics', label: 'Astrophysics', emoji: '🌑', desc: 'Black holes, relativity, cosmology' },
-      { id: 'philosophy', label: 'Philosophy', emoji: '🏛️', desc: 'Socrates, logic, epistemology' },
-      { id: 'history', label: 'History', emoji: '📜', desc: 'Civilizations, revolutions, ideas' },
-      { id: 'mathematics', label: 'Mathematics', emoji: '📐', desc: 'Proofs, number theory, geometry' },
+      { id: 'physics', label: 'Astrophysics', icon: Moon, desc: 'Black holes, relativity, cosmology' },
+      { id: 'philosophy', label: 'Philosophy', icon: Landmark, desc: 'Socrates, logic, epistemology' },
+      { id: 'history', label: 'History', icon: ScrollText, desc: 'Civilizations, revolutions, ideas' },
+      { id: 'mathematics', label: 'Mathematics', icon: Ruler, desc: 'Proofs, number theory, geometry' },
     ]
   },
   {
     id: 'style',
-    illustration: '⚡',
+    illustration: Zap,
     title: 'How do you learn best?',
     subtitle: 'VELORA adapts to your cognitive style.',
     body: null,
     cta: 'Personalize →',
     options: [
-      { id: 'visual', label: 'Visual', emoji: '👁️', desc: 'Animated diagrams & canvas simulations' },
-      { id: 'textual', label: 'Textual', emoji: '📖', desc: 'Deep-read articles & paper distillations' },
-      { id: 'interactive', label: 'Interactive', emoji: '🎮', desc: 'Quizzes, flow games & debates' },
+      { id: 'visual', label: 'Visual', icon: Eye, desc: 'Animated diagrams & canvas simulations' },
+      { id: 'textual', label: 'Textual', icon: BookOpen, desc: 'Deep-read articles & paper distillations' },
+      { id: 'interactive', label: 'Interactive', icon: Gamepad2, desc: 'Quizzes, flow games & debates' },
     ]
   },
   {
     id: 'intention',
-    illustration: '🌅',
+    illustration: Sunrise,
     title: 'Set your daily learning intention.',
     subtitle: 'How much time do you want to spend exploring today?',
     body: 'VELORA doesn\'t reward streaks or punish misses. Learning is personal — this is your commitment to yourself.',
@@ -71,7 +72,7 @@ const STEPS = [
   },
   {
     id: 'spark',
-    illustration: '✦',
+    illustration: Sparkles,
     title: 'You\'re ready to explore.',
     subtitle: 'Your intellectual cosmos awaits.',
     body: 'Every day VELORA surfaces a Daily Spark — a single question that opens an entire universe of thought. Your first one is waiting. Go discover something extraordinary.',
@@ -117,6 +118,8 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
 
   const progress = ((stepIdx + 1) / STEPS.length) * 100;
 
+  const Illustration = step.illustration;
+
   return (
     <div className="onboarding-overlay">
       <div className="onboarding-card">
@@ -131,7 +134,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
         </div>
 
         {/* Illustration */}
-        <div className="onboarding-illustration">{step.illustration}</div>
+        <div className="onboarding-illustration"><Illustration size={40} aria-hidden="true" /></div>
 
         {/* Text */}
         <div className="onboarding-text-block">
@@ -143,16 +146,16 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
         {/* Domain Picker */}
         {step.id === 'domain' && (
           <div className="onboarding-options-grid">
-            {step.options.map(opt => (
+            {step.options.map(({ id, label, desc, icon: OptionIcon }) => (
               <button
-                key={opt.id}
-                className={`onboarding-option-card ${selectedDomain === opt.id ? 'selected' : ''}`}
-                 aria-pressed={selectedDomain === opt.id}
-                onClick={() => setSelectedDomain(opt.id)}
+                key={id}
+                className={`onboarding-option-card ${selectedDomain === id ? 'selected' : ''}`}
+                 aria-pressed={selectedDomain === id}
+                onClick={() => setSelectedDomain(id)}
               >
-                <span className="opt-emoji">{opt.emoji}</span>
-                <span className="opt-label">{opt.label}</span>
-                <span className="opt-desc">{opt.desc}</span>
+                <span className="opt-emoji"><OptionIcon size={22} aria-hidden="true" /></span>
+                <span className="opt-label">{label}</span>
+                <span className="opt-desc">{desc}</span>
               </button>
             ))}
           </div>
@@ -161,16 +164,16 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
         {/* Learning Style Picker */}
         {step.id === 'style' && (
           <div className="onboarding-options-grid three-col">
-            {step.options.map(opt => (
+            {step.options.map(({ id, label, desc, icon: OptionIcon }) => (
               <button
-                key={opt.id}
-                className={`onboarding-option-card ${selectedStyle === opt.id ? 'selected' : ''}`}
-                 aria-pressed={selectedStyle === opt.id}
-                onClick={() => setSelectedStyle(opt.id)}
+                key={id}
+                className={`onboarding-option-card ${selectedStyle === id ? 'selected' : ''}`}
+                 aria-pressed={selectedStyle === id}
+                onClick={() => setSelectedStyle(id)}
               >
-                <span className="opt-emoji">{opt.emoji}</span>
-                <span className="opt-label">{opt.label}</span>
-                <span className="opt-desc">{opt.desc}</span>
+                <span className="opt-emoji"><OptionIcon size={22} aria-hidden="true" /></span>
+                <span className="opt-label">{label}</span>
+                <span className="opt-desc">{desc}</span>
               </button>
             ))}
           </div>
@@ -198,7 +201,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
           onClick={handleNext}
           disabled={!canProceed()}
         >
-          {isLast ? '✦ ' : ''}{step.cta}
+          {isLast && <Sparkles size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />}{step.cta}
         </button>
 
         {stepIdx > 0 && !isLast && (
