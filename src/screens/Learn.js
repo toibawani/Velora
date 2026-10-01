@@ -87,6 +87,12 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
   const subjectRecord = measurePerformance('resolve_subject_data', () => CURRICULUM[subjectId]);
   const subjectIcons = { physics: Atom, philosophy: Brain, history: Landmark };
   // Topic titles the learner has spent real time on in this subject.
+  //
+  // The match is on the title string, so a topic renamed in the curriculum would
+  // orphan the minutes already logged against its old title. Nothing in the app
+  // can rename a topic - the titles are static data and the reader only records
+  // the title it was handed - so the break is not reachable today. If a rename
+  // path is ever added, this is the line that needs a stable topic id instead.
   const loggedTopicKeys = useMemo(() => new Set(
     (learningAnalytics.topicTimeDistribution || [])
       .filter((entry) => (entry.subject || 'physics') === subjectId && (entry.hours || 0) > 0)
