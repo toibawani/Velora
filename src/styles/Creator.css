@@ -10,6 +10,10 @@
   max-width: 1000px;
   margin: 0 auto;
   width: 100%;
+  /* Without this, width:100% counts only the content box and the padding is
+     added on top of it, so the container is always wider than its parent by
+     the padding. On a phone that is a sideways scroll of the whole screen. */
+  box-sizing: border-box;
 }
 
 .creator-tabs {
@@ -411,6 +415,18 @@
 }
 
 @media (max-width: 768px) {
+  /* The toolbar row sets the min-content width of the whole container, and a
+     flex item's automatic minimum size is its min-content width, so four
+     buttons that cannot wrap pushed the entire page into a sideways scroll. */
+  .creator-container {
+    min-width: 0;
+    padding: var(--space-4);
+  }
+
+  .notes-toolbar {
+    flex-wrap: wrap;
+  }
+
   .creator-tabs {
     flex-wrap: wrap;
   }
