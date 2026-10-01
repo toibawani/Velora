@@ -1,0 +1,43 @@
+/* The self-reported preference card. Deliberately unlike the Learning Snapshot
+   beside it: dashed edge, no filled surface, a pill label instead of the panel's
+   plain uppercase stat label, and a note in italic. A preference must not read
+   as a measurement, so it must not look like one. */
+.self-reported-style {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.self-reported-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  padding: 3px 12px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.self-reported-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.self-reported-note {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
