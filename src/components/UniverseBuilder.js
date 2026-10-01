@@ -143,6 +143,62 @@ const CATEGORY_COLORS = {
   mathematics: 'var(--color-mathematics)',
 };
 
+/**
+ * Finds a position for a new node that does not sit on top of an existing one.
+ *
+ * This used to be Math.random() in a 300x200 box, which meant new nodes landed
+ * on top of each other roughly a fifth of the time and on top of their labels
+ * more often -- the caller could not know what was already there. The known
+ * defect was parked rather than fixed; this is the fix, and it deliberately does
+ * not touch the seed coordinates of the existing nodes, so every position that
+ * already looked right keeps looking right.
+ *
+ * Placement walks a spiral outward from a seeded point and takes the first
+ * candidate clear of every existing node's circle *and* its label box, so a new
+ * node never lands where a neighbour's caption is drawn. Deterministic for a
+ * given seed, which is what makes it testable.
+ */
+export const findFreeSpot = (existing, seed = { x: 220, y: 190 }, bounds = { width: 540, height: 380 }) => {
+  const NODE_CLEARANCE = NODE_RADIUS * 2 + 14; // circle plus its own label drop
+  const MIN_GAP = NODE_RADIUS * 2 + 20;
+  const LABEL_CLEARANCE = NODE_LABEL_DROP + LABEL_HALF_HEIGHT + 6;
+
+  const collides = (candidate) =>
+    existing.some((node) => {
+      const dx = candidate.x - node.position.x;
+      const dy = candidate.y - node.position.y;
+      // Compare node to node by centre distance...
+      if (Math.hypot(dx, dy) < MIN_GAP) return true;
+      // ...and node to the other node's label box, since a label sits below its
+      // node and is wide enough to collide at a distance circles alone miss.
+      const labelTop = node.position.y + NODE_LABEL_DROP - LABEL_HALF_HEIGHT;
+      const labelBottom = node.position.y + NODE_LABEL_DROP + LABEL_HALF_HEIGHT;
+      const withinX = Math.abs(dx) < NODE_CLEARANCE;
+      const withinY = candidate.y > labelTop - LABEL_CLEARANCE && candidate.y < labelBottom + LABEL_CLEARANCE;
+      return withinX && withinY;
+    });
+
+  const clampX = (x) => Math.max(NODE_RADIUS + 4, Math.min(bounds.width - NODE_RADIUS - 4, x));
+  const clampY = (y) => Math.max(NODE_RADIUS + 4, Math.min(bounds.height - NODE_RADIUS - 30, y));
+
+  const step = 14;
+  for (let ring = 0; ring < 60; ring += 1) {
+    // A full circle per ring, expanding outward: no randomness, no retry loop.
+    const radius = ring * step;
+    const count = ring === 0 ? 1 : Math.max(6, Math.floor(ring * 6));
+    for (let i = 0; i < count; i += 1) {
+      const angle = (i / count) * Math.PI * 2;
+      const candidate = {
+        x: Math.round(clampX(seed.x + Math.cos(angle) * radius)),
+        y: Math.round(clampY(seed.y + Math.sin(angle) * radius)),
+      };
+      if (!collides(candidate)) return candidate;
+    }
+  }
+  // Pathologically full: fall back to the clamped seed rather than returning null.
+  return { x: Math.round(clampX(seed.x)), y: Math.round(clampY(seed.y)) };
+};
+
 function UniverseBuilder({ topic, onBack }) {
   const [viewMode, setViewMode] = useState('galaxy'); // 'galaxy' | 'timeline' | 'map'
   const [concepts, setConcepts] = useState(INITIAL_CONCEPTS);
@@ -160,15 +216,18 @@ function UniverseBuilder({ topic, onBack }) {
     if (!newConceptName.trim()) return;
 
     const newId = Date.now();
+    // Spread new nodes around the outside of the existing ones rather than
+    // dropping them at a random point that may be occupied.
+    const seed = {
+      x: 60 + ((concepts.length * 137) % 420),
+      y: 70 + ((concepts.length * 89) % 250),
+    };
     const newEntry = {
       id: newId,
       name: newConceptName.trim(),
       category: newConceptCategory,
       icon: newConceptCategory === 'physics' ? Atom : newConceptCategory === 'biology' ? Dna : Lightbulb,
-      position: {
-        x: Math.floor(Math.random() * 300) + 100,
-        y: Math.floor(Math.random() * 200) + 80
-      },
+      position: findFreeSpot(concepts, seed),
       summary: newConceptSummary.trim() || 'User defined epistemic concept.'
     };
 
