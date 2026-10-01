@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut, Gamepad2, Route } from 'lucide-react';
+import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut, Gamepad2 } from 'lucide-react';
 import '../styles/MobileNav.css';
 
 function MobileNav({ currentScreen, setScreen, onLogout }) {
@@ -13,10 +13,6 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
     { name: 'Flow Games', screen: 'games', icon: Gamepad2 },
     { name: 'Analytics', screen: 'analytics', icon: BarChart3 },
     { name: 'Community', screen: 'community', icon: Users },
-    // The screen used to be a sprint with a leaderboard, so a trophy was honest
-    // there. It is now a list of the paths this app can actually teach, and a
-    // trophy would promise a ranking against people this app cannot see.
-    { name: 'Paths', screen: 'challenges', icon: Route },
   ];
 
   // Close nav on escape key
