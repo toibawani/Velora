@@ -8,7 +8,9 @@ import {
   Orbit,
   Waves,
   ArrowDown,
-  Info
+  Info,
+  Flame,
+  Rocket
 } from 'lucide-react';
 import {
   G,
@@ -1199,16 +1201,24 @@ function OrbitalMechanicsSim() {
             </g>
           )}
 
-          {/* Crash / Escape Messages */}
+          {/* Crash / Escape Messages. The label used to begin with a glyph inside
+              the <text>; an icon cannot live inside a text node, so it sits above
+              the line, centred on the same x. */}
           {isCrashed && (
-            <text x={centerX} y={centerY - 28} fontSize="12" fill="#A33B32" textAnchor="middle" fontWeight="bold">
-              💥 Orbit decayed: Collision with surface
-            </text>
+            <g>
+              <Flame size={16} x={centerX - 8} y={centerY - 48} color="#A33B32" aria-hidden="true" />
+              <text x={centerX} y={centerY - 28} fontSize="12" fill="#A33B32" textAnchor="middle" fontWeight="bold">
+                Orbit decayed: Collision with surface
+              </text>
+            </g>
           )}
           {isEscaped && (
-            <text x={centerX} y="30" fontSize="12" fill="#3F6B4A" textAnchor="middle" fontWeight="bold">
-              🚀 Spacecraft achieved escape velocity into deep cosmos
-            </text>
+            <g>
+              <Rocket size={16} x={centerX - 8} y={8} color="#3F6B4A" aria-hidden="true" />
+              <text x={centerX} y="34" fontSize="12" fill="#3F6B4A" textAnchor="middle" fontWeight="bold">
+                Spacecraft achieved escape velocity into deep cosmos
+              </text>
+            </g>
           )}
         </svg>
 
