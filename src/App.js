@@ -21,8 +21,6 @@ const LandingPage = lazy(() => import('./screens/LandingPage'));
 const LearnScreen = lazy(() => import('./screens/Learn'));
 const CommunityScreen = lazy(() => import('./screens/Community'));
 const AnalyticsScreen = lazy(() => import('./screens/Analytics'));
-const DoubtsScreen = lazy(() => import('./screens/Doubts'));
-const ChallengesScreen = lazy(() => import('./screens/Challenges'));
 const DictionaryScreen = lazy(() => import('./screens/Dictionary'));
 const GameHubScreen = lazy(() => import('./screens/Games'));
 const JourneyScreen = lazy(() => import('./screens/Journey'));
@@ -148,14 +146,6 @@ function App() {
 
         {screen === 'analytics' && user && (
           <AnalyticsScreen setScreen={setScreen} user={user} />
-        )}
-
-        {screen === 'doubts' && user && (
-          <DoubtsScreen setScreen={setScreen} />
-        )}
-
-        {screen === 'challenges' && user && (
-          <ChallengesScreen setScreen={setScreen} onOpenLesson={openLesson} />
         )}
 
         {screen === 'dictionary' && user && (
