@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, act, within } from '@testing-library/react';
-import ConceptScrabble from './ConceptScrabble';
+import ConceptScrabble, { SCRABBLE_LEVELS } from './ConceptScrabble';
 
 const rackLetters = () =>
   screen.getAllByRole('button', { name: /^Letter / }).map((b) => b.textContent);
@@ -69,7 +69,7 @@ describe('Concept Scrabble', () => {
 
     expect(screen.getByText('Score: 100')).toBeInTheDocument();
     act(() => jest.advanceTimersByTime(1300));
-    expect(screen.getByText('Level 2/7')).toBeInTheDocument();
+    expect(screen.getByText(`Level 2/${SCRABBLE_LEVELS.length}`)).toBeInTheDocument();
   });
 
   test('a wrong word says so and does not advance', () => {
@@ -82,16 +82,16 @@ describe('Concept Scrabble', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
     expect(screen.getByText(/not that word/i)).toBeInTheDocument();
-    expect(screen.getByText('Level 1/7')).toBeInTheDocument();
+    expect(screen.getByText(`Level 1/${SCRABBLE_LEVELS.length}`)).toBeInTheDocument();
   });
 
   // "You completed all levels!" was shown even when every level was skipped.
   test('skipping every level is reported as skipping, not as completing', () => {
     render(<ConceptScrabble onBack={() => {}} />);
-    for (let i = 0; i < 7; i += 1) {
+    for (let i = 0; i < SCRABBLE_LEVELS.length; i += 1) {
       fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
     }
-    expect(screen.getByText(/skipped 7/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`skipped ${SCRABBLE_LEVELS.length}`, 'i'))).toBeInTheDocument();
     expect(screen.queryByText(/completed all/i)).not.toBeInTheDocument();
   });
 
@@ -108,5 +108,29 @@ describe('Concept Scrabble', () => {
     fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
     expect(screen.getByText(/Starts with S/i)).toBeInTheDocument();
     expect(screen.queryByText(/\d+ letters/i)).not.toBeInTheDocument();
+  });
+});
+
+describe('scrabble content breadth', () => {
+  test('offers enough words that one sitting is not the whole game', () => {
+    expect(SCRABBLE_LEVELS.length).toBeGreaterThanOrEqual(14);
+  });
+
+  test('every word is spelled with letters only, so the rack can always spell it', () => {
+    SCRABBLE_LEVELS.forEach((level) => {
+      expect(level.word).toMatch(/^[A-Z]+$/);
+      expect(level.definition.length).toBeGreaterThan(25);
+      expect(level.category).toBeTruthy();
+    });
+  });
+
+  test('no two words are the same term', () => {
+    const words = SCRABBLE_LEVELS.map((l) => l.word);
+    expect(new Set(words).size).toBe(words.length);
+  });
+
+  test('spans more than space and physics', () => {
+    const categories = new Set(SCRABBLE_LEVELS.map((l) => l.category));
+    expect(categories.size).toBeGreaterThanOrEqual(7);
   });
 });

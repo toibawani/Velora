@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import fs from 'fs';
-import path from 'path';
 import DefinitionDuel, { DUEL_PAIRS } from './DefinitionDuel';
+import { SCRABBLE_LEVELS } from './ConceptScrabble';
 
 const answer = (text) => {
   fireEvent.change(screen.getByLabelText(/type the term/i), { target: { value: text } });
@@ -98,17 +97,16 @@ describe('duel content breadth', () => {
     expect(new Set(defs).size).toBe(defs.length);
   });
 
-  test('no term is guessed from a definition that also appears in another game', () => {
+  test('no term appears in this game and in Concept Scrabble at once', () => {
     // Three original definitions were copied verbatim from Concept Scrabble, so
-    // playing both games gave the same three questions twice.
-    const scrabble = fs.readFileSync(path.join(__dirname, 'ConceptScrabble.js'), 'utf8');
-    DUEL_PAIRS.forEach((pair) => {
-      const key = pair.definition.trim().replace(/^(a|an|the)\s+/i, '').toLowerCase();
-      // Compare on the distinctive tail of the sentence rather than the whole
-      // string, so a rewritten opening does not count as duplication.
-      const tail = key.split(' ').slice(-4).join(' ');
-      expect(scrabble.toLowerCase()).not.toContain(tail);
-    });
+    // playing both games gave the same three questions twice. The rule is that
+    // the same term is not quizzed twice in different games -- the wording does
+    // not have to differ, the term must not recur.
+    const scrabbleWords = SCRABBLE_LEVELS.map((level) => level.word.replace(/[^A-Z]/g, ''));
+    const overlap = DUEL_PAIRS.filter((pair) =>
+      scrabbleWords.includes(pair.word.replace(/[^A-Z]/g, '').toUpperCase())
+    );
+    expect(overlap.map((p) => p.word)).toEqual([]);
   });
 
   test('spans more than physics, since the original was five space terms of eight', () => {

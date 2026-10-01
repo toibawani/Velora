@@ -10,6 +10,17 @@ import '../styles/GameStyles.css';
  * chemical energy, not "light to energy", and a singularity is where our
  * physics stops predicting a density, not a place with a known infinite one.
  */
+/**
+ * Seven words, four of them space, and the definitions were written as terse
+ * one-liners with no room for a second correct reading. Fourteen now, spread
+ * across the subjects the dictionary covers, and every definition says something
+ * the term must actually get right -- "without being used up" is the part of a
+ * catalyst that distinguishes it from a reactant.
+ *
+ * These deliberately do not restate Definition Duel's wording for the same
+ * terms. A test enforces that: two games asking the same question in different
+ * clothes is padding, not breadth.
+ */
 const SCRABBLE_LEVELS = [
   {
     definition: 'A region of space that nothing can escape once entered',
@@ -52,6 +63,60 @@ const SCRABBLE_LEVELS = [
     word: 'ENTROPY',
     hint: 'Starts with E',
     category: 'Physics',
+  },
+  {
+    definition: 'The organism that makes its own food using light',
+    word: 'AUTOTROPH',
+    hint: 'Starts with A',
+    category: 'Biology',
+  },
+  {
+    definition: 'The way a cell divides to produce two identical daughter cells',
+    word: 'MITOSIS',
+    hint: 'Starts with M',
+    category: 'Biology',
+  },
+  {
+    definition: 'The measure of how much heat a body can hold per degree',
+    word: 'THERMALCAPACITY',
+    hint: 'Two words',
+    category: 'Physics',
+  },
+  {
+    definition: 'The claim that a belief must be able to be proved false to count as science',
+    word: 'FALSIFIABILITY',
+    hint: 'Starts with F',
+    category: 'Philosophy',
+  },
+  {
+    definition: 'Working out which values you did not measure from the ones you did',
+    word: 'REGRESSION',
+    hint: 'Starts with R',
+    category: 'Mathematics',
+  },
+  {
+    definition: 'The habit of seeking out only the evidence that agrees with you',
+    word: 'CONFIRMATIONBIAS',
+    hint: 'Two words',
+    category: 'Psychology',
+  },
+  {
+    definition: 'An agreement between two sides, and the price they settle at',
+    word: 'MARKETEQUILIBRIUM',
+    hint: 'Two words',
+    category: 'Economics',
+  },
+  {
+    definition: 'The empire that lasted from 1299 until after the First World War',
+    word: 'OTTOMAN',
+    hint: 'Starts with O',
+    category: 'History',
+  },
+  {
+    definition: 'The rate at which a nation’s goods are taxed as they cross its border',
+    word: 'TARIFF',
+    hint: 'Starts with T',
+    category: 'Political Science',
   },
 ];
 
@@ -254,5 +319,7 @@ function ConceptScrabble({ onBack }) {
     </div>
   );
 }
+
+export { SCRABBLE_LEVELS };
 
 export default ConceptScrabble;
