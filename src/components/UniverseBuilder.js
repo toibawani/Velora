@@ -51,6 +51,89 @@ const INITIAL_CONNECTIONS = [
   { from: 4, to: 1, label: 'Solar Flux' },
 ];
 
+// The node label is drawn at node.y + 36, below the circle. An edge label used
+// to sit at a flat midpointY - 4, so it landed in whichever row that produced:
+// for the Cellular Respiration -> ATP Synthesis edge, "Energy Coupling" ended up
+// at y=136, the exact baseline of the "ATP Synthesis" node label beside it, and
+// the two collided at every scale.
+//
+// Offsetting perpendicular to the edge, by a fraction of the edge's own length,
+// keeps the clearance proportional to how far apart the two nodes are, so it
+// holds when the diagram is scaled and when a node moves, instead of being a
+// constant that happened to line up at one set of coordinates.
+//
+// Both perpendiculars are scored against every node and the roomier one wins.
+// A fixed side is not enough: "Solar Flux" runs from Thermodynamic Entropy to
+// Photosynthesis, and pushing its label upward walks it straight through the
+// Cellular Respiration circle that sits near the midpoint.
+const EDGE_LABEL_CLEARANCE = [0.12, 0.2, 0.28, 0.36];
+const NODE_RADIUS = 24;
+const NODE_LABEL_DROP = 36;
+// An 8px monospace label runs about 5 user units per character, so a 15
+// character name is roughly 75u wide. Scoring only the anchor point let a wide
+// label reach past a node it had cleared by a comfortable margin: "Solar Flux"
+// sat 17u from the Cellular Respiration circle centre-to-centre and still
+// overlapped it, because the text extends roughly 25u sideways from its anchor.
+// The label's own footprint has to be part of the measurement.
+const LABEL_WIDTH_PER_CHAR = 5;
+const LABEL_HALF_HEIGHT = 4.7;
+
+const getEdgeLabelPosition = (fromNode, toNode, allNodes, label) => {
+  const dx = toNode.position.x - fromNode.position.x;
+  const dy = toNode.position.y - fromNode.position.y;
+  const length = Math.hypot(dx, dy);
+  const mx = (fromNode.position.x + toNode.position.x) / 2;
+  const my = (fromNode.position.y + toNode.position.y) / 2;
+  if (!length) return { x: mx, y: my };
+
+  const perpX = -dy / length;
+  const perpY = dx / length;
+
+  // The label is centred on its anchor and textAnchor is middle, so it reaches
+  // half its width either side of it. Measuring the anchor alone would let a long
+  // name overlap something it had nominally cleared.
+  const halfWidth = (String(label || '').length * LABEL_WIDTH_PER_CHAR) / 2;
+
+  // Worst clearance from this anchor, in user units. Negative means the label
+  // would sit on top of a node's circle or its name.
+  const worstGap = (ax, ay) => {
+    const left = ax - halfWidth;
+    const right = ax + halfWidth;
+    const top = ay - LABEL_HALF_HEIGHT;
+    const bottom = ay + LABEL_HALF_HEIGHT;
+
+    return allNodes.reduce((worst, node) => {
+      // Nearest point of this node's circle to the label box.
+      const cx = Math.max(left, Math.min(node.position.x, right));
+      const cy = Math.max(top, Math.min(node.position.y, bottom));
+      const fromCircle = Math.hypot(cx - node.position.x, cy - node.position.y) - NODE_RADIUS;
+
+      // Vertical gap to the node's own name, whose baseline is node.y + 36.
+      const nodeTop = node.position.y + NODE_LABEL_DROP - LABEL_HALF_HEIGHT;
+      const nodeBottom = node.position.y + NODE_LABEL_DROP + LABEL_HALF_HEIGHT;
+      const fromName = top >= nodeBottom ? top - nodeBottom : bottom <= nodeTop ? nodeTop - bottom : -Infinity;
+
+      return Math.min(worst, fromCircle, fromName);
+    }, Infinity);
+  };
+
+  // Try each clearance on both sides and keep the roomiest. Trying several
+  // distances matters because the nearest obstacle differs per edge: two nodes
+  // that sit far apart have room just off the midpoint, while a short edge
+  // hemmed in by a third node needs to step much further out.
+  let best = { x: mx, y: my, gap: worstGap(mx, my) };
+  EDGE_LABEL_CLEARANCE.forEach((factor) => {
+    const offset = length * factor;
+    [1, -1].forEach((sign) => {
+      const ax = mx + perpX * offset * sign;
+      const ay = my + perpY * offset * sign;
+      const gap = worstGap(ax, ay);
+      if (gap > best.gap) best = { x: ax, y: ay, gap };
+    });
+  });
+  return best;
+};
+
 const CATEGORY_COLORS = {
   biology: 'var(--color-biology)',
   chemistry: 'var(--accent-orange)',
@@ -222,8 +305,7 @@ function UniverseBuilder({ topic, onBack }) {
                 const fromNode = concepts.find((c) => c.id === conn.from);
                 const toNode = concepts.find((c) => c.id === conn.to);
                 if (!fromNode || !toNode) return null;
-                const mx = (fromNode.position.x + toNode.position.x) / 2;
-                const my = (fromNode.position.y + toNode.position.y) / 2;
+                const labelPos = getEdgeLabelPosition(fromNode, toNode, concepts, conn.label);
                 return (
                   <g key={idx}>
                     <line
@@ -237,8 +319,8 @@ function UniverseBuilder({ topic, onBack }) {
                     />
                     {conn.label && (
                       <text
-                        x={mx}
-                        y={my - 4}
+                        x={labelPos.x}
+                        y={labelPos.y}
                         textAnchor="middle"
                         fill="var(--text-tertiary)"
                         fontSize="8"
