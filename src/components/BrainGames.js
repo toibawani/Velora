@@ -410,14 +410,24 @@ const EXPLAIN_PROMPTS = [
     keyConcepts: ['speed', 'mass', 'heavy', 'stop', 'truck', 'moving', 'force', 'hard'],
     peerExplanations: [
       {
-        author: 'Richard Feynman',
-        role: 'Lectures on Physics (1961)',
-        text: 'Momentum is how hard something is to bring to a dead stop. A freight train creeping at 3 mph and a bullet flying at 1,000 mph both carry enormous momentum because one has immense mass and the other has immense speed.'
+        // These used to be attributed to 'Richard Feynman, Lectures on Physics
+        // (1961)' and 'John Rawls, A Theory of Justice (1971)': real published
+        // works, quoted from memory, with no page reference and no way for a
+        // reader to check the words were ever said. Making up words for a named
+        // person is the same class of fabrication as an invented leaderboard and
+        // worse, because the name is real and the reader cannot tell. The
+        // explanations are ours, so they are labelled ours, and where a claim is
+        // genuinely the thinker's it carries a source you can open.
+        body:
+          'Momentum is how hard something is to bring to a dead stop. A freight train creeping at 3 mph and a bullet flying at 1,000 mph both carry enormous momentum, because one has immense mass and the other has immense speed.',
+        by: 'VELORA',
+        source: null,
       },
       {
-        author: 'Priya S.',
-        role: 'VELORA Scholar',
-        text: 'It’s why you can catch a tennis ball traveling 40 mph with bare hands, but catching a bowling ball traveling 40 mph will break your wrist.'
+        body:
+          'It’s why you can catch a tennis ball traveling 40 mph with bare hands, but catching a bowling ball traveling 40 mph will break your wrist.',
+        by: 'VELORA',
+        source: null,
       }
     ]
   },
@@ -429,14 +439,16 @@ const EXPLAIN_PROMPTS = [
     keyConcepts: ['tag', 'switch', 'read', 'book', 'mark', 'recipe', 'gene', 'turn'],
     peerExplanations: [
       {
-        author: 'C.H. Waddington',
-        role: 'Evolutionary Biologist',
-        text: 'Your DNA is a cookbook containing every recipe you could ever cook. Epigenetics are the post-it notes and paperclips that mark which specific page is open in the kitchen today.'
+        body:
+          'Your DNA is a cookbook containing every recipe you could ever cook. Epigenetics are the post-it notes and paperclips that mark which specific page is open in the kitchen today.',
+        by: 'VELORA',
+        source: null,
       },
       {
-        author: 'Aiko T.',
-        role: 'VELORA Scholar',
-        text: 'Your genome is a piano keyboard; epigenetics is the sheet music deciding which keys get pressed and which stay silent.'
+        body:
+          'Your genome is a piano keyboard; epigenetics is the sheet music deciding which keys get pressed and which stay silent.',
+        by: 'VELORA',
+        source: null,
       }
     ]
   },
@@ -448,14 +460,24 @@ const EXPLAIN_PROMPTS = [
     keyConcepts: ['blind', 'slice', 'born', 'rules', 'cake', 'fair', 'know', 'who'],
     peerExplanations: [
       {
-        author: 'John Rawls',
-        role: 'A Theory of Justice (1971)',
-        text: 'Imagine setting the rules of society before you know who you will be born as—rich or poor, healthy or disabled, majority or minority. You naturally design rules that protect the least fortunate, because that could be you.'
+        // Rawls's own account of the device is in A Theory of Justice, section 3,
+        // and this summary is close enough to check it against. Unlike the entries
+        // above it is the thinker's argument, so it keeps a citable source -- and
+        // it is a paraphrase written here, not a quotation, which is why the
+        // rendering labels it as a summary rather than as his words.
+        body:
+          'Imagine setting the rules of society before you know who you will be born as: rich or poor, healthy or disabled, majority or minority. Lacking that knowledge, you would design rules that protect the least fortunate, because that could be you.',
+        by: 'VELORA',
+        source: {
+          label: 'Rawls, A Theory of Justice (1971), section 3',
+          url: 'https://plato.stanford.edu/entries/justice-distributive/',
+        },
       },
       {
-        author: 'Javier M.',
-        role: 'VELORA Scholar',
-        text: 'It’s the universal cake-cutting rule: one person cuts, the other chooses first. Ignorant of which piece you will get, you slice right down the exact center.'
+        body:
+          'It’s the universal cake-cutting rule: one person cuts, the other chooses first. Ignorant of which piece you will get, you slice right down the exact center.',
+        by: 'VELORA',
+        source: null,
       }
     ]
   }
@@ -708,10 +730,20 @@ function ExplainItBackGame() {
               {currentPrompt.peerExplanations.map((peer, i) => (
                 <div key={i} className="bg-peer-card bg-peer-card-example">
                   <div className="bg-peer-meta">
-                    <strong>Written by VELORA</strong>
-                    <small>example, not a quote</small>
+                    <strong>Written by {peer.by}</strong>
+                    <small>{peer.source ? 'summary, with a source' : 'example, not a quote'}</small>
                   </div>
-                  <p className="bg-peer-text">"{peer.text}"</p>
+                  <p className="bg-peer-text">"{peer.body}"</p>
+                  {peer.source && (
+                    <a
+                      className="bg-peer-source"
+                      href={peer.source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {peer.source.label}
+                    </a>
+                  )}
                 </div>
               ))}
             </div>
@@ -734,6 +766,8 @@ function ExplainItBackGame() {
 // ============================================================================
 // MAIN BRAIN GAMES SCREEN COMPONENT
 // ============================================================================
+export { EXPLAIN_PROMPTS, MYTH_QUESTIONS, CONNECT_PUZZLES };
+
 export default function BrainGames({ onBack }) {
   const [activeTab, setActiveTab] = useState('connect');
 

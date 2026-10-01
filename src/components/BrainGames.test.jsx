@@ -1,7 +1,9 @@
 import React from 'react';
 import { KEYS, readValue } from '../utils/storage';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import BrainGames from './BrainGames';
+import fs from 'fs';
+import path from 'path';
+import BrainGames, { EXPLAIN_PROMPTS } from './BrainGames';
 
 const openGame = async (name) => {
   fireEvent.click(screen.getByRole('tab', { name: new RegExp(name, 'i') }));
@@ -152,5 +154,44 @@ describe('True or Myth accuracy', () => {
       'href',
       expect.stringContaining('https://')
     );
+  });
+});
+
+describe('no invented people in the game data', () => {
+  const INVENTED = [
+    'Priya S.',
+    'Aiko T.',
+    'Javier M.',
+    'VELORA Scholar',
+    'Scholar_',
+    'Richard Feynman',
+    'John Rawls',
+    'C.H. Waddington',
+  ];
+
+  test('no source file attributes text to a named person', () => {
+    // A rendered card said "Written by VELORA / example, not a quote" while the
+    // data it rendered still claimed 'Richard Feynman, Lectures on Physics
+    // (1961)'. The UI relabelled it; the data did not. Reading the file is the
+    // only check that catches that, because rendering was already correct.
+    const source = fs.readFileSync(path.join(__dirname, 'BrainGames.js'), 'utf8');
+    INVENTED.forEach((name) => {
+      expect(source).not.toMatch(new RegExp(`author:\\s*'${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'`));
+    });
+  });
+
+  test('every peer explanation carries a body, an author and no role claim', () => {
+    const prompts = EXPLAIN_PROMPTS;
+    expect(prompts.length).toBeGreaterThan(0);
+    prompts.forEach((prompt) => {
+      expect(prompt.peerExplanations.length).toBeGreaterThan(0);
+      prompt.peerExplanations.forEach((peer) => {
+        expect(typeof peer.body).toBe('string');
+        expect(peer.body.length).toBeGreaterThan(40);
+        expect(peer.by).toBeTruthy();
+        expect(peer.role).toBeUndefined();
+        expect(peer.author).toBeUndefined();
+      });
+    });
   });
 });
