@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Pen, Eraser, X } from 'lucide-react';
 import '../styles/Whiteboard.css';
 
 /**
@@ -208,14 +209,14 @@ function AIWhiteboard({ topic, onBack }) {
                 onClick={() => setTool('pen')}
                 title="Pen / Stylus"
               >
-                ✏️ Pen
+                <Pen size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Pen
               </button>
               <button
                 className={`wb-tool-btn ${tool === 'eraser' ? 'active' : ''}`}
                 onClick={() => setTool('eraser')}
                 title="Eraser"
               >
-                🧹 Eraser
+                <Eraser size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Eraser
               </button>
             </div>
           </div>
@@ -284,7 +285,7 @@ function AIWhiteboard({ topic, onBack }) {
           <aside className="wb-analysis-drawer">
             <div className="drawer-header">
               <h3 className="drawer-title">Analytical Formalism</h3>
-              <button className="drawer-close" onClick={() => setAnalysisActive(false)}>✕</button>
+              <button className="drawer-close" aria-label="Close the analytics drawer" onClick={() => setAnalysisActive(false)}><X size={16} aria-hidden="true" /></button>
             </div>
 
             <div className="derivation-step-box">
