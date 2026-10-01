@@ -42,7 +42,7 @@ test('every nav entry carries a drawn icon rather than a text glyph', () => {
     'Flow Games',
     'Analytics',
     'Community',
-    'Challenges',
+    'Paths',
   ];
 
   entries.forEach((name) => {
