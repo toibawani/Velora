@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GraduationCap, Users, Target, Lightbulb, AlertTriangle, Microscope, Utensils } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/InstitutionalMode.css';
 
@@ -63,14 +64,14 @@ function InstitutionalMode({ onBack }) {
             aria-pressed={activeRole === 'educator'}
             onClick={() => setActiveRole('educator')}
           >
-            🎓 Educator Mode
+            <GraduationCap size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Educator Mode
           </button>
           <button
             className={`role-pill ${activeRole === 'parent' ? 'active' : ''}`}
             aria-pressed={activeRole === 'parent'}
             onClick={() => setActiveRole('parent')}
           >
-            👨‍👧 Parent Insights
+            <Users size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Parent Insights
           </button>
         </div>
       </header>
@@ -129,10 +130,10 @@ function InstitutionalMode({ onBack }) {
 
                     <div className="guide-content-grid">
                       <div className="guide-col">
-                        <span className="col-label">🎯 Pedagogical Objective</span>
+                        <span className="col-label"><Target size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />Pedagogical Objective</span>
                         <p className="col-text">{guide.coreConceptGoal}</p>
 
-                        <span className="col-label">💡 Socratic Discussion Prompts</span>
+                        <span className="col-label"><Lightbulb size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />Socratic Discussion Prompts</span>
                         <ul className="guide-ul">
                           {guide.socraticPrompts.map((p, i) => (
                             <li key={i}>{p}</li>
@@ -141,14 +142,14 @@ function InstitutionalMode({ onBack }) {
                       </div>
 
                       <div className="guide-col">
-                        <span className="col-label">⚠️ Common Misconceptions to Dismantle</span>
+                        <span className="col-label"><AlertTriangle size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />Common Misconceptions to Dismantle</span>
                         <ul className="guide-ul warnings">
                           {guide.misconceptionsToDismantle.map((m, i) => (
                             <li key={i}>{m}</li>
                           ))}
                         </ul>
 
-                        <span className="col-label">🔬 Experiential Classroom Lab</span>
+                        <span className="col-label"><Microscope size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />Experiential Classroom Lab</span>
                         <p className="col-text">{guide.classroomLabIdea}</p>
                       </div>
                     </div>
@@ -210,7 +211,7 @@ function InstitutionalMode({ onBack }) {
 
             {/* Dinner Table Conversation Starters */}
             <div className="conversation-starters-card">
-              <h4 className="starter-header">🍽️ Dinner Table Conversation Starters</h4>
+              <h4 className="starter-header"><Utensils size={16} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />Dinner Table Conversation Starters</h4>
               <p className="starter-sub">
                 Connect with your child’s learning naturally using these curiosity-driven questions:
               </p>
@@ -221,7 +222,7 @@ function InstitutionalMode({ onBack }) {
                   <div className="starter-text-block">
                     <p className="starter-q">"Why do clocks run slower near a black hole than on Earth?"</p>
                     <span className="starter-tip">
-                      💡 Tip: Ask them about gravitational time dilation and how Einstein discovered gravity curves spacetime.
+                      <Lightbulb size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Tip: Ask them about gravitational time dilation and how Einstein discovered gravity curves spacetime.
                     </span>
                   </div>
                 </div>
@@ -231,7 +232,7 @@ function InstitutionalMode({ onBack }) {
                   <div className="starter-text-block">
                     <p className="starter-q">"What did Socrates mean when he said the only true wisdom is knowing you know nothing?"</p>
                     <span className="starter-tip">
-                      💡 Tip: Encourage them to explain intellectual humility and questioning assumptions.
+                      <Lightbulb size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Tip: Encourage them to explain intellectual humility and questioning assumptions.
                     </span>
                   </div>
                 </div>
@@ -241,7 +242,7 @@ function InstitutionalMode({ onBack }) {
                   <div className="starter-text-block">
                     <p className="starter-q">"How did Galileo prove Earth wasn’t the center of the universe using just a telescope?"</p>
                     <span className="starter-tip">
-                      💡 Tip: They will love explaining Jupiter’s moons and the Moon’s craters.
+                      <Lightbulb size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Tip: They will love explaining Jupiter’s moons and the Moon’s craters.
                     </span>
                   </div>
                 </div>
