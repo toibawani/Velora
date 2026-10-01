@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Orbit, Landmark, Telescope } from 'lucide-react';
 import '../styles/LearningStories.css';
 
 /**
@@ -20,7 +21,7 @@ function LearningStories({ onSelectStoryTopic }) {
       author: 'Curated by VELORA Astrophysics Archive',
       readTime: '8 min narrative',
       color: '#2563EB',
-      icon: '🌌',
+      icon: Orbit,
       chapters: [
         {
           title: 'Chapter 1: The Clergyman & The Dark Stars (1783)',
@@ -55,7 +56,7 @@ function LearningStories({ onSelectStoryTopic }) {
       author: 'VELORA Philosophical Studies',
       readTime: '7 min narrative',
       color: '#2563EB',
-      icon: '🏛️',
+      icon: Landmark,
       chapters: [
         {
           title: 'Chapter 1: The Marketplace Provocateur (399 BCE)',
@@ -84,7 +85,7 @@ function LearningStories({ onSelectStoryTopic }) {
       author: 'VELORA History of Science',
       readTime: '6 min narrative',
       color: '#ff9f0a',
-      icon: '🔭',
+      icon: Telescope,
       chapters: [
         {
           title: 'Chapter 1: Looking Up in Padua (1609)',
@@ -133,7 +134,7 @@ function LearningStories({ onSelectStoryTopic }) {
           >
             <div className="story-card-top">
               <span className="story-icon-badge" style={{ background: `${story.color}15`, color: story.color }}>
-                {story.icon}
+                <story.icon size={22} aria-hidden="true" />
               </span>
               <span className="story-read-time">{story.readTime}</span>
             </div>
