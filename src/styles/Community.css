@@ -330,7 +330,11 @@
   background: var(--bg-tertiary);
 }
 
-.notes-list {
+/* Named "desk-*" because ShadowLearning.css also defines .note-item and
+   .notes-list for its own cards. Every component stylesheet ends up in one
+   global bundle, so a shared name leaks a white card and a 1.5rem padding into
+   the note rows below. Do not shorten these. */
+.desk-notes-list {
   list-style: none;
   margin: var(--space-3) 0 0;
   padding: 0;
@@ -339,7 +343,7 @@
   gap: var(--space-2);
 }
 
-.note-item {
+.desk-note-item {
   display: flex;
   align-items: baseline;
   justify-content: space-between;

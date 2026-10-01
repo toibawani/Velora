@@ -74,3 +74,29 @@ test('a draft below the length floor cannot be submitted at all', () => {
   expect(screen.getByRole('button', { name: /Keep this question/i })).toBeDisabled();
 });
 
+test('the note rows keep class names nothing else in the bundle claims', () => {
+  const now = new Date().toISOString();
+  localStorage.setItem(
+    'velora_question_desk',
+    JSON.stringify([
+      {
+        id: 'q-1',
+        question: 'Why does the horizon trap light but not the mass?',
+        subject: 'physics',
+        topicId: 'black-holes',
+        createdAt: now,
+        notes: [{ id: 'n-1', text: 'The escape velocity, not the density.', createdAt: now }],
+      },
+    ])
+  );
+
+  const { container } = open();
+
+  // ShadowLearning.css styles .note-item and .notes-list for its own cards, and
+  // every component stylesheet ends up in one global bundle, so the bare names
+  // painted a white card behind each note in a dark theme. Only the browser
+  // showed it: the markup was correct and the tests all passed.
+  expect(container.querySelector('.desk-note-item')).not.toBeNull();
+  expect(container.querySelector('.note-item')).toBeNull();
+});
+
