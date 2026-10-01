@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Landmark, Orbit, Headphones, Waves, Lightbulb } from 'lucide-react';
 import '../styles/SensoryRooms.css';
 
 /**
@@ -292,7 +293,7 @@ function SensoryRooms({ topic, onBack }) {
             ← Back to Learn
           </button>
           <h1 className="sr-title">
-            <span>🏛️</span> Deep Focus Sensory Room
+            <Landmark size={22} aria-hidden="true" style={{ verticalAlign: '-4px', marginRight: 8 }} />Deep Focus Sensory Room
           </h1>
           <p className="sr-subtitle">
             Tones, a breathing pacer and a focus timer. They are here to take up
@@ -365,7 +366,7 @@ function SensoryRooms({ topic, onBack }) {
             {/* 432Hz Drone */}
             <div className={`sr-sound-row ${activeSounds.drone ? 'active' : ''}`}>
               <div className="sr-sound-info">
-                <span className="sr-sound-icon">🌌</span>
+                <span className="sr-sound-icon"><Orbit size={20} aria-hidden="true" /></span>
                 <div>
                   <h3 className="sr-sound-name">Low Drone (432 Hz)</h3>
                   <p className="sr-sound-desc">
@@ -398,7 +399,7 @@ function SensoryRooms({ topic, onBack }) {
             {/* 10Hz Binaural Alpha */}
             <div className={`sr-sound-row ${activeSounds.binaural ? 'active' : ''}`}>
               <div className="sr-sound-info">
-                <span className="sr-sound-icon">🎧</span>
+                <span className="sr-sound-icon"><Headphones size={20} aria-hidden="true" /></span>
                 <div>
                   <h3 className="sr-sound-name">Binaural Beat (10 Hz)</h3>
                   <p className="sr-sound-desc">
@@ -433,7 +434,7 @@ function SensoryRooms({ topic, onBack }) {
             {/* Brownian Noise */}
             <div className={`sr-sound-row ${activeSounds.brownNoise ? 'active' : ''}`}>
               <div className="sr-sound-info">
-                <span className="sr-sound-icon">🌊</span>
+                <span className="sr-sound-icon"><Waves size={20} aria-hidden="true" /></span>
                 <div>
                   <h3 className="sr-sound-name">Deep Brownian Noise</h3>
                   <p className="sr-sound-desc">Low-frequency acoustic blanket masking environmental distraction</p>
@@ -462,7 +463,7 @@ function SensoryRooms({ topic, onBack }) {
           </div>
 
           <div className="sr-notice-banner">
-            <span>💡</span>
+            <Lightbulb size={16} aria-hidden="true" style={{ flexShrink: 0 }} />
             <span>
               All audio is generated procedurally in your browser using mathematical oscillators. No external audio streams or bandwidth required.
             </span>
