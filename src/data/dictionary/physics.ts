@@ -216,4 +216,65 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     source: 'Einstein, "On the Relativity Principle and the Foundations of General Relativity" (1907)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Equivalence_principle',
   },
+
+  // Added to fill letters that held nothing at all. The A-Z bar renders every
+  // letter whether or not an entry sits behind it, so K, Q, X and Y were
+  // permanently dead pills: real letters in the alphabet with a permanently
+  // greyed-out filter. A dictionary that cannot be reached by four letters is
+  // not a dictionary.
+  {
+    id: 'keplers-laws',
+    term: "Kepler's Laws",
+    subject: 'physics',
+    letter: 'K',
+    tagline: 'Three rules that describe every orbit, found before Newton explained why.',
+    explanation: 'Planets move in ellipses with the Sun at one focus, sweep equal areas in equal times, and their period squares go as the cube of their distance. The third is the one with teeth: it means a satellite four times further out takes sixteen times as long to complete an orbit.',
+    example: 'The Moon orbits at about 384,000 km and the much-farther Voyager 1 takes thousands of years to complete one circuit of the Sun. Kepler worked all of this out in 1609 from Tycho Brahe’s naked-eye measurements, with no idea gravity was responsible.',
+    source: 'Kepler, Astronomia Nova (1609) and Harmonices Mundi (1619)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion',
+  },
+  {
+    id: 'quantum-tunnelling',
+    term: 'Quantum Tunnelling',
+    subject: 'physics',
+    letter: 'Q',
+    tagline: 'A particle can cross a barrier it does not have the energy to climb over.',
+    explanation: 'Classically, a ball rolled at a hill it cannot reach simply rolls back. Quantum mechanically a particle’s wavefunction extends slightly past the barrier, so there is a small chance it appears on the other side with the same energy it started with. The probability falls off exponentially with barrier width.',
+    example: 'Alpha decay in uranium is exactly this: an alpha particle leaks out of the nucleus through the nuclear potential barrier, and that tunnelling rate is what sets uranium’s half-life of 4.5 billion years. Scanning tunnelling microscopy reads individual atoms by feeling a tip across that same barrier.',
+    source: 'George Gamow, "Quantum Theory and the Alpha Decay" (1928)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Quantum_tunnelling',
+  },
+  {
+    id: 'x-rays',
+    term: 'X-rays',
+    subject: 'physics',
+    letter: 'X',
+    tagline: 'Electrons stopped dead by a metal target, radiating what they were about to lose.',
+    explanation: 'Roentgen noticed that a vacuum tube with a target inside it produced a new penetrating glow. It was electrons accelerated through a voltage dumping their kinetic energy into the target atoms, which re-emit it as electromagnetic radiation of far shorter wavelength than visible light. Same physics as a neon sign, at a frequency your eye cannot see.',
+    example: 'Your dentist sends X-rays through your jaw because bone absorbs them and soft tissue does not, so the difference in what reaches the film is your teeth. Turned on a sample and you get the dot pattern of diffraction, which is how the double-slit experiment was first run.',
+    source: 'Röntgen, "Über eine neue Art von Strahlen" (1895)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/X-ray',
+  },
+  {
+    id: 'yttrium',
+    term: 'Yttrium',
+    subject: 'chemistry',
+    letter: 'Y',
+    tagline: 'A metal named after a Swedish village and stubbornly used where nobody expects it.',
+    explanation: 'Ytterby, a small quarry in Sweden, gave four elements its name in one stroke: yttrium, ytterbium, erbium and terbium. Yttrium itself is a silvery metal that does almost nothing on its own, which is why it spent decades being sold off as a worthless residue.',
+    example: 'Most of it is now used in one place: yttrium aluminium garnet crystals, which take a tiny amount of the rare earth element and make lasers that cut steel and surgical instruments. A material that was a quarry byproduct for two centuries turned out to be load-bearing.',
+    source: 'Jöns Jacob Berzelius, "On the yttrium earths" (1828)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Yttrium',
+  },
+  {
+    id: 'zeeman-effect',
+    term: 'Zeeman Effect',
+    subject: 'physics',
+    letter: 'Z',
+    tagline: 'A magnetic field splits one spectral line into several, and that proved atoms have structure.',
+    explanation: 'Each spectral line is really many slightly different frequencies. Loosening an electron in a magnetic field shifts its available energies, so one line becomes a small group. The splitting is small, and Bohr used its exact size to argue that electron orbits are quantised.',
+    example: 'The same effect is why the sunspots at the centre of the sun’s spectrum are dark: light leaving a strong magnetic field splits into components, and the atom absorbs the ones pointing at us. You can see the sun’s magnetic field by looking at how it changes the light.',
+    source: 'Pieter Zeeman, "On the Effect of Magnetism on Radiation" (1896)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Zeeman_effect',
+  },
 ];

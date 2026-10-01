@@ -42,7 +42,15 @@ describe('Curious Dictionary A-Z index', () => {
     // The bar advertises a count on every letter that has entries.
     const withCount = screen.getAllByTitle(/\d+ under/);
     expect(withCount.length).toBeGreaterThan(5);
-    expect(screen.getByTitle('No terms under Q')).toBeDisabled();
+
+    // Every letter that once held nothing now has entries behind it: the bar
+    // renders all 26 either way, so an empty letter is a permanently dead
+    // filter. This asserts the fix rather than a hardcoded letter, so filling
+    // one more later does not need the test rewritten.
+    // queryAllBy, not getAllBy: getAllBy throws when nothing matches, which
+    // would make this test fail for the wrong reason.
+    const empty = screen.queryAllByTitle(/No terms under/);
+    expect(empty).toHaveLength(0);
   });
 
   test('narrows the list to one letter and reports the new count', () => {
