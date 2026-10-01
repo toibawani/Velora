@@ -14,21 +14,59 @@ import '../styles/GameStyles.css';
  * does not "create" gravitational lensing, and a black hole does not contain
  * a singularity in the order that was listed.
  */
+/**
+ * Each chain is a causal sequence, and every link has to earn its place. The
+ * chemistry chain used to end "Chemical Bond holds together Molecule", which
+ * says the same thing as the step before it in reverse. A link that restates
+ * its neighbour is not a chain, so the second step now carries the actual
+ * mechanism: electrons shared between atoms is what a covalent bond is, and
+ * that is what makes a molecule.
+ *
+ * Six chains, up from three. One round of three was thin enough that a learner
+ * finished the game in under a minute and never saw a non-biological one.
+ */
 const CHAINS = [
   {
     title: 'Biology Chain',
     concepts: ['DNA', 'Genes', 'Proteins', 'Cells'],
-    links: ['contains', 'code for', 'build'],
+    links: ['carries the instructions that make up', 'are the instructions for building', 'are the machinery that builds'],
   },
   {
     title: 'Chemistry Chain',
     concepts: ['Atom', 'Electron', 'Chemical Bond', 'Molecule'],
-    links: ['has', 'form', 'holds together'],
+    links: ['has outer-shell', 'are shared between atoms to create a', 'joins atoms together into a'],
   },
   {
     title: 'Space Chain',
     concepts: ['Mass', 'Gravity', 'Orbital Velocity', 'Satellite'],
-    links: ['produces', 'sets', 'keeps in orbit'],
+    links: ['bends spacetime and produces', 'sets the sideways speed a body needs to stay in orbit around', 'stays in orbit because of'],
+  },
+  {
+    title: 'Physics Chain',
+    concepts: ['Temperature', 'Particle Motion', 'Pressure', 'Gas Expansion'],
+    links: [
+      'is the average speed of',
+      'raises the force per unit area when its particles push harder in',
+      'pushes outwards as the particles strike its walls harder, causing',
+    ],
+  },
+  {
+    title: 'Economics Chain',
+    concepts: ['Scarcity', 'Choice', 'Price', 'Trade'],
+    links: [
+      'forces a rationing decision, creating',
+      'is resolved by the scarcity, which is settled by',
+      'is what makes exchanging what you have for what you lack worthwhile',
+    ],
+  },
+  {
+    title: 'History Chain',
+    concepts: ['Grain Surplus', 'Population Growth', 'Urban Labour', 'Specialisation'],
+    links: [
+      'feeds and enables',
+      'whose numbers supply cities with',
+      'which frees people to trade goods they make better than their neighbours do',
+    ],
   },
 ];
 
@@ -176,5 +214,7 @@ function KnowledgeChain({ onBack }) {
     </div>
   );
 }
+
+export { CHAINS };
 
 export default KnowledgeChain;
