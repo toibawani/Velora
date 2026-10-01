@@ -28,7 +28,8 @@
     "lint:all": "eslint --max-warnings=0 --ext .js,.jsx,.ts,.tsx src",
     "eject": "react-scripts eject",
     "test:layout": "node scripts/layoutCheck.js",
-    "test:naming": "node scripts/nameAudit.js"
+    "test:naming": "node scripts/nameAudit.js",
+    "test:games": "node scripts/gameAudit.js"
   },
   "jest": {
     "coverageThreshold": {
