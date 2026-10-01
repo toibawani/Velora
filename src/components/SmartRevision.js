@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, RotateCcw, Lightbulb } from 'lucide-react';
+import { Calendar, RotateCcw, Lightbulb, BookOpen } from 'lucide-react';
 import EmptyState from './EmptyState';
 import '../styles/SmartRevision.css';
 
@@ -34,7 +34,7 @@ function SmartRevision({ selectedSubject }) {
 
       {revisions.length === 0 ? (
         <EmptyState
-          icon="📚"
+          icon={<BookOpen size={28} aria-hidden="true" />}
           title="No reviews scheduled"
           description="Finish a few topics and the planner will start scheduling retrieval practice for them."
           actionLabel="Start Learning"
