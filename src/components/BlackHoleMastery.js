@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Orbit, Clock, ArrowDown, Sparkles, CircleDot, Zap, Radiation, HelpCircle, Image as ImageIcon, Atom } from 'lucide-react';
 import '../styles/BlackHoleMastery.css';
 
 function BlackHoleMastery({ onBack, onOpenLab }) {
@@ -10,7 +11,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'what-is-space',
       title: 'What is Space?',
-      icon: '🌌',
+      icon: Orbit,
       color: '#2563EB',
       content: 'The three-dimensional arena in which all physical objects exist and events occur.',
       duration: '8 mins',
@@ -18,7 +19,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'spacetime',
       title: 'Space-Time',
-      icon: '⏱️',
+      icon: Clock,
       color: '#2563EB',
       content: 'Time and space are the same fabric—spacetime. Gravity bends it.',
       duration: '10 mins',
@@ -26,7 +27,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'gravity',
       title: "Einstein's Gravity",
-      icon: '⬇️',
+      icon: ArrowDown,
       color: '#2563EB',
       content: 'Mass curves spacetime. Objects follow the straightest path in curved geometry.',
       duration: '12 mins',
@@ -34,7 +35,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'stellar-death',
       title: 'Death of Stars',
-      icon: '💫',
+      icon: Sparkles,
       color: '#FF6B6B',
       content: 'A massive star collapses when fuel runs out. Gravity wins instantly.',
       duration: '11 mins',
@@ -42,7 +43,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'event-horizon',
       title: 'The Event Horizon',
-      icon: '🔴',
+      icon: CircleDot,
       color: '#F39C12',
       content: 'The point of no return. Escape velocity exceeds the speed of light.',
       duration: '13 mins',
@@ -58,7 +59,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'kerr-black-hole',
       title: 'Spinning Black Holes',
-      icon: '⚡',
+      icon: Zap,
       color: '#2563EB',
       content: 'Frame-dragging. Ergosphere. The cosmic tornado.',
       duration: '14 mins',
@@ -66,7 +67,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'hawking-radiation',
       title: 'Hawking Radiation',
-      icon: '☢️',
+      icon: Radiation,
       color: '#E74C3C',
       content: 'Black holes evaporate. They are not actually black.',
       duration: '12 mins',
@@ -74,7 +75,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'information-paradox',
       title: 'Information Paradox',
-      icon: '❓',
+      icon: HelpCircle,
       color: '#2563EB',
       content: 'The greatest unsolved problem. Is information destroyed?',
       duration: '15 mins',
@@ -82,7 +83,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     {
       id: 'holographic-principle',
       title: 'Holographic Principle',
-      icon: '🖼️',
+      icon: ImageIcon,
       color: '#3498DB',
       content: 'You might be a 2D hologram projected in 3D. The universe is data.',
       duration: '16 mins',
@@ -352,6 +353,8 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
     };
   }, []);
 
+  const ActiveLevel = levels[currentLevel];
+
   return (
     <div className="black-hole-mastery-container" ref={containerRef}>
       {/* Background Canvas */}
@@ -371,11 +374,11 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
                 style={{ background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', color: '#ffffff' }}
                 onClick={onOpenLab}
               >
-                ⚛️ Open Relativity Lab
+                <Atom size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Open Relativity Lab
               </button>
             )}
           </div>
-          <h1 className="bh-title">🌌 Black Holes: The Masterclass</h1>
+          <h1 className="bh-title"><Orbit size={24} aria-hidden="true" style={{ verticalAlign: '-4px', marginRight: 8 }} />Black Holes: The Masterclass</h1>
           <p className="bh-subtitle">From Fundamental Spacetime to Advanced Relativistic Phenomena</p>
         </header>
 
@@ -390,8 +393,8 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
                 onClick={() => setCurrentLevel(idx)}
               >
                 <div className="chapter-card-top">
-                  <span className="chapter-icon">{level.icon}</span>
-                  <span className="chapter-duration">⏱️ {level.duration}</span>
+                  <span className="chapter-icon"><level.icon size={18} aria-hidden="true" /></span>
+                  <span className="chapter-duration"><Clock size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />{level.duration}</span>
                 </div>
                 <h3 className="chapter-title">{level.title}</h3>
                 <p className="chapter-summary">{level.content}</p>
@@ -402,7 +405,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
           {/* Detailed Reading View */}
           <div className="detailed-reading-view">
             <h2 className="reading-chapter-title">
-              {levels[currentLevel].icon} {levels[currentLevel].title}
+              <ActiveLevel.icon size={20} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />{ActiveLevel.title}
             </h2>
 
             {detailedContent[levels[currentLevel].id] && (
