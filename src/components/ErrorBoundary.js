@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertTriangle } from 'lucide-react';
 import './ErrorBoundary.css';
 
 class ErrorBoundary extends React.Component {
@@ -30,7 +31,7 @@ class ErrorBoundary extends React.Component {
       return (
         <div className="error-boundary" role="alert">
           <div className="error-boundary-content">
-            <div className="error-icon">⚠️</div>
+            <div className="error-icon"><AlertTriangle size={44} aria-hidden="true" /></div>
             <h1 className="error-title">Something went wrong</h1>
             <p className="error-message">
               VELORA encountered an unexpected error. This might be a temporary issue.
