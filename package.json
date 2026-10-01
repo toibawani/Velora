@@ -32,10 +32,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "statements": 58,
-        "branches": 52,
-        "functions": 52,
-        "lines": 59
+        "statements": 60,
+        "branches": 54,
+        "functions": 54,
+        "lines": 62
       }
     }
   },
@@ -59,6 +59,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
+    "jest-axe": "^11.0.0",
     "puppeteer-core": "^23.11.1"
   }
 }

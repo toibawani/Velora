@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut, Gamepad2 } from 'lucide-react';
 import '../styles/MobileNav.css';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
 function MobileNav({ currentScreen, setScreen, onLogout }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleRef = useRef(null);
+  const drawerRef = useRef(null);
+  useFocusTrap(isOpen, drawerRef, { onClose: () => setIsOpen(false) });
 
   const navItems = [
     { name: 'Home', screen: 'universe', icon: Home },
@@ -73,6 +76,7 @@ function MobileNav({ currentScreen, setScreen, onLogout }) {
       )}
 
       <div
+        ref={drawerRef}
         className={`mobile-nav ${isOpen ? 'open' : ''}`}
         aria-hidden={!isOpen}
         role="dialog"

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Search, X, BookOpen, Command, Home, BarChart3, Users } from 'lucide-react';
 import '../styles/CommandPalette.css';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
 const DESTINATIONS = [
   { id: 'universe', label: 'VELORA Universe', description: 'Your learning home', icon: Home },
@@ -13,6 +14,8 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
   const [query, setQuery] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef(null);
+  const paletteRef = useRef(null);
+  useFocusTrap(isOpen, paletteRef, { onClose });
   const results = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     if (!normalized) return DESTINATIONS;
@@ -48,7 +51,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
 
   return (
     <div className="command-palette-backdrop" role="presentation" onMouseDown={onClose}>
-      <section className="command-palette" role="dialog" aria-modal="true" aria-label="VELORA search" onMouseDown={(event) => event.stopPropagation()} onKeyDown={handlePaletteKeyDown}>
+      <section ref={paletteRef} className="command-palette" role="dialog" aria-modal="true" aria-label="VELORA search" onMouseDown={(event) => event.stopPropagation()} onKeyDown={handlePaletteKeyDown}>
         <div className="command-search-row">
           <Search size={20} aria-hidden="true" />
           <input ref={inputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search VELORA" aria-label="Search VELORA" />

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Orbit, TrendingUp, Map as MapIcon, Leaf, Wind, Zap, Atom, Dna, Lightbulb, X } from 'lucide-react';
 import '../styles/Universe.css';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
 /**
  * Knowledge Universe & Interdisciplinary Topology Builder
@@ -151,6 +152,8 @@ function UniverseBuilder({ topic, onBack }) {
   const [newConceptName, setNewConceptName] = useState('');
   const [newConceptCategory, setNewConceptCategory] = useState('physics');
   const [newConceptSummary, setNewConceptSummary] = useState('');
+  const addConceptModalRef = useRef(null);
+  useFocusTrap(isAddingConcept, addConceptModalRef, { onClose: () => setIsAddingConcept(false) });
 
   const handleAddConcept = (e) => {
     e.preventDefault();
@@ -237,9 +240,9 @@ function UniverseBuilder({ topic, onBack }) {
         {/* Modal: Add Concept */}
         {isAddingConcept && (
           <div className="add-concept-overlay">
-            <div className="add-concept-modal">
+            <div className="add-concept-modal" ref={addConceptModalRef} role="dialog" aria-modal="true" aria-labelledby="add-concept-title">
               <div className="modal-header">
-                <h3>Add Concept to Knowledge Universe</h3>
+                <h2 id="add-concept-title">Add Concept to Knowledge Universe</h2>
                 <button className="modal-close-btn" aria-label="Close the add concept dialog" onClick={() => setIsAddingConcept(false)}><X size={18} aria-hidden="true" /></button>
               </div>
               <form onSubmit={handleAddConcept} className="add-concept-form">
@@ -375,7 +378,7 @@ function UniverseBuilder({ topic, onBack }) {
                 <div className="inspector-head">
                   <div className="inspector-title-row">
                     <span className="inspector-icon"><selectedConcept.icon size={18} aria-hidden="true" /></span>
-                    <h3 className="inspector-name">{selectedConcept.name}</h3>
+                    <h2 className="inspector-name">{selectedConcept.name}</h2>
                   </div>
                   <button className="inspector-close" aria-label="Close the node inspector" onClick={() => setSelectedConcept(null)}><X size={16} aria-hidden="true" /></button>
                 </div>
