@@ -54,7 +54,9 @@ const validateEmail = (email: string): string => {
 
 const validatePhone = (phone: string): string => {
   if (!phone) return ''; // Phone is optional
-  const phoneRegex = /^[\d\s\-\+\(\)]{10,}$/;
+  // Only \d needs escaping inside a character class; the rest are already
+  // literal there, so escaping them is what the no-useless-escape rule flags.
+  const phoneRegex = /^[\d\s\-+()]{10,}$/;
   if (!phoneRegex.test(phone)) return 'Please enter a valid phone number';
   return '';
 };
