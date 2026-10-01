@@ -1,7 +1,9 @@
 /* ==========================================================================
-   Community.css — High-Contrast Discussion Rooms & Academic Exchange
+   Community.css — Question Desk
    --------------------------------------------------------------------------
-   Twitter/X style timeline, clean typography, sharp borders, zero neon glow.
+   The styles for the question desk: the form, the list of kept questions,
+   their notes and their controls. The discussion-room and thread styles left
+   with the fabricated rooms and threads that used them.
    ========================================================================== */
 
 .community-page {
@@ -66,129 +68,11 @@
   border-color: var(--border-strong);
 }
 
-/* Safety Badge */
-.comm-safety-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 4px 12px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: var(--weight-medium);
-  color: var(--text-secondary);
-}
-
-.safety-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-green);
-}
-
 /* Main Container */
 .community-main-body {
   max-width: 760px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-4) var(--space-16);
-}
-
-.comm-top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-6);
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-
-/* Tab Switcher */
-.comm-tabs-row {
-  display: inline-flex;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  padding: 3px;
-  gap: 2px;
-}
-
-.comm-tab-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  padding: 6px 16px;
-  border-radius: var(--radius-full);
-  font-size: 0.875rem;
-  font-weight: var(--weight-medium);
-  cursor: pointer;
-  transition: color var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard);
-}
-
-.comm-tab-btn:hover {
-  color: var(--text-primary);
-}
-
-.comm-tab-btn.active {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-weight: var(--weight-semibold);
-  box-shadow: var(--shadow-xs);
-}
-
-.active-room-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  padding: 4px 10px;
-  font-size: 0.8125rem;
-  color: var(--accent-primary);
-}
-
-.chip-remove-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-tertiary);
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0 4px;
-}
-
-/* Topic Filter Pills */
-.subject-filter-row {
-  display: flex;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-  flex-wrap: wrap;
-}
-
-.filter-pill {
-  background: transparent;
-  border: 1px solid var(--border-default);
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  font-size: 0.8125rem;
-  font-weight: var(--weight-medium);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.filter-pill:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
-
-.filter-pill.active {
-  background: var(--text-primary);
-  color: var(--text-inverse);
-  border-color: var(--text-primary);
-  font-weight: var(--weight-semibold);
 }
 
 /* Compose Box */
@@ -207,14 +91,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.ask-anon-tag {
-  font-size: 0.75rem;
-  font-weight: var(--weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  color: var(--text-secondary);
 }
 
 .ask-subject-select {
@@ -311,45 +187,10 @@
   background: var(--bg-hover);
 }
 
-.discussion-card.flagged {
-  padding: var(--space-4);
-  background: var(--bg-tertiary);
-}
-
-.flagged-msg {
-  font-size: 0.8125rem;
-  color: var(--text-tertiary);
-  font-style: italic;
-}
-
 .disc-card-top-row {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-}
-
-.disc-topic-tag {
-  font-size: 0.75rem;
-  font-weight: var(--weight-bold);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  color: var(--accent-primary);
-}
-
-.expert-verified-badge {
-  font-size: 0.6875rem;
-  font-weight: var(--weight-semibold);
-  color: var(--accent-green);
-  background: rgba(21, 128, 61, 0.1);
-  border: 1px solid rgba(21, 128, 61, 0.25);
-  padding: 2px 6px;
-  border-radius: var(--radius-xs);
-}
-
-.disc-time-ago {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
-  margin-left: auto;
 }
 
 .disc-question {
@@ -358,145 +199,6 @@
   font-weight: var(--weight-bold);
   line-height: var(--leading-tight);
   color: var(--text-primary);
-}
-
-.disc-preview-snippet {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: var(--leading-normal);
-  color: var(--text-secondary);
-}
-
-.disc-card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: var(--space-3);
-}
-
-.disc-author-meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  font-size: 0.8125rem;
-}
-
-.author-name {
-  font-weight: var(--weight-semibold);
-  color: var(--text-primary);
-}
-
-.author-dot {
-  color: var(--text-tertiary);
-}
-
-.author-role {
-  color: var(--text-secondary);
-}
-
-.disc-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.upvote-btn,
-.reply-toggle-btn,
-.flag-btn {
-  background: transparent;
-  border: 1px solid var(--border-default);
-  color: var(--text-secondary);
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: var(--weight-medium);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.upvote-btn:hover,
-.reply-toggle-btn:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
-
-.upvote-btn.upvoted {
-  background: var(--accent-soft);
-  color: var(--accent-primary);
-  border-color: var(--accent-line);
-}
-
-.flag-btn {
-  padding: 4px 8px;
-  color: var(--text-tertiary);
-}
-
-.flag-btn:hover {
-  color: var(--accent-red);
-  border-color: rgba(185, 28, 28, 0.35);
-}
-
-/* Thread Replies Section */
-.thread-replies-tray {
-  margin-top: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--border-subtle);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.replies-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding-left: var(--space-3);
-  border-left: 2px solid var(--border-default);
-}
-
-.reply-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.reply-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: 0.75rem;
-}
-
-.reply-author {
-  font-weight: var(--weight-semibold);
-  color: var(--text-primary);
-}
-
-.reply-role-tag {
-  color: var(--accent-primary);
-  background: var(--bg-tertiary);
-  padding: 1px 6px;
-  border-radius: var(--radius-xs);
-  font-size: 0.6875rem;
-}
-
-.reply-time {
-  color: var(--text-tertiary);
-  margin-left: auto;
-}
-
-.reply-body {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: var(--leading-normal);
-}
-
-.no-replies-text {
-  font-size: 0.8125rem;
-  color: var(--text-tertiary);
-  margin: 0;
 }
 
 .reply-input-row {
@@ -532,112 +234,164 @@
   cursor: pointer;
 }
 
-/* Study Rooms Grid */
-.rooms-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--space-4);
+/* Question desk. Everything below describes one person's own notes, which is
+   the only thing this screen can honestly render. */
+.comm-device-note {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
 }
 
-.room-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
+.ask-header-row {
+  flex-wrap: wrap;
+}
+
+.ask-heading {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.ask-field-label {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  transition: border-color var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard);
-}
-
-.room-card:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-hover);
-}
-
-.room-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.room-subject-tag {
-  font-size: 0.6875rem;
-  font-weight: var(--weight-bold);
+  gap: 4px;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  color: var(--accent-primary);
-}
-
-.room-live-indicator {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.live-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-green);
-}
-
-.live-count {
-  font-size: 0.75rem;
-  color: var(--accent-green);
-  font-weight: var(--weight-semibold);
-}
-
-.room-name {
-  margin: 0;
-  font-size: 1.0625rem;
-  font-weight: var(--weight-bold);
-  color: var(--text-primary);
-  line-height: var(--leading-tight);
-}
-
-.room-desc {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: var(--leading-normal);
-  color: var(--text-secondary);
-  flex: 1;
-}
-
-.room-footer-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--border-subtle);
-}
-
-.room-members {
-  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
   color: var(--text-tertiary);
 }
 
-.room-join-btn {
-  background: transparent;
+.char-count-text.short {
+  color: var(--accent-orange);
+}
+
+.stack-heading {
+  margin: 0 0 var(--space-3);
+  font-size: 1.05rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.stack-empty-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.disc-subject-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--accent-primary);
+}
+
+.disc-time {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.disc-lesson-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.disc-lesson-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.disc-lesson-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
   border: 1px solid var(--border-default);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  font-size: 0.8125rem;
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 0.82rem;
   font-weight: var(--weight-semibold);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard);
 }
 
-.room-join-btn:hover {
+.disc-lesson-btn:hover {
   background: var(--bg-tertiary);
-  border-color: var(--border-strong);
 }
 
-.comm-empty-state {
-  padding: var(--space-8);
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 0.9375rem;
+.notes-list {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.note-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-left: 2px solid var(--border-default);
+  padding-left: var(--space-3);
+}
+
+.note-body {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
+.note-time {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.disc-discard-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: 0.8rem;
+  padding: 8px;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.disc-discard-btn:hover {
+  color: var(--accent-red);
+}
+
+@media (max-width: 640px) {
+  .comm-device-note {
+    display: none;
+  }
+
+  .disc-discard-btn > svg {
+    display: none;
+  }
+}
+
+.comm-alert-text {
+  font-size: 0.85rem;
+  color: var(--accent-orange);
+}
+
+.disc-discard-text {
+  font-weight: var(--weight-medium);
 }
