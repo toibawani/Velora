@@ -14,6 +14,7 @@ import MobileNav from './components/MobileNav';
 import OnboardingTour from './components/OnboardingTour';
 import ErrorBoundary from './components/ErrorBoundary';
 import Toast from './components/Toast';
+import { KEYS, readValue } from './utils/storage';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -76,7 +77,7 @@ function App() {
     setScreen('universe');
     let alreadyOnboarded = false;
     try {
-      alreadyOnboarded = Boolean(localStorage.getItem('velora_onboarding_done'));
+      alreadyOnboarded = Boolean(readValue(KEYS.ONBOARDING_DONE, false));
     } catch {
       alreadyOnboarded = false;
     }

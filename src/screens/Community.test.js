@@ -100,3 +100,19 @@ test('the note rows keep class names nothing else in the bundle claims', () => {
   expect(container.querySelector('.note-item')).toBeNull();
 });
 
+test('says a question was not saved when the browser refuses the write', () => {
+  const setItem = jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+    throw new DOMException('full', 'QuotaExceededError');
+  });
+
+  open();
+  fireEvent.change(screen.getByPlaceholderText(/What is actually confusing you/i), {
+    target: { value: 'Why does the horizon trap light but not the mass?' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /Keep this question/i }));
+
+  // The old behaviour was to render the entry and stay silent, which reads as
+  // "saved" to anyone who navigates away.
+  expect(screen.getByText(/would not save/i)).toBeInTheDocument();
+  setItem.mockRestore();
+});

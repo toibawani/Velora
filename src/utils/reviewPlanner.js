@@ -1,6 +1,6 @@
-import { safeGet, safeSet } from './storage';
+import { KEYS, readValue, writeValue } from './storage';
 
-const STORAGE_KEY = 'velora_reviews';
+const STORAGE_KEY = KEYS.REVIEWS;
 const DAY = 86400000;
 
 const DEFAULT_REVIEW_ITEMS = [];
@@ -8,13 +8,13 @@ const DEFAULT_REVIEW_ITEMS = [];
 const isValidItem = (item) => item && typeof item.id === 'string' && typeof item.topic === 'string' && typeof item.subject === 'string' && !Number.isNaN(Date.parse(item.nextReview));
 
 export const getReviewItems = () => {
-  const parsed = safeGet(STORAGE_KEY, null);
+  const parsed = readValue(STORAGE_KEY, null);
   if (Array.isArray(parsed)) return parsed.filter(isValidItem).map((item) => ({ ...item, retention: Math.max(0, Math.min(100, Number(item.retention) || 0)) }));
   return DEFAULT_REVIEW_ITEMS;
 };
 
 export const saveReviewItems = (items) => {
-  return safeSet(STORAGE_KEY, items);
+  return writeValue(STORAGE_KEY, items) === 'none';
 };
 
 export const addReviewItem = (topic, subject = 'physics') => {

@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { KEYS } from '../utils/storage';
 
 const ThemeContext = createContext();
 
-const THEME_STORAGE_KEY = 'velora_theme_preference';
+const THEME_STORAGE_KEY = KEYS.THEME;
 
 /**
  * Determines whether it is currently daytime (7 AM to 7 PM)

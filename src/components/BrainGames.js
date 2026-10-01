@@ -13,7 +13,7 @@ import {
   Check
 } from 'lucide-react';
 import { sanitizeText } from '../utils/sanitize';
-import { safeGet, safeSet } from '../utils/storage';
+import { KEYS, EXPLANATION_BOARD, readValue, writeValue } from '../utils/storage';
 import { trackEvent } from '../utils/analytics';
 import '../styles/BrainGames.css';
 
@@ -282,7 +282,7 @@ const MYTH_QUESTIONS = [
 function TrueOrMythGame() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [bestStreak, setBestStreak] = useState(() => safeGet('velora_myth_streak', 0));
+  const [bestStreak, setBestStreak] = useState(() => readValue(KEYS.MYTH_STREAK, 0));
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [totalAnswered, setTotalAnswered] = useState(0);
@@ -304,7 +304,7 @@ function TrueOrMythGame() {
       setCorrectCount((prev) => prev + 1);
       if (nextStreak > bestStreak) {
         setBestStreak(nextStreak);
-        safeSet('velora_myth_streak', nextStreak);
+        writeValue(KEYS.MYTH_STREAK, nextStreak);
       }
     } else {
       setStreak(0);
@@ -464,10 +464,10 @@ const EXPLAIN_PROMPTS = [
 /** Same key shape the Peer Explanations component writes, so this reads the
  *  explanations already stored on this device instead of inventing a feed. */
 const peerStorageKey = (term) =>
-  `velora_explanations_${term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+  EXPLANATION_BOARD(term.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
 
 function readLocalExplanations(term) {
-  const stored = safeGet(peerStorageKey(term), []);
+  const stored = readValue(peerStorageKey(term), []);
   if (!Array.isArray(stored)) return [];
   return stored
     .filter((item) => item && typeof item.text === 'string' && item.text.trim())
@@ -541,14 +541,14 @@ function ExplainItBackGame() {
 
     const sanitized = sanitizeText(explanation.trim());
     if (sanitized) {
-      const stored = safeGet('velora_my_explanations', []);
+      const stored = readValue(KEYS.MY_EXPLANATIONS, []);
       const list = Array.isArray(stored) ? stored : [];
       list.unshift({
         term: currentPrompt.term,
         text: sanitized,
         date: new Date().toLocaleDateString(),
       });
-      safeSet('velora_my_explanations', list.slice(0, 10));
+      writeValue(KEYS.MY_EXPLANATIONS, list.slice(0, 10));
 
       // Show what this browser already holds for the same term, which is what
       // the peer explanations screen stores.

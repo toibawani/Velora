@@ -1,4 +1,5 @@
 import React from 'react';
+import { KEYS, readValue } from '../utils/storage';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import BrainGames from './BrainGames';
 
@@ -94,7 +95,7 @@ describe('Brain Games', () => {
     fireEvent.click(submit);
     fireEvent.click(submit);
 
-    const stored = JSON.parse(localStorage.getItem('velora_my_explanations') || '[]');
+    const stored = readValue(KEYS.MY_EXPLANATIONS, []);
     expect(stored).toHaveLength(1);
   });
 });

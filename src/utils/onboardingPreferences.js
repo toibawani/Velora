@@ -1,6 +1,6 @@
-import { safeGet } from './storage';
+import { KEYS, readValue } from './storage';
 
-const ONBOARDING_PREFERENCES_KEY = 'velora_onboarding_preferences';
+const ONBOARDING_PREFERENCES_KEY = KEYS.ONBOARDING_PREFERENCES;
 
 /**
  * What the learner said about themselves when they set VELORA up.
@@ -17,7 +17,7 @@ const STYLE_LABELS = {
 };
 
 export const getSelfReportedStyle = () => {
-  const stored = safeGet(ONBOARDING_PREFERENCES_KEY, null);
+  const stored = readValue(ONBOARDING_PREFERENCES_KEY, null);
   if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return null;
 
   const label = STYLE_LABELS[stored.style];

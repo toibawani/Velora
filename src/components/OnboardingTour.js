@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Orbit, Telescope, Zap, Sunrise, Sparkles, Moon, Landmark, ScrollText, Ruler, Eye, BookOpen, Gamepad2 } from 'lucide-react';
 import '../styles/OnboardingTour.css';
+import { KEYS, writeValue } from '../utils/storage';
 
 /**
  * OnboardingTour Component
@@ -15,7 +16,7 @@ import '../styles/OnboardingTour.css';
  * Stored in localStorage to never show twice.
  */
 
-const ONBOARDING_KEY = 'velora_onboarding_done';
+const ONBOARDING_KEY = KEYS.ONBOARDING_DONE;
 
 const markOnboardingComplete = () => {
   try {
@@ -91,7 +92,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
 
   const persistPreferences = (domain, style, time) => {
     try {
-      localStorage.setItem('velora_onboarding_preferences', JSON.stringify({ domain, style, time }));
+      writeValue(KEYS.ONBOARDING_PREFERENCES, { domain, style, time });
     } catch {
       // The flow remains usable if storage is unavailable.
     }

@@ -1,13 +1,13 @@
-import { safeGet, safeSet, safeRemove } from './storage';
+import { KEYS, readValue, writeValue, removeValue } from './storage';
 
-const EVENTS_KEY = 'velora_events';
+const EVENTS_KEY = KEYS.EVENTS;
 const MAX_EVENTS = 100;
 const PRIVATE_KEYS = /^(email|password|token|secret|authorization)$/i;
 
 const sanitizeData = (data) => Object.fromEntries(Object.entries(data).filter(([key]) => !PRIVATE_KEYS.test(key)).map(([key, value]) => [key, ['string', 'number', 'boolean'].includes(typeof value) ? value : String(value)]));
 
 const readEvents = () => {
-  const parsed = safeGet(EVENTS_KEY, []);
+  const parsed = readValue(EVENTS_KEY, []);
   return Array.isArray(parsed) ? parsed : [];
 };
 
@@ -20,11 +20,11 @@ export const trackEvent = (eventName, data = {}) => {
 
   const events = readEvents();
   events.push(event);
-  safeSet(EVENTS_KEY, events.slice(-MAX_EVENTS));
+  writeValue(EVENTS_KEY, events.slice(-MAX_EVENTS));
 };
 
 export const getAnalytics = () => readEvents();
 
 export const clearAnalytics = () => {
-  safeRemove(EVENTS_KEY);
+  removeValue(EVENTS_KEY);
 };

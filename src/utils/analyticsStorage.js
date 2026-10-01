@@ -6,9 +6,9 @@
  * Zero tracking pixels, zero external telemetry, zero surveillance.
  */
 
-import { safeGet, safeSet, safeRemove } from './storage';
+import { KEYS, readValue, writeValue, removeValue } from './storage';
 
-const STORAGE_KEY = 'velora_learning_analytics';
+const STORAGE_KEY = KEYS.LEARNING_ANALYTICS;
 
 const DEFAULT_ANALYTICS = {
   totalHoursStudied: 0,
@@ -35,24 +35,23 @@ const cloneDefault = () => JSON.parse(JSON.stringify(DEFAULT_ANALYTICS));
 const isAnalyticsShape = (value) => value && typeof value === 'object' && Array.isArray(value.topicTimeDistribution) && Array.isArray(value.weeklyActivity);
 
 export const getAnalyticsData = () => {
-  const raw = safeGet(STORAGE_KEY, null);
+  const raw = readValue(STORAGE_KEY, null);
   if (!raw) {
     const defaults = cloneDefault();
-    safeSet(STORAGE_KEY, defaults);
+    writeValue(STORAGE_KEY, defaults);
     return defaults;
   }
   if (!isAnalyticsShape(raw)) {
     // Invalid schema - return defaults and fix storage
     const defaults = cloneDefault();
-    safeSet(STORAGE_KEY, defaults);
+    writeValue(STORAGE_KEY, defaults);
     return defaults;
   }
   return { ...cloneDefault(), ...raw };
 };
 
-export const saveAnalyticsData = (data) => {
-  safeSet(STORAGE_KEY, data);
-};
+/** Returns FAILURE.NONE or why the write did not land, so callers can say so. */
+export const saveAnalyticsData = (data) => writeValue(STORAGE_KEY, data);
 
 export const recordStudySession = (topicName, minutes, subject = 'physics') => {
   const safeMinutes = Number(minutes);
@@ -89,5 +88,5 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
 };
 
 export const clearAnalyticsData = () => {
-  safeRemove(STORAGE_KEY);
+  removeValue(STORAGE_KEY);
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
 import './ErrorBoundary.css';
+import { KEYS, writeValue } from '../utils/storage';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
     try {
-      localStorage.setItem('velora_last_error', JSON.stringify({ message: error.message, timestamp: new Date().toISOString() }));
+      writeValue(KEYS.LAST_ERROR, JSON.stringify({ message: error.message, timestamp: new Date().toISOString() }));
     } catch {
       // Storage may be unavailable in private browsing; the fallback still works.
     }

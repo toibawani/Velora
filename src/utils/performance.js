@@ -1,13 +1,13 @@
-import { safeGet, safeSet } from './storage';
+import { KEYS, readValue, writeValue } from './storage';
 
 const MAX_LOGGED_SLOW_OPERATIONS = 50;
-const PERFORMANCE_KEY = 'velora_performance_log';
+const PERFORMANCE_KEY = KEYS.PERFORMANCE_LOG;
 
 const recordSlowOperation = (name, duration, threshold) => {
   if (duration <= threshold) return;
-  const current = safeGet(PERFORMANCE_KEY, []);
+  const current = readValue(PERFORMANCE_KEY, []);
   current.push({ name, duration: Number(duration.toFixed(2)), timestamp: new Date().toISOString() });
-  safeSet(PERFORMANCE_KEY, current.slice(-MAX_LOGGED_SLOW_OPERATIONS));
+  writeValue(PERFORMANCE_KEY, current.slice(-MAX_LOGGED_SLOW_OPERATIONS));
 };
 
 export const measurePerformance = (name, fn) => {
@@ -28,11 +28,11 @@ export const measureAsync = async (name, fn) => {
     if (duration > 200) console.warn(`[perf] Slow async operation: ${name} took ${duration.toFixed(2)}ms`);
     return result;
   } catch (error) {
-    safeSet('velora_last_operation_error', { name, message: error.message, timestamp: new Date().toISOString() });
+    writeValue(KEYS.LAST_OPERATION_ERROR, { name, message: error.message, timestamp: new Date().toISOString() });
     throw error;
   }
 };
 
 export const getPerformanceLog = () => {
-  return safeGet(PERFORMANCE_KEY, []);
+  return readValue(PERFORMANCE_KEY, []);
 };

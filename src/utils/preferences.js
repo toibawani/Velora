@@ -1,13 +1,11 @@
-import { safeGet, safeSet, safeRemove } from './storage';
+import { KEYS, readValue, writeValue, removeValue } from './storage';
 
-export const getPreference = (key, defaultValue) => {
-  return safeGet(`velora_pref_${key}`, defaultValue);
-};
+// Individual preferences are their own key family: velora_pref_<name>. They are
+// namespaced here so the prefix lives in exactly one place.
+const preferenceKey = (key) => `${KEYS.PREFERENCE_PREFIX}${key}`;
 
-export const setPreference = (key, value) => {
-  safeSet(`velora_pref_${key}`, value);
-};
+export const getPreference = (key, defaultValue) => readValue(preferenceKey(key), defaultValue);
 
-export const clearPreference = (key) => {
-  safeRemove(`velora_pref_${key}`);
-};
+export const setPreference = (key, value) => writeValue(preferenceKey(key), value) !== 'failed';
+
+export const clearPreference = (key) => removeValue(preferenceKey(key));

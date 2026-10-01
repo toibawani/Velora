@@ -11,7 +11,9 @@
  * Stored shape: { name: string, createdAt: string }
  */
 
-const STORAGE_KEY = 'velora_local_profile';
+import { KEYS, FAILURE, readValue, writeValue, removeValue } from './storage';
+
+const STORAGE_KEY = KEYS.LOCAL_PROFILE;
 
 const MAX_NAME_LENGTH = 40;
 
@@ -24,18 +26,11 @@ export const normalizeName = (value) =>
 export const isValidName = (value) => normalizeName(value).length >= 2;
 
 export const getProfile = () => {
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== 'object') return null;
-    const name = normalizeName(parsed.name);
-    if (!isValidName(name)) return null;
-    return { name, createdAt: typeof parsed.createdAt === 'string' ? parsed.createdAt : null };
-  } catch {
-    // Corrupted or unavailable storage reads as "no profile", not as a crash.
-    return null;
-  }
+  const parsed = readValue(STORAGE_KEY, null);
+  if (!parsed || typeof parsed !== 'object') return null;
+  const name = normalizeName(parsed.name);
+  if (!isValidName(name)) return null;
+  return { name, createdAt: typeof parsed.createdAt === 'string' ? parsed.createdAt : null };
 };
 
 /**
@@ -47,19 +42,7 @@ export const saveProfile = (name) => {
   const clean = normalizeName(name);
   if (!isValidName(clean)) return null;
   const profile = { name: clean, createdAt: new Date().toISOString() };
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
-    return profile;
-  } catch {
-    return null;
-  }
+  return writeValue(STORAGE_KEY, profile) === FAILURE.NONE ? profile : null;
 };
 
-export const clearProfile = () => {
-  try {
-    window.localStorage.removeItem(STORAGE_KEY);
-    return true;
-  } catch {
-    return false;
-  }
-};
+export const clearProfile = () => removeValue(STORAGE_KEY);

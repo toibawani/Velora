@@ -1,6 +1,7 @@
 import { CURRICULUM } from '../data/curriculum';
+import { KEYS, readValue, writeValue, FAILURE } from './storage';
 
-const STORAGE_KEY = 'velora_question_desk';
+const STORAGE_KEY = KEYS.QUESTION_DESK;
 
 /**
  * The question desk: questions the learner has actually written down, plus the
@@ -28,23 +29,20 @@ const isValidEntry = (entry) =>
   entry && typeof entry === 'object' && typeof entry.question === 'string' && entry.question.trim() !== '';
 
 export const getQuestions = () => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return isList(parsed) ? parsed.filter(isValidEntry) : [];
-  } catch {
-    return [];
-  }
+  const parsed = readValue(STORAGE_KEY, []);
+  return isList(parsed) ? parsed.filter(isValidEntry) : [];
 };
 
+/** FAILURE.NONE, or why the last write did not land. The UI reads this. */
+let lastWriteResult = FAILURE.NONE;
+
+export const getLastWriteResult = () => lastWriteResult;
+
 const write = (entries) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-  } catch {
-    // Storage full or blocked. The entry still lives in component state for this
-    // visit, which is honest for one sitting, rather than claiming it was kept.
-  }
+  // Storage full or blocked. The entry still lives in component state for this
+  // visit, which is honest for one sitting, rather than claiming it was kept.
+  // Recording the reason is what lets the Community screen say so out loud.
+  lastWriteResult = writeValue(STORAGE_KEY, entries);
   return entries;
 };
 

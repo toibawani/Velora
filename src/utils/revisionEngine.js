@@ -7,7 +7,9 @@
  * peak focus hours.
  */
 
-const STORAGE_KEY = 'velora_revision_schedule';
+import { KEYS, readValue, writeValue } from './storage';
+
+const STORAGE_KEY = KEYS.REVISION_SCHEDULE;
 const DAY = 86400000;
 const daysAgo = (days, hour = 18) => new Date(Date.now() - days * DAY).setHours(hour, 0, 0, 0);
 
@@ -77,12 +79,11 @@ const cloneInitialTopics = () => INITIAL_TOPICS.map((topic) => ({ ...topic }));
 
 export const getRevisionSchedule = () => {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_TOPICS));
+    const parsed = readValue(STORAGE_KEY, null);
+    if (!parsed) {
+      writeValue(STORAGE_KEY, INITIAL_TOPICS);
       return cloneInitialTopics();
     }
-    const parsed = JSON.parse(raw);
     if (!validTopics(parsed)) throw new Error('Invalid revision schedule');
     return parsed;
   } catch (e) {
@@ -92,11 +93,7 @@ export const getRevisionSchedule = () => {
 };
 
 export const saveRevisionSchedule = (topics) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(topics));
-  } catch (e) {
-    console.error('Failed to save revision schedule', e);
-  }
+  return writeValue(STORAGE_KEY, topics);
 };
 
 export const calculateOverallRetention = (topics = getRevisionSchedule()) => {

@@ -2,7 +2,16 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, ArrowRight, BookOpen, Trash2 } from 'lucide-react';
 import { CURRICULUM } from '../data/curriculum';
 import { trackEvent } from '../utils/analytics';
-import { addNote, addQuestion, findTopic, getQuestions, removeQuestion, topicChoices } from '../utils/questionDesk';
+import {
+  addNote,
+  addQuestion,
+  findTopic,
+  getLastWriteResult,
+  getQuestions,
+  removeQuestion,
+  topicChoices,
+} from '../utils/questionDesk';
+import { FAILURE } from '../utils/storage';
 import '../styles/Community.css';
 
 /**
@@ -34,6 +43,9 @@ const whenLabel = (iso) => {
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 };
 
+const NOT_SAVED =
+  'This browser would not save that, so it is only here for this visit. Your question is not stored. Private browsing and a full storage quota both cause this.';
+
 function Community({ setScreen, onOpenLesson }) {
   const [questions, setQuestions] = useState(() => getQuestions());
   const [draft, setDraft] = useState('');
@@ -47,6 +59,15 @@ function Community({ setScreen, onOpenLesson }) {
   }, []);
 
   const topicOptions = useMemo(() => topicChoices(draftSubject), [draftSubject]);
+
+  // A refused write used to look exactly like a successful one: the entry
+  // appeared in the list and nothing said otherwise. Now the screen says it.
+  const applyWrite = (next) => {
+    setQuestions(next);
+    const result = getLastWriteResult();
+    if (result !== FAILURE.NONE) setNotice(NOT_SAVED);
+    return result === FAILURE.NONE;
+  };
 
   // Choosing a subject invalidates a lesson picked from the previous one.
   useEffect(() => {
@@ -63,21 +84,21 @@ function Community({ setScreen, onOpenLesson }) {
       return;
     }
     setNotice(null);
-    setQuestions(addQuestion({ question: trimmed, subject: draftSubject, topicId: draftTopic || null }));
+    const saved = applyWrite(addQuestion({ question: trimmed, subject: draftSubject, topicId: draftTopic || null }));
     setDraft('');
     setDraftTopic('');
-    trackEvent('question_asked', { subject: draftSubject });
+    trackEvent('question_asked', { subject: draftSubject, saved });
   };
 
   const handleNote = (questionId) => {
     const text = noteDrafts[questionId] || '';
     if (text.trim() === '') return;
-    setQuestions(addNote(questionId, text));
+    applyWrite(addNote(questionId, text));
     setNoteDrafts((prev) => ({ ...prev, [questionId]: '' }));
   };
 
   const handleDelete = (questionId) => {
-    setQuestions(removeQuestion(questionId));
+    applyWrite(removeQuestion(questionId));
   };
 
   const noteCount = questions.reduce((total, entry) => total + (entry.notes || []).length, 0);

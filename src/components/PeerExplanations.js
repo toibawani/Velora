@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Lightbulb, Target, Smile, Brain } from 'lucide-react';
 import EmptyState from './EmptyState';
 import { sanitizeText } from '../utils/sanitize';
-import { safeGet, safeSet } from '../utils/storage';
+import { EXPLANATION_BOARD, readValue, writeValue } from '../utils/storage';
 import '../styles/PeerExplanations.css';
 
 const DEFAULT_EXPLANATIONS = [
@@ -11,7 +11,7 @@ const DEFAULT_EXPLANATIONS = [
   { id: 3, text: 'Think of it as an infinite trap. You can look in but never get out. Not even light escapes.', votes: { clear: 31, funny: 2, mindBending: 5 }, timestamp: new Date(Date.now() - 86400000).toISOString() }
 ];
 
-const storageKey = (topic) => `velora_explanations_${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+const storageKey = (topic) => EXPLANATION_BOARD(topic.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
 
 const VOTE_TYPES = ['clear', 'funny', 'mindBending'];
 
@@ -43,7 +43,7 @@ const readExplanations = (stored) =>
 
 function PeerExplanations({ topic, onNotify }) {
   const [explanations, setExplanations] = useState(() => {
-    const saved = readExplanations(safeGet(storageKey(topic), null));
+    const saved = readExplanations(readValue(storageKey(topic), null));
     if (saved && saved.length) {
       return saved.map((item) => ({
         ...item,
@@ -64,7 +64,7 @@ function PeerExplanations({ topic, onNotify }) {
   const submittingRef = useRef(false);
 
   useEffect(() => {
-    safeSet(storageKey(topic), explanations);
+    writeValue(storageKey(topic), explanations);
   }, [explanations, topic]);
 
   const handleSubmit = (event) => {

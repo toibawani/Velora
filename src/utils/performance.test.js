@@ -1,5 +1,5 @@
 import { measurePerformance, measureAsync } from './performance';
-import { safeGet } from './storage';
+import { KEYS, readValue } from './storage';
 
 describe('Performance utilities', () => {
   test('measurePerformance returns the function result', () => {
@@ -15,7 +15,7 @@ describe('Performance utilities', () => {
   test('records and rethrows async operation failures', async () => {
     localStorage.clear();
     await expect(measureAsync('failing_op', async () => { throw new Error('network unavailable'); })).rejects.toThrow('network unavailable');
-    const errorData = safeGet('velora_last_operation_error', null);
+    const errorData = readValue(KEYS.LAST_OPERATION_ERROR, null);
     expect(errorData.name).toBe('failing_op');
   });
 
