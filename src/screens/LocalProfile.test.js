@@ -64,13 +64,27 @@ describe('local profile screen', () => {
     expect(screen.getByText(/at least 2 characters/i)).toBeInTheDocument();
   });
 
-  test('saves the name and hands the profile back', () => {
+  test('asks for interests before finishing, then saves and hands the profile back', () => {
     const onStart = jest.fn();
     render(<LocalProfile setScreen={jest.fn()} onStart={onStart} showToast={jest.fn()} />);
     fireEvent.change(screen.getByLabelText('Display name'), { target: { value: 'Ada Lovelace' } });
     fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+
+    // "Continue" used to finish the whole flow, which made the interests step
+    // unreachable: there was no way to ever see that screen.
+    expect(onStart).not.toHaveBeenCalled();
+    expect(screen.getByText('Your interests')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /start learning as Ada Lovelace/i }));
     expect(onStart).toHaveBeenCalledWith(expect.objectContaining({ name: 'Ada Lovelace' }));
     expect(getProfile().name).toBe('Ada Lovelace');
+  });
+
+  test('does not save the name until the flow is finished', () => {
+    render(<LocalProfile setScreen={jest.fn()} onStart={jest.fn()} showToast={jest.fn()} />);
+    fireEvent.change(screen.getByLabelText('Display name'), { target: { value: 'Ada' } });
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+    expect(getProfile()).toBeNull();
   });
 
   test('tells the user when the browser refuses to save', () => {
@@ -81,6 +95,7 @@ describe('local profile screen', () => {
     render(<LocalProfile setScreen={jest.fn()} onStart={onStart} showToast={jest.fn()} />);
     fireEvent.change(screen.getByLabelText('Display name'), { target: { value: 'Ada' } });
     fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+    fireEvent.click(screen.getByRole('button', { name: /start learning as Ada/i }));
     expect(onStart).not.toHaveBeenCalled();
     expect(screen.getByRole('alert')).toHaveTextContent(/refused to save/i);
     setItem.mockRestore();

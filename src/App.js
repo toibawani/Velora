@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, Suspense, lazy, useEffect, useRef } from 'react';
 import './App.css';
 import LoadingCard from './components/LoadingCard';
 import CommandPalette from './components/CommandPalette';
@@ -38,12 +38,44 @@ function ScreenLoader() {
   );
 }
 
+/** What each route is called when focus moves to it. */
+const ROUTE_LABELS = {
+  universe: 'Your atlas',
+  learn: 'Learn',
+  community: 'Question desk',
+  analytics: 'Your progress',
+  dictionary: 'Curious Dictionary',
+  games: 'Flow games',
+  journey: 'Your journey',
+  landing: 'VELORA',
+  profile: 'Set up this device',
+};
+
 function App() {
   const [screen, setScreen] = useState('splash');
   // The identity here is a name stored in this browser, read once at startup.
   // Before this, the user object lived only in useState and vanished on
   // refresh, which is why "Log out" used to end a session that never began.
   const [user, setUser] = useState(() => getProfile());
+
+  // Register already did this for its steps: move focus to the new step's heading
+  // so a keyboard or screen-reader user lands on the content rather than being
+  // left on a nav button three screens back. Route changes had none of that, so
+  // after tapping "Community" the focus ring was still on the bottom bar and
+  // Tab walked the nav again from the top.
+  const mainRef = useRef(null);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    if (screen === 'splash' || screen === 'login' || screen === 'register' || screen === 'profile') return;
+    const main = mainRef.current;
+    if (!main) return;
+    // tabIndex -1 so the container can take focus without becoming a tab stop.
+    main.focus({ preventScroll: true });
+  }, [screen]);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [learnView, setLearnView] = useState('overview');
@@ -98,6 +130,13 @@ function App() {
         {screen === 'splash' ? null : (
           <MobileNav currentScreen={screen} setScreen={setScreen} onForgetProfile={handleForgetProfile} />
         )}
+        <div
+          ref={mainRef}
+          tabIndex={-1}
+          // Named so the route change announces something useful. Without it a
+          // screen reader says only "group" when focus arrives here.
+          aria-label={ROUTE_LABELS[screen] || 'VELORA'}
+        >
         <Suspense fallback={<ScreenLoader />}>
         {screen === 'splash' && <SplashScreen setScreen={setScreen} />}
 
@@ -176,6 +215,7 @@ function App() {
         }} />
         <KeyboardHelp isOpen={keyboardHelpOpen} onClose={() => setKeyboardHelpOpen(false)} />
       </Suspense>
+        </div>
       </div>
     </ErrorBoundary>
   );

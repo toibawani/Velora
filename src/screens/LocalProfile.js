@@ -47,6 +47,16 @@ function LocalProfile({ setScreen, onStart, showToast }) {
   const toggleSubject = (id) =>
     setSubjects((prev) => (prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]));
 
+  const handleNameStep = (event) => {
+    event.preventDefault();
+    setTouched(true);
+    if (!isValidName(name)) return;
+    setName(normalizeName(name));
+    setStep(2);
+    // Move focus to the new step's heading, as the multi-step Register did.
+    window.requestAnimationFrame(() => headingRef.current?.focus());
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setTouched(true);
@@ -59,6 +69,7 @@ function LocalProfile({ setScreen, onStart, showToast }) {
       setStorageError(
         'This browser refused to save your name, so nothing was stored. Private browsing often does this. You can keep learning without a name, or try again outside private mode.'
       );
+      setStep(1);
       return;
     }
     onStart(profile);
@@ -77,7 +88,7 @@ function LocalProfile({ setScreen, onStart, showToast }) {
             : 'Optional. It only shapes what comes first, and it never leaves this device.'}
         </p>
 
-        <form onSubmit={handleSubmit} className="auth-form" noValidate>
+        <form onSubmit={step === 1 ? handleNameStep : handleSubmit} className="auth-form" noValidate>
           {step === 1 ? (
             <div className="form-group">
               <label htmlFor="profile-name">Display name</label>
