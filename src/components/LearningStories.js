@@ -150,12 +150,18 @@ function LearningStories({ onSelectStoryTopic }) {
           <span className="chapter-count-indicator">
             {activeStory.title} · Chapter {currentChapter + 1} of {activeStory.chapters.length}
           </span>
-          <div className="chapter-stepper-dots">
-            {activeStory.chapters.map((_, i) => (
+          <div className="chapter-stepper-dots" role="group" aria-label="Chapters in this story">
+            {activeStory.chapters.map((chapter, i) => (
               <button
                 key={i}
+                type="button"
                 className={`stepper-dot ${currentChapter === i ? 'current' : ''}`}
                 onClick={() => setCurrentChapter(i)}
+                // Each dot is an icon-only button. Announced as a button with no
+                // name at all before this: a screen reader listed four identical
+                // unlabelled controls and nothing said what they did.
+                aria-label={`Chapter ${i + 1}: ${chapter.title}`}
+                aria-current={currentChapter === i ? 'true' : undefined}
               />
             ))}
           </div>

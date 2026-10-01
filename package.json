@@ -27,7 +27,8 @@
     "lint": "eslint --max-warnings=0 --ext .js,.jsx,.ts,.tsx src --ignore-pattern '*.test.js' --ignore-pattern '*.test.jsx' --ignore-pattern '*.test.ts' --ignore-pattern '*.test.tsx'",
     "lint:all": "eslint --max-warnings=0 --ext .js,.jsx,.ts,.tsx src",
     "eject": "react-scripts eject",
-    "test:layout": "node scripts/layoutCheck.js"
+    "test:layout": "node scripts/layoutCheck.js",
+    "test:naming": "node scripts/nameAudit.js"
   },
   "jest": {
     "coverageThreshold": {

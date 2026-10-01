@@ -44,3 +44,4 @@ jobs:
       # to Jest. This drives the built output in real Chrome at 1440 and 375,
       # signs in through the real form and walks every screen.
       - run: npm run test:layout
+      - run: npm run test:naming
