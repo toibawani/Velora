@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Target, Type, Link2, FileText, Puzzle, Orbit, Clock, ArrowRight } from 'lucide-react';
+import { Target, Type, Link2, FileText, Puzzle, Orbit, Clock, ArrowRight, Brain, Zap } from 'lucide-react';
 import FlowStateGame from '../components/FlowStateGame';
 import ConceptScrabble from '../games/ConceptScrabble';
 import QuantumQuiz from '../games/QuantumQuiz';
@@ -136,7 +136,7 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
             onClick={() => { setHubTab('brain'); setSelectedGame(null); }}
             style={{ padding: '6px 16px', fontSize: '0.85rem' }}
           >
-            🧠 Brain Games
+            <Brain size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> Brain Games
           </button>
           <button
             type="button"
@@ -144,7 +144,7 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
             onClick={() => { setHubTab('sims'); setSelectedGame(null); }}
             style={{ padding: '6px 16px', fontSize: '0.85rem' }}
           >
-            ⚡ Physics Simulations
+            <Zap size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> Physics Simulations
           </button>
           <button
             type="button"
@@ -152,7 +152,7 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
             onClick={() => { setHubTab('classic'); setSelectedGame(null); }}
             style={{ padding: '6px 16px', fontSize: '0.85rem' }}
           >
-            🧩 Concept Puzzles
+            <Puzzle size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> Concept Puzzles
           </button>
         </div>
         {hubTab === 'classic' && (

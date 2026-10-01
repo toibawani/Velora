@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { AlertTriangle, MessageCircle, Flag } from 'lucide-react';
 import { trackEvent } from '../utils/analytics';
 import '../styles/Community.css';
 
@@ -294,7 +295,7 @@ function Community({ setScreen }) {
 
               {moderationNotice && (
                 <div className="comm-alert-box">
-                  ⚠️ {moderationNotice}
+                  <AlertTriangle size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> {moderationNotice}
                 </div>
               )}
 
@@ -365,7 +366,7 @@ function Community({ setScreen }) {
                             className="reply-toggle-btn"
                             onClick={() => setExpandedDiscussionId(isExpanded ? null : d.id)}
                           >
-                            💬 {d.repliesCount} {d.repliesCount === 1 ? 'Reply' : 'Replies'}
+                            <MessageCircle size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> {d.repliesCount} {d.repliesCount === 1 ? 'Reply' : 'Replies'}
                           </button>
 
                           <button
@@ -373,8 +374,9 @@ function Community({ setScreen }) {
                             className="flag-btn"
                             onClick={() => handleFlag(d.id)}
                             title="Report for safety review"
+                            aria-label="Report this discussion for safety review"
                           >
-                            ⚐
+                            <Flag size={14} aria-hidden="true" />
                           </button>
                         </div>
                       </div>
