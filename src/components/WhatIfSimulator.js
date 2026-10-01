@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Sparkles, X, Microscope, BarChart3, Lightbulb } from 'lucide-react';
 import '../styles/WhatIf.css';
 
 function WhatIfSimulator({ topic }) {
@@ -48,7 +49,7 @@ function WhatIfSimulator({ topic }) {
 
   return (
     <div className="whatif-container">
-      <h2>🔮 What-If Simulator</h2>
+      <h2><Sparkles size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />What-If Simulator</h2>
       <p className="whatif-intro">
         Explore mind-bending scenarios. See how changing one variable changes
         everything.
@@ -74,8 +75,8 @@ function WhatIfSimulator({ topic }) {
       {/* Simulation Display */}
       {selectedScenario && (
         <div className="simulation-modal">
-          <button className="modal-close" onClick={() => setSelectedScenario(null)}>
-            ✕
+          <button className="modal-close" aria-label="Close the simulation" onClick={() => setSelectedScenario(null)}>
+            <X size={18} aria-hidden="true" />
           </button>
 
           <div className="simulation-content">
@@ -112,9 +113,9 @@ function WhatIfSimulator({ topic }) {
 
                 <div className="simulation-actions">
                   <button className="btn-deep-dive">
-                    🔬 Deep Dive into Physics
+                    <Microscope size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Deep Dive into Physics
                   </button>
-                  <button className="btn-compare">📊 Compare Scenarios</button>
+                  <button className="btn-compare"><BarChart3 size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Compare Scenarios</button>
                 </div>
               </>
             )}
@@ -123,7 +124,7 @@ function WhatIfSimulator({ topic }) {
       )}
 
       <div className="whatif-note">
-        <p>💡 <strong>Why This Works:</strong> "What-If" scenarios trigger curiosity and make learning interactive. You're not just memorizing facts; you're exploring consequences.</p>
+        <p><Lightbulb size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /><strong>Why This Works:</strong> "What-If" scenarios trigger curiosity and make learning interactive. You're not just memorizing facts; you're exploring consequences.</p>
       </div>
     </div>
   );
