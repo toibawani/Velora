@@ -48,9 +48,20 @@ function App() {
   const [toast, setToast] = useState(null);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [keyboardHelpOpen, setKeyboardHelpOpen] = useState(false);
+  const [topicRequest, setTopicRequest] = useState(null);
 
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
+  };
+
+  // A lesson request handed to Learn by another screen. Until now the only way
+  // into a lesson was to navigate to Learn and find the topic by hand, which is
+  // why buttons that promised a specific lesson could only promise the screen.
+  const openLesson = (subject, topicId) => {
+    setSelectedSubject(subject);
+    setTopicRequest({ subject, topicId });
+    setLearnView('overview');
+    setScreen('learn');
   };
 
   useKeyboardShortcuts({
@@ -125,6 +136,8 @@ function App() {
             setSelectedSubject={setSelectedSubject}
             initialView={learnView}
             setInitialView={setLearnView}
+            pendingTopic={topicRequest}
+            onLessonOpened={() => setTopicRequest(null)}
             showToast={showToast}
           />
         )}
@@ -142,7 +155,7 @@ function App() {
         )}
 
         {screen === 'challenges' && user && (
-          <ChallengesScreen setScreen={setScreen} />
+          <ChallengesScreen setScreen={setScreen} onOpenLesson={openLesson} />
         )}
 
         {screen === 'dictionary' && user && (

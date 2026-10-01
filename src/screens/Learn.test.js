@@ -5,8 +5,11 @@ import { CURRICULUM } from '../data/curriculum';
 import { recordStudySession } from '../utils/analyticsStorage';
 
 // The lesson body and the performance probe are noise for these assertions, and
-// the probe would otherwise wrap the module mapping we are testing.
-jest.mock('../components/LessonReader', () => () => null);
+// the probe would otherwise wrap the module mapping we are testing. The mock
+// announces what it was handed so the tests can name the lesson that opened.
+jest.mock('../components/LessonReader', () => ({ topic, subject }) => (
+  <div data-testid="reader">{`reading:${subject}:${topic && topic.title}`}</div>
+));
 
 const moduleOne = CURRICULUM.physics.modules[0];
 
@@ -48,6 +51,47 @@ test('progress counts the topics logged, not a fixed zero', () => {
   const expected = `${Math.round((2 / moduleOne.topics.length) * 100)}%`;
 
   expect(container.querySelector('.progress-text').textContent).toBe(expected);
+});
+
+test('a lesson request from another screen opens that exact lesson', () => {
+  const onLessonOpened = jest.fn();
+
+  render(
+    <Learn
+      setScreen={jest.fn()}
+      selectedSubject="physics"
+      setSelectedSubject={jest.fn()}
+      initialView="overview"
+      setInitialView={jest.fn()}
+      pendingTopic={{ subject: 'physics', topicId: 'black-holes' }}
+      onLessonOpened={onLessonOpened}
+    />,
+  );
+
+  // 'black-holes' is the only topic in its module and is not the first topic of
+  // the subject, so this fails if the request is ignored or answered with the
+  // nearest-looking lesson instead of the named one.
+  expect(screen.getByTestId('reader').textContent).toBe('reading:physics:Black Holes');
+  expect(onLessonOpened).toHaveBeenCalled();
+});
+
+test('a lesson request for a topic the curriculum does not have opens nothing', () => {
+  const onLessonOpened = jest.fn();
+
+  render(
+    <Learn
+      setScreen={jest.fn()}
+      selectedSubject="physics"
+      setSelectedSubject={jest.fn()}
+      initialView="overview"
+      setInitialView={jest.fn()}
+      pendingTopic={{ subject: 'physics', topicId: 'no-such-topic' }}
+      onLessonOpened={onLessonOpened}
+    />,
+  );
+
+  expect(screen.queryByTestId('reader')).not.toBeInTheDocument();
+  expect(onLessonOpened).toHaveBeenCalled();
 });
 
 test('time logged in another subject does not start this one', () => {

@@ -45,7 +45,7 @@ import LessonReader from '../components/LessonReader';
 import { CURRICULUM, getTopic } from '../data/curriculum';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 
-function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, showToast }) {
+function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, pendingTopic, onLessonOpened, showToast }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [activeGame, setActiveGame] = useState({
@@ -65,6 +65,22 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
   useEffect(() => {
     trackEvent('learning_started', { subject: selectedSubject, view: currentView });
   }, [selectedSubject, currentView]);
+
+  // Another screen asked for one specific lesson. Resolve it against the real
+  // curriculum and open it; if the id does not exist in the curriculum there is
+  // nothing honest to open, so the request is dropped rather than opening a
+  // plausible-looking substitute.
+  useEffect(() => {
+    if (!pendingTopic) return;
+    const subject = pendingTopic.subject || 'physics';
+    const topic = getTopic(subject, pendingTopic.topicId);
+    if (topic) {
+      setSelectedTopic(topic);
+      setCurrentView('lesson');
+      trackEvent('lesson_opened', { subject, topic: topic.id, source: 'external' });
+    }
+    onLessonOpened?.();
+  }, [pendingTopic, onLessonOpened]);
 
   const subjectId = selectedSubject || 'physics';
   const subjectRecord = measurePerformance('resolve_subject_data', () => CURRICULUM[subjectId]);
