@@ -128,4 +128,25 @@ describe('the level set', () => {
       expect(`${entry.source ?? ''} ${entry.sourceUrl ?? ''}`.trim().length).toBeGreaterThan(10);
     });
   });
+
+  test('does not label everything settled', () => {
+    // A suite where every entry is "well-established" would pass every test
+    // above and be exactly the failure this content is meant to avoid. The
+    // contested and theoretical rows are the ones carrying the information.
+    const all = BLACK_HOLE_LEVELS.flatMap((level) => level.entries ?? []);
+    expect(all.length).toBeGreaterThan(5);
+    expect(all.some((entry) => entry.status === 'contested')).toBe(true);
+    expect(all.some((entry) => entry.status === 'theoretical')).toBe(true);
+  });
+
+  test('the observation-level entries name a specific detection rather than a topic', () => {
+    // Level 4 is where this matters most. "Observed by LIGO" is checkable;
+    // "confirmed by science" is not.
+    const level4 = BLACK_HOLE_LEVELS.find((level) => level.number === 4);
+    if (!level4) return;
+    level4.entries?.forEach((entry) => {
+      if (entry.status !== 'established') return;
+      expect(entry.source ?? '').toMatch(/\d{4}|GW\d+|M87|Sgr|EHT|LIGO|OGLE/i);
+    });
+  });
 });

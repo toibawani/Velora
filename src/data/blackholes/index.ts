@@ -14,8 +14,10 @@ import { BlackHoleLevel, validateLevel } from './schema';
 
 import LEVEL_0 from './level0-big-picture';
 import LEVEL_1 from './level1-basics';
+import LEVEL_2 from './level2-formation';
+import LEVEL_3 from './level3-anatomy';
 
-const ALL: BlackHoleLevel[] = [LEVEL_0, LEVEL_1];
+const ALL: BlackHoleLevel[] = [LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3];
 
 ALL.forEach((level) => validateLevel(level, 'blackholes/index'));
 
