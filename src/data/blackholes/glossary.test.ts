@@ -147,8 +147,10 @@ describe('the level set', () => {
     const checkable =
       /\d{4}|GW\d{6}|M87|Sgr|EHT|LIGO|Virgo|KAGRA|GRAVITY|Swift|INTEGRAL|OGLE|ROSAT|Chandra|SDSS|Sloan|PTF|Zwicky|Palomar/i;
     const level4 = BLACK_HOLE_LEVELS.find((level) => level.number === 4);
+    // Asserted rather than returned early: an early return would make this
+    // test pass vacuously if Level 4 were ever removed from the index.
     expect(level4).toBeDefined();
-    level4.entries?.forEach((entry) => {
+    level4?.entries?.forEach((entry) => {
       if (entry.status !== 'established') return;
       expect(entry.source ?? '').toMatch(checkable);
     });
