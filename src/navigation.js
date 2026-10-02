@@ -29,6 +29,7 @@ import {
   Clock,
   Map,
   Settings as SettingsIcon,
+  ListTodo,
 } from 'lucide-react';
 
 export const SCREENS = [
@@ -79,6 +80,14 @@ export const SCREENS = [
     description: 'A timeline of the study sessions on this device',
     icon: Clock,
     primary: true,
+  },
+  {
+    id: 'tasks',
+    label: 'Next up',
+    drawerLabel: 'Next up',
+    description: 'Things you noticed while reading and want to come back to',
+    icon: ListTodo,
+    primary: false,
   },
   {
     id: 'roadmap',

@@ -30,6 +30,8 @@ export const KEYS = {
   LAST_OPERATION_ERROR: 'velora_last_operation_error',
   MY_EXPLANATIONS: 'velora_my_explanations',
   MYTH_STREAK: 'velora_myth_streak',
+  // Next up. A personal list of things to come back to, scoped to learning.
+  TASKS: 'velora_next_up',
   // Individual preferences are their own key family: velora_pref_<name>.
   PREFERENCE_PREFIX: 'velora_pref_',
   // Explanation boards are keyed per term, e.g. velora_explanations_momentum.

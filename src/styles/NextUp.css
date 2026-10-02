@@ -1,0 +1,351 @@
+/* ==========================================================================
+   NextUp.css
+   Same single-column shape as Roadmap.css and Settings.css. The form collapses
+   to one column at 375px, where two selects side by side would each be about
+   150px wide and truncate every option label.
+   ========================================================================== */
+
+.nextup-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  padding-bottom: 96px;
+}
+
+.nu-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-8) var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.nu-eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.nu-header h1 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 2.25rem;
+  font-weight: 400;
+}
+
+.nu-back {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.nu-back:hover {
+  border-color: var(--accent-primary, var(--color-accent));
+}
+
+.nu-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-8);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.nu-intro {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.nu-intro-quiet {
+  font-size: 0.88rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--border-subtle);
+}
+
+.nu-form {
+  display: grid;
+  gap: 0.6rem;
+  padding: var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md, 12px);
+  background: var(--bg-elevated);
+}
+
+.nu-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.nu-textarea {
+  width: 100%;
+  min-height: 64px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.nu-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.nu-select-label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.nu-select {
+  min-height: 44px;
+  padding: 0 0.6rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.nu-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.nu-count {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.nu-count.bad {
+  color: #b4453a;
+}
+
+.nu-add {
+  min-height: 44px;
+  padding: 0 1.3rem;
+  border: 1px solid var(--accent-primary, var(--color-accent));
+  border-radius: 999px;
+  background: var(--accent-primary, var(--color-accent));
+  color: var(--inverse-text, #fff);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nu-add:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.nu-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid #b4453a;
+  border-radius: var(--radius-sm);
+  background: rgba(180, 69, 58, 0.08);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.nu-alert svg {
+  flex: 0 0 auto;
+  margin-top: 0.15rem;
+}
+
+.nu-section h2 {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.nu-empty {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.nu-empty svg {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+.nu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.nu-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+
+.nu-item.done {
+  opacity: 0.65;
+}
+
+.nu-item.done .nu-item-text {
+  text-decoration: line-through;
+}
+
+.nu-item-main {
+  min-width: 0;
+}
+
+.nu-item-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.nu-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.nu-open-lesson {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  min-height: 36px;
+  padding: 0 0.7rem;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.nu-open-lesson:hover {
+  border-color: var(--accent-primary, var(--color-accent));
+}
+
+.nu-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+
+.nu-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 36px;
+  padding: 0 0.65rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nu-action:hover {
+  border-color: var(--accent-primary, var(--color-accent));
+}
+
+.nu-action-remove:hover {
+  border-color: #b4453a;
+  color: #b4453a;
+}
+
+.nu-clear {
+  margin-top: 0.7rem;
+  min-height: 40px;
+  padding: 0 0.9rem;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.nu-clear:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .nu-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-4) 1.1rem;
+  }
+
+  .nu-body {
+    padding: var(--space-4) 1.1rem;
+  }
+
+  .nu-header h1 {
+    font-size: 1.8rem;
+  }
+
+  /* One column, and the item stacks so the actions sit under the text rather
+     than squeezing it. */
+  .nu-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .nu-item {
+    flex-direction: column;
+  }
+
+  .nu-item-actions {
+    flex-direction: row;
+  }
+}
+
