@@ -1,0 +1,125 @@
+/* ==========================================================================
+   GlossaryTerm.css
+   An inline definition that works with a finger.
+
+   The panel is absolutely positioned rather than revealed by a :hover rule,
+   because hover does not exist on a phone. The control is a real button with
+   min-height 44px and its own hit area, so a thumb can hit it.
+   ========================================================================== */
+
+.gt-root {
+  position: relative;
+  display: inline;
+}
+
+.gt-trigger {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.2em;
+  /* 44px is the touch target minimum, but this is a word inside a paragraph:
+     padding would break the line box, so the target is extended with a
+     pseudo-element that does not affect layout. */
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  position: relative;
+}
+
+.gt-trigger::after {
+  content: '';
+  position: absolute;
+  left: -0.35em;
+  right: -0.35em;
+  top: -0.5em;
+  bottom: -0.5em;
+}
+
+.gt-dotted {
+  border-bottom: 1px dotted var(--accent-primary, var(--color-accent));
+  /* The dotted underline is the affordance. text-decoration would sit on the
+     baseline of a wrapped line and clash with the line above. */
+  padding-bottom: 0.05em;
+}
+
+.gt-icon {
+  opacity: 0.55;
+  align-self: center;
+  flex: 0 0 auto;
+}
+
+.gt-trigger:hover .gt-dotted,
+.gt-trigger:focus-visible .gt-dotted {
+  border-bottom-color: var(--text-primary);
+}
+
+.gt-trigger:focus-visible {
+  outline: 2px solid var(--ring, var(--accent-primary, var(--color-accent)));
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.gt-trigger-open .gt-dotted {
+  border-bottom-style: solid;
+}
+
+.gt-popover {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  /* Without a max-width the panel matches the paragraph width and reads as part
+     of the page rather than as an aside. */
+  max-width: min(22rem, 78vw);
+  display: block;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  box-shadow: 0 12px 32px -12px var(--shadow-color, rgba(62, 39, 24, 0.35));
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.gt-popover-term {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: var(--weight-semibold, 600);
+  color: var(--accent-primary, var(--color-accent));
+}
+
+.gt-popover-body {
+  display: block;
+  color: var(--text-secondary);
+}
+
+.gt-popover-see {
+  display: block;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.82rem;
+  color: var(--text-tertiary, var(--text-secondary));
+}
+
+/* On a narrow screen a left-anchored panel runs off the right edge on a term
+   near the end of a line. Right-aligning below 560px keeps it on screen; the
+   alternative, a full-width panel below the paragraph, was tried and it moved
+   the text the reader was looking at. */
+@media (max-width: 560px) {
+  .gt-popover {
+    max-width: min(20rem, 88vw);
+  }
+
+  .gt-root:last-of-type .gt-popover,
+  .gt-popover {
+    right: 0;
+    left: auto;
+  }
+}
