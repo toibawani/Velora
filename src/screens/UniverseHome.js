@@ -1,13 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
-  BarChart3,
   BookOpen,
-  BookText,
   ChevronDown,
   Compass,
-  Gamepad2,
-  Home,
   Layers3,
   LogOut,
   Search,
@@ -15,6 +11,7 @@ import {
   X,
 } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
+import { PRIMARY_SCREENS } from '../navigation';
 import { trackEvent } from '../utils/analytics';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
@@ -160,11 +157,20 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onFor
         </button>
 
         <nav className="uh-nav-links" aria-label="Primary navigation">
-          <button type="button" className="uh-nav-item active" onClick={() => setScreen('universe')}><Home size={16} /> Atlas</button>
-          <button type="button" className="uh-nav-item" onClick={() => { setSelectedSubject('physics'); setScreen('learn'); }}><BookOpen size={16} /> Learn</button>
-          <button type="button" className="uh-nav-item" onClick={() => setScreen('dictionary')}><BookText size={16} /> Curious Dictionary</button>
-          <button type="button" className="uh-nav-item" onClick={() => setScreen('analytics')}><BarChart3 size={16} /> Progress</button>
-          <button type="button" className="uh-nav-item" onClick={() => setScreen('games')}><Gamepad2 size={16} /> Games</button>
+          {PRIMARY_SCREENS.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                type="button"
+                key={item.id}
+                className={`uh-nav-item ${item.id === 'universe' ? 'active' : ''}`}
+                onClick={() => setScreen(item.id)}
+                aria-current={item.id === 'universe' ? 'page' : undefined}
+              >
+                <Icon size={16} aria-hidden="true" /> {item.label}
+              </button>
+            );
+          })}
         </nav>
 
         <div className="uh-header-actions">

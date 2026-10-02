@@ -1,22 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Home, BookOpen, BookText, Users, BarChart3, LogOut, Gamepad2 } from 'lucide-react';
+import { Menu, X, LogOut } from 'lucide-react';
+import { SCREENS } from '../navigation';
 import '../styles/MobileNav.css';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 
+/**
+ * The drawer carries every screen, not a hand-picked subset. The list it uses to
+ * carry was six entries long and had already fallen behind the app: the Journey
+ * was in none of the nav surfaces at all, and this drawer still called the
+ * question desk "Community", the name of the forum that was deleted for being
+ * invented. Both are fixed by reading src/navigation.js.
+ */
 function MobileNav({ currentScreen, setScreen, onForgetProfile }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleRef = useRef(null);
   const drawerRef = useRef(null);
   useFocusTrap(isOpen, drawerRef, { onClose: () => setIsOpen(false) });
-
-  const navItems = [
-    { name: 'Home', screen: 'universe', icon: Home },
-    { name: 'Learn', screen: 'learn', icon: BookOpen },
-    { name: 'Curious Dictionary', screen: 'dictionary', icon: BookText },
-    { name: 'Flow Games', screen: 'games', icon: Gamepad2 },
-    { name: 'Analytics', screen: 'analytics', icon: BarChart3 },
-    { name: 'Community', screen: 'community', icon: Users },
-  ];
 
   // Close nav on escape key
   useEffect(() => {
@@ -94,17 +93,17 @@ function MobileNav({ currentScreen, setScreen, onForgetProfile }) {
         </div>
 
         <nav className="mobile-nav-list" aria-label="Main navigation">
-          {navItems.map((item) => {
+          {SCREENS.map((item) => {
             const Icon = item.icon;
             return (
               <button
-                key={item.screen}
-                className={`mobile-nav-item ${currentScreen === item.screen ? 'active' : ''}`}
-                onClick={() => handleNavClick(item.screen)}
-                aria-current={currentScreen === item.screen ? 'page' : undefined}
+                key={item.id}
+                className={`mobile-nav-item ${currentScreen === item.id ? 'active' : ''}`}
+                onClick={() => handleNavClick(item.id)}
+                aria-current={currentScreen === item.id ? 'page' : undefined}
               >
                 <Icon size={20} strokeWidth={2} aria-hidden="true" />
-                {item.name}
+                {item.drawerLabel}
               </button>
             );
           })}

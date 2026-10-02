@@ -1,14 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, X, BookOpen, Command, Home, BarChart3, Users } from 'lucide-react';
+import { Search, X, Command } from 'lucide-react';
+import { SCREENS } from '../navigation';
 import '../styles/CommandPalette.css';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 
-const DESTINATIONS = [
-  { id: 'universe', label: 'VELORA Universe', description: 'Your learning home', icon: Home },
-  { id: 'learn', label: 'Learn', description: 'Choose a subject and follow your curiosity', icon: BookOpen },
-  { id: 'analytics', label: 'Analytics', description: 'See how your understanding is growing', icon: BarChart3 },
-  { id: 'community', label: 'Community', description: 'Compare notes with other learners', icon: Users }
-];
+/**
+ * The palette listed four destinations while the app had seven. Cmd-K is the
+ * fastest route to a screen there is one, so leaving the dictionary and the
+ * games out of it meant the two things most worth typing the name of were the
+ * two you could not. It now searches the same registry every other nav uses.
+ */
+const DESTINATIONS = SCREENS;
 
 function CommandPalette({ isOpen, onClose, onNavigate }) {
   const [query, setQuery] = useState('');
@@ -19,7 +21,10 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
   const results = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     if (!normalized) return DESTINATIONS;
-    return DESTINATIONS.filter((item) => `${item.label} ${item.description}`.toLowerCase().includes(normalized));
+    return DESTINATIONS.filter((item) =>
+      // drawerLabel is searched too: someone who remembers the nav saying
+      // "Curious Dictionary" should find it by typing that, not "Dictionary".
+      `${item.label} ${item.drawerLabel} ${item.description}`.toLowerCase().includes(normalized));
   }, [query]);
 
   useEffect(() => {

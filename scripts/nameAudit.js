@@ -102,10 +102,38 @@ const audit = (page) =>
     return { unnamed, exposedIcons: exposedIcons.slice(0, 10), unnamedCount: unnamed.length };
   });
 
-const SCREENS = ['Home', 'Learn', 'Flow', 'Insights', 'Community'];
-// Reachable from the drawer rather than the bottom bar, so they get their own
-// pass: the drawer closes on navigation, so each one is opened by a real click.
-const DRAWER_SCREENS = ['Curious Dictionary'];
+// Both scripts walk the built app by clicking real nav controls, so the screens
+// they visit are read from src/navigation.js instead of being typed out again
+// here. That duplication is why the layout check visited five screens and called
+// it a pass while the dictionary, the question desk and the Journey were walked
+// by hand through a second list that had already fallen behind the app.
+//
+// navigation.js is a module, so it cannot be require()d from here. It is parsed
+// instead, and the parser is checked against a count below: if a future entry
+// stops matching this shape the script fails rather than quietly visiting fewer
+// screens and reporting a pass.
+const readRegistry = () => {
+  const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'navigation.js'), 'utf8');
+  const body = source.slice(source.indexOf('export const SCREENS = ['));
+  return [...body.matchAll(
+    // Order inside an entry is fixed, so one lazy match across fields is safe.
+    /id:\s*'([a-z-]+)',[\s\S]*?label:\s*'([^']+)',[\s\S]*?drawerLabel:\s*'([^']+)',[\s\S]*?primary:\s*(true|false),/g
+  )].map(([, id, label, drawerLabel, primary]) => ({ id, label, drawerLabel, primary: primary === 'true' }));
+};
+
+const REGISTRY = readRegistry();
+
+if (REGISTRY.length < 7) {
+  console.error(
+    `navigation.js parsed as ${REGISTRY.length} screens, expected at least 7. The parser is out of date, not the app.`
+  );
+  process.exit(2);
+}
+
+// The bottom bar shows the primary screens, the drawer shows all of them. Both
+// are walked by clicking, so the labels here are the ones a person sees.
+const SCREENS = REGISTRY.filter((screen) => screen.primary).map((screen) => screen.label);
+const DRAWER_SCREENS = REGISTRY.filter((screen) => !screen.primary).map((screen) => screen.drawerLabel);
 
 const clickNav = async (page, label) =>
   page.evaluate((t) => {

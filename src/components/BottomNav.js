@@ -1,26 +1,25 @@
 import React from 'react';
-import { Compass, BookOpen, Zap, BarChart2, Users } from 'lucide-react';
+import { PRIMARY_SCREENS } from '../navigation';
 import '../styles/BottomNav.css';
 
 /**
  * BottomNav Component
- * 
+ *
  * Mobile-first fixed bottom navigation bar ensuring 48px+ touch targets,
  * thumb-zone navigation, and clean screen switching on mobile viewports.
+ *
+ * The items come from src/navigation.js rather than a list of its own. The
+ * Curious Dictionary used to be missing from this bar, which meant that on the
+ * widths where this bar is the only permanent nav, the dictionary was one
+ * drawer tap away instead of one tap. The list used to live here, and a
+ * screen added to the app could easily be left out of it, so it lives in one
+ * place now and this bar is capped at the six entries marked primary.
  */
 function BottomNav({ currentScreen, setScreen }) {
-  const navItems = [
-    { id: 'universe', label: 'Home', icon: Compass },
-    { id: 'learn', label: 'Learn', icon: BookOpen },
-    { id: 'games', label: 'Flow', icon: Zap },
-    { id: 'analytics', label: 'Insights', icon: BarChart2 },
-    { id: 'community', label: 'Community', icon: Users },
-  ];
-
   return (
     <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">
       <div className="mobile-bottom-nav-inner">
-        {navItems.map((item) => {
+        {PRIMARY_SCREENS.map((item) => {
           const isActive = currentScreen === item.id;
           const Icon = item.icon;
           return (

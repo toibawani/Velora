@@ -305,6 +305,17 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
+  /* A flex item defaults to min-width: auto, so this column refuses to shrink
+     below the width of the longest word in the term. On a 375px screen that
+     pushed the domain badge off the right edge, where it could never be
+     scrolled to: html and body clip overflow-x, so the text was cut off with
+     no way to read it. Letting it shrink is what lets the tagline wrap. */
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.entry-head-row > .entry-domain-badge {
+  flex: 0 0 auto;
 }
 
 .entry-letter-badge {

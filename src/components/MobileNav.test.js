@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import MobileNav from './MobileNav';
+import { SCREENS } from '../navigation';
 
 test('opens and closes mobile nav drawer when clicking toggle and item', () => {
   const mockSetScreen = jest.fn();
@@ -35,17 +36,22 @@ test('every nav entry carries a drawn icon rather than a text glyph', () => {
   // string, which the render code had to sniff for at runtime. An icon
   // component draws an svg and a glyph draws none, so this is the check that
   // keeps a glyph from coming back: every entry has to have a real icon.
-  const entries = [
-    'Home',
-    'Learn',
-    'Curious Dictionary',
-    'Flow Games',
-    'Analytics',
-    'Community',
-  ];
-
-  entries.forEach((name) => {
-    const button = screen.getByRole('button', { name });
+  // Every entry in the shared registry, checked through the drawer. This used
+  // to be a hardcoded list of the six the drawer happened to have, which meant
+  // a seventh screen could be added to the app and never checked here. It is
+  // now SCREENS itself, so the test cannot fall behind the registry.
+  SCREENS.forEach(({ drawerLabel }) => {
+    const button = screen.getByRole('button', { name: drawerLabel });
     expect(button.querySelector('svg')).not.toBeNull();
   });
+});
+
+test('the drawer offers every screen the app has, including the Journey', () => {
+  render(<MobileNav currentScreen="universe" setScreen={jest.fn()} />);
+  fireEvent.click(screen.getByRole('button', { name: /open mobile navigation/i }));
+
+  // The Journey was in no nav surface at all before this commit: grep for
+  // 'journey' found exactly one hit in the whole of src, its own render line in
+  // App.js. The screen existed and could not be reached.
+  expect(screen.getByRole('button', { name: 'Journey' })).toBeInTheDocument();
 });

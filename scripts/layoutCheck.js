@@ -182,13 +182,52 @@ const clickByText = async (page, text) =>
     return true;
   }, text);
 
+// The screens this walks come from src/navigation.js, split by how they are
+// reached: primary ones sit in the bottom bar, the rest are opened through the
+// drawer. It used to visit a hardcoded five, which is how this check went on
+// reporting a pass for six of the seven screens in the app - Dictionary and
+// Journey were never measured at either width.
+const readRegistry = () => {
+  const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'navigation.js'), 'utf8');
+  const body = source.slice(source.indexOf('export const SCREENS = ['));
+  return [...body.matchAll(
+    /id:\s*'([a-z-]+)',[\s\S]*?label:\s*'([^']+)',[\s\S]*?drawerLabel:\s*'([^']+)',[\s\S]*?primary:\s*(true|false),/g
+  )].map(([, id, label, drawerLabel, primary]) => ({ id, label, drawerLabel, primary: primary === 'true' }));
+};
+
+const REGISTRY = readRegistry();
+
+if (REGISTRY.length < 7) {
+  console.error(
+    `navigation.js parsed as ${REGISTRY.length} screens, expected at least 7. The parser is out of date, not the app.`
+  );
+  process.exit(2);
+}
+
 const SCREENS = [
-  { name: 'Home', label: 'Home' },
-  { name: 'Learn', label: 'Learn' },
-  { name: 'Flow', label: 'Flow' },
-  { name: 'Insights', label: 'Insights' },
-  { name: 'Community', label: 'Community' },
+  ...REGISTRY.filter((screen) => screen.primary).map((screen) => ({ name: screen.label, label: screen.label })),
+  ...REGISTRY.filter((screen) => !screen.primary).map((screen) => ({ name: screen.drawerLabel, label: screen.drawerLabel, drawer: true })),
 ];
+
+// Opens the drawer and clicks a drawer item. The drawer closes on navigation, so
+// each drawer screen is reached by the same two clicks a person makes.
+const clickDrawerItem = async (page, text) => {
+  await page.evaluate(() => {
+    const toggle = document.querySelector('.mobile-nav-toggle');
+    if (toggle) toggle.click();
+  });
+  await new Promise((r) => setTimeout(r, 400));
+  const ok = await page.evaluate((t) => {
+    const target = [...document.querySelectorAll('.mobile-nav-item')].find(
+      (b) => b.textContent.trim() === t
+    );
+    if (!target) return false;
+    target.click();
+    return true;
+  }, text);
+  await new Promise((r) => setTimeout(r, 700));
+  return ok;
+};
 
 const signIn = async (page, url) => {
   await page.goto(url, { waitUntil: 'domcontentloaded' });
@@ -275,7 +314,9 @@ const main = async () => {
     await signIn(page, url);
 
     for (const screen of SCREENS) {
-      const opened = await clickByText(page, screen.label);
+      const opened = screen.drawer
+        ? await clickDrawerItem(page, screen.label)
+        : await clickByText(page, screen.label);
       if (!opened) {
         failures.push({ width, screen: screen.name, reason: 'nav item not found' });
         continue;
