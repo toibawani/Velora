@@ -141,12 +141,16 @@ describe('the level set', () => {
 
   test('the observation-level entries name a specific detection rather than a topic', () => {
     // Level 4 is where this matters most. "Observed by LIGO" is checkable;
-    // "confirmed by science" is not.
+    // "confirmed by science" is not. The alternation lists the instruments and
+    // event names a reader could go and verify, so adding a vague source here
+    // fails rather than passing on the strength of a plausible-sounding phrase.
+    const checkable =
+      /\d{4}|GW\d{6}|M87|Sgr|EHT|LIGO|Virgo|KAGRA|GRAVITY|Swift|INTEGRAL|OGLE|ROSAT|Chandra|SDSS|Sloan|PTF|Zwicky|Palomar/i;
     const level4 = BLACK_HOLE_LEVELS.find((level) => level.number === 4);
-    if (!level4) return;
+    expect(level4).toBeDefined();
     level4.entries?.forEach((entry) => {
       if (entry.status !== 'established') return;
-      expect(entry.source ?? '').toMatch(/\d{4}|GW\d+|M87|Sgr|EHT|LIGO|OGLE/i);
+      expect(entry.source ?? '').toMatch(checkable);
     });
   });
 });
