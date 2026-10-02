@@ -289,36 +289,39 @@
   overflow: hidden;
 }
 
-.uh-field-rail { padding: 1.35rem 0.7rem 1.6rem; background: var(--bg-tertiary); }
-.uh-rail-label {
-  margin: 0.35rem 0 0.7rem;
-  padding: 0 0.85rem;
-  color: var(--text-tertiary);
-  font-size: 0.78rem;
-  font-style: italic;
-}
-.uh-field-button {
-  width: 100%;
-  min-height: 64px;
-  justify-content: flex-start;
-  gap: 0.75rem;
-  margin: 0.15rem 0;
-  padding: 0.7rem 0.75rem !important;
-  background: transparent !important;
-  color: var(--text-primary) !important;
-  border: 0 !important;
-  border-radius: 18px !important;
-  box-shadow: none !important;
-  text-align: left;
-}
-.uh-field-button:hover { background: var(--bg-glass) !important; box-shadow: none !important; transform: none; }
-.uh-field-button.active { background: var(--bg-elevated) !important; box-shadow: 0 8px 18px var(--shadow-color) !important; }
-.uh-field-button svg { color: var(--accent-primary); flex: none; }
-.uh-field-number { display: none; }
-.uh-field-button > span:last-of-type { display: grid; gap: 1px; }
-.uh-field-button strong { color: var(--text-primary); font-size: 1rem; font-weight: 600; }
-.uh-field-button small { color: var(--text-tertiary); font-size: 0.78rem; }
+/*
+ * The indexed variant drops the fixed minimum height.
+ *
+ * The old grid reserved 640px because the card stack inside it was tall. An
+ * index has no such floor: it is as long as the content and no longer. Left
+ * alone, the reservation made every field - including Literature's 92 topics -
+ * sit in a scroll box inside a panel that was already scrolling, which is two
+ * nested scrollers and a lot of wasted space.
+ */
+.uh-atlas-indexed { min-height: 0; }
 
+/* The key above the index: what the two markers mean. */
+.uh-index-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-size: 0.8rem;
+}
+.uh-key-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+}
+/* The key reuses the entry's marker classes, so the dot and label sit at the
+   same size the reader will meet on every line below. */
+.uh-key-item .aix-marker { font-size: 0.8rem; }
+.uh-key-item .aix-marker-text { font-size: 0.8rem; }
+
+.uh-field-rail { padding: 1.35rem 0.7rem 1.6rem; background: var(--bg-tertiary); }
 .uh-field-panel { min-width: 0; padding: 1.8rem 1.6rem 2rem; }
 .uh-field-header {
   display: grid;
@@ -338,100 +341,6 @@
   line-height: 0.94;
 }
 .uh-field-header > p { max-width: 34rem; margin: 0 0 0.4rem; color: var(--text-secondary); font-size: 1.02rem; line-height: 1.6; }
-
-.uh-discipline-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; align-items: start; }
-.universe-home .uh-discipline-card {
-  background: var(--bg-elevated) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: 24px !important;
-  padding: 1.15rem 1.15rem 1.05rem;
-  box-shadow: 0 10px 24px var(--shadow-color);
-  backdrop-filter: none;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-.universe-home .uh-discipline-card.active {
-  border-color: var(--accent-line) !important;
-  background: var(--bg-elevated) !important;
-  box-shadow: 0 16px 32px var(--shadow-color);
-}
-.universe-home .uh-discipline-card:has(.uh-module-list) { grid-column: 1 / -1; }
-.universe-home .uh-discipline-card:hover { border-color: var(--accent-line) !important; transform: translateY(-1px); }
-
-.uh-discipline-trigger {
-  width: 100%;
-  justify-content: space-between;
-  padding: 0 !important;
-  background: transparent !important;
-  color: var(--text-primary) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  text-align: left;
-}
-.uh-discipline-trigger:hover { background: transparent !important; box-shadow: none !important; transform: none; }
-.uh-discipline-trigger > span { display: grid; gap: 2px; }
-.uh-discipline-trigger strong {
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: var(--weight-semibold);
-  letter-spacing: -0.03em;
-}
-.uh-discipline-trigger small { color: var(--text-tertiary); font-size: 0.82rem; }
-.uh-discipline-trigger svg { color: var(--accent-primary); transition: transform 0.2s ease; }
-.uh-discipline-trigger svg.rotated { transform: rotate(180deg); }
-.uh-discipline-card > p { margin: 0.7rem 0 0; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; }
-
-.uh-module-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem 1.4rem;
-  margin-top: 1.1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-subtle);
-}
-.uh-module-group { min-width: 0; }
-.uh-module-trigger {
-  width: 100%;
-  justify-content: space-between;
-  padding: 0.4rem 0 !important;
-  background: transparent !important;
-  color: var(--text-secondary) !important;
-  border: 0 !important;
-  border-bottom: 1px solid var(--border-subtle) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  font-size: 0.95rem !important;
-  text-align: left;
-}
-.uh-module-trigger:hover,
-.uh-module-trigger.active { background: transparent !important; color: var(--accent-primary) !important; box-shadow: none !important; transform: none; }
-.uh-module-trigger span {
-  min-width: 24px;
-  padding: 2px 7px;
-  color: var(--text-secondary);
-  background: var(--bg-tertiary);
-  border-radius: 999px;
-  font-size: 0.75rem;
-}
-.uh-topic-grid { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.75rem; }
-.uh-topic-grid button {
-  min-height: 34px;
-  padding: 0.38rem 0.75rem !important;
-  color: var(--text-primary) !important;
-  background: var(--bg-primary) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: 999px !important;
-  box-shadow: none !important;
-  font-size: 0.86rem !important;
-}
-.uh-topic-grid button:hover,
-.uh-topic-grid button.active {
-  color: var(--inverse-text) !important;
-  background: var(--inverse-surface) !important;
-  border-color: var(--inverse-surface) !important;
-  box-shadow: none !important;
-  transform: none;
-}
 
 /*
  * Three children now: the description block, the coverage line, and the button.
@@ -536,22 +445,11 @@
   .uh-hero h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); }
   .uh-section-heading-row { grid-template-columns: 1fr; gap: 0.7rem; }
   .uh-atlas-grid { display: block; min-height: 0; border-radius: 24px; }
-  .uh-field-rail {
-    display: flex;
-    gap: 0.45rem;
-    padding: 0.8rem;
-    overflow-x: auto;
-    border-bottom: 1px solid var(--border-subtle);
-    scrollbar-width: none;
-  }
-  .uh-field-rail::-webkit-scrollbar { display: none; }
-  .uh-rail-label { display: none; }
-  .uh-field-button { min-width: 168px; min-height: 58px; }
+  /* The thumb-index goes horizontal on a phone. The rail-specific rules that
+     used to live here are gone with the rail; .aix-tabs carries its own
+     responsive treatment in AtlasIndex.css so the two stay in one place. */
   .uh-field-panel { padding: 1.2rem 0.95rem 1.3rem; }
   .uh-field-header { grid-template-columns: 1fr; gap: 0.7rem; }
-  .uh-discipline-grid { grid-template-columns: 1fr; }
-  .universe-home .uh-discipline-card:has(.uh-module-list) { grid-column: auto; }
-  .uh-module-list { grid-template-columns: 1fr; }
   .uh-topic-preview { grid-template-columns: 1fr; padding: 1.3rem 1.1rem; }
   .uh-topic-preview > button { justify-self: start; }
   .uh-method-grid { grid-template-columns: 1fr; }

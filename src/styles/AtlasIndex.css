@@ -1,0 +1,343 @@
+/* ==========================================================================
+   Atlas index
+   --------------------------------------------------------------------------
+   The topic-selection motif for the atlas, as an index rather than a grid of
+   pills. Everything here comes from design-tokens.css; the one new role is
+   --index-leader, for the dotted run between an entry and its marker.
+
+   The organising rule: hierarchy is carried by type size, weight and case, not
+   by boxes, borders or fills. An entry is a line of text. If a reader has to
+   look at a shape to work out what level they are at, the shape is wrong.
+   ========================================================================== */
+
+.aix-index {
+  /* Two columns of index lines at desktop width. An index line is short - a
+     topic name plus a marker - so two columns fit far more per screen height
+     than the one-column card stack this replaced. */
+  columns: 2;
+  column-gap: 3.5rem;
+  /* A discipline group must not break across a column boundary. Without this a
+     heading can land at the foot of one column with its entries overleaf, which
+     is exactly the disorientation an index is supposed to prevent. */
+  break-inside: avoid;
+}
+
+.aix-group {
+  break-inside: avoid;
+  margin: 0 0 2.1rem;
+}
+.aix-group:last-child { margin-bottom: 0; }
+
+/* ---- Discipline: the middle level. Letterspaced caps with a rule beneath. ---- */
+.aix-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding-bottom: 0.34rem;
+  /* The rule under a group heading is what makes this read as an index rather
+     than a list. It sits under the whole head, not just the title. */
+  border-bottom: 1px solid var(--border-strong);
+}
+.aix-group-title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.aix-group-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+.aix-group-desc {
+  margin: 0.42rem 0 0.7rem;
+  max-width: 34rem;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+/* ---- Subfield: only rendered when a discipline has more than one module. ---- */
+.aix-subgroup { margin-top: 0.75rem; }
+.aix-subgroup:first-of-type { margin-top: 0; }
+.aix-subgroup-title {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+}
+
+/* ---- Topic: the leaf. An indented line of body text, not a shape. ---- */
+.aix-entries {
+  margin: 0;
+  padding: 0 0 0 0.85rem;
+  list-style: none;
+  /* The indent line tying entries to their discipline. A single hairline rather
+     than a box, because the job is to show nesting, not to contain anything. */
+  border-left: 1px solid var(--border-subtle);
+}
+.aix-entry-row { margin: 0; }
+
+/*
+ * The index entry is a line of text, not a button shape.
+ *
+ * index.css sets a global `button { background-color: var(--accent-primary);
+ * border-radius: 999px; padding: 10px 18px }` with !important, which is a
+ * deliberate decision for the app's real buttons - it is why every control in
+ * VELORA is a warm sienna pill and never indigo. An index entry is not that
+ * kind of control: it is a text line in a contents listing, and inheriting a
+ * filled pill turns 188 lines of type into 188 orange lozenges and destroys the
+ * hierarchy the index exists to show.
+ *
+ * The reset is scoped to this component and restates every property the global
+ * rule sets, because !important on the other side cannot be beaten by
+ * specificity alone. It is one `all` reset plus the three properties the
+ * global rule animates, so a future addition to that rule cannot leak in here
+ * unnoticed.
+ */
+/*
+ * Only the base state is reset, and the reset has to carry !important.
+ *
+ * `all: unset` is not itself !important, so it cannot beat index.css's
+ * `button { background-color: var(--accent-primary) !important }`. Without the
+ * flag the entry still rendered as a filled sienna lozenge - 188 of them - which
+ * destroyed the hierarchy the index exists to show. The specific properties are
+ * listed rather than leaning on `all` alone, because `all` also resets
+ * `transition`, `text-align` and the flex properties the layout depends on, and
+ * getting those back afterwards is how subtle layout bugs start.
+ *
+ * :hover and :focus-visible are deliberately absent from the selector list.
+ * Putting them here would run the reset after the state rules below and wipe
+ * the very background and outline those rules set.
+ */
+.aix-entry,
+.aix-tab {
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: var(--radius-xs) !important;
+  padding: 0.18rem 0.35rem 0.18rem 0.5rem !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.93rem !important;
+  font-weight: var(--weight-regular) !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  text-align: left !important;
+  box-shadow: none !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.aix-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 30px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.aix-entry:hover { background-color: var(--bg-hover) !important; }
+.aix-entry:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
+
+.aix-entry-text {
+  /* The name must not push the marker off the line: a long name like 'History
+     of Technology' would otherwise wrap the flex row and break the leader.
+     Truncating keeps the column clean; the full name stays in the aria-label. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The leader run. A flex child that grows to fill the gap between the name and
+   the marker, drawn as a dotted bottom border. This is the whole "index" look:
+   the dots connect an entry to its marker the way a contents page connects a
+   title to a page number.
+
+   The rule sits below the line box with a negative offset so the dots land on
+   the text baseline. Given align-items: baseline it does not, because the marker
+   is a word with a taller box than the entry text - so the offset is restored
+   explicitly here. At --index-leader's opacity it was also invisible against the
+   dark ground, which is why the rule is drawn at a slightly heavier alpha than
+   the token alone suggests: an index needs the line to actually be seen. */
+.aix-leader {
+  flex: 1 1 auto;
+  min-width: 0.75rem;
+  height: 0;
+  border-bottom: 1px dotted var(--index-leader);
+  transform: translateY(-0.24em);
+}
+
+/*
+ * The status marker: a dot plus a word.
+ *
+ * Originally a 7px dot alone, which was the more elegant idea and the wrong one.
+ * At the right edge of a two-column index the dot was too small to read at a
+ * glance, and the difference between "filled" and "hollow" is not something to
+ * ask a reader to make from 7 pixels. The word carries the meaning; the dot is
+ * there so a scanning eye can find the status column quickly.
+ *
+ * The label must never wrap: a wrapping marker breaks the leader rule and the
+ * line below it, so white-space is nowrap and the flex parent cannot shrink it.
+ */
+.aix-marker {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  color: var(--text-tertiary);
+}
+.aix-marker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: transparent;
+}
+/* Written: a filled accent dot with the accent-coloured word. Unwritten: a
+   hollow ring in tertiary ink, so "no content" is a visibly different kind of
+   thing rather than a dimmer version of the same thing. */
+.aix-marker.written { color: var(--accent-primary); }
+.aix-marker.written .aix-marker-dot { background: var(--accent-primary); }
+.aix-marker.unwritten .aix-marker-dot { border: 1px solid var(--index-leader); }
+
+.aix-marker-text {
+  font-family: var(--font-sans);
+  /* Small, but not so small it drops under the 12px floor where text becomes
+     hard to read on a phone. */
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.03em;
+}
+
+/* An unwritten topic is set quieter than a written one, but not so quiet it
+   disappears. Tertiary ink is measured at 4.7 to 1 against the page, which is
+   the WCAG AA threshold for this size of text, so it is a legitimate
+   de-emphasis rather than a contrast failure. */
+.aix-entry.unwritten .aix-entry-text { color: var(--text-tertiary); }
+
+/* The selected line. Accent bar plus the page tint, not a filled pill. The
+   !important flags are needed for the same reason as the reset above: the
+   global button rule is !important and would otherwise win. */
+.aix-entry.current {
+  background-color: var(--accent-soft) !important;
+  color: var(--accent-primary) !important;
+  font-weight: var(--weight-medium) !important;
+  box-shadow: inset 2px 0 0 var(--accent-primary) !important;
+}
+.aix-entry.current .aix-entry-text { color: var(--accent-primary); }
+
+/* ==========================================================================
+   Field tabs - the thumb-index down the left edge
+   ========================================================================== */
+.aix-tabs {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+/*
+ * The tab keeps the reset's background and padding but sets its own border and
+ * colour, so it opts back in with !important for the same reason the entry does.
+ */
+.aix-tab {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.55rem;
+  padding: 0.5rem 0.7rem !important;
+  border-left: 2px solid var(--border-default) !important;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0 !important;
+  color: var(--text-secondary) !important;
+  font-family: var(--font-sans) !important;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.aix-tab:hover {
+  background-color: var(--bg-hover) !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+}
+.aix-tab:focus-visible { outline: 2px solid var(--ring); outline-offset: -2px; }
+
+.aix-tab-number {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+.aix-tab-name {
+  font-size: 0.9rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+}
+.aix-tab-meta {
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.aix-tab[aria-pressed='true'] {
+  border-left-color: var(--accent-primary) !important;
+  background-color: var(--accent-soft) !important;
+  color: var(--accent-primary) !important;
+}
+.aix-tab[aria-pressed='true'] .aix-tab-number,
+.aix-tab[aria-pressed='true'] .aix-tab-meta { color: var(--accent-primary); }
+
+/* ==========================================================================
+   Responsive
+   --------------------------------------------------------------------------
+   Two index columns become one before they get narrow, and the tab rail becomes
+   a horizontal scroller on a phone. The rail scrolls rather than wrapping
+   because six wrapped tabs would push the index itself below two screens of
+   chrome, which is the same density problem in a different shape.
+   ========================================================================== */
+@media (max-width: 1080px) {
+  .aix-index { columns: 1; }
+}
+
+@media (max-width: 720px) {
+  .aix-tabs {
+    position: static;
+    flex-direction: row;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.3rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .aix-tabs::-webkit-scrollbar { display: none; }
+
+  .aix-tab {
+    flex: 0 0 auto;
+    border-left: 0;
+    border-bottom: 2px solid var(--border-default);
+    border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+    padding: 0.4rem 0.6rem;
+  }
+  .aix-tab[aria-pressed='true'] {
+    border-left-color: transparent;
+    border-bottom-color: var(--accent-primary);
+  }
+  .aix-tab-meta { display: none; }
+
+  .aix-entries { padding-left: 0.6rem; }
+}
+
+/* Wide screens: the index gets the room and the rail stays narrow. */
+@media (min-width: 1400px) {
+  .aix-index { column-gap: 4.5rem; }
+}

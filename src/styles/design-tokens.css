@@ -153,7 +153,16 @@
   --color-history: var(--subject-history);
   --color-mathematics: var(--subject-mathematics);
 
-  /* ---- Standard 8px spatial grid ---- */
+  /* ---- Index motif ----
+     The only token added for the Atlas index. An index needs a leader rule:
+     the dotted run between an entry and its page or status marker. That rule is
+     a border, but it is a border doing a job no existing border role describes,
+     and it has to dim in the dark theme the same way the others do. Defining it
+     once here is cheaper than hardcoding a dotted border in two themes across
+     every index line. */
+  --index-leader: rgba(62, 39, 24, 0.34);
+
+  /* Standard 8px spatial grid */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -248,6 +257,10 @@
   --ambient-warm: rgba(217, 142, 99, 0.12);
   --ambient-light: rgba(217, 142, 99, 0.06);
   --inverse-surface: #120C07;
+
+  /* The leader rule has to lighten with everything else, or the index reads as
+     a row of broken dotted lines on the dark ground. */
+  --index-leader: rgba(242, 233, 221, 0.38);
   --inverse-text: #F2E9DD;
   --success-line: rgba(140, 199, 158, 0.4);
   --warning-line: rgba(232, 178, 92, 0.4);
@@ -282,7 +295,34 @@
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* An explicit "light" pick must win even while the OS is in dark mode.
+/* ==========================================================================
+   Utilities
+   --------------------------------------------------------------------------
+   .sr-only is defined here rather than assumed. Two places in the atlas used the
+   class name on the assumption it came from Tailwind - the search field's label
+   and the index's status marker - and this project does not use Tailwind, so the
+   rule did not exist and both rendered their text visibly. On the index that
+   meant every one of 188 topic lines printed its status twice, and the search
+   box had a visible duplicate label above it.
+
+   This is the standard clip technique: it takes the element out of the visual
+   layout while leaving it in the accessibility tree, so a screen reader still
+   announces it. It lives outside :root because a selector nested in a custom
+   property block would only ever match an element called ":root".
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* An explicit "Color theme" pick must win even while the OS is in dark mode.
    The values are the :root defaults, restated here so the specificity of
    this selector beats a previously applied dark block. */
 :root[data-theme='light'] {
@@ -324,6 +364,8 @@
   --ambient-light: rgba(232, 196, 154, 0.45);
   --inverse-surface: #2C2118;
   --inverse-text: #FFF8F1;
+
+  --index-leader: rgba(62, 39, 24, 0.34);
   --success-line: rgba(47, 82, 56, 0.3);
   --warning-line: rgba(138, 86, 32, 0.3);
   --danger-line: rgba(163, 59, 50, 0.28);

@@ -31,6 +31,12 @@ export default function ThemeToggle() {
           type="button"
           className="theme-toggle-segment"
           aria-pressed={theme === mode}
+          // The visible label alone is "Dark" or "Light", and both are common
+          // words in the atlas: "Dark Matter" is a physics topic and the index
+          // now renders every topic at once. Prefixing the accessible name with
+          // the control's own group makes the two distinguishable to anyone
+          // navigating by name rather than by position.
+          aria-label={`Theme: ${label}`}
           title={mode === 'auto' ? 'Follow the system theme' : `${label} theme`}
           onClick={() => select(mode)}
         >

@@ -1,31 +1,26 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
-  BookOpen,
-  ChevronDown,
-  Compass,
-  Layers3,
   LogOut,
   Search,
-  Sparkles,
   X,
 } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
 import { resolveAtlasTopic, fieldCoverage } from '../data/atlasResolution';
+import AtlasIndex from '../components/AtlasIndex';
 import { PRIMARY_SCREENS } from '../navigation';
 import { trackEvent } from '../utils/analytics';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
 
-const FIELD_ICONS = {
-  science: Sparkles,
-  philosophy: Compass,
-  history: BookOpen,
-  'political-science': Layers3,
-  geography: Compass,
-  literature: BookOpen,
-};
-
+/**
+ * No per-field icons any more.
+ *
+ * The index deliberately carries hierarchy in type alone - number, letterspaced
+ * caps, body text - and a row of six lucide glyphs beside the field names put a
+ * shape back into the level that was supposed to be readable as a number. The
+ * icons were only ever used by the old field rail, which the index replaced.
+ */
 function makeSelection(field, discipline, parentModule, topic) {
   return { field, discipline, module: parentModule, topic };
 }
@@ -38,7 +33,6 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
   const [activeDisciplineId, setActiveDisciplineId] = useState(initialDiscipline.id);
   const [activeModuleName, setActiveModuleName] = useState(initialModule.name);
   const [selectedTopic, setSelectedTopic] = useState(initialModule.topics[0]);
-  const [expandedDisciplineId, setExpandedDisciplineId] = useState(initialDiscipline.id);
   const [query, setQuery] = useState('');
 
   const activeField = KNOWLEDGE_FIELDS.find((field) => field.id === activeFieldId) || initialField;
@@ -84,37 +78,22 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
   }, []);
 
   const selectField = (field) => {
+    // Land on the first discipline's first topic. The index shows everything at
+    // once, so there is nothing to expand and no reason to preserve a previous
+    // field's expansion state.
     const discipline = field.disciplines[0];
     const parentModule = discipline.modules[0];
     setActiveFieldId(field.id);
     setActiveDisciplineId(discipline.id);
     setActiveModuleName(parentModule.name);
     setSelectedTopic(parentModule.topics[0]);
-    setExpandedDisciplineId(discipline.id);
     setQuery('');
     trackEvent('curriculum_field_selected', { fieldId: field.id });
-  };
-
-  const selectDiscipline = (discipline) => {
-    const parentModule = discipline.modules[0];
-    setActiveDisciplineId(discipline.id);
-    setActiveModuleName(parentModule.name);
-    setSelectedTopic(parentModule.topics[0]);
-    setExpandedDisciplineId(discipline.id);
-    setQuery('');
-    trackEvent('curriculum_discipline_selected', { fieldId: activeField.id, disciplineId: discipline.id });
-  };
-
-  const selectModule = (parentModule) => {
-    setActiveModuleName(parentModule.name);
-    setSelectedTopic(parentModule.topics[0]);
-    trackEvent('curriculum_topic_previewed', { fieldId: activeField.id, topic: parentModule.topics[0] });
   };
 
   const selectSearchResult = (result) => {
     setActiveFieldId(result.field.id);
     setActiveDisciplineId(result.discipline.id);
-    setExpandedDisciplineId(result.discipline.id);
     setActiveModuleName(result.module.name);
     setSelectedTopic(result.topic);
     setQuery('');
@@ -305,28 +284,50 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
             )}
           </div>
 
-          <div className="uh-atlas-grid">
-            <aside className="uh-field-rail" aria-label="Knowledge fields">
-              <p className="uh-rail-label">Major fields</p>
+          {/*
+            The subject rail and the discipline panel, replaced by an index.
+
+            The old layout was a column of subject cards that each expanded into
+            a grid of pill buttons. Both halves are gone: the rail is now a
+            thumb-index of fields, and the panel is a two-column index of
+            disciplines and topics with nothing collapsed. A reader can see all
+            55 physics topics without expanding a single section, which is the
+            thing the pill grid could not do.
+          */}
+          <div className="uh-atlas-grid uh-atlas-indexed">
+            <nav className="aix-tabs" aria-label="Knowledge fields">
               {KNOWLEDGE_FIELDS.map((field, index) => {
-                const FieldIcon = FIELD_ICONS[field.id];
                 const isActive = field.id === activeField.id;
+                const topics = field.disciplines.reduce(
+                  (total, discipline) => total + discipline.modules.reduce((sum, item) => sum + item.topics.length, 0),
+                  0
+                );
+                const written = field.disciplines.reduce(
+                  (total, discipline) => total + discipline.modules.reduce(
+                    (sum, item) => sum + item.topics.filter((topic) => {
+                      const kind = resolveAtlasTopic({ fieldId: field.id, disciplineId: discipline.id, moduleName: item.name, topic }).kind;
+                      return kind === 'lesson' || kind === 'deep-read';
+                    }).length,
+                    0
+                  ),
+                  0
+                );
                 return (
                   <button
                     type="button"
                     key={field.id}
-                    className={`uh-field-button ${isActive ? 'active' : ''}`}
+                    className="aix-tab"
                     onClick={() => selectField(field)}
-                    aria-label={`${field.label}, ${field.disciplines.length} disciplines`}
                     aria-pressed={isActive}
+                    aria-label={`${field.label}, ${field.disciplines.length} disciplines, ${written} of ${topics} topics written`}
                   >
-                    <span className="uh-field-number">0{index + 1}</span>
-                    <FieldIcon size={19} />
-                    <span><strong>{field.label}</strong><small>{field.disciplines.length} disciplines</small></span>
+                    <span className="aix-tab-number">{String(index + 1).padStart(2, '0')}</span>
+                    <span className="aix-tab-name">{field.label}</span>
+                    <span className="aix-tab-meta">{written}/{topics} written</span>
                   </button>
                 );
               })}
-            </aside>
+            </nav>
 
             <div className="uh-field-panel">
               <header className="uh-field-header">
@@ -337,69 +338,27 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
                 <p>{activeField.description}</p>
               </header>
 
-              <div className="uh-discipline-grid">
-                {visibleDisciplines.map((discipline) => {
-                  const isExpanded = discipline.id === expandedDisciplineId;
-                  const isActive = discipline.id === activeDiscipline.id;
-                  const topicCount = discipline.modules.reduce((total, item) => total + item.topics.length, 0);
-                  return (
-                    <article
-                      key={discipline.id}
-                      className={`uh-discipline-card bg-[#FFF9F1] border border-[#3E2718]/10 rounded-3xl p-6 hover:border-[#8C4A2F]/40 transition-all ${isActive ? 'active' : ''}`}
-                    >
-                      <button
-                        type="button"
-                        className="uh-discipline-trigger"
-                        onClick={() => selectDiscipline(discipline)}
-                        aria-expanded={isExpanded}
-                        aria-controls={`discipline-${discipline.id}`}
-                      >
-                        <span><strong>{discipline.name}</strong><small>{topicCount} topics</small></span>
-                        <ChevronDown size={18} className={isExpanded ? 'rotated' : ''} />
-                      </button>
-                      <p>{discipline.description}</p>
+              <p className="uh-index-key">
+                <span className="uh-key-item"><span className="aix-marker written"><span className="aix-marker-dot" />has content</span></span>
+                <span className="uh-key-item"><span className="aix-marker unwritten"><span className="aix-marker-dot" />listed, not written yet</span></span>
+              </p>
 
-                      {isExpanded && (
-                        <div id={`discipline-${discipline.id}`} className="uh-module-list">
-                          {discipline.modules.map((parentModule) => (
-                            <div key={parentModule.name} className="uh-module-group">
-                              <button
-                                type="button"
-                                className={`uh-module-trigger ${activeModule.name === parentModule.name ? 'active' : ''}`}
-                                onClick={() => selectModule(parentModule)}
-                                aria-pressed={activeModule.name === parentModule.name}
-                              >
-                                {parentModule.name}<span>{parentModule.topics.length}</span>
-                              </button>
-                              {activeModule.name === parentModule.name && (
-                                <div className="uh-topic-grid">
-                                  {parentModule.topics.map((topic) => (
-                                    <button
-                                      type="button"
-                                      key={topic}
-                                      className={selectedTopic === topic ? 'active' : ''}
-                                      onClick={() => {
-                                        setSelectedTopic(topic);
-                                        trackEvent('curriculum_topic_previewed', { fieldId: activeField.id, disciplineId: discipline.id, topic });
-                                      }}
-                                      aria-pressed={selectedTopic === topic}
-                                    >
-                                      {topic}
-                                    </button>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </article>
-                  );
-                })}
-              </div>
+              <AtlasIndex
+                field={activeField}
+                disciplines={visibleDisciplines}
+                selected={selection}
+                onSelect={({ field, discipline, moduleName, topic }) => {
+                  setActiveFieldId(field.id);
+                  setActiveDisciplineId(discipline.id);
+                  setActiveModuleName(moduleName);
+                  setSelectedTopic(topic);
+                  trackEvent('curriculum_topic_previewed', { fieldId: field.id, disciplineId: discipline.id, topic });
+                }}
+              />
             </div>
           </div>
         </section>
+
 
         <section className="uh-topic-preview" aria-live="polite" aria-label="Selected curriculum topic">
           <div>

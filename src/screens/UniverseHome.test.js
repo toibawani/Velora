@@ -2,25 +2,31 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import UniverseHome from './UniverseHome';
 import { ThemeProvider } from '../context/ThemeContext';
 
-const renderUniverse = (overrides = {}) => {
-  const props = {
-    user: { name: 'Ada' },
-    setScreen: jest.fn(),
-    setSelectedSubject: jest.fn(),
-    setLearnView: jest.fn(),
-    onOpenLesson: jest.fn(),
-    onOpenDeepRead: jest.fn(),
-    onLogout: jest.fn(),
-    showToast: jest.fn(),
-    ...overrides,
-  };
+/** The props every render in this file needs, as fresh mocks each time. */
+const baseProps = () => ({
+  user: { name: 'Ada' },
+  setScreen: jest.fn(),
+  setSelectedSubject: jest.fn(),
+  setLearnView: jest.fn(),
+  onOpenLesson: jest.fn(),
+  onOpenDeepRead: jest.fn(),
+  onLogout: jest.fn(),
+  showToast: jest.fn(),
+});
 
-  render(
+const renderUniverse = (overrides = {}) => {
+  const props = { ...baseProps(), ...overrides };
+
+  // container is returned alongside the props because several tests below
+  // assert on the index's DOM shape rather than on accessible names - the
+  // density guarantee is a fact about how many entries exist, and asking for
+  // 188 accessible names to assert on it would be absurd.
+  const { container } = render(
     <ThemeProvider>
       <UniverseHome {...props} />
     </ThemeProvider>
   );
-  return props;
+  return { ...props, container };
 };
 
 describe('editorial knowledge atlas', () => {
@@ -42,7 +48,6 @@ describe('editorial knowledge atlas', () => {
     fireEvent.click(monsoonResult);
 
     expect(screen.getByRole('heading', { name: 'Geography' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^Physical Geography 20 topics$/ })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Monsoons' })).toBeInTheDocument();
   });
 
@@ -56,12 +61,10 @@ describe('editorial knowledge atlas', () => {
     const { onOpenLesson, setSelectedSubject, showToast } = renderUniverse();
 
     // Philosophy is reached because Stoicism is one of its written lessons.
-    // Reach it the way a reader would: pick the field, expand the discipline
-    // that holds it, open the subfield, then tap the topic. Only the first
-    // discipline of a field is expanded on arrival, so the intermediate clicks
-    // are real steps a person also has to take.
+    // Reach it the way a reader would: pick the field, then tap the topic line.
+    // Nothing expands any more - every topic in the field is already on screen -
+    // so the discipline and subfield clicks the old layout required are gone.
     fireEvent.click(screen.getByRole('button', { name: /^Philosophy,/ }));
-    fireEvent.click(screen.getByRole('button', { name: /^Philosophical Traditions/ }));
     fireEvent.click(screen.getByRole('button', { name: /^Stoicism$/ }));
 
     fireEvent.click(screen.getByRole('button', { name: /Read the lesson/i }));
@@ -79,7 +82,10 @@ describe('editorial knowledge atlas', () => {
     // no lesson written. This used to navigate to the physics topic index and
     // silently drop the topic.
     expect(screen.getByRole('heading', { name: 'Motion' })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: /Not written yet/i }));
+    // Every unwritten topic now carries the status in its accessible name, so
+    // the call to action has to be found by exact label rather than by a loose
+    // /Not written yet/ match that would hit 180 topic lines as well.
+    fireEvent.click(screen.getByRole('button', { name: 'Not written yet', exact: true }));
 
     expect(onOpenLesson).not.toHaveBeenCalled();
     expect(onOpenDeepRead).not.toHaveBeenCalled();
@@ -115,6 +121,68 @@ describe('editorial knowledge atlas', () => {
   });
 });
 
+/**
+ * The index's job is density and honesty. These tests assert both, because
+ * neither is visible in a snapshot and both are the reason the pill grid went.
+ */
+describe('atlas index', () => {
+  test('every topic in the field is on screen without expanding anything', () => {
+    const { container } = renderUniverse();
+
+    // Science is the largest field at 188 topics. The old layout showed 7 of
+    // them until a reader expanded Classical Mechanics, and then still only
+    // that one discipline's. Here all 188 are in the DOM at once.
+    const entries = container.querySelectorAll('.aix-entry');
+    expect(entries).toHaveLength(188);
+
+    // And nothing on screen is a disclosure control any more. This is the
+    // density guarantee: no topic is behind a click.
+    expect(screen.queryByRole('button', { expanded: true })).not.toBeInTheDocument();
+    expect(container.querySelectorAll('.uh-topic-grid')).toHaveLength(0);
+  });
+
+  test('marks each topic as written or not written', () => {
+    const { container } = renderUniverse();
+
+    // The key above the index explains the marker shapes, and it is rendered
+    // before the entries, so it is excluded by scoping to the index itself
+    // rather than by offset arithmetic that would break if the key moved.
+    const entries = container.querySelectorAll('.aix-entry');
+    const markers = container.querySelectorAll('.aix-entry .aix-marker');
+    expect(entries).toHaveLength(188);
+    expect(markers).toHaveLength(188);
+
+    // Science resolves 3 topics to real content. If the content grows, raise
+    // these in the same commit as the content.
+    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(3);
+    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(185);
+  });
+
+  test('says "not written yet" in the accessible name, not just in colour', () => {
+    renderUniverse();
+
+    // Status by marker colour alone would be invisible to a screen reader and
+    // to anyone who cannot separate the accent from the tertiary ink. Motion is
+    // on Science, which is the field open on arrival.
+    expect(screen.getByRole('button', { name: 'Motion, not written yet' })).toBeInTheDocument();
+
+    // A written topic carries no such suffix, so the two states are
+    // distinguishable by name alone. Black Holes sits under Astrophysics and
+    // resolves to the deep read, so it is written despite looking like a topic
+    // that would not be.
+    expect(screen.getByRole('button', { name: 'Black Holes' })).toBeInTheDocument();
+  });
+
+  test('offers the field coverage as written-of-total on each tab', () => {
+    renderUniverse();
+
+    // The reader can compare fields at a glance: Literature is 0 of 92, Science
+    // is 3 of 188. Nothing in the old layout made that comparison possible.
+    expect(screen.getByRole('button', { name: /^Science, .*3 of 188 topics written$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Literature, .*0 of 92 topics written$/ })).toBeInTheDocument();
+  });
+});
+
 describe('theme control in the header', () => {
   afterEach(() => {
     localStorage.removeItem('velora_theme_preference');
@@ -125,8 +193,12 @@ describe('theme control in the header', () => {
   test('defaults to Auto and switches the document to dark when Dark is pressed', () => {
     renderUniverse();
 
-    const auto = screen.getByRole('button', { name: /Auto/ });
-    const dark = screen.getByRole('button', { name: /Dark/ });
+    // 'Dark' is deliberately an exact match. The atlas now renders every physics
+    // topic at once, which puts "Dark Matter" on screen, and a loose /Dark/
+    // regex matches both the theme control and the topic line. That collision is
+    // real for assistive tech too, so the theme control carries a fuller name.
+    const auto = screen.getByRole('button', { name: /^Theme: Auto/ });
+    const dark = screen.getByRole('button', { name: /^Theme: Dark/ });
     expect(auto).toHaveAttribute('aria-pressed', 'true');
     expect(dark).toHaveAttribute('aria-pressed', 'false');
 
