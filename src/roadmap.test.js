@@ -153,3 +153,51 @@ test('the totals match the sections they count', () => {
 test('the three states this page exists to distinguish are present and ordered', () => {
   expect(ROADMAP.map((section) => section.id)).toEqual(['live', 'partial', 'notstarted']);
 });
+
+test('no row claims something is unbuilt when the file exists', () => {
+  // This is the drift the page is most vulnerable to. Settings and Next up were
+  // both listed as "not started" on the day they were committed, because the
+  // page was written a commit earlier and nothing compared it to the tree. The
+  // next reader would have been told not to build something that was sitting
+  // two commits back.
+  //
+  // Every row naming a screen is checked against the file for it. A row marked
+  // not-started whose file exists fails here, so it has to be updated in the
+  // same commit that adds the screen.
+  const screenFiles = {
+    Settings: 'screens/Settings.js',
+    'Next up': 'screens/NextUp.js',
+    Roadmap: 'screens/Roadmap.js',
+    'The atlas': 'screens/UniverseHome.js',
+    Lessons: 'screens/Learn.js',
+    'Curious Dictionary': 'screens/Dictionary.js',
+    'Flow games': 'screens/Games.js',
+    'Question desk': 'screens/Community.js',
+    'Progress and Journey': 'screens/Analytics.js',
+  };
+
+  ROADMAP.forEach((section) => {
+    section.items.forEach((item) => {
+      const file = screenFiles[item.name];
+      if (!file) return;
+      const exists = fs.existsSync(path.join(__dirname, file));
+      if (item.state === 'notstarted' || item.state === 'removed') {
+        expect({ name: item.name, exists }).toEqual({ name: item.name, exists: false });
+      } else {
+        expect({ name: item.name, exists }).toEqual({ name: item.name, exists: true });
+      }
+    });
+  });
+});
+
+test('nothing is listed as unbuilt under a name that does not match a screen', () => {
+  // The previous row was called "Settings and a personal task list", which
+  // matched no file and so could never be caught by the check above. Anything
+  // marked not-started must name something specific enough to be checked.
+  const notStarted = ROADMAP.find((section) => section.id === 'notstarted');
+  notStarted.items.forEach((item) => {
+    expect(item.name.length).toBeLessThan(60);
+    // A row about something removed must say so in the name or the detail.
+    if (item.state === 'removed') expect(item.detail.length).toBeGreaterThan(80);
+  });
+});

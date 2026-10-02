@@ -80,6 +80,18 @@ export const ROADMAP = [
         state: 'live',
         detail: 'Light, dark, or follow the system. Applied before the first paint, so a reload does not flash the wrong colours.',
       },
+      {
+        name: 'Settings',
+        state: 'live',
+        detail:
+          'A settings screen: the theme, and the answers given during setup, which were write-once until it existed. There are no reminder switches, because nothing here can send a reminder without a server to send it from.',
+      },
+      {
+        name: 'Next up',
+        state: 'live',
+        detail:
+          'A short list of things to come back to, stored on this device. No due dates and no reminders, for the reason above. Items can point at a lesson that exists.',
+      },
     ],
   },
   {
@@ -166,12 +178,6 @@ export const ROADMAP = [
         state: 'notstarted',
         detail:
           'Not started. Political Science, Geography and Literature appear in the atlas as browsable topics, and Biology, Chemistry, Mathematics, Psychology and Economics have dictionary entries, but neither has written lessons behind it.',
-      },
-      {
-        name: 'Settings and a personal task list',
-        state: 'notstarted',
-        detail:
-          'Not started at the time of writing. Both are separate pieces of work tracked in this repository rather than here, because a roadmap written next to the code it describes goes stale the moment either lands.',
       },
     ],
   },
