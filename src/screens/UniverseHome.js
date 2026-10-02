@@ -11,6 +11,7 @@ import {
   X,
 } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
+import { resolveAtlasTopic, fieldCoverage } from '../data/atlasResolution';
 import { PRIMARY_SCREENS } from '../navigation';
 import { trackEvent } from '../utils/analytics';
 import ThemeToggle from '../components/ThemeToggle';
@@ -29,7 +30,7 @@ function makeSelection(field, discipline, parentModule, topic) {
   return { field, discipline, module: parentModule, topic };
 }
 
-function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onForgetProfile, showToast }) {
+function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpenLesson, onOpenDeepRead, onForgetProfile, showToast }) {
   const initialField = KNOWLEDGE_FIELDS[0];
   const initialDiscipline = initialField.disciplines[0];
   const initialModule = initialDiscipline.modules[0];
@@ -44,9 +45,6 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onFor
   const activeDiscipline = activeField.disciplines.find((discipline) => discipline.id === activeDisciplineId) || activeField.disciplines[0];
   const activeModule = activeDiscipline.modules.find((item) => item.name === activeModuleName) || activeDiscipline.modules[0];
   const selection = makeSelection(activeField, activeDiscipline, activeModule, selectedTopic);
-  const lessonFieldId = activeField.id === 'science'
-    ? (activeDiscipline.id === 'physics' ? 'physics' : undefined)
-    : activeField.lessonFieldId;
 
   const searchResults = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -122,16 +120,76 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onFor
     setQuery('');
   };
 
+  /**
+   * What the currently selected topic actually resolves to.
+   *
+   * Recomputed from the selection rather than stored, so the preview can never
+   * disagree with what the button will do. That disagreement was the original
+   * bug: the preview said one thing and the button navigated to another.
+   */
+  const resolution = useMemo(
+    () => resolveAtlasTopic({
+      fieldId: selection.field.id,
+      disciplineId: selection.discipline.id,
+      moduleName: selection.module.name,
+      topic: selection.topic,
+    }),
+    [selection.field.id, selection.discipline.id, selection.module.name, selection.topic]
+  );
+
+  /**
+   * How much of the active field is actually written.
+   *
+   * Shown in the atlas so a reader can tell the difference between "this app
+   * has 573 topics" and "this app has 7 written topics", which the old layout
+   * made impossible to see.
+   */
+  const coverage = useMemo(() => {
+    const topics = activeField.disciplines.flatMap((discipline) =>
+      discipline.modules.flatMap((item) => item.topics));
+    return fieldCoverage(activeField.id, topics);
+  }, [activeField]);
+
+  // What the reader is being offered, in words, derived from the same resolver
+  // the button uses. Previously this string was hardcoded per branch and drifted
+  // from what the click actually did.
+  const outcomeLabel = {
+    lesson: 'Read the lesson',
+    'deep-read': 'Open the deep read',
+    unwritten: 'Not written yet',
+    'unmapped-field': 'Not written yet',
+  }[resolution.kind];
+
   const openLearningPath = () => {
-    if (!lessonFieldId) {
-      showToast?.(`${activeField.label} → ${activeDiscipline.name} is mapped in the atlas. Its full learning path is coming next.`, 'info');
+    trackEvent('atlas_topic_opened', {
+      fieldId: activeField.id,
+      disciplineId: activeDiscipline.id,
+      topic: selectedTopic,
+      outcome: resolution.kind,
+    });
+
+    // Real lesson content. Hand the subject and topic id to the screen that can
+    // actually resolve and render it.
+    if (resolution.kind === 'lesson') {
+      setSelectedSubject(resolution.subject);
+      onOpenLesson?.(resolution.subject, resolution.topicId);
       return;
     }
 
-    trackEvent('lesson_opened', { fieldId: activeField.id, disciplineId: activeDiscipline.id, topic: selectedTopic });
-    setSelectedSubject(lessonFieldId);
-    setLearnView?.('overview');
-    setScreen('learn');
+    // Deep multi-level content. Black holes is the one that exists today.
+    if (resolution.kind === 'deep-read') {
+      setSelectedSubject('physics');
+      onOpenDeepRead?.(resolution.readId);
+      return;
+    }
+
+    // Nothing behind it yet. Say so, in the topic's own name, rather than
+    // sending the reader somewhere that will not contain the thing they asked
+    // for.
+    showToast?.(
+      `${resolution.title} is listed in the atlas but not written yet. ${coverage.written} of ${coverage.written + coverage.unwritten + coverage.unmapped} topics in ${activeField.label} have content today.`,
+      'info'
+    );
   };
 
   const scrollToAtlas = () => {
@@ -348,14 +406,40 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onFor
             <p className="uh-eyebrow">Selected thread</p>
             <p className="uh-breadcrumbs">{selection.field.label} <span>/</span> {selection.discipline.name} <span>/</span> {selection.module.name}</p>
             <h2>{selection.topic}</h2>
-            <p>This topic sits inside a clear sequence: begin with the field, understand the discipline, then narrow to the subfield and idea you need.</p>
+            {/*
+              The description used to be one fixed sentence for all 573 topics:
+              "This topic sits inside a clear sequence...". It read as though
+              the app knew something about the topic and it was filler. Now each
+              branch states what is actually true, including when the honest
+              answer is that nothing is written here yet.
+            */}
+            {resolution.kind === 'lesson' && (
+              <p>A written lesson, {resolution.title === selection.topic ? 'ready to read' : `titled ${resolution.title}`}. Opening it goes straight to the lesson rather than to a list it is somewhere inside.</p>
+            )}
+            {resolution.kind === 'deep-read' && (
+              <p>Deep multi-level material, not a single lesson. {resolution.title} runs as a sequence of levels you can read in order or dip into.</p>
+            )}
+            {resolution.kind === 'unwritten' && (
+              <p><strong>Not written yet.</strong> This topic is a real part of {selection.module.name}, and it is listed so the shape of the field is visible, but there is no lesson behind it. It is marked rather than filled with a placeholder.</p>
+            )}
+            {resolution.kind === 'unmapped-field' && (
+              <p><strong>Not written yet.</strong> {selection.field.label} has no curriculum behind it in this build. The topics are listed; the lessons are not written.</p>
+            )}
           </div>
+          {/*
+            Coverage, so the atlas states its own honesty instead of implying
+            that every topic is one click from content. This is the number the
+            old layout had no way of showing.
+          */}
+          <p className="uh-coverage">
+            {activeField.label}: <strong>{coverage.written}</strong> of {coverage.written + coverage.unwritten + coverage.unmapped} topics written
+          </p>
           <button
             type="button"
             className="uh-primary bg-[#8C4A2F] hover:bg-[#6E3822] text-[#FFF8F1] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[#8C4A2F]/20 transition-all"
             onClick={openLearningPath}
           >
-            {lessonFieldId ? 'Open learning path' : 'Keep this path'} <ArrowRight size={17} />
+            {outcomeLabel} <ArrowRight size={17} />
           </button>
         </section>
 

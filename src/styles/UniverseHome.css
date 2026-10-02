@@ -433,10 +433,16 @@
   transform: none;
 }
 
+/*
+ * Three children now: the description block, the coverage line, and the button.
+ * The coverage line is placed in the button's column and the button stays on the
+ * row below it, so the grid reads as "what this is / how much exists / open it"
+ * rather than pushing the description off to one side.
+ */
 .uh-topic-preview {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2rem;
+  gap: 1.1rem 2rem;
   align-items: center;
   margin-top: 1.4rem;
   padding: 1.7rem 1.6rem;
@@ -457,8 +463,31 @@
   line-height: 0.98;
 }
 .uh-topic-preview > div > p:last-child { max-width: 40rem; margin: 0.85rem 0 0; color: var(--inverse-text); font-size: 1rem; line-height: 1.6; }
-.uh-topic-preview > button { min-height: 48px; white-space: nowrap; background: var(--inverse-text) !important; color: var(--inverse-surface) !important; }
+
+/*
+ * The coverage count. It sits above the button in the same column, and is
+ * allowed to wrap: "Literature: 0 of 92 topics written" is a long string for a
+ * 375px screen and a nowrap rule here would reintroduce horizontal overflow.
+ */
+.uh-coverage {
+  grid-column: 2;
+  margin: 0;
+  max-width: 22rem;
+  color: var(--inverse-text);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  opacity: 0.82;
+}
+.uh-coverage strong { font-weight: var(--weight-semibold); }
+
+.uh-topic-preview > button { grid-column: 2; min-height: 48px; white-space: nowrap; background: var(--inverse-text) !important; color: var(--inverse-surface) !important; }
 .uh-topic-preview > button:hover { background: var(--inverse-text) !important; }
+
+@media (max-width: 720px) {
+  .uh-coverage,
+  .uh-topic-preview > button { grid-column: 1 / -1; max-width: none; }
+  .uh-topic-preview > button { width: 100%; }
+}
 
 .uh-method-section { display: grid; grid-template-columns: minmax(220px, 0.7fr) 1.3fr; gap: 2.5rem; padding: 3.5rem 0.2rem 0; }
 .uh-method-section h2 { max-width: 12ch; margin: 0; color: var(--text-primary); font-family: var(--font-display); font-weight: var(--weight-semibold); letter-spacing: -0.04em; line-height: 1.02; }

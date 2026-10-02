@@ -104,6 +104,20 @@ function App() {
     setScreen('learn');
   };
 
+  // Deep multi-level material is not a LessonReader lesson, so it cannot travel
+  // through the lesson request. It gets its own channel into Learn's view state.
+  // 'black-holes' is the only deep read that exists today; the id is validated
+  // against the real level list so a typo cannot open an empty screen.
+  const openDeepRead = (readId) => {
+    if (readId !== 'black-holes') {
+      showToast?.('That deep read does not exist yet.', 'info');
+      return;
+    }
+    setSelectedSubject('physics');
+    setLearnView('black-hole-mastery');
+    setScreen('learn');
+  };
+
   useKeyboardShortcuts({
     'cmd+k': () => setCommandPaletteOpen(true),
     'cmd+/': () => setKeyboardHelpOpen((open) => !open),
@@ -158,6 +172,8 @@ function App() {
             setScreen={setScreen}
             setSelectedSubject={setSelectedSubject}
             setLearnView={setLearnView}
+            onOpenLesson={openLesson}
+            onOpenDeepRead={openDeepRead}
             onForgetProfile={handleForgetProfile}
             showToast={showToast}
           />
