@@ -26,7 +26,10 @@ describe('the glossary', () => {
     // reaching this test at all means there was not one. Asserted explicitly
     // anyway, because an import-time throw reads as "the app will not start"
     // rather than as "you typed a word twice".
-    expect(new Set(GLOSSARY_TERMS).size).toBe(GLOSSARY_TERMS.length);
+    // Array.from rather than spreading a Set: the build targets es5, where
+    // spreading an iterator is a type error, and the fix belongs here rather
+    // than in a tsconfig change that would affect every file in src.
+    expect(Array.from(new Set(GLOSSARY_TERMS)).length).toBe(GLOSSARY_TERMS.length);
   });
 
   test('every definition is a sentence a reader can finish', () => {
@@ -66,15 +69,17 @@ describe('the glossary', () => {
 });
 
 describe('inline terms in the level content', () => {
-  const usedTerms = [...allText.matchAll(new RegExp(INLINE_TERM.source, 'g'))].map((match) =>
-    match[1].trim()
+  // Array.from rather than spreading: the build targets es5, where spreading an
+  // iterator is a type error.
+  const usedTerms = Array.from(allText.matchAll(new RegExp(INLINE_TERM.source, 'g'))).map(
+    (match) => match[1].trim()
   );
 
   test('every inline term resolves to a real glossary entry', () => {
     // A typo in a term name, or a term added to the content before it was added
     // to the glossary, would otherwise render as a button that opens nothing.
     expect(usedTerms.length).toBeGreaterThan(0);
-    const unresolved = [...new Set(usedTerms)].filter((term) => !GLOSSARY[term]);
+    const unresolved = Array.from(new Set(usedTerms)).filter((term) => !GLOSSARY[term]);
     expect(unresolved).toEqual([]);
   });
 
@@ -106,7 +111,7 @@ describe('the level set', () => {
 
   test('gives no two entries in the whole subject the same id', () => {
     const ids = BLACK_HOLE_LEVELS.flatMap((level) => (level.entries ?? []).map((entry) => entry.id));
-    expect(new Set(ids).size).toBe(ids.length);
+    expect(Array.from(new Set(ids)).length).toBe(ids.length);
   });
 
   test('labels every entry with a status from the closed set', () => {

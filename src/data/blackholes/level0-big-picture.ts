@@ -1,4 +1,4 @@
-import { BlackHoleLevel } from '../schema';
+import { BlackHoleLevel } from './schema';
 
 /**
  * Level 0: the big picture, with no jargon at all.

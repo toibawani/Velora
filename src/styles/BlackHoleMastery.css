@@ -1,7 +1,14 @@
 /* ==========================================================================
-   BlackHoleMastery.css — High-Performance Scientific Visualization & Masterclass
+   BlackHoleMastery.css — long-form reading surface
    --------------------------------------------------------------------------
-   Disciplined, distraction-free astronomy curriculum with sharp cards.
+   This screen has more text than anything else in the app, so it is set like
+   reading rather than like a dashboard: a serif display face for headings, the
+   app's own --font-reading token for body at a larger size, a line height above
+   the app default, and a hard cap on measure.
+
+   The measure cap is the one that matters most. 70 characters is the range where
+   the eye finds the next line reliably; without the max-width the paragraphs on
+   a 1440px screen run edge to edge and the return sweep starts missing lines.
    ========================================================================== */
 
 .black-hole-mastery-container {
@@ -9,197 +16,481 @@
   min-height: 100vh;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-sans);
+  font-family: var(--font-reading);
   overflow-x: hidden;
 }
 
-.black-hole-canvas {
+.bhm-canvas-wrap {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.black-hole-canvas {
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.85;
+  opacity: 0.5;
 }
 
-.black-hole-content {
+/* Above the canvas, and dimmed: the canvas is decoration, and at full strength
+   behind cream text it competes with the reading. */
+.bhm-shell {
   position: relative;
   z-index: 1;
-  max-width: 920px;
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-4) var(--space-16);
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(246, 239, 228, 0.82),
+    rgba(246, 239, 228, 0.94) 40%,
+    rgba(246, 239, 228, 0.97)
+  );
+  padding-bottom: 96px;
 }
 
-.bh-header {
-  margin-bottom: var(--space-8);
-  border-bottom: 1px solid var(--border-default);
-  padding-bottom: var(--space-6);
+:root[data-theme='dark'] .bhm-shell {
+  background: linear-gradient(
+    to bottom,
+    rgba(23, 16, 9, 0.86),
+    rgba(23, 16, 9, 0.95) 40%,
+    rgba(23, 16, 9, 0.98)
+  );
 }
 
-.bh-back-btn {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-default);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  font-size: 0.8125rem;
-  font-weight: var(--weight-medium);
-  cursor: pointer;
-  margin-bottom: var(--space-4);
-  transition: border-color var(--duration-fast) var(--ease-standard),
-              background var(--duration-fast) var(--ease-standard);
-}
+/* ---- Header ---------------------------------------------------------- */
 
-.bh-back-btn:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-}
-
-.bh-title {
-  margin: 0 0 var(--space-1);
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--color-text);
-}
-
-.bh-subtitle {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  max-width: 68ch;
-  color: var(--color-text-muted);
-}
-
-/* Masterclass Chapters & Progression */
-.mastery-chapters-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-4);
-  margin-bottom: var(--space-8);
-}
-
-.chapter-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-5);
-  cursor: pointer;
-  transition: border-color var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard);
+.bhm-header {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-8) var(--space-6);
 }
 
-.chapter-card:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-hover);
+.bhm-eyebrow {
+  margin: 0 0 0.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
 }
 
-.chapter-card.active {
-  border-color: var(--accent-primary);
-  background: var(--bg-secondary);
+.bhm-header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.1rem);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
 }
 
-.chapter-card-top {
+.bhm-header-note {
+  margin: 0.6rem 0 0;
+  max-width: 34rem;
+  font-size: 0.95rem;
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+
+.bhm-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+/* ---- Body: rail plus reading column ------------------------------------ */
+
+.bhm-body {
+  display: grid;
+  grid-template-columns: minmax(15rem, 19rem) minmax(0, 1fr);
+  gap: var(--space-8);
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 var(--space-8);
+}
+
+.bhm-rail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.bhm-rail {
+  position: sticky;
+  top: var(--space-4);
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  /* A rail that scrolls with the page is a rail you lose. */
+}
+
+.bhm-rail-item {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  text-align: left;
+  cursor: pointer;
+}
+
+.bhm-rail-item:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.bhm-rail-item.current {
+  border-left-color: var(--accent-primary);
+  background: var(--accent-soft, var(--wash));
+  color: var(--text-primary);
+}
+
+.bhm-rail-number {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-tertiary, var(--text-secondary));
+  text-align: right;
+}
+
+.bhm-rail-item.current .bhm-rail-number {
+  color: var(--accent-primary);
+}
+
+.bhm-rail-text {
+  display: block;
+}
+
+.bhm-rail-text strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: var(--weight-semibold);
+  line-height: 1.3;
+}
+
+.bhm-rail-text small {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--text-tertiary, var(--text-secondary));
+}
+
+/* Hidden on wide screens: the rail is already beside the text there. */
+.bhm-rail-toggle,
+.bhm-rail-list-collapsed {
+  display: none;
+}
+
+/* ---- Reading column ---------------------------------------------------- */
+
+.bhm-main {
+  min-width: 0;
+}
+
+.bhm-content {
+  /* 70 characters. The single most valuable line in this file. */
+  max-width: 38rem;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.bhm-level-eyebrow {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.bhm-level-title {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.bhm-level-title:focus {
+  outline: none;
+}
+
+.bhm-level-title:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.bhm-level-intro {
+  margin: 0 0 var(--space-6);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ---- One entry --------------------------------------------------------- */
+
+.bhm-entry {
+  margin: 0 0 var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.bhm-entry:last-of-type {
+  border-bottom: 0;
+}
+
+.bhm-entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.bhm-entry-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: var(--weight-regular);
+  line-height: 1.3;
+}
+
+.bhm-entry-simple {
+  margin: 0 0 var(--space-4);
+  font-size: 1.09rem;
+  line-height: 1.72;
+}
+
+.bhm-entry-deeper p,
+.bhm-entry-matters p {
+  margin: 0;
+}
+
+.bhm-field-label {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.bhm-entry-deeper {
+  margin: 0 0 var(--space-4);
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.bhm-entry-matters {
+  margin: 0 0 var(--space-3);
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--accent-primary);
+  color: var(--text-secondary);
+}
+
+.bhm-entry-source {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-tertiary, var(--text-secondary));
+}
+
+.bhm-entry-source a {
+  color: var(--text-secondary);
+}
+
+/* ---- Status ------------------------------------------------------------ */
+/*
+  A dot and a word. The semantic colours are reused from the existing token set
+  rather than picked fresh: established leans on --color-success, contested on
+  --color-warning, theoretical on --color-info. A loud filled badge on every entry
+  would make the contested ones compete with the settled ones, which inverts
+  what the label is for.
+*/
+
+.bhm-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.bhm-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  border: 1px solid currentColor;
+}
+
+.bhm-status-established .bhm-status-dot {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.bhm-status-contested .bhm-status-dot {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.bhm-status-theoretical .bhm-status-dot {
+  background: transparent;
+  border-color: var(--color-info);
+}
+
+/* ---- Pager ------------------------------------------------------------- */
+
+.bhm-pager {
   display: flex;
   justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.bhm-pager-btn {
+  display: inline-flex;
   align-items: center;
-}
-
-.chapter-icon {
-  font-size: 1.25rem;
-}
-
-.chapter-duration {
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
-  font-weight: 500;
-}
-
-.chapter-title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--color-text);
-}
-
-.chapter-summary {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  line-height: 1.55;
-  max-width: 68ch;
-  color: var(--color-text-muted);
-}
-
-/* Detailed Reading & Scientific Visuals */
-.detailed-reading-view {
-  background: var(--bg-secondary);
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0 1.1rem;
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-8);
-  margin-top: var(--space-6);
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
-.reading-chapter-title {
-  margin: 0 0 var(--space-6);
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--color-text);
-  border-bottom: 1px solid var(--border-default);
-  padding-bottom: var(--space-4);
+.bhm-pager-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
-.reading-section-block {
-  margin-bottom: var(--space-8);
+.bhm-lab-link {
+  margin-top: var(--space-4);
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
-.reading-heading {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--color-text);
-  margin: 0 0 var(--space-2);
+/* ---- Narrow screens ----------------------------------------------------- */
+/*
+  Below 900px the rail becomes a disclosure. Eleven level buttons above the text
+  would push the first paragraph of the page below the fold, which on a screen
+  whose purpose is reading is the failure that actually costs something.
+*/
+
+@media (max-width: 900px) {
+  .bhm-header {
+    padding: var(--space-6) var(--space-5) var(--space-4);
+  }
+
+  .bhm-body {
+    display: block;
+    padding: 0 var(--space-5);
+  }
+
+  .bhm-rail {
+    display: none;
+  }
+
+  .bhm-rail-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 48px;
+    margin-bottom: var(--space-5);
+    padding: 0 1rem;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    cursor: pointer;
+  }
+
+  .bhm-rail-toggle span {
+    flex: 1 1 auto;
+    text-align: left;
+  }
+
+  .bhm-rail-toggle .rotated {
+    transform: rotate(180deg);
+  }
+
+  .bhm-rail-list-collapsed {
+    display: grid;
+    margin-bottom: var(--space-5);
+    padding: 0.25rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+  }
 }
 
-.reading-text {
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  max-width: 68ch;
-  color: var(--color-text-muted);
-  margin: 0 0 var(--space-4);
-}
+@media (max-width: 480px) {
+  /* 17px rather than 18px, and still comfortably above the app's 16px body. The
+     brief asks for 18-19px; dropping one pixel at the narrowest width keeps a
+     long paragraph from needing a horizontal scroll, which would be a worse
+     trade than a point of type size. */
+  .bhm-content,
+  .bhm-level-intro {
+    font-size: 1.0625rem;
+  }
 
-.visual-container {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: var(--space-4) 0;
-}
+  .bhm-entry-simple {
+    font-size: 1.0625rem;
+  }
 
-.visual-svg {
-  max-width: 360px;
-  width: 100%;
-  height: auto;
+  .bhm-header h1 {
+    font-size: 2rem;
+  }
+
+  .bhm-entry-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
 }
