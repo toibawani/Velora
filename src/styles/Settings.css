@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Settings.css
+   One column of sections, matching Roadmap.css. The choice rows wrap rather
+   than scroll, because a preference you cannot see all of is a preference you
+   cannot check what you picked.
+   ========================================================================== */
+
+.settings-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  padding-bottom: 96px;
+}
+
+.st-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-8) var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.st-eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.st-header h1 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 2.25rem;
+  font-weight: 400;
+}
+
+.st-back {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.st-back:hover {
+  border-color: var(--accent-primary, var(--color-accent));
+}
+
+.st-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-8);
+  display: grid;
+  gap: var(--space-6);
+}
+
+.st-section h2 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+.st-section-note {
+  margin: 0 0 var(--space-3);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.st-section-note svg {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+.st-choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.st-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.st-choice:hover {
+  border-color: var(--accent-primary, var(--color-accent));
+}
+
+.st-choice.selected {
+  border-color: var(--accent-primary, var(--color-accent));
+  background: var(--accent-soft, var(--bg-elevated));
+  font-weight: 600;
+}
+
+.st-fieldset {
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  border: 0;
+}
+
+.st-fieldset legend {
+  padding: 0 0 0.5rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.st-clear {
+  margin-top: 0.6rem;
+  min-height: 40px;
+  padding: 0 0.8rem;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.st-clear:hover {
+  color: var(--text-primary);
+}
+
+.st-danger {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.st-danger:hover {
+  border-color: #b4453a;
+  color: #b4453a;
+}
+
+.st-notice,
+.st-storage-warning {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid #b4453a;
+  border-radius: var(--radius-sm);
+  background: rgba(180, 69, 58, 0.08);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.st-storage-warning {
+  border-color: var(--border-default);
+  background: var(--bg-elevated);
+}
+
+@media (max-width: 768px) {
+  .st-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-4) 1.1rem;
+  }
+
+  .st-body {
+    padding: var(--space-4) 1.1rem;
+  }
+
+  .st-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .st-choice {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}

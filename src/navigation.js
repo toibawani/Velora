@@ -28,6 +28,7 @@ import {
   Users,
   Clock,
   Map,
+  Settings as SettingsIcon,
 } from 'lucide-react';
 
 export const SCREENS = [
@@ -85,6 +86,14 @@ export const SCREENS = [
     drawerLabel: 'Roadmap',
     description: 'What is built, what is half-built, what is not started',
     icon: Map,
+    primary: false,
+  },
+  {
+    id: 'settings',
+    label: 'Settings',
+    drawerLabel: 'Settings',
+    description: 'Theme, and the answers you gave during setup',
+    icon: SettingsIcon,
     primary: false,
   },
   {

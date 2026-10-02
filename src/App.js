@@ -26,6 +26,7 @@ const DictionaryScreen = lazy(() => import('./screens/Dictionary'));
 const GameHubScreen = lazy(() => import('./screens/Games'));
 const JourneyScreen = lazy(() => import('./screens/Journey'));
 const RoadmapScreen = lazy(() => import('./screens/Roadmap'));
+const SettingsScreen = lazy(() => import('./screens/Settings'));
 
 /**
  * Minimalist, elegant loading indicator for lazy-loaded screen bundles
@@ -49,6 +50,7 @@ const ROUTE_LABELS = {
   games: 'Flow games',
   journey: 'Your journey',
   roadmap: 'Roadmap',
+  settings: 'Settings',
   landing: 'VELORA',
   profile: 'Set up this device',
 };
@@ -194,6 +196,14 @@ function App() {
 
         {screen === 'roadmap' && user && (
           <RoadmapScreen setScreen={setScreen} />
+        )}
+
+        {screen === 'settings' && user && (
+          <SettingsScreen
+            user={user}
+            setScreen={setScreen}
+            onForgetProfile={handleForgetProfile}
+          />
         )}
 
         {user && screen !== 'splash' && screen !== 'profile' && screen !== 'landing' && (
