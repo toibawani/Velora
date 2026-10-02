@@ -1,0 +1,197 @@
+/* ==========================================================================
+   Roadmap.css
+   The three sections and the state tag on each row. Deliberately plain: this
+   is a page whose job is to be read, not to sell anything, so it is a single
+   column of text at both widths and the only colour is the state tag.
+   ========================================================================== */
+
+.roadmap-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  padding-bottom: 96px;
+}
+
+.rm-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-8) var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.rm-eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary, var(--text-secondary));
+}
+
+.rm-header h1 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 2.25rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.rm-back {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.rm-back:hover {
+  border-color: var(--accent-primary, var(--color-accent));
+}
+
+.rm-intro,
+.rm-section,
+.rm-footer {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--space-8);
+}
+
+.rm-intro {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-4);
+}
+
+.rm-intro p,
+.rm-section-summary,
+.rm-item p,
+.rm-footer p {
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.rm-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+}
+
+.rm-totals li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+
+.rm-totals strong {
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+
+.rm-totals span {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.rm-section {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-2);
+}
+
+.rm-section h2 {
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.rm-section-summary {
+  margin: 0.4rem 0 0;
+  font-size: 0.95rem;
+}
+
+.rm-list {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.rm-item {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md, 12px);
+  background: var(--bg-elevated);
+}
+
+.rm-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.rm-item h3 {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+.rm-item p {
+  margin: 0.5rem 0 0;
+  font-size: 0.92rem;
+}
+
+.rm-state {
+  flex: 0 0 auto;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.rm-removed,
+.rm-notstarted {
+  border-style: dashed;
+}
+
+.rm-footer {
+  margin-top: var(--space-6);
+  padding-bottom: var(--space-8);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .rm-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-4) 1.1rem;
+  }
+
+  .rm-intro,
+  .rm-section,
+  .rm-footer {
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+  }
+
+  .rm-header h1 {
+    font-size: 1.8rem;
+  }
+}

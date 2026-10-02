@@ -27,6 +27,7 @@ import {
   BarChart3,
   Users,
   Clock,
+  Map,
 } from 'lucide-react';
 
 export const SCREENS = [
@@ -77,6 +78,14 @@ export const SCREENS = [
     description: 'A timeline of the study sessions on this device',
     icon: Clock,
     primary: true,
+  },
+  {
+    id: 'roadmap',
+    label: 'Roadmap',
+    drawerLabel: 'Roadmap',
+    description: 'What is built, what is half-built, what is not started',
+    icon: Map,
+    primary: false,
   },
   {
     id: 'community',
