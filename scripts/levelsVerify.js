@@ -111,8 +111,26 @@ const signIn = async (page, port) => {
   });
   console.log('level buttons in rail:', total);
 
+  // Proving this one can fail: if the masterclass never opened, or the rail
+  // rendered no level buttons, the loop below would run zero times, `bad` would
+  // stay at 0, and the script would exit 0 having checked nothing at all. That
+  // is the same "a green suite that is lying" failure this sweep is about - the
+  // script reported a clean run because it had nothing to complain about.
+  const reached = await page.evaluate(() => Boolean(document.querySelector('.bhm-pager')));
+  if (!reached) {
+    console.error('\nnever reached the black hole masterclass; no levels were checked');
+    await browser.close(); server.close();
+    process.exit(1);
+  }
+  if (total === 0) {
+    console.error('\nmasterclass opened but the level rail rendered no buttons; nothing was checked');
+    await browser.close(); server.close();
+    process.exit(1);
+  }
+
   // Click each level in turn and confirm it renders real content.
   let bad = 0;
+  let checked = 0;
   for (let i = 0; i < total; i++) {
     const r = await page.evaluate((idx) => {
       const btn = document.querySelectorAll('.bhm-rail-item')[idx];
@@ -122,6 +140,7 @@ const signIn = async (page, port) => {
       return label;
     }, i);
     if (!r) continue;
+    checked++;
     await new Promise(res => setTimeout(res, 450));
     const info = await page.evaluate(() => {
       const main = document.querySelector('main') || document.body;
@@ -135,9 +154,14 @@ const signIn = async (page, port) => {
   }
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   console.log('horizontal overflow at 375:', overflow);
-  console.log('\nempty levels:', bad);
+  console.log(`\nlevels checked: ${checked} of ${total}`);
+  console.log('empty levels:', bad);
   console.log('console errors:', errors.length);
   errors.slice(0,5).forEach(e => console.log(' !', e.slice(0,140)));
   await browser.close(); server.close();
-  process.exit(bad || errors.length ? 1 : 0);
+  // Checking fewer levels than the rail offers is itself a failure. The loop
+  // used to `continue` past a rail item that had vanished, which skipped the
+  // level without counting it, and the script still exited 0 on the strength of
+  // the levels it did reach.
+  process.exit(bad || errors.length || checked !== total ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });
