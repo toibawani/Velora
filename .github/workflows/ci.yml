@@ -40,6 +40,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # Every audit below drives real Chrome. If the runner image ever stops
+      # shipping it, fail here with a clear message naming where it looked,
+      # rather than four jobs later with "No Chrome found".
+      - name: locate a browser
+        run: node scripts/chrome.js
       # jsdom has no layout engine, so element-geometry regressions are invisible
       # to Jest. This drives the built output in real Chrome at 1440 and 375,
       # signs in through the real form and walks every screen.
@@ -56,3 +61,36 @@ jobs:
       # The same argument applies to the atlas: the hidden search label and the
       # index-not-a-pill regressions are both invisible to Jest.
       - run: npm run test:a11y
+
+  atlas:
+    name: atlas coverage (real Chrome, built app)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Same reason as the layout job: this one is about the browser, not the app.
+      - name: locate a browser
+        run: node scripts/chrome.js
+      # Three atlas audits existed and were run by nobody. Each could report
+      # success while verifying nothing, and two of them could only find Chrome
+      # at a macOS path, so on this runner they would have exited before looking
+      # at the app at all.
+      #
+      # They now resolve Chrome through scripts/chrome.js and exit non-zero when
+      # they reach nothing or check less than they claim to. They are wired here
+      # for the same reason the game audit is: a check nobody runs is not a
+      # check, and one that cannot fail is worse than none.
+      #
+      # atlasTopicVerify: every tapped topic resolves to a lesson, a deep read,
+      # or an honest "not written yet".
+      - run: npm run test:atlas-topics
+      # atlasTapAudit: every field and discipline has a live topic, and every
+      # written topic's call to action opens real content.
+      - run: npm run test:atlas-tap
+      # levelsVerify: every level in the black hole rail renders real content.
+      - run: npm run test:levels

@@ -30,7 +30,10 @@
     "test:layout": "node scripts/layoutCheck.js",
     "test:a11y": "node scripts/atlasAccessibilityAudit.js",
     "test:naming": "node scripts/nameAudit.js",
-    "test:games": "node scripts/gameAudit.js"
+    "test:games": "node scripts/gameAudit.js",
+    "test:atlas-topics": "node scripts/atlasTopicVerify.js",
+    "test:atlas-tap": "node scripts/atlasTapAudit.js",
+    "test:levels": "node scripts/levelsVerify.js"
   },
   "jest": {
     "coverageThreshold": {
