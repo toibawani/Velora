@@ -45,3 +45,14 @@ jobs:
       # signs in through the real form and walks every screen.
       - run: npm run test:layout
       - run: npm run test:naming
+      # The game audit plays every game in the built app in real Chrome and fails
+      # if one cannot be reached or the page logs an error.
+      #
+      # This step was described as existing when only the npm script did: the
+      # audit had never actually run in CI, which is how a selector bug made it
+      # navigate out of the games screen and "pass" while testing one puzzle. A
+      # check nobody runs is not a check, so it is wired up here and it blocks.
+      - run: npm run test:games
+      # The same argument applies to the atlas: the hidden search label and the
+      # index-not-a-pill regressions are both invisible to Jest.
+      - run: npm run test:a11y
