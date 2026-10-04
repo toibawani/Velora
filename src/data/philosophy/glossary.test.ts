@@ -91,7 +91,7 @@ describe('the level set', () => {
     expect(numbers).toEqual([...numbers].sort((a, b) => a - b));
     expect(numbers[0]).toBe(0);
     expect(TOTAL_ENTRIES).toBe(allEntries.length);
-    expect(TOTAL_ENTRIES).toBeGreaterThan(3);
+    expect(TOTAL_ENTRIES).toBeGreaterThan(5);
   });
 
   test('gives every level a title and a one-line blurb for the rail', () => {
@@ -139,6 +139,8 @@ describe('the level set', () => {
     expect(byName('Existence')?.status).toBe('debated');
     expect(byName('Knowledge')?.status).toBe('settled');
     expect(byName('Skepticism')?.status).toBe('open');
+    expect(byName('Morality')?.status).toBe('debated');
+    expect(byName('Consequentialism')?.status).toBe('debated');
   });
 
   test('states the disputed cases concretely rather than naming them', () => {
@@ -150,12 +152,15 @@ describe('the level set', () => {
     expect(knowledge?.deeper).toMatch(/Barcelona/);
     const reality = allEntries.find((entry) => entry.name === 'Reality');
     expect(reality?.deeper).toMatch(/Kant/);
+    const morality = allEntries.find((entry) => entry.name === 'Morality');
+    expect(morality?.deeper).toMatch(/footbridge|bridge/i);
+    expect(morality?.deeper).toMatch(/surgeon/);
   });
 
   test('covers the topics the Atlas actually lists, so the markers mean something', () => {
     // Each entry name here has to match an Atlas topic exactly or the index will
     // show the topic as unwritten while the content sits next to it unreachable.
-    ['Reality', 'Existence', 'Knowledge', 'Skepticism'].forEach(
+    ['Reality', 'Existence', 'Knowledge', 'Skepticism', 'Morality', 'Consequentialism'].forEach(
       (name) => expect(allEntries.some((entry) => entry.name === name)).toBe(true)
     );
   });

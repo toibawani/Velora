@@ -16,8 +16,9 @@ import { PhilosophyLevel, validateLevel } from './schema';
 import LEVEL_0 from './level0-big-picture';
 import LEVEL_1 from './level1-what-is-there';
 import LEVEL_2 from './level2-what-we-can-know';
+import LEVEL_3 from './level3-what-we-should-do';
 
-const ALL: PhilosophyLevel[] = [LEVEL_0, LEVEL_1, LEVEL_2];
+const ALL: PhilosophyLevel[] = [LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3];
 
 ALL.forEach((level) => validateLevel(level, 'philosophy/index'));
 
