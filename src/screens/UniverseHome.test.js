@@ -103,7 +103,27 @@ describe('editorial knowledge atlas', () => {
     fireEvent.click(screen.getByRole('button', { name: /Black Holes.*Science/i }));
     fireEvent.click(screen.getByRole('button', { name: /Open the deep read/i }));
 
-    expect(onOpenDeepRead).toHaveBeenCalledWith('black-holes');
+    // The second argument is the level anchor. Black holes does not name one, so
+    // it is undefined - the read opens at the top. A philosophy topic does name
+    // one, which is asserted in atlasResolution.test.ts and in the real-browser
+    // audit, because the point of the anchor is that it is actually used.
+    expect(onOpenDeepRead).toHaveBeenCalledWith('black-holes', undefined);
+    expect(onOpenLesson).not.toHaveBeenCalled();
+  });
+
+  test('a philosophy topic opens the deep read on the level that carries it', () => {
+    const { onOpenDeepRead, onOpenLesson } = renderUniverse();
+
+    fireEvent.click(screen.getByRole('button', { name: /^Philosophy,/ }));
+    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), {
+      target: { value: 'Free Will' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: /Free Will.*Philosophy/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Open the deep read/i }));
+
+    // Tapping "Free Will" has to land on the free will level, not the top of the
+    // subject. Anyone who comes back for one part should not have to walk to it.
+    expect(onOpenDeepRead).toHaveBeenCalledWith('philosophy-core', 'are-we-free');
     expect(onOpenLesson).not.toHaveBeenCalled();
   });
 
@@ -207,5 +227,41 @@ describe('theme control in the header', () => {
     expect(dark).toHaveAttribute('aria-pressed', 'true');
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(localStorage.getItem('velora_theme_preference')).toBe('dark');
+  });
+
+  /*
+   * The general form of the collision above, kept as its own test because the
+   * two words only collide on this screen and the screen is the only place they
+   * meet: the theme control lives in the header and the topic lives in the index
+   * a few hundred pixels below it, which is far enough apart to look obvious and
+   * close enough that anyone navigating by name hits both.
+   */
+  test('no header control is named exactly like a topic in the index', () => {
+    renderUniverse();
+
+    const topicNames = Array.from(document.querySelectorAll('.aix-entry-text')).map((n) =>
+      n.textContent.trim()
+    );
+    const controlNames = Array.from(document.querySelectorAll('.theme-toggle-segment')).map((n) =>
+      n.textContent.trim()
+    );
+
+    // "Dark Matter" is in the index, so a control named "Dark" is ambiguous.
+    expect(topicNames).toContain('Dark Matter');
+    controlNames.forEach((name) => expect(topicNames).not.toContain(name));
+  });
+
+  test('the theme control is reachable only under its own group name', () => {
+    renderUniverse();
+
+    // Prefixing with the group is the fix: renaming either side would mean
+    // either touching content data or shortening a label every reader sees.
+    expect(screen.queryByRole('button', { name: 'Dark', exact: true })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Theme: Dark' })).toBeInTheDocument();
+    // And the topic is still reachable by its own name. It is unwritten, so the name
+    // carries the status suffix the index promises - and note that the bare topic
+    // name is still a prefix of it, which is exactly why the theme control has to
+    // disambiguate rather than relying on position.
+    expect(screen.getByRole('button', { name: /^Dark Matter/ })).toBeInTheDocument();
   });
 });
