@@ -9,9 +9,15 @@
    The measure cap is the one that matters most. 70 characters is the range where
    the eye finds the next line reliably; without the max-width the paragraphs on
    a 1440px screen run edge to edge and the return sweep starts missing lines.
+
+   The class prefix is .bhm- for historical reasons and now belongs to the shared
+   deep-read shell, not to black holes alone: philosophy renders through the same
+   component and the same stylesheet. Renaming every selector would have touched
+   the component, this file and the tests at once for no visual gain, so the
+   prefix stays and this note is the explanation.
    ========================================================================== */
 
-.black-hole-mastery-container {
+.deep-read-container {
   position: relative;
   min-height: 100vh;
   background: var(--bg-primary);
@@ -95,18 +101,50 @@
   color: var(--text-secondary);
 }
 
+/*
+ * Pill radius is written as a literal here rather than as var(--radius-full).
+ * That token currently resolves to 8px - the same as --radius-lg - so anything
+ * using it as written gets a slightly rounded rectangle rather than a pill.
+ * Thirty-odd selectors across the app depend on the token as it is, so changing
+ * it is a separate piece of work and not something to fold into this fix. The
+ * literal is what index.css and UniverseHome.css already use for pills, so these
+ * three controls keep the shape they had before the global rule was overridden.
+ */
+/*
+ * THE GLOBAL BUTTON RULE AND THIS SHELL
+ * -------------------------------------
+ * index.css sets a global `button { background-color: var(--accent-primary);
+ * border-radius: 999px; padding: 10px 18px; border: none; font-weight: ... }`
+ * with !important on every one of those properties. It is a deliberate decision
+ * for VELORA's action buttons - it is why every control in the app is a warm
+ * sienna pill - and it cannot be beaten by specificity alone, so every control
+ * below that is not meant to be a pill has to opt back in with !important.
+ *
+ * Without those flags this file's own values were silently discarded: the level
+ * rail rendered as a column of filled sienna lozenges instead of a list of text
+ * lines, and Back / Previous / Next / the lab link all rendered as solid accent
+ * pills instead of the quiet outlined controls they are written as. The CSS was
+ * not wrong, it was being overruled. AtlasIndex.css had already hit this and
+ * solved it the same way; this shell simply had not been done.
+ *
+ * The rule itself is left alone. Removing the !important would be the tidier
+ * architecture, but a dozen other stylesheets across the app are painted by it
+ * today, so that is a separate piece of work and not something to smuggle into
+ * a fix.
+ */
 .bhm-back {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   min-height: 44px;
-  padding: 0 1rem;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
+  padding: 0 1rem !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 999px !important;
+  background: var(--bg-elevated) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.9rem !important;
+  font-weight: var(--weight-semibold) !important;
   cursor: pointer;
   flex: 0 0 auto;
 }
@@ -144,26 +182,44 @@
   grid-template-columns: 1.6rem 1fr;
   gap: 0.5rem;
   width: 100%;
-  padding: 0.5rem 0.6rem;
-  border: 0;
-  border-left: 2px solid transparent;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  background: transparent;
-  color: var(--text-secondary);
-  font-family: var(--font-sans);
+  padding: 0.5rem 0.6rem !important;
+  border: 0 !important;
+  border-left: 2px solid transparent !important;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  font-family: var(--font-sans) !important;
+  font-weight: var(--weight-regular) !important;
   text-align: left;
   cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/*
+ * index.css also animates a hover state with !important - an accent background
+ * and a lifted shadow - so the rail needs to state both of them back or a
+ * pointer on a level turns the whole row sienna. The transform is reset for the
+ * same reason the atlas index resets it: the global rule's hover transition is
+ * built around one.
+ */
+.bhm-rail-item:hover,
+.bhm-back:hover,
+.bhm-pager-btn:hover,
+.bhm-lab-link:hover,
+.bhm-rail-toggle:hover {
+  box-shadow: none !important;
+  transform: none;
 }
 
 .bhm-rail-item:hover {
-  background: var(--wash);
-  color: var(--text-primary);
+  background: var(--wash) !important;
+  color: var(--text-primary) !important;
 }
 
 .bhm-rail-item.current {
-  border-left-color: var(--accent-primary);
-  background: var(--accent-soft, var(--wash));
-  color: var(--text-primary);
+  border-left-color: var(--accent-primary) !important;
+  background: var(--accent-soft, var(--wash)) !important;
+  color: var(--text-primary) !important;
 }
 
 .bhm-rail-number {
@@ -385,13 +441,14 @@
   align-items: center;
   gap: 0.4rem;
   min-height: 44px;
-  padding: 0 1.1rem;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
+  padding: 0 1.1rem !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 999px !important;
+  background: var(--bg-elevated) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.9rem !important;
+  font-weight: var(--weight-semibold) !important;
   cursor: pointer;
 }
 
@@ -403,13 +460,14 @@
 .bhm-lab-link {
   margin-top: var(--space-4);
   min-height: 44px;
-  padding: 0 1.1rem;
-  border: 1px dashed var(--border-default);
-  border-radius: var(--radius-full);
-  background: transparent;
-  color: var(--text-secondary);
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
+  padding: 0 1.1rem !important;
+  border: 1px dashed var(--border-default) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.9rem !important;
+  font-weight: var(--weight-medium) !important;
   cursor: pointer;
 }
 
@@ -441,13 +499,14 @@
     width: 100%;
     min-height: 48px;
     margin-bottom: var(--space-5);
-    padding: 0 1rem;
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-sm);
-    background: var(--bg-elevated);
-    color: var(--text-primary);
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
+    padding: 0 1rem !important;
+    border: 1px solid var(--border-default) !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--bg-elevated) !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.92rem !important;
+    font-weight: var(--weight-semibold) !important;
     cursor: pointer;
   }
 
