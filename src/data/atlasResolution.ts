@@ -137,6 +137,28 @@ const DEEP_READS: Record<string, { readId: string; title: string; levelId?: stri
   consciousness: { readId: 'philosophy-core', levelId: 'who-we-are', title: 'The big questions' },
   'free-will': { readId: 'philosophy-core', levelId: 'are-we-free', title: 'The big questions' },
   determinism: { readId: 'philosophy-core', levelId: 'are-we-free', title: 'The big questions' },
+
+  // History: twelve entries across five levels, keyed to the exact Atlas topic
+  // names. Note these drop leading articles and use the Atlas's z-spelling of
+  // "Decolonization", because a key that does not match the topic's slug is the
+  // same as no key at all: the topic would show as unwritten while its content
+  // sat beside it, unreachable. The test at the bottom of this file asserts every
+  // one of these names is a real Atlas topic.
+  'ancient-egypt': { readId: 'history-core', levelId: 'ancient-worlds', title: 'History, from the record' },
+  'ancient-greece': { readId: 'history-core', levelId: 'ancient-worlds', title: 'History, from the record' },
+  'ancient-rome': { readId: 'history-core', levelId: 'ancient-worlds', title: 'History, from the record' },
+  reformation: { readId: 'history-core', levelId: 'words-and-numbers', title: 'History, from the record' },
+  'scientific-revolution': { readId: 'history-core', levelId: 'words-and-numbers', title: 'History, from the record' },
+  'age-of-exploration': { readId: 'history-core', levelId: 'words-and-numbers', title: 'History, from the record' },
+  enlightenment: { readId: 'history-core', levelId: 'rights-and-rule', title: 'History, from the record' },
+  'french-revolution': { readId: 'history-core', levelId: 'rights-and-rule', title: 'History, from the record' },
+  colonialism: { readId: 'history-core', levelId: 'rights-and-rule', title: 'History, from the record' },
+  // The numeral in "World War I" slugs to "i", not "one". Spelled the English way
+  // here it read as if correct, and the result was a topic reporting itself
+  // unwritten while its entry sat in the level above it, unreachable.
+  'world-war-i': { readId: 'history-core', levelId: 'the-century-of-wars', title: 'History, from the record' },
+  decolonization: { readId: 'history-core', levelId: 'the-century-of-wars', title: 'History, from the record' },
+  'cold-war': { readId: 'history-core', levelId: 'the-century-of-wars', title: 'History, from the record' },
 };
 
 /**

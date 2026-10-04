@@ -122,10 +122,16 @@ describe('fieldCoverage', () => {
 
   test('is honest about how little is written today', () => {
     // A deliberate number, raised in the same commit as the content that earned
-    // it. It went from 10 to 18 when the philosophy levels landed: three entry
-    // points in Science, four philosophy lessons, six history, and the ten
-    // philosophy topics that now resolve to the deep read. If it fails, content
-    // was added, which is good news - raise it in the same commit as the content.
+    // it. It went from 10 to 18 when the philosophy levels landed, and from 18
+    // to 30 when the history levels did: the twelve history entries are the
+    // whole of the difference. If it fails, content was added, which is good
+    // news - raise it in the same commit as the content.
+    //
+    // It is worth being precise about what 30 out of 572 means. It is not
+    // "thirty topics are done" in any sense a reader would recognise; it is
+    // thirty topics that open something real, against roughly five hundred that
+    // honestly report themselves as unwritten. The number went up by twelve and
+    // the gap went from 554 to 542, which is the honest way to read it.
     const all: Array<[string, string]> = [];
     KNOWLEDGE_FIELDS.forEach((f) => {
       f.disciplines.forEach((d) => {
@@ -139,7 +145,45 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(18);
+    expect(written).toBe(30);
     expect(all.length).toBeGreaterThan(500);
+  });
+
+  test('each subject reports its own written count, so a field cannot drift silently', () => {
+    // The single total above says how much of the app is written. It says
+    // nothing about whether one subject stopped working while the others
+    // carried the number, which is exactly what would have happened if the
+    // history deep-read keys had not matched their Atlas topics: twelve entries
+    // of real content, a total that looked fine, and a history field whose
+    // taps still said "not written yet".
+    const perField = KNOWLEDGE_FIELDS.reduce<Record<string, { written: number; total: number }>>((acc, f) => {
+      const topics = f.disciplines.flatMap((d) => d.modules.flatMap((m) => m.topics));
+      const written = topics.filter((t) => {
+        const kind = at(f.id, t).kind;
+        return kind === 'lesson' || kind === 'deep-read';
+      }).length;
+      acc[f.id] = { written, total: topics.length };
+      return acc;
+    }, {});
+
+    // Measured, not assumed. The first version of this test guessed fifteen for
+    // philosophy and eighteen for history on the reasoning that "ten philosophy
+    // topics plus some lessons" ought to come to that, and was wrong on both -
+    // philosophy is 13 and history is 14. A coverage assertion written from a
+    // guess is worse than none, because the guess reads as knowledge.
+    expect(perField.science.written).toBe(3);
+    expect(perField.philosophy.written).toBe(13);
+    // History: two pre-existing lessons, plus the twelve history entries.
+    expect(perField.history.written).toBe(14);
+    expect(perField.history.total).toBe(78);
+    // The three fields with no curriculum must still report as unwritten rather
+    // than quietly counting as written, and their totals still have to sum.
+    expect(perField['political-science'].written).toBe(0);
+    expect(perField.geography.written).toBe(0);
+    expect(perField.literature.written).toBe(0);
+    // And the parts still have to add up to the whole, which is what catches a
+    // field being added to the map but never counted.
+    const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
+    expect(summed).toBe(30);
   });
 });
