@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import QuantumQuiz, { QUIZ_QUESTIONS } from './QuantumQuiz';
 import { CLASSIC_GAMES } from '../screens/Games';
 import { PHILOSOPHY_LEVELS } from '../data/philosophy';
@@ -102,6 +102,32 @@ describe('Concept Check quiz', () => {
     pick('A cosmic event');
 
     expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  // Traced for the same double-submit shape that was live in Concept Puzzle and
+  // Concept Scrabble, and found clean here. Two separate guards, and this test
+  // pins the one that is structural.
+  //
+  // The Next button is only rendered once a question has been answered. So
+  // clicking it twice is not "a second advance" - the first click advances,
+  // which resets `answered` and unmounts the button, and there is no second
+  // click to land on. That is why no guard was needed on handleNext, and it is
+  // the kind of thing worth writing down before someone adds a guard that looks
+  // like the only thing holding it up.
+  test('advancing unmounts the Next button, so a double click cannot skip a question', () => {
+    jest.useFakeTimers();
+    render(<QuantumQuiz onBack={() => {}} />);
+    fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+
+    const next = screen.getByRole('button', { name: /next question/i });
+    fireEvent.click(next);
+    // Question two is unanswered, so there is nothing to advance past.
+    expect(screen.queryByRole('button', { name: /next question|finish/i })).not.toBeInTheDocument();
+
+    // And the deck is still on question two, not three.
+    act(() => jest.advanceTimersByTime(3000));
+    expect(screen.getByText(QUIZ_QUESTIONS[1].question)).toBeInTheDocument();
+    jest.useRealTimers();
   });
 
   test('the correct answer scores once', () => {
