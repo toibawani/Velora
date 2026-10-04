@@ -8,12 +8,31 @@ import '../styles/GameStyles.css';
  * the entire game is asking whether the player learned the right definition.
  */
 /**
- * Six of the original eight were black holes, gravitation and entropy, and three
- * of those restated Concept Scrabble's definitions word for word. A learner who
- * has played both games had already seen half of this one, and a learner who
- * liked astronomy had a game that never left the subject. Now spread across all
- * eight subjects the dictionary covers, with definitions written so each one
- * could only be answered by that term.
+ * Sixteen hand-written term and clue pairs, spanning the subjects the dictionary
+ * and the lessons actually cover.
+ *
+ * WHY THESE ARE NOT PULLED FROM THE DICTIONARY
+ * --------------------------------------------
+ * Each clue is written for this game and for no other. The dictionary's
+ * explanation is an entry in its own right - it names the term it is explaining,
+ * it carries the philosopher's name, and it is two or three sentences long -
+ * and a clue that names the answer is not a clue. So the wording is this game's,
+ * while the choice of terms is not invented: the ten philosophy terms below are
+ * exactly the ten entries in the philosophy levels, and a test checks that they
+ * cannot drift apart.
+ *
+ * WHY THE TERMS MUST NOT RECUR ACROSS GAMES
+ * ------------------------------------------
+ * A term quizzed in two games is answered twice. Seven were - Black Hole,
+ * Photosynthesis, Catalyst, Regression, Confirmation Bias, Market Equilibrium and
+ * Falsifiability all appeared here and in Concept Scrabble. The rule was written
+ * down and a test was written to enforce it, and the test could not see any of
+ * them, because it normalised both sides by stripping every character that was
+ * not an uppercase letter. "Falsifiability" became "F" and "FALSIFIABILITY"
+ * became "FALSIFIABILITY", so the two never matched.
+ *
+ * Philosophy has taken the freed slots, which is where the ten new entries went:
+ * a subject with eleven lessons had a game that never mentioned it.
  */
 const DUEL_PAIRS = [
   // Written so this definition could not be answered from Concept Scrabble's
@@ -21,21 +40,28 @@ const DUEL_PAIRS = [
   // black hole, photosynthesis, catalyst, gravitational lensing and entropy
   // were near-copies across the two games, so playing both meant answering the
   // same five questions twice.
-  { definition: 'A dead star so dense that spacetime bends inward around what is left', word: 'Black Hole' },
-  { definition: 'Plant cells capturing photons to build sugar, and the oxygen is a waste product', word: 'Photosynthesis' },
-  { definition: 'Something that lowers the activation energy of a reaction and is unchanged by it', word: 'Catalyst' },
   { definition: 'An organism that hunts other organisms for food', word: 'Predator' },
   { definition: 'Light from a distant object arriving bent, so a galaxy appears stretched into arcs', word: 'Gravitational Lensing' },
   { definition: 'You should believe nothing that could not survive being doubted', word: 'Cartesian Doubt' },
-  { definition: 'Inferring values you cannot observe directly from the ones you can', word: 'Regression' },
-  { definition: 'The habit of noticing evidence that agrees with you and missing the rest', word: 'Confirmation Bias' },
-  { definition: 'Prices that are set by buyers and sellers rather than by any one of them', word: 'Market Equilibrium' },
   { definition: 'The authority of a government derives from those it governs, not from a ruler', word: 'Popular Sovereignty' },
   { definition: 'Two things moving together, which proves nothing about which one moves the other', word: 'Correlation' },
   { definition: 'The chemical bond in which one atom takes electrons away from another', word: 'Ionic Bonding' },
   { definition: 'The chain of amino acids that folds into a working protein', word: 'Primary Structure' },
   { definition: 'The empire dissolved after a war in which its soldiers were defeated', word: 'Ottoman Empire' },
-  { definition: 'The scientific claim that a belief must be able to be proved false to count', word: 'Falsifiability' },
+
+  // The ten philosophy entries. These are the terms the levels are actually
+  // written under, so a reader who has read "Free Will" and then met it here is
+  // meeting the same idea, not a paraphrase of it.
+  { definition: 'Whatever is the case whether or not anyone happens to be looking at it', word: 'Reality' },
+  { definition: 'Being among the things there are, which is the part of metaphysics a person can actually get wrong', word: 'Existence' },
+  { definition: 'Believing it, it being true, and having a good reason - a recipe a two-and-a-half page paper showed to be incomplete in 1963', word: 'Knowledge' },
+  { definition: 'Noticing that your reasons for believing you are awake right now are exactly your reasons if you were dreaming', word: 'Skepticism' },
+  { definition: 'The study of what an agent ought to do, including whether causing a harm differs from merely allowing it', word: 'Morality' },
+  { definition: 'Judging an action only by what it brings about, and never by what kind of act it is', word: 'Consequentialism' },
+  { definition: 'What makes you the same person while your cells are replaced, as they are, every few years or so', word: 'Identity' },
+  { definition: 'The felt quality of experience itself, which no complete physical description has yet delivered', word: 'Consciousness' },
+  { definition: 'Control over your own actions, disputed for two thousand years over whether it needs the power to have done otherwise', word: 'Free Will' },
+  { definition: 'The claim that the state of the world now, with its laws, fixes exactly one future rather than probably one', word: 'Determinism' },
 ];
 
 const ROUND_SECONDS = 60;
