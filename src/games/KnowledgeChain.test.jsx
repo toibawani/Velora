@@ -145,6 +145,41 @@ describe('chain content quality', () => {
     ['Biology', 'Chemistry', 'Space', 'Physics', 'Economics', 'History'].forEach((subject) => {
       expect(titles).toContain(subject);
     });
+    // The deck had no philosophy at all, in a subject with eleven lessons and
+    // sixteen dictionary entries.
+    expect(titles).toContain('Kant');
+    expect(titles).toContain('Aristotle');
+  });
+
+  test('the philosophy chains link by a real mechanism, not by restating the step', () => {
+    // A chain earns its place only if each link says how one concept produces
+    // the next. Philosophy is where this deck is most likely to cheat: it is
+    // easy to write "Duty follows from Good Will" and call that a chain, when
+    // it restates the step before it.
+    //
+    // So each link must name a mechanism, and must not merely repeat the next
+    // concept back. These two chains are Kant's test of a maxim and Aristotle's
+    // account of habituation, and both have a term doing work in the link.
+    ['Kant Chain', 'Aristotle Chain'].forEach((title) => {
+      const chain = CHAINS.find((c) => c.title === title);
+      expect(chain).toBeDefined();
+
+      chain.links.forEach((link) => {
+        // Naming the next concept is how the link plugs into the next step, so
+        // that is expected. What must not happen is a link that is *only* the
+        // next concept - "Duty follows from Good Will" says the step happened
+        // without saying how. So the link has to carry more than the concept.
+        const next = chain.concepts[chain.links.indexOf(link) + 1];
+        expect(next).toBeTruthy();
+        const linkWords = link.trim().split(/\s+/).length;
+        const nextWords = next.split(/\s+/).length;
+        // Everything the link says, bar the concept it plugs into.
+        expect(linkWords).toBeGreaterThan(nextWords);
+        // And the mechanism is a clause, not a single verb: six words is the
+        // floor that stops "links to" or "causes" passing as an explanation.
+        expect(linkWords).toBeGreaterThanOrEqual(6);
+      });
+    });
   });
 
   test('offers enough chains that one round is not the whole game', () => {

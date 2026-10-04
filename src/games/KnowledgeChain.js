@@ -68,6 +68,32 @@ const CHAINS = [
       'which frees people to trade goods they make better than their neighbours do',
     ],
   },
+  // Philosophy.
+  //
+  // The other five chains are causal in the physical, economic or demographic
+  // sense: surplus feeds population, population supplies cities. Philosophy
+  // mostly has no such chains, and forcing one in is how this deck ended up
+  // with links that restated the step before them. These two are built on
+  // arguments where a link genuinely is a mechanism: Kant's test of a maxim,
+  // and Aristotle's account of habituation as the formation of character.
+  {
+    title: 'Kant Chain',
+    concepts: ['Maxims', 'Universal Law', 'Good Will', 'Duty'],
+    links: [
+      'are the rules you act on, and asking whether they survive being made universal is the test that produces',
+      'and acting on it whatever the consequences is what makes a',
+      'the character you are praised for rather than the outcome you got',
+    ],
+  },
+  {
+    title: 'Aristotle Chain',
+    concepts: ['Actions', 'Repetition', 'Habit', 'Character'],
+    links: [
+      'done often enough stop being decisions and settle into',
+      'and doing something without thinking about it any more is what',
+      'so virtue is built by doing rather than waited for',
+    ],
+  },
 ];
 
 const isCorrectOrder = (selected, total) =>
