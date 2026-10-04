@@ -107,6 +107,51 @@ const PUZZLES = [
     word: 'FABRICATION',
     blanks: 1,
   },
+
+  // Philosophy.
+  //
+  // The deck had none, in a subject with eleven lessons and thirteen dictionary
+  // entries. These are the dictionary's own terms rather than new coinages, and
+  // none of them is an answer Concept Scrabble already uses: the two decks share
+  // six science words today (a pre-existing overlap, tracked separately), and a
+  // reader who spelled a term in one game should not be asked to fill it in
+  // again in the other.
+  {
+    hint: 'Two words',
+    sentence: 'Kant held that some acts are right in themselves and would be right however everyone chose them, which is the _____ imperative.',
+    word: 'CATEGORICAL IMPERATIVE',
+    blanks: 2,
+  },
+  {
+    hint: 'Three words',
+    sentence: 'Rawls said to choose the principles of justice before knowing what position you would end up in, behind the _____ of ignorance.',
+    word: 'VEIL OF IGNORANCE',
+    blanks: 3,
+  },
+  {
+    hint: 'Two words',
+    sentence: 'In philosophy, judging a person by the character they have built over a whole life rather than by any single act is the _____ approach.',
+    word: 'VIRTUE ETHICS',
+    blanks: 2,
+  },
+  {
+    hint: 'One word',
+    sentence: 'The branch of philosophy that asks what knowledge is, and how anyone could ever get any, is _____.',
+    word: 'EPISTEMOLOGY',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'In philosophy, holding that a belief is true when it works well in practice rather than because it matches reality is called _____.',
+    word: 'PRAGMATISM',
+    blanks: 1,
+  },
+  {
+    hint: 'Two words',
+    sentence: 'Philippa Foot built the _____ in 1967 to show that an argument against killing could not stay as tidy as it claimed.',
+    word: 'TROLLEY PROBLEM',
+    blanks: 2,
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;

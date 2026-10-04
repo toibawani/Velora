@@ -1,6 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import WordPuzzle, { PUZZLES } from './WordPuzzle';
+import { SCRABBLE_LEVELS } from './ConceptScrabble';
+import { CURIOUS_TERMS } from '../data/dictionary';
+
+// Read from the dictionary so the cross-game test identifies the philosophy
+// answers by where they came from rather than by a list repeated here.
+// Every answer in this deck is stored in capitals because the input only
+// accepts letters, so the dictionary is folded to match before comparing.
+const dictionaryTermNames = CURIOUS_TERMS.map((t) => t.term.toUpperCase());
 
 const fill = (...words) => {
   words.forEach((w, i) => {
@@ -99,6 +107,74 @@ describe('Word Puzzle', () => {
 });
 
 describe('puzzle data integrity', () => {
+  test('the philosophy answers are the dictionary\'s own terms, not new coinages', () => {
+    // Six philosophy answers now sit in a deck that had none. They are read from
+    // the dictionary rather than copied here, so an answer that drifts away from
+    // the entry it is drawn from fails this instead of quietly becoming a
+    // different claim.
+    // EVENT HORIZON and ENTROPY are dictionary terms too, so the count is
+    // taken from the sentences rather than assumed: these are the puzzles whose
+    // text names a philosopher, an argument, or a field of philosophy.
+    const PHILOSOPHY_ANSWERS = PUZZLES
+      .map((p) => p.word)
+      .filter((w) => dictionaryTermNames.includes(w) && /Kant|Rawls|Foot|philosophy|knower/.test(
+        PUZZLES.find((p) => p.word === w).sentence
+      ));
+    expect(PHILOSOPHY_ANSWERS.sort()).toEqual([
+      'CATEGORICAL IMPERATIVE', 'EPISTEMOLOGY', 'PRAGMATISM',
+      'TROLLEY PROBLEM', 'VEIL OF IGNORANCE', 'VIRTUE ETHICS',
+    ]);
+
+    // Folded to capitals for the same reason as above: the deck stores answers
+    // uppercase and the dictionary stores them in title case, and comparing
+    // them case-sensitively failed on all six.
+    const dictionaryTerms = CURIOUS_TERMS
+      .filter((t) => t.subject === 'philosophy')
+      .map((t) => t.term.toUpperCase());
+    PHILOSOPHY_ANSWERS.forEach((answer) => {
+      expect(dictionaryTerms).toContain(answer);
+    });
+
+    // And each sentence names the thing it is about, so a reader who cannot
+    // place the term has a handle to search on.
+    const philosophy = PUZZLES.filter((p) => PHILOSOPHY_ANSWERS.includes(p.word));
+    expect(philosophy.some((p) => /Kant/i.test(p.sentence))).toBe(true);
+    expect(philosophy.some((p) => /Rawls/i.test(p.sentence))).toBe(true);
+    expect(philosophy.some((p) => /Foot|1967/.test(p.sentence))).toBe(true);
+  });
+
+  test('no philosophy answer is asked twice across the two word games', () => {
+    // Concept Scrabble spells a term from a rack of letters; this game fills it
+    // into a sentence. Asking the reader for the same term in both is not a
+    // different question, it is the same question twice - which is exactly what
+    // the Definition Duel and Scrabble overlap was, seven terms in two decks.
+    //
+    // Scoped to the philosophy answers added here. The six science answers the
+    // two decks already shared predate this change and are a content decision
+    // rather than a bug, so they are asserted below as a known list instead of
+    // being silently allowed through by a loose filter.
+    const scrabbleKeys = SCRABBLE_LEVELS.map((l) => l.word.replace(/\s+/g, ''));
+    const philosophy = PUZZLES.filter((p) => /Kant|Rawls|Foot|philosophy|knower/.test(p.sentence));
+
+    const key = (w) => w.replace(/\s+/g, '');
+    expect(philosophy.length).toBeGreaterThanOrEqual(6);
+    philosophy.forEach((puzzle) => {
+      expect(scrabbleKeys).not.toContain(key(puzzle.word));
+    });
+
+    // The pre-existing overlap, pinned so it is visible and so that adding a
+    // seventh shared answer cannot slip past unnoticed.
+    // Scrabble stores its words with no spaces, so the comparison folds them
+    // rather than listing two spellings of the same term.
+    const shared = PUZZLES
+      .map((p) => p.word)
+      .filter((w) => scrabbleKeys.includes(key(w)))
+      .sort();
+    expect(shared).toEqual([
+      'BLACK HOLE', 'CATALYST', 'ENTROPY', 'EVENT HORIZON', 'LENSING', 'PHOTOSYNTHESIS',
+    ]);
+  });
+
   test('the hint always states the number of words the answer actually has', () => {
     // The lensing puzzle said "Two words" for the one-word answer LENSING, in a
     // sentence that already contained the word "gravitational". A hint that
@@ -106,7 +182,23 @@ describe('puzzle data integrity', () => {
     PUZZLES.forEach((puzzle) => {
       const words = puzzle.word.trim().split(/\s+/).length;
       expect(puzzle.blanks).toBe(words);
-      const stated = puzzle.hint === 'Two words' ? 2 : 1;
+      // The hint text is parsed, not pattern-matched to 1 and 2.
+      //
+      // It read `puzzle.hint === 'Two words' ? 2 : 1`, so anything that was not
+      // exactly "Two words" counted as one word. The first three-word answer in
+      // this deck made that visible: VEIL OF IGNORANCE states "Three words" and
+      // the test read it as 1. Every future multi-word answer beyond two would
+      // have failed the same way, and the deck could not grow past two words
+      // without the test lying about it.
+      const WORD_NUMBERS = {
+        one: 1, two: 2, three: 3, four: 4, five: 5,
+        six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+      };
+      const m = /^(One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten)\b/.exec(puzzle.hint);
+      // A hint that does not start with a number word is itself the failure, so
+      // assert the shape before reading it rather than getting NaN.
+      expect(m).not.toBeNull();
+      const stated = WORD_NUMBERS[m[1].toLowerCase()];
       expect(stated).toBe(words);
     });
   });
