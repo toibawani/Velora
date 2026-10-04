@@ -8,7 +8,10 @@
  * and reports what came back.
  *
  * Usage: node scripts/gameAudit.js
- * Exits 0 always: this is a report, not a gate.
+ *
+ * Exits non-zero if a game cannot be reached or if the page logged a console
+ * error. It used to exit 0 on the grounds that it was a report rather than a
+ * gate, which meant it could verify nothing and still look like it had passed.
  */
 const fs = require('fs');
 const path = require('path');
@@ -146,8 +149,19 @@ const playConnect = async (page) => {
       return c ? (c.className.includes('success') ? 'CORRECT' : 'WRONG') : 'none';
     });
     rounds.push({ title, firstOption: markers[0], clicked, verdict });
+    // Scope this to the game's own result card, and match its actual label.
+    //
+    // It used to be [...document.querySelectorAll('button')].find(x =>
+    // /next/i.test(...)), which matches the global "Next up" nav item as readily
+    // as the game's "Next Connection" button - so the audit answered one puzzle,
+    // clicked straight out of the games screen into Next Up, and then reported
+    // the other two games as "tab not found" because it was no longer in them.
+    // Two of the three games had never been played by this script, and the
+    // output looked like a report rather than a failure.
     const hasNext = await page.evaluate(() => {
-      const b = [...document.querySelectorAll('button')].find(x => /next/i.test(x.textContent));
+      const b = [...document.querySelectorAll('.bg-result-card button')].find((x) =>
+        /next connection/i.test(x.textContent)
+      );
       if (!b) return false;
       b.click();
       return true;
@@ -235,6 +249,7 @@ const main = async () => {
   });
   await new Promise((r) => setTimeout(r, 700));
 
+  const unreachable = [];
   for (const [label, play] of [
     ['Connect the Concept', playConnect],
     ['Counterintuitive (True/Myth)', playMyth],
@@ -248,6 +263,7 @@ const main = async () => {
     }, label);
     await new Promise((r) => setTimeout(r, 700));
     if (!ok) {
+      unreachable.push(label);
       record(label, { error: 'tab not found' });
       continue;
     }
@@ -258,7 +274,26 @@ const main = async () => {
 
   await browser.close();
   server.close();
-  console.log('\n--- report only; exits 0 ---');
+
+  /*
+   * A game this script could not reach is a failure, not a note.
+   *
+   * The audit used to print "tab not found" and carry on, and still exit 0, on
+   * the grounds that it was a report and not a gate. That is how two of the three
+   * brain games went unplayed for as long as the script existed: the run looked
+   * successful and nobody was told. A verification step that can quietly verify
+   * nothing is worse than no verification step, so an unreachable game now exits
+   * non-zero and CI sees it.
+   */
+  if (unreachable.length) {
+    console.error(`\nunreachable games: ${unreachable.join(', ')}`);
+    process.exit(1);
+  }
+  if (consoleErrors.length) {
+    console.error(`\nconsole errors: ${consoleErrors.length}`);
+    process.exit(1);
+  }
+  console.log('\n--- every game reached and played; no console errors ---');
 };
 
 main().catch((err) => {
