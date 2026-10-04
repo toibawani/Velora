@@ -1,5 +1,5 @@
 /**
- * The philosophy material, merged.
+ * The six levels of the philosophy material, merged.
  *
  * One file per level, merged here, exactly as the black hole subject does it.
  * That arrangement is the thing this subject was built to test: if the pattern
@@ -18,8 +18,9 @@ import LEVEL_1 from './level1-what-is-there';
 import LEVEL_2 from './level2-what-we-can-know';
 import LEVEL_3 from './level3-what-we-should-do';
 import LEVEL_4 from './level4-who-we-are';
+import LEVEL_5 from './level5-are-we-free';
 
-const ALL: PhilosophyLevel[] = [LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4];
+const ALL: PhilosophyLevel[] = [LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5];
 
 ALL.forEach((level) => validateLevel(level, 'philosophy/index'));
 

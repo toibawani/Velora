@@ -91,7 +91,7 @@ describe('the level set', () => {
     expect(numbers).toEqual([...numbers].sort((a, b) => a - b));
     expect(numbers[0]).toBe(0);
     expect(TOTAL_ENTRIES).toBe(allEntries.length);
-    expect(TOTAL_ENTRIES).toBeGreaterThan(7);
+    expect(TOTAL_ENTRIES).toBeGreaterThan(9);
   });
 
   test('gives every level a title and a one-line blurb for the rail', () => {
@@ -143,6 +143,8 @@ describe('the level set', () => {
     expect(byName('Consequentialism')?.status).toBe('debated');
     expect(byName('Identity')?.status).toBe('debated');
     expect(byName('Consciousness')?.status).toBe('open');
+    expect(byName('Free Will')?.status).toBe('debated');
+    expect(byName('Determinism')?.status).toBe('open');
   });
 
   test('states the disputed cases concretely rather than naming them', () => {
@@ -164,12 +166,18 @@ describe('the level set', () => {
     const consciousness = allEntries.find((entry) => entry.name === 'Consciousness');
     expect(consciousness?.deeper).toMatch(/Chinese room/i);
     expect(consciousness?.deeper).toMatch(/Mary/);
+    const freeWill = allEntries.find((entry) => entry.name === 'Free Will');
+    expect(freeWill?.deeper).toMatch(/van Inwagen/);
+    expect(freeWill?.deeper).toMatch(/Frankfurt/);
+    const determinism = allEntries.find((entry) => entry.name === 'Determinism');
+    expect(determinism?.deeper).toMatch(/Laplace/);
+    expect(determinism?.deeper).toMatch(/chaotic/);
   });
 
   test('covers the topics the Atlas actually lists, so the markers mean something', () => {
     // Each entry name here has to match an Atlas topic exactly or the index will
     // show the topic as unwritten while the content sits next to it unreachable.
-    ['Reality', 'Existence', 'Knowledge', 'Skepticism', 'Morality', 'Consequentialism', 'Identity', 'Consciousness'].forEach(
+    ['Reality', 'Existence', 'Knowledge', 'Skepticism', 'Morality', 'Consequentialism', 'Identity', 'Consciousness', 'Free Will', 'Determinism'].forEach(
       (name) => expect(allEntries.some((entry) => entry.name === name)).toBe(true)
     );
   });
