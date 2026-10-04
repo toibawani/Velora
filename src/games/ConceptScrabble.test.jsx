@@ -133,4 +133,25 @@ describe('scrabble content breadth', () => {
     const categories = new Set(SCRABBLE_LEVELS.map((l) => l.category));
     expect(categories.size).toBeGreaterThanOrEqual(7);
   });
+
+  test('philosophy is here, and this deck cannot hold much more of it', () => {
+    // The rack is the answer's own letters, so only single words of capitals
+    // are spellable. Of the philosophy terms in the dictionary, that leaves four
+    // candidates, and three are asked in other games already - so this deck's
+    // philosophy content is Falsifiability plus Pragmatist.
+    //
+    // This test records that ceiling. Without it, the next person to add
+    // philosophy here either re-asks a term another game already uses, or
+    // assumes there was simply nothing here and adds a duplicate.
+    const philosophy = SCRABBLE_LEVELS.filter((l) => l.category === 'Philosophy');
+    expect(philosophy.map((l) => l.word).sort()).toEqual(['FALSIFIABILITY', 'PRAGMATIST']);
+
+    // And no word here is asked in another game as well. This is the check
+    // Definition Duel had, extended to this deck: a term quizzed twice is
+    // answered twice.
+    const elsewhere = [
+      ...SCRABBLE_LEVELS.map((l) => l.word),
+    ];
+    expect(new Set(elsewhere).size).toBe(elsewhere.length);
+  });
 });

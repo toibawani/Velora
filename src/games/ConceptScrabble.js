@@ -118,6 +118,26 @@ const SCRABBLE_LEVELS = [
     hint: 'Starts with T',
     category: 'Political Science',
   },
+
+  // Philosophy, and not one word more than this.
+  //
+  // The rack is built from the answer's own letters, so a word has to be a
+  // single run of capitals. That rules out every multi-word philosophical term
+  // in the dictionary - Categorical Imperative, Veil of Ignorance, Trolley
+  // Problem, Problem of Induction and eleven more. Of the four that survive the
+  // rule, three are asked elsewhere already: Epistemology and Pragmatism in
+  // Concept Puzzle, Stoicism in Connect the Concept.
+  //
+  // So Falsifiability and Pragmatist are what this deck can honestly hold. That
+  // is a ceiling rather than an oversight, and a test records it so the next
+  // person adding terms does not re-derive it or quietly re-use a term another
+  // game already asks.
+  {
+    definition: 'Holding that a belief counts as true when it works well in practice, rather than because it matches reality',
+    word: 'PRAGMATIST',
+    hint: 'Starts with P',
+    category: 'Philosophy',
+  },
 ];
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` is not a shuffle: it is
