@@ -162,6 +162,15 @@ function ConceptScrabble({ onBack }) {
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState('');
   const [shake, setShake] = useState(false);
+  // True once this level has been solved and the move on is already booked.
+  //
+  // handleSubmit left the solved word on the rack with both buttons still live
+  // for the 1200ms the advance is waiting out, so a second click passed the same
+  // guard the first one did and booked a second move. Measured before the fix:
+  // one correct word scored 200 and jumped from level 1 to level 3. Skip had the
+  // same hole from the other direction - skipping after solving cost the player
+  // the level they had just earned.
+  const [settled, setSettled] = useState(false);
   const advanceRef = useRef(null);
   const shakeRef = useRef(null);
 
@@ -201,9 +210,12 @@ function ConceptScrabble({ onBack }) {
     setCurrentLevel((prev) => prev + 1);
     setSelectedLetters([]);
     setMessage('');
+    setSettled(false);
   }, [isLastLevel]);
 
   const handleSubmit = useCallback(() => {
+    // Booked already: paying again would score twice and advance twice.
+    if (settled) return;
     const formed = selectedLetters.map((tile) => tile.letter).join('');
     if (formed !== level.word) {
       setMessage('Not that word. Try rearranging what you have.');
@@ -216,13 +228,17 @@ function ConceptScrabble({ onBack }) {
     setMessage('Correct.');
     setScore((prev) => prev + POINTS_PER_WORD);
     setSolvedCount((prev) => prev + 1);
+    setSettled(true);
     advanceRef.current = setTimeout(goToNextLevel, 1200);
-  }, [goToNextLevel, level.word, selectedLetters]);
+  }, [goToNextLevel, level.word, selectedLetters, settled]);
 
   const handleSkip = useCallback(() => {
+    // Skipping a level already solved would throw away the level just earned
+    // and cost a second advance on top of the one already booked.
+    if (settled) return;
     setSkipped((prev) => prev + 1);
     goToNextLevel();
-  }, [goToNextLevel]);
+  }, [goToNextLevel, settled]);
 
   if (gameOver) {
     const total = SCRABBLE_LEVELS.length;
@@ -328,10 +344,10 @@ function ConceptScrabble({ onBack }) {
         )}
 
         <div className="game-actions">
-          <button className="btn-submit" onClick={handleSubmit} disabled={selectedLetters.length === 0}>
+          <button className="btn-submit" onClick={handleSubmit} disabled={selectedLetters.length === 0 || settled}>
             Submit word
           </button>
-          <button className="btn-skip" onClick={handleSkip}>
+          <button className="btn-skip" onClick={handleSkip} disabled={settled}>
             Skip level
           </button>
         </div>

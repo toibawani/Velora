@@ -129,6 +129,66 @@ describe('scrabble content breadth', () => {
     expect(new Set(words).size).toBe(words.length);
   });
 
+  // The rack is exactly the answer's letters, so a repeated letter needs the
+  // first tile that is still unused - taking the first match every time clicks
+  // one tile twice and builds a word that was never on the rack.
+  const buildWord = (word) => {
+    word.split('').forEach((letter) => {
+      const tile = screen.getAllByRole('button', { name: `Letter ${letter}` })
+        .find((button) => !button.disabled);
+      fireEvent.click(tile);
+    });
+  };
+
+  test('solving twice does not score twice or skip a level', () => {
+    // The same shape as the Concept Puzzle double-submit. handleSubmit left the
+    // solved word on the rack with both buttons live for the 1200ms the advance
+    // is booked over, so a second click booked a second advance. Before the fix
+    // one correct word scored 200 and took the player from level 1 to level 3.
+    jest.useFakeTimers();
+    render(<ConceptScrabble onBack={() => {}} />);
+
+    buildWord(SCRABBLE_LEVELS[0].word);
+    fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+    act(() => jest.advanceTimersByTime(2400));
+
+    expect(screen.getByText(`Level 2/${SCRABBLE_LEVELS.length}`)).toBeInTheDocument();
+    expect(screen.getByText('Score: 100')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  test('skipping after solving does not throw away the level just earned', () => {
+    jest.useFakeTimers();
+    render(<ConceptScrabble onBack={() => {}} />);
+
+    buildWord(SCRABBLE_LEVELS[0].word);
+    fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+    fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
+    act(() => jest.advanceTimersByTime(2400));
+
+    // One move, and the solve still counted: score 100, not a skip and a solve.
+    expect(screen.getByText(`Level 2/${SCRABBLE_LEVELS.length}`)).toBeInTheDocument();
+    expect(screen.getByText('Score: 100')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  test('skipping twice in a row is still two skips, and is not blocked', () => {
+    // The guard is against a skip landing on top of a solve, not against
+    // skipping deliberately. Without this the fix could quietly stop Skip from
+    // working at all, which would look like a pass while removing the control.
+    jest.useFakeTimers();
+    render(<ConceptScrabble onBack={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
+    fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
+    act(() => jest.advanceTimersByTime(2400));
+
+    expect(screen.getByText(`Level 3/${SCRABBLE_LEVELS.length}`)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
   test('spans more than space and physics', () => {
     const categories = new Set(SCRABBLE_LEVELS.map((l) => l.category));
     expect(categories.size).toBeGreaterThanOrEqual(7);
