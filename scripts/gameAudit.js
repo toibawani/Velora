@@ -172,15 +172,72 @@ const playConnect = async (page) => {
   return { rounds };
 };
 
+/**
+ * Plays Counterintuitive through its whole deck.
+ *
+ * This used to click one answer, snapshot the page, and call it played. The deck
+ * is six questions; five of them were never opened by anything, and the
+ * "Next Intuition Check" button - the only way past a result card - was never
+ * clicked at all. So a broken second question, a missing explanation, or a
+ * source link that 404s on questions two through six passed every run.
+ *
+ * It also now reports each claim's own text, so a deck that silently stops
+ * dealing new questions is visible as repeated claims rather than as a short
+ * array nobody reads.
+ */
 const playMyth = async (page) => {
-  const first = await snapshot(page);
-  await page.evaluate(() => {
-    const b = [...document.querySelectorAll('button')].find((x) => /it.?s a myth|it.?s true/i.test(x.textContent));
-    if (b) b.click();
-  });
-  await new Promise((r) => setTimeout(r, 500));
-  const answered = await snapshot(page);
-  return { first, answered };
+  const rounds = [];
+  const seenClaims = [];
+  for (let i = 0; i < 8; i++) {
+    const claim = await page.evaluate(() => {
+      const el = document.querySelector('.bg-myth-claim, .bg-claim, [class*="claim"]');
+      return el ? el.textContent.trim() : null;
+    });
+    if (claim) seenClaims.push(claim);
+
+    const answered = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')]
+        .find((x) => /it.?s a myth|it.?s true/i.test(x.textContent));
+      if (!b) return null;
+      const label = b.textContent.trim();
+      b.click();
+      return label;
+    });
+    if (!answered) break;
+    await new Promise((r) => setTimeout(r, 500));
+
+    const result = await page.evaluate(() => {
+      const card = document.querySelector('.bg-result-card');
+      const link = card && card.querySelector('a[href]');
+      return {
+        verdict: card ? card.innerText.replace(/\s+/g, ' ').slice(0, 60) : 'no result card',
+        // Every myth claim is checkable against a source. If one renders with
+        // no link, the reader is asked to take it on faith.
+        source: link ? link.getAttribute('href') : null,
+      };
+    });
+
+    // Advance only through the game's own button, and only once the result card
+    // is up - the same scoping bug that once sent this script out to Next Up.
+    const hasNext = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('.bg-result-card button')]
+        .find((x) => /next intuition check/i.test(x.textContent));
+      if (!b) return false;
+      b.click();
+      return true;
+    });
+    rounds.push({ claim: claim ? claim.slice(0, 44) : null, answered, ...result });
+    if (!hasNext) break;
+    await new Promise((r) => setTimeout(r, 600));
+  }
+
+  const missingSource = rounds.filter((r) => r.claim && !r.source);
+  return {
+    questionsPlayed: rounds.length,
+    distinctClaims: new Set(seenClaims).size,
+    missingSource: missingSource.map((r) => r.claim),
+    rounds,
+  };
 };
 
 const playExplain = async (page) => {
@@ -479,6 +536,14 @@ const main = async () => {
       continue;
     }
     record(label, await play(page));
+    // Counterintuitive must reach all six of its claims. It used to answer one
+    // and snapshot, so a deck that stopped dealing after the first question
+    // looked identical to a deck that worked. If it cannot advance past a
+    // result card, this fails instead of quietly reporting a shorter array.
+    const played = audit[audit.length - 1];
+    if (played.distinctClaims !== undefined && played.distinctClaims < 6) {
+      unreachable.push(`${label} (${played.distinctClaims}/6 claims reached)`);
+    }
   }
 
   // The six Concept Puzzles games, which until now nothing opened at all.
