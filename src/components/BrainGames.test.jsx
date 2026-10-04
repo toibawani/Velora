@@ -3,7 +3,12 @@ import { KEYS, readValue } from '../utils/storage';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import fs from 'fs';
 import path from 'path';
-import BrainGames, { EXPLAIN_PROMPTS, CONNECT_PUZZLES, shuffleOptions } from './BrainGames';
+import BrainGames, {
+  EXPLAIN_PROMPTS,
+  CONNECT_PUZZLES,
+  MYTH_QUESTIONS,
+  shuffleOptions,
+} from './BrainGames';
 
 const openGame = async (name) => {
   fireEvent.click(screen.getByRole('tab', { name: new RegExp(name, 'i') }));
@@ -197,6 +202,132 @@ describe('no invented people in the game data', () => {
 });
 
 describe('sprint content breadth', () => {
+  /*
+   * The double-submit trace, run the same way as on Definition Duel, Concept
+   * Puzzle and Concept Scrabble, found nothing here. All three of these games
+   * advance on an explicit Next button rather than a setTimeout, and in all
+   * three that button only exists once the current item has been answered.
+   * Clicking it advances, which clears `isAnswered`, which unmounts the button -
+   * so there is no second click to land on and nothing to skip.
+   *
+   * That is the same structural protection Concept Check has, and it is
+   * invisible from the handler: nextPuzzle and nextQuestion have no guard and
+   * need none. These three tests are what stop someone adding a guard that
+   * looks load-bearing and is not, or removing the `isAnswered &&` that is.
+   */
+
+  test('Connect the Concept cannot skip a puzzle by double clicking Next', async () => {
+    render(<BrainGames onBack={() => {}} />);
+    await openGame('Connect the Concept');
+    const titleOf = () => screen.getByRole('heading', { level: 3 }).textContent
+      .replace('Connect the Concept: ', '');
+
+    fireEvent.click(document.querySelector('.bg-option-btn'));
+    const next = screen.getByRole('button', { name: /next connection/i });
+    fireEvent.click(next);
+    fireEvent.click(next);
+
+    expect(titleOf()).toBe(CONNECT_PUZZLES[1].title);
+    expect(titleOf()).not.toBe(CONNECT_PUZZLES[2].title);
+    // And the next puzzle starts unanswered, with no Next button to click twice.
+    expect(screen.queryByRole('button', { name: /next connection/i })).not.toBeInTheDocument();
+  });
+
+  test('Counterintuitive cannot skip a question by double clicking Next', async () => {
+    render(<BrainGames onBack={() => {}} />);
+    await openGame('True/Myth');
+
+    fireEvent.click(screen.getByRole('button', { name: /it’s a myth/i }));
+    const next = screen.getByRole('button', { name: /next intuition check/i });
+    fireEvent.click(next);
+    fireEvent.click(next);
+
+    const claim = document.querySelector('.bg-myth-claim').textContent;
+    expect(claim).toContain(MYTH_QUESTIONS[1].claim.slice(0, 30));
+    expect(claim).not.toContain(MYTH_QUESTIONS[2].claim.slice(0, 30));
+    expect(screen.queryByRole('button', { name: /next intuition check/i })).not.toBeInTheDocument();
+  });
+
+  test('Explain It Back cannot skip a prompt by double clicking Next', async () => {
+    render(<BrainGames onBack={() => {}} />);
+    await openGame('Explain It Back');
+
+    fireEvent.click(screen.getByRole('button', { name: /start 30s timer/i }));
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'a real explanation of it' } });
+    fireEvent.click(screen.getByRole('button', { name: /submit explanation/i }));
+    const next = screen.getByRole('button', { name: /next concept sprint/i });
+    fireEvent.click(next);
+    fireEvent.click(next);
+
+    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(EXPLAIN_PROMPTS[1].term);
+  });
+
+  /*
+   * The third game is the only one in the app with a running clock, so the edge
+   * that matters here is not a double click but the clock running out. All four
+   * of these are reachable and all four behave.
+   */
+  test('submitting removes the Submit button, so it cannot be mashed', async () => {
+    // The double-submit path for this game, and it is closed twice over before
+    // any handler guard is reached: submitting sets `submitted`, which unmounts
+    // the whole sprint input including the button, and finish() also clears the
+    // interval so the clock cannot call finish again.
+    //
+    // Two earlier versions of this test claimed more than they checked. One
+    // advanced the clock after submitting and passed with submittedRef deleted,
+    // because clearing the interval is what stops the second call. The other
+    // clicked Submit twice and could not find the button, for the same reason
+    // from the other side.
+    //
+    // submittedRef is left in place as a third layer and no test here claims to
+    // cover it, because no path through the UI reaches it - the same situation
+    // as the horizon guard in Relativity Lab.
+    localStorage.clear();
+    render(<BrainGames onBack={() => {}} />);
+    await openGame('Explain It Back');
+
+    fireEvent.click(screen.getByRole('button', { name: /start 30s timer/i }));
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'momentum is how hard it is to stop' } });
+    fireEvent.click(screen.getByRole('button', { name: /submit explanation/i }));
+
+    expect(screen.queryByRole('button', { name: /submit explanation/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    // One save, and the results are on screen.
+    expect(readValue(KEYS.MY_EXPLANATIONS, []).length).toBe(1);
+    expect(document.querySelector('.bg-feynman-results')).toBeInTheDocument();
+  });
+
+  test('running out of time with nothing written says so rather than showing an empty quote', async () => {
+    localStorage.clear();
+    jest.useFakeTimers();
+    render(<BrainGames onBack={() => {}} />);
+    await openGame('Explain It Back');
+
+    fireEvent.click(screen.getByRole('button', { name: /start 30s timer/i }));
+    act(() => { jest.advanceTimersByTime(31000); });
+
+    expect(document.querySelector('.bg-feynman-results')).toBeInTheDocument();
+    expect(screen.getByText(/no explanation entered before time expired/i)).toBeInTheDocument();
+    expect(readValue(KEYS.MY_EXPLANATIONS, [])).toEqual([]);
+    jest.useRealTimers();
+  });
+
+  test('the next prompt cannot be submitted until its sprint is started', async () => {
+    render(<BrainGames onBack={() => {}} />);
+    await openGame('Explain It Back');
+
+    fireEvent.click(screen.getByRole('button', { name: /start 30s timer/i }));
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'a real explanation of it' } });
+    fireEvent.click(screen.getByRole('button', { name: /submit explanation/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next concept sprint/i }));
+
+    // No textarea and no submit until the timer is started. This is what keeps
+    // submittedRef, which startSprint resets, from being read as still-true.
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /submit explanation/i })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start 30s timer/i })).toBeInTheDocument();
+  });
+
   test('offers more than three prompts, which is what it had', () => {
     expect(EXPLAIN_PROMPTS.length).toBeGreaterThanOrEqual(8);
   });
