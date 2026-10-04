@@ -1,5 +1,9 @@
 /**
- * The ten (eleven, counting Level 0) levels of the black hole material, merged.
+ * The eight levels of the black hole material, merged - Level 0 through Level 7.
+ *
+ * This said "ten (eleven, counting Level 0)" when the subject had seven levels,
+ * so it had been describing a subject that did not exist for some time. Nothing
+ * checked it because the count lived in a comment. It is now the real count.
  *
  * One file per level, merged here, so a level is added by adding a file and
  * editing two lists: this one and the import block above it. That is the same
@@ -19,8 +23,9 @@ import LEVEL_3 from './level3-anatomy';
 import LEVEL_4 from './level4-evidence';
 import LEVEL_5 from './level5-relativity';
 import LEVEL_6 from './level6-thermodynamics';
+import LEVEL_7 from './level7-frontier';
 
-const ALL: BlackHoleLevel[] = [LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6];
+const ALL: BlackHoleLevel[] = [LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7];
 
 ALL.forEach((level) => validateLevel(level, 'blackholes/index'));
 

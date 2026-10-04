@@ -105,7 +105,7 @@ export type AtlasResolution =
 /**
  * Deep reads that are not single lessons.
  *
- * Black holes is the case that made this necessary. Its content is eleven
+ * Black holes is the case that made this necessary. Its content is eight
  * levels of structured material, not one LessonReader-shaped lesson, and it
  * predates the Atlas entirely, so nothing in the topic list pointed at it. The
  * Atlas listed 'General Relativity' and 'Special Relativity' as topics with no
