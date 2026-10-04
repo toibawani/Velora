@@ -12,6 +12,71 @@ import BrainGames from '../components/BrainGames';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/Games.css';
 
+// Names, colours and time limits are taken from what these games actually
+// do. The durations used to be invented: Definition Duel is a 60 second
+// round advertised as 8 minutes, and Knowledge Chain has no clock at all
+// and claimed 12. The colours were blue, green, orange and teal, in a
+// palette the stylesheet explicitly describes as warm espresso, never
+// indigo.
+export const CLASSIC_GAMES = [
+  {
+    id: 'quiz',
+    name: 'Concept Check',
+    type: 'quiz',
+    description: 'Ten questions across physics, chemistry and biology, with the reasoning behind each answer',
+    icon: Target,
+    color: '#8C4A2F',
+    difficulty: 'Mixed',
+  },
+  {
+    id: 'scrabble',
+    name: 'Concept Scrabble',
+    type: 'scrabble',
+    description: 'Build scientific terms from a rack of letters',
+    icon: Type,
+    color: '#A05A2C',
+    difficulty: 'Easy',
+  },
+  {
+    id: 'chain',
+    name: 'Knowledge Chain',
+    type: 'chain',
+    description: 'Put four concepts in the order where each one causes the next',
+    icon: Link2,
+    color: '#7A4B2A',
+    difficulty: 'Medium',
+  },
+  {
+    id: 'duel',
+    name: 'Definition Duel',
+    type: 'duel',
+    description: 'Type the term a definition describes, against a 60 second clock',
+    icon: FileText,
+    color: '#8C4A2F',
+    difficulty: 'Medium',
+    fixedLength: '60 seconds',
+  },
+  {
+    id: 'puzzle',
+    name: 'Concept Puzzle',
+    type: 'puzzle',
+    description: 'Fill in the missing term in a definition',
+    icon: Puzzle,
+    color: '#6B5644',
+    difficulty: 'Easy',
+  },
+  {
+    id: 'relativity',
+    name: 'Relativity Lab',
+    type: 'simulation',
+    description: 'Play with time dilation, length contraction and event horizons',
+    icon: Orbit,
+    color: '#7A4B2A',
+    difficulty: 'Advanced',
+  },
+];
+
+
 /**
  * GameHub
  * 
@@ -34,74 +99,9 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
   // unless you found this checkbox and turned it off.
   const [useFlowMode, setUseFlowMode] = useState(false);
 
-  // Names, colours and time limits are taken from what these games actually
-  // do. The durations used to be invented: Definition Duel is a 60 second
-  // round advertised as 8 minutes, and Knowledge Chain has no clock at all
-  // and claimed 12. The colours were blue, green, orange and teal, in a
-  // palette the stylesheet explicitly describes as warm espresso, never
-  // indigo.
-  const games = [
-    {
-      id: 'quiz',
-      name: 'Concept Check',
-      type: 'quiz',
-      description: 'Ten questions across physics, chemistry and biology, with the reasoning behind each answer',
-      icon: Target,
-      color: '#8C4A2F',
-      difficulty: 'Mixed',
-    },
-    {
-      id: 'scrabble',
-      name: 'Concept Scrabble',
-      type: 'scrabble',
-      description: 'Build scientific terms from a rack of letters',
-      icon: Type,
-      color: '#A05A2C',
-      difficulty: 'Easy',
-    },
-    {
-      id: 'chain',
-      name: 'Knowledge Chain',
-      type: 'chain',
-      description: 'Put four concepts in the order where each one causes the next',
-      icon: Link2,
-      color: '#7A4B2A',
-      difficulty: 'Medium',
-    },
-    {
-      id: 'duel',
-      name: 'Definition Duel',
-      type: 'duel',
-      description: 'Type the term a definition describes, against a 60 second clock',
-      icon: FileText,
-      color: '#8C4A2F',
-      difficulty: 'Medium',
-      fixedLength: '60 seconds',
-    },
-    {
-      id: 'puzzle',
-      name: 'Concept Puzzle',
-      type: 'puzzle',
-      description: 'Fill in the missing term in a definition',
-      icon: Puzzle,
-      color: '#6B5644',
-      difficulty: 'Easy',
-    },
-    {
-      id: 'relativity',
-      name: 'Relativity Lab',
-      type: 'simulation',
-      description: 'Play with time dilation, length contraction and event horizons',
-      icon: Orbit,
-      color: '#7A4B2A',
-      difficulty: 'Advanced',
-    },
-  ];
-
-
   // Render selected game in Flow State or Classic mode
   if (selectedGame) {
-    const activeGameConfig = games.find(g => g.id === selectedGame) || games[0];
+    const activeGameConfig = CLASSIC_GAMES.find(g => g.id === selectedGame) || CLASSIC_GAMES[0];
 
     if (activeGameConfig.type === 'simulation') {
       return <RelativityLab onBack={() => setSelectedGame(null)} />;
@@ -195,7 +195,7 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
 
       {/* Games Grid */}
       <main className="games-grid-main">
-        {games.map((game) => {
+        {CLASSIC_GAMES.map((game) => {
           const GameIcon = game.icon;
           return (
             // A div with an onClick is not focusable, has no role, and cannot

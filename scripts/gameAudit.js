@@ -211,6 +211,217 @@ const playExplain = async (page) => {
   return { promptsSeen: seen };
 };
 
+/**
+ * Plays the six Concept Puzzles games end to end.
+ *
+ * The script used to snapshot the hub and then play only the three Brain Games
+ * modes, while printing "every game reached and played". Six of the nine games -
+ * Concept Check, Concept Scrabble, Knowledge Chain, Definition Duel, Concept
+ * Puzzle and Relativity Lab - were never opened by anything. A deck with an
+ * unreachable card, a crash on mount, or an input that never fires would have
+ * passed CI every single time.
+ *
+ * It also checks that Definition Duel is actually serving the philosophy deck.
+ * The ten philosophy terms are held to the philosophy entries by a unit test,
+ * but a unit test reads the array; it does not prove the game the array belongs
+ * to will hand those clues to a player.
+ */
+const CLASSIC = [
+  { name: 'Concept Check', clue: null },
+  { name: 'Concept Scrabble', clue: null },
+  { name: 'Knowledge Chain', clue: null },
+  { name: 'Definition Duel', clue: '.duel-definition' },
+  { name: 'Concept Puzzle', clue: null },
+  { name: 'Relativity Lab', clue: null },
+];
+
+const PHILOSOPHY_CLUE_MARKERS = [
+  /two thousand years/i,
+  /physical description/i,
+  /cells are replaced/i,
+  /actually get wrong/i,
+  /1963/,
+  /awake right now/i,
+  /merely allowing/i,
+  /looks at it/i,
+];
+
+/** Clicks whatever the current game offers to advance, and reports if there was one. */
+const advanceIfOffered = (page, patterns) =>
+  page.evaluate((res) => {
+    for (const src of res.patterns) {
+      const re = new RegExp(src, 'i');
+      const b = [...document.querySelectorAll('button')].find((x) => re.test(x.textContent));
+      if (b && !/next up|return to universe/i.test(b.textContent)) {
+        b.click();
+        return true;
+      }
+    }
+    return false;
+  }, { patterns });
+
+/** Types into the first visible text field, the way a player would. */
+const typeInto = (page, text) =>
+  page.evaluate((t) => {
+    const field = [...document.querySelectorAll('input:not([type]), textarea, input[type="text"]')]
+      .filter((f) => f.offsetParent !== null)[0];
+    if (!field) return false;
+    const proto = field.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement : window.HTMLInputElement;
+    Object.getOwnPropertyDescriptor(proto.prototype, 'value').set.call(field, t);
+    field.dispatchEvent(new Event('input', { bubbles: true }));
+    return true;
+  }, text);
+
+/**
+ * Plays Definition Duel properly.
+ *
+ * Answering wrong does not move you to the next card - handleSubmit returns
+ * before advancing - so a script that submits a plausible guess reads the same
+ * first clue forever. This used to report "20 clues served" while all twenty
+ * were the same sentence about predators.
+ *
+ * The game does, however, say the answer out loud in its own feedback: "Not
+ * quite. The answer was Predator." So a deliberate wrong answer is used to ask
+ * the question, the answer is read back, and the correct one is submitted to
+ * move on. That also exercises the wrong-answer path on every card, which is
+ * the path a real player hits most.
+ *
+ * The round is 60 seconds of real time, so this stops the moment a philosophy
+ * clue is dealt rather than grinding through the remaining cards. The philosophy
+ * cards start at index 8, so it reaches them with time to spare.
+ */
+const playDuel = async (page) => {
+  const clues = [];
+  for (let i = 0; i < 20; i++) {
+    const clue = await page.evaluate(() => {
+      const e = document.querySelector('.duel-definition');
+      return e ? e.textContent.trim() : null;
+    });
+    if (clue) clues.push(clue);
+    if (clue && PHILOSOPHY_CLUE_MARKERS.some((re) => re.test(clue))) break;
+
+    await typeInto(page, 'definitely not the answer');
+    await new Promise((r) => setTimeout(r, 200));
+    await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find((x) => /submit/i.test(x.textContent) && !x.disabled);
+      if (b) b.click();
+    });
+    await new Promise((r) => setTimeout(r, 400));
+
+    const told = await page.evaluate(() => {
+      const f = document.querySelector('.duel-feedback');
+      const m = f && /the answer was (.+?)\.?$/i.exec(f.textContent.trim());
+      return m ? m[1] : null;
+    });
+    if (!told) break; // no feedback means this is not the duel any more
+
+    await typeInto(page, told);
+    await new Promise((r) => setTimeout(r, 150));
+    await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find((x) => /submit/i.test(x.textContent) && !x.disabled);
+      if (b) b.click();
+    });
+    await new Promise((r) => setTimeout(r, 1000)); // the card advances at 800ms
+  }
+  return clues;
+};
+
+/**
+ * Leaves whatever game screen is showing and returns to the Concept Puzzles
+ * grid, so the next game in the list can be opened.
+ *
+ * Games end in three different places - some have a Back button, some finish
+ * onto a score screen that only offers a restart, and some replace the hub
+ * entirely - so the fallback walks out through the bottom nav rather than
+ * assuming one shape.
+ */
+const backToClassicHub = async (page) => {
+  await page.evaluate(() => {
+    const b = [...document.querySelectorAll('button')].find((x) => /back/i.test(x.textContent));
+    if (b) b.click();
+  });
+  await new Promise((r) => setTimeout(r, 700));
+
+  const onHub = await page.evaluate(() => !!document.querySelector('.games-hub-new'));
+  if (!onHub) {
+    await clickByText(page, 'Flow');
+    await new Promise((r) => setTimeout(r, 800));
+  }
+  await page.evaluate(() => {
+    const b = [...document.querySelectorAll('button')].find((x) => /concept puzzles/i.test(x.textContent));
+    if (b) b.click();
+  });
+  await new Promise((r) => setTimeout(r, 700));
+};
+
+const playClassicGames = async (page) => {
+  // The six live under the Concept Puzzles tab, not the Brain Games one.
+  await page.evaluate(() => {
+    const b = [...document.querySelectorAll('button')].find((x) => /concept puzzles/i.test(x.textContent));
+    if (b) b.click();
+  });
+  await new Promise((r) => setTimeout(r, 900));
+
+  const unreachable = [];
+  const duelClues = [];
+
+  for (const game of CLASSIC) {
+    const opened = await page.evaluate((n) => {
+      const card = [...document.querySelectorAll('.game-card-large')]
+        .find((c) => c.textContent.includes(n));
+      if (!card) return false;
+      card.click();
+      return true;
+    }, game.name);
+    if (!opened) { unreachable.push(game.name); continue; }
+    await new Promise((r) => setTimeout(r, 1100));
+
+    // Definition Duel needs its own player: a wrong answer does not advance
+    // the card, so the generic loop below would re-read the first clue forever.
+    if (game.name === 'Definition Duel') {
+      const clues = await playDuel(page);
+      duelClues.push(...clues);
+      record('classic: Definition Duel', { cluesDealt: clues.length, clues });
+      await backToClassicHub(page);
+      continue;
+    }
+
+    // Three turns is enough to prove the round renders, takes input and moves
+    // on. Only Definition Duel needs to dig further into a deck.
+    const turns = [];
+    for (let i = 0; i < 3; i++) {
+      const typed = await typeInto(page, 'momentum');
+      await new Promise((r) => setTimeout(r, 250));
+
+      // Prefer a real, labelled control. The first enabled button on a game
+      // screen is often an icon with no text - clicking one does nothing and the
+      // round never moves, which reads as a game that will not advance.
+      const advanced = await page.evaluate(() => {
+        const usable = [...document.querySelectorAll('button')].filter(
+          (x) => !x.disabled
+            && x.textContent.trim().length > 0
+            && !/next up|return to universe|^\s*(back|←)/i.test(x.textContent)
+        );
+        const labelled = usable.find((x) => /submit|next|answer|check|continue|reveal|done|start|play/i.test(x.textContent));
+        const target = labelled || usable[0];
+        if (!target) return null;
+        const label = target.textContent.trim().slice(0, 30);
+        target.click();
+        return label;
+      });
+      turns.push({ typed, advanced });
+      if (!advanced) break;
+      await new Promise((r) => setTimeout(r, 1200));
+    }
+
+    record(`classic: ${game.name}`, { turns });
+
+    await backToClassicHub(page);
+  }
+
+  return { unreachable, duelClues };
+};
+
 const main = async () => {
   const buildDir = path.join(__dirname, '..', 'build');
   if (!fs.existsSync(buildDir)) {
@@ -270,6 +481,18 @@ const main = async () => {
     record(label, await play(page));
   }
 
+  // The six Concept Puzzles games, which until now nothing opened at all.
+  const classic = await playClassicGames(page);
+  unreachable.push(...classic.unreachable);
+
+  const philosophyServed = classic.duelClues.filter((c) =>
+    PHILOSOPHY_CLUE_MARKERS.some((re) => re.test(c))
+  );
+  record('definition-duel-philosophy-clues', {
+    cluesSeen: classic.duelClues.length,
+    philosophyClues: philosophyServed,
+  });
+
   record('console-errors', consoleErrors);
 
   await browser.close();
@@ -293,7 +516,23 @@ const main = async () => {
     console.error(`\nconsole errors: ${consoleErrors.length}`);
     process.exit(1);
   }
-  console.log('\n--- every game reached and played; no console errors ---');
+  // A deck can be correct in a unit test and still never reach a player. Prove
+  // the game actually serves the philosophy clues, not just that the array has
+  // them in it.
+  if (!classic.duelClues.length) {
+    console.error('\nDefinition Duel served no clues at all - the round never rendered.');
+    process.exit(1);
+  }
+  if (!philosophyServed.length) {
+    console.error(
+      `\nDefinition Duel served ${classic.duelClues.length} clues and none were from the philosophy deck. ` +
+      'The terms are in the data but the game is not dealing them.'
+    );
+    process.exit(1);
+  }
+  console.log(
+    `\n--- every game reached and played; ${philosophyServed.length} philosophy clue(s) served by Definition Duel; no console errors ---`
+  );
 };
 
 main().catch((err) => {

@@ -63,7 +63,7 @@ export const ROADMAP = [
       {
         name: 'Flow games',
         state: 'live',
-        detail: 'Five games over the curriculum: Definition Duel, Concept Scrabble, Knowledge Chain, Concept Puzzle and Explain It Back. Every item is drawn from the same data as the lessons.',
+        detail: 'Games over the curriculum: Concept Check, Concept Scrabble, Knowledge Chain, Definition Duel, Concept Puzzle and Relativity Lab, plus Explain It Back, Counterintuitive and Connect the Concept under Brain Games. Each deck writes its own clues, because a clue that names its own answer is not a clue - but the terms are not invented, and a test holds Definition Duel\u2019s ten philosophy terms to the philosophy entries themselves rather than to a copy of their names.',
       },
       {
         name: 'Question desk',

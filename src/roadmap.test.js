@@ -24,6 +24,7 @@ import ROADMAP, {
 import { CURRICULUM } from './data/curriculum';
 import { KNOWLEDGE_STATS } from './data/knowledgeFields';
 import { CURIOUS_TERMS } from './data/dictionary';
+import { CLASSIC_GAMES } from './screens/Games';
 
 const read = (...parts) => fs.readFileSync(path.join(__dirname, ...parts), 'utf8');
 const allText = ROADMAP.map((section) =>
@@ -187,6 +188,33 @@ test('no row claims something is unbuilt when the file exists', () => {
         expect({ name: item.name, exists }).toEqual({ name: item.name, exists: true });
       }
     });
+  });
+});
+
+test('the games the roadmap names are the games that exist', () => {
+  // This row used to say "Five games over the curriculum: Definition Duel,
+  // Concept Scrabble, Knowledge Chain, Concept Puzzle and Explain It Back. Every
+  // item is drawn from the same data as the lessons." Both halves were false.
+  // Concept Check and Relativity Lab existed and were not listed, so "five" was
+  // wrong; and not one game imported lesson data - all eight kept their items in
+  // inline arrays of their own. The row now says what is true, and this test is
+  // what stops it going false again: every game a reader can open is named.
+  //
+  // It checks the direction that drifts. A game added to the hub without being
+  // added here would leave the roadmap quietly under-listing, which is how
+  // "Five games" survived two extra games.
+  const detail = ROADMAP.flatMap((section) => section.items)
+    .find((item) => item.name === 'Flow games').detail;
+  CLASSIC_GAMES.forEach((game) => {
+    expect({ name: game.name, listed: detail.includes(game.name) }).toEqual({
+      name: game.name,
+      listed: true,
+    });
+  });
+
+  // And the three brain-game modes are named too, all of which exist.
+  ['Connect the Concept', 'Counterintuitive', 'Explain It Back'].forEach((name) => {
+    expect(detail.includes(name)).toBe(true);
   });
 });
 
