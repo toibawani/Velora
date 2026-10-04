@@ -109,6 +109,35 @@ describe('Knowledge Chain', () => {
 });
 
 describe('chain content quality', () => {
+  // The double-submit trace finds nothing here, for the same structural reason
+  // as Concept Check but by a different mechanism: every control on the screen
+  // is disabled once the chain is solved, and handleSubmit returns early too.
+  test('nothing is still clickable after a chain is solved', () => {
+    // handleSubmit books its move on a 2600ms timer. If any control stayed live
+    // in that window a second click could land on top of it.
+    jest.useFakeTimers();
+    render(<KnowledgeChain onBack={() => {}} />);
+
+    CHAINS[0].concepts.forEach((concept) =>
+      fireEvent.click(screen.getByRole('button', { name: concept })));
+    fireEvent.click(screen.getByRole('button', { name: /check/i }));
+    expect(screen.getByText(/correct/i)).toBeInTheDocument();
+
+    // Every concept, the undo button and the check button are all disabled.
+    CHAINS[0].concepts.forEach((concept) => {
+      expect(screen.getByRole('button', { name: concept })).toBeDisabled();
+    });
+    expect(screen.getByRole('button', { name: /undo/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /check/i })).toBeDisabled();
+
+    // And the solved state survives the window and still advances exactly one
+    // chain rather than two.
+    act(() => jest.advanceTimersByTime(3000));
+    expect(screen.getByRole('button', { name: CHAINS[1].concepts[0] })).toBeInTheDocument();
+    expect(screen.queryByText(/correct/i)).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
   test('every chain has four concepts and exactly three links', () => {
     CHAINS.forEach((chain) => {
       expect(chain.concepts.length).toBe(4);
