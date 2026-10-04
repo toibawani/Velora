@@ -425,6 +425,28 @@
   border-color: var(--color-info);
 }
 
+/*
+ * Philosophy's three tiers map onto the same three meanings, so they take the
+ * same colours: a settled result is solid, a live debate is a warning, an open
+ * question is the hollow info ring. Without these the dot fell through to the
+ * default `border: 1px solid currentColor`, which drew every philosophy entry
+ * identically and quietly threw away the distinction the label exists to make.
+ */
+.bhm-status-settled .bhm-status-dot {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.bhm-status-debated .bhm-status-dot {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.bhm-status-open .bhm-status-dot {
+  background: transparent;
+  border-color: var(--color-info);
+}
+
 /* ---- Pager ------------------------------------------------------------- */
 
 .bhm-pager {

@@ -87,8 +87,12 @@ export interface AtlasAddress {
 export type AtlasResolution =
   /** Real lesson content exists. Open it with this subject and topic id. */
   | { kind: 'lesson'; subject: string; topicId: string; title: string; fieldId: string }
-  /** Deep multi-level content exists (the black hole levels). */
-  | { kind: 'deep-read'; readId: string; title: string; fieldId: string }
+  /**
+   * Deep multi-level content exists. `levelId` is set when the topic names one
+   * level in particular, so a tap on "Free Will" can open the free will level
+   * rather than the top of the subject.
+   */
+  | { kind: 'deep-read'; readId: string; levelId?: string; title: string; fieldId: string }
   /**
    * The topic is a real part of the curriculum but has not been written yet.
    * Named and counted rather than hidden, so an unwritten topic is visible as
@@ -107,12 +111,32 @@ export type AtlasResolution =
  * Atlas listed 'General Relativity' and 'Special Relativity' as topics with no
  * content behind them while the most-developed material in the app sat
  * unreachable next to it.
+ *
+ * Philosophy arrived the same way and is the test of whether the first fix was a
+ * general one. It was: adding a subject here is a map entry per topic and a level
+ * id, and no change to how a tap resolves. `levelId` is the one addition - with a
+ * rail of levels, a tap on 'Free Will' should open the free will level rather
+ * than the top of the subject, and the anchor is what lets it.
  */
-const DEEP_READS: Record<string, { readId: string; title: string }> = {
+const DEEP_READS: Record<string, { readId: string; title: string; levelId?: string }> = {
   // Keyed by slug of the Atlas topic name.
   'black-holes': { readId: 'black-holes', title: 'Black Holes' },
   'general-relativity': { readId: 'black-holes', title: 'Black Holes' },
   'special-relativity': { readId: 'black-holes', title: 'Black Holes' },
+
+  // Philosophy: the ten topics with entries written, each pointing at the level
+  // it lives in. Topics left off this list stay 'unwritten', which is the honest
+  // marker and the reason the list is explicit rather than a subject-wide flag.
+  reality: { readId: 'philosophy-core', levelId: 'what-is-there', title: 'The big questions' },
+  existence: { readId: 'philosophy-core', levelId: 'what-is-there', title: 'The big questions' },
+  knowledge: { readId: 'philosophy-core', levelId: 'what-we-can-know', title: 'The big questions' },
+  skepticism: { readId: 'philosophy-core', levelId: 'what-we-can-know', title: 'The big questions' },
+  morality: { readId: 'philosophy-core', levelId: 'what-we-should-do', title: 'The big questions' },
+  consequentialism: { readId: 'philosophy-core', levelId: 'what-we-should-do', title: 'The big questions' },
+  identity: { readId: 'philosophy-core', levelId: 'who-we-are', title: 'The big questions' },
+  consciousness: { readId: 'philosophy-core', levelId: 'who-we-are', title: 'The big questions' },
+  'free-will': { readId: 'philosophy-core', levelId: 'are-we-free', title: 'The big questions' },
+  determinism: { readId: 'philosophy-core', levelId: 'are-we-free', title: 'The big questions' },
 };
 
 /**
@@ -141,7 +165,7 @@ export const resolveAtlasTopic = ({ fieldId, topic }: AtlasAddress): AtlasResolu
 
   const deepRead = DEEP_READS[topicSlug];
   if (deepRead) {
-    return { kind: 'deep-read', readId: deepRead.readId, title: deepRead.title, fieldId };
+    return { kind: 'deep-read', readId: deepRead.readId, levelId: deepRead.levelId, title: deepRead.title, fieldId };
   }
 
   const subject = FIELD_SUBJECT[fieldId];

@@ -57,6 +57,19 @@ const ROUTE_LABELS = {
   profile: 'Set up this device',
 };
 
+/**
+ * The deep reads that exist, and where each one opens.
+ *
+ * This used to be a single hard-coded id inside openDeepRead, which meant the
+ * second subject required editing navigation code. Now adding a subject is one
+ * line here plus its data files, which is the property the philosophy work was
+ * meant to demonstrate.
+ */
+const DEEP_READ_ROUTES = {
+  'black-holes': { subject: 'physics', view: 'black-hole-mastery' },
+  'philosophy-core': { subject: 'philosophy', view: 'philosophy-core' },
+};
+
 function App() {
   const [screen, setScreen] = useState('splash');
   // The identity here is a name stored in this browser, read once at startup.
@@ -89,6 +102,9 @@ function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [keyboardHelpOpen, setKeyboardHelpOpen] = useState(false);
   const [topicRequest, setTopicRequest] = useState(null);
+  // Which level a deep read should open on, when the topic that was tapped names
+  // one. Null means "open at the top", which is what a generic entry point wants.
+  const [deepReadLevel, setDeepReadLevel] = useState(null);
 
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
@@ -106,15 +122,17 @@ function App() {
 
   // Deep multi-level material is not a LessonReader lesson, so it cannot travel
   // through the lesson request. It gets its own channel into Learn's view state.
-  // 'black-holes' is the only deep read that exists today; the id is validated
-  // against the real level list so a typo cannot open an empty screen.
-  const openDeepRead = (readId) => {
-    if (readId !== 'black-holes') {
+  // The id is validated against the registry above, so a typo opens nothing
+  // rather than an empty screen.
+  const openDeepRead = (readId, levelId = null) => {
+    const route = DEEP_READ_ROUTES[readId];
+    if (!route) {
       showToast?.('That deep read does not exist yet.', 'info');
       return;
     }
-    setSelectedSubject('physics');
-    setLearnView('black-hole-mastery');
+    setSelectedSubject(route.subject);
+    setDeepReadLevel(levelId);
+    setLearnView(route.view);
     setScreen('learn');
   };
 
@@ -186,6 +204,7 @@ function App() {
             setSelectedSubject={setSelectedSubject}
             initialView={learnView}
             setInitialView={setLearnView}
+            deepReadLevel={deepReadLevel}
             pendingTopic={topicRequest}
             onLessonOpened={() => setTopicRequest(null)}
             showToast={showToast}

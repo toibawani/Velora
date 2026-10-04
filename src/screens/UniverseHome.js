@@ -155,10 +155,12 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
       return;
     }
 
-    // Deep multi-level content. Black holes is the one that exists today.
+    // Deep multi-level content. Two exist today: the black hole levels and the
+    // philosophy levels. The anchor is passed straight through, so a topic that
+    // names a level opens on that level.
     if (resolution.kind === 'deep-read') {
-      setSelectedSubject('physics');
-      onOpenDeepRead?.(resolution.readId);
+      setSelectedSubject(resolution.fieldId === 'philosophy' ? 'philosophy' : 'physics');
+      onOpenDeepRead?.(resolution.readId, resolution.levelId);
       return;
     }
 

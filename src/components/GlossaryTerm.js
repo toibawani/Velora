@@ -1,7 +1,22 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { BookOpen } from 'lucide-react';
-import { lookupTerm } from '../data/blackholes/glossary';
+import { lookupTerm as lookupPhysicsTerm } from '../data/blackholes/glossary';
+import { lookupTerm as lookupPhilosophyTerm } from '../data/philosophy/glossary';
 import '../styles/GlossaryTerm.css';
+
+/**
+ * The one lookup every inline definition goes through.
+ *
+ * There are two subjects with difficult words and one term system, so this is
+ * the join between them rather than a second <GlossaryTerm> for philosophy. The
+ * glossaries stay separate files (each has its own duplicate guard and its own
+ * tests) and this function is the single place they are read together, which
+ * keeps "one word, one meaning" checkable: glossary.test.ts asserts no term is
+ * defined in both, so the order of the two lookups can never decide what a
+ * reader is shown.
+ */
+export const lookupTerm = (term) =>
+  lookupPhysicsTerm(term) || lookupPhilosophyTerm(term);
 
 /**
  * An inline definition for a difficult word.
@@ -104,7 +119,7 @@ export function GlossaryTerm({ term, children, definition }) {
           <span className="gt-popover-body">{text}</span>
           {chained && (
             <span className="gt-popover-see">
-              Builds on <strong>{chained.term}</strong>, defined in Level 10.
+              Builds on <strong>{chained.term}</strong>, which has its own definition.
             </span>
           )}
         </span>

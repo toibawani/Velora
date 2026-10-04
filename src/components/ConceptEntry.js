@@ -1,6 +1,6 @@
 import React from 'react';
 import { parseInlineTerms } from './GlossaryTerm';
-import { STATUS_LABELS } from '../data/blackholes/schema';
+import { STATUS_LABELS as PHYSICS_STATUS_LABELS } from '../data/blackholes/schema';
 import '../styles/BlackHoleMastery.css';
 
 /**
@@ -14,8 +14,14 @@ import '../styles/BlackHoleMastery.css';
  *
  * Every field runs through the same inline-term parser, so a difficult word is
  * defined the same way wherever it appears. There is no per-entry markup.
+ *
+ * The status vocabulary is a prop rather than an import, because the two
+ * subjects do not share one. Physics can call a result "established" when a
+ * measurement decides it; philosophy cannot, and forcing that word onto a live
+ * disagreement would be the exact dishonesty the labels exist to prevent. The
+ * physics labels are the default so the black hole screen needs no change.
  */
-function ConceptEntry({ entry }) {
+function ConceptEntry({ entry, statusLabels = PHYSICS_STATUS_LABELS }) {
   const { name, simple, deeper, matters, status, source, sourceUrl } = entry;
 
   return (
@@ -30,7 +36,7 @@ function ConceptEntry({ entry }) {
             same kind of claim. */}
         <span className={`bhm-status bhm-status-${status}`}>
           <span className="bhm-status-dot" aria-hidden="true" />
-          {STATUS_LABELS[status]}
+          {statusLabels[status]}
         </span>
       </header>
 

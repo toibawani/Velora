@@ -22,6 +22,7 @@ import {
 import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
 import BlackHoleMastery from '../components/BlackHoleMastery';
+import PhilosophyDeepRead from '../components/PhilosophyDeepRead';
 import RelativityLab from '../components/RelativityLab';
 import PhysicsSimulations from '../components/PhysicsSimulations';
 import FlowStateGame from '../components/FlowStateGame';
@@ -46,7 +47,7 @@ import LessonReader from '../components/LessonReader';
 import { CURRICULUM, getTopic } from '../data/curriculum';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 
-function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, pendingTopic, onLessonOpened, showToast }) {
+function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, deepReadLevel, pendingTopic, onLessonOpened, showToast }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [activeGame, setActiveGame] = useState({
@@ -248,6 +249,18 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       <BlackHoleMastery
         onBack={handleBack}
         onOpenLab={() => setCurrentView('relativity-lab')}
+      />
+    );
+  }
+
+  // View: the philosophy deep read. Same reader, different data - the only thing
+  // that differs is the level it opens on, which the Atlas supplies when a tapped
+  // topic names one.
+  if (currentView === 'philosophy-core') {
+    return (
+      <PhilosophyDeepRead
+        onBack={handleBack}
+        initialLevelId={deepReadLevel}
       />
     );
   }
