@@ -74,6 +74,44 @@ describe('Word Puzzle', () => {
     expect(screen.getByText(new RegExp(`0 of ${PUZZLES.length} correct`, 'i'))).toBeInTheDocument();
   });
 
+  test('answering correctly twice does not score twice or skip a puzzle', () => {
+    // A correct answer leaves the word in the boxes and the button enabled for
+    // the 1200ms the advance is booked over. A second click in that window used
+    // to book a second advance: one answer scored 200 and jumped the player from
+    // puzzle 1 to puzzle 3, so the score line claimed a total the deck could not
+    // pay out. Reveal had the same hole.
+    jest.useFakeTimers();
+    render(<WordPuzzle onBack={() => {}} />);
+
+    fill(...PUZZLES[0].word.split(' '));
+    fireEvent.click(screen.getByRole('button', { name: /submit answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit answer/i }));
+    act(() => jest.advanceTimersByTime(2400));
+
+    expect(screen.getByText(`Puzzle 2/${PUZZLES.length}`)).toBeInTheDocument();
+    expect(screen.getByText('Score: 100')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  // Reveal was never affected. The Reveal button is disabled the moment it is
+  // pressed, so a second press never fires a second handler - verified against
+  // the pre-fix file, which reported Puzzle 2/21 and Score 0 here too. This test
+  // exists to keep it that way, not because it caught anything.
+  test('revealing twice does not score twice or skip a puzzle', () => {
+    jest.useFakeTimers();
+    render(<WordPuzzle onBack={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /reveal answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /reveal answer/i }));
+    act(() => jest.advanceTimersByTime(5200));
+
+    // A reveal is not a solve, so the score stays at zero - and it must still
+    // move exactly one puzzle.
+    expect(screen.getByText(`Puzzle 2/${PUZZLES.length}`)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
   test('a wrong answer does not advance and does not score', () => {
     render(<WordPuzzle onBack={() => {}} />);
     fill('dark', 'matter');

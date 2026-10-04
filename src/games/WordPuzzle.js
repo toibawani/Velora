@@ -171,6 +171,18 @@ function WordPuzzle({ onBack }) {
   const [message, setMessage] = useState('');
   const [revealed, setRevealed] = useState(false);
   const [finished, setFinished] = useState(false);
+  // True once this puzzle has been settled - solved or revealed - and the move
+  // to the next one is already booked.
+  //
+  // This was missing, and every path through it was a double-count. Solving a
+  // puzzle leaves the word in the boxes and the Submit button enabled, so a
+  // second click inside the 1200ms advance window booked a second advance: one
+  // correct answer scored 200 and skipped a puzzle, and the score line then
+  // claimed a total the player could not earn by playing the deck. Reveal has
+  // the same shape. Neither needs a deliberate mistake to trigger - it is
+  // anyone tapping twice, or anyone on a connection where the click lands after
+  // the animation.
+  const [settled, setSettled] = useState(false);
   const advanceRef = useRef(null);
 
   const puzzle = PUZZLES[currentPuzzle];
@@ -187,6 +199,7 @@ function WordPuzzle({ onBack }) {
     setUserAnswers(() => Array(PUZZLES[currentPuzzle + 1].blanks).fill(''));
     setMessage('');
     setRevealed(false);
+    setSettled(false);
   }, [currentPuzzle, isLast]);
 
   const handleInputChange = useCallback((index, value) => {
@@ -199,6 +212,8 @@ function WordPuzzle({ onBack }) {
 
   const handleSubmit = useCallback(() => {
     if (userAnswers.some((a) => !a.trim())) return;
+    // Booked already: scoring again would pay twice and advance twice.
+    if (settled) return;
 
     const isCorrect = normalise(userAnswers.join(' ')) === normalise(puzzle.word);
     if (!isCorrect) {
@@ -210,17 +225,20 @@ function WordPuzzle({ onBack }) {
     setScore((prev) => prev + POINTS_PER_PUZZLE);
     setSolved((prev) => prev + 1);
     setUnaided((prev) => prev + 1);
+    setSettled(true);
     advanceRef.current = setTimeout(goToNext, 1200);
-  }, [goToNext, puzzle.word, userAnswers]);
+  }, [goToNext, puzzle.word, settled, userAnswers]);
 
   const handleReveal = useCallback(() => {
+    if (settled) return;
+    setSettled(true);
     setRevealed(true);
     setRevealedCount((prev) => prev + 1);
     setMessage(`The answer is ${puzzle.word}.`);
     // Revealing used to be a dead end on the last puzzle, and on any puzzle
     // there was no way forward at all short of getting it right.
     advanceRef.current = setTimeout(goToNext, 2600);
-  }, [goToNext, puzzle.word]);
+  }, [goToNext, puzzle.word, settled]);
 
   if (finished) {
     const total = PUZZLES.length;
@@ -309,11 +327,11 @@ function WordPuzzle({ onBack }) {
           <button
             className="btn-submit-puzzle"
             onClick={handleSubmit}
-            disabled={userAnswers.some((a) => !a.trim()) || revealed}
+            disabled={userAnswers.some((a) => !a.trim()) || revealed || settled}
           >
             Submit answer
           </button>
-          <button className="btn-hint" onClick={handleReveal} disabled={revealed}>
+          <button className="btn-hint" onClick={handleReveal} disabled={revealed || settled}>
             Reveal answer
           </button>
         </div>
