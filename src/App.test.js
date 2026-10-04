@@ -77,7 +77,21 @@ describe('focus on route change', () => {
     // Before this, focus was still on the nav button: the new screen was reached
     // visually but not for a keyboard user.
     expect(navButton).not.toHaveFocus();
-    expect(document.activeElement).toHaveAttribute('aria-label', 'Question desk');
+
+    // Waited on rather than asserted once.
+    //
+    // The screen is lazily imported behind Suspense, and focus is moved by an
+    // effect keyed on the route. `settle()` is a single macrotask, which is
+    // enough when the module is already in the require cache and not enough
+    // when seventy other suites are competing for the event loop: this test
+    // failed intermittently under the full parallel run and passed alone, which
+    // is the signature of a timing assumption rather than a broken app.
+    //
+    // What is being asserted is that focus eventually lands on the new route,
+    // not that it happens within one tick. Waiting for it states that.
+    await waitFor(() => {
+      expect(document.activeElement).toHaveAttribute('aria-label', 'Question desk');
+    });
   });
 
   test('names the route it moved to', async () => {
