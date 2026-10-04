@@ -9,6 +9,7 @@ import WordPuzzle from '../games/WordPuzzle';
 import RelativityLab from '../components/RelativityLab';
 import PhysicsSimulations from '../components/PhysicsSimulations';
 import BrainGames from '../components/BrainGames';
+import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/Games.css';
 
 /**
@@ -20,6 +21,14 @@ import '../styles/Games.css';
 function GameHub({ setScreen, initialTab = 'classic' }) {
   const [hubTab, setHubTab] = useState(initialTab); // 'brain' | 'sims' | 'classic'
   const [selectedGame, setSelectedGame] = useState(null);
+  // What this device has actually recorded. Read once on mount, the same way
+  // Journey reads it, so the two screens cannot disagree about the same numbers.
+  const [analytics] = useState(() => getAnalyticsData());
+  const sessionsLogged = analytics.weeklyActivity.reduce(
+    (total, day) => total + (day.sessions || 0),
+    0
+  );
+  const conceptsTouched = analytics.topicTimeDistribution.length;
   // Off by default. Flow State is a timed question drill, so switching it on by
   // default meant the six real games underneath could not be reached at all
   // unless you found this checkbox and turned it off.
@@ -229,27 +238,52 @@ function GameHub({ setScreen, initialTab = 'classic' }) {
       </main>
 
       {/* Stats */}
-      <section className="games-stats">
-        <h3>Your Learning Insights</h3>
-        <div className="stats-row">
-          <div className="stat-item">
-            <p className="stat-number">18</p>
-            <p className="stat-label">Flow Sessions Completed</p>
-          </div>
-          <div className="stat-item">
-            <p className="stat-number">4.9/5</p>
-            <p className="stat-label">Comprehension Rating</p>
-          </div>
-          <div className="stat-item">
-            <p className="stat-number">15</p>
-            <p className="stat-label">Concepts Mastered</p>
-          </div>
-          <div className="stat-item">
-            <p className="stat-number">92%</p>
-            <p className="stat-label">Retention Score</p>
-          </div>
-        </div>
-      </section>
+        {/*
+         * These four numbers used to be typed out by hand: 18 sessions, 4.9/5
+         * comprehension, 15 concepts mastered, 92% retention. Nothing on this
+         * device produced any of them, and every learner saw exactly the same
+         * four - including someone who had just arrived - which is the same
+         * failure Journey was rebuilt to remove. The hero above this panel even
+         * claims "no artificial scoreboards", which put the contradiction on one
+         * screen.
+         *
+         * What is real is minutes spent: LessonReader records a session when a
+         * lesson closes. So the panel now shows that, plus an empty state that
+         * says so, rather than a number that flatters.
+         *
+         * What stays absent is the scoring. Comprehension and retention are not
+         * dropped because they would be awkward to produce - they are dropped
+         * because nothing here measures them. A quiz would produce a number
+         * instantly, and that number would not be a measure of understanding.
+         */}
+        <section className="games-stats">
+          <h3>Your Learning Insights</h3>
+          {sessionsLogged === 0 ? (
+            <p className="games-stats-empty">
+              Nothing recorded yet. A count appears here when you close a lesson, so this
+              panel can only ever show time you actually spent.
+            </p>
+          ) : (
+            <div className="stats-row">
+              <div className="stat-item">
+                <p className="stat-number">{sessionsLogged}</p>
+                <p className="stat-label">Sessions logged</p>
+              </div>
+              <div className="stat-item">
+                <p className="stat-number">{conceptsTouched}</p>
+                <p className="stat-label">Concepts touched</p>
+              </div>
+              <div className="stat-item">
+                <p className="stat-number">{analytics.totalHoursStudied}</p>
+                <p className="stat-label">Hours recorded</p>
+              </div>
+            </div>
+          )}
+          <p className="games-stats-note">
+            No comprehension rating and no retention score. Nothing in this app measures
+            either one, so a number here would be decoration shaped like a measurement.
+          </p>
+        </section>
       </>
     )}
   </div>

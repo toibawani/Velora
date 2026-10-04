@@ -269,6 +269,29 @@
   margin: 0;
 }
 
+/* The empty state and the note that says what is deliberately missing. Both are
+   text rather than a row of zeroes: a row of zeros still looks like a score
+   board, and this panel's whole job is to not be one. */
+.games-stats-empty {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.games-stats-note {
+  margin: var(--space-4) 0 0;
+  max-width: 42rem;
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
 /* ==================== SHARED GAME SCREEN SHELL ==================== */
 .game-screen {
   min-height: 100vh;

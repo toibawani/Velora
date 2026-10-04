@@ -42,6 +42,66 @@ describe('Game hub listings', () => {
   });
 });
 
+/*
+ * The insights panel.
+ *
+ * It used to read "18 Flow Sessions Completed", "4.9/5 Comprehension Rating",
+ * "15 Concepts Mastered" and "92% Retention Score". All four were typed out by
+ * hand, all four were the same for everyone including someone who had just
+ * arrived, and nothing in this app measured any of them - while the hero two
+ * elements above claimed "no artificial scoreboards".
+ *
+ * These tests are here so that panel cannot quietly go back to being flattering.
+ */
+describe('the insights panel only reports what the device recorded', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  test('says so when nothing has been recorded, rather than showing zeroes', () => {
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(screen.getByText(/Nothing recorded yet/i)).toBeInTheDocument();
+    // A row of zeroes still looks like a scoreboard. This is text instead.
+    expect(screen.queryByText('Sessions logged')).not.toBeInTheDocument();
+  });
+
+  test('shows the real counts once a session has been recorded', () => {
+    localStorage.setItem(
+      'velora_learning_analytics',
+      JSON.stringify({
+        totalHoursStudied: 1.5,
+        topicTimeDistribution: [
+          { topic: 'Free Will', hours: 0.5, subject: 'philosophy' },
+          { topic: 'Black Holes', hours: 1, subject: 'physics' },
+        ],
+        weeklyActivity: [{ day: '2026-01-01', hours: 1.5, sessions: 2 }],
+      })
+    );
+
+    render(<GameHub setScreen={() => {}} />);
+
+    // Two sessions across two topics, and the hours the device actually stored.
+    expect(screen.getByText('Sessions logged').previousSibling).toHaveTextContent('2');
+    expect(screen.getByText('Concepts touched').previousSibling).toHaveTextContent('2');
+    expect(screen.getByText('Hours recorded').previousSibling).toHaveTextContent('1.5');
+    expect(screen.queryByText(/Nothing recorded yet/i)).not.toBeInTheDocument();
+  });
+
+  test('states that comprehension and retention are not measured', () => {
+    render(<GameHub setScreen={() => {}} />);
+
+    // These two numbers were the worst of the four, because no amount of
+    // cleverness could make them real. They are not replaced with a subtler
+    // invented figure; the panel says they are absent and why.
+    expect(screen.getByText(/No comprehension rating and no retention score/i)).toBeInTheDocument();
+    expect(screen.queryByText('4.9/5')).not.toBeInTheDocument();
+    expect(screen.queryByText('92%')).not.toBeInTheDocument();
+    expect(screen.queryByText('15')).not.toBeInTheDocument();
+    expect(screen.queryByText('18')).not.toBeInTheDocument();
+  });
+});
+
 describe('Game hub keyboard access', () => {
   // Each card was a div with an onClick, which is not focusable and has no
   // role, so the whole grid could only be used with a mouse.
