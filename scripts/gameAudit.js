@@ -49,15 +49,15 @@ const serve = (root) =>
     server.listen(PORT, () => resolve(server));
   });
 
-const findChrome = () =>
-  [
-    process.env.CHROME_PATH,
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-  ]
-    .filter(Boolean)
-    .find((p) => fs.existsSync(p));
+// Chrome discovery lives in scripts/chrome.js.
+//
+// This list named only the macOS bundle and /usr/bin/chromium. On a GitHub
+// Actions ubuntu runner Chrome is at /usr/bin/google-chrome, so these four
+// scripts would all have exited with "No Chrome found" - which is why none of
+// them was in CI, and why nobody could tell the difference between an audit
+// that found nothing and one that never ran.
+const { findChrome } = require('./chrome');
+const CHROME = findChrome();
 
 const signIn = async (page, url) => {
   await page.goto(url, { waitUntil: 'domcontentloaded' });

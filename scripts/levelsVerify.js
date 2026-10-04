@@ -13,9 +13,15 @@ const http = require('http');
 const puppeteer = require('puppeteer-core');
 
 const ROOT = path.join(__dirname, '..', 'build');
-const CHROME =
-  process.env.CHROME_PATH ||
-  ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/chromium'].find((p) => fs.existsSync(p));
+// Chrome discovery lives in scripts/chrome.js.
+//
+// This list named only the macOS bundle and /usr/bin/chromium. On a GitHub
+// Actions ubuntu runner Chrome is at /usr/bin/google-chrome, so these four
+// scripts would all have exited with "No Chrome found" - which is why none of
+// them was in CI, and why nobody could tell the difference between an audit
+// that found nothing and one that never ran.
+const { findChrome } = require('./chrome');
+const CHROME = findChrome();
 
 const MIME = {
   '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',

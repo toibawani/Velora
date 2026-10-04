@@ -38,15 +38,9 @@ const serve = (root) =>
     server.listen(PORT, () => resolve(server));
   });
 
-const findChrome = () =>
-  [
-    process.env.CHROME_PATH,
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-  ]
-    .filter(Boolean)
-    .find((p) => fs.existsSync(p));
+// Chrome discovery lives in scripts/chrome.js. See the note there: this list
+// was a copy, and the copies had drifted apart.
+const { requireChrome } = require('./chrome');
 
 const audit = (page) =>
   page.evaluate(() => {
@@ -173,7 +167,7 @@ const main = async () => {
   }
   const server = await serve(buildDir);
   const url = `http://localhost:${PORT}`;
-  const chromePath = findChrome();
+  const chromePath = requireChrome();
   if (!chromePath) {
     console.error('No Chrome binary found. Set CHROME_PATH.');
     process.exit(2);

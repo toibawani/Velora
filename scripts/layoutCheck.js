@@ -21,16 +21,10 @@ const puppeteer = require('puppeteer-core');
 const WIDTHS = [1440, 375];
 const PORT = Number(process.env.PORT || 4173);
 
-const CHROME_PATHS = [
-  process.env.CHROME_PATH,
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  '/Applications/Chromium.app/Contents/MacOS/Chromium',
-  '/usr/bin/google-chrome',
-  '/usr/bin/chromium',
-  '/usr/bin/chromium-browser',
-].filter(Boolean);
-
-const findChrome = () => CHROME_PATHS.find((p) => fs.existsSync(p));
+// Chrome discovery lives in scripts/chrome.js. It used to be a copy of this
+// list, and the copies had already drifted: this one knew about Linux runners
+// and the atlas scripts did not.
+const { requireChrome } = require('./chrome');
 
 const MIME = {
   '.html': 'text/html',
@@ -277,7 +271,7 @@ const signIn = async (page, url) => {
 
 const main = async () => {
   const urlArg = process.argv.indexOf('--url');
-  const chromePath = findChrome();
+  const chromePath = requireChrome();
   if (!chromePath) {
     console.error('No Chrome binary found. Set CHROME_PATH.');
     process.exit(2);
