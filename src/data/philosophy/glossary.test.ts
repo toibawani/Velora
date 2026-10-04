@@ -91,7 +91,7 @@ describe('the level set', () => {
     expect(numbers).toEqual([...numbers].sort((a, b) => a - b));
     expect(numbers[0]).toBe(0);
     expect(TOTAL_ENTRIES).toBe(allEntries.length);
-    expect(TOTAL_ENTRIES).toBeGreaterThan(5);
+    expect(TOTAL_ENTRIES).toBeGreaterThan(7);
   });
 
   test('gives every level a title and a one-line blurb for the rail', () => {
@@ -141,6 +141,8 @@ describe('the level set', () => {
     expect(byName('Skepticism')?.status).toBe('open');
     expect(byName('Morality')?.status).toBe('debated');
     expect(byName('Consequentialism')?.status).toBe('debated');
+    expect(byName('Identity')?.status).toBe('debated');
+    expect(byName('Consciousness')?.status).toBe('open');
   });
 
   test('states the disputed cases concretely rather than naming them', () => {
@@ -155,12 +157,19 @@ describe('the level set', () => {
     const morality = allEntries.find((entry) => entry.name === 'Morality');
     expect(morality?.deeper).toMatch(/footbridge|bridge/i);
     expect(morality?.deeper).toMatch(/surgeon/);
+    const identity = allEntries.find((entry) => entry.name === 'Identity');
+    expect(identity?.deeper).toMatch(/Theseus|ship/i);
+    expect(identity?.deeper).toMatch(/Parfit|branch/i);
+    expect(identity?.deeper).toMatch(/Reid|brave officer/i);
+    const consciousness = allEntries.find((entry) => entry.name === 'Consciousness');
+    expect(consciousness?.deeper).toMatch(/Chinese room/i);
+    expect(consciousness?.deeper).toMatch(/Mary/);
   });
 
   test('covers the topics the Atlas actually lists, so the markers mean something', () => {
     // Each entry name here has to match an Atlas topic exactly or the index will
     // show the topic as unwritten while the content sits next to it unreachable.
-    ['Reality', 'Existence', 'Knowledge', 'Skepticism', 'Morality', 'Consequentialism'].forEach(
+    ['Reality', 'Existence', 'Knowledge', 'Skepticism', 'Morality', 'Consequentialism', 'Identity', 'Consciousness'].forEach(
       (name) => expect(allEntries.some((entry) => entry.name === name)).toBe(true)
     );
   });
