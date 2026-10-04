@@ -46,8 +46,36 @@ describe('focus on route change', () => {
   // "Insights" is now in both the header and the bottom bar, because the header
   // renders the same shared registry. Scope the lookup to the bar so this keeps
   // testing the bottom nav rather than whichever of the two mounts first.
-  const bottomBarButton = (name) =>
-    within(document.querySelector('.mobile-bottom-nav')).getByRole('button', { name });
+  //
+  // This used to be `within(document.querySelector('.mobile-bottom-nav'))`, which
+  // throws "Expected container to be an Element... but got null" when the bar has
+  // not mounted yet. Inside waitFor that throw is retried like any other, so when
+  // the retries ran out the failure reported was this TypeError rather than the
+  // thing that actually went wrong, which was the bar being late.
+  //
+  // Throwing a named Error instead keeps the same retry behaviour and makes the
+  // timeout say what it was waiting for.
+  const bottomBarButton = (name) => {
+    const bar = document.querySelector('.mobile-bottom-nav');
+    if (!bar) throw new Error('the bottom navigation bar has not mounted yet');
+    return within(bar).getByRole('button', { name });
+  };
+
+  // Screens are lazily imported behind Suspense, so every wait here needs room
+  // to actually arrive.
+  //
+  // Two timeouts, and the order matters. waitFor gets 10s, and this describe
+  // block is given a 30s jest timeout so it is the wait that runs out, not jest.
+  // At 5s each the wait and jest's own default timeout fired together, and the
+  // failure was jest's "Exceeded timeout of 5000 ms for a test" - which says
+  // nothing about focus, which is the thing under test. Raising waitFor to 5s
+  // without raising jest's is how you get the same unhelpful message back.
+  //
+  // Under the full parallel run seventy suites share the event loop, so a lazy
+  // chunk can take a second or two to arrive, and this test walks the whole
+  // onboarding flow before it navigates anywhere.
+  const PATIENCE = { timeout: 10000 };
+  jest.setTimeout(30000);
 
   // The app opens on Splash even when a name is stored, so get there the way a
   // returning visitor does: real clicks, not poked state.
@@ -63,7 +91,7 @@ describe('focus on route change', () => {
     fireEvent.click(await screen.findByRole('button', { name: /start learning as/i }));
     // Wait for the bar, not for any "Insights" button: the header renders the
     // same shared list, so a bare findByRole matches two and throws.
-    await waitFor(() => expect(bottomBarButton('Insights')).toBeInTheDocument());
+    await waitFor(() => expect(bottomBarButton('Insights')).toBeInTheDocument(), PATIENCE);
   };
 
   test('moves focus into the new screen rather than leaving it on the nav', async () => {
@@ -91,7 +119,7 @@ describe('focus on route change', () => {
     // not that it happens within one tick. Waiting for it states that.
     await waitFor(() => {
       expect(document.activeElement).toHaveAttribute('aria-label', 'Question desk');
-    });
+    }, PATIENCE);
   });
 
   test('names the route it moved to', async () => {
