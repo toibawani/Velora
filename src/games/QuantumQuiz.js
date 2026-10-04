@@ -141,6 +141,72 @@ const QUIZ_QUESTIONS = [
     explanation:
       'It never reaches zero, only keeps approaching it. After two half-lives a quarter remains, after three an eighth, and that is what makes carbon dating work.',
   },
+
+  // Philosophy.
+  //
+  // The deck had no philosophy in it at all, and the game's own description
+  // said "Ten questions across physics, chemistry and biology" - which was
+  // already wrong, since five of the ten were space and quantum questions, and
+  // wrong in the direction that hid an entire subject. Philosophy is eleven
+  // lessons deep in this app and had a game that never mentioned it.
+  //
+  // These are drawn from the Curious Dictionary entries rather than invented for
+  // the game, and each names the argument it is about so a reader who gets it
+  // wrong can go and read the entry: the trolley problem is Philippa Foot's 1967
+  // thought experiment, the is-ought gap is Hume's, and the Gettier case is the
+  // 1963 result that knowledge is not reducible to justified true belief.
+  {
+    question: 'The trolley problem asks whether it is morally the same to pull a lever that kills one person to save five as it is to push one person off a bridge to save five. Why was it built that way?',
+    options: [
+      'To find the one answer most people agree on',
+      'To expose a flaw in an earlier argument about double effect',
+      'To argue that killing is always wrong',
+      'To test whether people obey instructions under pressure',
+    ],
+    correct: 1,
+    category: 'Philosophy',
+    explanation:
+      'Philippa Foot built it in 1967 to undermine an argument she thought was too tidy, not to be solved. Judith Jarvis Thomson later pointed out that the bridge case puts you in the same position as the victim, which is why most people judge the two differently and Foot\'s original argument does not survive.',
+  },
+  {
+    question: 'Hume pointed out that no statement purely about how the world is can logically yield a statement about how it ought to be. What is the practical consequence?',
+    options: [
+      'Moral reasoning is impossible',
+      'Most moral arguments need a premise about obligation stated explicitly',
+      'Only religious thinkers can do ethics',
+      'Facts about the world are unreliable',
+    ],
+    correct: 1,
+    category: 'Philosophy',
+    explanation:
+      '"He is hungry, so feed him" only works if you add a rule saying you ought to feed the hungry. Without it the sentence is a non sequitur wearing the clothes of a moral argument, and that gap is where most of them hide their premise.',
+  },
+  {
+    question: 'A stopped clock gets a bet on whether it will read correctly tomorrow. It was right by luck. Why is this a problem for a theory of knowledge?',
+    options: [
+      'It shows that luck makes a belief true',
+      'It shows that a belief can be justified and true without being knowledge',
+      'It shows that clocks cannot be trusted',
+      'It shows that knowledge requires luck',
+    ],
+    correct: 1,
+    category: 'Philosophy',
+    explanation:
+      'Getttier cases like this are why "justified true belief" was not the last word on knowledge. The belief is justified and it is true, but nothing about your reasons connects it to the truth, so it is not knowledge - and Gettier\'s 1963 paper is two and a half pages long.',
+  },
+  {
+    question: 'You maximise expected happiness and take no account of how the action came about, only what it leads to. Which view of morality is that?',
+    options: [
+      'Deontology',
+      'Consequentialism',
+      'Virtue ethics',
+      'The is-ought problem',
+    ],
+    correct: 1,
+    category: 'Philosophy',
+    explanation:
+      'Judging an act only by what it produces is consequentialism. Deontologists judge by the kind of act it is regardless of results, and virtue ethicists ask what habit of character the act builds - they ask about the actor rather than the outcome or the rule.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
@@ -289,4 +355,5 @@ function QuantumQuiz({ onBack }) {
   );
 }
 
+export { QUIZ_QUESTIONS };
 export default QuantumQuiz;
