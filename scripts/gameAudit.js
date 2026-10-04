@@ -127,28 +127,51 @@ const record = (name, data) => {
   console.log(JSON.stringify(data, null, 1));
 };
 
+/**
+ * Plays Connect the Concept through its whole deck.
+ *
+ * Three rounds of a six-puzzle deck. The loop now runs to the end of the deck
+ * and stops when a title repeats, which is how the game wraps
+ * (`(prev + 1) % CONNECT_PUZZLES.length`) - so reaching the wrap is what proves
+ * the full deck was dealt.
+ *
+ * The correct option is matched by its thread text rather than by index, because
+ * the options are shuffled per play and an index would answer the wrong thing
+ * most of the time. Every option is now also checked for non-empty text: an
+ * option that renders blank is a puzzle a learner cannot answer, and it used to
+ * pass unnoticed because the verdict column only recorded CORRECT or WRONG.
+ */
 const playConnect = async (page) => {
   const rounds = [];
-  for (let i = 0; i < 3; i++) {
+  const titles = [];
+  for (let i = 0; i < 12; i++) {
     const title = await page.evaluate(() => {
       const h = [...document.querySelectorAll('h3')].find(x => /Connect the Concept/.test(x.textContent));
       return h ? h.textContent.replace('Connect the Concept: ', '') : 'NONE';
     });
-    const markers = await page.evaluate(() => [...document.querySelectorAll('.bg-option-btn')].map(b => b.textContent.trim().slice(0, 26)));
-    // click the option whose text matches the known thread for this puzzle
+    // The game wraps by index, so a repeated title means we have seen the deck.
+    if (title !== 'NONE' && titles.includes(title)) break;
+    titles.push(title);
+
+    const optionTexts = await page.evaluate(() =>
+      [...document.querySelectorAll('.bg-option-btn')].map(b => b.textContent.trim()));
+    const blankOptions = optionTexts.filter(t => !t).length;
+
     const clicked = await page.evaluate(() => {
       const opts = [...document.querySelectorAll('.bg-option-btn')];
-      const target = opts.find(o => /reproduce itself|trace of it|every other level|arrow of time|negative feedback|updating beliefs/.test(o.textContent));
+      const target = opts.find(o => /reproduce itself|trace of it|every other level|arrow of time|negative feedback|updating beliefs|reversible|irreversible|feedback/i.test(o.textContent));
       if (!target) return null;
       target.click();
       return target.textContent.trim().slice(0, 40);
     });
     await new Promise(r => setTimeout(r, 600));
+
     const verdict = await page.evaluate(() => {
       const c = document.querySelector('.bg-result-card');
-      return c ? (c.className.includes('success') ? 'CORRECT' : 'WRONG') : 'none';
+      return c ? (c.className.includes('success') ? 'CORRECT' : 'WRONG') : 'no result card';
     });
-    rounds.push({ title, firstOption: markers[0], clicked, verdict });
+    rounds.push({ title, optionsShown: optionTexts.length, blankOptions, clicked, verdict });
+
     // Scope this to the game's own result card, and match its actual label.
     //
     // It used to be [...document.querySelectorAll('button')].find(x =>
@@ -169,7 +192,15 @@ const playConnect = async (page) => {
     if (!hasNext) break;
     await new Promise(r => setTimeout(r, 700));
   }
-  return { rounds };
+
+  return {
+    puzzlesPlayed: rounds.length,
+    distinctTitles: new Set(titles).size,
+    blankOptions: rounds.filter(r => r.blankOptions > 0).map(r => r.title),
+    unanswered: rounds.filter(r => r.clicked === null).map(r => r.title),
+    noResult: rounds.filter(r => r.verdict === 'no result card').map(r => r.title),
+    rounds,
+  };
 };
 
 /**
@@ -240,22 +271,62 @@ const playMyth = async (page) => {
   };
 };
 
+/**
+ * Plays Explain It Back through its whole deck.
+ *
+ * Four rounds of an eight-prompt deck. The sprint advances by index and wraps,
+ * so it now runs until a prompt repeats, which is what proves the full deck was
+ * dealt rather than that four rounds happened to succeed.
+ *
+ * It reports how many of the required intuition cues the typed answer actually
+ * matched. The game scores on that number, so a prompt whose keyConcepts cannot
+ * be hit by an ordinary explanation is a prompt that scores every learner zero
+ * and looks like a working game while it runs.
+ */
 const playExplain = async (page) => {
   const seen = [];
-  for (let i = 0; i < 4; i++) {
+  const results = [];
+  for (let i = 0; i < 14; i++) {
     const label = await page.evaluate(() => {
       const h = [...document.querySelectorAll('h3')].find(x => /Explain It Back/.test(x.textContent));
       return h ? h.textContent.trim() : 'NONE';
     });
+    if (label !== 'NONE' && seen.includes(label)) break;
     seen.push(label);
-    {
-      await page.evaluate(() => { const b = [...document.querySelectorAll('button')].find(x => /start 30s timer/i.test(x.textContent)); if (b) b.click(); });
-      await new Promise(r => setTimeout(r, 500));
-      await page.type('textarea', 'momentum is how hard something is to stop and a heavy thing moving slowly still has lots of it');
-      await new Promise(r => setTimeout(r, 300));
-      await page.evaluate(() => { const b = [...document.querySelectorAll('button')].find(x => /submit explanation/i.test(x.textContent)); if (b) b.click(); });
-      await new Promise(r => setTimeout(r, 600));
-    }
+
+    const started = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find(x => /start 30s timer/i.test(x.textContent));
+      if (!b) return false;
+      b.click();
+      return true;
+    });
+    if (!started) break;
+    await new Promise(r => setTimeout(r, 500));
+    await page.type('textarea', 'momentum is how hard something is to stop and a heavy thing moving slowly still has lots of it');
+    await new Promise(r => setTimeout(r, 300));
+    await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')].find(x => /submit explanation/i.test(x.textContent));
+      if (b) b.click();
+    });
+    await new Promise(r => setTimeout(r, 600));
+    const outcome = await page.evaluate(() => {
+      // Scoped to the sprint's own results panel.
+      //
+      // It used to read `document.querySelector('[role="status"]')`, which on this
+      // screen is the "paused" note - an element that only exists when the timer
+      // was paused. On a normal run there is no such element, so every prompt
+      // reported "no feedback rendered" and the run would have failed for a
+      // reason that had nothing to do with the game.
+      const panel = document.querySelector('.bg-feynman-results');
+      if (!panel) return 'no results rendered';
+      const cues = [...panel.querySelectorAll('.bg-cue-pill')].map(c => c.textContent.trim());
+      const peers = [...panel.querySelectorAll('blockquote')].length;
+      // No matched cues means the explanation scored zero. That can be a fair
+      // result for a weak answer, but it is worth seeing.
+      return `cues matched ${cues.length}; peer examples ${peers}`;
+    });
+    results.push({ prompt: label, feedback: outcome });
+
     const hasNext = await page.evaluate(() => {
       const b = [...document.querySelectorAll('button')].find(x => /next concept sprint/i.test(x.textContent));
       if (!b) return false;
@@ -265,7 +336,17 @@ const playExplain = async (page) => {
     if (!hasNext) break;
     await new Promise(r => setTimeout(r, 700));
   }
-  return { promptsSeen: seen };
+
+  return {
+    promptsSeen: seen.length,
+    distinctPrompts: new Set(seen).size,
+    // A sprint that submits but renders no results panel is a sprint a learner
+    // cannot finish. This used to read [role="status"], which on this screen is
+    // the paused-timer note and only exists while paused, so every prompt read
+    // as having no feedback.
+    noResults: results.filter(r => r.feedback === 'no results rendered').map(r => r.prompt),
+    results,
+  };
 };
 
 /**
@@ -536,13 +617,25 @@ const main = async () => {
       continue;
     }
     record(label, await play(page));
-    // Counterintuitive must reach all six of its claims. It used to answer one
-    // and snapshot, so a deck that stopped dealing after the first question
-    // looked identical to a deck that worked. If it cannot advance past a
-    // result card, this fails instead of quietly reporting a shorter array.
+    // Deck coverage is asserted, not reported.
+    //
+    // Connect the Concept played three rounds of six and Explain It Back four
+    // of eight, and both looked identical in the output to a run that had dealt
+    // everything. A game that stops advancing after the third puzzle now fails
+    // here instead of producing a shorter array in a report.
     const played = audit[audit.length - 1];
-    if (played.distinctClaims !== undefined && played.distinctClaims < 6) {
-      unreachable.push(`${label} (${played.distinctClaims}/6 claims reached)`);
+    const coverage = played.distinctTitles ?? played.distinctClaims ?? played.distinctPrompts;
+    const expected = { 'Connect the Concept': 6, 'Counterintuitive (True/Myth)': 6, 'Explain It Back (30s Sprint)': 8 }[label];
+    if (expected && coverage !== undefined && coverage < expected) {
+      unreachable.push(`${label} (${coverage}/${expected} items reached)`);
+    }
+    // An option that renders blank, or a prompt that scores without rendering
+    // feedback, is a puzzle or a sprint a learner cannot finish.
+    if (played.blankOptions && played.blankOptions.length) {
+      unreachable.push(`${label} (blank options on: ${played.blankOptions.join(', ')})`);
+    }
+    if (played.noResults && played.noResults.length) {
+      unreachable.push(`${label} (no results rendered on: ${played.noResults.join(', ')})`);
     }
   }
 
