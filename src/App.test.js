@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, within, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, within, waitFor, act } from '@testing-library/react';
 import App from './App';
 import { KEYS, writeValue } from './utils/storage';
 import { ThemeProvider } from './context/ThemeContext';
@@ -15,8 +15,26 @@ beforeEach(() => {
   window.localStorage.clear();
 });
 
-// Lazily imported screens need a tick to resolve under Suspense.
-const settle = () => new Promise((resolve) => setTimeout(resolve, 0));
+/**
+ * Lets React flush, and any lazy boundary resolve, before the next assertion.
+ *
+ * This was `new Promise((resolve) => setTimeout(resolve, 0))` - a single
+ * macrotask - on the theory that one tick is what a Suspense boundary needs.
+ * It is not. Every screen in this app is lazily imported, and each step of the
+ * onboarding flow renders one, so the whole flow is a chain of boundaries.
+ * A tick is enough when the machine is idle and not enough when it is not: this
+ * file failed on CI's own runner while passing locally, and the reported error
+ * was jest's "Exceeded timeout", which says nothing about focus.
+ *
+ * act() with an awaited microtask flush is the honest version - it waits for the
+ * work React actually scheduled rather than assuming a duration - and it costs
+ * nothing when the work is already done.
+ */
+const settle = async () => {
+  await act(async () => {
+    await Promise.resolve();
+  });
+};
 
 test('offers a single honest way in, with no account language', () => {
   renderApp();
