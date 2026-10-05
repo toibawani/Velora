@@ -229,10 +229,29 @@ const signIn = async (page, port) => {
           const btn = document.querySelector('.uh-topic-preview button');
           if (!btn) return 'NO CALL TO ACTION RENDERED';
           const label = btn.textContent.trim();
+          const SELECTOR = '.lesson-reader, .bhm-pager, .lr-reader, [data-testid="lesson"]';
           btn.click();
-          await new Promise((r) => setTimeout(r, 900));
-          const reader = document.querySelector('.lesson-reader, .bhm-pager, .lr-reader, [data-testid="lesson"]');
-          return `${label} -> ${reader ? 'content opened' : 'NOTHING OPENED'}`;
+
+          // Waited on, rather than slept for.
+          //
+          // This used to wait a fixed 900ms and then check. The deep reads are
+          // behind a lazy boundary, so on a loaded runner - three Chrome jobs at
+          // once is exactly when CI runs this - the reader had not mounted yet,
+          // and a topic with perfectly good content was reported as "CTA opened
+          // nothing". It passed locally and failed on the runner, which is the
+          // signature of a timing assumption rather than a broken reader.
+          //
+          // The lesson reader and the deep reads render different markup, so the
+          // wait polls for whichever is actually on its way, and gives up with
+          // the label rather than a bare boolean.
+          const deadline = Date.now() + 15000;
+          while (Date.now() < deadline) {
+            if (document.querySelector(SELECTOR)) {
+              return `${label} -> content opened`;
+            }
+            await new Promise((r) => setTimeout(r, 100));
+          }
+          return `${label} -> NOTHING OPENED (waited 15s for ${SELECTOR})`;
         });
         await page.evaluate(() => {
           const b = [...document.querySelectorAll('button')].find((x) => /atlas|home/i.test(x.textContent || ''));
