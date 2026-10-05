@@ -97,26 +97,54 @@ const signIn = async (page, port) => {
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 1000 });
 
+  // page.evaluate, but survivable.
+  //
+  // Every probe below runs against the main frame, and the main frame is not
+  // always there: clicking a call to action leaves the atlas, and the click that
+  // comes back races the navigation it triggered. Evaluating into the frame you
+  // had a moment ago throws "Attempted to use detached Frame" - a statement about
+  // timing, not about the atlas - and it took the whole audit down with an exit
+  // code 1 on a run that had already probed dozens of disciplines correctly.
+  // The retry is the honest response: wait for a live document, then evaluate.
+  const evaluate = async (fn, arg) => {
+    const deadline = Date.now() + 20000;
+    for (;;) {
+      try {
+        return await page.evaluate(fn, arg);
+      } catch (e) {
+        const transient = /detached frame|execution context|Target closed/i.test(e.message);
+        if (!transient || Date.now() > deadline) throw e;
+        await wait(250);
+      }
+    }
+  };
+
+  // The atlas is ready when its field tabs are on screen. Returning to it is a
+  // click, and a click is not a navigation guarantee.
+  const waitForAtlas = async () => {
+    await page.waitForFunction(() => document.querySelectorAll('.aix-tab').length > 0, { timeout: 20000 });
+  };
+
   const consoleErrors = [];
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text()); });
   page.on('pageerror', (e) => consoleErrors.push(`pageerror: ${e.message}`));
 
   await signIn(page, port);
-  const state = await page.evaluate(() => ({
+  const state = await evaluate(() => ({
     headings: [...document.querySelectorAll('h1,h2')].map((e) => e.textContent.trim()).slice(0, 5),
     atlas: Boolean(document.querySelector('#knowledge-atlas')),
     keys: Object.keys(localStorage).filter((k) => /profile|onboard/i.test(k)).map((k) => `${k}=${localStorage.getItem(k)}`),
   }));
   console.log('after signIn:', JSON.stringify(state, null, 1));
-  await page.evaluate(() => {
+  await evaluate(() => {
     const btn = [...document.querySelectorAll('button')].find((b) => /atlas|universe/i.test(b.textContent || ''));
     btn && btn.click();
   });
-  await wait(600);
+  await waitForAtlas();
 
-  const onAtlas = await page.evaluate(() => Boolean(document.querySelector('#knowledge-atlas')));
+  const onAtlas = await evaluate(() => Boolean(document.querySelector('#knowledge-atlas')));
   if (!onAtlas) {
-    const where = await page.evaluate(() => ({
+    const where = await evaluate(() => ({
       headings: [...document.querySelectorAll('h1,h2')].map((e) => e.textContent.trim()).slice(0, 5),
       buttons: [...document.querySelectorAll('button')].map((e) => e.textContent.trim()).filter(Boolean).slice(0, 16),
       dialog: document.querySelector('[role="dialog"]')?.innerText.replace(/\s+/g, ' ').slice(0, 200) || null,
@@ -126,7 +154,7 @@ const signIn = async (page, port) => {
   console.log(`reached atlas: ${onAtlas}`);
 
   // The field tabs, which is what replaced .uh-field-button.
-  const fields = await page.evaluate(() =>
+  const fields = await evaluate(() =>
     [...document.querySelectorAll('.aix-tab')].map((b) => ({
       label: b.querySelector('.aix-tab-name')?.textContent.trim() || b.textContent.trim(),
       aria: b.getAttribute('aria-label'),
@@ -135,7 +163,7 @@ const signIn = async (page, port) => {
 
   const rows = [];
   for (const field of fields) {
-    await page.evaluate((name) => {
+    await evaluate((name) => {
       const tab = [...document.querySelectorAll('.aix-tab')]
         .find((b) => (b.querySelector('.aix-tab-name')?.textContent.trim() || b.textContent.trim()) === name);
       tab && tab.click();
@@ -151,7 +179,7 @@ const signIn = async (page, port) => {
     // never ran, the table printed with no rows, and the script exited 0. It had
     // been reporting a clean pass over an atlas it never touched, and it is not
     // in CI, so nothing ever contradicted it.
-    const structure = await page.evaluate(() => {
+    const structure = await evaluate(() => {
       const groups = [...document.querySelectorAll('.aix-group')];
       return {
         disciplineCount: groups.length,
@@ -167,7 +195,8 @@ const signIn = async (page, port) => {
     // the marker is for - and an unwritten topic has no call to action to
     // press, so probing it says nothing about whether the atlas works.
     const openField = async () => {
-      await page.evaluate((name) => {
+      await waitForAtlas();
+      await evaluate((name) => {
         const tab = [...document.querySelectorAll('.aix-tab')]
           .find((b) => (b.querySelector('.aix-tab-name')?.textContent.trim() || b.textContent.trim()) === name);
         tab && tab.click();
@@ -187,7 +216,7 @@ const signIn = async (page, port) => {
       // field entirely.
       await openField();
 
-      const picked = await page.evaluate((idx) => {
+      const picked = await evaluate((idx) => {
         const g = document.querySelectorAll('.aix-group')[idx];
         if (!g) return null;
         const entries = [...g.querySelectorAll('.aix-entry')];
@@ -205,7 +234,7 @@ const signIn = async (page, port) => {
       }
       await wait(300);
 
-      const probe = await page.evaluate((topic) => {
+      const probe = await evaluate((topic) => {
         // Every topic must be addressable: selecting it should name it in the
         // preview panel, whether it has a lesson behind it or not.
         const preview = document.querySelector('.uh-topic-preview')?.innerText || '';
@@ -225,7 +254,7 @@ const signIn = async (page, port) => {
       // Press the call to action on a written topic and see what opens.
       let opened = 'skipped (topic is not written)';
       if (picked.written) {
-        opened = await page.evaluate(async () => {
+        opened = await evaluate(async () => {
           const btn = document.querySelector('.uh-topic-preview button');
           if (!btn) return 'NO CALL TO ACTION RENDERED';
           const label = btn.textContent.trim();
@@ -253,11 +282,14 @@ const signIn = async (page, port) => {
           }
           return `${label} -> NOTHING OPENED (waited 15s for ${SELECTOR})`;
         });
-        await page.evaluate(() => {
+        await evaluate(() => {
           const b = [...document.querySelectorAll('button')].find((x) => /atlas|home/i.test(x.textContent || ''));
           b && b.click();
         });
-        await wait(700);
+        // Wait for the atlas, not for the clock. This used to be a flat 700ms
+        // sleep, so on a loaded runner the next probe could run against the
+        // lesson reader that had not finished unmounting.
+        await waitForAtlas();
       }
 
       rows.push({ field: field.label, discipline: structure.disciplineNames[d], topic: picked.topic, ...probe, opened });
