@@ -107,14 +107,32 @@ const signIn = async (page, port) => {
   // code 1 on a run that had already probed dozens of disciplines correctly.
   // The retry is the honest response: wait for a live document, then evaluate.
   const evaluate = async (fn, arg) => {
+    // A navigation swaps the frame underfoot, so a waitFor* started on the
+    // previous document throws rather than timing out. Re-enter through the
+    // currently attached frame instead of reusing the handle that died.
+    const liveFrame = async () => {
+      for (const frame of page.frames()) {
+        if (frame === page.mainFrame() || frame.parentFrame() === null) {
+          try { await frame.evaluate(() => true); return frame; } catch { /* keep looking */ }
+        }
+      }
+      return page.mainFrame();
+    };
     const deadline = Date.now() + 20000;
     for (;;) {
       try {
         return await page.evaluate(fn, arg);
       } catch (e) {
-        const transient = /detached frame|execution context|Target closed/i.test(e.message);
+        const transient = /detached frame|execution context|Target closed|Cannot find context|Session closed/i.test(e.message);
         if (!transient || Date.now() > deadline) throw e;
         await wait(250);
+        // Give the next page.evaluate a live document: do not just sleep, make
+        // sure the current main frame answers before the retry evaluates into
+        // it, so a slow navigation does not burn all twenty seconds on misses.
+        try {
+          const frame = await liveFrame();
+          await frame.waitForFunction(() => document.readyState === 'complete' || document.readyState === 'interactive', { timeout: 5000 }).catch(() => {});
+        } catch { /* the retry below is the real attempt */ }
       }
     }
   };
@@ -252,14 +270,27 @@ const signIn = async (page, port) => {
       }, picked.topic);
 
       // Press the call to action on a written topic and see what opens.
+      //
+      // The click is the one deliberate exception to the retrying evaluate:
+      // it navigates away from the atlas (frame swap), so clicking and then
+      // polling for 15s in ONE evaluate call means a navigation that outruns
+      // the poll's first query kills the whole probe with a detached frame.
+      // Instead: click in one call, let the app land, then poll a live
+      // document in the next.
       let opened = 'skipped (topic is not written)';
       if (picked.written) {
-        opened = await evaluate(async () => {
+        const label = await evaluate(() => {
           const btn = document.querySelector('.uh-topic-preview button');
-          if (!btn) return 'NO CALL TO ACTION RENDERED';
-          const label = btn.textContent.trim();
-          const SELECTOR = '.lesson-reader, .bhm-pager, .lr-reader, [data-testid="lesson"]';
+          if (!btn) return null;
+          const text = btn.textContent.trim();
           btn.click();
+          return text;
+        });
+        if (!label) {
+          opened = 'NO CALL TO ACTION RENDERED';
+        } else {
+          opened = await evaluate(async (args) => {
+          const { label, SELECTOR } = args;
 
           // Waited on, rather than slept for.
           //
@@ -281,7 +312,8 @@ const signIn = async (page, port) => {
             await new Promise((r) => setTimeout(r, 100));
           }
           return `${label} -> NOTHING OPENED (waited 15s for ${SELECTOR})`;
-        });
+        }, { label, SELECTOR: '.lesson-reader, .bhm-pager, .deep-read-container, .lr-reader, [data-testid="lesson"]' });
+        }
         await evaluate(() => {
           const b = [...document.querySelectorAll('button')].find((x) => /atlas|home/i.test(x.textContent || ''));
           b && b.click();

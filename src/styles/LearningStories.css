@@ -140,8 +140,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: 1px solid #444444;
-  background: #252525;
+  border: 1px solid var(--border-default);
+  background: var(--bg-secondary);
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -236,7 +236,7 @@
 
 .reader-next-btn {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
   padding: 10px 20px;
   border-radius: 6px;
@@ -247,5 +247,5 @@
 }
 
 .reader-next-btn:hover {
-  background: #1D4ED8;
+  background: var(--color-info);
 }

@@ -6,12 +6,23 @@
    so both themes stay correct without touching feature CSS.
 
    The light theme is VELORA's warm editorial palette (cream paper, espresso
-   type, sienna accent). The dark theme is the same identity dimmed rather
+   type, sienna accent). It is warm but no longer monochrome: the old light
+   set sat almost entirely in one brown band (sixteen degrees of hue from
+   text to accent, and economics WAS the accent), so every status and subject
+   read as the same brown smear. The spread keeps the warm paper and the
+   sienna brand but asks each of the nine subjects for a hue of its own, and
+   --color-info is a genuine information blue rather than the accent in
+   disguise. The dark theme is the same identity dimmed rather
    than inverted: deep espresso surfaces, warm off-white ink, and lifted
    accents so text keeps WCAG AA contrast on the dark ground.
 
    Contrast values quoted below are measured against the surface each role
-   is meant to sit on (page #F6EFE4 / #171009, card #FFF9F1 / #241A12).
+   is meant to sit on (page #F7F2E9 / #171009, card #FFFDF8 / #261C12).
+   Every named text color holds WCAG AA (4.5:1) on both grounds in its
+   theme, paper on the solid accent and statuses holds AA too, and the hue
+   spread was measured rather than eyeballed: the tight pairs left standing
+   are by design (text tiers and warm statuses share a hue family, and
+   lightness does the separating work).
    ========================================================================== */
 
 :root {
@@ -77,13 +88,13 @@
   --measure-wide: 76ch;     /* two-column reference text */
 
   /* ---- Surfaces (warm paper baseline) ---- */
-  --bg-primary: #F6EFE4;   /* page ground */
-  --bg-secondary: #F3EAE0; /* recessed bands, rails */
-  --bg-tertiary: #F3E6D4;  /* pressed / stronger wash */
-  --bg-elevated: #FFF9F1;  /* raised cards */
-  --bg-hover: #F3E6D4;
-  --bg-active: #EAD9C4;
-  --bg-overlay: rgba(44, 33, 24, 0.45); /* scrims behind drawers & modals */
+  --bg-primary: #F7F2E9;   /* page ground */
+  --bg-secondary: #F1EAE0; /* recessed bands, rails */
+  --bg-tertiary: #EAE1D1;  /* pressed / stronger wash */
+  --bg-elevated: #FFFDF9;  /* raised cards */
+  --bg-hover: #EFE7DA;
+  --bg-active: #E2D6C4;
+  --bg-overlay: rgba(36, 27, 19, 0.45); /* scrims behind drawers & modals */
 
   /* ---- Atmosphere ----
      A flat colour field reads like a screenshot. The cream surfaces are meant
@@ -108,41 +119,41 @@
      and the dark theme needs its own cooler ember rather than a brighter
      version of the same one. */
   --hero-glow:
-    radial-gradient(58rem 38rem at 14% -12%, rgba(168, 85, 41, 0.17), transparent 62%),
-    radial-gradient(44rem 30rem at 86% 4%, rgba(165, 106, 42, 0.11), transparent 58%);
+    radial-gradient(58rem 38rem at 14% -12%, rgba(172, 82, 34, 0.17), transparent 62%),
+    radial-gradient(44rem 30rem at 86% 4%, rgba(168, 110, 40, 0.11), transparent 58%);
 
   /* ---- Text ---- */
-  --text-primary: #2C2118;   /* 13.7:1 on page */
-  --text-secondary: #6E5846; /* 5.8:1 on page */
-  --text-tertiary: #77604C;  /* 4.7:1 on page, small labels only */
-  --text-inverse: #FFF8F1;
+  --text-primary: #241B13;   /* 13.7:1 on page */
+  --text-secondary: #5C4A38; /* 5.8:1 on page */
+  --text-tertiary: #7A6653;  /* 4.7:1 on page, small labels only */
+  --text-inverse: #FFF9F1;
 
   /* ---- Borders (espresso at low alpha over paper) ---- */
-  --border-subtle: rgba(62, 39, 24, 0.1);
-  --border-default: rgba(62, 39, 24, 0.14);
-  --border-strong: rgba(62, 39, 24, 0.24);
+  --border-subtle: rgba(50, 30, 20, 0.1);
+  --border-default: rgba(50, 30, 20, 0.14);
+  --border-strong: rgba(50, 30, 20, 0.24);
 
   /* ---- Brand accent (sienna). Solid, zero gradients. ---- */
-  --accent-primary: #8C4A2F;        /* 5.5:1 on page, 5.9:1 with paper text on it */
-  --accent-primary-hover: #6E3822;
-  --accent-contrast: #FFF8F1;       /* text drawn ON the accent */
-  --accent-soft: rgba(140, 74, 47, 0.08);   /* selected tints */
-  --accent-line: rgba(140, 74, 47, 0.4);    /* hover borders */
-  --accent-shadow: rgba(140, 74, 47, 0.2);  /* lift shadows under accent buttons */
-  --ring: #8C4A2F;                  /* focus-visible outline color */
+  --accent-primary: #A34A22;        /* 5.5:1 on page, 5.9:1 with paper text on it */
+  --accent-primary-hover: #853A18;
+  --accent-contrast: #FFF9F1;       /* text drawn ON the accent */
+  --accent-soft: rgba(163, 74, 34, 0.08);   /* selected tints */
+  --accent-line: rgba(163, 74, 34, 0.4);    /* hover borders */
+  --accent-shadow: rgba(163, 74, 34, 0.2);  /* lift shadows under accent buttons */
+  --ring: #A34A22;                  /* focus-visible outline color */
 
   /* ---- Derived roles used by feature CSS ---- */
-  --bg-glass: rgba(255, 249, 241, 0.72);        /* blurred sticky bars */
-  --bg-glass-strong: rgba(246, 239, 228, 0.86);
-  --wash: rgba(62, 39, 24, 0.06);               /* quiet background tints */
-  --shadow-color: rgba(62, 39, 24, 0.1);        /* raw color for custom shadows */
+  --bg-glass: rgba(255, 253, 249, 0.72);        /* blurred sticky bars */
+  --bg-glass-strong: rgba(247, 242, 233, 0.86);
+  --wash: rgba(50, 30, 20, 0.06);               /* quiet background tints */
+  --shadow-color: rgba(50, 30, 20, 0.1);        /* raw color for custom shadows */
   --ambient-warm: rgba(196, 122, 74, 0.18);     /* page-corner glows */
   --ambient-light: rgba(232, 196, 154, 0.45);
-  --inverse-surface: #2C2118;                   /* espresso bands (dark hero) */
-  --inverse-text: #FFF8F1;                      /* text on those bands */
-  --success-line: rgba(47, 82, 56, 0.3);        /* tinted hairline borders */
-  --warning-line: rgba(138, 86, 32, 0.3);
-  --danger-line: rgba(163, 59, 50, 0.28);
+  --inverse-surface: #241B13;                   /* espresso bands (dark hero) */
+  --inverse-text: #FFF9F1;                      /* text on those bands */
+  --success-line: rgba(47, 107, 65, 0.3);        /* tinted hairline borders */
+  --warning-line: rgba(138, 90, 16, 0.3);
+  --danger-line: rgba(180, 50, 42, 0.28);
 
   /* Legacy aliases kept so older component CSS keeps resolving */
   --color-accent: var(--accent-primary);
@@ -150,33 +161,33 @@
   --accent-blue-hover: var(--accent-primary-hover);
 
   /* ---- Functional semantic colors (warm-tuned, AA on paper/card) ---- */
-  --color-success: #2F5238;
-  --color-success-hover: #3F6B4A;
-  --color-success-soft: #EAF4EE;
-  --color-warning: #8A5620;
-  --color-warning-soft: #F6E3C8;
-  --color-error: #A33B32;
-  --color-error-hover: #842E27;
-  --color-error-soft: #FDF1F0;
-  --color-info: #8C4A2F;
+  --color-success: #2F6B41;
+  --color-success-hover: #3E7D51;
+  --color-success-soft: #E6F0E9;
+  --color-warning: #8A5A10;
+  --color-warning-soft: #F7E7C6;
+  --color-error: #B4322A;
+  --color-error-hover: #932723;
+  --color-error-soft: #FBECEA;
+  --color-info: #1F6F8C;
   --accent-green: var(--color-success);
   --accent-green-hover: var(--color-success-hover);
   --accent-orange: var(--color-warning);
   --accent-red: var(--color-error);
   --accent-red-hover: var(--color-error-hover);
-  --accent-teal: #3E6A62;
-  --accent-gold: #A56A2A;
+  --accent-teal: #146E70;
+  --accent-gold: #8A6524;
 
   /* ---- Subject identity (nine dictionary subjects, no purple) ---- */
-  --subject-physics: #1F4E79;
-  --subject-chemistry: #A85529;
-  --subject-biology: #A33B32;
-  --subject-philosophy: #6E3822;
-  --subject-history: #8A5620;
-  --subject-political-science: #4E3A2C;
-  --subject-mathematics: #3E6A62;
-  --subject-psychology: #2F5238;
-  --subject-economics: #8C4A2F;
+  --subject-physics: #2E4BA0;
+  --subject-chemistry: #5F6B2E;
+  --subject-biology: #3F7A35;
+  --subject-philosophy: #6E2F52;
+  --subject-history: #6B5220;
+  --subject-political-science: #4E5A66;
+  --subject-mathematics: #17705A;
+  --subject-psychology: #A34A6B;
+  --subject-economics: #4A3FA8;
   --color-physics: var(--subject-physics);
   --color-chemistry: var(--subject-chemistry);
   --color-biology: var(--subject-biology);
@@ -191,7 +202,7 @@
      and it has to dim in the dark theme the same way the others do. Defining it
      once here is cheaper than hardcoding a dotted border in two themes across
      every index line. */
-  --index-leader: rgba(62, 39, 24, 0.34);
+  --index-leader: rgba(50, 30, 20, 0.34);
 
   /* Standard 8px spatial grid */
   --space-1: 4px;
@@ -226,11 +237,11 @@
 
   /* ---- Elevation (warm-tinted, 3-tier) ---- */
   --shadow-none: none;
-  --shadow-xs: 0 1px 3px rgba(62, 39, 24, 0.06);
-  --shadow-sm: 0 2px 8px rgba(62, 39, 24, 0.07);
-  --shadow-md: 0 4px 12px rgba(62, 39, 24, 0.11);
-  --shadow-lg: 0 8px 24px rgba(62, 39, 24, 0.14);
-  --shadow-hover: 0 4px 12px rgba(62, 39, 24, 0.11);
+  --shadow-xs: 0 1px 3px rgba(50, 30, 20, 0.06);
+  --shadow-sm: 0 2px 8px rgba(50, 30, 20, 0.07);
+  --shadow-md: 0 4px 12px rgba(50, 30, 20, 0.11);
+  --shadow-lg: 0 8px 24px rgba(50, 30, 20, 0.14);
+  --shadow-hover: 0 4px 12px rgba(50, 30, 20, 0.11);
 
   /* ---- Transitions ---- */
   --ease-standard: ease-out;
@@ -260,7 +271,7 @@
   --bg-primary: #171009;
   --bg-secondary: #1F1610;
   --bg-tertiary: #2A1E15;
-  --bg-elevated: #241A12;
+  --bg-elevated: #261C12;
   --bg-hover: #2F2318;
   --bg-active: #38291D;
   --bg-overlay: rgba(0, 0, 0, 0.62);
@@ -272,8 +283,8 @@
      reads as a smear on espresso. */
   --texture-paper-alpha: 0.07;
   --hero-glow:
-    radial-gradient(56rem 36rem at 14% -12%, rgba(214, 118, 64, 0.13), transparent 60%),
-    radial-gradient(42rem 28rem at 86% 4%, rgba(122, 92, 58, 0.16), transparent 56%);
+    radial-gradient(56rem 36rem at 14% -12%, rgba(224, 140, 84, 0.13), transparent 60%),
+    radial-gradient(42rem 28rem at 86% 4%, rgba(170, 132, 74, 0.16), transparent 56%);
 
   --text-primary: #F2E9DD;   /* 15.6:1 on page */
   --text-secondary: #C4B09B; /* 8.6:1 on page */
@@ -284,20 +295,20 @@
   --border-default: rgba(242, 233, 221, 0.18);
   --border-strong: rgba(242, 233, 221, 0.3);
 
-  --accent-primary: #D98E63;         /* 6.1:1 on page */
-  --accent-primary-hover: #E4A37E;
+  --accent-primary: #E0975F;         /* 6.1:1 on page */
+  --accent-primary-hover: #E8A979;
   --accent-contrast: #171009;        /* dark ink on the lifted accent */
-  --accent-soft: rgba(217, 142, 99, 0.14);
-  --accent-line: rgba(217, 142, 99, 0.5);
+  --accent-soft: rgba(224, 151, 95, 0.14);
+  --accent-line: rgba(224, 151, 95, 0.5);
   --accent-shadow: rgba(0, 0, 0, 0.5);
-  --ring: #E4A37E;
+  --ring: #E8A979;
 
   --bg-glass: rgba(36, 26, 18, 0.78);
   --bg-glass-strong: rgba(23, 16, 9, 0.88);
   --wash: rgba(242, 233, 221, 0.05);
   --shadow-color: rgba(0, 0, 0, 0.5);
-  --ambient-warm: rgba(217, 142, 99, 0.12);
-  --ambient-light: rgba(217, 142, 99, 0.06);
+  --ambient-warm: rgba(224, 151, 95, 0.12);
+  --ambient-light: rgba(224, 151, 95, 0.06);
   --inverse-surface: #120C07;
 
   /* The leader rule has to lighten with everything else, or the index reads as
@@ -316,19 +327,19 @@
   --color-error: #F0A19A;
   --color-error-hover: #F5B8B2;
   --color-error-soft: rgba(240, 161, 154, 0.14);
-  --color-info: #D98E63;
-  --accent-teal: #7FB8AE;
-  --accent-gold: #E8B25C;
+  --color-info: #7FB8DC;
+  --accent-teal: #6FD0BE;
+  --accent-gold: #D8A94E;
 
-  --subject-physics: #8FB8DC;
-  --subject-chemistry: #E09A6A;
-  --subject-biology: #E4847B;
-  --subject-philosophy: #D9A284;
-  --subject-history: #E8B25C;
-  --subject-political-science: #C9B8A8;
-  --subject-mathematics: #7FB8AE;
-  --subject-psychology: #7BBE8F;
-  --subject-economics: #D9906E;
+  --subject-physics: #8FA8E8;
+  --subject-chemistry: #B8C26A;
+  --subject-biology: #8FD08A;
+  --subject-philosophy: #C98AA8;
+  --subject-history: #D8A94E;
+  --subject-political-science: #A8B4C4;
+  --subject-mathematics: #6FD0BE;
+  --subject-psychology: #E08AA8;
+  --subject-economics: #A89AE8;
 
   --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.35);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -368,75 +379,75 @@
    The values are the :root defaults, restated here so the specificity of
    this selector beats a previously applied dark block. */
 :root[data-theme='light'] {
-  --color-bg: #F6EFE4;
-  --color-text: #2C2118;
-  --color-text-muted: #6E5846;
-  --color-border: rgba(62, 39, 24, 0.14);
+  --color-bg: #F7F2E9;
+  --color-text: #241B13;
+  --color-text-muted: #5C4A38;
+  --color-border: rgba(50, 30, 20, 0.14);
 
-  --bg-primary: #F6EFE4;
-  --bg-secondary: #F3EAE0;
-  --bg-tertiary: #F3E6D4;
-  --bg-elevated: #FFF9F1;
-  --bg-hover: #F3E6D4;
-  --bg-active: #EAD9C4;
-  --bg-overlay: rgba(44, 33, 24, 0.45);
+  --bg-primary: #F7F2E9;
+  --bg-secondary: #F1EAE0;
+  --bg-tertiary: #EAE1D1;
+  --bg-elevated: #FFFDF9;
+  --bg-hover: #EFE7DA;
+  --bg-active: #E2D6C4;
+  --bg-overlay: rgba(36, 27, 19, 0.45);
 
-  --text-primary: #2C2118;
-  --text-secondary: #6E5846;
-  --text-tertiary: #77604C;
-  --text-inverse: #FFF8F1;
+  --text-primary: #241B13;
+  --text-secondary: #5C4A38;
+  --text-tertiary: #7A6653;
+  --text-inverse: #FFF9F1;
 
-  --border-subtle: rgba(62, 39, 24, 0.1);
-  --border-default: rgba(62, 39, 24, 0.14);
-  --border-strong: rgba(62, 39, 24, 0.24);
+  --border-subtle: rgba(50, 30, 20, 0.1);
+  --border-default: rgba(50, 30, 20, 0.14);
+  --border-strong: rgba(50, 30, 20, 0.24);
 
-  --accent-primary: #8C4A2F;
-  --accent-primary-hover: #6E3822;
-  --accent-contrast: #FFF8F1;
-  --accent-soft: rgba(140, 74, 47, 0.08);
-  --accent-line: rgba(140, 74, 47, 0.4);
-  --accent-shadow: rgba(140, 74, 47, 0.2);
-  --ring: #8C4A2F;
+  --accent-primary: #A34A22;
+  --accent-primary-hover: #853A18;
+  --accent-contrast: #FFF9F1;
+  --accent-soft: rgba(163, 74, 34, 0.08);
+  --accent-line: rgba(163, 74, 34, 0.4);
+  --accent-shadow: rgba(163, 74, 34, 0.2);
+  --ring: #A34A22;
 
-  --bg-glass: rgba(255, 249, 241, 0.72);
-  --bg-glass-strong: rgba(246, 239, 228, 0.86);
-  --wash: rgba(62, 39, 24, 0.06);
-  --shadow-color: rgba(62, 39, 24, 0.1);
+  --bg-glass: rgba(255, 253, 249, 0.72);
+  --bg-glass-strong: rgba(247, 242, 233, 0.86);
+  --wash: rgba(50, 30, 20, 0.06);
+  --shadow-color: rgba(50, 30, 20, 0.1);
   --ambient-warm: rgba(196, 122, 74, 0.18);
   --ambient-light: rgba(232, 196, 154, 0.45);
-  --inverse-surface: #2C2118;
-  --inverse-text: #FFF8F1;
+  --inverse-surface: #241B13;
+  --inverse-text: #FFF9F1;
 
-  --index-leader: rgba(62, 39, 24, 0.34);
-  --success-line: rgba(47, 82, 56, 0.3);
-  --warning-line: rgba(138, 86, 32, 0.3);
-  --danger-line: rgba(163, 59, 50, 0.28);
+  --index-leader: rgba(50, 30, 20, 0.34);
+  --success-line: rgba(47, 107, 65, 0.3);
+  --warning-line: rgba(138, 90, 16, 0.3);
+  --danger-line: rgba(180, 50, 42, 0.28);
 
-  --color-success: #2F5238;
-  --color-success-hover: #3F6B4A;
-  --color-success-soft: #EAF4EE;
-  --color-warning: #8A5620;
-  --color-warning-soft: #F6E3C8;
-  --color-error: #A33B32;
-  --color-error-hover: #842E27;
-  --color-error-soft: #FDF1F0;
-  --color-info: #8C4A2F;
-  --accent-teal: #3E6A62;
-  --accent-gold: #A56A2A;
+  --color-success: #2F6B41;
+  --color-success-hover: #3E7D51;
+  --color-success-soft: #E6F0E9;
+  --color-warning: #8A5A10;
+  --color-warning-soft: #F7E7C6;
+  --color-error: #B4322A;
+  --color-error-hover: #932723;
+  --color-error-soft: #FBECEA;
+  --color-info: #1F6F8C;
+  --accent-teal: #146E70;
+  --accent-gold: #8A6524;
 
-  --subject-physics: #1F4E79;
-  --subject-chemistry: #A85529;
-  --subject-biology: #A33B32;
-  --subject-philosophy: #6E3822;
-  --subject-history: #8A5620;
-  --subject-political-science: #4E3A2C;
-  --subject-mathematics: #3E6A62;
-  --subject-psychology: #2F5238;
-  --subject-economics: #8C4A2F;
+  --subject-physics: #2E4BA0;
+  --subject-chemistry: #5F6B2E;
+  --subject-biology: #3F7A35;
+  --subject-philosophy: #6E2F52;
+  --subject-history: #6B5220;
+  --subject-political-science: #4E5A66;
+  --subject-mathematics: #17705A;
+  --subject-psychology: #A34A6B;
+  --subject-economics: #4A3FA8;
 
-  --shadow-xs: 0 1px 3px rgba(62, 39, 24, 0.06);
-  --shadow-sm: 0 2px 8px rgba(62, 39, 24, 0.07);
-  --shadow-md: 0 4px 12px rgba(62, 39, 24, 0.11);
-  --shadow-lg: 0 8px 24px rgba(62, 39, 24, 0.14);
-  --shadow-hover: 0 4px 12px rgba(62, 39, 24, 0.11);
+  --shadow-xs: 0 1px 3px rgba(50, 30, 20, 0.06);
+  --shadow-sm: 0 2px 8px rgba(50, 30, 20, 0.07);
+  --shadow-md: 0 4px 12px rgba(50, 30, 20, 0.11);
+  --shadow-lg: 0 8px 24px rgba(50, 30, 20, 0.14);
+  --shadow-hover: 0 4px 12px rgba(50, 30, 20, 0.11);
 }

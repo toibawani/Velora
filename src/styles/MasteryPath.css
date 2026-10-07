@@ -158,7 +158,7 @@
 
 .lesson-action-btn.start {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
 }
 

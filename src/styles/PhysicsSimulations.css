@@ -98,7 +98,7 @@
 
 .sim-tab-btn.active {
   background: var(--accent-primary, var(--accent-primary)) !important;
-  color: #FFF8F1 !important;
+  color: var(--bg-primary) !important;
   border-color: var(--accent-primary, var(--accent-primary)) !important;
   box-shadow: 0 4px 12px var(--accent-shadow) !important;
 }
@@ -160,7 +160,7 @@
 
 .sim-btn-play {
   background: var(--accent-primary, var(--accent-primary)) !important;
-  color: #FFF8F1 !important;
+  color: var(--bg-primary) !important;
 }
 
 .sim-btn-play:hover {
@@ -169,7 +169,7 @@
 
 .sim-btn-pause {
   background: var(--accent-gold) !important;
-  color: #FFF8F1 !important;
+  color: var(--bg-primary) !important;
 }
 
 .sim-btn-ghost {
@@ -362,7 +362,7 @@
 
 .pill-btn.active {
   background: var(--accent-primary, var(--accent-primary)) !important;
-  color: #FFF8F1 !important;
+  color: var(--bg-primary) !important;
   border-color: var(--accent-primary, var(--accent-primary)) !important;
 }
 

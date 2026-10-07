@@ -48,7 +48,7 @@
 .velora-empty-action {
   padding: 10px 20px;
   background: var(--accent-primary);
-  color: #ffffff;
+  color: --bg-primary;
   border: none;
   border-radius: var(--radius-md);
   font-size: 0.875rem;

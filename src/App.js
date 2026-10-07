@@ -68,6 +68,8 @@ const ROUTE_LABELS = {
 const DEEP_READ_ROUTES = {
   'black-holes': { subject: 'physics', view: 'black-hole-mastery' },
   'philosophy-core': { subject: 'philosophy', view: 'philosophy-core' },
+  'history-core': { subject: 'history', view: 'history-core' },
+  'cs-core': { subject: 'computer science', view: 'cs-core' },
 };
 
 function App() {

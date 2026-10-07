@@ -155,7 +155,7 @@
 
 .sr-btn-primary {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
   padding: 8px 18px;
   border-radius: var(--radius-full);
@@ -272,9 +272,9 @@
 }
 
 .sr-toggle-btn.playing {
-  background: #10b981;
-  border-color: #10b981;
-  color: #ffffff;
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: var(--text-inverse);
 }
 
 .sr-slider-wrapper {

@@ -14,13 +14,13 @@
   margin: 0 0 0.5rem;
   font-size: 1.5rem;
   font-weight: 800;
-  color: #000000;
+  color: var(--text-primary);
 }
 
 .explanations-subtitle {
   margin: 0;
   font-size: 0.95rem;
-  color: #4a4a4a;
+  color: var(--text-secondary);
 }
 
 .explanation-input-box {
@@ -34,12 +34,12 @@
 .explanation-input {
   width: 100%;
   padding: 1rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-default);
   border-radius: 8px;
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.6;
-  color: #1a1a1a;
+  color: var(--text-primary);
   resize: vertical;
   min-height: 80px;
   transition: all 0.2s ease;
@@ -62,7 +62,7 @@
 
 .char-count {
   font-size: 0.85rem;
-  color: #5f5e5a;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .submit-btn:hover {
-  background: #5a6fd6;
+  background: var(--color-info);
   transform: translateY(-2px);
 }
 
@@ -90,15 +90,15 @@
 }
 
 .explanation-card {
-  background: #f8f8f8;
-  border: 1px solid #e0e0e0;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: 10px;
   padding: 1.5rem;
   transition: all 0.2s ease;
 }
 
 .explanation-card:hover {
-  border-color: #d0d0d0;
+  border-color: var(--border-default);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
@@ -106,7 +106,7 @@
   margin: 0 0 1rem;
   font-size: 1rem;
   line-height: 1.7;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
@@ -119,7 +119,7 @@
 
 .time-ago {
   font-size: 0.8rem;
-  color: #5f5e5a;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -133,8 +133,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 6px 12px;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -150,21 +150,21 @@
 }
 
 .vote-count {
-  color: #4a4a4a;
+  color: var(--text-secondary);
 }
 
 .vote-btn.clear:hover {
-  background: #f0f8ff;
+  background: var(--bg-secondary);
   border-color: var(--accent-primary);
 }
 
 .vote-btn.funny:hover {
-  background: #fff8f0;
-  border-color: #F39C12;
+  background: var(--bg-tertiary);
+  border-color: var(--color-warning);
 }
 
 .vote-btn.mindBending:hover {
-  background: #f0f0ff;
+  background: var(--bg-secondary);
   border-color: var(--accent-primary);
 }
 

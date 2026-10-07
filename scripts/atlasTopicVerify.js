@@ -187,6 +187,7 @@ const CASES = [
   { name: 'Industrial Revolution (history)', query: 'Industrial', topic: 'Industrial Revolution', expect: 'lesson' },
   { name: 'Black Holes (deep read)', query: 'Black Holes', topic: 'Black Holes', expect: 'deep-read' },
   { name: 'General Relativity (deep read)', query: 'General Relativity', topic: 'General Relativity', expect: 'deep-read' },
+  { name: 'Quantum Computing (cs deep read)', query: 'Quantum Computing', topic: 'Quantum Computing', expect: 'deep-read' },
   { name: 'Motion (listed, unwritten)', query: 'Motion', topic: 'Motion', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },
   { name: 'Monsoons (field unmapped)', query: 'Monsoons', topic: 'Monsoons', expect: 'unwritten' },

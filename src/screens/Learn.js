@@ -23,6 +23,8 @@ import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
 import BlackHoleMastery from '../components/BlackHoleMastery';
 import PhilosophyDeepRead from '../components/PhilosophyDeepRead';
+import HistoryDeepRead from '../components/HistoryDeepRead';
+import ComputerScienceDeepRead from '../components/ComputerScienceDeepRead';
 import RelativityLab from '../components/RelativityLab';
 import PhysicsSimulations from '../components/PhysicsSimulations';
 import FlowStateGame from '../components/FlowStateGame';
@@ -146,7 +148,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       : <Circle size={13} aria-hidden="true" />
   );
 
-  const getStatusColor = (status) => (status === 'in-progress' ? '#ff9f0a' : '#666666');
+  const getStatusColor = (status) => (status === 'in-progress' ? 'var(--color-warning)' : 'var(--text-tertiary)');
 
   // View: Full curriculum lesson
   if (currentView === 'lesson' && selectedTopic) {
@@ -265,6 +267,34 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     );
   }
 
+  // View: the history deep read. Identical wiring, different data and different
+  // status vocabulary - which is the point, because the mechanic generalising to
+  // a third subject is the claim the earlier two could only make twice.
+  // The level id comes through the same channel as every other deep read. A
+  // stale value cannot strand this screen: DeepRead falls back to its first
+  // level when the id names nothing it renders.
+  if (currentView === 'history-core') {
+    return (
+      <HistoryDeepRead
+        onBack={handleBack}
+        initialLevelId={deepReadLevel}
+      />
+    );
+  }
+
+  // View: the computer science deep read. The fourth subject through the same
+  // reader, and the first that needed a status vocabulary of five rather than
+  // three - which is the evidence that the vocabulary was per-subject by
+  // necessity rather than by decoration.
+  if (currentView === 'cs-core') {
+    return (
+      <ComputerScienceDeepRead
+        onBack={handleBack}
+        initialLevelId={deepReadLevel}
+      />
+    );
+  }
+
   // View: Relativity Lab
   if (currentView === 'relativity-lab') {
     return (
@@ -315,24 +345,24 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
             {(selectedSubject === 'physics' || !selectedSubject) && (
               <section className="learn-section">
                 <div
-                  className="card p-6 border border-[#3E2718]/15 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[#FFF9F1] shadow-sm mb-6"
-                  style={{ background: '#FFF9F1', padding: '1.5rem', borderRadius: '18px', border: '1px solid rgba(62, 39, 24, 0.12)' }}
+                  className="card p-6 border border-border rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm mb-6"
+                  style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '18px', border: '1px solid var(--border-default)' }}
                 >
                   <div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8C4A2F', display: 'block', marginBottom: '4px' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-secondary)', display: 'block', marginBottom: '4px' }}>
                       Interactive Laboratory
                     </span>
-                    <h3 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: '1.35rem', margin: '0 0 6px', color: '#2C2118' }}>
+                    <h3 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: '1.35rem', margin: '0 0 6px', color: 'var(--text-primary)', }}>
                       Physics in Motion: 5 Hands-On Simulations
                     </h3>
-                    <p style={{ margin: 0, fontSize: '0.92rem', color: '#6E5846', maxWidth: '640px' }}>
+                    <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--text-secondary)', maxWidth: '640px' }}>
                       Test Newton's second law on a live track, angle ballistic projectiles, drop objects in a vacuum chamber, watch ripple waves interfere, and fire thruster burns in Keplerian orbit.
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setCurrentView('physics-sims')}
-                    style={{ whiteSpace: 'nowrap', backgroundColor: '#8C4A2F', color: '#FFF8F1', borderRadius: '999px', padding: '10px 20px', fontWeight: 600, border: 'none', cursor: 'pointer' }}
+                    style={{ whiteSpace: 'nowrap', backgroundColor: 'var(--text-secondary)', color: 'var(--bg-primary)', borderRadius: '999px', padding: '10px 20px', fontWeight: 600, border: 'none', cursor: 'pointer' }}
                   >
                     Open Physics Lab →
                   </button>

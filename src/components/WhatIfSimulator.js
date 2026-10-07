@@ -97,8 +97,8 @@ function WhatIfSimulator({ topic }) {
                       key={idx}
                       className="visual-box"
                       style={{
-                        background: '#f8f8f8',
-                        border: '1px solid #e0e0e0',
+                        background: 'var(--bg-secondary)',
+                        border: '1px solid var(--border-default)',
                       }}
                     >
                       <p>Scenario Visualization</p>

@@ -6,7 +6,7 @@
 
 .shadow-learning-container h2 {
   margin: 0 0 1rem;
-  color: #042C53;
+  color: var(--text-primary);
 }
 
 .my-note-section {
@@ -14,18 +14,18 @@
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 2px solid #D3D1C7;
+  border: 2px solid var(--border-default);
   margin-bottom: 2rem;
 }
 
 .my-note-section h3 {
   margin: 0 0 0.5rem;
-  color: #042C53;
+  color: var(--text-primary);
 }
 
 .challenge {
   margin: 0 0 1.5rem;
-  color: #5F5E5A;
+  color: var(--text-secondary);
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -34,11 +34,11 @@
   width: 100%;
   min-height: 100px;
   padding: 1rem;
-  border: 2px solid #D3D1C7;
+  border: 2px solid var(--border-default);
   border-radius: 8px;
   font-family: inherit;
   font-size: 1rem;
-  color: #042C53;
+  color: var(--text-primary);
   resize: vertical;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 1rem;
@@ -57,7 +57,7 @@
 }
 
 .char-count {
-  color: #888780;
+  color: var(--text-tertiary);
   font-size: 0.9rem;
 }
 
@@ -73,12 +73,12 @@
 }
 
 .btn-submit-note:hover {
-  background: #1D4ED8;
+  background: var(--color-info);
   box-shadow: 0 2px 6px var(--accent-shadow);
 }
 
 .btn-submit-note.submitted {
-  background: #2E7D32;
+  background: var(--color-success);
 }
 
 .community-notes {
@@ -87,14 +87,14 @@
 
 .community-notes h3 {
   margin: 0 0 1.5rem;
-  color: #042C53;
+  color: var(--text-primary);
 }
 
 .top-note {
-  background: #fff8ed;
+  background: var(--bg-tertiary);
   padding: 2rem;
   border-radius: 12px;
-  border: 2px solid #FFB74D;
+  border: 2px solid var(--color-warning);
   margin-bottom: 2rem;
   position: relative;
 }
@@ -113,7 +113,7 @@
 
 .note-text {
   margin: 1rem 0;
-  color: #042C53;
+  color: var(--text-primary);
   font-size: 1.1rem;
   font-style: italic;
   line-height: 1.6;
@@ -127,7 +127,7 @@
 
 .vote-count {
   font-weight: 600;
-  color: #E65100;
+  color: var(--color-warning);
   font-size: 0.95rem;
 }
 
@@ -160,8 +160,8 @@
 .vote-btn {
   flex: 1;
   padding: 8px 12px;
-  background: #F8F8F8;
-  border: 1px solid #D3D1C7;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
@@ -171,29 +171,29 @@
 
 .vote-btn.clear:hover {
   border-color: var(--accent-primary);
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .vote-btn.funny:hover {
-  border-color: #FFB74D;
-  color: #E65100;
+  border-color: var(--color-warning);
+  color: var(--color-warning);
 }
 
 .vote-btn.memorable:hover {
-  border-color: #2E7D32;
-  color: #2E7D32;
+  border-color: var(--color-success);
+  color: var(--color-success);
 }
 
 .shadow-note {
   padding: 1rem;
-  background: #f5f8fc;
+  background: var(--bg-secondary);
   border-radius: 8px;
   border-left: 4px solid var(--accent-primary);
 }
 
 .shadow-note p {
   margin: 0;
-  color: #042C53;
+  color: var(--text-primary);
   font-size: 0.9rem;
   line-height: 1.6;
 }

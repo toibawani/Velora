@@ -23,9 +23,9 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
   };
 
   const getRetentionColor = (retention) => {
-    if (retention >= 80) return '#2E7D32';
-    if (retention >= 60) return '#F39C12';
-    return '#E74C3C';
+    if (retention >= 80) return 'var(--color-success)';
+    if (retention >= 60) return 'var(--color-warning)';
+    return 'var(--color-info)';
   };
 
   // Returns the urgency and its wording, so the icon can be chosen from data
@@ -99,7 +99,7 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
                 className="review-btn"
                 onClick={() => handleReviewNow(item.id)}
                 style={{
-                  background: getDaysUntilReview(item.nextReview) <= 0 ? '#E74C3C' : '#2563EB',
+                  background: getDaysUntilReview(item.nextReview) <= 0 ? 'var(--color-error)' : 'var(--color-info)',
                 }}
               >
                 Review

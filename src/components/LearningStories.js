@@ -20,7 +20,7 @@ function LearningStories({ onSelectStoryTopic }) {
       subtitle: 'From 18th-century "Dark Stars" in church journals to the first photograph of an event horizon.',
       author: 'Curated by VELORA Astrophysics Archive',
       readTime: '8 min narrative',
-      color: '#2563EB',
+      color: 'var(--color-info)',
       icon: Orbit,
       chapters: [
         {
@@ -55,7 +55,7 @@ function LearningStories({ onSelectStoryTopic }) {
       subtitle: 'How Socratic aporia, Plato’s cave, and Aristotle’s telos govern modern AI ethics and digital reality.',
       author: 'VELORA Philosophical Studies',
       readTime: '7 min narrative',
-      color: '#2563EB',
+      color: 'var(--color-info)',
       icon: Landmark,
       chapters: [
         {
@@ -84,7 +84,7 @@ function LearningStories({ onSelectStoryTopic }) {
       subtitle: 'From Galileo’s glass tube in Venice to James Webb staring into Cosmic Dawn.',
       author: 'VELORA History of Science',
       readTime: '6 min narrative',
-      color: '#ff9f0a',
+      color: 'var(--color-warning)',
       icon: Telescope,
       chapters: [
         {

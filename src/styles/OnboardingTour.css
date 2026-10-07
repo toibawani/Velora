@@ -20,8 +20,8 @@
 }
 
 .onboarding-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
+  background: var(--bg-secondary, --text-primary);
+  border: 1px solid var(--border-default, --text-secondary);
   border-radius: 16px;
   max-width: 580px;
   width: 100%;
@@ -49,7 +49,7 @@
 .onboarding-progress-track {
   width: 100%;
   height: 4px;
-  background: var(--bg-tertiary, #222222);
+  background: var(--bg-tertiary, --text-secondary);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -66,7 +66,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary, --text-tertiary);
 }
 
 .onboarding-illustration {
@@ -86,13 +86,13 @@
   font-size: 1.75rem;
   font-weight: 900;
   letter-spacing: -0.03em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary, --bg-primary);
 }
 
 .onboarding-subtitle {
   margin: 0;
   font-size: 1rem;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary, --text-tertiary);
   font-weight: 500;
 }
 
@@ -100,7 +100,7 @@
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary, --text-tertiary);
   max-width: 440px;
 }
 
@@ -124,8 +124,8 @@
 }
 
 .onboarding-option-card {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
+  background: var(--bg-tertiary, --bg-secondary);
+  border: 1px solid var(--border-default, --border-default);
   border-radius: 10px;
   padding: 1rem 0.85rem;
   display: flex;
@@ -155,12 +155,12 @@
 .opt-label {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary, --bg-primary);
 }
 
 .opt-desc {
   font-size: 0.75rem;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary, --text-tertiary);
   line-height: 1.3;
 }
 
@@ -174,9 +174,9 @@
 }
 
 .time-option-btn {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
-  color: var(--text-secondary, #a0a0a0);
+  background: var(--bg-tertiary, --bg-secondary);
+  border: 1px solid var(--border-default, --border-default);
+  color: var(--text-secondary, --text-tertiary);
   padding: 10px 18px;
   border-radius: 8px;
   font-size: 0.9rem;
@@ -186,8 +186,8 @@
 }
 
 .time-option-btn:hover {
-  border-color: #555;
-  color: #fff;
+  border-color: var(--text-tertiary);
+  color: var(--bg-primary);
 }
 
 .time-option-btn.selected {
@@ -199,7 +199,7 @@
 /* CTA */
 .onboarding-cta-btn {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--bg-primary);
   border: none;
   padding: 13px 28px;
   border-radius: 8px;
@@ -212,7 +212,7 @@
 }
 
 .onboarding-cta-btn:hover:not(:disabled) {
-  background: #1D4ED8;
+  background: var(--color-info);
   transform: translateY(-1px);
 }
 
@@ -232,5 +232,5 @@
 }
 
 .onboarding-skip-link:hover {
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary, --text-tertiary);
 }

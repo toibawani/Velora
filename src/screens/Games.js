@@ -25,7 +25,7 @@ export const CLASSIC_GAMES = [
     type: 'quiz',
     description: 'Fourteen questions across space, quantum, physics, chemistry, biology and philosophy, with the reasoning behind each answer',
     icon: Target,
-    color: '#8C4A2F',
+    color: '--text-secondary',
     difficulty: 'Mixed',
   },
   {
@@ -34,7 +34,7 @@ export const CLASSIC_GAMES = [
     type: 'scrabble',
     description: 'Build scientific terms from a rack of letters',
     icon: Type,
-    color: '#A05A2C',
+    color: '--text-secondary',
     difficulty: 'Easy',
   },
   {
@@ -43,7 +43,7 @@ export const CLASSIC_GAMES = [
     type: 'chain',
     description: 'Put four concepts in the order where each one causes the next',
     icon: Link2,
-    color: '#7A4B2A',
+    color: '--text-secondary',
     difficulty: 'Medium',
   },
   {
@@ -52,7 +52,7 @@ export const CLASSIC_GAMES = [
     type: 'duel',
     description: 'Type the term a definition describes, against a 60 second clock',
     icon: FileText,
-    color: '#8C4A2F',
+    color: '--text-secondary',
     difficulty: 'Medium',
     fixedLength: '60 seconds',
   },
@@ -62,7 +62,7 @@ export const CLASSIC_GAMES = [
     type: 'puzzle',
     description: 'Fill in the missing term in a definition',
     icon: Puzzle,
-    color: '#6B5644',
+    color: '--text-tertiary',
     difficulty: 'Easy',
   },
   {
@@ -71,7 +71,7 @@ export const CLASSIC_GAMES = [
     type: 'simulation',
     description: 'Play with time dilation, length contraction and event horizons',
     icon: Orbit,
-    color: '#7A4B2A',
+    color: '--text-secondary',
     difficulty: 'Advanced',
   },
 ];

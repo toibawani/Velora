@@ -155,11 +155,12 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
       return;
     }
 
-    // Deep multi-level content. Two exist today: the black hole levels and the
-    // philosophy levels. The anchor is passed straight through, so a topic that
-    // names a level opens on that level.
+    // Deep multi-level content. Four exist today: black holes, philosophy,
+    // history and computer science. The anchor is passed straight through, so
+    // a topic that names a level opens on that level.
     if (resolution.kind === 'deep-read') {
-      setSelectedSubject(resolution.fieldId === 'philosophy' ? 'philosophy' : 'physics');
+      const SUBJECT_BY_FIELD = { philosophy: 'philosophy', history: 'history', science: 'physics' };
+      setSelectedSubject(SUBJECT_BY_FIELD[resolution.fieldId] || 'physics');
       onOpenDeepRead?.(resolution.readId, resolution.levelId);
       return;
     }
@@ -188,8 +189,8 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
     : activeField.disciplines;
 
   return (
-    <div className="universe-home bg-[#F6EFE4] min-h-screen text-[#2C2118]">
-      <header className="uh-header bg-[#F6EFE4]/85 backdrop-blur-md border-b border-[#3E2718]/10">
+    <div className="universe-home bg-[--bg-tertiary] min-h-screen text-[--text-primary]">
+      <header className="uh-header bg-[--bg-tertiary]/85 backdrop-blur-md border-b border-[--text-primary]/10">
         <button className="uh-brand" type="button" onClick={() => setScreen('universe')} aria-label="VELORA home">
           <span className="uh-brand-mark">V</span>
           <span><strong>VELORA</strong><small>The knowledge atlas</small></span>
@@ -228,7 +229,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
             <div className="uh-hero-actions">
               <button
                 type="button"
-                className="uh-primary bg-[#8C4A2F] hover:bg-[#6E3822] text-[#FFF8F1] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[#8C4A2F]/20 transition-all"
+                className="uh-primary bg-[--text-secondary] hover:bg-[--text-secondary] text-[--bg-primary] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[--text-secondary]/20 transition-all"
                 onClick={scrollToAtlas}
               >
                 Explore the atlas <ArrowRight size={17} />
@@ -252,7 +253,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
           <div className="uh-section-heading-row">
             <div>
               <p className="uh-eyebrow">The knowledge hierarchy</p>
-              <h2 id="atlas-heading" className="font-serif text-2xl font-light tracking-wide text-[#2C2118]">Explore the fields of human thought</h2>
+              <h2 id="atlas-heading" className="font-serif text-2xl font-light tracking-wide text-[--text-primary]">Explore the fields of human thought</h2>
             </div>
             <p>Choose a field, open a discipline, select a subfield, then choose a topic to preview its place in the whole.</p>
           </div>
@@ -397,7 +398,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
           </p>
           <button
             type="button"
-            className="uh-primary bg-[#8C4A2F] hover:bg-[#6E3822] text-[#FFF8F1] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[#8C4A2F]/20 transition-all"
+            className="uh-primary bg-[--text-secondary] hover:bg-[--text-secondary] text-[--bg-primary] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[--text-secondary]/20 transition-all"
             onClick={openLearningPath}
           >
             {outcomeLabel} <ArrowRight size={17} />
@@ -407,7 +408,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
         <section className="uh-method-section" aria-labelledby="method-title">
           <div>
             <p className="uh-eyebrow">A knowledge system that compounds</p>
-            <h2 id="method-title" className="font-serif text-2xl font-light tracking-wide text-[#2C2118]">One idea should open the next.</h2>
+            <h2 id="method-title" className="font-serif text-2xl font-light tracking-wide text-[--text-primary]">One idea should open the next.</h2>
           </div>
           <div className="uh-method-grid">
             <article><span>01</span><h3>Start broad</h3><p>See how the major field connects ideas across centuries and disciplines.</p></article>

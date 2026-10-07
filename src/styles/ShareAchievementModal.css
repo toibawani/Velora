@@ -41,7 +41,7 @@
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.06em;
-  color: #ffd60a;
+  color: var(--color-warning);
   background: rgba(255, 214, 10, 0.12);
   border: 1px solid rgba(255, 214, 10, 0.25);
   padding: 4px 10px;
@@ -57,7 +57,7 @@
 }
 
 .share-close-btn:hover {
-  color: #ffffff;
+  color: var(--text-inverse);
 }
 
 .achievement-graphic-card {
@@ -107,7 +107,7 @@
 }
 
 .share-caption-box {
-  background: #141414;
+  background: var(--bg-secondary);
   border: 1px solid var(--border-default, #2e2e2e);
   border-radius: 8px;
   padding: 0.85rem 1rem;
@@ -148,9 +148,9 @@
 }
 
 .viral-btn:hover {
-  background: #2a2a2a;
-  border-color: #555555;
-  color: #ffffff;
+  background: var(--bg-secondary);
+  border-color: var(--text-tertiary);
+  color: var(--text-inverse);
 }
 
 .viral-btn.whatsapp {

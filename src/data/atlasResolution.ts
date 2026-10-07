@@ -159,6 +159,34 @@ const DEEP_READS: Record<string, { readId: string; title: string; levelId?: stri
   'world-war-i': { readId: 'history-core', levelId: 'the-century-of-wars', title: 'History, from the record' },
   decolonization: { readId: 'history-core', levelId: 'the-century-of-wars', title: 'History, from the record' },
   'cold-war': { readId: 'history-core', levelId: 'the-century-of-wars', title: 'History, from the record' },
+  // Computer science: eleven entries across six levels, keyed to the exact Atlas
+  // topic names in the computer-science discipline. slugify() turns '&' into
+  // 'and', so 'Algorithms & Data Structures' arrives here as
+  // 'algorithms-and-data-structures' and there is no separate alias to keep.
+  //
+  // Note the collision survives intact: "Quantum Computing" is listed TWICE in
+  // the Atlas - once under Physics (Quantum Physics module) and once under
+  // Computer Science (Computing Systems module) - and the resolver keys on the
+  // slug of the topic alone, with no discipline. The entry below therefore
+  // opens the frontier level for EITHER topic of that name; the audit probes
+  // the computer-science one, which is why the physics twin does not disturb
+  // the score.
+  programming: { readId: 'cs-core', levelId: 'the-machine', title: 'Computer science, from the machine up' },
+  'computer-architecture': { readId: 'cs-core', levelId: 'the-machine', title: 'Computer science, from the machine up' },
+  'computer-networks': { readId: 'cs-core', levelId: 'the-machine', title: 'Computer science, from the machine up' },
+  'algorithms-and-data-structures': { readId: 'cs-core', levelId: 'fast-and-correct', title: 'Computer science, from the machine up' },
+  databases: { readId: 'cs-core', levelId: 'fast-and-correct', title: 'Computer science, from the machine up' },
+  'distributed-systems': { readId: 'cs-core', levelId: 'many-machines', title: 'Computer science, from the machine up' },
+  // "Cloud Computing" is a real Atlas topic and is deliberately NOT keyed here.
+  // There is no cloud entry in any level, so a key pointing at 'many-machines'
+  // would open a level that does not contain the topic - a tap that appears to
+  // work and lands the reader somewhere else. Unwritten is the honest answer,
+  // and it is what the topic still reports.
+  'machine-learning': { readId: 'cs-core', levelId: 'learning-from-data', title: 'Computer science, from the machine up' },
+  'deep-learning': { readId: 'cs-core', levelId: 'learning-from-data', title: 'Computer science, from the machine up' },
+  'artificial-intelligence': { readId: 'cs-core', levelId: 'learning-from-data', title: 'Computer science, from the machine up' },
+  'quantum-computing': { readId: 'cs-core', levelId: 'the-frontier', title: 'Computer science, from the machine up' },
+  cybersecurity: { readId: 'cs-core', levelId: 'the-frontier', title: 'Computer science, from the machine up' },
 };
 
 /**

@@ -228,7 +228,7 @@
 /* Center Canvas Container */
 .wb-canvas-container {
   flex: 1;
-  background: #020408;
+  background: --bg-primary;
   position: relative;
   overflow: hidden;
 }

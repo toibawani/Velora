@@ -33,7 +33,7 @@
   transform-origin: 50% 50%;
   will-change: transform;
   border-radius: var(--radius-sm, 8px);
-  background: var(--bg-elevated, #fff);
+  background: var(--bg-elevated, --bg-primary);
   box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
   overflow: hidden;
 }
@@ -57,10 +57,10 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--text-secondary, #666);
-  background: var(--bg-elevated, #fff);
-  border-top: 1px solid var(--border-subtle, #e5e5e5);
-  border-right: 1px solid var(--border-subtle, #e5e5e5);
+  color: var(--text-secondary, --text-tertiary);
+  background: var(--bg-elevated, --bg-primary);
+  border-top: 1px solid var(--border-subtle, --bg-secondary);
+  border-right: 1px solid var(--border-subtle, --bg-secondary);
   border-top-right-radius: var(--radius-sm, 8px);
   opacity: 0;
   transition: opacity 160ms ease-out;
@@ -85,7 +85,7 @@
   font-family: var(--font-sans, sans-serif);
   font-size: 0.875rem;
   line-height: 1.6;
-  color: var(--text-secondary, #666);
+  color: var(--text-secondary, --text-tertiary);
 }
 
 @media (max-width: 720px) {

@@ -77,6 +77,45 @@ describe('resolveAtlasTopic', () => {
     expect(at('philosophy', 'Nietzsche').kind).toBe('unwritten');
   });
 
+  test('routes the written computer science topics to the cs deep read, on their own level', () => {
+    // The generalization of the philosophy case above. Eleven Atlas topics, each
+    // with the level id of the level that actually carries the entry, so a tap
+    // on "Quantum Computing" opens the frontier level rather than the top of
+    // the subject. 'P vs NP' and 'The Two Generals Problem' are not Atlas
+    // topics and are deliberately not keyed here.
+    const cases: Array<[string, string]> = [
+      ['Programming', 'the-machine'],
+      ['Computer Architecture', 'the-machine'],
+      ['Computer Networks', 'the-machine'],
+      ['Algorithms & Data Structures', 'fast-and-correct'],
+      ['Databases', 'fast-and-correct'],
+      ['Distributed Systems', 'many-machines'],
+      ['Machine Learning', 'learning-from-data'],
+      ['Deep Learning', 'learning-from-data'],
+      ['Artificial Intelligence', 'learning-from-data'],
+      ['Quantum Computing', 'the-frontier'],
+      ['Cybersecurity', 'the-frontier'],
+    ];
+    cases.forEach(([topic, levelId]) => {
+      expect(at('science', topic)).toEqual({
+        kind: 'deep-read',
+        readId: 'cs-core',
+        levelId,
+        title: 'Computer science, from the machine up',
+        fieldId: 'science',
+      });
+    });
+  });
+
+  test('leaves an unwritten computer science topic unwritten rather than sending it to the read', () => {
+    // Same failure mode as the philosophy case: opening one subject's material
+    // for every topic in the discipline. 'Cloud Computing' is listed but has no
+    // entry, so it stays unwritten rather than opening a level that does not
+    // contain it.
+    expect(at('science', 'Cloud Computing').kind).toBe('unwritten');
+    expect(at('science', 'Robotics').kind).toBe('unwritten');
+  });
+
   test('reports an unwritten topic as unwritten instead of inventing content', () => {
     expect(at('science', 'Motion')).toEqual({
       kind: 'unwritten', reason: 'no-content-yet', title: 'Motion', fieldId: 'science',
@@ -114,24 +153,28 @@ describe('fieldCoverage', () => {
     const coverage = fieldCoverage('science', topics);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Physics has three written entry points: the two lessons that match Atlas
-    // topic names, plus black holes as a deep read.
-    expect(coverage.written).toBe(3);
+    // Fifteen written entry points across the whole science field: three for
+    // physics, one for space science (black holes), and eleven for the computer
+    // science deep read. It was three before computer science landed.
+    expect(coverage.written).toBe(15);
     expect(coverage.unmapped).toBe(0);
   });
 
   test('is honest about how little is written today', () => {
     // A deliberate number, raised in the same commit as the content that earned
     // it. It went from 10 to 18 when the philosophy levels landed, and from 18
-    // to 30 when the history levels did: the twelve history entries are the
-    // whole of the difference. If it fails, content was added, which is good
-    // news - raise it in the same commit as the content.
+    // to 30 when the history levels did, and from 30 to 42 when computer
+    // science did: eleven CS Atlas topics, plus "Quantum Computing" which the
+    // Atlas lists under both physics and computer science and so counts twice.
+    // If it fails, content was added, which is good news - raise it in the same
+    // commit as the content.
     //
-    // It is worth being precise about what 30 out of 572 means. It is not
-    // "thirty topics are done" in any sense a reader would recognise; it is
-    // thirty topics that open something real, against roughly five hundred that
-    // honestly report themselves as unwritten. The number went up by twelve and
-    // the gap went from 554 to 542, which is the honest way to read it.
+    // It is worth being precise about what 42 out of 572 means. It is not
+    // "forty-two topics are done" in any sense a reader would recognise; it is
+    // forty-two topics that open something real, against roughly five hundred
+    // that honestly report themselves as unwritten. The number went up by
+    // twelve and the gap went from 542 to 530, which is the honest way to read
+    // it.
     const all: Array<[string, string]> = [];
     KNOWLEDGE_FIELDS.forEach((f) => {
       f.disciplines.forEach((d) => {
@@ -145,7 +188,7 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(30);
+    expect(written).toBe(42);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -171,7 +214,9 @@ describe('fieldCoverage', () => {
     // topics plus some lessons" ought to come to that, and was wrong on both -
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
-    expect(perField.science.written).toBe(3);
+    //
+    // Science is 15: three physics, one space science, eleven computer science.
+    expect(perField.science.written).toBe(15);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -184,6 +229,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(30);
+    expect(summed).toBe(42);
   });
 });

@@ -2,21 +2,26 @@ import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import { lookupTerm as lookupPhysicsTerm } from '../data/blackholes/glossary';
 import { lookupTerm as lookupPhilosophyTerm } from '../data/philosophy/glossary';
+import { lookupTerm as lookupHistoryTerm } from '../data/history/glossary';
+import { lookupTerm as lookupCsTerm } from '../data/computerscience/glossary';
 import '../styles/GlossaryTerm.css';
 
 /**
  * The one lookup every inline definition goes through.
  *
- * There are two subjects with difficult words and one term system, so this is
- * the join between them rather than a second <GlossaryTerm> for philosophy. The
- * glossaries stay separate files (each has its own duplicate guard and its own
- * tests) and this function is the single place they are read together, which
- * keeps "one word, one meaning" checkable: glossary.test.ts asserts no term is
- * defined in both, so the order of the two lookups can never decide what a
+ * Four subjects have difficult words and there is one term system, so this is
+ * the join between them rather than a <GlossaryTerm> per subject. The glossaries
+ * stay separate files (each has its own duplicate guard and its own tests) and
+ * this function is the single place they are read together, which keeps "one
+ * word, one meaning" checkable: every subject's glossary.test.ts asserts no term
+ * is defined in two of them, so the order of the lookups can never decide what a
  * reader is shown.
  */
 export const lookupTerm = (term) =>
-  lookupPhysicsTerm(term) || lookupPhilosophyTerm(term);
+  lookupPhysicsTerm(term) ||
+  lookupPhilosophyTerm(term) ||
+  lookupHistoryTerm(term) ||
+  lookupCsTerm(term);
 
 /**
  * An inline definition for a difficult word.

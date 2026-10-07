@@ -53,5 +53,5 @@
 
 .velora-segment-btn.active .velora-segment-badge {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: --bg-primary;
 }

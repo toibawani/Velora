@@ -447,6 +447,59 @@
   border-color: var(--color-info);
 }
 
+/*
+  Computer science's five tiers, on the same three colours and no new ones.
+
+  This is where the visual pass's rule earns its keep: the dot must not become a
+  five-colour legend. Three existing semantic tokens do all the work, because
+  what the reader needs to know at a glance is not which of five epistemic states
+  an entry is in, but how much to trust it.
+
+    proved                solid green  - a proof, nothing can overturn it
+    measured              solid green  - a number, reproducible
+    machine-dependent     ringed amber  - true of a named version, watch it
+    contested             solid amber  - capable people disagree
+    open                  ringed info   - nobody has solved it
+
+  'proved' and 'measured' deliberately share a colour. They are different
+  claims - a proof is not a measurement - but they carry the same instruction to
+  the reader, which is "rely on this", and inventing a fourth colour to separate
+  them would make the contested entries stop standing out, which is the one job
+  this element has.
+
+  'machine-dependent' is the new tier and it is a warning colour on purpose. It
+  is the one state where the entry is quietly likely to stop being true under
+  you, so it must not read as reassurance.
+
+  --color-warning is solid amber; --color-info is the quiet steel of hollow
+  rings on physics and philosophy. Open problems are drawn hollow because
+  there is no inner truth to shade.
+*/
+.bhm-status-proved .bhm-status-dot {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.bhm-status-measured .bhm-status-dot {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.bhm-status-machine-dependent .bhm-status-dot {
+  background: transparent;
+  border-color: var(--color-warning);
+}
+
+.bhm-status-contested .bhm-status-dot {
+  background: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.bhm-status-open .bhm-status-dot {
+  background: transparent;
+  border-color: var(--color-info);
+}
+
 /* ---- Pager ------------------------------------------------------------- */
 
 .bhm-pager {

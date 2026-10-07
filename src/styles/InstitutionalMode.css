@@ -63,8 +63,8 @@
 }
 
 .role-pill.active {
-  background: #333333;
-  color: #ffffff;
+  background: var(--bg-secondary);
+  color: var(--text-inverse);
 }
 
 .inst-hero-summary {
@@ -106,14 +106,14 @@
 }
 
 .age-btn:hover {
-  border-color: #555555;
-  color: #ffffff;
+  border-color: var(--border-default);
+  color: var(--text-inverse);
 }
 
 .age-btn.active {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
 }
 
 /* Educator Guide Cards */
@@ -167,7 +167,7 @@
 .align-badge {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #ff9f0a;
+  color: var(--color-warning);
   background: rgba(255, 159, 10, 0.1);
   border: 1px solid rgba(255, 159, 10, 0.25);
   padding: 4px 10px;
@@ -219,7 +219,7 @@
 }
 
 .guide-ul.warnings {
-  color: #ff9f0a;
+  color: var(--color-warning);
 }
 
 .guide-card-footer {
@@ -281,7 +281,7 @@
 .stat-score-large {
   font-size: 1.85rem;
   font-weight: 800;
-  color: #34c759;
+  color: var(--color-success);
   letter-spacing: -0.02em;
 }
 
@@ -322,7 +322,7 @@
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: #181818;
+  background: var(--bg-secondary);
   border: 1px solid var(--border-default, #2a2a2a);
   border-radius: 8px;
   padding: 1rem 1.25rem;
