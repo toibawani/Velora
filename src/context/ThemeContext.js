@@ -48,6 +48,7 @@ export function ThemeProvider({ children }) {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, themeMode);
     } catch (e) {
+      // Theme preference could not be persisted; user settings are unaffected
       console.warn('Could not save theme preference', e);
     }
   }, [themeMode, resolvedTheme]);
