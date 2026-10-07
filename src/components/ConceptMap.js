@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import PropTypes from 'prop-types'; 'react';
 import { X } from 'lucide-react';
 import '../styles/ConceptMap.css';
 

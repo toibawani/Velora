@@ -1,4 +1,5 @@
-import React, { memo } from 'react';
+import React, { memo } from
+import PropTypes from 'prop-types'; 'react';
 import PropTypes from 'prop-types'; { useEffect, useId, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ChevronDown, List } from 'lucide-react';
 import ConceptEntry from './ConceptEntry';
