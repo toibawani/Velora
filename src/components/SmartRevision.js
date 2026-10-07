@@ -3,6 +3,10 @@ import { Calendar, RotateCcw, Lightbulb, BookOpen } from 'lucide-react';
 import EmptyState from './EmptyState';
 import '../styles/SmartRevision.css';
 
+/**
+ * SmartRevision - revision schedule per subject with due dates and
+ * completion history.
+ */
 function SmartRevision({ selectedSubject }) {
   const [revisions] = useState([
     {
