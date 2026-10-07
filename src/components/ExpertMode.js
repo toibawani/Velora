@@ -107,19 +107,23 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
       <div className="expert-nav-tabs">
         <button
           className={`expert-tab ${activeTab === 'papers' ? 'active' : ''}`}
+          role="tab"
+          aria-selected={activeTab === 'papers'}
           onClick={() => setActiveTab('papers')}
         >
           <FileText size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Research Papers (1-Page)
         </button>
         <button
           className={`expert-tab ${activeTab === 'debates' ? 'active' : ''}`}
-          onClick={() => setActiveTab('debates')}
+          role="tab"
+          aria-selected={activeTab === 'debates'}          onClick={() => setActiveTab('debates')}
         >
           <MessageCircle size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Peer Debate Prompts
         </button>
         <button
           className={`expert-tab ${activeTab === 'careers' ? 'active' : ''}`}
-          onClick={() => setActiveTab('careers')}
+          role="tab"
+          aria-selected={activeTab === 'careers'}          onClick={() => setActiveTab('careers')}
         >
           <Rocket size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Astrophysics Career Paths
         </button>

@@ -21,6 +21,8 @@ export function SegmentedNav({
             key={item.id}
             role="tab"
             aria-selected={isActive}
+            aria-controls={`tabpanel-${item.id}`}
+            id={`tab-${item.id}`}
             className={`velora-segment-btn ${isActive ? 'active' : ''}`}
             onClick={() => onChange(item.id)}
           >
