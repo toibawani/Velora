@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Globe, Sun, Sparkles, Orbit, Clapperboard, CircleDot, Atom } from 'lucide-react';
 
+/**
+ * RelativityLab - interactive general-relativity playground: mass, proximity
+ * and time-dilation sliders over live physics metrics.
+ */
 // Fundamental physical constants (SI Units)
 const G = 6.6743e-11; // m^3 kg^-1 s^-2
 const C = 299792458;  // m/s
