@@ -3,6 +3,10 @@ import { AlertTriangle } from 'lucide-react';
 import './ErrorBoundary.css';
 import { KEYS, writeValue } from '../utils/storage';
 
+/**
+ * ErrorBoundary - catches render errors, logs them to on-device storage,
+ * and shows a recovery screen instead of a blank page.
+ */
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
