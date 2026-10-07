@@ -113,7 +113,7 @@ function LearningStories({ onSelectStoryTopic }) {
   const activeStory = stories[selectedStoryIndex];
 
   return (
-    <div className="learning-stories-container">
+    <div data-testid="learning-stories" className="learning-stories-container">
       {/* Section Header */}
       <div className="stories-section-header">
         <div>

@@ -30,7 +30,7 @@ function BlackHolesElite({ onExploreMasterclass, onOpenLab }) {
   ];
 
   return (
-    <div className="black-holes-elite">
+    <div data-testid="black-holes-elite" className="black-holes-elite">
       {sections.map((section, idx) => (
         <div key={idx} className="elite-section">
           <div className="section-header">

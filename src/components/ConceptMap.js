@@ -94,7 +94,7 @@ function ConceptMap({ subject }) {
   };
 
   return (
-    <div className="concept-map">
+    <div data-testid="concept-map" className="concept-map">
       <div className="map-header">
         <h2 className="map-title">{map.title}</h2>
         <p className="map-subtitle">Click nodes to explore connections</p>

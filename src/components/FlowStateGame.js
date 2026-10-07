@@ -79,7 +79,7 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
     };
     document.addEventListener('visibilitychange', onVisibility);
 
-          <kbd className="fs-kbd">R</kbd>
+          <kbd data-testid="flow-state-game" className="fs-kbd">R</kbd>
       <kbd className="fs-kbd">Esc</kbd>
       <p className="fs-shortcuts-note">
         Flow State: <kbd>R</kbd> to restart, <kbd>Esc</kbd> to exit.
