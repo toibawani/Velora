@@ -45,7 +45,7 @@ function LearningAnalytics({ selectedSubject }) {
   const hasActivity = snapshot.hours > 0;
 
   return (
-    <div className="learning-analytics">
+    <div data-testid="learning-analytics" className="learning-analytics">
       <h2 className="analytics-title">Learning Snapshot</h2>
       <p className="analytics-scope">{label}, recorded on this device</p>
 

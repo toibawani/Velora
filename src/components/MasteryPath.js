@@ -40,7 +40,7 @@ function MasteryPath({ selectedSubject }) {
   const percentage = Math.round((completed / path.lessons.length) * 100);
 
   return (
-    <div className="mastery-path-card">
+    <div data-testid="mastery-path" className="mastery-path-card">
       <div className="path-header">
         <div className="path-title-col">
           <span className="path-overline">Structured Syllabus</span>

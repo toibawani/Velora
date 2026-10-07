@@ -50,7 +50,7 @@ function InstitutionalMode({ onBack }) {
   ];
 
   return (
-    <div className="institutional-mode-container">
+    <div data-testid="institutional-mode" className="institutional-mode-container">
       {/* Top Header */}
       <header className="inst-header-bar">
         <div className="inst-brand-info">

@@ -92,7 +92,7 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
   ];
 
   return (
-    <div className="expert-mode-container">
+    <div data-testid="expert-mode" className="expert-mode-container">
       {/* Header Banner */}
       <div className="expert-hero-bar">
         <div className="expert-badge-tag">
