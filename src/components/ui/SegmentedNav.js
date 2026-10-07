@@ -24,6 +24,7 @@ export function SegmentedNav({
             aria-controls={`tabpanel-${item.id}`}
             id={`tab-${item.id}`}
             className={`velora-segment-btn ${isActive ? 'active' : ''}`}
+            title={item.label}
             onClick={() => onChange(item.id)}
           >
             {Icon && <Icon size={14} strokeWidth={1.5} />}
