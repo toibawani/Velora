@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Lightbulb, Target, Smile, Brain } from 'lucide-react';
 import EmptyState from './EmptyState';
 import { sanitizeText } from '../utils/sanitize';
