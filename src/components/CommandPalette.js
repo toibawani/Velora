@@ -56,7 +56,7 @@ function CommandPalette({ isOpen, onClose, onNavigate }) {
 
   return (
     <div className="command-palette-backdrop" role="presentation" onMouseDown={onClose}>
-      <section ref={paletteRef} className="command-palette" role="dialog" aria-modal="true" aria-label="VELORA search" onMouseDown={(event) => event.stopPropagation()} onKeyDown={handlePaletteKeyDown}>
+      <section ref={paletteRef} className="command-palette" aria-expanded="false" role="dialog" aria-modal="true" aria-label="VELORA search" onMouseDown={(event) => event.stopPropagation()} onKeyDown={handlePaletteKeyDown}>
         <div className="command-search-row">
           <Search size={20} aria-hidden="true" />
           <input ref={inputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search VELORA" aria-label="Search VELORA" />
