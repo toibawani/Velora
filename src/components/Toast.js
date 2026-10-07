@@ -12,7 +12,7 @@ function Toast({ message, type = 'info', duration = 3000, onClose = () => {} }) 
   return (
     <div className={`toast toast-${type}`} role={type === 'error' ? 'alert' : 'status'} aria-live={type === 'error' ? 'assertive' : 'polite'}>
       <span>{message}</span>
-      <button className="toast-close" onClick={onClose} aria-label="Dismiss notification">
+      <button data-testid="toast" className="toast-close" onClick={onClose} aria-label="Dismiss notification">
         <X size={16} aria-hidden="true" />
       </button>
     </div>

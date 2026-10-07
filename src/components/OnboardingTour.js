@@ -123,7 +123,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
   const Illustration = step.illustration;
 
   return (
-    <div className="onboarding-overlay">
+    <div data-testid="onboarding-tour" className="onboarding-overlay">
       <div className="onboarding-card">
         {/* Progress Bar */}
         <div className="onboarding-progress-track">

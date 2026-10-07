@@ -28,7 +28,7 @@ export default function ThemeToggle() {
   };
 
   return (
-    <div className="theme-toggle" role="group" aria-label="Color theme">
+    <div data-testid="theme-toggle" className="theme-toggle" role="group" aria-label="Color theme">
       {MODES.map(({ mode, label, Icon }) => (
         <button
           key={mode}
