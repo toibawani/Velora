@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { AlertTriangle, ArrowRight, BookOpen, Trash2 } from 'lucide-react';
 import { CURRICULUM } from '../data/curriculum';
 import { trackEvent } from '../utils/analytics';

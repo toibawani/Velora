@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
 import {
   CURIOUS_TERMS,
