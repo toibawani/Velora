@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import '../styles/ConceptMap.css';
 
+/**
+ * ConceptMap - interactive knowledge graph showing how concepts within a
+ * subject connect. Selecting a node reveals its relationships.
+ */
+
 function ConceptMap({ subject }) {
   const [selectedNode, setSelectedNode] = useState(null);
 
