@@ -1,3 +1,7 @@
+/**
+ * GlossaryTerm - inline glossary term with tap-to-reveal definition.
+ * Terms are looked up from subject glossary data (blackholes, philosophy, history).
+ */
 import React, { useCallback } from
 import PropTypes from 'prop-types'; 'react';
 import PropTypes from 'prop-types'; } from 'react';

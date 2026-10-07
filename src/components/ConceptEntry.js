@@ -1,3 +1,7 @@
+/**
+ * ConceptEntry - a single concept entry in the deep-read sidebar.
+ * Shows the concept name, its tier, and a brief summary.
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parseInlineTerms } from './GlossaryTerm';

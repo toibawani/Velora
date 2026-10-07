@@ -1,3 +1,7 @@
+/**
+ * LoadingCard - skeleton loading placeholder for content areas.
+ * Shows a shimmer animation while data is being fetched.
+ */
 import React from 'react';
 import '../styles/LoadingCard.css';
 
