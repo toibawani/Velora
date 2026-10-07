@@ -2,6 +2,11 @@ import React from 'react';
 import { UserCheck, Orbit, Atom } from 'lucide-react';
 import '../styles/BlackHolesElite.css';
 
+/**
+ * BlackHolesElite - elite-tier black hole content: discovery story, lab access,
+ * and masterclass entry points for advanced learners.
+ */
+
 function BlackHolesElite({ onExploreMasterclass, onOpenLab }) {
   const sections = [
     {
