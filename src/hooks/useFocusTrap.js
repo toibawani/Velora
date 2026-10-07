@@ -55,8 +55,7 @@ export const useFocusTrap = (isOpen, containerRef, { onClose } = {}) => {
     const firstItem = container.querySelector(FOCUSABLE);
     if (firstItem) firstItem.focus();
 
-        return (
-      <div ref={node} className="focus-trap-wrapper" role="dialog" aria-modal="true">) => {
+    return () => {
       document.removeEventListener('keydown', onKeyDown, true);
       if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
         previouslyFocused.focus();
