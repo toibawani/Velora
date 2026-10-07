@@ -17,8 +17,7 @@
 // Privacy-respecting storage module.
 // All data stays on-device.
 
-
-
+export const KEYS = {
   THEME: 'velora_theme_preference',
   PREFERENCES: 'velora_preferences',
   ONBOARDING_DONE: 'velora_onboarding_done',
