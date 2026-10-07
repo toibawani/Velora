@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Orbit, Check } from 'lucide-react';
 import { copyText, COPY_OK } from '../utils/clipboard';
 
