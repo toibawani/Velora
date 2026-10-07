@@ -6,6 +6,11 @@ import SmartReviewPlanner from './SmartReviewPlanner';
 import { trackEvent } from '../utils/analytics';
 import { getReviewItems, addReviewItem, removeReviewItem } from '../utils/reviewPlanner';
 import { recordStudySession } from '../utils/analyticsStorage';
+
+/**
+ * LessonReader - full lesson view with peer explanations, concept map,
+ * and review scheduling for the current lesson.
+ */
 import '../styles/LessonReader.css';
 
 function LessonReader({ topic, subject, onBack, showToast }) {
