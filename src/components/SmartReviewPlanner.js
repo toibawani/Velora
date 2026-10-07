@@ -3,6 +3,10 @@ import { AlertCircle, Clock, Timer, Lightbulb } from 'lucide-react';
 import { getReviewItems, saveReviewItems, completeReviewItem } from '../utils/reviewPlanner';
 import '../styles/SmartReviewPlanner.css';
 
+/**
+ * SmartReviewPlanner - spaced-repetition planner: due-today queue, overdue
+ * flags, and complete/dismiss actions per review item.
+ */
 function SmartReviewPlanner({ selectedSubject, onNotify }) {
   const [reviewItems, setReviewItems] = useState(getReviewItems);
 
