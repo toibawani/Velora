@@ -37,7 +37,7 @@ class ErrorBoundary extends React.Component {
             <p className="error-message">
               VELORA encountered an unexpected error. This might be a temporary issue.
             </p>
-            
+
             {this.state.error && (
               <details className="error-details">
                 <summary>Error details</summary>
@@ -47,15 +47,15 @@ class ErrorBoundary extends React.Component {
                 </pre>
               </details>
             )}
-            
+
             <div className="error-actions">
-              <button 
+              <button
                 onClick={this.handleReset}
                 className="error-button primary"
               >
                 Refresh without clearing data
               </button>
-              <button 
+              <button
                 onClick={() => window.location.reload()}
                 className="error-button secondary"
               >

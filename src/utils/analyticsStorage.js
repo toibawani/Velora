@@ -1,6 +1,6 @@
 /**
  * analyticsStorage.js
- * 
+ *
  * Privacy-respecting, on-device learning analytics utility.
  * All metrics are calculated and stored purely in the user's browser (localStorage).
  * Zero tracking pixels, zero external telemetry, zero surveillance.
@@ -59,7 +59,7 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
   const data = getAnalyticsData();
   const hours = safeMinutes / 60;
   data.totalHoursStudied = parseFloat((data.totalHoursStudied + hours).toFixed(1));
-  
+
   const existingTopic = data.topicTimeDistribution.find(t => t.topic === topicName);
   const day = new Date().toLocaleDateString('en-US', { weekday: 'short' });
   const todayActivity = data.weeklyActivity.find((item) => item.day === day);
@@ -82,7 +82,7 @@ export const recordStudySession = (topicName, minutes, subject = 'physics') => {
       subject
     });
   }
-  
+
   saveAnalyticsData(data);
   return true;
 };

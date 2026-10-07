@@ -5,7 +5,7 @@ import { useFocusTrap } from '../hooks/useFocusTrap';
 
 /**
  * Knowledge Universe & Interdisciplinary Topology Builder
- * 
+ *
  * Interactive concept mapper allowing students to construct causal connections,
  * cross-domain analogies, and epistemic timelines across STEM and humanities.
  */

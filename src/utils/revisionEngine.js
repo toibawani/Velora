@@ -1,6 +1,6 @@
 /**
  * revisionEngine.js
- * 
+ *
  * Intelligent spaced-repetition and retention scoring algorithm for VELORA.
  * Calculates decay rates using cognitive memory models (Ebbinghaus forgetting curve),
  * and automatically schedules proactive revision reminders aligned with the learner's

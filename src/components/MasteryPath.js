@@ -4,7 +4,7 @@ import '../styles/MasteryPath.css';
 
 /**
  * Mastery Path Progress Module
- * 
+ *
  * Tracks structured milestone sequences across subject tracks.
  */
 

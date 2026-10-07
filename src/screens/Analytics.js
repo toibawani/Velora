@@ -6,7 +6,7 @@ import '../styles/Analytics.css';
 
 /**
  * Analytics Screen
- * 
+ *
  * Provides transparent, privacy-respecting insights into learning patterns,
  * time allocation, struggled concepts, cognitive learning style preferences,
  * and peak focus hours.

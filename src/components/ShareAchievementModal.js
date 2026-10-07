@@ -4,7 +4,7 @@ import { copyText, COPY_OK } from '../utils/clipboard';
 
 /**
  * ShareAchievementModal Component
- * 
+ *
  * Generates viral, share-worthy milestone celebration moments with:
  * - High-res SVG achievement badge
  * - 1-click native sharing to WhatsApp, X (Twitter), LinkedIn, and Instagram Stories

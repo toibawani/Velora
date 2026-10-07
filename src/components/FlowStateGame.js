@@ -19,7 +19,7 @@ import ShareAchievementModal from './ShareAchievementModal';
 
 /**
  * FlowStateGame
- * 
+ *
  * Replaces gamified arcade mechanics with a distraction-free, flow-state learning
  * experience. Focuses on conceptual clarity, reflective learning, and key takeaways
  * rather than arcade points.
@@ -389,7 +389,7 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
               {(gameType === 'scrabble' || gameType === 'duel' || gameType === 'puzzle') && (
                 <div className="flow-card-stack">
                   <h3 className="flow-step-question">{scrabbleData.clue}</h3>
-                  
+
                   <div className="assembled-slots">
                     <span className="slots-label">Constructed Term:</span>
                     <div className="slots-container">

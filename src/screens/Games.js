@@ -79,7 +79,7 @@ export const CLASSIC_GAMES = [
 
 /**
  * GameHub
- * 
+ *
  * Offers both classic interactive modes and distraction-free Flow State learning
  * sessions tailored for deep conceptual mastery.
  */

@@ -245,13 +245,13 @@ export default function StackSpread(_props: StackSpreadProps) {
     const handleScroll = () => {
       const rect = node.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      
+
       // Calculate scroll progress: 0 when section is at bottom of viewport,
       // 1 when section has scrolled up to 30% of viewport
       const start = viewportHeight * 0.94;
       const end = viewportHeight * 0.3;
       const progress = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
-      
+
       scrollProgressRef.current = progress;
     };
 
@@ -291,13 +291,13 @@ export default function StackSpread(_props: StackSpreadProps) {
       const newTransforms: PlateTransform[] = PLATES.map((_, index) => {
         const state = springStatesRef.current[index];
         const target = scrollProgressRef.current;
-        
+
         // Apply spring physics (mutates state in place)
         advanceSpring(state, target, SPRING_CONFIG, deltaTime);
-        
+
         // The transform value goes from 1 (at rest) to 0 (spread)
         const t = 1 - state.value;
-        
+
         return { x: 0, y: 0, r: t };
       });
 

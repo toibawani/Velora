@@ -4,7 +4,7 @@ import '../styles/SketchbookCard.css';
 
 /**
  * SketchbookCard Component
- * 
+ *
  * Editorial, humanized visual cards combining:
  * - Hand-sketched SVG diagrams with interactive callouts
  * - Core conceptual definition & visual breakdown

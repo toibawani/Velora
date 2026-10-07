@@ -4,7 +4,7 @@ import '../styles/ExpertMode.css';
 
 /**
  * ExpertMode Component
- * 
+ *
  * Deep academic dive for advanced learners:
  * - 1-page distillations of landmark astrophysics research papers
  * - Formal mathematical equations & tensor derivations

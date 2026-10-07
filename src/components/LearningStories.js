@@ -4,7 +4,7 @@ import '../styles/LearningStories.css';
 
 /**
  * LearningStories Component
- * 
+ *
  * Reframes isolated curriculum lessons into gripping historical & scientific
  * narrative arcs. Learners follow how real humans struggled, failed, and broke
  * through dogma to discover the cosmos.

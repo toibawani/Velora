@@ -5,7 +5,7 @@ import '../styles/InstitutionalMode.css';
 
 /**
  * InstitutionalMode Component
- * 
+ *
  * Provides dedicated interfaces for:
  * 1. Educators & Teachers (Curriculum alignment, Socratic discussion guides, age levels)
  * 2. Parents (Privacy-safe developmental insights, Educational Value Index, dinner conversation starters)

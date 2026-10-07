@@ -4,7 +4,7 @@ import '../styles/Whiteboard.css';
 
 /**
  * Interactive Concept & Derivation Whiteboard
- * 
+ *
  * High-performance 2D Canvas whiteboard for drafting mathematical proofs,
  * physics vector diagrams, and geometry with preset scientific templates.
  */

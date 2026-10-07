@@ -4,7 +4,7 @@ import '../styles/SensoryRooms.css';
 
 /**
  * SensoryRooms Component
- * 
+ *
  * High-performance, zero-dependency ambient soundscape generator and deep focus chamber.
  * Uses the native Web Audio API for harmonic drone generation, 10Hz binaural alpha waves,
  * and Brownian noise study isolation.
