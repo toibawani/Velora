@@ -227,7 +227,7 @@ function ConnectConceptGame() {
   const isCorrect = chosenOptionText === puzzle.options[puzzle.correctIdx];
 
   return (
-    <div className="bg-game-card">
+    <div data-testid="brain-games" className="bg-game-card">
       <div className="bg-game-header">
         <div>
           <span className="bg-game-kicker">DAILY CONCEPT THREAD</span>
