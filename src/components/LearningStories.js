@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Orbit, Landmark, Telescope } from 'lucide-react';
 import '../styles/LearningStories.css';
 

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { X, Command } from 'lucide-react';
 import '../styles/KeyboardHelp.css';
 import { useFocusTrap } from '../hooks/useFocusTrap';
