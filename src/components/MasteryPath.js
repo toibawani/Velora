@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Timer, Check } from 'lucide-react';
 import '../styles/MasteryPath.css';
 
