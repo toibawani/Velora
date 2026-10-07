@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Orbit, TrendingUp, Map as MapIcon, Leaf, Wind, Zap, Atom, Dna, Lightbulb, X } from 'lucide-react';
 import '../styles/Universe.css';
 import { useFocusTrap } from '../hooks/useFocusTrap';
