@@ -108,6 +108,7 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
         <button
           className={`expert-tab ${activeTab === 'papers' ? 'active' : ''}`}
           role="tab"
+          aria-label="Research Papers"
           aria-selected={activeTab === 'papers'}
           onClick={() => setActiveTab('papers')}
         >
@@ -116,6 +117,7 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
         <button
           className={`expert-tab ${activeTab === 'debates' ? 'active' : ''}`}
           role="tab"
+          aria-label="Peer Debates"
           aria-selected={activeTab === 'debates'}          onClick={() => setActiveTab('debates')}
         >
           <MessageCircle size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Peer Debate Prompts
@@ -123,6 +125,7 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
         <button
           className={`expert-tab ${activeTab === 'careers' ? 'active' : ''}`}
           role="tab"
+          aria-label="Career Paths"
           aria-selected={activeTab === 'careers'}          onClick={() => setActiveTab('careers')}
         >
           <Rocket size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Astrophysics Career Paths

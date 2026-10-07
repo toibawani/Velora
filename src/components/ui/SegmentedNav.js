@@ -12,7 +12,7 @@ export function SegmentedNav({
   className = ''
 }) {
   return (
-    <div className={`velora-segmented-nav ${className}`} role="tablist">
+    <div className={`velora-segmented-nav ${className}`} role="tablist" aria-label="Section navigation">
       {items.map((item) => {
         const isActive = activeId === item.id;
         const Icon = item.icon;
