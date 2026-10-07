@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Shield, Lightbulb, Target } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import { trackEvent } from '../utils/analytics';

@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Search, X, Command } from 'lucide-react';
 import { SCREENS } from '../navigation';
 import '../styles/CommandPalette.css';

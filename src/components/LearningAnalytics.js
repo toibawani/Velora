@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Clock, BookOpen, Waves, Lightbulb } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/LearningAnalytics.css';

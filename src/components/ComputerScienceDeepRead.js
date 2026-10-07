@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import DeepRead from './DeepRead';
 import { CS_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/computerscience';
 

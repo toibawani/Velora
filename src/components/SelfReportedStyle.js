@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { MessageSquareQuote } from 'lucide-react';
 import { getSelfReportedStyle } from '../utils/onboardingPreferences';
 import '../styles/SelfReportedStyle.css';

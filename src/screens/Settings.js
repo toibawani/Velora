@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Check, HardDrive, Monitor, Moon, Sun, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { FAILURE, describeStorage } from '../utils/storage';

@@ -3,7 +3,6 @@
  * Terms are looked up from subject glossary data (blackholes, philosophy, history).
  */
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { BookOpen } from 'lucide-react';
 import { lookupTerm as lookupPhysicsTerm } from '../data/blackholes/glossary';
 import { lookupTerm as lookupPhilosophyTerm } from '../data/philosophy/glossary';

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { AlertCircle, Clock, Timer, Lightbulb } from 'lucide-react';
 import { getReviewItems, saveReviewItems, completeReviewItem } from '../utils/reviewPlanner';
 import '../styles/SmartReviewPlanner.css';

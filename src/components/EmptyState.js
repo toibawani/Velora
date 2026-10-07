@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import '../styles/EmptyState.css';
 
 function EmptyState({ icon, title, description, action, actionText, onAction, actionLabel }) {

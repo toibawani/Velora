@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { PRIMARY_SCREENS } from '../navigation';
 import '../styles/BottomNav.css';
 

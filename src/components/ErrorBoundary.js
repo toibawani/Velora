@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { AlertTriangle } from 'lucide-react';
 import './ErrorBoundary.css';
 import { KEYS, writeValue } from '../utils/storage';

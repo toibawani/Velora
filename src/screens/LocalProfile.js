@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { ArrowRight, Check, HardDrive } from 'lucide-react';
 import '../styles/Auth.css';
 import { isValidName, normalizeName, saveProfile } from '../utils/localProfile';

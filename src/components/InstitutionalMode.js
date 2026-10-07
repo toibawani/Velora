@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { GraduationCap, Users, Target, Lightbulb, AlertTriangle, Microscope, Utensils } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/InstitutionalMode.css';

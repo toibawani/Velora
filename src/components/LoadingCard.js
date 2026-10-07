@@ -3,7 +3,6 @@
  * Shows a shimmer animation while data is being fetched.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import '../styles/LoadingCard.css';
 
 function LoadingCard({ count = 3, label = "Loading content", compact = false }) {

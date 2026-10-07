@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { ArrowLeft, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock } from 'lucide-react';
 import PeerExplanations from './PeerExplanations';
 import ConceptMap from './ConceptMap';

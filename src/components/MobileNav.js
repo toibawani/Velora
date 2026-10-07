@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { Menu, X, LogOut } from 'lucide-react';
 import { SCREENS } from '../navigation';
 import '../styles/MobileNav.css';
