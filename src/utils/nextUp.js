@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * nextUp
+ */
 import { KEYS, readValue, writeValue, FAILURE } from './storage';
 
 /**

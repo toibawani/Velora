@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * preferences
+ */
 import { KEYS, readValue, writeValue, removeValue } from './storage';
 
 // Individual preferences are their own key family: velora_pref_<name>. They are

@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * performance
+ */
 import { KEYS, readValue, writeValue } from './storage';
 
 const MAX_LOGGED_SLOW_OPERATIONS = 50;

@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * onboardingPreferences
+ */
 import { KEYS, readValue, writeValue, FAILURE } from './storage';
 
 const ONBOARDING_PREFERENCES_KEY = KEYS.ONBOARDING_PREFERENCES;

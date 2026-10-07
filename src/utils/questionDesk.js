@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * questionDesk
+ */
 import { CURRICULUM } from '../data/curriculum';
 import { KEYS, readValue, writeValue, FAILURE } from './storage';
 
