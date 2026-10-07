@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DeepRead from './DeepRead';
 import { PHILOSOPHY_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/philosophy';
 

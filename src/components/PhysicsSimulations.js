@@ -1251,6 +1251,9 @@ function OrbitalMechanicsSim() {
 // ============================================================================
 // MAIN CONTAINER COMPONENT
 // ============================================================================
+/* PropTypes for PhysicsSimulations */
+PhysicsSimulations.propTypes = { simulations: PropTypes.array, onSelect: PropTypes.func };
+
 export default function PhysicsSimulations({ defaultSim = 'newton', onBack }) {
   const [activeTab, setActiveTab] = useState(defaultSim);
 
