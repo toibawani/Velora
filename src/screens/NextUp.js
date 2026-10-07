@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { AlertTriangle, BookOpen, Check, ListTodo, Trash2, Undo2 } from 'lucide-react';
 import { CURRICULUM } from '../data/curriculum';
 import {
