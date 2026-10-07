@@ -180,13 +180,7 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
     setGameState('complete');
   };
 
-        <kbd className="fs-kbd">R</kbd>
-      <kbd className="fs-kbd">Esc</kbd>
-      <p className="fs-shortcuts-note">
-        Flow State: <kbd>R</kbd> to restart, <kbd>Esc</kbd> to exit.
-        Press and hold to begin.
-      </p>
-      return (
+  return (
     <div className="flow-game-container">
         {gameState === 'start' && (
           <div
