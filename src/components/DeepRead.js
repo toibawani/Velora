@@ -1,7 +1,5 @@
-import React, { memo } from
+import React, { memo, useEffect, useId, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import PropTypes from 'prop-types'; 'react';
-import PropTypes from 'prop-types'; { useEffect, useId, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ChevronDown, List } from 'lucide-react';
 import ConceptEntry from './ConceptEntry';
 import { parseInlineTerms } from './GlossaryTerm';

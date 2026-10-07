@@ -2,10 +2,8 @@
  * GlossaryTerm - inline glossary term with tap-to-reveal definition.
  * Terms are looked up from subject glossary data (blackholes, philosophy, history).
  */
-import React, { useCallback } from
-import PropTypes from 'prop-types'; 'react';
-import PropTypes from 'prop-types'; } from 'react';
-import PropTypes from 'prop-types';, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { BookOpen } from 'lucide-react';
 import { lookupTerm as lookupPhysicsTerm } from '../data/blackholes/glossary';
 import { lookupTerm as lookupPhilosophyTerm } from '../data/philosophy/glossary';
