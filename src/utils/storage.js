@@ -14,7 +14,11 @@
  *    than implying data was saved.
  */
 
-export const KEYS = {
+// Privacy-respecting storage module.
+// All data stays on-device.
+
+
+
   THEME: 'velora_theme_preference',
   PREFERENCES: 'velora_preferences',
   ONBOARDING_DONE: 'velora_onboarding_done',
