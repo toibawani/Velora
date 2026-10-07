@@ -1,4 +1,8 @@
 /**
+ * VELORA utility module
+ * clipboard
+ */
+/**
  * Copying text, with the failure cases handled.
  *
  * navigator.clipboard does not exist at all on a plain http:// origin, and

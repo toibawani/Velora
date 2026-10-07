@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * analytics
+ */
 import { KEYS, readValue, writeValue, removeValue } from './storage';
 
 const EVENTS_KEY = KEYS.EVENTS;

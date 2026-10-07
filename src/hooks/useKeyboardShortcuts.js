@@ -1,3 +1,7 @@
+/**
+ * Custom React hook
+ * useKeyboardShortcuts
+ */
 import { useEffect } from 'react';
 
 export const useKeyboardShortcuts = (shortcuts) => {

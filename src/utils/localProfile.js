@@ -1,4 +1,8 @@
 /**
+ * VELORA utility module
+ * localProfile
+ */
+/**
  * The local profile.
  *
  * This app has no backend. It cannot verify an email, cannot store a password

@@ -1,3 +1,7 @@
+/**
+ * Custom React hook
+ * useFocusTrap
+ */
 import { useEffect } from 'react';
 
 const FOCUSABLE =

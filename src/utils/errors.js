@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * errors
+ */
 const PRIVATE_DETAIL_KEYS = /^(email|password|token|secret|authorization)$/i;
 const redactDetails = (details) => {
   if (!details || typeof details !== 'object') return {};
