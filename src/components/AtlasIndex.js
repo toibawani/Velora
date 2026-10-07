@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from
+import PropTypes from 'prop-types'; 'react';
 import { resolveAtlasTopic } from '../data/atlasResolution';
 import '../styles/AtlasIndex.css';
 
