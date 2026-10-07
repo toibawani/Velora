@@ -75,7 +75,7 @@ function ShadowLearning({ topic, onNotify }) {
   )[0];
 
   return (
-    <div className="shadow-learning-container">
+    <div data-testid="shadow-learning" className="shadow-learning-container">
       <h2><Users size={20} aria-hidden="true" style={{ verticalAlign: '-4px', marginRight: 8 }} />Community Notes: {topic?.name}</h2>
 
       {/* Explain it to a 10-year-old */}

@@ -23,7 +23,7 @@ function CreatorStudio({ topic, onBack }) {
   };
 
   return (
-    <div className="learn-container">
+    <div data-testid="creator-studio" className="learn-container">
       <div className="learn-header">
         <button className="learn-back-btn" onClick={onBack}>
           ← Back

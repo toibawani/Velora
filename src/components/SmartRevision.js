@@ -27,7 +27,7 @@ function SmartRevision({ selectedSubject }) {
   ]);
 
   return (
-    <div className="smart-revision">
+    <div data-testid="smart-revision" className="smart-revision">
       <div className="revision-header">
         <h2 className="revision-title">Cognitive Spaced Revision</h2>
         <p className="revision-desc">Optimal recall intervals calculated from your active retrieval scores</p>

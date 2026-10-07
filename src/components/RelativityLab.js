@@ -349,7 +349,7 @@ function RelativityLab({ onBack }) {
   }, [logMass, radiusRatio]);
 
   return (
-    <div className="relativity-lab-container">
+    <div data-testid="relativity-lab" className="relativity-lab-container">
       {/* Header */}
       <header className="rel-header">
         <div className="rel-header-left">
