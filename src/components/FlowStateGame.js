@@ -78,7 +78,13 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
     };
     document.addEventListener('visibilitychange', onVisibility);
 
-    return () => {
+          <kbd className="fs-kbd">R</kbd>
+      <kbd className="fs-kbd">Esc</kbd>
+      <p className="fs-shortcuts-note">
+        Flow State: <kbd>R</kbd> to restart, <kbd>Esc</kbd> to exit.
+        Press and hold to begin.
+      </p>
+      return () => {
       clearInterval(timer);
       document.removeEventListener('visibilitychange', onVisibility);
     };
@@ -179,7 +185,13 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
     setGameState('complete');
   };
 
-  return (
+        <kbd className="fs-kbd">R</kbd>
+      <kbd className="fs-kbd">Esc</kbd>
+      <p className="fs-shortcuts-note">
+        Flow State: <kbd>R</kbd> to restart, <kbd>Esc</kbd> to exit.
+        Press and hold to begin.
+      </p>
+      return (
     <div className="flow-game-container">
         {gameState === 'start' && (
           <div
@@ -285,7 +297,13 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                         optionClass += ' correct-choice';
                       }
 
-                      return (
+                            <kbd className="fs-kbd">R</kbd>
+      <kbd className="fs-kbd">Esc</kbd>
+      <p className="fs-shortcuts-note">
+        Flow State: <kbd>R</kbd> to restart, <kbd>Esc</kbd> to exit.
+        Press and hold to begin.
+      </p>
+      return (
                         <button
                           key={idx}
                           className={optionClass}
@@ -352,7 +370,13 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                   <div className="chain-list">
                     {chainUserOrder.map((stepId, index) => {
                       const item = chainSteps.find(s => s.id === stepId);
-                      return (
+                            <kbd className="fs-kbd">R</kbd>
+      <kbd className="fs-kbd">Esc</kbd>
+      <p className="fs-shortcuts-note">
+        Flow State: <kbd>R</kbd> to restart, <kbd>Esc</kbd> to exit.
+        Press and hold to begin.
+      </p>
+      return (
                         <div key={stepId} className="chain-item-card">
                           <div className="chain-index">{index + 1}</div>
                           <div className="chain-text">{item.label}</div>
