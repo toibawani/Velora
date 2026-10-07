@@ -1,11 +1,11 @@
 const PRIVATE_DETAIL_KEYS = /^(email|password|token|secret|authorization)$/i;
-const redactDetails = (details) => {
+ * Redact private keys (email, password, token, secret, authorization) from error details.const redactDetails = (details) => {
   if (!details || typeof details !== 'object') return {};
   return Object.fromEntries(Object.entries(details).filter(([key]) => !PRIVATE_DETAIL_KEYS.test(key)).map(([key, value]) => [key, ['string', 'number', 'boolean'].includes(typeof value) ? value : '[omitted]']));
 };
 
 export class VeloraError extends Error {
-  constructor(message, code, details = {}) {
+ * Custom error class with user-facing message extraction.  constructor(message, code, details = {}) {
     super(message);
     this.code = code;
     this.details = details;
@@ -14,7 +14,7 @@ export class VeloraError extends Error {
 }
 
 export const getVeloraErrorMessage = (code) => {
-  const messages = {
+ * Map error codes to user-facing messages.  const messages = {
     NETWORK_ERROR: 'Connection lost. Check your internet.',
     AUTH_FAILED: 'Login failed. Check email and password.',
     VALIDATION_ERROR: 'Please check your input and try again.',
@@ -27,7 +27,7 @@ export const getVeloraErrorMessage = (code) => {
 };
 
 export const logError = (error) => {
-  console.error({
+ * Log sanitized error to console with timestamp.  console.error({
     message: error.message,
     code: error.code,
     details: redactDetails(error.details),

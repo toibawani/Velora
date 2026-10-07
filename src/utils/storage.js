@@ -15,7 +15,7 @@
  */
 
 export const KEYS = {
-  THEME: 'velora_theme_preference',
+ * Registry of all localStorage keys with metadata.  THEME: 'velora_theme_preference',
   PREFERENCES: 'velora_preferences',
   ONBOARDING_DONE: 'velora_onboarding_done',
   ONBOARDING_PREFERENCES: 'velora_onboarding_preferences',
