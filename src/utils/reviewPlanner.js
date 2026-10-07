@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * reviewPlanner
+ */
 import { KEYS, readValue, writeValue } from './storage';
 
 const STORAGE_KEY = KEYS.REVIEWS;

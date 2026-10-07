@@ -1,4 +1,8 @@
 /**
+ * VELORA utility module
+ * spring
+ */
+/**
  * A damped spring, in plain arithmetic.
  *
  * This exists so the hero plate field can spring without pulling in an

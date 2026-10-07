@@ -1,4 +1,8 @@
 /**
+ * VELORA utility module
+ * sanitize
+ */
+/**
  * Text cleanup for anything a person typed.
  *
  * The important thing to be clear about: React escapes text when it renders

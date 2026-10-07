@@ -1,4 +1,8 @@
 /**
+ * VELORA utility module
+ * revisionEngine
+ */
+/**
  * revisionEngine.js
  *
  * Intelligent spaced-repetition and retention scoring algorithm for VELORA.

@@ -1,3 +1,7 @@
+/**
+ * VELORA utility module
+ * validation
+ */
 export const validateEmail = (email) => {
   if (typeof email !== 'string') return false;
   const normalized = email.trim();
