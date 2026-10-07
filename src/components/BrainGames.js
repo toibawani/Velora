@@ -975,6 +975,9 @@ function ExplainItBackGame() {
 // ============================================================================
 export { EXPLAIN_PROMPTS, MYTH_QUESTIONS, CONNECT_PUZZLES };
 
+/* PropTypes for BrainGames */
+BrainGames.propTypes = { games: PropTypes.array, onGameSelect: PropTypes.func };
+
 export default function BrainGames({ onBack }) {
   const [activeTab, setActiveTab] = useState('connect');
 

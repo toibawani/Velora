@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { UserCheck, Orbit, Atom } from 'lucide-react';
 import '../styles/BlackHolesElite.css';
 
