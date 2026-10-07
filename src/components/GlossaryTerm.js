@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';, useEffect, useId, useRef, useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import { lookupTerm as lookupPhysicsTerm } from '../data/blackholes/glossary';
 import { lookupTerm as lookupPhilosophyTerm } from '../data/philosophy/glossary';
