@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Globe, Sun, Sparkles, Orbit, Clapperboard, CircleDot, Atom } from 'lucide-react';
 
 // Fundamental physical constants (SI Units)
