@@ -1,4 +1,8 @@
 /**
+ * VELORA navigation registry
+ * Screen definitions and navigation helpers
+ */
+/**
  * Every top-level screen, in one list, with the places it can be reached from.
  *
  * There used to be four separate item lists - the bottom bar, the mobile

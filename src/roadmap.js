@@ -1,4 +1,8 @@
 /**
+ * VELORA learning roadmap
+ * Generated from curriculum data and knowledge fields
+ */
+/**
  * What is actually built, what is half-built, and what is not started.
  *
  * This file is the roadmap's content, and it is written as data rather than
