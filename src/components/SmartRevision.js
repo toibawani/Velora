@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Calendar, RotateCcw, Lightbulb, BookOpen } from 'lucide-react';
 import EmptyState from './EmptyState';
 import '../styles/SmartRevision.css';

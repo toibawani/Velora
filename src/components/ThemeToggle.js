@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { trackEvent } from '../utils/analytics';
@@ -14,6 +15,9 @@ const MODES = [
  * ThemeContext persists the mode, and the pre-paint script in index.html
  * reads the same key so a reload lands already themed (no cream flash).
  */
+/* PropTypes for ThemeToggle */
+ThemeToggle.propTypes = { onChange: PropTypes.func };
+
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
