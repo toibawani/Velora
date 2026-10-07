@@ -134,7 +134,7 @@ function PeerExplanations({ topic, onNotify }) {
   );
 
   return (
-    <div className="peer-explanations">
+    <div data-testid="peer-explanations" className="peer-explanations">
       <div className="explanations-header">
         <h2 className="explanations-title">How Others Explain This</h2>
         <p className="explanations-subtitle">

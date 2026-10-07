@@ -70,7 +70,7 @@ function ShareAchievementModal({
   };
 
   return (
-    <div className="share-modal-overlay" onClick={onClose}>
+    <div data-testid="share-achievement-modal" className="share-modal-overlay" onClick={onClose}>
       <div className="share-modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="share-modal-header">

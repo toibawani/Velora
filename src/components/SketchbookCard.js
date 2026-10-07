@@ -105,7 +105,7 @@ function SketchbookCard({ term = 'capillary-action' }) {
   };
 
   return (
-    <div className="sketchbook-wrapper">
+    <div data-testid="sketchbook-card" className="sketchbook-wrapper">
       {/* Term Switcher */}
       <div className="sketchbook-selector-bar">
         <span className="selector-title">Curated Concept Visuals:</span>

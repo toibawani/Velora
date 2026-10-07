@@ -52,7 +52,7 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
   const visibleItems = selectedSubject ? reviewItems.filter((item) => item.subject === selectedSubject) : reviewItems;
 
   return (
-    <div className="smart-review-planner">
+    <div data-testid="smart-review-planner" className="smart-review-planner">
       <div className="planner-header">
         <h2 className="planner-title">Smart Review Schedule</h2>
         <p className="planner-subtitle">
