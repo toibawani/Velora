@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Palette, NotebookPen, Brain, Layers, BookOpen, Save, Check, Link2, Plus, X, Upload, Rocket, Sparkles } from 'lucide-react';
 import '../styles/Creator.css';
 
+/**
+ * CreatorStudio - learner authoring studio: notes, mind maps, flashcards,
+ * and lesson drafts for a chosen topic.
+ */
 function CreatorStudio({ topic, onBack }) {
   const [activeMode, setActiveMode] = useState('notes'); // notes, mindmap, flashcards, lesson
   const [noteContent, setNoteContent] = useState('');
