@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { parseInlineTerms } from './GlossaryTerm';
 import { STATUS_LABELS as PHYSICS_STATUS_LABELS } from '../data/blackholes/schema';
 import '../styles/BlackHoleMastery.css';
