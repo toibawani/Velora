@@ -353,13 +353,7 @@ function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', 
                   <div className="chain-list">
                     {chainUserOrder.map((stepId, index) => {
                       const item = chainSteps.find(s => s.id === stepId);
-                            <kbd className="fs-kbd">R</kbd>
-      <kbd className="fs-kbd">Esc</kbd>
-      <p className="fs-shortcuts-note">
-        Flow State: <kbd>R</kbd> to restart, <kbd>Esc</kbd> to exit.
-        Press and hold to begin.
-      </p>
-      return (
+                        return (
                         <div key={stepId} className="chain-item-card">
                           <div className="chain-index">{index + 1}</div>
                           <div className="chain-text">{item.label}</div>
