@@ -104,7 +104,7 @@ function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
       </div>
 
       {/* Mode Sub-Navigation */}
-      <div className="expert-nav-tabs">
+      <div className="expert-nav-tabs" role="tablist">
         <button
           className={`expert-tab ${activeTab === 'papers' ? 'active' : ''}`}
           role="tab"
