@@ -3,6 +3,10 @@ import { X, Command } from 'lucide-react';
 import '../styles/KeyboardHelp.css';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 
+/**
+ * KeyboardHelp - modal listing every keyboard shortcut, opened with
+ * Cmd/Ctrl+/ and closed with Escape.
+ */
 const SHORTCUTS = [
   ['⌘ K / Ctrl K', 'Open search'],
   ['⌘ / / Ctrl /', 'Show keyboard help'],
