@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Users, NotebookPen, Check, Rocket, Trophy, Star, Lightbulb, Smile, Brain, GraduationCap } from 'lucide-react';
 import '../styles/ShadowLearning.css';
 
+/**
+ * ShadowLearning - anonymous peer-note board per topic, with submit and
+ * lightweight moderation states.
+ */
 function ShadowLearning({ topic, onNotify }) {
   const [myNote, setMyNote] = useState('');
   const [submitted, setSubmitted] = useState(false);
