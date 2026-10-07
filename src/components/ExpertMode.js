@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Microscope, FileText, MessageCircle, Rocket } from 'lucide-react';
 import '../styles/ExpertMode.css';
 
