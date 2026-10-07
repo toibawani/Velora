@@ -17,7 +17,7 @@ function SelfReportedStyle() {
   if (!style) return null;
 
   return (
-    <section className="learn-section">
+    <section data-testid="self-reported-style" className="learn-section">
       <aside className="self-reported-style" aria-label="Self-reported learning style">
         <span className="self-reported-tag">
           <MessageSquareQuote size={13} aria-hidden="true" />

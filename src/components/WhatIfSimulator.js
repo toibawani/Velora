@@ -49,7 +49,7 @@ function WhatIfSimulator({ topic }) {
   };
 
   return (
-    <div className="whatif-container">
+    <div data-testid="what-if-simulator" className="whatif-container">
       <h2><Sparkles size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 8 }} />What-If Simulator</h2>
       <p className="whatif-intro">
         Explore mind-bending scenarios. See how changing one variable changes

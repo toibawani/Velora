@@ -286,7 +286,7 @@ function SensoryRooms({ topic, onBack }) {
   };
 
   return (
-    <div className="sensory-chamber-container">
+    <div data-testid="sensory-rooms" className="sensory-chamber-container">
       {/* Header */}
       <header className="sr-header">
         <div>

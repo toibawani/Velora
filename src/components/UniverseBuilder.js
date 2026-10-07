@@ -242,7 +242,7 @@ function UniverseBuilder({ topic, onBack }) {
   };
 
   return (
-    <div className="universe-console">
+    <div data-testid="universe-builder" className="universe-console">
       {/* Header */}
       <header className="universe-navbar">
         <div className="univ-nav-left">
