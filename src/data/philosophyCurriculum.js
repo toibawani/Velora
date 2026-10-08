@@ -1,4 +1,7 @@
 // Human-written philosophy curriculum for VELORA.
+/**
+ * Philosophy curriculum for VELORA.
+ */
 export const PHILOSOPHY_CURRICULUM = {
   name: 'Philosophy',
   description: 'Careful questions about what we know, what we should do, and what it means to be free.',

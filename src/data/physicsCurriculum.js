@@ -1,4 +1,7 @@
 // Human-written curriculum for VELORA. These notes are written for a curious person, not a textbook dump.
+/**
+ * Physics curriculum for VELORA.
+ */
 export const PHYSICS_CURRICULUM = {
   name: 'Physics',
   description: 'The rules underneath everything, from a rolling ball to a warped universe.',

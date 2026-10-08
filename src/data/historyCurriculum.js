@@ -1,4 +1,7 @@
 // Human-written history curriculum for VELORA.
+/**
+ * History curriculum for VELORA.
+ */
 export const HISTORY_CURRICULUM = {
   name: 'History',
   description: 'People, trade, mistakes, and ideas that did not arrive in a neat line.',
