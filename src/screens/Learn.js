@@ -49,6 +49,10 @@ import LessonReader from '../components/LessonReader';
 import { CURRICULUM, getTopic } from '../data/curriculum';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 
+/**
+ * Learn - subject overview, topic list, and deep-read reader. Handles
+ * navigation, progress, and opens LessonReader for individual lessons.
+ */
 function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, deepReadLevel, pendingTopic, onLessonOpened, showToast }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
