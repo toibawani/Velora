@@ -99,6 +99,8 @@ const CHAINS = [
 const isCorrectOrder = (selected, total) =>
   selected.length === total && selected.every((index, position) => index === position);
 
+KnowledgeChain.propTypes = { onBack: PropTypes.func };
+
 function KnowledgeChain({ onBack }) {
   const [currentChain, setCurrentChain] = useState(0);
   const [selectedConcepts, setSelectedConcepts] = useState([]);
