@@ -1,5 +1,10 @@
 import { BlackHoleLevel } from './schema';
 
+/**
+ * Level 6 - Black hole thermodynamics: Hawking radiation, temperature,
+ * evaporation, entropy, and the four laws.
+ */
+
 const LEVEL_6: BlackHoleLevel = {
   id: 'thermodynamics',
   number: 6,
