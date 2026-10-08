@@ -75,6 +75,8 @@ const normalise = (text) =>
     .replace(/[.,!?;:]+$/, '')
     .replace(/\s+/g, ' ');
 
+DefinitionDuel.propTypes = { onBack: PropTypes.func };
+
 function DefinitionDuel({ onBack }) {
   const [currentPair, setCurrentPair] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
