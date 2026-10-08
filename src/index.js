@@ -41,6 +41,11 @@ import './styles/design-tokens.css';
 import './index.css';
 import App from './App';
 import './styles/global-compat.css';
+
+/**
+ * VELORA root: hydrate the app, apply fonts and theme, and provide the
+ * theme context to the whole tree.
+ */
 // Imported here in one fixed order rather than from each component. They
 // cascade against each other, and letting the order depend on which component
 // happened to load first made that order vary between builds.
