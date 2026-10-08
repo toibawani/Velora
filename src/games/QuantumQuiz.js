@@ -211,6 +211,8 @@ const QUIZ_QUESTIONS = [
 
 const POINTS_PER_CORRECT = 10;
 
+QuantumQuiz.propTypes = { onBack: PropTypes.func };
+
 function QuantumQuiz({ onBack }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
