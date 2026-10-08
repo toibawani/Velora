@@ -9,6 +9,10 @@ import {
 } from '../data/dictionary';
 import '../styles/Dictionary.css';
 
+/**
+ * Dictionary - term lookup across subjects with letter and subject filters,
+ * plus curious-term discovery on the landing side.
+ */
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 function Dictionary({ setScreen }) {
