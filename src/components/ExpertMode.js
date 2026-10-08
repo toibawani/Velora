@@ -11,6 +11,8 @@ import '../styles/ExpertMode.css';
  * - Open philosophical/physical debate prompts
  * - Astrophysics career pathways
  */
+ExpertMode.propTypes = { domain: PropTypes.string, onOpenDiscussion: PropTypes.string };
+
 function ExpertMode({ domain = 'physics', onOpenDiscussion }) {
   const [activeTab, setActiveTab] = useState('papers');
   const [selectedPaper, setSelectedPaper] = useState(0);

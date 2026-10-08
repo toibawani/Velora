@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import DeepRead from './DeepRead';
 import { PHILOSOPHY_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/philosophy';
 
@@ -15,6 +17,8 @@ import { PHILOSOPHY_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/philoso
  * the level rail makes: someone who came back for a specific part should not have
  * to walk to it.
  */
+PhilosophyDeepRead.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), initialLevelId: PropTypes.string };
+
 function PhilosophyDeepRead({ onBack, initialLevelId }) {
   return (
     <DeepRead

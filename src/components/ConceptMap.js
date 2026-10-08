@@ -7,6 +7,8 @@ import '../styles/ConceptMap.css';
  * subject connect. Selecting a node reveals its relationships.
  */
 
+ConceptMap.propTypes = { subject: PropTypes.string };
+
 function ConceptMap({ subject }) {
   const [selectedNode, setSelectedNode] = useState(null);
 

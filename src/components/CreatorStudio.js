@@ -6,6 +6,8 @@ import '../styles/Creator.css';
  * CreatorStudio - learner authoring studio: notes, mind maps, flashcards,
  * and lesson drafts for a chosen topic.
  */
+CreatorStudio.propTypes = { topic: PropTypes.string, onBack: PropTypes.shape({"onBack": PropTypes.func}) };
+
 function CreatorStudio({ topic, onBack }) {
   const [activeMode, setActiveMode] = useState('notes'); // notes, mindmap, flashcards, lesson
   const [noteContent, setNoteContent] = useState('');

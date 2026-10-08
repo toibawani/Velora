@@ -23,6 +23,8 @@ const STATE_COPY = {
   notstarted: { label: 'Not started', className: 'rm-notstarted' },
 };
 
+Roadmap.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+
 function Roadmap({ setScreen }) {
   return (
     <div className="roadmap-page">

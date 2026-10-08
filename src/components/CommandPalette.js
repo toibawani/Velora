@@ -12,6 +12,8 @@ import { useFocusTrap } from '../hooks/useFocusTrap';
  */
 const DESTINATIONS = SCREENS;
 
+CommandPalette.propTypes = { isOpen: PropTypes.string, onClose: PropTypes.shape({"onClose": PropTypes.func}), onNavigate: PropTypes.shape({"onNavigate": PropTypes.func}) };
+
 function CommandPalette({ isOpen, onClose, onNavigate }) {
   const [query, setQuery] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);

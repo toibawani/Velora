@@ -6,6 +6,8 @@ import '../styles/WhatIf.css';
  * WhatIfSimulator - counterfactual science scenarios per topic, each with
  * an explanation of what would change and why.
  */
+WhatIfSimulator.propTypes = { topic: PropTypes.string };
+
 function WhatIfSimulator({ topic }) {
   const [selectedScenario, setSelectedScenario] = useState(null);
   const [simulationRunning, setSimulationRunning] = useState(false);

@@ -24,6 +24,8 @@ import ShareAchievementModal from './ShareAchievementModal';
  * experience. Focuses on conceptual clarity, reflective learning, and key takeaways
  * rather than arcade points.
  */
+FlowStateGame.propTypes = { gameName: PropTypes.string, gameType: PropTypes.string, difficulty: PropTypes.string, duration: PropTypes.string, onBack: PropTypes.shape({"onBack": PropTypes.func}) };
+
 function FlowStateGame({ gameName = 'Quantum Concepts Quiz', gameType = 'quiz', difficulty = 'Intermediate', duration = 10, onBack }) {
   const [gameState, setGameState] = useState('start'); // 'start' | 'playing' | 'complete'
   const [currentStep, setCurrentStep] = useState(0);

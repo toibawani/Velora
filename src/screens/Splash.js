@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import '../styles/Splash.css';
 
 /**
@@ -7,6 +9,8 @@ import '../styles/Splash.css';
  * Clean, confident, minimal. Like a premium product's welcome gate.
  * No emojis, no pastel gradients, no clutter. Just the brand and two actions.
  */
+SplashScreen.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+
 function SplashScreen({ setScreen }) {
   return (
     <div className="splash">

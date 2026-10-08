@@ -10,6 +10,8 @@ import '../styles/InstitutionalMode.css';
  * 1. Educators & Teachers (Curriculum alignment, Socratic discussion guides, age levels)
  * 2. Parents (Privacy-safe developmental insights, Educational Value Index, dinner conversation starters)
  */
+InstitutionalMode.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}) };
+
 function InstitutionalMode({ onBack }) {
   const [activeRole, setActiveRole] = useState('educator'); // 'educator' | 'parent'
   const [selectedAgeBand, setSelectedAgeBand] = useState('high-school');

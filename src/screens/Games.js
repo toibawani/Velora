@@ -83,6 +83,8 @@ export const CLASSIC_GAMES = [
  * Offers both classic interactive modes and distraction-free Flow State learning
  * sessions tailored for deep conceptual mastery.
  */
+GameHub.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), initialTab: PropTypes.string };
+
 function GameHub({ setScreen, initialTab = 'classic' }) {
   const [hubTab, setHubTab] = useState(initialTab); // 'brain' | 'sims' | 'classic'
   const [selectedGame, setSelectedGame] = useState(null);

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import DeepRead from './DeepRead';
 import { CS_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/computerscience';
 
@@ -21,6 +23,8 @@ import { CS_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/computerscience
  * `initialLevelId` is how a reader who tapped "Quantum Computing" in the Atlas
  * lands on the frontier level rather than the top of the subject.
  */
+ComputerScienceDeepRead.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), initialLevelId: PropTypes.string };
+
 function ComputerScienceDeepRead({ onBack, initialLevelId }) {
   return (
     <DeepRead

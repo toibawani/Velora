@@ -11,6 +11,8 @@ import { useFocusTrap } from '../hooks/useFocusTrap';
  * question desk "Community", the name of the forum that was deleted for being
  * invented. Both are fixed by reading src/navigation.js.
  */
+MobileNav.propTypes = { currentScreen: PropTypes.string, setScreen: PropTypes.shape({"setScreen": PropTypes.func}), onForgetProfile: PropTypes.shape({"onForgetProfile": PropTypes.func}) };
+
 function MobileNav({ currentScreen, setScreen, onForgetProfile }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleRef = useRef(null);

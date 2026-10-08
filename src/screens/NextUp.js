@@ -52,6 +52,8 @@ const whenLabel = (iso) => {
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 };
 
+NextUp.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), onOpenLesson: PropTypes.shape({"onOpenLesson": PropTypes.func}) };
+
 function NextUp({ setScreen, onOpenLesson }) {
   const [open, setOpen] = useState(() => getOpenTasks());
   const [done, setDone] = useState(() => getDoneTasks());

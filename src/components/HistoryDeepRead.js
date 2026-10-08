@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import DeepRead from './DeepRead';
 import { HISTORY_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/history';
 
@@ -16,6 +18,8 @@ import { HISTORY_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/history';
  * `initialLevelId` is how a reader who clicked "World War I" in the Atlas lands
  * on the century-of-wars level rather than the top of the subject.
  */
+HistoryDeepRead.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), initialLevelId: PropTypes.string };
+
 function HistoryDeepRead({ onBack, initialLevelId }) {
   return (
     <DeepRead

@@ -7,6 +7,8 @@ import '../styles/SmartRevision.css';
  * SmartRevision - revision schedule per subject with due dates and
  * completion history.
  */
+SmartRevision.propTypes = { selectedSubject: PropTypes.shape({"selectedSubject": PropTypes.func}) };
+
 function SmartRevision({ selectedSubject }) {
   const [revisions] = useState([
     {

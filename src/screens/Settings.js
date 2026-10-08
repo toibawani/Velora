@@ -53,6 +53,8 @@ const NOT_SAVED = {
 
 const failureMessage = (result) => NOT_SAVED[result] || NOT_SAVED.failed;
 
+Settings.propTypes = { user: PropTypes.string, setScreen: PropTypes.shape({"setScreen": PropTypes.func}), onForgetProfile: PropTypes.shape({"onForgetProfile": PropTypes.func}) };
+
 function Settings({ user, setScreen, onForgetProfile }) {
   const { theme, setTheme } = useTheme();
   const [preferences, setPreferences] = useState(() => getOnboardingPreferences());

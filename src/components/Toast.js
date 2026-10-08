@@ -6,6 +6,8 @@ import '../styles/Toast.css';
  * Toast - transient notification with info/success/warning/error variants
  * and an auto-dismiss timer.
  */
+Toast.propTypes = { message: PropTypes.string, type: PropTypes.string, duration: PropTypes.string, onClose: PropTypes.shape({"onClose": PropTypes.func}) };
+
 function Toast({ message, type = 'info', duration = 3000, onClose = () => {} }) {
   useEffect(() => {
     const timer = setTimeout(onClose, duration);

@@ -13,6 +13,8 @@ import { recordStudySession } from '../utils/analyticsStorage';
  */
 import '../styles/LessonReader.css';
 
+LessonReader.propTypes = { topic: PropTypes.string, subject: PropTypes.string, onBack: PropTypes.shape({"onBack": PropTypes.func}), showToast: PropTypes.shape({"showToast": PropTypes.func}) };
+
 function LessonReader({ topic, subject, onBack, showToast }) {
   const [saved, setSaved] = useState(() => topic ? getReviewItems().some((item) => item.id === `${subject}:${topic.id}`) : false);
   const openedAt = useRef(Date.now());

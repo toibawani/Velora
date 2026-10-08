@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { HelpCircle } from 'lucide-react';
 import '../../styles/ui/EmptyState.css';
 
@@ -9,7 +11,17 @@ import '../../styles/ui/EmptyState.css';
  * The enter animation is a CSS keyframe in EmptyState.css. It used to come
  * from motion/react, which is not a dependency of this project.
  */
-export function EmptyState({
+export EmptyState.propTypes = {
+  icon: PropTypes.node,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  action: PropTypes.string,
+  actionText: PropTypes.string,
+  onAction: PropTypes.func,
+  actionLabel: PropTypes.string
+};
+
+function EmptyState({
   icon: Icon = HelpCircle,
   title,
   description,

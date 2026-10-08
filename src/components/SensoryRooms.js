@@ -9,6 +9,8 @@ import '../styles/SensoryRooms.css';
  * Uses the native Web Audio API for harmonic drone generation, 10Hz binaural alpha waves,
  * and Brownian noise study isolation.
  */
+SensoryRooms.propTypes = { topic: PropTypes.string, onBack: PropTypes.shape({"onBack": PropTypes.func}) };
+
 function SensoryRooms({ topic, onBack }) {
   // Web Audio Context reference
   const audioCtxRef = useRef(null);

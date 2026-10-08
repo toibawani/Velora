@@ -82,6 +82,8 @@ const COLORS = [
   { label: 'Red', value: '#f4212e' },
 ];
 
+AIWhiteboard.propTypes = { topic: PropTypes.string, onBack: PropTypes.shape({"onBack": PropTypes.func}) };
+
 function AIWhiteboard({ topic, onBack }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);

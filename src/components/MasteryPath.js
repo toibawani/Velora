@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Timer, Check } from 'lucide-react';
 import '../styles/MasteryPath.css';
 
@@ -31,6 +33,8 @@ const PATHS = {
     ],
   },
 };
+
+MasteryPath.propTypes = { selectedSubject: PropTypes.shape({"selectedSubject": PropTypes.func}) };
 
 function MasteryPath({ selectedSubject }) {
   const path = PATHS[selectedSubject || 'physics'] || PATHS.physics;

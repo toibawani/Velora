@@ -15,6 +15,8 @@ import '../styles/Dictionary.css';
  */
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
+Dictionary.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+
 function Dictionary({ setScreen }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('all');

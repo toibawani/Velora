@@ -6,6 +6,8 @@ import '../styles/ShadowLearning.css';
  * ShadowLearning - anonymous peer-note board per topic, with submit and
  * lightweight moderation states.
  */
+ShadowLearning.propTypes = { topic: PropTypes.string, onNotify: PropTypes.shape({"onNotify": PropTypes.func}) };
+
 function ShadowLearning({ topic, onNotify }) {
   const [myNote, setMyNote] = useState('');
   const [submitted, setSubmitted] = useState(false);

@@ -71,6 +71,8 @@ const PRESETS = [
   }
 ];
 
+RelativityLab.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}) };
+
 function RelativityLab({ onBack }) {
   const [selectedPreset, setSelectedPreset] = useState('sag-a');
   // Logarithmic scale for mass (in Solar Masses): 10^-6 to 10^10

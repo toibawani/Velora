@@ -20,6 +20,8 @@ import '../styles/Analytics.css';
 export const barColor = (subject) =>
   subject ? `var(--subject-${subject}, var(--accent-primary))` : 'var(--accent-primary)';
 
+Analytics.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), user: PropTypes.string };
+
 function Analytics({ setScreen, user }) {
   const [analytics, setAnalytics] = useState(getAnalyticsData());
   const hasActivity = analytics.totalHoursStudied > 0 || analytics.topicTimeDistribution.length > 0;

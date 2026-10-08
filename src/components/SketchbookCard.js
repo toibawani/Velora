@@ -12,6 +12,8 @@ import '../styles/SketchbookCard.css';
  * - On-the-fly interactive "Challenge Me" quiz
  * - "Save to Study Kit" personal curation
  */
+SketchbookCard.propTypes = { term: PropTypes.string };
+
 function SketchbookCard({ term = 'capillary-action' }) {
   const [highlightedPart, setHighlightedPart] = useState(null);
   const [isSaved, setIsSaved] = useState(false);

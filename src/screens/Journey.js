@@ -40,6 +40,8 @@ const pluralise = (count, singular, plural = `${singular}s`) =>
 const sessionsRecorded = (analytics) =>
   analytics.weeklyActivity.reduce((total, day) => total + (day.sessions || 0), 0);
 
+LearningJourney.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+
 function LearningJourney({ setScreen }) {
   const [analytics] = useState(() => getAnalyticsData());
   const entries = journeyEntries(analytics);

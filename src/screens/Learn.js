@@ -53,6 +53,8 @@ import { getAnalyticsData } from '../utils/analyticsStorage';
  * Learn - subject overview, topic list, and deep-read reader. Handles
  * navigation, progress, and opens LessonReader for individual lessons.
  */
+Learn.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), selectedSubject: PropTypes.shape({"selectedSubject": PropTypes.func}), setSelectedSubject: PropTypes.shape({"setSelectedSubject": PropTypes.func}), initialView: PropTypes.string, setInitialView: PropTypes.string, deepReadLevel: PropTypes.string, pendingTopic: PropTypes.string, onLessonOpened: PropTypes.shape({"onLessonOpened": PropTypes.func}), showToast: PropTypes.shape({"showToast": PropTypes.func}) };
+
 function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, deepReadLevel, pendingTopic, onLessonOpened, showToast }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);

@@ -199,6 +199,8 @@ export const findFreeSpot = (existing, seed = { x: 220, y: 190 }, bounds = { wid
   return { x: Math.round(clampX(seed.x)), y: Math.round(clampY(seed.y)) };
 };
 
+UniverseBuilder.propTypes = { topic: PropTypes.string, onBack: PropTypes.shape({"onBack": PropTypes.func}) };
+
 function UniverseBuilder({ topic, onBack }) {
   const [viewMode, setViewMode] = useState('galaxy'); // 'galaxy' | 'timeline' | 'map'
   const [concepts, setConcepts] = useState(INITIAL_CONCEPTS);

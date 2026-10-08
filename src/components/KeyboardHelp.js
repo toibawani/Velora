@@ -14,6 +14,8 @@ const SHORTCUTS = [
   ['Tab', 'Move through interactive controls']
 ];
 
+KeyboardHelp.propTypes = { isOpen: PropTypes.string, onClose: PropTypes.shape({"onClose": PropTypes.func}) };
+
 function KeyboardHelp({ isOpen, onClose }) {
   const helpRef = useRef(null);
   useFocusTrap(isOpen, helpRef, { onClose });

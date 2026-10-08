@@ -3,6 +3,8 @@
  * Shows the concept name, its tier, and a brief summary.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { parseInlineTerms } from './GlossaryTerm';
 import { STATUS_LABELS as PHYSICS_STATUS_LABELS } from '../data/blackholes/schema';
 import '../styles/BlackHoleMastery.css';
@@ -25,6 +27,8 @@ import '../styles/BlackHoleMastery.css';
  * disagreement would be the exact dishonesty the labels exist to prevent. The
  * physics labels are the default so the black hole screen needs no change.
  */
+ConceptEntry.propTypes = { entry: PropTypes.string, statusLabels: PropTypes.string };
+
 function ConceptEntry({ entry, statusLabels = PHYSICS_STATUS_LABELS }) {
   const { name, simple, deeper, matters, status, source, sourceUrl } = entry;
 

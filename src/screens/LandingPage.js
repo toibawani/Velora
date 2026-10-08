@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {
   Globe,
   Zap,
@@ -20,6 +22,8 @@ import '../styles/LandingPage.css';
  * Left-aligned asymmetric hero. No centered column stacks.
  * Phase 2+4: Asymmetric layout, lucide icons, intentional visual density.
  */
+LandingPage.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+
 function LandingPage({ setScreen }) {
   const testimonials = [
     {

@@ -33,6 +33,8 @@ const GOALS = [
   { id: 'research', name: 'Academic research' },
 ];
 
+LocalProfile.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), onStart: PropTypes.shape({"onStart": PropTypes.func}), showToast: PropTypes.shape({"showToast": PropTypes.func}) };
+
 function LocalProfile({ setScreen, onStart, showToast }) {
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');

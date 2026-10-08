@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { UserCheck, Orbit, Atom } from 'lucide-react';
 import '../styles/BlackHolesElite.css';
 
@@ -6,6 +8,8 @@ import '../styles/BlackHolesElite.css';
  * BlackHolesElite - elite-tier black hole content: discovery story, lab access,
  * and masterclass entry points for advanced learners.
  */
+
+BlackHolesElite.propTypes = { onExploreMasterclass: PropTypes.shape({"onExploreMasterclass": PropTypes.func}), onOpenLab: PropTypes.shape({"onOpenLab": PropTypes.func}) };
 
 function BlackHolesElite({ onExploreMasterclass, onOpenLab }) {
   const sections = [

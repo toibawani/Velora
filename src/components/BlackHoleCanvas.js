@@ -14,6 +14,8 @@ import '../styles/BlackHoleMastery.css';
  * BlackHoleMastery.motion.test.jsx covers this by counting requestAnimationFrame
  * calls, because jsdom has no canvas backend and pixels cannot be read.
  */
+BlackHoleCanvas.propTypes = { className: PropTypes.string };
+
 function BlackHoleCanvas({ className = 'black-hole-canvas' }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);

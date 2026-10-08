@@ -41,6 +41,8 @@ const isValidExplanation = (item) =>
 const readExplanations = (stored) =>
   Array.isArray(stored) ? stored.filter(isValidExplanation) : null;
 
+PeerExplanations.propTypes = { topic: PropTypes.string, onNotify: PropTypes.shape({"onNotify": PropTypes.func}) };
+
 function PeerExplanations({ topic, onNotify }) {
   const [explanations, setExplanations] = useState(() => {
     const saved = readExplanations(readValue(storageKey(topic), null));

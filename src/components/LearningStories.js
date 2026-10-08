@@ -9,6 +9,8 @@ import '../styles/LearningStories.css';
  * narrative arcs. Learners follow how real humans struggled, failed, and broke
  * through dogma to discover the cosmos.
  */
+LearningStories.propTypes = { onSelectStoryTopic: PropTypes.string };
+
 function LearningStories({ onSelectStoryTopic }) {
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
   const [currentChapter, setCurrentChapter] = useState(0);

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { PRIMARY_SCREENS } from '../navigation';
 import '../styles/BottomNav.css';
 
@@ -15,6 +17,8 @@ import '../styles/BottomNav.css';
  * screen added to the app could easily be left out of it, so it lives in one
  * place now and this bar is capped at the six entries marked primary.
  */
+BottomNav.propTypes = { currentScreen: PropTypes.string, setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+
 function BottomNav({ currentScreen, setScreen }) {
   return (
     <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">

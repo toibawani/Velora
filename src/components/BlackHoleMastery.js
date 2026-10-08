@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import DeepRead from './DeepRead';
 import BlackHoleCanvas from './BlackHoleCanvas';
 import { BLACK_HOLE_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/blackholes';
@@ -15,6 +17,8 @@ import { BLACK_HOLE_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/blackho
  * call site means the physics screen's public shape did not change when the
  * reader was generalised, so nothing that renders it had to be touched.
  */
+BlackHoleMastery.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), onOpenLab: PropTypes.shape({"onOpenLab": PropTypes.func}) };
+
 function BlackHoleMastery({ onBack, onOpenLab }) {
   return (
     <DeepRead

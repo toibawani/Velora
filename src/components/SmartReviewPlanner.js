@@ -7,6 +7,8 @@ import '../styles/SmartReviewPlanner.css';
  * SmartReviewPlanner - spaced-repetition planner: due-today queue, overdue
  * flags, and complete/dismiss actions per review item.
  */
+SmartReviewPlanner.propTypes = { selectedSubject: PropTypes.shape({"selectedSubject": PropTypes.func}), onNotify: PropTypes.shape({"onNotify": PropTypes.func}) };
+
 function SmartReviewPlanner({ selectedSubject, onNotify }) {
   const [reviewItems, setReviewItems] = useState(getReviewItems);
 

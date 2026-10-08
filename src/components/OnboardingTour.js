@@ -81,6 +81,8 @@ const STEPS = [
   }
 ];
 
+OnboardingTour.propTypes = { onComplete: PropTypes.string, setSelectedSubject: PropTypes.shape({"setSelectedSubject": PropTypes.func}) };
+
 function OnboardingTour({ onComplete, setSelectedSubject }) {
   const [stepIdx, setStepIdx] = useState(0);
   const [selectedDomain, setSelectedDomain] = useState(null);

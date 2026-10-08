@@ -46,6 +46,8 @@ const whenLabel = (iso) => {
 const NOT_SAVED =
   'This browser would not save that, so it is only here for this visit. Your question is not stored. Private browsing and a full storage quota both cause this.';
 
+Community.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), onOpenLesson: PropTypes.shape({"onOpenLesson": PropTypes.func}) };
+
 function Community({ setScreen, onOpenLesson }) {
   const [questions, setQuestions] = useState(() => getQuestions());
   const [draft, setDraft] = useState('');
