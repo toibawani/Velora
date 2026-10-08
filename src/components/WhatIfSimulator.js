@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Sparkles, X, Microscope, BarChart3, Lightbulb } from 'lucide-react';
 import '../styles/WhatIf.css';
 
+/**
+ * WhatIfSimulator - counterfactual science scenarios per topic, each with
+ * an explanation of what would change and why.
+ */
 function WhatIfSimulator({ topic }) {
   const [selectedScenario, setSelectedScenario] = useState(null);
   const [simulationRunning, setSimulationRunning] = useState(false);
