@@ -158,6 +158,8 @@ const POINTS_PER_PUZZLE = 100;
 
 const normalise = (text) => text.trim().toUpperCase().replace(/\s+/g, ' ');
 
+WordPuzzle.propTypes = { onBack: PropTypes.func };
+
 function WordPuzzle({ onBack }) {
   const [currentPuzzle, setCurrentPuzzle] = useState(0);
   const [userAnswers, setUserAnswers] = useState(() => Array(PUZZLES[0].blanks).fill(''));
