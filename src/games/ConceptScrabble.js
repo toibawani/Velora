@@ -153,6 +153,8 @@ const shuffle = (letters) => {
 
 const POINTS_PER_WORD = 100;
 
+ConceptScrabble.propTypes = { onBack: PropTypes.func };
+
 function ConceptScrabble({ onBack }) {
   const [currentLevel, setCurrentLevel] = useState(0);
   const [selectedLetters, setSelectedLetters] = useState([]);
