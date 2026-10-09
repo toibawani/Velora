@@ -190,6 +190,7 @@ const CASES = [
   { name: 'Quantum Computing (cs deep read)', query: 'Quantum Computing', topic: 'Quantum Computing', expect: 'deep-read' },
   { name: 'Motion (classical mechanics lesson)', query: 'Motion', topic: 'Motion', expect: 'lesson' },
   { name: 'Work, Energy & Power (lesson)', query: 'Work, Energy', topic: 'Work, Energy & Power', expect: 'lesson' },
+  { name: 'Gravitation (classical mechanics lesson)', query: 'Gravitation', topic: 'Gravitation', expect: 'lesson' },
   { name: 'Entropy (listed, unwritten)', query: 'Entropy', topic: 'Entropy', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },
   { name: 'Monsoons (field unmapped)', query: 'Monsoons', topic: 'Monsoons', expect: 'unwritten' },

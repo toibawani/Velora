@@ -165,10 +165,10 @@ describe('fieldCoverage', () => {
     const coverage = fieldCoverage('science', topics);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Nineteen written entry points across the whole science field: seven for
+    // Twenty-two written entry points across the whole science field: ten for
     // physics, one for space science (black holes), and eleven for the computer
     // science deep read. It was three before computer science landed.
-    expect(coverage.written).toBe(19);
+    expect(coverage.written).toBe(22);
     expect(coverage.unmapped).toBe(0);
   });
 
@@ -200,7 +200,7 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(46);
+    expect(written).toBe(49);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -227,8 +227,8 @@ describe('fieldCoverage', () => {
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
     //
-    // Science is 19: seven physics, one space science, eleven computer science.
-    expect(perField.science.written).toBe(19);
+    // Science is 22: ten physics, one space science, eleven computer science.
+    expect(perField.science.written).toBe(22);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -241,6 +241,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(46);
+    expect(summed).toBe(49);
   });
 });

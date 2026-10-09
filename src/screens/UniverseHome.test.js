@@ -139,7 +139,7 @@ describe('editorial knowledge atlas', () => {
     // the element's own text rather than a regex over one text node.
     const coverage = screen.getByText((_, element) =>
       element?.className === 'uh-coverage' &&
-      /Science:\s*19\s*of 188 topics written/.test(element.textContent || '')
+      /Science:\s*22\s*of 188 topics written/.test(element.textContent || '')
     );
     expect(coverage).toBeInTheDocument();
   });
@@ -176,11 +176,11 @@ describe('atlas index', () => {
     expect(entries).toHaveLength(188);
     expect(markers).toHaveLength(188);
 
-    // Science resolves 19 topics to real content: seven physics, one space
+    // Science resolves 22 topics to real content: ten physics, one space
     // science, eleven computer science. If the content grows, raise these in the
     // same commit as the content.
-    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(19);
-    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(169);
+    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(22);
+    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(166);
   });
 
   test('says "not written yet" in the accessible name, not just in colour', () => {
@@ -202,11 +202,11 @@ describe('atlas index', () => {
     renderUniverse();
 
     // The reader can compare fields at a glance: Literature is 0 of 92, Science
-    // is 19 of 188 - the seven physics lessons, the space-science entry point,
+    // is 22 of 188 - the ten physics lessons, the space-science entry point,
     // the eleven computer science topics and the Quantum Computing topic that
     // both disciplines share. Nothing in the old layout made that comparison
     // possible.
-    expect(screen.getByRole('button', { name: /^Science, .*19 of 188 topics written$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Science, .*22 of 188 topics written$/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /^Literature, .*0 of 92 topics written$/ })).toBeInTheDocument();
   });
 });
