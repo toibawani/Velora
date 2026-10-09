@@ -78,10 +78,14 @@ describe('editorial knowledge atlas', () => {
   test('an unwritten topic says so instead of navigating nowhere', () => {
     const { onOpenLesson, onOpenDeepRead, showToast } = renderUniverse();
 
-    // 'Motion' opens the atlas on Classical Mechanics, which is listed but has
+    // 'Entropy' sits under Thermodynamics, which the Atlas lists and which has
     // no lesson written. This used to navigate to the physics topic index and
-    // silently drop the topic.
-    expect(screen.getByRole('heading', { name: 'Motion' })).toBeInTheDocument();
+    // silently drop the topic. The case used to be 'Motion', which is now a
+    // lesson, so it has to track the content rather than stay where it was.
+    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), { target: { value: 'Entropy' } });
+    fireEvent.click(screen.getByRole('button', { name: /Entropy.*Science/i }));
+
+    expect(screen.getByRole('heading', { name: 'Entropy' })).toBeInTheDocument();
     // Every unwritten topic now carries the status in its accessible name, so
     // the call to action has to be found by exact label rather than by a loose
     // /Not written yet/ match that would hit 180 topic lines as well.
@@ -135,7 +139,7 @@ describe('editorial knowledge atlas', () => {
     // the element's own text rather than a regex over one text node.
     const coverage = screen.getByText((_, element) =>
       element?.className === 'uh-coverage' &&
-      /Science:\s*15\s*of 188 topics written/.test(element.textContent || '')
+      /Science:\s*19\s*of 188 topics written/.test(element.textContent || '')
     );
     expect(coverage).toBeInTheDocument();
   });
@@ -172,20 +176,20 @@ describe('atlas index', () => {
     expect(entries).toHaveLength(188);
     expect(markers).toHaveLength(188);
 
-    // Science resolves 15 topics to real content: three physics, one space
+    // Science resolves 19 topics to real content: seven physics, one space
     // science, eleven computer science. If the content grows, raise these in the
     // same commit as the content.
-    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(15);
-    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(173);
+    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(19);
+    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(169);
   });
 
   test('says "not written yet" in the accessible name, not just in colour', () => {
     renderUniverse();
 
     // Status by marker colour alone would be invisible to a screen reader and
-    // to anyone who cannot separate the accent from the tertiary ink. Motion is
+    // to anyone who cannot separate the accent from the tertiary ink. Entropy is
     // on Science, which is the field open on arrival.
-    expect(screen.getByRole('button', { name: 'Motion, not written yet' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Entropy, not written yet' })).toBeInTheDocument();
 
     // A written topic carries no such suffix, so the two states are
     // distinguishable by name alone. Black Holes sits under Astrophysics and
@@ -198,11 +202,11 @@ describe('atlas index', () => {
     renderUniverse();
 
     // The reader can compare fields at a glance: Literature is 0 of 92, Science
-    // is 15 of 188 - the three pre-existing physics and space-science entry
-    // points plus the eleven computer science topics and the Quantum Computing
-    // topic that both disciplines share. Nothing in the old layout made that
-    // comparison possible.
-    expect(screen.getByRole('button', { name: /^Science, .*15 of 188 topics written$/ })).toBeInTheDocument();
+    // is 19 of 188 - the seven physics lessons, the space-science entry point,
+    // the eleven computer science topics and the Quantum Computing topic that
+    // both disciplines share. Nothing in the old layout made that comparison
+    // possible.
+    expect(screen.getByRole('button', { name: /^Science, .*19 of 188 topics written$/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /^Literature, .*0 of 92 topics written$/ })).toBeInTheDocument();
   });
 });

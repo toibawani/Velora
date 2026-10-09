@@ -117,8 +117,20 @@ describe('resolveAtlasTopic', () => {
   });
 
   test('reports an unwritten topic as unwritten instead of inventing content', () => {
+    expect(at('science', 'Entropy')).toEqual({
+      kind: 'unwritten', reason: 'no-content-yet', title: 'Entropy', fieldId: 'science',
+    });
+  });
+
+  test('a Classical Mechanics topic with a lesson in the curriculum opens that lesson', () => {
+    // 'Motion' was the example of an unwritten topic until the lesson was
+    // written. The Atlas topic and the lesson id are matched by slug, so this
+    // also checks that the two names still agree.
     expect(at('science', 'Motion')).toEqual({
-      kind: 'unwritten', reason: 'no-content-yet', title: 'Motion', fieldId: 'science',
+      kind: 'lesson', subject: 'physics', topicId: 'motion', title: 'Motion', fieldId: 'science',
+    });
+    expect(at('science', 'Work, Energy & Power')).toEqual({
+      kind: 'lesson', subject: 'physics', topicId: 'work-energy-power', title: 'Work, Energy & Power', fieldId: 'science',
     });
   });
 
@@ -153,10 +165,10 @@ describe('fieldCoverage', () => {
     const coverage = fieldCoverage('science', topics);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Fifteen written entry points across the whole science field: three for
+    // Nineteen written entry points across the whole science field: seven for
     // physics, one for space science (black holes), and eleven for the computer
     // science deep read. It was three before computer science landed.
-    expect(coverage.written).toBe(15);
+    expect(coverage.written).toBe(19);
     expect(coverage.unmapped).toBe(0);
   });
 
@@ -188,7 +200,7 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(42);
+    expect(written).toBe(46);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -215,8 +227,8 @@ describe('fieldCoverage', () => {
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
     //
-    // Science is 15: three physics, one space science, eleven computer science.
-    expect(perField.science.written).toBe(15);
+    // Science is 19: seven physics, one space science, eleven computer science.
+    expect(perField.science.written).toBe(19);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -229,6 +241,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(42);
+    expect(summed).toBe(46);
   });
 });

@@ -25,4 +25,8 @@
 .lesson-list-card ul { margin: 0; padding-left: 1.25rem; color: var(--text-secondary); line-height: 1.7; }
 .lesson-list-card li + li { margin-top: var(--space-2); }
 .lesson-section-card .concept-map, .lesson-section-card .peer-explanations, .lesson-section-card .smart-review-planner { margin: var(--space-5) 0 0; }
+.lesson-sources ul { margin: var(--space-4) 0 0; padding-left: 1.25rem; color: var(--text-secondary); line-height: 1.7; }
+.lesson-sources li + li { margin-top: var(--space-2); }
+.lesson-sources a { color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; }
+.lesson-sources a:hover { color: var(--text-primary); }
 @media (max-width: 640px) { .lesson-reader-header { padding: var(--space-3) var(--space-4); } .lesson-reader-main { width: min(100% - 2rem, 820px); padding-top: var(--space-8); } .lesson-columns { grid-template-columns: 1fr; } .lesson-story, .lesson-callout, .lesson-section-card, .lesson-list-card { padding: var(--space-4); } }
