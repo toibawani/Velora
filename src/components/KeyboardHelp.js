@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import { X, Command } from 'lucide-react';
 import '../styles/KeyboardHelp.css';

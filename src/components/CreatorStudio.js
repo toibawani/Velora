@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Palette, NotebookPen, Brain, Layers, BookOpen, Save, Check, Link2, Plus, X, Upload, Rocket, Sparkles } from 'lucide-react';
 import '../styles/Creator.css';

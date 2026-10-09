@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import '../styles/ConceptMap.css';

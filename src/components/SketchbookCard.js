@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Check, Star, Globe, Zap, Lightbulb } from 'lucide-react';
 import '../styles/SketchbookCard.css';

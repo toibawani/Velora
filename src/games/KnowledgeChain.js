@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import '../styles/GameStyles.css';
 

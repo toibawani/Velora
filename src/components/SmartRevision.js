@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Calendar, RotateCcw, Lightbulb, BookOpen } from 'lucide-react';
 import EmptyState from './EmptyState';

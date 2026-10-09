@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
 import { Landmark, Orbit, Headphones, Waves, Lightbulb } from 'lucide-react';
 import '../styles/SensoryRooms.css';

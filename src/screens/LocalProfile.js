@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { ArrowRight, Check, HardDrive } from 'lucide-react';
 import '../styles/Auth.css';

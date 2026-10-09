@@ -11,7 +11,7 @@ import '../../styles/ui/EmptyState.css';
  * The enter animation is a CSS keyframe in EmptyState.css. It used to come
  * from motion/react, which is not a dependency of this project.
  */
-export EmptyState.propTypes = {
+EmptyState.propTypes = {
   icon: PropTypes.node,
   title: PropTypes.string,
   description: PropTypes.string,

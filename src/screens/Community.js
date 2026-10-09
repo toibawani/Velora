@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, ArrowRight, BookOpen, Trash2 } from 'lucide-react';
 import { CURRICULUM } from '../data/curriculum';

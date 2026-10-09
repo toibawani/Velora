@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Users, NotebookPen, Check, Rocket, Trophy, Star, Lightbulb, Smile, Brain, GraduationCap } from 'lucide-react';
 import '../styles/ShadowLearning.css';

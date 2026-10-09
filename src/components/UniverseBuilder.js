@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { Orbit, TrendingUp, Map as MapIcon, Leaf, Wind, Zap, Atom, Dna, Lightbulb, X } from 'lucide-react';
 import '../styles/Universe.css';

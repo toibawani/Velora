@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import ROADMAP, { ROADMAP_TOTALS, lessonTopicCount, atlasTopicCount } from '../roadmap';
 import '../styles/Roadmap.css';
 

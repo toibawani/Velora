@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
 import { Lightbulb, Target, Smile, Brain } from 'lucide-react';
 import EmptyState from './EmptyState';

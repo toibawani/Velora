@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Orbit, Telescope, Zap, Sunrise, Sparkles, Moon, Landmark, ScrollText, Ruler, Eye, BookOpen, Gamepad2 } from 'lucide-react';
 import '../styles/OnboardingTour.css';

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, LogOut } from 'lucide-react';
 import { SCREENS } from '../navigation';

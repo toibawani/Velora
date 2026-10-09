@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import '../styles/Toast.css';

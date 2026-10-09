@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Globe, Sun, Sparkles, Orbit, Clapperboard, CircleDot, Atom } from 'lucide-react';
 

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Sparkles, X, Microscope, BarChart3, Lightbulb } from 'lucide-react';
 import '../styles/WhatIf.css';

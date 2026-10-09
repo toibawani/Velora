@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { GraduationCap, Users, Target, Lightbulb, AlertTriangle, Microscope, Utensils } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';

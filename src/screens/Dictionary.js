@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
 import {

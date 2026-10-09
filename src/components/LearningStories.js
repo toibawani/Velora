@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Orbit, Landmark, Telescope } from 'lucide-react';
 import '../styles/LearningStories.css';

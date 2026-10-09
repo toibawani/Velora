@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Pen, Eraser, X } from 'lucide-react';
 import '../styles/Whiteboard.css';

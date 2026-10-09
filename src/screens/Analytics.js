@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { Shield, Lightbulb, Target } from 'lucide-react';
 import { getAnalyticsData } from '../utils/analyticsStorage';
