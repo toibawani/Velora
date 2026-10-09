@@ -127,14 +127,30 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       };
     }),
   };
-  if (!subject) return null;
-
+  // No early return here, even though `subject` can be undefined: a deep read
+  // can select a subject the curriculum does not have (computer science has six
+  // levels of deep-read material and zero lessons), and every view below the
+  // overview renders without the course record. Returning null before them made
+  // the whole screen blank when a reader tapped "Quantum Computing" in the
+  // Atlas, which is what the atlas-topic audit caught.
   const handleBack = () => {
     if (selectedTopic) {
       setSelectedTopic(null);
     } else if (currentView !== 'overview') {
-      setCurrentView('overview');
-      if (setInitialView) setInitialView('overview');
+      // Back normally returns to the course overview. But a deep read can
+      // select a subject the curriculum does not have (computer science has six
+      // levels of deep-read material and zero lessons), and there is no
+      // overview to show for it. The Atlas is where the reader tapped, so that
+      // is where Back goes, and the subject is cleared so the next visit to
+      // Learn starts on the default course instead of an empty one.
+      if (subject) {
+        setCurrentView('overview');
+        if (setInitialView) setInitialView('overview');
+      } else {
+        if (setInitialView) setInitialView('overview');
+        setSelectedSubject(null);
+        setScreen('universe');
+      }
     } else {
       if (setInitialView) setInitialView('overview');
       setScreen('universe');
@@ -326,6 +342,12 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       </div>
     );
   }
+
+  // Last resort before the overview renders: the course record is what the
+  // overview is made of. handleBack never leaves a reader here (it returns to
+  // the Atlas when there is no overview to show), so this guard exists only to
+  // fail closed rather than throw on subject.icon below.
+  if (!subject) return null;
 
   const SubjectIconHeader = subject.icon;
 
