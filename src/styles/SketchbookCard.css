@@ -44,8 +44,8 @@
 }
 
 .term-pill:hover {
-  border-color: #555555;
-  color: #ffffff;
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .term-pill.active {
@@ -72,7 +72,7 @@
 
 /* Illustration Side */
 .sketchbook-illustration-side {
-  background: #141414;
+  background: var(--bg-secondary);
   border-right: 1px solid var(--border-default, #2a2a2a);
   padding: var(--space-8) var(--space-6);
   display: flex;
@@ -88,6 +88,20 @@
   height: auto;
   display: block;
 }
+
+/* Illustrator's ink, themed so the diagram reads on cream and espresso alike.
+   These are classes, not presentation attributes, because SVG attributes cannot
+   take var(); a hardcoded #ffffff label vanished on the cream ground. */
+.sketch-svg .ink-primary { stroke: var(--text-secondary); }
+.sketch-svg .ink-info { stroke: var(--color-info); fill: var(--color-info); }
+.sketch-svg .ink-warning { stroke: var(--color-warning); fill: var(--color-warning); }
+.sketch-svg .ink-horizon { stroke: var(--text-primary); }
+.sketch-svg .fill-info { fill: var(--color-info); }
+.sketch-svg .fill-warning { fill: var(--color-warning); }
+.sketch-svg .liquid-fill { fill: var(--color-info); }
+.sketch-svg .label-info { fill: var(--color-info); }
+.sketch-svg .label-warning { fill: var(--color-warning); }
+.sketch-svg .label-ink { fill: var(--text-primary); }
 
 .illustration-caption-row {
   font-size: 0.75rem;
@@ -144,14 +158,14 @@
 
 .save-kit-btn:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: #555555;
-  color: #ffffff;
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 .save-kit-btn.saved {
   background: rgba(255, 214, 10, 0.12);
-  border-color: #ffd60a;
-  color: #ffd60a;
+  border-color: var(--color-warning);
+  color: var(--color-warning);
 }
 
 .definition-section {
@@ -200,13 +214,13 @@
 .part-item:hover,
 .part-item.active {
   border-color: var(--accent-primary);
-  background: #262626;
+  background: var(--bg-tertiary);
 }
 
 .part-label {
   font-size: 0.88rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-primary);
   margin-bottom: var(--space-1);
 }
 
@@ -219,18 +233,18 @@
 
 /* Everyday Connection Box */
 .everyday-connection-box {
-  background: rgba(52, 199, 89, 0.08);
-  border-left: 3px solid #34c759;
+  background: var(--color-success-soft);
+  border: 1px solid var(--border-default);
   padding: var(--space-4) var(--space-5);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-radius: var(--radius-md);
 }
 
 .everyday-connection-box .section-title {
-  color: #34c759;
+  color: var(--color-success);
 }
 
 .everyday-connection-box .section-content {
-  color: #d0f0d8;
+  color: var(--text-secondary);
 }
 
 /* Challenge CTA & Panel */
@@ -240,7 +254,7 @@
 
 .challenge-me-trigger-btn {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--accent-contrast);
   border: none;
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-sm);
@@ -252,7 +266,7 @@
 }
 
 .challenge-me-trigger-btn:hover {
-  background: #1D4ED8;
+  background: var(--accent-primary-hover);
 }
 
 .interactive-challenge-panel {
@@ -275,7 +289,7 @@
   font-size: 0.72rem;
   text-transform: uppercase;
   font-weight: 700;
-  color: #ff9f0a;
+  color: var(--color-warning);
   letter-spacing: 0.05em;
 }
 
@@ -291,7 +305,7 @@
   margin: 0;
   font-size: 0.92rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .challenge-opts-list {
@@ -301,9 +315,9 @@
 }
 
 .challenge-opt-btn {
-  background: #181818;
+  background: var(--bg-secondary);
   color: var(--text-primary, #e0e0e0);
-  border: 1px solid #333333;
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
   text-align: left;
@@ -313,23 +327,23 @@
 }
 
 .challenge-opt-btn:hover {
-  border-color: #555555;
-  background: #202020;
+  border-color: var(--text-secondary);
+  background: var(--bg-tertiary);
 }
 
 .challenge-opt-btn.correct {
-  border-color: #34c759;
-  background: rgba(52, 199, 89, 0.15);
+  border-color: var(--color-success);
+  background: var(--color-success-soft);
 }
 
 .challenge-opt-btn.wrong {
-  border-color: #ff3b30;
-  background: rgba(255, 59, 48, 0.15);
+  border-color: var(--color-error);
+  background: var(--color-error-soft);
 }
 
 .challenge-explanation-text {
   margin: var(--space-1) 0 0 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: #a0c0ff;
+  color: var(--text-secondary);
 }

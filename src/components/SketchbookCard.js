@@ -138,24 +138,23 @@ function SketchbookCard({ term = 'capillary-action' }) {
         <div className="sketchbook-illustration-side">
           {selectedTermKey === 'capillary-action' && (
             <svg viewBox="0 0 300 400" className="sketch-svg">
-              <rect x="95" y="40" width="40" height="300" fill="none" stroke="#555" strokeWidth="2" />
-              <line x1="95" y1="40" x2="135" y2="40" stroke="#555" strokeWidth="2" />
+              <rect x="95" y="40" width="40" height="300" fill="none" className="ink-primary" strokeWidth="2" />
+              <line x1="95" y1="40" x2="135" y2="40" className="ink-primary" strokeWidth="2" />
               <path
                 d="M 97 290 Q 115 220 133 290 Z"
-                fill="#2563EB"
                 opacity="0.6"
                 className="liquid-fill"
               />
-              <path d="M 97 290 Q 115 220 133 290" stroke="#2563EB" strokeWidth="2" fill="none" />
-              <path d="M 97 220 Q 115 210 133 220" stroke="#2563EB" strokeWidth="3" fill="none" />
-              <text x="115" y="195" fontSize="11" fill="#2563EB" textAnchor="middle" fontWeight="bold">
+              <path d="M 97 290 Q 115 220 133 290" className="ink-info" strokeWidth="2" fill="none" />
+              <path d="M 97 220 Q 115 210 133 220" className="ink-info" strokeWidth="3" fill="none" />
+              <text x="115" y="195" fontSize="11" className="fill-info" textAnchor="middle" fontWeight="bold">
                 Meniscus
               </text>
-              <text x="165" y="100" fontSize="13" fill="#e0e0e0" fontWeight="bold">
+              <text x="165" y="100" fontSize="13" className="label-ink" fontWeight="bold">
                 Adhesive Forces
               </text>
-              <path d="M 160 105 L 138 120" stroke="#888" strokeWidth="1" />
-              <text x="165" y="220" fontSize="13" fill="#e0e0e0" fontWeight="bold">
+              <path d="M 160 105 L 138 120" className="ink-primary" strokeWidth="1" />
+              <text x="165" y="220" fontSize="13" className="label-ink" fontWeight="bold">
                 Capillary Rise ($h$)
               </text>
             </svg>
@@ -163,16 +162,16 @@ function SketchbookCard({ term = 'capillary-action' }) {
 
           {selectedTermKey === 'event-horizon' && (
             <svg viewBox="0 0 300 400" className="sketch-svg">
-              <circle cx="150" cy="200" r="90" fill="none" stroke="#ff9f0a" strokeWidth="2" strokeDasharray="4 4" />
-              <circle cx="150" cy="200" r="65" fill="none" stroke="#2563EB" strokeWidth="2" />
-              <circle cx="150" cy="200" r="45" fill="#000000" stroke="#ffffff" strokeWidth="2" />
+              <circle cx="150" cy="200" r="90" fill="none" className="ink-warning" strokeWidth="2" strokeDasharray="4 4" />
+              <circle cx="150" cy="200" r="65" fill="none" className="ink-info" strokeWidth="2" />
+              <circle cx="150" cy="200" r="45" fill="#000000" className="ink-horizon" strokeWidth="2" />
               <text x="150" y="205" fontSize="12" fill="#ffffff" textAnchor="middle" fontWeight="bold">
                 Singularity
               </text>
-              <text x="150" y="145" fontSize="11" fill="#2563EB" textAnchor="middle" fontWeight="bold">
+              <text x="150" y="145" fontSize="11" className="fill-info" textAnchor="middle" fontWeight="bold">
                 $R_s$ Horizon
               </text>
-              <text x="150" y="95" fontSize="11" fill="#ff9f0a" textAnchor="middle" fontWeight="bold">
+              <text x="150" y="95" fontSize="11" className="fill-warning" textAnchor="middle" fontWeight="bold">
                 Photon Sphere (1.5 $R_s$)
               </text>
             </svg>
@@ -180,27 +179,27 @@ function SketchbookCard({ term = 'capillary-action' }) {
 
           {selectedTermKey === 'entropy' && (
             <svg viewBox="0 0 300 400" className="sketch-svg">
-              <rect x="40" y="80" width="90" height="90" fill="none" stroke="#2563EB" strokeWidth="2" />
-              <circle cx="65" cy="105" r="4" fill="#2563EB" />
-              <circle cx="85" cy="105" r="4" fill="#2563EB" />
-              <circle cx="105" cy="105" r="4" fill="#2563EB" />
-              <circle cx="65" cy="125" r="4" fill="#2563EB" />
-              <circle cx="85" cy="125" r="4" fill="#2563EB" />
-              <circle cx="105" cy="125" r="4" fill="#2563EB" />
-              <text x="85" y="195" fontSize="11" fill="#2563EB" textAnchor="middle" fontWeight="bold">
+              <rect x="40" y="80" width="90" height="90" fill="none" className="ink-info" strokeWidth="2" />
+              <circle cx="65" cy="105" r="4" className="fill-info" />
+              <circle cx="85" cy="105" r="4" className="fill-info" />
+              <circle cx="105" cy="105" r="4" className="fill-info" />
+              <circle cx="65" cy="125" r="4" className="fill-info" />
+              <circle cx="85" cy="125" r="4" className="fill-info" />
+              <circle cx="105" cy="125" r="4" className="fill-info" />
+              <text x="85" y="195" fontSize="11" className="fill-info" textAnchor="middle" fontWeight="bold">
                 Low Entropy (Ordered)
               </text>
 
-              <path d="M 140 125 L 165 125" stroke="#ffffff" strokeWidth="2" markerEnd="url(#arrow)" />
+              <path d="M 140 125 L 165 125" className="ink-horizon" strokeWidth="2" markerEnd="url(#arrow)" />
 
-              <rect x="175" y="80" width="90" height="90" fill="none" stroke="#ff9f0a" strokeWidth="2" />
-              <circle cx="185" cy="95" r="4" fill="#ff9f0a" />
-              <circle cx="245" cy="105" r="4" fill="#ff9f0a" />
-              <circle cx="195" cy="150" r="4" fill="#ff9f0a" />
-              <circle cx="230" cy="135" r="4" fill="#ff9f0a" />
-              <circle cx="210" cy="115" r="4" fill="#ff9f0a" />
-              <circle cx="250" cy="160" r="4" fill="#ff9f0a" />
-              <text x="220" y="195" fontSize="11" fill="#ff9f0a" textAnchor="middle" fontWeight="bold">
+              <rect x="175" y="80" width="90" height="90" fill="none" className="ink-warning" strokeWidth="2" />
+              <circle cx="185" cy="95" r="4" className="fill-warning" />
+              <circle cx="245" cy="105" r="4" className="fill-warning" />
+              <circle cx="195" cy="150" r="4" className="fill-warning" />
+              <circle cx="230" cy="135" r="4" className="fill-warning" />
+              <circle cx="210" cy="115" r="4" className="fill-warning" />
+              <circle cx="250" cy="160" r="4" className="fill-warning" />
+              <text x="220" y="195" fontSize="11" className="fill-warning" textAnchor="middle" fontWeight="bold">
                 High Entropy (Dispersed)
               </text>
             </svg>
