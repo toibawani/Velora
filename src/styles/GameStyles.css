@@ -632,9 +632,8 @@
 .puzzle-sentence {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
-  border-left: 3px solid var(--accent-orange);
   padding: var(--space-6);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border-radius: var(--radius-sm);
   margin-bottom: var(--space-8);
 }
 

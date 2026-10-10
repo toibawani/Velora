@@ -258,10 +258,7 @@
   padding: var(--space-4);
   background: var(--bg-secondary);
   border-radius: var(--radius-sm);
-  border-left: 3px solid var(--accent-primary);
-  border-top: 1px solid var(--border-subtle);
-  border-right: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-subtle);
   margin-top: var(--space-8);
 }
 

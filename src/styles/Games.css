@@ -138,7 +138,6 @@
   transition: border-color var(--duration-fast) var(--ease-standard),
               background-color var(--duration-fast) var(--ease-standard);
   border: 1px solid var(--border-default);
-  border-top: 3px solid var(--game-color, var(--accent-primary));
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -901,9 +900,8 @@
 .puzzle-sentence {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
-  border-left: 3px solid var(--accent-orange);
   padding: var(--space-5) var(--space-6);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border-radius: var(--radius-sm);
   margin-bottom: var(--space-6);
 }
 

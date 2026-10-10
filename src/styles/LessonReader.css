@@ -17,7 +17,6 @@
 .lesson-block-number { color: var(--accent-primary); font: 800 0.875rem var(--font-mono); }
 .lesson-block h2, .lesson-card-heading h2, .lesson-callout h2 { margin: 0 0 var(--space-3); font-size: 1.2rem; font-weight: 800; }
 .lesson-block p { margin: 0; }
-.lesson-callout { border-left: 3px solid var(--accent-orange); }
 .lesson-callout-heading, .lesson-card-heading { display: flex; align-items: center; gap: var(--space-2); color: var(--accent-primary); }
 .lesson-callout-heading h2 { margin: 0; color: var(--text-primary); }
 .lesson-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }

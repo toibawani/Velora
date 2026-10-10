@@ -187,10 +187,10 @@
 }
 
 .chapter-takeaway-box {
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 3px solid var(--accent-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   padding: var(--space-5) var(--space-6);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-radius: var(--radius-md);
   margin-top: var(--space-2);
 }
 

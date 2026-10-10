@@ -138,11 +138,11 @@
 }
 
 .note-item {
-  background: white;
+  background: var(--bg-secondary);
   padding: var(--space-6);
   border-radius: var(--radius-md);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-left: 4px solid var(--accent-primary);
+  border: 1px solid var(--border-default);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -188,7 +188,7 @@
   padding: var(--space-4);
   background: var(--bg-secondary);
   border-radius: var(--radius-md);
-  border-left: 4px solid var(--accent-primary);
+  border: 1px solid var(--border-default);
 }
 
 .shadow-note p {

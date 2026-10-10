@@ -161,9 +161,9 @@
 
 .highlight-takeaway {
   background: var(--accent-soft);
-  border-left: 3px solid var(--accent-primary);
+  border: 1px solid var(--border-default);
   padding: var(--space-4) var(--space-5);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border-radius: var(--radius-sm);
 }
 
 .paper-equation-box {

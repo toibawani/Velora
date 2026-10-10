@@ -386,9 +386,9 @@
   gap: var(--space-4);
   align-items: flex-start;
   background: var(--bg-secondary);
-  border-left: 3px solid var(--accent-primary, var(--accent-primary));
+  border: 1px solid var(--border-default);
   padding: var(--space-4) var(--space-5);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-radius: var(--radius-md);
 }
 
 .sim-info-icon {

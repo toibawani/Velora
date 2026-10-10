@@ -389,7 +389,6 @@
 .entry-analogy-box {
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
-  border-left: 3px solid var(--text-primary);
   border-radius: var(--radius-sm);
   padding: var(--space-3) var(--space-4);
   display: flex;

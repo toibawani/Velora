@@ -364,8 +364,10 @@
 
 .bhm-entry-matters {
   margin: 0 0 var(--space-3);
-  padding-left: var(--space-4);
-  border-left: 2px solid var(--accent-primary);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
   color: var(--text-secondary);
 }
 
