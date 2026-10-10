@@ -182,6 +182,17 @@ for (const [name, theme, page, card] of CHECKS) {
   check(theme, '--accent-contrast', '--accent-primary', page, 4.5, 'button label');
   check(theme, '--accent-primary', page, page, 3.0, 'accent UI at large sizes');
   check(theme, '--inverse-text', '--inverse-surface', page, 4.5, 'inverted bands');
+  // Status LABELS are a coloured dot plus the word, never colour alone, so the
+  // word is checked above as ordinary card text. But the dot itself is a
+  // non-text indicator and must be distinguishable against the surface it
+  // sits on (WCAG 1.4.11, 3:1). Every label state resolves to a status role:
+  // established/settled/proved/measured -> success, contested/debated/
+  // machine-dependent -> warning, theoretical/open -> info outline. Checking
+  // each role's dot against the page and the card at 3:1 covers all of them.
+  for (const role of STATUS_ROLES) {
+    check(theme, role, page, page, 3.0, 'status dot vs page (non-text)');
+    check(theme, role, card, card, 3.0, 'status dot vs card (non-text)');
+  }
   // Links are the accent on the page ground, held to text AA.
   check(theme, '--accent-primary', '--bg-primary', page, 4.5, 'link on page');
   check(theme, '--accent-primary', '--bg-elevated', page, 4.5, 'link on card');

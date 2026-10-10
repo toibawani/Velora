@@ -124,6 +124,40 @@ stage actually looks like, because none of these answer "does it look right".
 
 No script in `scripts/` verifies this; the numbers are hand-measured claims.
 
+## 6. The palette, written down before it was changed (Stage 2)
+
+The house family is a warm paper-and-sienna set, not blue. The dominant ground
+is a warm cream in light (`--bg-primary #F7F2E9`) and a near-black espresso in
+dark (`#171009`). The neutrals are all browns, not greys: card cream
+`#FFFDF9`, ink `#241B13`, secondary brown `#5C4A38`, tertiary brown `#7A6653`,
+and the dark-mode lifts of each. There is no muddy brown left because every
+text tier is a real brown, not a desaturated grey.
+
+The one sharp accent is sienna/terracotta `--accent-primary #A34A22` (light)
+that lifts to `#E0975F` in dark so it stays visible on espresso. There is no
+second competing accent and no gradient. Status colours are four distinct
+hues that also differ in lightness, so they never rely on hue alone:
+
+| Role | Light | Dark | On page (L / D) |
+|---|---|---|---|
+| text-primary | `#241B13` | `#F2E9DD` | 15.17 / 15.68 |
+| text-secondary | `#5C4A38` | `#C4B09B` | 7.56 / 9.00 |
+| text-tertiary | `#7A6653` | `#A08B78` | 4.89 / 5.80 |
+| success | `#2F6B41` | `#8CC79E` | 5.71 / 9.67 |
+| warning | `#8A5A10` | `#E8B25C` | 5.30 / 9.83 |
+| error | `#B4322A` | `#F0A19A` | 5.49 / 9.21 |
+| info | `#1F6F8C` | `#7FB8DC` | 5.08 / 8.79 |
+| accent-contrast on accent | `#FFF9F1` | `#171009` | 5.64 / 7.86 |
+| inverse-text on inverse-surface | `#FFF9F1` | `#F2E9DD` | 16.17 / 16.16 |
+| focus ring on page | `#A34A22` | `#E8A979` | 5.29 / 9.32 |
+
+Ratios above are measured by `scripts/checkContrast.js`, which reads the real
+token values out of `design-tokens.css`, composites translucent tints over the
+ground they sit on, and holds every pair to WCAG AA (4.5:1 text, 3:1 non-text
+and UI). The status labels are a dot plus the word, never colour alone, so
+their meaning survives without hue. The checker is wired into the `verify` CI
+job and is proven to fail: setting one token below AA turns the run red.
+
 ## 6. Stage 2 palette and the contrast gate
 
 Written before the colour fixes, from the live values in `design-tokens.css`
