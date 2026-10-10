@@ -166,6 +166,28 @@ It runs in CI (`node scripts/checkContrast.js` in the no-browser `verify` job),
 so a palette edit that drops any pair below AA fails the build instead of
 shipping cream-on-cream.
 
+## 7. Colour sweep: what converted and the two justified exceptions
+
+The Stage 2 sweep removed every coloured left/top border accent (callouts,
+takeaway boxes, puzzle sentences, definition boxes, note items, pull-quotes)
+and re-boxed them on a neutral `--border-default` with a symmetric radius, so
+no card is distinguished by a coloured stripe. It also converted grounds that
+silently assumed a dark page (`background: white` on shadow notes,
+`rgba(255,255,255,0.03)` on story take-aways, and the SketchbookCard's
+`#141414/#181818/#262626/#ffffff/#34c759/#ff3b30/#1D4ED8` panels) to theme
+tokens.
+
+Two hardcoded colours are deliberate and stay, with a reason:
+
+- **`ShareAchievementModal` brand dots** (`#25d366`, `#1d9bf0`, `#0077b5`): the
+  real WhatsApp, X, and LinkedIn marks. The brand colour is the small dot; the
+  label sits on a compliant `--bg-elevated` ground (12.5 to 13.7:1 both
+  themes), so the off-brand hue never has to pass text AA by itself.
+- **`RelativityLab` canvas backing** (`#06080d`) and the SketchbookCard SVG
+  diagrams: always-dark instrument/scene surfaces where a token ground would
+  make the simulation or diagram vanish. The text drawn on them uses
+  `--text-primary`, which is measured against the actual ground.
+
 ## Stage 2: the palette, written down before it is changed
 
 Written down from the rendered screenshots (light + dark, 1440 + 375) and the
