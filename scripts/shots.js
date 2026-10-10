@@ -22,6 +22,9 @@ const arg = (name, fallback) => {
 const URL = arg('--url', 'http://localhost:3000');
 const OUT = path.resolve(arg('--out', path.join('.freebuff', 'shots')));
 
+/** Theme key shared with the pre-paint script in index.html. */
+const THEME_KEY = 'velora_theme_preference';
+
 /** Same entry flow as layoutCheck.js: seed local state, then the real forms. */
 const signIn = async (page) => {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
@@ -72,9 +75,21 @@ const clickNav = (page, text) =>
     return true;
   }, text);
 
+/** Click the first visible element whose text matches, anywhere on the page. */
+const clickText = (page, re) =>
+  page.evaluate((src) => {
+    const target = [...document.querySelectorAll('button, a, [role="button"], .tool-card, .game-card-large')]
+      .find((b) => new RegExp(src, 'i').test(b.textContent.trim()) && b.offsetParent !== null);
+    if (!target) return false;
+    target.click();
+    return true;
+  }, re.source ?? String(re));
+
 const settle = (ms = 900) => new Promise((r) => setTimeout(r, ms));
 
 const main = async () => {
+  const themeArg = process.argv.indexOf('--theme');
+  const theme = themeArg === -1 ? null : process.argv[themeArg + 1];
   const chromePath = requireChrome();
   if (!chromePath) {
     console.error('No Chrome binary found. Set CHROME_PATH.');
@@ -88,6 +103,13 @@ const main = async () => {
 
   for (const width of [1440, 375]) {
     const page = await browser.newPage();
+    if (theme) {
+      // The app's auto theme follows the OS scheme; pinning the media feature
+      // pins the theme without touching the explicit per-user preference.
+      await page.emulateMediaFeatures([
+        { name: 'prefers-color-scheme', value: theme === 'dark' ? 'dark' : 'light' },
+      ]);
+    }
     await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
     const errors = [];
     page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
@@ -97,17 +119,16 @@ const main = async () => {
 
     const shot = async (name) => {
       await settle();
-      const file = path.join(OUT, `${width}-${name}.png`);
+      const prefix = theme ? `${width}-${theme}` : `${width}`;
+      const file = path.join(OUT, `${prefix}-${name}.png`);
       await page.screenshot({ path: file });
       console.log(`wrote ${file}`);
     };
 
+    // Core reading surfaces.
     await shot('home');
     await clickNav(page, 'Learn'); await shot('learn');
     await clickNav(page, 'Dictionary'); await shot('dictionary');
-    // The bottom bar calls the games screen "Flow" (navigation.js label); an
-    // earlier version of this script asked for "Games", got false, and quietly
-    // screenshotted the Dictionary twice.
     await clickNav(page, 'Flow'); await shot('games');
 
     // The Atlas index lives on Home; scroll it into view for a dedicated shot.
@@ -129,6 +150,49 @@ const main = async () => {
       if (t) t.click();
     });
     await shot('lesson');
+
+    // The save-for-review Toast (success variant). Save, screenshot, then
+    // unsave so the seed state is unchanged for the next shot.
+    if (await clickText(page, /^Save for review$/)) {
+      await shot('toast');
+      await clickText(page, /^Saved$/);
+      await settle(400);
+    }
+
+    // Settings, reached through the drawer (MobileNav), not the bottom bar.
+    await clickNav(page, 'Atlas');
+    await page.evaluate(() => {
+      document.querySelector('.mobile-nav-toggle')?.click();
+    });
+    await settle();
+    if (await clickText(page, /^Settings$/)) {
+      await shot('settings');
+    }
+
+    // SketchbookCard, a tool on the Learn screen.
+    await clickNav(page, 'Learn');
+    await settle();
+    if (await clickText(page, /Sketchbook cards/)) {
+      await shot('sketchbook');
+    }
+
+    // The share modal, opened by finishing a game (Concept Check) and tapping
+    // Share Milestone on the completion screen. The flow is start -> Begin Flow
+    // Session -> Complete Early (skips the quiz) -> complete -> Share Milestone.
+    await clickNav(page, 'Flow');
+    await settle();
+    if (await clickText(page, /Concept Check/)) {
+      await settle(700);
+      if (await clickText(page, /Begin Flow Session/)) {
+        await settle(700);
+        if (await clickText(page, /Complete Early/)) {
+          await settle(700);
+          if (await clickText(page, /Share Milestone/)) {
+            await shot('share-modal');
+          }
+        }
+      }
+    }
 
     if (errors.length) {
       console.error(`console errors at ${width}px:`);
