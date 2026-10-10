@@ -50,7 +50,7 @@
 
 .term-pill.active {
   background: var(--accent-primary);
-  color: #ffffff;
+  color: var(--accent-contrast);
   border-color: var(--accent-primary);
 }
 
