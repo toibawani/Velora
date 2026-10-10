@@ -2,35 +2,50 @@
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: white;
+  background: var(--bg-elevated);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md, 8px);
-  padding: var(--space-4) var(--space-6);
+  padding: var(--space-4) var(--space-5);
   box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3);
   animation: toast-slide-in 0.25s ease;
   z-index: var(--z-toast, 10000);
   max-width: 360px;
   min-width: 220px;
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: var(--text-ui);
 }
 
-.toast-success {
-  border-left: 3px solid var(--color-success);
+/* Variant is carried by a dot AND the status word below, never by color
+   alone and never by a colored side border. */
+.toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full, 999px);
+  flex-shrink: 0;
 }
 
-.toast-error {
-  border-left: 3px solid var(--color-error);
+.toast-label {
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
 
-.toast-info {
-  border-left: 3px solid var(--accent-primary);
-}
+.toast-success .toast-dot { background: var(--color-success); }
+.toast-error .toast-dot { background: var(--color-error); }
+.toast-warning .toast-dot { background: var(--color-warning); }
+.toast-info .toast-dot { background: var(--accent-primary); }
 
-.toast span {
+.toast-success .toast-label { color: var(--color-success); }
+.toast-error .toast-label { color: var(--color-error); }
+.toast-warning .toast-label { color: var(--color-warning); }
+.toast-info .toast-label { color: var(--accent-primary); }
+
+.toast-message {
   flex: 1;
   color: var(--text-primary);
   line-height: 1.4;
@@ -49,6 +64,12 @@
 
 .toast-close:hover {
   color: var(--text-primary);
+}
+
+.toast-close:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs, 3px);
 }
 
 @keyframes toast-slide-in {

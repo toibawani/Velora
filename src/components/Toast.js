@@ -3,11 +3,14 @@ import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import '../styles/Toast.css';
 
+const STATUS_WORD = { success: 'Done', error: 'Error', warning: 'Warning', info: 'Note' };
+
 /**
  * Toast - transient notification with info/success/warning/error variants
- * and an auto-dismiss timer.
+ * and an auto-dismiss timer. The variant is shown as a colored dot plus a
+ * plain status word, so it never depends on color alone.
  */
-Toast.propTypes = { message: PropTypes.string, type: PropTypes.string, duration: PropTypes.string, onClose: PropTypes.shape({"onClose": PropTypes.func}) };
+Toast.propTypes = { message: PropTypes.string, type: PropTypes.string, duration: PropTypes.number, onClose: PropTypes.shape({ "onClose": PropTypes.func }) };
 
 function Toast({ message, type = 'info', duration = 3000, onClose = () => {} }) {
   useEffect(() => {
@@ -17,7 +20,9 @@ function Toast({ message, type = 'info', duration = 3000, onClose = () => {} }) 
 
   return (
     <div className={`toast toast-${type}`} role={type === 'error' ? 'alert' : 'status'} aria-live={type === 'error' ? 'assertive' : 'polite'}>
-      <span>{message}</span>
+      <span className="toast-dot" aria-hidden="true" />
+      <span className="toast-label">{STATUS_WORD[type] || STATUS_WORD.info}</span>
+      <span className="toast-message">{message}</span>
       <button data-testid="toast" className="toast-close" onClick={onClose} aria-label="Dismiss notification">
         <X size={16} aria-hidden="true" />
       </button>
