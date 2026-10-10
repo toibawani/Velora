@@ -22,7 +22,7 @@
 
   /* Add padding bottom to pages so content is not obscured by bottom bar */
   body, .universe-home, .learn-container, .analytics-page-root, .games-hub-new, .community-page {
-    padding-bottom: 72px !important;
+    padding-bottom: var(--space-16) !important;
   }
 }
 
@@ -44,11 +44,11 @@
   color: var(--color-text-muted);
   min-width: 52px;
   min-height: 48px;
-  padding: 4px;
+  padding: var(--space-1);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: color var(--duration-fast) var(--ease-standard);
-  gap: 3px;
+  gap: var(--space-1);
   -webkit-tap-highlight-color: transparent;
   box-shadow: none;
 }

@@ -4,10 +4,10 @@
 
 .velora-segmented-nav {
   display: inline-flex;
-  gap: 4px;
+  gap: var(--space-1);
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  padding: 4px;
+  padding: var(--space-1);
   border-radius: var(--radius-md);
   overflow-x: auto;
   max-width: 100%;
@@ -17,7 +17,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   background: transparent;
   color: var(--text-secondary);
   border: none;
@@ -45,7 +45,7 @@
 
 .velora-segment-badge {
   font-size: 0.7rem;
-  padding: 2px 6px;
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-full);
   background: var(--bg-tertiary);
   color: var(--text-secondary);

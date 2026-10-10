@@ -10,7 +10,7 @@
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  padding-bottom: 96px;
+  padding-bottom: var(--space-16);
 }
 
 .rm-header {
@@ -23,7 +23,7 @@
 }
 
 .rm-eyebrow {
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-1);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -40,9 +40,9 @@
 
 .rm-back {
   min-height: 44px;
-  padding: 0 1.1rem;
+  padding: 0 var(--space-4);
   border: 1px solid var(--border-default);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: var(--bg-elevated);
   color: var(--text-primary);
   font: inherit;
@@ -87,8 +87,8 @@
 .rm-totals li {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  padding: 0.5rem 0.9rem;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   background: var(--bg-elevated);
@@ -117,7 +117,7 @@
 }
 
 .rm-section-summary {
-  margin: 0.4rem 0 0;
+  margin: var(--space-2) 0 0;
   font-size: 0.95rem;
 }
 
@@ -130,7 +130,7 @@
 }
 
 .rm-item {
-  padding: 1rem 1.1rem;
+  padding: var(--space-4) var(--space-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md, 12px);
   background: var(--bg-elevated);
@@ -151,14 +151,14 @@
 }
 
 .rm-item p {
-  margin: 0.5rem 0 0;
+  margin: var(--space-2) 0 0;
   font-size: 0.92rem;
 }
 
 .rm-state {
   flex: 0 0 auto;
-  padding: 0.15rem 0.6rem;
-  border-radius: 999px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
   border: 1px solid var(--border-default);
   font-size: 0.72rem;
   letter-spacing: 0.04em;
@@ -187,8 +187,8 @@
   .rm-intro,
   .rm-section,
   .rm-footer {
-    padding-left: 1.1rem;
-    padding-right: 1.1rem;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
   }
 
   .rm-header h1 {

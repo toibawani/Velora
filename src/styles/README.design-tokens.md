@@ -37,17 +37,38 @@ themes stay correct without touching feature CSS.
 
 ### Typography
 
+Three roles, chosen deliberately. This is the pairing, and why it is this one:
+
 | Role | Font | Fallback |
 |------|------|----------|
-| `--font-display` | Fraunces (serif) | Georgia, Times New Roman, serif |
+| `--font-display` | Fraunces (serif, optical-size axis) | Georgia, Times New Roman, serif |
 | `--font-reading` / `--font-body` | Source Serif 4 | Georgia, serif |
 | `--font-sans` / `--font-ui` | Source Sans 3 | -apple-system, Segoe UI, sans-serif |
 | `--font-mono` | SF Mono, JetBrains Mono, Fira Code | Consolas, monospace |
 
-### Spacing (8px grid)
+Fraunces is the display face because it has real weight contrast and an
+optical-size axis, so a 5rem hero and a 1.25rem card heading read as the same
+voice rather than one stretched and one shrunk. Source Serif 4 is the
+long-form body: this is a reading product, and a serif at 17px is what
+sustains a twenty-minute lesson. Source Sans 3 is the chrome only - nav,
+buttons, status tags, form fields - so the interface never competes with the
+prose. That is the whole system: one display, one reading face, one UI face.
+The previous states were "Inter everywhere" (declared but never even loaded)
+and Fraunces paired with the sans as body, which set long lessons in the
+nav's typeface at a large size.
 
-`--space-1` … `--space-12` (1,2,3,4,6,8,12,16,24,32,48,64px). No creative
-`gap`/`padding` values; use the scale for consistency.
+### Spacing (4/8px grid)
+
+`--space-1` … `--space-16` (4, 8, 12, 16, 20, 24, 32, 40, 48, 64px). No creative
+`gap`/`padding` values; use the scale for consistency. `scripts/tokenizeSpacing.js`
+snaps stragglers onto the scale and is idempotent, so re-running it after a
+manual edit shows what drifted.
+
+### Radius
+
+`--radius-xs/sm/md/lg/xl/2xl/3xl/full` (3, 6, 8, 12, 18, 24, 32, 999px). Two
+steps were added when the audit found 135 raw radii - the old ladder ended at
+18px while hero panels were drawn at 20-32px.
 
 ### Shadows
 

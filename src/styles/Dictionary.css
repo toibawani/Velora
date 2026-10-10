@@ -82,14 +82,14 @@
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-default);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   transition: all var(--duration-fast) var(--ease-standard);
 }
 
@@ -103,7 +103,7 @@
   color: var(--text-secondary);
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  padding: 4px 12px;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   white-space: nowrap;
 }
@@ -168,7 +168,7 @@
   border: none;
   color: var(--text-tertiary);
   cursor: pointer;
-  padding: 4px;
+  padding: var(--space-1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -190,14 +190,14 @@
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
   color: var(--text-secondary);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   transition: all var(--duration-fast) var(--ease-standard);
 }
 
@@ -217,7 +217,7 @@
 .sub-count {
   font-size: 0.6875rem;
   background: rgba(0, 0, 0, 0.08);
-  padding: 1px 6px;
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-full);
 }
 
@@ -229,7 +229,7 @@
 /* Alphabet Jump Bar */
 .alphabet-selector-strip {
   display: flex;
-  gap: 3px;
+  gap: var(--space-1);
   flex-wrap: wrap;
   border-top: 1px solid var(--border-subtle);
   padding-top: var(--space-3);
@@ -242,7 +242,7 @@
   color: var(--text-secondary);
   min-width: 28px;
   height: 28px;
-  padding: 0 4px;
+  padding: 0 var(--space-1);
   border-radius: var(--radius-xs);
   display: inline-flex;
   align-items: center;
@@ -334,7 +334,7 @@
 }
 
 .entry-term {
-  margin: 0 0 4px;
+  margin: 0 0 var(--space-1);
   font-family: var(--font-display);
   font-size: 1.375rem;
   font-weight: 700;
@@ -354,7 +354,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 3px 9px;
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
@@ -394,7 +394,7 @@
   padding: var(--space-3) var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-1);
 }
 
 .analogy-label {
@@ -463,7 +463,7 @@
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
   color: var(--text-primary);
-  padding: 6px 16px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
   font-size: 0.8125rem;
   font-weight: 600;
@@ -489,15 +489,15 @@
 }
 
 .source-flag {
-  margin-left: 8px;
-  padding: 1px 7px;
+  margin-left: var(--space-2);
+  padding: var(--space-1) var(--space-2);
   font-size: 0.6875rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--text-secondary, var(--text-secondary));
   background: var(--bg-surface-hover, var(--bg-tertiary));
   border: 1px solid var(--border-default, var(--border-default));
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   cursor: help;
 }
 

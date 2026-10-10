@@ -217,14 +217,21 @@
   --space-16: 64px;
 
   /* ---- Radii ----
-     Deliberately soft and few. The Atlas index and the deep-read rails are set
-     with hairline rules and indent, and sharp corners are what make an index
-     read as printed rather than as a set of cards. */
-  --radius-xs: 3px;
-  --radius-sm: 5px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 18px;
+     Deliberately few, and every radius in the app points here. The scale was
+     extended from five steps to seven after the audit counted 135 raw
+     border-radius values in feature CSS: the old ladder stopped at 18px while
+     the app's hero panels and modals were drawn at 20, 22, 24, 28 and 32px,
+     so the scale simply did not describe the product. Sharp corners are what
+     make an index read as printed rather than as a set of cards, which is why
+     the small steps stay small; the large steps exist so the big surfaces can
+     stop being special cases. */
+  --radius-xs: 3px;   /* badges, tight chips */
+  --radius-sm: 6px;   /* buttons, inputs. Was 5px; snapped to the 3/6/8 family */
+  --radius-md: 8px;   /* cards */
+  --radius-lg: 12px;  /* large cards, dropdowns */
+  --radius-xl: 18px;  /* feature panels */
+  --radius-2xl: 24px; /* hero cards, search results */
+  --radius-3xl: 32px; /* the atlas container and other page-scale surfaces */
   /* NOW CORRECT. This used to resolve to 8px - identical to --radius-lg - so
      every one of roughly thirty selectors that asked for a pill by name drew a
      slightly rounded rectangle instead. The file previously documented the bug

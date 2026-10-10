@@ -100,7 +100,7 @@
 }
 
 .toolbar-btn {
-  padding: 8px 16px;
+  padding: var(--space-2) var(--space-4);
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
@@ -119,7 +119,7 @@
 
 .btn-save-note {
   width: 100%;
-  padding: 12px;
+  padding: var(--space-3);
   background: var(--accent-primary);
   color: var(--text-inverse);
   border: none;
@@ -178,7 +178,7 @@
 }
 
 .btn-share-mindmap {
-  padding: 12px;
+  padding: var(--space-3);
   background: var(--accent-primary);
   color: var(--text-inverse);
   border: none;
@@ -212,7 +212,7 @@
 
 .flashcard-input-field,
 .flashcard-input-area {
-  padding: 12px;
+  padding: var(--space-3);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   font-size: 0.9375rem;
@@ -229,7 +229,7 @@
 }
 
 .btn-add-card {
-  padding: 10px;
+  padding: var(--space-3);
   background: var(--accent-green);
   color: var(--text-inverse);
   border: none;
@@ -303,7 +303,7 @@
 
 .btn-publish-cards {
   width: 100%;
-  padding: 12px;
+  padding: var(--space-3);
   background: var(--accent-primary);
   color: var(--text-inverse);
   border: none;
@@ -333,7 +333,7 @@
 
 .lesson-input,
 .lesson-textarea {
-  padding: 12px;
+  padding: var(--space-3);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   font-size: 0.9375rem;
@@ -376,7 +376,7 @@
 }
 
 .btn-publish-lesson {
-  padding: 12px;
+  padding: var(--space-3);
   background: var(--accent-primary);
   color: var(--text-inverse);
   border: none;

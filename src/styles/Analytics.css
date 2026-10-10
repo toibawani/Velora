@@ -101,8 +101,8 @@
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
-  padding: 3px;
-  gap: 2px;
+  padding: var(--space-1);
+  gap: var(--space-1);
 }
 
 .timeframe-btn {
@@ -254,7 +254,7 @@
 
 .recommendation-pill > svg {
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: var(--space-1);
   color: var(--accent-gold);
 }
 
@@ -273,7 +273,7 @@
 .unmeasured-list li {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-1);
   padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--border-default);
 }
@@ -380,7 +380,7 @@
 
 .struggle-remedy-text > svg {
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: var(--space-1);
   color: var(--accent-primary);
 }
 

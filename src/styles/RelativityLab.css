@@ -332,7 +332,7 @@
 }
 
 .rel-preset-note {
-  margin: 0.35rem 0 1rem;
+  margin: var(--space-1) 0 var(--space-4);
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--text-secondary, var(--text-secondary));

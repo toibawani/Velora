@@ -108,7 +108,7 @@
   box-sizing: border-box;
   width: 100%;
   min-height: 54px;
-  padding: 0 1rem;
+  padding: 0 var(--space-4);
   overflow: visible;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
@@ -180,7 +180,7 @@
   justify-content: center;
   width: 100%;
   min-height: 52px;
-  padding: 0.875rem 1.25rem;
+  padding: var(--space-4) var(--space-5);
   border: 0;
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -262,7 +262,7 @@ button.auth-back {
   justify-content: center;
   width: 100%;
   min-height: 48px;
-  padding: 0.625rem 0.75rem;
+  padding: var(--space-3) var(--space-3);
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -279,7 +279,7 @@ button.auth-link {
 }
 
 button.auth-link span {
-  margin-left: 0.3rem;
+  margin-left: var(--space-1);
   color: var(--accent-primary);
   font-weight: 700;
 }
@@ -332,7 +332,7 @@ button.auth-link:hover span {
   position: relative;
   height: 4px;
   background: var(--bg-tertiary);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   margin-bottom: var(--space-4);
   overflow: hidden;
 }
@@ -409,7 +409,7 @@ button.auth-link:hover span {
 .step-heading:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .step-actions {
@@ -436,14 +436,14 @@ button.auth-link:hover span {
 .strength-bar {
   flex: 1;
   display: flex;
-  gap: 4px;
+  gap: var(--space-1);
   height: 4px;
 }
 
 .strength-segment {
   flex: 1;
   background: var(--bg-tertiary);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   transition: background-color 200ms ease;
 }
 
@@ -565,7 +565,7 @@ button.auth-link:hover span {
 
 .auth-local-note svg {
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: var(--space-1);
 }
 
 .form-label {

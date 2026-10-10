@@ -68,9 +68,9 @@ div, section, main {
 button {
   background-color: var(--accent-primary) !important;
   color: var(--accent-contrast) !important;
-  border-radius: 999px !important;
+  border-radius: var(--radius-full) !important;
   border: none !important;
-  padding: 10px 18px !important;
+  padding: var(--space-3) var(--space-5) !important;
   font-family: var(--font-ui);
   /* Was 560, which is not a weight this app loads. Source Sans 3 ships static
      instances at 300/400/600/700, so 560 resolved to 600 anyway - ask for the
@@ -88,6 +88,6 @@ button:hover {
 .card, [class*="card"], [class*="Card"] {
   background: var(--bg-surface) !important;
   border: 1px solid var(--border-color) !important;
-  border-radius: 22px !important;
+  border-radius: var(--radius-2xl) !important;
   color: var(--text-primary) !important;
 }

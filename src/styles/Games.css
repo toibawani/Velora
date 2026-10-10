@@ -274,7 +274,7 @@
    board, and this panel's whole job is to not be one. */
 .games-stats-empty {
   margin: 0;
-  padding: 1rem 1.1rem;
+  padding: var(--space-4) var(--space-4);
   background: var(--bg-tertiary);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);

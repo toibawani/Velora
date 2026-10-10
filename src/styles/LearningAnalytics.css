@@ -2,12 +2,12 @@
   background: var(--bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 2rem;
-  margin-bottom: 2.5rem;
+  padding: var(--space-8);
+  margin-bottom: var(--space-10);
 }
 
 .analytics-title {
-  margin: 0 0 1.5rem;
+  margin: 0 0 var(--space-6);
   font-size: 1.35rem;
   font-weight: 700;
   color: var(--color-text);
@@ -18,7 +18,7 @@
    subject it was given and report the device total, so opening the history tab
    showed a philosophy learner's hours. */
 .analytics-scope {
-  margin: -1rem 0 1rem;
+  margin: -1rem 0 var(--space-4);
   font-size: 0.8125rem;
   color: var(--color-text-muted);
 }
@@ -28,19 +28,19 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 2rem;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
 }
 
 .stat-card {
   background: var(--bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 1.25rem;
+  padding: var(--space-5);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   text-align: center;
   transition: border-color var(--duration-fast) var(--ease-standard),
               box-shadow var(--duration-fast) var(--ease-standard);
@@ -82,11 +82,11 @@
   background: var(--bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 1.25rem;
+  padding: var(--space-5);
 }
 
 .insights-heading {
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--space-3);
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--color-text);
@@ -95,13 +95,13 @@
 .insight {
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
 }
 
 .insight > svg {
   flex-shrink: 0;
-  margin-top: 0.15rem;
+  margin-top: var(--space-1);
   color: var(--color-text-muted);
 }
 
@@ -124,10 +124,10 @@
 @media (max-width: 768px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .learning-analytics {
-    padding: 1.25rem;
+    padding: var(--space-5);
   }
 }

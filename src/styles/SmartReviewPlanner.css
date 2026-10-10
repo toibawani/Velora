@@ -2,16 +2,16 @@
   background: var(--bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 2rem;
-  margin-bottom: 2.5rem;
+  padding: var(--space-8);
+  margin-bottom: var(--space-10);
 }
 
 .planner-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .planner-title {
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
   font-size: 1.35rem;
   font-weight: 700;
   color: var(--color-text);
@@ -27,13 +27,13 @@
 .review-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
 }
 
 .no-reviews {
   text-align: center;
-  padding: 2rem;
+  padding: var(--space-8);
   background: var(--bg-secondary);
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
@@ -43,9 +43,9 @@
 .review-item {
   display: grid;
   grid-template-columns: 140px 1fr auto;
-  gap: 1.5rem;
+  gap: var(--space-6);
   align-items: center;
-  padding: 1.25rem;
+  padding: var(--space-5);
   background: var(--bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -62,7 +62,7 @@
 .review-left {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .review-topic {
@@ -84,13 +84,13 @@
 .review-middle {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .retention-display {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: var(--space-1);
 }
 
 .retention-bar {
@@ -121,7 +121,7 @@
 }
 
 .review-btn {
-  padding: 8px 16px;
+  padding: var(--space-2) var(--space-4);
   background: var(--color-accent);
   color: var(--color-bg);
   border: none;
@@ -148,11 +148,11 @@
   background: var(--bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 1.25rem;
+  padding: var(--space-5);
 }
 
 .info-title {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--space-4);
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--color-text);
@@ -161,8 +161,8 @@
 .schedule-explanation {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.875rem;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
   flex-wrap: wrap;
 }
 
@@ -170,7 +170,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  gap: var(--space-1);
   text-align: center;
 }
 
@@ -208,12 +208,12 @@
 
 @media (max-width: 768px) {
   .smart-review-planner {
-    padding: 1.25rem;
+    padding: var(--space-5);
   }
 
   .review-item {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .review-btn {
@@ -222,7 +222,7 @@
 
   .schedule-explanation {
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .schedule-arrow {

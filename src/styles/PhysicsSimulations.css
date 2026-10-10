@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 3.5rem;
+  padding: var(--space-6) var(--space-4) var(--space-16);
   color: var(--text-primary, var(--text-primary));
 }
 
@@ -12,10 +12,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2rem;
-  gap: 1.5rem;
+  margin-bottom: var(--space-8);
+  gap: var(--space-6);
   border-bottom: 1px solid var(--border-default);
-  padding-bottom: 1.5rem;
+  padding-bottom: var(--space-6);
 }
 
 .sims-kicker {
@@ -25,7 +25,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-primary, var(--accent-primary));
-  margin-bottom: 0.4rem;
+  margin-bottom: var(--space-2);
 }
 
 .sims-header h2 {
@@ -34,7 +34,7 @@
   font-weight: 400;
   line-height: 1.15;
   color: var(--text-primary, var(--text-primary));
-  margin: 0 0 0.6rem;
+  margin: 0 0 var(--space-2);
 }
 
 .sims-header p {
@@ -49,8 +49,8 @@
   background: transparent !important;
   color: var(--text-primary, var(--text-primary)) !important;
   border: 1px solid var(--border-strong) !important;
-  padding: 8px 16px !important;
-  border-radius: 999px !important;
+  padding: var(--space-2) var(--space-4) !important;
+  border-radius: var(--radius-full) !important;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -64,10 +64,10 @@
 /* Tab rail */
 .sims-tab-rail {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-2);
   overflow-x: auto;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1.8rem;
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-8);
   scrollbar-width: none;
 }
 
@@ -78,12 +78,12 @@
 .sim-tab-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   background: var(--bg-surface, var(--bg-elevated)) !important;
   color: var(--text-secondary, var(--text-secondary)) !important;
   border: 1px solid var(--border-default) !important;
-  border-radius: 999px !important;
-  padding: 8px 18px !important;
+  border-radius: var(--radius-full) !important;
+  padding: var(--space-2) var(--space-5) !important;
   font-size: 0.88rem;
   font-weight: 550;
   cursor: pointer;
@@ -107,8 +107,8 @@
 .sim-card {
   background: var(--bg-surface, var(--bg-elevated));
   border: 1px solid var(--border-default);
-  border-radius: 20px;
-  padding: 1.8rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
   box-shadow: 0 8px 24px var(--shadow-color);
 }
 
@@ -116,8 +116,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.2rem;
-  gap: 1rem;
+  margin-bottom: var(--space-5);
+  gap: var(--space-4);
   flex-wrap: wrap;
 }
 
@@ -128,7 +128,7 @@
   text-transform: uppercase;
   color: var(--accent-primary, var(--accent-primary));
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--space-1);
 }
 
 .sim-title {
@@ -142,16 +142,16 @@
 .sim-controls-top {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
 .sim-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 8px 16px !important;
-  border-radius: 999px !important;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4) !important;
+  border-radius: var(--radius-full) !important;
   font-size: 0.85rem !important;
   font-weight: 600 !important;
   cursor: pointer;
@@ -187,9 +187,9 @@
 .sim-interactive-stage {
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
-  border-radius: 14px;
-  padding: 1rem;
-  margin-bottom: 1.4rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
   overflow: hidden;
 }
 
@@ -207,7 +207,7 @@
   display: flex;
   justify-content: center;
   background: var(--bg-elevated);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 
@@ -216,7 +216,7 @@
   max-width: 600px;
   height: 200px;
   image-rendering: pixelated;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .sim-overlay-labels {
@@ -232,8 +232,8 @@
 .sim-overlay-badge {
   background: var(--bg-glass-strong);
   backdrop-filter: blur(4px);
-  padding: 3px 8px;
-  border-radius: 6px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--text-secondary);
@@ -244,16 +244,16 @@
 .sim-telemetry-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 0.8rem;
-  margin-top: 1rem;
-  padding-top: 0.9rem;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
   border-top: 1px solid var(--border-subtle);
 }
 
 .sim-telemetry-item {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: var(--space-1);
 }
 
 .telemetry-label {
@@ -278,7 +278,7 @@
    compared rather than the simulation standing in for the maths. */
 .telemetry-sub {
   display: block;
-  margin-top: 2px;
+  margin-top: var(--space-1);
   font-family: var(--font-body, system-ui, sans-serif);
   font-size: 0.72rem;
   font-weight: 400;
@@ -290,17 +290,17 @@
 .sim-params-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.2rem;
-  margin-bottom: 1.4rem;
-  padding: 1.2rem;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
   background: var(--wash);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 .sim-slider-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .sim-slider-label-row {
@@ -318,7 +318,7 @@
   -webkit-appearance: none;
   width: 100%;
   height: 6px;
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   background: var(--wash);
   outline: none;
   cursor: pointer;
@@ -347,15 +347,15 @@
 
 .sim-btn-pill-row {
   display: flex;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
 .pill-btn {
   background: transparent !important;
   color: var(--text-secondary, var(--text-secondary)) !important;
   border: 1px solid var(--border-default) !important;
-  border-radius: 999px !important;
-  padding: 4px 12px !important;
+  border-radius: var(--radius-full) !important;
+  padding: var(--space-1) var(--space-3) !important;
   font-size: 0.78rem !important;
   cursor: pointer;
 }
@@ -374,7 +374,7 @@
 .sim-checkbox-label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   font-size: 0.85rem;
   color: var(--text-primary, var(--text-primary));
   cursor: pointer;
@@ -383,18 +383,18 @@
 /* Explanation Box */
 .sim-explanation-box {
   display: flex;
-  gap: 0.9rem;
+  gap: var(--space-4);
   align-items: flex-start;
   background: var(--bg-secondary);
   border-left: 3px solid var(--accent-primary, var(--accent-primary));
-  padding: 1rem 1.2rem;
-  border-radius: 0 10px 10px 0;
+  padding: var(--space-4) var(--space-5);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 .sim-info-icon {
   flex-shrink: 0;
   color: var(--accent-primary, var(--accent-primary));
-  margin-top: 2px;
+  margin-top: var(--space-1);
 }
 
 .sim-explanation-box p {
@@ -410,7 +410,7 @@
 
 @media (max-width: 640px) {
   .sim-card {
-    padding: 1.2rem 1rem;
+    padding: var(--space-5) var(--space-4);
   }
   .sim-header-row {
     flex-direction: column;
@@ -423,7 +423,7 @@
 /* Shown when a simulation is deliberately stopped rather than running. */
 .sim-motion-note {
   margin: 0 0 var(--space-3, 12px);
-  padding: 9px 12px;
+  padding: var(--space-2) var(--space-3);
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--text-secondary, var(--text-secondary));

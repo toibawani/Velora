@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 980px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 4rem;
+  padding: var(--space-6) var(--space-4) var(--space-16);
   color: var(--text-primary);
 }
 
@@ -12,10 +12,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2rem;
-  gap: 1.5rem;
+  margin-bottom: var(--space-8);
+  gap: var(--space-6);
   border-bottom: 1px solid var(--border-default);
-  padding-bottom: 1.5rem;
+  padding-bottom: var(--space-6);
 }
 
 .bg-kicker {
@@ -25,7 +25,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-primary);
-  margin-bottom: 0.4rem;
+  margin-bottom: var(--space-2);
 }
 
 .bg-hero h2 {
@@ -34,7 +34,7 @@
   font-weight: 400;
   line-height: 1.15;
   color: var(--text-primary);
-  margin: 0 0 0.6rem;
+  margin: 0 0 var(--space-2);
 }
 
 .bg-hero p {
@@ -49,8 +49,8 @@
   background: transparent !important;
   color: var(--text-primary) !important;
   border: 1px solid var(--border-strong) !important;
-  padding: 8px 16px !important;
-  border-radius: 999px !important;
+  padding: var(--space-2) var(--space-4) !important;
+  border-radius: var(--radius-full) !important;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -64,10 +64,10 @@
 /* Tab Rail */
 .bg-tab-rail {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-2);
   overflow-x: auto;
-  padding-bottom: 0.4rem;
-  margin-bottom: 1.8rem;
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-8);
   scrollbar-width: none;
 }
 
@@ -78,12 +78,12 @@
 .bg-tab-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   background: var(--bg-surface) !important;
   color: var(--text-secondary) !important;
   border: 1px solid var(--border-default) !important;
-  border-radius: 999px !important;
-  padding: 8px 18px !important;
+  border-radius: var(--radius-full) !important;
+  padding: var(--space-2) var(--space-5) !important;
   font-size: 0.88rem;
   font-weight: 550;
   cursor: pointer;
@@ -107,8 +107,8 @@
 .bg-game-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
-  border-radius: 20px;
-  padding: 2rem;
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
   box-shadow: 0 8px 24px var(--shadow-color);
 }
 
@@ -116,8 +116,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.2rem;
-  gap: 1rem;
+  margin-bottom: var(--space-5);
+  gap: var(--space-4);
 }
 
 .bg-game-kicker {
@@ -127,7 +127,7 @@
   text-transform: uppercase;
   color: var(--accent-primary);
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--space-1);
 }
 
 .bg-game-title {
@@ -143,19 +143,19 @@
   color: var(--accent-primary);
   font-size: 0.75rem;
   font-weight: 600;
-  padding: 4px 12px;
-  border-radius: 999px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
   border: 1px solid var(--accent-soft);
 }
 
 .bg-streak-counter {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: var(--space-2);
   background: var(--warning-line);
   color: var(--accent-gold);
-  padding: 5px 12px;
-  border-radius: 999px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
   font-size: 0.85rem;
 }
 
@@ -166,11 +166,11 @@
 .bg-timer-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: var(--space-1);
   background: var(--danger-line);
   color: var(--color-error);
-  padding: 5px 12px;
-  border-radius: 999px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -179,28 +179,28 @@
   font-size: 0.98rem;
   line-height: 1.55;
   color: var(--text-secondary);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 /* Connect Terms Grid */
 .bg-terms-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 0.8rem;
-  margin-bottom: 1.8rem;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
 }
 
 .bg-term-card {
   background: var(--bg-elevated) !important;
   border: 1px solid var(--border-default) !important;
-  border-radius: 14px !important;
-  padding: 1rem !important;
+  border-radius: var(--radius-lg) !important;
+  padding: var(--space-4) !important;
   text-align: left !important;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: var(--space-1);
 }
 
 .bg-term-card:hover {
@@ -232,43 +232,43 @@
   font-size: 0.82rem;
   line-height: 1.4;
   color: var(--text-secondary);
-  margin-top: 0.3rem;
+  margin-top: var(--space-1);
   border-top: 1px solid var(--border-subtle);
-  padding-top: 0.4rem;
+  padding-top: var(--space-2);
 }
 
 .bg-term-hint-action {
   font-size: 0.72rem;
   color: var(--accent-primary);
-  margin-top: 0.2rem;
+  margin-top: var(--space-1);
 }
 
 /* Options Section */
 .bg-options-section {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .bg-question-text {
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .bg-options-list {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: var(--space-2);
 }
 
 .bg-option-btn {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: var(--space-3);
   background: var(--bg-elevated) !important;
   border: 1px solid var(--border-default) !important;
-  border-radius: 12px !important;
-  padding: 0.9rem 1.1rem !important;
+  border-radius: var(--radius-lg) !important;
+  padding: var(--space-4) var(--space-4) !important;
   text-align: left !important;
   color: var(--text-primary) !important;
   cursor: pointer;
@@ -312,9 +312,9 @@
 
 /* Feedback Result Card */
 .bg-result-card {
-  padding: 1.4rem;
-  border-radius: 14px;
-  margin-top: 1.5rem;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-6);
 }
 
 .result-success {
@@ -330,8 +330,8 @@
 .bg-result-header {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 0.8rem;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
 }
 
 .bg-result-header h4 {
@@ -345,21 +345,21 @@
   font-size: 0.95rem;
   line-height: 1.55;
   color: var(--text-secondary);
-  margin: 0 0 1.2rem;
+  margin: 0 0 var(--space-5);
 }
 
 .bg-result-actions {
   display: flex;
-  gap: 0.8rem;
+  gap: var(--space-3);
   align-items: center;
 }
 
 .bg-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 9px 18px !important;
-  border-radius: 999px !important;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5) !important;
+  border-radius: var(--radius-full) !important;
   font-size: 0.88rem !important;
   font-weight: 600 !important;
   cursor: pointer;
@@ -384,9 +384,9 @@
 .bg-myth-question-box {
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
-  border-radius: 14px;
-  padding: 1.8rem;
-  margin-bottom: 1.5rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .bg-myth-subject-tag {
@@ -396,7 +396,7 @@
   letter-spacing: 0.08em;
   color: var(--accent-primary);
   display: block;
-  margin-bottom: 0.8rem;
+  margin-bottom: var(--space-3);
 }
 
 .bg-myth-claim {
@@ -411,16 +411,16 @@
 .bg-myth-actions-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .bg-myth-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  padding: 1rem !important;
-  border-radius: 14px !important;
+  gap: var(--space-2);
+  padding: var(--space-4) !important;
+  border-radius: var(--radius-lg) !important;
   font-size: 1rem !important;
   font-weight: 600 !important;
   cursor: pointer;
@@ -448,7 +448,7 @@
 }
 
 .bg-session-summary {
-  margin-top: 1.5rem;
+  margin-top: var(--space-6);
   font-size: 0.85rem;
   color: var(--text-secondary);
   text-align: center;
@@ -458,9 +458,9 @@
 .bg-explain-prompt-box {
   background: var(--bg-elevated);
   border-left: 3px solid var(--accent-primary);
-  padding: 1rem 1.2rem;
-  border-radius: 0 10px 10px 0;
-  margin-bottom: 1.5rem;
+  padding: var(--space-4) var(--space-5);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: var(--space-6);
 }
 
 .bg-explain-task {
@@ -472,15 +472,15 @@
 
 .bg-sprint-start-banner {
   text-align: center;
-  padding: 2.5rem 1rem;
+  padding: var(--space-10) var(--space-4);
   background: var(--bg-elevated);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
 }
 
 .bg-sprint-start-banner p {
   font-size: 1.05rem;
   color: var(--text-secondary);
-  margin-bottom: 1.2rem;
+  margin-bottom: var(--space-5);
 }
 
 .bg-sprint-textarea {
@@ -488,14 +488,14 @@
   box-sizing: border-box;
   background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.5;
   color: var(--text-primary);
   resize: vertical;
-  margin-bottom: 0.8rem;
+  margin-bottom: var(--space-3);
 }
 
 .bg-sprint-textarea:focus {
@@ -516,14 +516,14 @@
 .bg-feynman-results {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .bg-your-distillation {
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
-  border-radius: 14px;
-  padding: 1.4rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
 }
 
 .bg-distill-label {
@@ -532,7 +532,7 @@
   letter-spacing: 0.08em;
   color: var(--accent-primary);
   display: block;
-  margin-bottom: 0.6rem;
+  margin-bottom: var(--space-2);
 }
 
 .bg-your-quote {
@@ -540,14 +540,14 @@
   font-size: 1.15rem;
   font-style: italic;
   color: var(--text-primary);
-  margin: 0 0 0.8rem;
+  margin: 0 0 var(--space-3);
   line-height: 1.45;
 }
 
 .bg-intuition-tags {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   flex-wrap: wrap;
   font-size: 0.82rem;
   color: var(--text-secondary);
@@ -556,37 +556,37 @@
 .bg-cue-pill {
   background: var(--color-success-soft);
   color: var(--color-success);
-  padding: 2px 8px;
-  border-radius: 6px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
   font-weight: 600;
 }
 
 .bg-peer-heading {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   font-size: 0.95rem;
   color: var(--text-primary);
-  margin-bottom: 0.8rem;
+  margin-bottom: var(--space-3);
 }
 
 .bg-peers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.9rem;
+  gap: var(--space-4);
 }
 
 .bg-peer-card {
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
 }
 
 .bg-peer-meta {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.4rem;
+  margin-bottom: var(--space-2);
   font-size: 0.82rem;
 }
 
@@ -607,7 +607,7 @@
 
 @media (max-width: 640px) {
   .bg-game-card {
-    padding: 1.3rem 1rem;
+    padding: var(--space-5) var(--space-4);
   }
   .bg-myth-actions-row {
     grid-template-columns: 1fr;
@@ -631,7 +631,7 @@
 
 .bg-paused-note {
   margin: 0 0 var(--space-3, 12px);
-  padding: 8px 11px;
+  padding: var(--space-2) var(--space-3);
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--text-secondary);
@@ -641,7 +641,7 @@
 }
 
 .bg-result-source {
-  margin: 0.35rem 0 0;
+  margin: var(--space-1) 0 0;
   font-size: 0.8125rem;
 }
 

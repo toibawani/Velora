@@ -54,7 +54,7 @@
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-default);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
@@ -98,7 +98,7 @@
   color: var(--text-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
-  padding: 4px 8px;
+  padding: var(--space-1) var(--space-2);
   font-size: 0.8125rem;
   outline: none;
 }
@@ -148,7 +148,7 @@
   color: var(--text-inverse);
   border: 1px solid transparent;
   border-radius: var(--radius-full);
-  padding: 6px 16px;
+  padding: var(--space-2) var(--space-4);
   font-size: 0.875rem;
   font-weight: var(--weight-semibold);
   cursor: pointer;
@@ -215,7 +215,7 @@
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 0.8125rem;
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   outline: none;
 }
 
@@ -228,7 +228,7 @@
   color: var(--text-inverse);
   border: none;
   border-radius: var(--radius-full);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   font-size: 0.8125rem;
   font-weight: var(--weight-semibold);
   cursor: pointer;
@@ -256,7 +256,7 @@
 .ask-field-label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-1);
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -309,7 +309,7 @@
 .disc-lesson-hint {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   font-size: 0.82rem;
   color: var(--text-secondary);
 }
@@ -317,12 +317,12 @@
 .disc-lesson-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   background: none;
   border: 1px solid var(--border-default);
   color: var(--text-primary);
   border-radius: var(--radius-sm);
-  padding: 6px 12px;
+  padding: var(--space-2) var(--space-3);
   font-size: 0.82rem;
   font-weight: var(--weight-semibold);
   cursor: pointer;
@@ -370,12 +370,12 @@
 .disc-discard-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   background: none;
   border: none;
   color: var(--text-tertiary);
   font-size: 0.8rem;
-  padding: 8px;
+  padding: var(--space-2);
   cursor: pointer;
   transition: color var(--duration-fast) var(--ease-standard);
 }

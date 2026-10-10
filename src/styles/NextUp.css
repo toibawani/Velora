@@ -10,7 +10,7 @@
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  padding-bottom: 96px;
+  padding-bottom: var(--space-16);
 }
 
 .nu-header {
@@ -23,7 +23,7 @@
 }
 
 .nu-eyebrow {
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-1);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -39,9 +39,9 @@
 
 .nu-back {
   min-height: 44px;
-  padding: 0 1.1rem;
+  padding: 0 var(--space-4);
   border: 1px solid var(--border-default);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: var(--bg-elevated);
   color: var(--text-primary);
   font: inherit;
@@ -70,13 +70,13 @@
 
 .nu-intro-quiet {
   font-size: 0.88rem;
-  padding-left: 0.85rem;
+  padding-left: var(--space-3);
   border-left: 2px solid var(--border-subtle);
 }
 
 .nu-form {
   display: grid;
-  gap: 0.6rem;
+  gap: var(--space-2);
   padding: var(--space-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md, 12px);
@@ -91,7 +91,7 @@
 .nu-textarea {
   width: 100%;
   min-height: 64px;
-  padding: 0.7rem 0.8rem;
+  padding: var(--space-3) var(--space-3);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   background: var(--bg-primary);
@@ -104,19 +104,19 @@
 .nu-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .nu-select-label {
   display: grid;
-  gap: 0.3rem;
+  gap: var(--space-1);
   font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
 .nu-select {
   min-height: 44px;
-  padding: 0 0.6rem;
+  padding: 0 var(--space-2);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   background: var(--bg-primary);
@@ -144,9 +144,9 @@
 
 .nu-add {
   min-height: 44px;
-  padding: 0 1.3rem;
+  padding: 0 var(--space-5);
   border: 1px solid var(--accent-primary, var(--color-accent));
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: var(--accent-primary, var(--color-accent));
   color: var(--inverse-text, --bg-primary);
   font: inherit;
@@ -163,9 +163,9 @@
 .nu-alert {
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: var(--space-2);
   margin: 0;
-  padding: 0.85rem 1rem;
+  padding: var(--space-3) var(--space-4);
   border: 1px solid --color-error;
   border-radius: var(--radius-sm);
   background: rgba(180, 69, 58, 0.08);
@@ -175,11 +175,11 @@
 
 .nu-alert svg {
   flex: 0 0 auto;
-  margin-top: 0.15rem;
+  margin-top: var(--space-1);
 }
 
 .nu-section h2 {
-  margin: 0 0 0.6rem;
+  margin: 0 0 var(--space-2);
   font-family: var(--font-serif, Georgia, serif);
   font-size: 1.3rem;
   font-weight: 400;
@@ -188,9 +188,9 @@
 .nu-empty {
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: var(--space-2);
   margin: 0;
-  padding: 1rem 1.1rem;
+  padding: var(--space-4) var(--space-4);
   border: 1px dashed var(--border-default);
   border-radius: var(--radius-sm);
   font-size: 0.92rem;
@@ -200,7 +200,7 @@
 
 .nu-empty svg {
   flex: 0 0 auto;
-  margin-top: 0.2rem;
+  margin-top: var(--space-1);
 }
 
 .nu-list {
@@ -208,7 +208,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.6rem;
+  gap: var(--space-2);
 }
 
 .nu-item {
@@ -216,7 +216,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-3);
-  padding: 0.9rem 1rem;
+  padding: var(--space-4) var(--space-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   background: var(--bg-elevated);
@@ -244,8 +244,8 @@
 .nu-item-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 0.35rem;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
   font-size: 0.78rem;
   color: var(--text-secondary);
 }
@@ -253,12 +253,12 @@
 .nu-open-lesson {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.5rem;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
   min-height: 36px;
-  padding: 0 0.7rem;
+  padding: 0 var(--space-3);
   border: 1px solid var(--border-default);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: transparent;
   color: var(--text-primary);
   font: inherit;
@@ -273,16 +273,16 @@
 .nu-item-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: var(--space-1);
   flex: 0 0 auto;
 }
 
 .nu-action {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: var(--space-1);
   min-height: 36px;
-  padding: 0 0.65rem;
+  padding: 0 var(--space-3);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   background: transparent;
@@ -303,9 +303,9 @@
 }
 
 .nu-clear {
-  margin-top: 0.7rem;
+  margin-top: var(--space-3);
   min-height: 40px;
-  padding: 0 0.9rem;
+  padding: 0 var(--space-4);
   border: 1px dashed var(--border-default);
   border-radius: var(--radius-sm);
   background: transparent;

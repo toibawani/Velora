@@ -14,17 +14,17 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 1.5rem;
+  padding: var(--space-6);
   font-family: var(--font-sans);
 }
 
 .share-modal-card {
   background: var(--bg-secondary, #1a1a1a);
   border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   max-width: 520px;
   width: 100%;
-  padding: 2rem;
+  padding: var(--space-8);
   text-align: center;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   animation: modal-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -34,7 +34,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .milestone-badge-tag {
@@ -44,8 +44,8 @@
   color: var(--color-warning);
   background: rgba(255, 214, 10, 0.12);
   border: 1px solid rgba(255, 214, 10, 0.25);
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xs);
 }
 
 .share-close-btn {
@@ -63,19 +63,19 @@
 .achievement-graphic-card {
   background: var(--bg-tertiary, #202020);
   border: 1px solid var(--border-default, #2e2e2e);
-  border-radius: 12px;
-  padding: 2rem 1.5rem;
-  margin-bottom: 1.5rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  margin-bottom: var(--space-6);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .badge-svg-container {
   width: 120px;
   height: 120px;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .milestone-badge-svg {
@@ -99,7 +99,7 @@
 }
 
 .achievement-blurb {
-  margin: 0.5rem 0 0 0;
+  margin: var(--space-2) 0 0 0;
   font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-secondary, #a0a0a0);
@@ -109,9 +109,9 @@
 .share-caption-box {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default, #2e2e2e);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
-  margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
   text-align: left;
 }
 
@@ -126,7 +126,7 @@
 .share-buttons-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 @media (max-width: 480px) {
@@ -136,8 +136,8 @@
 }
 
 .viral-btn {
-  padding: 10px 14px;
-  border-radius: 6px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
@@ -185,7 +185,7 @@
 
 .share-copy-fallback {
   margin: var(--space-4, 16px) 0 0;
-  padding: 10px 12px;
+  padding: var(--space-3) var(--space-3);
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--text-secondary, var(--text-secondary));

@@ -15,21 +15,21 @@
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  padding: 1.5rem;
+  padding: var(--space-6);
   font-family: var(--font-sans);
 }
 
 .onboarding-card {
   background: var(--bg-secondary, --text-primary);
   border: 1px solid var(--border-default, --text-secondary);
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   max-width: 580px;
   width: 100%;
-  padding: 2.5rem 2.25rem;
+  padding: var(--space-10) var(--space-10);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--space-6);
   text-align: center;
   animation: card-emerge 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
@@ -50,14 +50,14 @@
   width: 100%;
   height: 4px;
   background: var(--bg-tertiary, --text-secondary);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
 .onboarding-progress-fill {
   height: 100%;
   background: var(--accent-primary);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -72,13 +72,13 @@
 .onboarding-illustration {
   color: var(--accent-primary);
   line-height: 1;
-  margin: 0.25rem 0;
+  margin: var(--space-1) 0;
 }
 
 .onboarding-text-block {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .onboarding-title {
@@ -97,7 +97,7 @@
 }
 
 .onboarding-body {
-  margin: 0.25rem 0 0;
+  margin: var(--space-1) 0 0;
   font-size: 0.9rem;
   line-height: 1.6;
   color: var(--text-secondary, --text-tertiary);
@@ -108,7 +108,7 @@
 .onboarding-options-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: var(--space-3);
   width: 100%;
 }
 
@@ -126,12 +126,12 @@
 .onboarding-option-card {
   background: var(--bg-tertiary, --bg-secondary);
   border: 1px solid var(--border-default, --border-default);
-  border-radius: 10px;
-  padding: 1rem 0.85rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: var(--space-1);
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
@@ -167,7 +167,7 @@
 /* Time Options */
 .onboarding-time-options {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
@@ -177,8 +177,8 @@
   background: var(--bg-tertiary, --bg-secondary);
   border: 1px solid var(--border-default, --border-default);
   color: var(--text-secondary, --text-tertiary);
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -201,8 +201,8 @@
   background: var(--accent-primary);
   color: var(--bg-primary);
   border: none;
-  padding: 13px 28px;
-  border-radius: 8px;
+  padding: var(--space-3) var(--space-8);
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;

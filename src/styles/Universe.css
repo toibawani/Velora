@@ -52,7 +52,7 @@
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-default);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
@@ -71,7 +71,7 @@
   background: var(--color-accent);
   color: var(--color-bg);
   border: none;
-  padding: 8px 16px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
@@ -110,15 +110,15 @@
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
-  padding: 3px;
-  gap: 2px;
+  padding: var(--space-1);
+  gap: var(--space-1);
 }
 
 .mode-tab-btn {
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-xs);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
@@ -215,7 +215,7 @@
 .add-concept-form label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-1);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);
   color: var(--text-secondary);
@@ -228,7 +228,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
-  padding: 8px 10px;
+  padding: var(--space-2) var(--space-3);
   font-family: var(--font-sans);
   font-size: 0.875rem;
   outline: none;
@@ -251,7 +251,7 @@
   background: transparent;
   border: 1px solid var(--border-default);
   color: var(--text-secondary);
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   cursor: pointer;
@@ -268,7 +268,7 @@
   background: var(--color-accent);
   border: none;
   color: var(--color-bg);
-  padding: 6px 16px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: var(--weight-medium);

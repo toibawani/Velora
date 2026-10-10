@@ -24,7 +24,7 @@
 .path-title-col {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-1);
 }
 
 .path-overline {
@@ -47,7 +47,7 @@
   font-size: 0.75rem;
   color: var(--text-secondary);
   background: var(--bg-tertiary);
-  padding: 3px 10px;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   font-weight: var(--weight-medium);
 }
@@ -129,7 +129,7 @@
 .lesson-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-1);
 }
 
 .lesson-title {
@@ -145,7 +145,7 @@
 }
 
 .lesson-action-btn {
-  padding: 4px 12px;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   font-size: 0.75rem;
   font-weight: var(--weight-semibold);

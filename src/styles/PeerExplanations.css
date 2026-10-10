@@ -7,11 +7,11 @@
 }
 
 .explanations-header {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
 }
 
 .explanations-title {
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
   font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-primary);
@@ -33,9 +33,9 @@
 
 .explanation-input {
   width: 100%;
-  padding: 1rem;
+  padding: var(--space-4);
   border: 1px solid var(--border-default);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.6;
@@ -43,7 +43,7 @@
   resize: vertical;
   min-height: 80px;
   transition: all 0.2s ease;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .explanation-input:focus {
@@ -67,11 +67,11 @@
 }
 
 .submit-btn {
-  padding: 10px 20px;
+  padding: var(--space-3) var(--space-5);
   background: var(--accent-primary);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 600;
   font-size: 0.9rem;
@@ -86,14 +86,14 @@
 .explanations-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .explanation-card {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-default);
-  border-radius: 10px;
-  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
   transition: all 0.2s ease;
 }
 
@@ -103,7 +103,7 @@
 }
 
 .explanation-text {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--space-4);
   font-size: 1rem;
   line-height: 1.7;
   color: var(--text-primary);
@@ -114,7 +114,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .time-ago {
@@ -125,17 +125,17 @@
 
 .vote-buttons {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .vote-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 6px 12px;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 0.85rem;
   font-weight: 600;
@@ -170,7 +170,7 @@
 
 @media (max-width: 768px) {
   .peer-explanations {
-    padding: 1.5rem;
+    padding: var(--space-6);
   }
 
   .explanation-footer {

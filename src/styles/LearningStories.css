@@ -110,11 +110,11 @@
 .story-reader-card {
   background: var(--bg-secondary, #1a1a1a);
   border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 12px;
-  padding: 2.25rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-10);
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: var(--space-8);
 }
 
 .reader-header {
@@ -122,7 +122,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--border-subtle, #282828);
-  padding-bottom: 1rem;
+  padding-bottom: var(--space-4);
 }
 
 .chapter-count-indicator {
@@ -133,7 +133,7 @@
 
 .chapter-stepper-dots {
   display: flex;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .stepper-dot {
@@ -150,13 +150,13 @@
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   width: 22px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
 }
 
 .chapter-body-content {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: var(--space-5);
 }
 
 .chapter-period-badge {
@@ -167,8 +167,8 @@
   text-transform: uppercase;
   color: var(--text-tertiary, #888888);
   background: var(--bg-tertiary, #222222);
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-xs);
 }
 
 .chapter-heading {
@@ -189,9 +189,9 @@
 .chapter-takeaway-box {
   background: rgba(255, 255, 255, 0.03);
   border-left: 3px solid var(--accent-primary);
-  padding: 1.15rem 1.5rem;
-  border-radius: 0 8px 8px 0;
-  margin-top: 0.5rem;
+  padding: var(--space-5) var(--space-6);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-top: var(--space-2);
 }
 
 .takeaway-tag {
@@ -200,7 +200,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: var(--space-1);
 }
 
 .takeaway-body {
@@ -215,15 +215,15 @@
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--border-subtle, #282828);
-  padding-top: 1.25rem;
+  padding-top: var(--space-5);
 }
 
 .reader-prev-btn {
   background: transparent;
   color: var(--text-secondary, #a0a0a0);
   border: 1px solid var(--border-default, #333333);
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -238,8 +238,8 @@
   background: var(--accent-primary);
   color: var(--text-inverse);
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;

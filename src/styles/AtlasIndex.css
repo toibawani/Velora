@@ -15,7 +15,7 @@
      topic name plus a marker - so two columns fit far more per screen height
      than the one-column card stack this replaced. */
   columns: 2;
-  column-gap: 3.5rem;
+  column-gap: var(--space-16);
   /* A discipline group must not break across a column boundary. Without this a
      heading can land at the foot of one column with its entries overleaf, which
      is exactly the disorientation an index is supposed to prevent. */
@@ -24,7 +24,7 @@
 
 .aix-group {
   break-inside: avoid;
-  margin: 0 0 2.1rem;
+  margin: 0 0 var(--space-8);
 }
 .aix-group:last-child { margin-bottom: 0; }
 
@@ -32,8 +32,8 @@
 .aix-group-head {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  padding-bottom: 0.34rem;
+  gap: var(--space-2);
+  padding-bottom: var(--space-1);
   /* The rule under a group heading is what makes this read as an index rather
      than a list. It sits under the whole head, not just the title. */
   border-bottom: 1px solid var(--border-strong);
@@ -55,7 +55,7 @@
   font-variant-numeric: tabular-nums;
 }
 .aix-group-desc {
-  margin: 0.42rem 0 0.7rem;
+  margin: var(--space-2) 0 var(--space-3);
   max-width: 34rem;
   color: var(--text-secondary);
   font-size: 0.86rem;
@@ -63,10 +63,10 @@
 }
 
 /* ---- Subfield: only rendered when a discipline has more than one module. ---- */
-.aix-subgroup { margin-top: 0.75rem; }
+.aix-subgroup { margin-top: var(--space-3); }
 .aix-subgroup:first-of-type { margin-top: 0; }
 .aix-subgroup-title {
-  margin: 0 0 0.3rem;
+  margin: 0 0 var(--space-1);
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: var(--weight-medium);
@@ -77,7 +77,7 @@
 /* ---- Topic: the leaf. An indented line of body text, not a shape. ---- */
 .aix-entries {
   margin: 0;
-  padding: 0 0 0 0.85rem;
+  padding: 0 0 0 var(--space-3);
   list-style: none;
   /* The indent line tying entries to their discipline. A single hairline rather
      than a box, because the job is to show nesting, not to contain anything. */
@@ -123,7 +123,7 @@
   background-image: none !important;
   border: 0 !important;
   border-radius: var(--radius-xs) !important;
-  padding: 0.18rem 0.35rem 0.18rem 0.5rem !important;
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2) !important;
   color: var(--text-primary) !important;
   font-family: var(--font-body) !important;
   font-size: 0.93rem !important;
@@ -138,7 +138,7 @@
 .aix-entry {
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  gap: var(--space-2);
   width: 100%;
   min-height: 30px;
   box-sizing: border-box;
@@ -192,7 +192,7 @@
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: var(--space-1);
   white-space: nowrap;
   color: var(--text-tertiary);
 }
@@ -244,7 +244,7 @@
   align-self: start;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: var(--space-1);
 }
 /*
  * The tab keeps the reset's background and padding but sets its own border and
@@ -254,8 +254,8 @@
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: baseline;
-  gap: 0.55rem;
-  padding: 0.5rem 0.7rem !important;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) !important;
   border-left: 2px solid var(--border-default) !important;
   border-radius: 0 var(--radius-xs) var(--radius-xs) 0 !important;
   color: var(--text-secondary) !important;
@@ -313,10 +313,10 @@
   .aix-tabs {
     position: static;
     flex-direction: row;
-    gap: 0.4rem;
+    gap: var(--space-2);
     overflow-x: auto;
     scrollbar-width: none;
-    padding-bottom: 0.3rem;
+    padding-bottom: var(--space-1);
     -webkit-overflow-scrolling: touch;
   }
   .aix-tabs::-webkit-scrollbar { display: none; }
@@ -326,7 +326,7 @@
     border-left: 0;
     border-bottom: 2px solid var(--border-default);
     border-radius: var(--radius-xs) var(--radius-xs) 0 0;
-    padding: 0.4rem 0.6rem;
+    padding: var(--space-2) var(--space-2);
   }
   .aix-tab[aria-pressed='true'] {
     border-left-color: transparent;
@@ -334,10 +334,10 @@
   }
   .aix-tab-meta { display: none; }
 
-  .aix-entries { padding-left: 0.6rem; }
+  .aix-entries { padding-left: var(--space-2); }
 }
 
 /* Wide screens: the index gets the room and the rail stays narrow. */
 @media (min-width: 1400px) {
-  .aix-index { column-gap: 4.5rem; }
+  .aix-index { column-gap: var(--space-16); }
 }

@@ -5,15 +5,15 @@
 .sketchbook-wrapper {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: var(--space-4);
   font-family: var(--font-sans);
 }
 
 .sketchbook-selector-bar {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
   flex-wrap: wrap;
 }
 
@@ -27,7 +27,7 @@
 
 .selector-pills {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
@@ -35,8 +35,8 @@
   background: var(--bg-secondary, #1a1a1a);
   color: var(--text-secondary, #a0a0a0);
   border: 1px solid var(--border-default, #333333);
-  padding: 6px 14px;
-  border-radius: 6px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -59,7 +59,7 @@
   grid-template-columns: 340px 1fr;
   background: var(--bg-secondary, #1a1a1a);
   border: 1px solid var(--border-default, #2a2a2a);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   text-align: left;
 }
@@ -74,12 +74,12 @@
 .sketchbook-illustration-side {
   background: #141414;
   border-right: 1px solid var(--border-default, #2a2a2a);
-  padding: 2rem 1.5rem;
+  padding: var(--space-8) var(--space-6);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .sketch-svg {
@@ -99,10 +99,10 @@
 
 /* Definition Side */
 .sketchbook-definition-side {
-  padding: 2.25rem;
+  padding: var(--space-10);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .definition-header {
@@ -110,9 +110,9 @@
   justify-content: space-between;
   align-items: flex-start;
   border-bottom: 1px solid var(--border-subtle, #282828);
-  padding-bottom: 1rem;
+  padding-bottom: var(--space-4);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .domain-label {
@@ -124,7 +124,7 @@
 }
 
 .definition-term {
-  margin: 0.25rem 0 0 0;
+  margin: var(--space-1) 0 0 0;
   font-size: 1.65rem;
   font-weight: 800;
   color: var(--text-primary, #ffffff);
@@ -134,8 +134,8 @@
   background: transparent;
   color: var(--text-secondary, #a0a0a0);
   border: 1px solid var(--border-default, #3a3a3a);
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
@@ -157,7 +157,7 @@
 .definition-section {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .section-title {
@@ -185,15 +185,15 @@
 .parts-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 0.25rem;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
 }
 
 .part-item {
   background: var(--bg-tertiary, #222222);
   border: 1px solid var(--border-default, #303030);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
   transition: all 0.2s ease;
 }
 
@@ -207,7 +207,7 @@
   font-size: 0.88rem;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 2px;
+  margin-bottom: var(--space-1);
 }
 
 .part-description {
@@ -221,8 +221,8 @@
 .everyday-connection-box {
   background: rgba(52, 199, 89, 0.08);
   border-left: 3px solid #34c759;
-  padding: 1rem 1.25rem;
-  border-radius: 0 8px 8px 0;
+  padding: var(--space-4) var(--space-5);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 .everyday-connection-box .section-title {
@@ -235,15 +235,15 @@
 
 /* Challenge CTA & Panel */
 .challenge-cta-row {
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
 }
 
 .challenge-me-trigger-btn {
   background: var(--accent-primary);
   color: #ffffff;
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
@@ -258,11 +258,11 @@
 .interactive-challenge-panel {
   background: var(--bg-tertiary, #222222);
   border: 1px solid var(--border-default, #333333);
-  border-radius: 8px;
-  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .challenge-panel-header {
@@ -297,15 +297,15 @@
 .challenge-opts-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .challenge-opt-btn {
   background: #181818;
   color: var(--text-primary, #e0e0e0);
   border: 1px solid #333333;
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
   text-align: left;
   font-size: 0.82rem;
   line-height: 1.4;
@@ -328,7 +328,7 @@
 }
 
 .challenge-explanation-text {
-  margin: 0.25rem 0 0 0;
+  margin: var(--space-1) 0 0 0;
   font-size: 0.82rem;
   line-height: 1.5;
   color: #a0c0ff;

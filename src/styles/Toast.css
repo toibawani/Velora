@@ -5,11 +5,11 @@
   background: white;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md, 8px);
-  padding: 1rem 1.5rem;
+  padding: var(--space-4) var(--space-6);
   box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
   animation: toast-slide-in 0.25s ease;
   z-index: var(--z-toast, 10000);
   max-width: 360px;

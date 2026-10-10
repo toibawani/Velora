@@ -8,13 +8,13 @@
 .command-result:hover, .command-result:focus-visible, .command-result.active { background: var(--bg-hover); }
 .command-result.active { box-shadow: inset 3px 0 0 var(--accent-primary); }
 .command-result-icon { display: grid; place-items: center; width: 36px; height: 36px; color: var(--accent-primary); background: var(--bg-tertiary); border-radius: var(--radius-sm); }
-.command-result span:nth-child(2) { display: flex; flex: 1; flex-direction: column; gap: 2px; }
+.command-result span:nth-child(2) { display: flex; flex: 1; flex-direction: column; gap: var(--space-1); }
 .command-result strong { font-size: 0.9375rem; }
 .command-result small { color: var(--text-secondary); font-size: 0.8125rem; }
 .command-enter { color: var(--text-tertiary); font-size: 0.75rem; }
 .command-empty { padding: var(--space-8) var(--space-4); text-align: center; color: var(--text-secondary); }
 .command-footer { display: flex; justify-content: space-between; padding: var(--space-3) var(--space-5); border-top: 1px solid var(--border-default); color: var(--text-tertiary); font-size: 0.75rem; }
-.command-footer span { display: inline-flex; align-items: center; gap: 4px; }
+.command-footer span { display: inline-flex; align-items: center; gap: var(--space-1); }
 @keyframes command-palette-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 480px) { .command-palette-backdrop { padding-top: 8vh; } .command-footer { display: none; } }
 @media (prefers-reduced-motion: reduce) { .command-palette { animation: none; } }
