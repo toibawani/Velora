@@ -53,6 +53,47 @@ cream-on-cream.
 **What the tokens already promise:** the token header claims measured WCAG AA
 for every named text role on both grounds, with the measured ratios written
 into comments (13.7:1 primary, 5.8:1 secondary, 4.7:1 tertiary on light page).
+
+## 1a. Stage 2 palette, written down (2026-10-10)
+
+Chosen before any re-skin, from the values already in `design-tokens.css` and
+confirmed in the browser at 1440 and 375, light and dark. The warm family is
+kept: it reads as paper and ink, which is the reference-book feel the app
+wants. The one sharp accent is sienna in the light theme and a lifted
+terracotta in the dark theme.
+
+| Role | Light | Dark | Ground it sits on | Measured |
+|---|---|---|---|---|
+| Page ground | `#F7F2E9` warm cream | `#171009` espresso | self | - |
+| Raised card | `#FFFDF9` | `#261C12` | on page | - |
+| Body ink | `#241B13` (13.7:1) | `#F2E9DD` (15.6:1) | page | AA |
+| Secondary ink | `#5C4A38` (8.0:1) | `#C4B09B` (9.0:1) | page | AA |
+| Tertiary / placeholder | `#7A6653` (5.8:1) | `#A08B78` (5.8:1) | page | AA |
+| **Accent** | `#A34A22` sienna (5.5:1) | `#E0975F` terracotta (6.1:1) | page | AA / large-UI |
+| Ink on accent | `#FFF9F1` | `#171009` | accent | AA |
+| Success | `#2F6B41` forest | `#8CC79E` | page | AA |
+| Warning | `#8A5A10` amber-brown | `#E8B25C` | page | AA |
+| Error | `#B4322A` brick | `#F0A19A` | page | AA |
+| Info | `#1F6F8C` steel-blue | `#7FB8DC` | page | AA |
+
+The brown does **not** read muddy in the browser once the ground and ink are
+set from tokens: cream `#F7F2E9` against ink `#241B13` is a printed page, and
+sienna `#A34A22` is a saturated warm accent, not a dull one. No new hue family
+was invented; the muddy readings the first pass produced came from boxes that
+hardcoded their own dark-mode colors (see the Part D sweep), not from the
+tokens. Status distinction is preserved as a dot shape plus the word: filled
+dot for settled states (success), filled dot for contested (warning), hollow
+ring for open/theoretical (info). It never relies on color alone.
+
+`scripts/checkContrast.js` reads these values out of the file and measures 80
+pairs across both themes: text tiers on page and card, status roles as text
+and as non-text dots (3:1) on both grounds, accent label and accent-as-link,
+focus ring (3:1), placeholder, muted metadata, and disabled controls faded to
+0.5 and 0.38. It exits non-zero on any failure and is wired into the CI
+`verify` job, so a token edit that drops a pair below AA fails the build.
+Proven to fail: setting `--color-info` to a near-white turned four pairs red
+and the script exited 1; restoring it returned to green.
+
 No script in `scripts/` verifies this; the numbers are hand-measured claims.
 
 ## 2. Type

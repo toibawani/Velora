@@ -25,6 +25,12 @@ jobs:
       - run: npx tsc --noEmit
       - run: CI=true npx react-scripts test --watchAll=false --coverage
       - run: npm run build
+      # The palette's contrast ratios live in design-tokens.css, and a hand-note
+      # saying "4.7:1" drifts the moment someone lightens a token. This reads the
+      # real values, composites translucent roles over their ground, and exits
+      # non-zero on any pair below AA. It needs no browser, so it runs in the
+      # cheap job. A check nobody runs is not a check.
+      - run: node scripts/checkContrast.js
       # Token contrast is a pure-node gate, so it belongs with the no-browser
       # checks. It reads the real values out of design-tokens.css, composites
       # translucent roles over the ground they sit on, and fails on anything
