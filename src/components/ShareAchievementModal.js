@@ -92,9 +92,9 @@ function ShareAchievementModal({
             <svg viewBox="0 0 160 160" className="milestone-badge-svg">
               <circle cx="80" cy="80" r="72" fill="none" stroke="var(--color-info)" strokeWidth="3" opacity="0.3" />
               <circle cx="80" cy="80" r="64" fill="var(--bg-primary)" stroke="var(--color-info)" strokeWidth="2" />
-              <circle cx="80" cy="80" r="50" fill="rgba(37, 99, 235, 0.1)" stroke="var(--color-success)" strokeWidth="1.5" strokeDasharray="4 2" />
+              <circle cx="80" cy="80" r="50" fill="var(--accent-soft)" stroke="var(--color-success)" strokeWidth="1.5" strokeDasharray="4 2" />
               <Orbit size={34} x={63} y={57} color="var(--color-info)" strokeWidth={1.5} aria-hidden="true" />
-              <text x="80" y="110" fontSize="10" fill="#ffffff" fontWeight="800" textAnchor="middle" letterSpacing="1">
+              <text x="80" y="110" fontSize="10" fill="var(--text-primary)" fontWeight="800" textAnchor="middle" letterSpacing="1">
                 VELORA MASTER
               </text>
             </svg>

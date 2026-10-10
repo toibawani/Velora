@@ -8,8 +8,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(8px);
+  background: var(--bg-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,53 +134,85 @@
   }
 }
 
+/* Brand share buttons. Each brand's own hue is kept only as a small dot (the
+   mark), never as the label text: on this warm card the brand colours measured
+   1.6, 2.3 and 3.6 to 1 in light mode (and LinkedIn 3.4 to 1 in dark), all well
+   under AA. The label is drawn in --text-primary, which holds 12 to 1 or better
+   in both themes, so the word is always readable while the dot still says which
+   service it is. */
 .viral-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
   border: 1px solid var(--border-default, #333333);
   background: var(--bg-tertiary, #222222);
   color: var(--text-primary, #e0e0e0);
 }
 
+.viral-btn::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
 .viral-btn:hover {
   background: var(--bg-secondary);
   border-color: var(--text-tertiary);
-  color: var(--text-inverse);
+  color: var(--text-primary);
 }
 
 .viral-btn.whatsapp {
   background: rgba(37, 211, 102, 0.1);
   border-color: rgba(37, 211, 102, 0.3);
-  color: #25d366;
+  color: var(--text-primary);
 }
 
+.viral-btn.whatsapp::before { background: #25d366; }
+
 .viral-btn.whatsapp:hover {
-  background: rgba(37, 211, 102, 0.2);
+  background: rgba(37, 211, 102, 0.18);
 }
 
 .viral-btn.twitter {
   background: rgba(29, 155, 240, 0.1);
   border-color: rgba(29, 155, 240, 0.3);
-  color: #1d9bf0;
+  color: var(--text-primary);
 }
 
+.viral-btn.twitter::before { background: #1d9bf0; }
+
 .viral-btn.twitter:hover {
-  background: rgba(29, 155, 240, 0.2);
+  background: rgba(29, 155, 240, 0.18);
 }
 
 .viral-btn.linkedin {
   background: rgba(0, 119, 181, 0.1);
   border-color: rgba(0, 119, 181, 0.3);
-  color: #0077b5;
+  color: var(--text-primary);
 }
 
+.viral-btn.linkedin::before { background: #0077b5; }
+
 .viral-btn.linkedin:hover {
-  background: rgba(0, 119, 181, 0.2);
+  background: rgba(0, 119, 181, 0.18);
 }
+
+/* The copy button is not a brand; it keeps the plain elevated ground and no
+   brand dot. */
+.viral-btn.copy::before { display: none; }
 
 .share-copy-fallback {
   margin: var(--space-4, 16px) 0 0;
