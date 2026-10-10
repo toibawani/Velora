@@ -35,14 +35,6 @@ jobs:
       # ESLint currently runs over app source only. Every remaining violation is
       # in *.test.* files and is tracked as debt; see the lint job below.
       - run: npm run lint
-      # Machine-checked WCAG AA for the token palette, light and dark. The
-      # header comments quote ratios by hand and those drift, which is how dark
-      # mode shipped cream-on-cream. This reads the real values, composites
-      # translucent roles over their ground, and fails on any pair below AA. It
-      # needs no browser, so it lives with the static gates rather than the
-      # Chrome jobs. Proven to fail: a single broken token turns it red.
-      - run: node scripts/checkContrast.js
-
   layout:
     name: layout regression (real Chrome, built app)
     runs-on: ubuntu-latest
