@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# local sandbox/tooling artifact, not part of the project
+.freebuff/

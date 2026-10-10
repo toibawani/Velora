@@ -201,6 +201,51 @@ const TERMS: GlossaryEntry[] = [
     definition:
       'A measure of how many arrangements something could be in that look the same from far away. It is why heat flows one way and not the other, and it is the quantity black holes were eventually shown to have.',
   },
+  // The thermodynamics lessons share this glossary, so a word like "heat engine"
+  // is defined once here rather than twice in the physics lessons.
+  {
+    term: 'thermal-equilibrium',
+    definition:
+      'Two things at the same temperature, so no heat flows between them however long they sit together. A thermometer works by settling into this state with whatever it touches.',
+  },
+  {
+    term: 'latent-heat',
+    definition:
+      'The energy that goes into changing a substance from one state to another rather than raising its temperature, such as melting ice into water or boiling water into steam.',
+  },
+  {
+    term: 'absolute-zero',
+    definition:
+      'The lowest possible temperature, where particles have as little motion as the rules of quantum mechanics allow. It is minus 273.15 degrees Celsius, written 0 K, and it can never be reached.',
+  },
+  {
+    term: 'kinetic-theory',
+    definition:
+      'The explanation of temperature as the motion of countless tiny particles: the faster they jiggle, the hotter the thing is. Pressure is those same particles striking the walls of their container.',
+    see: 'entropy',
+  },
+  {
+    term: 'specific-heat-capacity',
+    definition:
+      'The amount of energy needed to raise one kilogram of a material by one degree. Water has a high value, which is why it holds heat so well and warms and cools slowly.',
+  },
+  {
+    term: 'internal-energy',
+    definition:
+      'All the kinetic and potential energy of the particles inside a system added together. Heating it or making it do work changes this total, and the first law says the books must balance.',
+  },
+  {
+    term: 'microstate',
+    definition:
+      'One particular way of arranging the particles of a system that looks the same from the outside. Entropy counts how many microstates a system could be in.',
+    see: 'entropy',
+  },
+  {
+    term: 'heat-engine',
+    definition:
+      'Any machine that turns a flow of heat from something hot into something cold into useful work, from a steam engine to a power station. It can never convert all of the heat it takes in.',
+    see: 'entropy',
+  },
   {
     term: 'Hawking radiation',
     definition:

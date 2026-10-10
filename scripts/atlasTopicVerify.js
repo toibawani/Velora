@@ -191,7 +191,10 @@ const CASES = [
   { name: 'Motion (classical mechanics lesson)', query: 'Motion', topic: 'Motion', expect: 'lesson' },
   { name: 'Work, Energy & Power (lesson)', query: 'Work, Energy', topic: 'Work, Energy & Power', expect: 'lesson' },
   { name: 'Gravitation (classical mechanics lesson)', query: 'Gravitation', topic: 'Gravitation', expect: 'lesson' },
-  { name: 'Entropy (listed, unwritten)', query: 'Entropy', topic: 'Entropy', expect: 'unwritten' },
+  { name: 'Heat (thermodynamics lesson)', query: 'Heat', topic: 'Heat', expect: 'lesson' },
+  { name: 'Entropy (thermodynamics lesson)', query: 'Entropy', topic: 'Entropy', expect: 'lesson' },
+  { name: 'Heat Engines (thermodynamics lesson)', query: 'Heat Engines', topic: 'Heat Engines', expect: 'lesson' },
+  { name: 'Electric Charge (listed, unwritten)', query: 'Electric Charge', topic: 'Electric Charge', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },
   { name: 'Monsoons (field unmapped)', query: 'Monsoons', topic: 'Monsoons', expect: 'unwritten' },
 ];

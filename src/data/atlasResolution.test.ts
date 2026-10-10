@@ -117,8 +117,12 @@ describe('resolveAtlasTopic', () => {
   });
 
   test('reports an unwritten topic as unwritten instead of inventing content', () => {
-    expect(at('science', 'Entropy')).toEqual({
-      kind: 'unwritten', reason: 'no-content-yet', title: 'Entropy', fieldId: 'science',
+    // 'Electric Charge' sits under Physics > Electromagnetism. The five
+    // Thermodynamics lessons used to be the unwritten example here, starting
+    // with Entropy; once they were written the case had to move to a topic that
+    // still has no lesson, and Electric Charge is the honest one.
+    expect(at('science', 'Electric Charge')).toEqual({
+      kind: 'unwritten', reason: 'no-content-yet', title: 'Electric Charge', fieldId: 'science',
     });
   });
 
@@ -165,10 +169,12 @@ describe('fieldCoverage', () => {
     const coverage = fieldCoverage('science', topics);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Twenty-two written entry points across the whole science field: ten for
-    // physics, one for space science (black holes), and eleven for the computer
-    // science deep read. It was three before computer science landed.
-    expect(coverage.written).toBe(22);
+    // Twenty-seven written entry points across the whole science field: ten for
+    // classical mechanics, five for the Thermodynamics lessons (Heat,
+    // Temperature, Laws of Thermodynamics, Entropy, Heat Engines), one for space
+    // science (black holes), and eleven for the computer science deep read. It
+    // was twenty-two before the Thermodynamics lessons landed.
+    expect(coverage.written).toBe(27);
     expect(coverage.unmapped).toBe(0);
   });
 
@@ -178,15 +184,15 @@ describe('fieldCoverage', () => {
     // to 30 when the history levels did, and from 30 to 42 when computer
     // science did: eleven CS Atlas topics, plus "Quantum Computing" which the
     // Atlas lists under both physics and computer science and so counts twice.
+    // It is now 54, five higher, because the five Thermodynamics lessons landed.
     // If it fails, content was added, which is good news - raise it in the same
     // commit as the content.
     //
-    // It is worth being precise about what 42 out of 572 means. It is not
-    // "forty-two topics are done" in any sense a reader would recognise; it is
-    // forty-two topics that open something real, against roughly five hundred
-    // that honestly report themselves as unwritten. The number went up by
-    // twelve and the gap went from 542 to 530, which is the honest way to read
-    // it.
+    // It is worth being precise about what 54 out of 572 means. It is not
+    // "fifty-four topics are done" in any sense a reader would recognise; it is
+    // fifty-four topics that open something real, against roughly five hundred
+    // that honestly report themselves as unwritten. The number went up by five
+    // and the gap went from 523 to 518, which is the honest way to read it.
     const all: Array<[string, string]> = [];
     KNOWLEDGE_FIELDS.forEach((f) => {
       f.disciplines.forEach((d) => {
@@ -200,7 +206,7 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(49);
+    expect(written).toBe(54);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -227,8 +233,9 @@ describe('fieldCoverage', () => {
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
     //
-    // Science is 22: ten physics, one space science, eleven computer science.
-    expect(perField.science.written).toBe(22);
+    // Science is 27: ten classical mechanics, five Thermodynamics lessons, one
+    // space science, eleven computer science.
+    expect(perField.science.written).toBe(27);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -241,6 +248,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(49);
+    expect(summed).toBe(54);
   });
 });
