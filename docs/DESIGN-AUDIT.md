@@ -123,3 +123,70 @@ errors fail the run), `atlasAccessibilityAudit.js`, `atlasTapAudit.js`,
 stage actually looks like, because none of these answer "does it look right".
 
 No script in `scripts/` verifies this; the numbers are hand-measured claims.
+
+## Stage 2: the palette, written down before it is changed
+
+Written down from the rendered screenshots (light + dark, 1440 + 375) and the
+token values above, then committed before any color moves. Every ratio below
+is measured with the WCAG 2.1 relative-luminance formula, not asserted.
+
+**Dominant warm family: warm paper, not mud.** The light ground is a cream
+`#F7F2E9` rising to a card `#FFFDF9`; the dark ground is a near-black espresso
+`#171009` rising to a card `#261C12`. In the browser this reads as paper and
+as a dim reading lamp, not as brown. The muted text tier is a warm taupe
+(`#7A6653` light, `#A08B78` dark) at 4.89:1 and 5.80:1, still clearly a
+separate step from the secondary and primary tiers, so it is a hierarchy and
+not a smear. I am keeping the brown: measured against its surfaces it is
+readable and it is the one thing that makes this feel like a book rather than
+a dashboard. What is broken is not the family, it is the two components that
+opened their own white ground and their own off-brand fills.
+
+**One sharp accent: sienna, solid, zero gradients.** `#A34A22` on light,
+`#E0975F` on dark. 5.29:1 on the light page, 7.86:1 on the dark page. Text
+drawn on it uses `--accent-contrast` (`#FFF9F1` light at 5.64:1, `#171009`
+dark at 7.86:1). It is the only saturated hue that is not a status color.
+
+**Neutrals:** the warm text tiers and warm hairline borders above, plus the
+espresso scrim `--bg-overlay` for drawers and modals.
+
+**Status colors (kept warm-tuned, each AA on both grounds):**
+
+| role | light | ratio on light page | dark | ratio on dark page |
+|---|---|---|---|---|
+| success | `#2F6B41` | 5.71 | `#8CC79E` | 9.67 |
+| warning | `#8A5A10` | 5.30 | `#E8B25C` | 9.83 |
+| error   | `#B4322A` | 5.49 | `#F0A19A` | 9.21 |
+| info    | `#1F6F8C` | 5.08 | `#7FB8DC` | 8.79 |
+
+On their soft tints (light mode) success 5.46:1, warning 4.84:1, error 5.33:1.
+
+**Three distinctions that must survive, without relying on color alone:**
+evidence tiers (well-established / theoretical / unknown), documentation tiers
+(well-documented / disputed / speculative), and reception tiers (widely
+accepted / live debate / open question). These already render a word or a
+marker next to the color in `Learn.css` and `BlackHoleMastery.css`; the color
+change must not remove that.
+
+**Confirmed in the browser, measured, and about to be fixed:**
+
+- **Toast** opens its own `background: white` and paints cream text
+  `#FFF9F1` on it: **1.05:1 in both themes**, effectively invisible. It also
+  carries a colored left border per variant, which is the banned side-border
+  pattern, and its `duration` PropTypes says `string` while every caller and
+  the default pass a number.
+- **SketchbookCard `.term-pill.active`** paints white text on the dark accent
+  `#E0975F`: **2.40:1**, fails AA in dark mode. `--accent-contrast` fixes it
+  to 7.86:1.
+- **ShareAchievementModal** brand buttons (WhatsApp `#25d366`, X `#1d9bf0`,
+  LinkedIn `#0077b5`) put white text on brand colors that clear AA in light
+  mode but were never checked in dark, and they force off-brand fills. The fix
+  is a per-theme override on a compliant ground while the label stays readable,
+  measured in both themes.
+
+The contrast checker currently passes 40 token pairs. Stage 2 adds the pairs
+that actually broke (Toast variants, text on accent, status labels in both
+themes, brand buttons in both themes, disabled and focus, placeholder, link),
+proves it can fail by setting one token below AA and watching it go red, and
+wires it into CI so a check nobody runs cannot masquerade as green.
+
+
