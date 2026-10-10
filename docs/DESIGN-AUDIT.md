@@ -124,6 +124,48 @@ stage actually looks like, because none of these answer "does it look right".
 
 No script in `scripts/` verifies this; the numbers are hand-measured claims.
 
+## 6. Stage 2 palette and the contrast gate
+
+Written before the colour fixes, from the live values in `design-tokens.css`
+and measured by `scripts/checkContrast.js` (both themes).
+
+**Dominant warm family (neutrals).** Warm cream and espresso, never cool grey:
+
+| Role | Light | Dark |
+|---|---|---|
+| page ground | `--color-bg` `#F7F2E9` | `--bg-primary` `#171009` |
+| card | `--bg-elevated` (near `#F1EAE0`) | `--bg-elevated` (near `#1F1610`) |
+| ink | `--text-primary` `#241B13` | `--text-primary` `#F2E9DD` |
+
+**The one sharp accent.** Sienna `--accent-primary` `#A34A22` (light) lifting to
+`#E0975F` (dark). Not purple, not blue, no gradient. Text on it is
+`--accent-contrast`, measured at 5.64:1 light and 7.86:1 dark.
+
+**Status colours** (`--color-success` green, `--color-warning` amber,
+`--color-error` red, `--color-info` steel) keep their three-way meaning through
+a **dot plus the word**, never colour alone: the black-hole rail draws the dot
+with these tokens and the label text stays `--text-secondary` on the card.
+
+**What the contrast gate covers now** (32 pairs x 2 themes = 64 checks, all
+green, and proven to fail: forcing the light `--text-tertiary` to `#D8C7AE`
+turns four pairs red and exits non-zero, and restoring it goes green again):
+
+- text tiers (`primary/secondary/tertiary`) on page and on card, body AA 4.5:1
+- status roles on page, on card, and on their own translucent tint
+- text on the solid accent (`--accent-contrast` on `--accent-primary`)
+- accent as large UI (3:1) and accent as an inline link on page and card
+- placeholder text (tertiary) on page and card inputs
+- focus ring (`--ring`) against page and card, 3:1 non-text
+- disabled labels faded at 0.5 and 0.38 over page and card, held to 1.5:1
+  (WCAG 1.4.3 exempts inactive controls from the 4.5:1 text rule, so the bar is
+  "still perceptible as a control", not full legibility)
+- muted metadata (`--color-text-muted`) on page and card
+- inverted bands (`--inverse-text` on `--inverse-surface`)
+
+It runs in CI (`node scripts/checkContrast.js` in the no-browser `verify` job),
+so a palette edit that drops any pair below AA fails the build instead of
+shipping cream-on-cream.
+
 ## Stage 2: the palette, written down before it is changed
 
 Written down from the rendered screenshots (light + dark, 1440 + 375) and the

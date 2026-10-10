@@ -25,6 +25,13 @@ jobs:
       - run: npx tsc --noEmit
       - run: CI=true npx react-scripts test --watchAll=false --coverage
       - run: npm run build
+      # Token contrast is a pure-node gate, so it belongs with the no-browser
+      # checks. It reads the real values out of design-tokens.css, composites
+      # translucent roles over the ground they sit on, and fails on anything
+      # below WCAG AA (links, placeholders, focus, disabled, status states,
+      # text on accent, muted metadata). A palette edit that drops a token below
+      # AA now fails here rather than shipping cream-on-cream.
+      - run: node scripts/checkContrast.js
       # ESLint currently runs over app source only. Every remaining violation is
       # in *.test.* files and is tracked as debt; see the lint job below.
       - run: npm run lint
