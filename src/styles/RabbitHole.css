@@ -1,0 +1,221 @@
+/* ==========================================================================
+   VELORA Rabbit Hole Mode Styling
+   --------------------------------------------------------------------------
+   Editorial sidebar displaying three unexpected cross-disciplinary connections.
+   Aged paper aesthetic, tactile borders, zero purple gradients, zero blur.
+   ========================================================================== */
+
+.rabbit-hole-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 420px;
+  max-width: 90vw;
+  background-color: var(--bg-elevated);
+  border-left: 1px solid var(--border-strong);
+  box-shadow: -8px 0 24px rgba(36, 27, 19, 0.12);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--duration-normal) var(--ease-standard);
+  overflow-y: auto;
+}
+
+.rabbit-hole-sidebar.open {
+  transform: translateX(0);
+}
+
+.rabbit-hole-scrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(36, 27, 19, 0.45);
+  z-index: 999;
+}
+
+.rabbit-hole-header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.rabbit-hole-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rabbit-hole-badge {
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-primary);
+}
+
+.rabbit-hole-heading {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: var(--leading-tight);
+}
+
+.rabbit-hole-subhead {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  margin: var(--space-1) 0 0;
+  line-height: var(--leading-normal);
+}
+
+.rabbit-hole-close-btn {
+  background: transparent;
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  flex-shrink: 0;
+}
+
+.rabbit-hole-close-btn:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.rabbit-hole-content {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  flex: 1;
+}
+
+.rabbit-hole-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard);
+}
+
+.rabbit-hole-card:hover {
+  border-color: var(--accent-line);
+  transform: translateY(-1px);
+}
+
+.rabbit-hole-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.rabbit-hole-step {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+}
+
+.rabbit-hole-discipline {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+}
+
+.rabbit-hole-card-title {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: var(--leading-snug);
+}
+
+.rabbit-hole-card-body {
+  font-family: var(--font-reading);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.rabbit-hole-action-btn {
+  margin-top: var(--space-2);
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  color: var(--accent-primary);
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.rabbit-hole-action-btn:hover {
+  background-color: var(--accent-soft);
+  border-color: var(--accent-primary);
+}
+
+/* Floating / inline trigger button */
+.rabbit-hole-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.rabbit-hole-trigger-btn:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--accent-primary);
+}
+
+.rabbit-hole-trigger-btn.active {
+  background-color: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
