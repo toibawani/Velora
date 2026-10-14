@@ -28,6 +28,7 @@ const JourneyScreen = lazy(() => import('./screens/Journey'));
 const RoadmapScreen = lazy(() => import('./screens/Roadmap'));
 const SettingsScreen = lazy(() => import('./screens/Settings'));
 const NextUpScreen = lazy(() => import('./screens/NextUp'));
+const ConversationBotsScreen = lazy(() => import('./screens/ConversationBots'));
 
 /**
  * Minimalist, elegant loading indicator for lazy-loaded screen bundles
@@ -53,6 +54,7 @@ const ROUTE_LABELS = {
   roadmap: 'Roadmap',
   settings: 'Settings',
   tasks: 'Next up',
+  dialogues: 'Intellectual Dialogues',
   landing: 'VELORA',
   profile: 'Set up this device',
 };
@@ -107,6 +109,12 @@ function App() {
   // Which level a deep read should open on, when the topic that was tapped names
   // one. Null means "open at the top", which is what a generic entry point wants.
   const [deepReadLevel, setDeepReadLevel] = useState(null);
+  const [dialogueFigure, setDialogueFigure] = useState('einstein');
+
+  const openDialogue = (figureId = 'einstein') => {
+    setDialogueFigure(figureId);
+    setScreen('dialogues');
+  };
 
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
@@ -194,6 +202,7 @@ function App() {
             setLearnView={setLearnView}
             onOpenLesson={openLesson}
             onOpenDeepRead={openDeepRead}
+            onOpenDialogue={openDialogue}
             onForgetProfile={handleForgetProfile}
             showToast={showToast}
           />
@@ -209,6 +218,7 @@ function App() {
             deepReadLevel={deepReadLevel}
             pendingTopic={topicRequest}
             onLessonOpened={() => setTopicRequest(null)}
+            onOpenDialogue={openDialogue}
             showToast={showToast}
           />
         )}
@@ -247,6 +257,14 @@ function App() {
 
         {screen === 'tasks' && user && (
           <NextUpScreen setScreen={setScreen} onOpenLesson={openLesson} />
+        )}
+
+        {screen === 'dialogues' && user && (
+          <ConversationBotsScreen
+            setScreen={setScreen}
+            initialFigureId={dialogueFigure}
+            showToast={showToast}
+          />
         )}
 
         {user && screen !== 'splash' && screen !== 'profile' && screen !== 'landing' && (

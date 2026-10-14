@@ -34,6 +34,7 @@ import {
   Map,
   Settings as SettingsIcon,
   ListTodo,
+  MessageSquareQuote,
 } from 'lucide-react';
 
 export const SCREENS = [
@@ -115,6 +116,14 @@ export const SCREENS = [
     drawerLabel: 'Question desk',
     description: 'Questions you wrote down, and notes against them',
     icon: Users,
+    primary: false,
+  },
+  {
+    id: 'dialogues',
+    label: 'Dialogues',
+    drawerLabel: 'Intellectual Dialogues',
+    description: 'Direct conversations with historical thinkers: Einstein, Socrates, Rumi, Curie, Chanakya, Ibn Rushd',
+    icon: MessageSquareQuote,
     primary: false,
   },
 ];
