@@ -73,7 +73,7 @@ export const enforceRLS = (authUid, resourceUserId, action = 'access') => {
 /**
  * Pattern detector for SQL/NoSQL injection and dangerous payload characters.
  */
-const SQL_INJECTION_PATTERN = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|UNION|INTO|FROM|WHERE)\b.*[=;\-])|(--[^\r\n]*)|(\/\*[\w\W]*?(?:\*\/|$))/i;
+const SQL_INJECTION_PATTERN = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|UNION|INTO|FROM|WHERE)\b.*[=;-])|(--[^\r\n]*)|(\/\*[\w\W]*?(?:\*\/|$))/i;
 
 export const containsInjection = (value) => {
   if (typeof value !== 'string') return false;
