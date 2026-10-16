@@ -1,40 +1,35 @@
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+node_modules
 
-# testing & coverage
-/coverage
-*.lcov
+# build output
+build
 
-# production
-/build
-
-# environment & secrets - NEVER commit sensitive credentials
+# env files (don't commit secrets)
 .env
+.env.local
+.env.*.local
 .env.*
 !.env.example
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
-# operating system & editor artifacts
+# OS files
 .DS_Store
-.AppleDouble
-.LSOverride
 Thumbs.db
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
 
-# logs & debugging
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-*.log
 
-# local sandbox/tooling artifact
-.freebuff/
+# coverage
+coverage
+*.lcov
 
+# editor
+.vscode
+*.swp
+*.swo
+*~
+
+# OS specific
+.DS_Store
+``
