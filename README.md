@@ -24,14 +24,6 @@ fact itself.
 
 ![Atlas at 375px](docs/images/375-atlas-index.png)
 
-![Atlas at 1440px](docs/images/1440-atlas-index.png)
-
-![A lesson with a GlossaryTerm open at 1440px](docs/images/1440-lesson.png)
-
-![The Black Hole Masterclass game at 1440px](docs/images/1440-games.png)
-
-![Atlas at 375px](docs/images/375-atlas-index.png)
-
 ---
 
 ## How to run it
