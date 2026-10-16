@@ -21,6 +21,7 @@ const arg = (name, fallback) => {
 
 const URL = arg('--url', 'http://localhost:3000');
 const OUT = path.resolve(arg('--out', path.join('.freebuff', 'shots')));
+const WIDTHS = [320, 375, 768, 1024, 1440, 1920];
 
 /** Theme key shared with the pre-paint script in index.html. */
 const THEME_KEY = 'velora_theme_preference';
@@ -101,7 +102,7 @@ const main = async () => {
     args: ['--no-sandbox', '--disable-dev-shm-usage'],
   });
 
-  for (const width of [1440, 375]) {
+  for (const width of WIDTHS) {
     const page = await browser.newPage();
     if (theme) {
       // The app's auto theme follows the OS scheme; pinning the media feature
