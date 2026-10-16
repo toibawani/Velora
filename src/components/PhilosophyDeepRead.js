@@ -17,9 +17,13 @@ import { PHILOSOPHY_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/philoso
  * the level rail makes: someone who came back for a specific part should not have
  * to walk to it.
  */
-PhilosophyDeepRead.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), initialLevelId: PropTypes.string };
+PhilosophyDeepRead.propTypes = {
+  onBack: PropTypes.func,
+  initialLevelId: PropTypes.string,
+  onOpenDialogue: PropTypes.func,
+};
 
-function PhilosophyDeepRead({ onBack, initialLevelId }) {
+function PhilosophyDeepRead({ onBack, initialLevelId, onOpenDialogue }) {
   return (
     <DeepRead
       levels={PHILOSOPHY_LEVELS}
@@ -30,6 +34,7 @@ function PhilosophyDeepRead({ onBack, initialLevelId }) {
       statusLabels={STATUS_LABELS}
       onBack={onBack}
       initialLevelId={initialLevelId}
+      onOpenDialogue={onOpenDialogue}
     />
   );
 }

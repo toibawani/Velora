@@ -17,9 +17,13 @@ import { BLACK_HOLE_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/blackho
  * call site means the physics screen's public shape did not change when the
  * reader was generalised, so nothing that renders it had to be touched.
  */
-BlackHoleMastery.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), onOpenLab: PropTypes.shape({"onOpenLab": PropTypes.func}) };
+BlackHoleMastery.propTypes = {
+  onBack: PropTypes.func,
+  onOpenLab: PropTypes.func,
+  onOpenDialogue: PropTypes.func,
+};
 
-function BlackHoleMastery({ onBack, onOpenLab }) {
+function BlackHoleMastery({ onBack, onOpenLab, onOpenDialogue }) {
   return (
     <DeepRead
       levels={BLACK_HOLE_LEVELS}
@@ -30,6 +34,7 @@ function BlackHoleMastery({ onBack, onOpenLab }) {
       statusLabels={STATUS_LABELS}
       onBack={onBack}
       background={<BlackHoleCanvas />}
+      onOpenDialogue={onOpenDialogue}
       levelFooter={(level) =>
         onOpenLab && level.number === 1 ? (
           <button type="button" className="bhm-lab-link" onClick={onOpenLab}>

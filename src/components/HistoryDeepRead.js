@@ -18,9 +18,13 @@ import { HISTORY_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/history';
  * `initialLevelId` is how a reader who clicked "World War I" in the Atlas lands
  * on the century-of-wars level rather than the top of the subject.
  */
-HistoryDeepRead.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), initialLevelId: PropTypes.string };
+HistoryDeepRead.propTypes = {
+  onBack: PropTypes.func,
+  initialLevelId: PropTypes.string,
+  onOpenDialogue: PropTypes.func,
+};
 
-function HistoryDeepRead({ onBack, initialLevelId }) {
+function HistoryDeepRead({ onBack, initialLevelId, onOpenDialogue }) {
   return (
     <DeepRead
       levels={HISTORY_LEVELS}
@@ -31,6 +35,7 @@ function HistoryDeepRead({ onBack, initialLevelId }) {
       statusLabels={STATUS_LABELS}
       onBack={onBack}
       initialLevelId={initialLevelId}
+      onOpenDialogue={onOpenDialogue}
     />
   );
 }

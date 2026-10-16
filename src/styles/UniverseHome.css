@@ -31,15 +31,18 @@
   cursor: pointer;
 }
 
-.universe-home .bg-\[\#F6EFE4\]\/85 {
-  background: var(--bg-glass-strong);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+/* Solid warm-paper header — no backdrop-filter, no transparency */
+.uh-header--paper {
+  background: var(--bg-tertiary);
+}
+
+/* Legacy utility stubs kept so stale className strings do not crash */
+.universe-home .bg-\[--bg-tertiary\]\/85 {
+  background: var(--bg-tertiary);
 }
 
 .universe-home .backdrop-blur-md {
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  /* intentionally empty: backdrop-blur removed from editorial design */
 }
 
 .universe-home .border-b { border-bottom-style: solid; }

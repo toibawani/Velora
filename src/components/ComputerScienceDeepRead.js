@@ -23,9 +23,13 @@ import { CS_LEVELS, TOTAL_ENTRIES, STATUS_LABELS } from '../data/computerscience
  * `initialLevelId` is how a reader who tapped "Quantum Computing" in the Atlas
  * lands on the frontier level rather than the top of the subject.
  */
-ComputerScienceDeepRead.propTypes = { onBack: PropTypes.shape({"onBack": PropTypes.func}), initialLevelId: PropTypes.string };
+ComputerScienceDeepRead.propTypes = {
+  onBack: PropTypes.func,
+  initialLevelId: PropTypes.string,
+  onOpenDialogue: PropTypes.func,
+};
 
-function ComputerScienceDeepRead({ onBack, initialLevelId }) {
+function ComputerScienceDeepRead({ onBack, initialLevelId, onOpenDialogue }) {
   return (
     <DeepRead
       levels={CS_LEVELS}
@@ -36,6 +40,7 @@ function ComputerScienceDeepRead({ onBack, initialLevelId }) {
       statusLabels={STATUS_LABELS}
       onBack={onBack}
       initialLevelId={initialLevelId}
+      onOpenDialogue={onOpenDialogue}
     />
   );
 }

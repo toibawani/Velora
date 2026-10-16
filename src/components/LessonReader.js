@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock } from 'lucide-react';
+import { ArrowLeft, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock, Sparkles } from 'lucide-react';
 import PeerExplanations from './PeerExplanations';
 import ConceptMap from './ConceptMap';
 import SmartReviewPlanner from './SmartReviewPlanner';
+import RabbitHoleSidebar from './RabbitHoleSidebar';
 import { trackEvent } from '../utils/analytics';
 import { getReviewItems, addReviewItem, removeReviewItem } from '../utils/reviewPlanner';
 import { recordStudySession } from '../utils/analyticsStorage';
@@ -11,14 +12,21 @@ import { parseInlineTerms } from './GlossaryTerm';
 
 /**
  * LessonReader - full lesson view with peer explanations, concept map,
- * and review scheduling for the current lesson.
+ * review scheduling, and Rabbit Hole cross-discipline exploration.
  */
 import '../styles/LessonReader.css';
 
-LessonReader.propTypes = { topic: PropTypes.string, subject: PropTypes.string, onBack: PropTypes.shape({"onBack": PropTypes.func}), showToast: PropTypes.shape({"showToast": PropTypes.func}) };
+LessonReader.propTypes = {
+  topic: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  subject: PropTypes.string,
+  onBack: PropTypes.func,
+  showToast: PropTypes.func,
+  onOpenDialogue: PropTypes.func,
+};
 
-function LessonReader({ topic, subject, onBack, showToast }) {
+function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue }) {
   const [saved, setSaved] = useState(() => topic ? getReviewItems().some((item) => item.id === `${subject}:${topic.id}`) : false);
+  const [rabbitHoleOpen, setRabbitHoleOpen] = useState(false);
   const openedAt = useRef(Date.now());
   useEffect(() => {
     openedAt.current = Date.now();
@@ -43,6 +51,14 @@ function LessonReader({ topic, subject, onBack, showToast }) {
       <header className="lesson-reader-header">
         <button className="learn-back-btn" onClick={onBack}><ArrowLeft size={16} /> Back to path</button>
         <div className="lesson-reader-actions">
+          <button
+            type="button"
+            className="rabbit-hole-trigger-btn"
+            onClick={() => setRabbitHoleOpen(true)}
+            aria-label="Open Rabbit Hole Mode"
+          >
+            <Sparkles size={14} aria-hidden="true" /> Rabbit Hole
+          </button>
           <button className={`lesson-save-btn ${saved ? 'saved' : ''}`} onClick={toggleSaved}>{saved ? 'Saved' : 'Save for review'}</button>
         </div>
       </header>
@@ -79,6 +95,14 @@ function LessonReader({ topic, subject, onBack, showToast }) {
         <section className="lesson-section-card"><div className="lesson-card-heading"><Users size={17} /><h2>Compare explanations</h2></div><PeerExplanations topic={topic.title} onNotify={showToast} /></section>
         <section className="lesson-section-card"><div className="lesson-card-heading"><CalendarClock size={17} /><h2>Return to this later</h2></div><SmartReviewPlanner selectedSubject={subject} onNotify={showToast} /></section>
       </main>
+      <RabbitHoleSidebar
+        topicId={topic.id}
+        topicTitle={topic.title}
+        subject={subject}
+        isOpen={rabbitHoleOpen}
+        onClose={() => setRabbitHoleOpen(false)}
+        onNavigateFigure={onOpenDialogue}
+      />
     </div>
   );
 }

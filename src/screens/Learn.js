@@ -54,9 +54,20 @@ import { getAnalyticsData } from '../utils/analyticsStorage';
  * Learn - subject overview, topic list, and deep-read reader. Handles
  * navigation, progress, and opens LessonReader for individual lessons.
  */
-Learn.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), selectedSubject: PropTypes.shape({"selectedSubject": PropTypes.func}), setSelectedSubject: PropTypes.shape({"setSelectedSubject": PropTypes.func}), initialView: PropTypes.string, setInitialView: PropTypes.string, deepReadLevel: PropTypes.string, pendingTopic: PropTypes.string, onLessonOpened: PropTypes.shape({"onLessonOpened": PropTypes.func}), showToast: PropTypes.shape({"showToast": PropTypes.func}) };
+Learn.propTypes = {
+  setScreen: PropTypes.func,
+  selectedSubject: PropTypes.string,
+  setSelectedSubject: PropTypes.func,
+  initialView: PropTypes.string,
+  setInitialView: PropTypes.func,
+  deepReadLevel: PropTypes.string,
+  pendingTopic: PropTypes.object,
+  onLessonOpened: PropTypes.func,
+  showToast: PropTypes.func,
+  onOpenDialogue: PropTypes.func,
+};
 
-function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, deepReadLevel, pendingTopic, onLessonOpened, showToast }) {
+function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = 'overview', setInitialView, deepReadLevel, pendingTopic, onLessonOpened, showToast, onOpenDialogue }) {
   const [currentView, setCurrentView] = useState(initialView || 'overview');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [activeGame, setActiveGame] = useState({
@@ -175,7 +186,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
 
   // View: Full curriculum lesson
   if (currentView === 'lesson' && selectedTopic) {
-    return <LessonReader topic={selectedTopic} subject={selectedSubject || 'physics'} onBack={handleBack} showToast={showToast} />;
+    return <LessonReader topic={selectedTopic} subject={selectedSubject || 'physics'} onBack={handleBack} showToast={showToast} onOpenDialogue={onOpenDialogue} />;
   }
 
   // View: Flow State Game
@@ -274,6 +285,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       <BlackHoleMastery
         onBack={handleBack}
         onOpenLab={() => setCurrentView('relativity-lab')}
+        onOpenDialogue={onOpenDialogue}
       />
     );
   }
@@ -286,6 +298,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       <PhilosophyDeepRead
         onBack={handleBack}
         initialLevelId={deepReadLevel}
+        onOpenDialogue={onOpenDialogue}
       />
     );
   }
@@ -301,6 +314,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       <HistoryDeepRead
         onBack={handleBack}
         initialLevelId={deepReadLevel}
+        onOpenDialogue={onOpenDialogue}
       />
     );
   }
@@ -314,6 +328,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
       <ComputerScienceDeepRead
         onBack={handleBack}
         initialLevelId={deepReadLevel}
+        onOpenDialogue={onOpenDialogue}
       />
     );
   }

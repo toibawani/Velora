@@ -1,33 +1,12 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, ChevronDown, List } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown, List, Sparkles } from 'lucide-react';
 import ConceptEntry from './ConceptEntry';
 import { parseInlineTerms } from './GlossaryTerm';
+import RabbitHoleSidebar from './RabbitHoleSidebar';
 import '../styles/BlackHoleMastery.css';
 
 /**
  * A level reader: a rail of levels, one level of entries at a time.
- *
- * This used to be BlackHoleMastery and was physics-only. It was extracted so the
- * philosophy material could use it unchanged, which is the actual evidence that
- * the pattern generalises: adding a subject meant adding data files, not writing
- * a second reader. The component does three things and nothing else - choose a
- * level, render it, and let someone get back to where they were.
- *
- * The rail is a rail rather than a scroll for the reason given in the brief:
- * these are thousands of words and people come back to a specific part. It also
- * shows what each level contains before you click it, so someone can jump
- * straight to Level 4 rather than scrolling through three to find out whether
- * Level 4 is what they want.
- *
- * On a narrow screen the rail collapses behind a disclosure. A stack of level
- * buttons above the content would push the first paragraph below the fold on a
- * 375px screen, which on a screen whose whole purpose is reading is the one
- * layout failure that actually matters.
- *
- * Everything subject-specific arrives as a prop: the levels, what the subject is
- * called, the label on the rail, the status vocabulary, and an optional piece of
- * background decoration (the black hole canvas) and an optional per-level footer
- * (the relativity lab link). Nothing about physics is baked in.
  */
 function DeepRead({
   levels,
@@ -40,7 +19,9 @@ function DeepRead({
   background = null,
   statusLabels,
   levelFooter,
+  onOpenDialogue,
 }) {
+  const [rabbitHoleOpen, setRabbitHoleOpen] = useState(false);
   const isValidLevel = (id) => levels.some((entry) => entry.id === id);
   const [levelId, setLevelId] = useState(() =>
     initialLevelId && isValidLevel(initialLevelId) ? initialLevelId : levels[0].id
@@ -103,9 +84,19 @@ function DeepRead({
             <h1>{title}</h1>
             <p className="bhm-header-note">{note}</p>
           </div>
-          <button type="button" className="bhm-back" onClick={onBack}>
-            <ArrowLeft size={16} aria-hidden="true" /> Back
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button
+              type="button"
+              className="rabbit-hole-trigger-btn"
+              onClick={() => setRabbitHoleOpen(true)}
+              aria-label="Open Rabbit Hole Mode"
+            >
+              <Sparkles size={14} aria-hidden="true" /> Rabbit Hole
+            </button>
+            <button type="button" className="bhm-back" onClick={onBack}>
+              <ArrowLeft size={16} aria-hidden="true" /> Back
+            </button>
+          </div>
         </header>
 
         <div className="bhm-body">
@@ -175,6 +166,14 @@ function DeepRead({
           </main>
         </div>
       </div>
+      <RabbitHoleSidebar
+        topicId={title ? title.toLowerCase().replace(/\s+/g, '-') : 'black-holes'}
+        topicTitle={title}
+        subject={eyebrow ? eyebrow.toLowerCase() : 'physics'}
+        isOpen={rabbitHoleOpen}
+        onClose={() => setRabbitHoleOpen(false)}
+        onNavigateFigure={onOpenDialogue}
+      />
     </div>
   );
 }

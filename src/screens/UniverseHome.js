@@ -190,7 +190,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
 
   return (
     <div className="universe-home bg-[--bg-tertiary] min-h-screen text-[--text-primary]">
-      <header className="uh-header bg-[--bg-tertiary]/85 backdrop-blur-md border-b border-[--text-primary]/10">
+      <header className="uh-header uh-header--paper border-b border-[--text-primary]/10">
         <button className="uh-brand" type="button" onClick={() => setScreen('universe')} aria-label="VELORA home">
           <span className="uh-brand-mark">V</span>
           <span><strong>VELORA</strong><small>The knowledge atlas</small></span>
