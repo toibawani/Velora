@@ -13,8 +13,16 @@ fact itself.
 
 ### See it running
 
-- **Live demo:** https://velora.app
+- **Live demo:** https://toibawani.github.io/velora (deploys automatically on push to main)
 - **CI:** [![CI](https://github.com/toibawani/Velora/actions/workflows/ci.yml/badge.svg)](https://github.com/toibawani/Velora/actions/workflows/ci.yml)
+
+![Atlas at 1440px](docs/images/1440-atlas-index.png)
+
+![A lesson with a GlossaryTerm open at 1440px](docs/images/1440-lesson.png)
+
+![The Black Hole Masterclass game at 1440px](docs/images/1440-games.png)
+
+![Atlas at 375px](docs/images/375-atlas-index.png)
 
 ![Atlas at 1440px](docs/images/1440-atlas-index.png)
 
