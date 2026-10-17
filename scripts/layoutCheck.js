@@ -25,6 +25,7 @@ const PORT = Number(process.env.PORT || 4173);
 // list, and the copies had already drifted: this one knew about Linux runners
 // and the atlas scripts did not.
 const { requireChrome } = require('./chrome');
+const { attach, dump } = require('./auditDiagnostics');
 
 const MIME = {
   '.html': 'text/html',
@@ -43,6 +44,12 @@ const MIME = {
 const serve = (root) =>
   new Promise((resolve) => {
     const server = http.createServer((req, res) => {
+      // NOTE: build/index.html references /velora/static/... because
+      // package.json homepage is https://toibawani.github.io/velora, but
+      // this server serves from /. A request for /velora/static/js/main.js
+      // falls through to index.html below, so Chrome parses HTML as JS
+      // (Unexpected token '<') and renders zero buttons. The diagnostic
+      // capture in main() exists to prove this instead of assuming it.
       const urlPath = decodeURIComponent(req.url.split('?')[0]);
       let filePath = path.join(root, urlPath);
       if (!filePath.startsWith(root)) {
@@ -304,8 +311,14 @@ const main = async () => {
       if (msg.type() === 'error') consoleErrors.push(msg.text());
     });
     page.on('pageerror', (err) => consoleErrors.push(`pageerror: ${err.message}`));
+    const diag = attach(page, `layout-${width}`);
 
-    await signIn(page, url);
+    try {
+      await signIn(page, url);
+    } catch (err) {
+      await dump(page, diag);
+      throw err;
+    }
 
     for (const screen of SCREENS) {
       const opened = screen.drawer
@@ -333,6 +346,9 @@ const main = async () => {
 
     for (const e of consoleErrors.slice(0, 5)) {
       failures.push({ width, screen: 'console', reason: e });
+    }
+    if (failures.length) {
+      await dump(page, diag);
     }
     await page.close();
   }
