@@ -55,6 +55,12 @@ jobs:
       # to Jest. This drives the built output in real Chrome at 1440 and 375,
       # signs in through the real form and walks every screen.
       - run: npm run test:layout
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: audit-artifacts-layout
+          path: audit-artifacts/
+          if-no-files-found: warn
       - run: npm run test:naming
       # The game audit plays every game in the built app in real Chrome and fails
       # if one cannot be reached or the page logs an error.
@@ -100,3 +106,9 @@ jobs:
       - run: npm run test:atlas-tap
       # levelsVerify: every level in the black hole rail renders real content.
       - run: npm run test:levels
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: audit-artifacts-atlas
+          path: audit-artifacts/
+          if-no-files-found: warn
