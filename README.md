@@ -13,7 +13,7 @@ fact itself.
 
 ### See it running
 
-- **Live demo:** https://toibawani.github.io/velora (deploys automatically on push to main)
+- **Live demo:** https://toibawani.github.io/Velora/ (deploys automatically on push to main)
 - **CI:** [![CI](https://github.com/toibawani/Velora/actions/workflows/ci.yml/badge.svg)](https://github.com/toibawani/Velora/actions/workflows/ci.yml)
 
 ![Atlas at 1440px](docs/images/1440-atlas-index.png)

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>VELORA</title>
+    <script>
+      // GitHub Pages serves this file for any unknown path under /Velora/.
+      // The app keeps its route in memory, not in the URL, so a hard refresh
+      // on a deep link would otherwise 404. Bounce back to the root; the
+      // stored profile and lesson state in localStorage picks up from there.
+      (function () {
+        sessionStorage.setItem('velora_redirect', location.pathname + location.search);
+        location.replace('/Velora/');
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
