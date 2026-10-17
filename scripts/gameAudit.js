@@ -19,6 +19,8 @@ const http = require('http');
 
 const puppeteer = require('puppeteer-core');
 
+const { stripBase } = require('./auditServe');
+
 const PORT = Number(process.env.PORT || 4175);
 
 const MIME = {
@@ -36,7 +38,7 @@ const MIME = {
 const serve = (root) =>
   new Promise((resolve) => {
     const server = http.createServer((req, res) => {
-      const urlPath = decodeURIComponent(req.url.split('?')[0]);
+      const urlPath = stripBase(req.url);
       let filePath = path.join(root, urlPath);
       if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
         filePath = path.join(root, 'index.html');

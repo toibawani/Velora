@@ -21,6 +21,7 @@ const ROOT = path.join(__dirname, '..', 'build');
 // them was in CI, and why nobody could tell the difference between an audit
 // that found nothing and one that never ran.
 const { findChrome } = require('./chrome');
+const { stripBase } = require('./auditServe');
 const CHROME = findChrome();
 
 const MIME = {
@@ -32,7 +33,8 @@ const MIME = {
 const serve = (root) =>
   new Promise((resolve) => {
     const server = http.createServer((req, res) => {
-      const file = path.join(root, req.url === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0]));
+      const stripped = stripBase(req.url);
+      const file = path.join(root, stripped === '/' ? 'index.html' : stripped);
       fs.readFile(file, (err, data) => {
         if (err) { res.writeHead(404); res.end('nope'); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream' });

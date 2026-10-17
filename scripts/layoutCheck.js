@@ -26,6 +26,7 @@ const PORT = Number(process.env.PORT || 4173);
 // and the atlas scripts did not.
 const { requireChrome } = require('./chrome');
 const { attach, dump } = require('./auditDiagnostics');
+const { stripBase } = require('./auditServe');
 
 const MIME = {
   '.html': 'text/html',
@@ -44,13 +45,8 @@ const MIME = {
 const serve = (root) =>
   new Promise((resolve) => {
     const server = http.createServer((req, res) => {
-      // NOTE: build/index.html references /velora/static/... because
-      // package.json homepage is https://toibawani.github.io/velora, but
-      // this server serves from /. A request for /velora/static/js/main.js
-      // falls through to index.html below, so Chrome parses HTML as JS
-      // (Unexpected token '<') and renders zero buttons. The diagnostic
-      // capture in main() exists to prove this instead of assuming it.
-      const urlPath = decodeURIComponent(req.url.split('?')[0]);
+      // Shared base-path fix, see scripts/auditServe.js.
+      const urlPath = stripBase(req.url);
       let filePath = path.join(root, urlPath);
       if (!filePath.startsWith(root)) {
         res.writeHead(403).end();
