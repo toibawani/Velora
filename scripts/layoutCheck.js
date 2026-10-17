@@ -232,7 +232,7 @@ const signIn = async (page, url) => {
     for (const [k, v] of Object.entries(seed)) localStorage.setItem(k, v);
   }, SEED);
   await page.goto(url, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('button', { timeout: 20000 });
+  await page.waitForSelector('button[data-proof-the-audit-fails]', { timeout: 20000 });
 
   // Walk splash -> landing -> profile by clicking whatever the screen offers.
   const deadline = Date.now() + 20000;
