@@ -357,6 +357,49 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
             )}
           </div>
 
+        <section className="uh-topic-preview" aria-live="polite" aria-label="Selected curriculum topic">
+          <div>
+            <p className="uh-eyebrow">Selected thread</p>
+            <p className="uh-breadcrumbs">{selection.field.label} <span>/</span> {selection.discipline.name} <span>/</span> {selection.module.name}</p>
+            <h2>{selection.topic}</h2>
+            {/*
+              The description used to be one fixed sentence for all 573 topics:
+              "This topic sits inside a clear sequence...". It read as though
+              the app knew something about the topic and it was filler. Now each
+              branch states what is actually true, including when the honest
+              answer is that nothing is written here yet.
+            */}
+            {resolution.kind === 'lesson' && (
+              <p>A written lesson, {resolution.title === selection.topic ? 'ready to read' : `titled ${resolution.title}`}. Opening it goes straight to the lesson rather than to a list it is somewhere inside.</p>
+            )}
+            {resolution.kind === 'deep-read' && (
+              <p>Deep multi-level material, not a single lesson. {resolution.title} runs as a sequence of levels you can read in order or dip into.</p>
+            )}
+            {resolution.kind === 'unwritten' && (
+              <p><strong>Not written yet.</strong> This topic is a real part of {selection.module.name}, and it is listed so the shape of the field is visible, but there is no lesson behind it. It is marked rather than filled with a placeholder.</p>
+            )}
+            {resolution.kind === 'unmapped-field' && (
+              <p><strong>Not written yet.</strong> {selection.field.label} has no curriculum behind it in this build. The topics are listed; the lessons are not written.</p>
+            )}
+          </div>
+          {/*
+            Coverage, so the atlas states its own honesty instead of implying
+            that every topic is one click from content. This is the number the
+            old layout had no way of showing.
+          */}
+          <p className="uh-coverage">
+            {activeField.label}: <strong>{coverage.written}</strong> of {coverage.written + coverage.unwritten + coverage.unmapped} topics written
+          </p>
+          <button
+            type="button"
+            className="uh-primary bg-[--text-secondary] hover:bg-[--text-secondary] text-[--bg-primary] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[--text-secondary]/20 transition-all"
+            onClick={openLearningPath}
+          >
+            {outcomeLabel} <ArrowRight size={17} />
+          </button>
+        </section>
+
+
           {/*
             The subject rail and the discipline panel, replaced by an index.
 
@@ -432,48 +475,6 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
           </div>
         </section>
 
-
-        <section className="uh-topic-preview" aria-live="polite" aria-label="Selected curriculum topic">
-          <div>
-            <p className="uh-eyebrow">Selected thread</p>
-            <p className="uh-breadcrumbs">{selection.field.label} <span>/</span> {selection.discipline.name} <span>/</span> {selection.module.name}</p>
-            <h2>{selection.topic}</h2>
-            {/*
-              The description used to be one fixed sentence for all 573 topics:
-              "This topic sits inside a clear sequence...". It read as though
-              the app knew something about the topic and it was filler. Now each
-              branch states what is actually true, including when the honest
-              answer is that nothing is written here yet.
-            */}
-            {resolution.kind === 'lesson' && (
-              <p>A written lesson, {resolution.title === selection.topic ? 'ready to read' : `titled ${resolution.title}`}. Opening it goes straight to the lesson rather than to a list it is somewhere inside.</p>
-            )}
-            {resolution.kind === 'deep-read' && (
-              <p>Deep multi-level material, not a single lesson. {resolution.title} runs as a sequence of levels you can read in order or dip into.</p>
-            )}
-            {resolution.kind === 'unwritten' && (
-              <p><strong>Not written yet.</strong> This topic is a real part of {selection.module.name}, and it is listed so the shape of the field is visible, but there is no lesson behind it. It is marked rather than filled with a placeholder.</p>
-            )}
-            {resolution.kind === 'unmapped-field' && (
-              <p><strong>Not written yet.</strong> {selection.field.label} has no curriculum behind it in this build. The topics are listed; the lessons are not written.</p>
-            )}
-          </div>
-          {/*
-            Coverage, so the atlas states its own honesty instead of implying
-            that every topic is one click from content. This is the number the
-            old layout had no way of showing.
-          */}
-          <p className="uh-coverage">
-            {activeField.label}: <strong>{coverage.written}</strong> of {coverage.written + coverage.unwritten + coverage.unmapped} topics written
-          </p>
-          <button
-            type="button"
-            className="uh-primary bg-[--text-secondary] hover:bg-[--text-secondary] text-[--bg-primary] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[--text-secondary]/20 transition-all"
-            onClick={openLearningPath}
-          >
-            {outcomeLabel} <ArrowRight size={17} />
-          </button>
-        </section>
 
         <section className="uh-method-section" aria-labelledby="method-title">
           <div>

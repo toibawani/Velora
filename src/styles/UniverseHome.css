@@ -356,7 +356,10 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--space-4) var(--space-8);
   align-items: center;
-  margin-top: var(--space-6);
+  /* It sits above the index now, not after it. At the old position the panel
+     was 3,400px below the topic a reader had just tapped, so a tap looked
+     like nothing happened. */
+  margin: var(--space-6) 0;
   padding: var(--space-6) var(--space-6);
   background: var(--inverse-surface);
   color: var(--inverse-text);
@@ -443,9 +446,16 @@
 @media (max-width: 768px) {
   .uh-header { min-height: 68px; padding: 0 var(--space-4); grid-template-columns: 1fr auto; }
   .uh-nav-links { display: none !important; }
+  /* Three theme segments plus the logout button left about 180px for a
+     42px mark and two lines of wordmark, so the brand wrapped under the
+     controls at 375px. The theme also lives in Settings, which is where the
+     phone navigation already sends people. */
+  .uh-header-actions .theme-toggle { display: none; }
   .uh-main { width: min(100% - 1.4rem, 1180px); padding-top: var(--space-8); }
   .uh-hero { padding-bottom: var(--space-10); }
-  .uh-hero h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); }
+  /* 14vw at 375px gave a 52px headline that filled most of the first
+     screen before a reader saw the index. */
+  .uh-hero h1 { font-size: clamp(2.4rem, 11vw, 3.6rem); }
   .uh-section-heading-row { grid-template-columns: 1fr; gap: var(--space-3); }
   .uh-atlas-grid { display: block; min-height: 0; border-radius: var(--radius-2xl); }
   /* The thumb-index goes horizontal on a phone. The rail-specific rules that
