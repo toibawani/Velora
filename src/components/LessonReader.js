@@ -6,6 +6,7 @@ import ConceptMap from './ConceptMap';
 import SmartReviewPlanner from './SmartReviewPlanner';
 import RabbitHoleSidebar from './RabbitHoleSidebar';
 import { trackEvent } from '../utils/analytics';
+import { trackLessonCompleted } from '../utils/siteAnalytics';
 import { getReviewItems, addReviewItem, removeReviewItem } from '../utils/reviewPlanner';
 import { recordStudySession } from '../utils/analyticsStorage';
 import { parseInlineTerms } from './GlossaryTerm';
@@ -27,10 +28,27 @@ LessonReader.propTypes = {
 function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue }) {
   const [saved, setSaved] = useState(() => topic ? getReviewItems().some((item) => item.id === `${subject}:${topic.id}`) : false);
   const [rabbitHoleOpen, setRabbitHoleOpen] = useState(false);
+  const [completed, setCompleted] = useState(false);
   const openedAt = useRef(Date.now());
+  const mainRef = useRef(null);
   useEffect(() => {
     openedAt.current = Date.now();
+    setCompleted(false);
   }, [subject, topic?.id]);
+  useEffect(() => {
+    const main = mainRef.current;
+    if (!main) return;
+    const onScroll = () => {
+      if (completed) return;
+      const { scrollTop, scrollHeight, clientHeight } = main;
+      const scrolledToEnd = scrollHeight - scrollTop - clientHeight < 120;
+      if (!scrolledToEnd) return;
+      setCompleted(true);
+      trackLessonCompleted(topic.title, subject);
+    };
+    main.addEventListener('scroll', onScroll, { passive: true });
+    return () => main.removeEventListener('scroll', onScroll);
+  }, [subject, topic?.title, completed]);
   useEffect(() => () => {
     const minutes = Math.max(1, Math.round((Date.now() - openedAt.current) / 60000));
     if (topic?.title) recordStudySession(topic.title, minutes, subject);
@@ -62,7 +80,7 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue }) {
           <button className={`lesson-save-btn ${saved ? 'saved' : ''}`} onClick={toggleSaved}>{saved ? 'Saved' : 'Save for review'}</button>
         </div>
       </header>
-      <main className="lesson-reader-main">
+      <main className="lesson-reader-main" ref={mainRef}>
         <div className="lesson-kicker">{topic.moduleTitle} · {topic.minutes} min read</div>
         <h1>{topic.title}</h1>
         <p className="lesson-kicker-line">{topic.kicker}</p>

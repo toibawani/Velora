@@ -9,6 +9,7 @@ import {
   getOnboardingPreferences,
   setOnboardingPreference,
 } from '../utils/onboardingPreferences';
+import { isOptedIn, setOptedIn } from '../utils/siteAnalytics';
 import '../styles/Settings.css';
 
 /**
@@ -61,6 +62,19 @@ function Settings({ user, setScreen, onForgetProfile }) {
   const [preferences, setPreferences] = useState(() => getOnboardingPreferences());
   const [notice, setNotice] = useState(null);
   const storage = describeStorage();
+  const [analyticsOn, setAnalyticsOn] = useState(isOptedIn());
+
+  const saveAnalytics = (enabled) => {
+    const ok = setOptedIn(enabled);
+    if (!ok) {
+      setNotice(
+        'That change was not saved. Private browsing or a full storage quota can block it, so the setting stays as it was for this visit.',
+      );
+      return;
+    }
+    setAnalyticsOn(enabled);
+    setNotice(null);
+  };
 
   /**
    * Write one field and reflect the result, whichever way it went.
@@ -218,6 +232,35 @@ function Settings({ user, setScreen, onForgetProfile }) {
             have played. None of it is transmitted anywhere, and clearing your browser data deletes
             all of it. There is no second copy, because there is nowhere for one to be.
           </p>
+        </section>
+
+        <section className="st-section" aria-labelledby="st-analytics">
+          <h2 id="st-analytics">External analytics</h2>
+          <p className="st-section-note">
+            <Monitor size={14} aria-hidden="true" /> VELORA can send anonymous usage numbers to an
+            analytics service (page views, which Atlas topics open, whether a lesson is finished,
+            game completions and how often people come back within seven days). It cannot tell who
+            you are: there are no cookies, no fingerprinting, no email, no name and no identifier,
+            and nothing is sent at all unless you switch it on. It is off by default. The full
+            disclosure, including what the numbers cannot tell us, is on the{' '}
+            <button type="button" className="st-link" onClick={() => setScreen('privacy')}>
+              Privacy page
+            </button>
+            .
+          </p>
+          <div className="st-choice-row" role="group" aria-label="External analytics">
+            <button
+              type="button"
+              className={`st-choice ${analyticsOn ? 'selected' : ''}`}
+              onClick={() => saveAnalytics(!analyticsOn)}
+              aria-pressed={analyticsOn}
+            >
+              {analyticsOn && <Check size={14} aria-hidden="true" />}
+              {analyticsOn
+                ? 'Sending anonymous usage data (on)'
+                : 'Sending anonymous usage data (off)'}
+            </button>
+          </div>
         </section>
       </div>
     </div>

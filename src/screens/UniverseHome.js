@@ -10,6 +10,7 @@ import { resolveAtlasTopic, fieldCoverage } from '../data/atlasResolution';
 import AtlasIndex from '../components/AtlasIndex';
 import { PRIMARY_SCREENS } from '../navigation';
 import { trackEvent } from '../utils/analytics';
+import { trackTopicOpened } from '../utils/siteAnalytics';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
 
@@ -146,6 +147,10 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
       topic: selectedTopic,
       outcome: resolution.kind,
     });
+
+    // The same opening, sent as aggregate-only usage data — but only when the
+    // visitor has opted in to external analytics in Settings.
+    trackTopicOpened(selectedTopic, resolution.subject || activeField.id);
 
     // Real lesson content. Hand the subject and topic id to the screen that can
     // actually resolve and render it.

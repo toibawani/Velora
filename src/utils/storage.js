@@ -39,6 +39,12 @@ export const KEYS = {
   PREFERENCE_PREFIX: 'velora_pref_',
   // Explanation boards are keyed per term, e.g. velora_explanations_momentum.
   EXPLANATION_BOARD_PREFIX: 'velora_explanations_',
+  // Analytics opt-in. VELORA's promise is that nothing leaves your browser, so
+  // external (cross-device, aggregate) analytics is opt-in and defaults off.
+  ANALYTICS_OPTIN: 'velora_analytics_optin',
+  // Return-visit counter for the 7-day aggregate measure. Stored as
+  // { firstSeen, lastSeen, returnCount }; never sent as an identity.
+  RETURN_VISITS: 'velora_return_visits',
 };
 
 export const EXPLANATION_BOARD = (term) => `${KEYS.EXPLANATION_BOARD_PREFIX}${term}`;

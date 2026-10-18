@@ -180,6 +180,21 @@
   background: var(--bg-elevated);
 }
 
+.st-link {
+  background: transparent;
+  border: none;
+  color: var(--accent-primary, var(--color-accent));
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.st-link:hover {
+  opacity: 0.8;
+}
+
 @media (max-width: 768px) {
   .st-header {
     flex-direction: column;

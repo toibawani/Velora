@@ -35,6 +35,7 @@ import {
   Settings as SettingsIcon,
   ListTodo,
   MessageSquareQuote,
+  EyeOff,
 } from 'lucide-react';
 
 export const SCREENS = [
@@ -124,6 +125,14 @@ export const SCREENS = [
     drawerLabel: 'Intellectual Dialogues',
     description: 'Direct conversations with historical thinkers: Einstein, Socrates, Rumi, Curie, Chanakya, Ibn Rushd',
     icon: MessageSquareQuote,
+    primary: false,
+  },
+  {
+    id: 'privacy',
+    label: 'Privacy',
+    drawerLabel: 'Privacy',
+    description: 'What leaves this browser, and what never does',
+    icon: EyeOff,
     primary: false,
   },
 ];

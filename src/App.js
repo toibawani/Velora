@@ -15,6 +15,7 @@ import OnboardingTour from './components/OnboardingTour';
 import ErrorBoundary from './components/ErrorBoundary';
 import Toast from './components/Toast';
 import { KEYS, readValue } from './utils/storage';
+import { trackPageView, recordReturnVisit } from './utils/siteAnalytics';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -29,6 +30,7 @@ const RoadmapScreen = lazy(() => import('./screens/Roadmap'));
 const SettingsScreen = lazy(() => import('./screens/Settings'));
 const NextUpScreen = lazy(() => import('./screens/NextUp'));
 const ConversationBotsScreen = lazy(() => import('./screens/ConversationBots'));
+const PrivacyScreen = lazy(() => import('./screens/Privacy'));
 
 /**
  * Minimalist, elegant loading indicator for lazy-loaded screen bundles
@@ -55,6 +57,7 @@ const ROUTE_LABELS = {
   settings: 'Settings',
   tasks: 'Next up',
   dialogues: 'Intellectual Dialogues',
+  privacy: 'Privacy',
   landing: 'VELORA',
   profile: 'Set up this device',
 };
@@ -99,6 +102,19 @@ function App() {
     // tabIndex -1 so the container can take focus without becoming a tab stop.
     main.focus({ preventScroll: true });
   }, [screen]);
+
+  // Record a page view whenever the route changes. Splash, landing and profile
+  // are gates, not content, so they are not counted as views.
+  useEffect(() => {
+    if (screen === 'splash' || screen === 'landing' || screen === 'profile') return;
+    trackPageView(`/${screen}`, ROUTE_LABELS[screen] || 'VELORA');
+  }, [screen]);
+
+  // Record this device's visit once on load, before any profile exists. It is
+  // the baseline for the 7-day return measure: no identity is ever sent.
+  useEffect(() => {
+    recordReturnVisit();
+  }, []);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [learnView, setLearnView] = useState('overview');
@@ -265,6 +281,10 @@ function App() {
             initialFigureId={dialogueFigure}
             showToast={showToast}
           />
+        )}
+
+        {screen === 'privacy' && user && (
+          <PrivacyScreen setScreen={setScreen} />
         )}
 
         {user && screen !== 'splash' && screen !== 'profile' && screen !== 'landing' && (
