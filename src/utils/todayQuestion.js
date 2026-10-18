@@ -66,7 +66,7 @@ const QUESTIONS = [
     termId: 'natural-selection',
     question: "What is natural selection?",
     answer: 'The process by which traits that improve survival and reproduction become more common in a population over generations.',
-    hint: "It's not random — it's shaped by what survives.",
+    hint: "Shaped by what survives, not by chance.",
   },
   {
     id: 'supply-demand',
@@ -82,7 +82,7 @@ const QUESTIONS = [
     termId: 'cognitive-bias',
     question: "What is a cognitive bias?",
     answer: 'A systematic pattern of deviation from rationality in judgment — the mind taking shortcuts that lead to predictable errors.',
-    hint: "It's not a one-off mistake; it's a pattern.",
+    hint: "A systematic pattern, not a one-off mistake.",
   },
 ];
 
