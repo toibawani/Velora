@@ -79,7 +79,7 @@ behind them yet.
 | Fields / disciplines | 6 / 34 |
 | Dictionary entries | 138 |
 | Black hole levels | 8 levels, 61 entries |
-| Games | 5 |
+| Game files in src/games/ | 5 |
 
 ### Not done yet
 
