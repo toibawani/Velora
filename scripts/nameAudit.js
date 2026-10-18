@@ -168,7 +168,9 @@ const main = async () => {
     process.exit(2);
   }
   const server = await serve(buildDir);
-  const url = `http://localhost:${PORT}`;
+  // Read the bound port: PORT=0 asks the OS for a free one, and building the
+  // URL from the requested value sends the audit to localhost:0.
+  const url = `http://localhost:${server.address().port}`;
   const chromePath = requireChrome();
   if (!chromePath) {
     console.error('No Chrome binary found. Set CHROME_PATH.');
@@ -184,7 +186,12 @@ const main = async () => {
     const page = await browser.newPage();
     await page.setViewport({ width, height: 900 });
     await page.goto(url, { waitUntil: 'domcontentloaded' });
-    await page.evaluate(() => localStorage.setItem('velora_onboarding_done', 'true'));
+    await page.evaluate(() => {
+      // Same reason as the layout audit: the 1440 pass leaves a saved name, and
+      // the app rightly opens on the atlas for a returning visitor.
+      localStorage.clear();
+      localStorage.setItem('velora_onboarding_done', 'true');
+    });
     await page.goto(url, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('button');
 

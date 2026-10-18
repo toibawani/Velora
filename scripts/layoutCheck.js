@@ -229,6 +229,11 @@ const clickDrawerItem = async (page, text) => {
 const signIn = async (page, url) => {
   await page.goto(url, { waitUntil: 'domcontentloaded' });
   await page.evaluate((seed) => {
+    // Start from a known state. The two width passes share one browser profile,
+    // and the 1440 pass ends with a saved name; without this clear, the 375 pass
+    // opened on the atlas (as a returning visitor should) and then waited for a
+    // name field that was never going to appear.
+    localStorage.clear();
     for (const [k, v] of Object.entries(seed)) localStorage.setItem(k, v);
   }, SEED);
   await page.goto(url, { waitUntil: 'domcontentloaded' });
@@ -289,6 +294,11 @@ const main = async () => {
       process.exit(2);
     }
     server = await serve(buildDir);
+    // The port the server actually bound, not the one that was requested.
+    // PORT=0 means "pick a free port", and the URL used to be built from the
+    // requested value, so the audit drove http://localhost:0 and died with
+    // ERR_UNSAFE_PORT before looking at a single screen.
+    url = `http://localhost:${server.address().port}`;
   } else {
     url = process.argv[urlArg + 1];
   }

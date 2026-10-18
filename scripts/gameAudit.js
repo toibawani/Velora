@@ -569,7 +569,9 @@ const main = async () => {
     process.exit(2);
   }
   const server = await serve(buildDir);
-  const url = `http://localhost:${PORT}`;
+  // Read the bound port: PORT=0 asks the OS for a free one, and building the
+  // URL from the requested value sends the audit to localhost:0.
+  const url = `http://localhost:${server.address().port}`;
   const chromePath = findChrome();
   if (!chromePath) {
     console.error('No Chrome binary found. Set CHROME_PATH.');
