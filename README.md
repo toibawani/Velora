@@ -46,7 +46,7 @@ workflow files. Run it and compare.
 | Dictionary entries | 138, every one with a source URL |
 | Black hole deep read | 8 levels, 61 entries |
 | CI jobs / checks | 4 jobs, 8 checks (7 real-Chrome audits and the contrast gate) |
-| Lighthouse, mobile | performance 99 to 100 across three runs, accessibility 100, best practices 100, SEO 100 |
+| Lighthouse, mobile | performance 99, accessibility 100, best practices 100, SEO 100 |
 | Lighthouse measured | 18 October 2026, Lighthouse 12.2.1, [docs/lighthouse.json](docs/lighthouse.json) |
 
 ```bash
