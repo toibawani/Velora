@@ -32,6 +32,7 @@ const SettingsScreen = lazy(() => import('./screens/Settings'));
 const NextUpScreen = lazy(() => import('./screens/NextUp'));
 const ConversationBotsScreen = lazy(() => import('./screens/ConversationBots'));
 const PrivacyScreen = lazy(() => import('./screens/Privacy'));
+const TermsScreen = lazy(() => import('./screens/Terms'));
 
 /**
  * Minimalist, elegant loading indicator for lazy-loaded screen bundles
@@ -59,6 +60,7 @@ const ROUTE_LABELS = {
   tasks: 'Next up',
   dialogues: 'Intellectual Dialogues',
   privacy: 'Privacy',
+  terms: 'Terms of Service',
   landing: 'VELORA',
   profile: 'Set up this device',
 };
@@ -337,8 +339,12 @@ function App() {
           />
         )}
 
-        {screen === 'privacy' && user && (
+        {screen === 'privacy' && (
           <PrivacyScreen setScreen={setScreen} />
+        )}
+
+        {screen === 'terms' && (
+          <TermsScreen setScreen={setScreen} />
         )}
 
         {user && screen !== 'splash' && screen !== 'profile' && screen !== 'landing' && (

@@ -246,6 +246,10 @@ function Settings({ user, setScreen, onForgetProfile }) {
             <button type="button" className="st-link" onClick={() => setScreen('privacy')}>
               Privacy page
             </button>
+            . The terms governing your use of VELORA are on the{' '}
+            <button type="button" className="st-link" onClick={() => setScreen('terms')}>
+              Terms of Service page
+            </button>
             .
           </p>
           <div className="st-choice-row" role="group" aria-label="External analytics">

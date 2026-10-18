@@ -186,6 +186,10 @@ function LandingPage({ setScreen }) {
         <div className="footer-inner">
           <span className="landing-logo small">VELORA</span>
           <span className="footer-tagline">Learning is exploration, not memorization.</span>
+          <div className="footer-links">
+            <button className="footer-link" onClick={() => setScreen('terms')}>Terms of Service</button>
+            <button className="footer-link" onClick={() => setScreen('privacy')}>Privacy</button>
+          </div>
         </div>
       </footer>
     </div>
