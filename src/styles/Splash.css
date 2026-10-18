@@ -179,6 +179,10 @@
 /* The "look around" route. Under the global filled-button rule this has to opt
    back out explicitly, the same way the other secondary actions do. */
 .splash .splash-browse {
+  /* The footer sits directly under this button. With no bottom margin the
+     "No account, no email" line touched the button's border at 375px, which
+     read as two elements colliding rather than as a caption. */
+  margin-bottom: var(--space-5);
   background: transparent !important;
   color: var(--text-secondary, var(--text-secondary)) !important;
   border: 1px solid var(--border-default, var(--border-default)) !important;
