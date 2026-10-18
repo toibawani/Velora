@@ -733,9 +733,68 @@
 /* 375px landing clarity: the primary CTA is the next step, so it takes the full
    width and cannot be missed; the headline stays readable on a narrow screen. */
 @media (max-width: 375px) {
-  .landing-hero { padding: 0 var(--space-4); }
+  /* This rule used to zero the vertical padding as well, which put the eyebrow
+     box directly under the sticky nav with no space at all. */
+  .landing-hero { padding: var(--space-8) var(--space-4) var(--space-10); }
   .hero-headline { font-size: clamp(1.75rem, 11vw, 2.5rem); line-height: 1.2; }
   .hero-cta-row { flex-direction: column; align-items: stretch; gap: var(--space-3); }
   .hero-primary-cta { width: 100%; justify-content: center; }
   .hero-subline { font-size: 0.95rem; line-height: 1.55; }
 }
+
+/* ==================== LOOK-AROUND INVENTORY ==================== */
+/* Added when the marketing page became an inventory. Same paper and type as
+   the rest of the page; lists only, no badges or side stripes. */
+.landing-fine-print {
+  margin: var(--space-4) 0 0;
+  max-width: 46ch;
+  color: var(--text-tertiary);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.landing-coverage-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.landing-coverage-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.landing-coverage-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.landing-coverage-count {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.landing-coverage-note {
+  margin: var(--space-5) 0 0;
+  max-width: 62ch;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.landing-missing-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  max-width: 70ch;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.landing-missing-list li { margin-bottom: var(--space-2); }

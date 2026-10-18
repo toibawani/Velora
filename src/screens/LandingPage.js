@@ -1,264 +1,209 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Globe,
-  Zap,
-  Microscope,
-  Users,
-  BarChart2,
-  Award,
-  ArrowRight,
-  Check,
-  X,
-} from 'lucide-react';
-import StackSpread from '../components/ui/StackSpread';
+import { ArrowRight, BookOpen, Globe } from 'lucide-react';
+import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
+import { fieldCoverage } from '../data/atlasResolution';
+import { CURIOUS_TERMS } from '../data/dictionary';
+import { BLACK_HOLE_LEVELS, TOTAL_ENTRIES } from '../data/blackholes';
 import '../styles/LandingPage.css';
 
 /**
- * LandingPage Screen
+ * What a visitor sees behind "Look around first".
  *
- * The marketing landing page for VELORA — first impression for new visitors.
- * Left-aligned asymmetric hero. No centered column stacks.
- * Phase 2+4: Asymmetric layout, lucide icons, intentional visual density.
+ * This screen used to be a marketing page: three testimonials from people who
+ * do not exist, a "Join 1,400+ scholars" line, a comparison table against
+ * Khan Academy, and promises of verifiable credentials and debate rooms that
+ * were never built. Every one of those was invented. A page that lies about
+ * users is worse than no page, so it is now an inventory instead: the real
+ * counts, the real gaps, and a button into the real app.
+ *
+ * The numbers are read from the same data modules the app reads, so this
+ * screen cannot drift from what the app actually contains.
  */
-LandingPage.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+LandingPage.propTypes = { setScreen: PropTypes.shape({ setScreen: PropTypes.func }) };
 
 function LandingPage({ setScreen }) {
-  const testimonials = [
-    {
-      text: 'I spent 2 hours on the Black Holes module and couldn\'t stop. I\'ve never been that absorbed in a learning app before.',
-      name: 'Priya S.',
-      role: 'Engineering Student, IIT Delhi',
-      initials: 'PS',
-    },
-    {
-      text: 'The philosophy discussions are actually making me a better critical thinker. I argue more clearly now.',
-      name: 'Javier M.',
-      role: 'Pre-law, University of Toronto',
-      initials: 'JM',
-    },
-    {
-      text: 'Finally something for people who actually want to UNDERSTAND physics, not just pass an exam.',
-      name: 'Aiko T.',
-      role: 'Self-learner & Science Writer',
-      initials: 'AT',
-    },
-  ];
-
-  const pillars = [
-    {
-      Icon: Globe,
-      title: 'Interactive Visual Cosmos',
-      desc: 'Animated physics simulations, canvas-rendered black hole accretion disks, and real-time tensor equations — not slides.',
-      featured: true,
-    },
-    {
-      Icon: Zap,
-      title: 'Flow-State Learning',
-      desc: 'Scientifically-designed sessions that eliminate distraction and create genuine states of deep absorption.',
-    },
-    {
-      Icon: Microscope,
-      title: 'Research-Grade Depth',
-      desc: 'Primary paper distillations from Hawking 1974, EHT 2019, and Einstein 1916 — accessible without a PhD.',
-    },
-    {
-      Icon: Users,
-      title: 'Anonymous Peer Discourse',
-      desc: 'Debate ideas without social pressure. Upvote the clearest explanation, not the most popular person.',
-    },
-    {
-      Icon: BarChart2,
-      title: 'On-Device Analytics',
-      desc: 'Your cognitive patterns, peak focus hours, and forgetting curves — private and local, never sold.',
-    },
-    {
-      Icon: Award,
-      title: 'Verifiable Credentials',
-      desc: 'Earn certificates with cryptographic verification IDs — shareable directly to LinkedIn.',
-    },
-  ];
-
-  const compareRows = [
-    ['Content depth', 'Survey-level overview', 'Research paper distillations'],
-    ['Learning mode', 'Passive video watching', 'Interactive simulations'],
-    ['Community', 'Comment sections', 'Anonymous Socratic debate rooms'],
-    ['Analytics', 'Completion tracking', 'Cognitive pattern analysis'],
-    ['Credentials', 'PDF certificate', 'Cryptographically verifiable'],
-    ['Engagement', 'Streaks & gamification', 'Flow-state design'],
-  ];
+  const fields = KNOWLEDGE_FIELDS.map((field) => {
+    const topics = field.disciplines.flatMap((discipline) =>
+      discipline.modules.flatMap((moduleItem) => moduleItem.topics)
+    );
+    const coverage = fieldCoverage(field.id, topics);
+    return {
+      id: field.id,
+      label: field.label,
+      total: topics.length,
+      written: coverage.written,
+      unwritten: coverage.unwritten + coverage.unmapped,
+    };
+  });
+  const written = fields.reduce((sum, field) => sum + field.written, 0);
+  const unwritten = fields.reduce((sum, field) => sum + field.unwritten, 0);
+  const emptyFields = fields.filter((field) => field.written === 0);
 
   return (
     <div className="landing-page">
-      {/* Nav Bar */}
       <nav className="landing-nav">
         <div className="landing-nav-inner">
           <span className="landing-logo">VELORA</span>
-          <div className="landing-nav-links">
-            <button className="lp-nav-link">Domains</button>
-            <button className="lp-nav-link">Community</button>
-            <button className="lp-nav-link">For Educators</button>
-          </div>
           <div className="landing-nav-cta">
-            <button className="lp-cta-btn" onClick={() => setScreen('profile')}>
-              Start Learning <ArrowRight size={14} strokeWidth={2.5} />
+            <button className="lp-cta-btn" onClick={() => setScreen('splash')}>
+              Back to the start
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section — Left-aligned asymmetric split */}
       <section className="landing-hero">
         <div className="hero-left">
           <div className="hero-eyebrow">
-            <span className="hero-badge">Eight fields, and no timer</span>
+            <span className="hero-badge">A look around, before you sign up for anything</span>
           </div>
 
           <h1 className="hero-headline">
-            Actually understand<br />
-            <em className="hero-accent">how things work,</em><br />
-            not just what to memorize.
+            Look inside
+            <br />
+            <em className="hero-accent">before you start.</em>
           </h1>
 
           <p className="hero-subline">
-            Physics simulations you can push around, a dictionary written for humans
-            instead of test-takers, and philosophy discussions where disagreement
-            is allowed. Nine subjects, at whatever pace you actually read.
+            Velora is a reference book for curious people. Every topic is listed from day one.
+            The ones with nothing written behind them say so, in the index, rather than opening
+            a half-finished page. There is no server, no account and nothing to install.
           </p>
 
           <div className="hero-cta-row">
             <button className="hero-primary-cta" onClick={() => setScreen('profile')}>
-              Begin Your Exploration
+              Set up this device <ArrowRight size={15} />
             </button>
           </div>
+          <p className="landing-fine-print">
+            Setting up asks for a display name and stores it in this browser. There is no email,
+            no password and no account behind it.
+          </p>
         </div>
-
       </section>
 
-      {/* The plate field. Below the fold it tidies itself as you scroll. */}
-      <section className="hero-plates-section" aria-labelledby="plate-field-title">
-        <div className="hero-plates-copy">
-          <p className="section-label">WHAT YOU GET</p>
-          <h2 id="plate-field-title" className="hero-plates-heading">
-            A dictionary, physics simulations you can nudge, and philosophy
-            discussions where you can actually disagree.
-          </h2>
-        </div>
-        <StackSpread />
-      </section>
-
-      {/* What Makes It Different — Asymmetric bento */}
-      <section className="landing-section pillars-section">
+      <section className="landing-section pillars-section" aria-labelledby="inventory-title">
         <div className="section-inner">
           <div className="section-header-asymm">
-            <span className="section-label">WHY VELORA</span>
-            <h2 className="section-heading">Not just another education app.</h2>
+            <span className="section-label">THE WHOLE INVENTORY</span>
+            <h2 id="inventory-title" className="section-heading">
+              Here is exactly what is written, and what is not.
+            </h2>
           </div>
 
           <div className="pillars-bento">
-            {pillars.map((p, i) => (
-              <div
-                key={p.title}
-                className={`pillar-card${p.featured ? ' pillar-card--featured' : ''}`}
-              >
-                <span className="pillar-icon-wrap">
-                  <p.Icon size={18} strokeWidth={1.8} />
-                </span>
-                <h3 className="pillar-title">{p.title}</h3>
-                <p className="pillar-desc">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Block */}
-      <section className="landing-section compare-section">
-        <div className="section-inner">
-          <div className="section-header-asymm">
-            <span className="section-label">VELORA VS. TRADITIONAL EDTECH</span>
-            <h2 className="section-heading">The difference is in the depth.</h2>
-          </div>
-
-          <div className="compare-table">
-            <div className="compare-header">
-              <div className="compare-col-label"></div>
-              <div className="compare-col-label other">Khan Academy / Coursera</div>
-              <div className="compare-col-label velora">VELORA</div>
+            <div className="pillar-card pillar-card--featured">
+              <span className="pillar-icon-wrap">
+                <Globe size={18} strokeWidth={1.8} aria-hidden="true" />
+              </span>
+              <h3 className="pillar-title">
+                {written} of {KNOWLEDGE_STATS.topics} atlas topics have something behind them
+              </h3>
+              <p className="pillar-desc">
+                {KNOWLEDGE_STATS.fields} fields, {KNOWLEDGE_STATS.disciplines} disciplines.
+                The other {unwritten} topics are listed and marked "not written yet". They are
+                real parts of their fields; the lessons simply do not exist.
+              </p>
             </div>
-            {compareRows.map(([feature, them, us], i) => (
-              <div key={i} className="compare-row">
-                <div className="compare-feature">{feature}</div>
-                <div className="compare-them">
-                  <X size={13} className="compare-icon compare-icon--no" />
-                  {them}
-                </div>
-                <div className="compare-us">
-                  <Check size={13} className="compare-icon compare-icon--yes" />
-                  {us}
-                </div>
-              </div>
-            ))}
+
+            <div className="pillar-card">
+              <span className="pillar-icon-wrap">
+                <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
+              </span>
+              <h3 className="pillar-title">{CURIOUS_TERMS.length} dictionary entries</h3>
+              <p className="pillar-desc">
+                Nine subjects, plain-language explanations, and a source URL on every entry.
+                Searchable without a connection to anything.
+              </p>
+            </div>
+
+            <div className="pillar-card">
+              <span className="pillar-icon-wrap">
+                <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
+              </span>
+              <h3 className="pillar-title">
+                {BLACK_HOLE_LEVELS.length} black hole levels, {TOTAL_ENTRIES} entries
+              </h3>
+              <p className="pillar-desc">
+                A deep read with a label on each claim: well-established, theoretical, or
+                contested. The labels are the point. Not everything in physics is settled and
+                the page says which is which.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials — Staggered masonry-feel */}
-      <section className="landing-section testimonials-section">
+      <section className="landing-section" aria-labelledby="coverage-title">
         <div className="section-inner">
           <div className="section-header-asymm">
-            <span className="section-label">SCHOLAR TESTIMONIALS</span>
-            <h2 className="section-heading">From the minds who've explored it.</h2>
+            <span className="section-label">BY FIELD</span>
+            <h2 id="coverage-title" className="section-heading">
+              Three fields are written. Three are an outline.
+            </h2>
           </div>
 
-          <div className="testimonials-grid">
-            {testimonials.map((t, i) => (
-              <div key={i} className={`testimonial-card testimonial-card--${i}`}>
-                <p className="testimonial-quote">"{t.text}"</p>
-                <div className="testimonial-author-row">
-                  <span className="testimonial-avatar">{t.initials}</span>
-                  <div>
-                    <div className="testimonial-name">{t.name}</div>
-                    <div className="testimonial-role">{t.role}</div>
-                  </div>
-                </div>
-              </div>
+          <ul className="landing-coverage-list">
+            {fields.map((field) => (
+              <li key={field.id}>
+                <span className="landing-coverage-name">{field.label}</span>
+                <span className="landing-coverage-count">
+                  {field.written} of {field.total} written
+                </span>
+              </li>
             ))}
-          </div>
+          </ul>
+
+          <p className="landing-coverage-note">
+            {emptyFields.length > 0
+              ? `${emptyFields.map((field) => field.label).join(', ')} are listed in full and have no content behind them yet. That is the current state, not a loading screen.`
+              : 'Every field has something written behind it.'}
+          </p>
         </div>
       </section>
 
-      {/* Final CTA — Left-anchored, not center-stacked */}
+      <section className="landing-section" aria-labelledby="missing-title">
+        <div className="section-inner">
+          <div className="section-header-asymm">
+            <span className="section-label">WHAT IS NOT HERE</span>
+            <h2 id="missing-title" className="section-heading">
+              The missing pieces are part of the design.
+            </h2>
+          </div>
+
+          <ul className="landing-missing-list">
+            <li>No accounts, no email, no password. A display name is stored in this browser.</li>
+            <li>No backend. Progress lives in localStorage and is lost if you clear site data.</li>
+            <li>No comments, likes or rankings. There are no other users to show you.</li>
+            <li>No certificates and no credentials. Nothing here can be verified by anyone else.</li>
+            <li>No lessons in Political Science, Geography or Literature yet. The topics are listed so the gap is visible.</li>
+          </ul>
+        </div>
+      </section>
+
       <section className="landing-final-cta">
         <div className="final-cta-inner">
           <div className="final-cta-text">
-            <h2 className="final-cta-heading">Your intellectual cosmos awaits.</h2>
+            <h2 className="final-cta-heading">Start with a topic, not a tour.</h2>
             <p className="final-cta-sub">
-              Join 1,400+ scholars exploring physics, philosophy, and history
-              the way it was meant to be understood.
+              The atlas opens on a written lesson, and the index tells you which topics have
+              one. Reading it takes a name and nothing else.
             </p>
           </div>
           <div className="final-cta-action">
-            <button className="hero-primary-cta large" onClick={() => setScreen('register')}>
-              Create Free Account <ArrowRight size={15} />
+            <button className="hero-primary-cta large" onClick={() => setScreen('profile')}>
+              Set up this device <ArrowRight size={15} />
             </button>
-            <p className="final-cta-note">No credit card required. Free forever for core content.</p>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="landing-footer">
         <div className="footer-inner">
           <span className="landing-logo small">VELORA</span>
           <span className="footer-tagline">Learning is exploration, not memorization.</span>
-          <div className="footer-links">
-            <button className="footer-link">Privacy</button>
-            <button className="footer-link">Terms</button>
-            <button className="footer-link">Educators</button>
-            <button className="footer-link">Contact</button>
-          </div>
         </div>
       </footer>
     </div>
