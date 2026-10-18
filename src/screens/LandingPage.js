@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ArrowRight, BookOpen, Globe } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
 import { fieldCoverage } from '../data/atlasResolution';
 import { CURIOUS_TERMS } from '../data/dictionary';
@@ -84,7 +84,7 @@ function LandingPage({ setScreen }) {
         </div>
       </section>
 
-      <section className="landing-section pillars-section" aria-labelledby="inventory-title">
+      <section className="landing-section inventory-section" aria-labelledby="inventory-title">
         <div className="section-inner">
           <div className="section-header-asymm">
             <span className="section-label">THE WHOLE INVENTORY</span>
@@ -93,46 +93,28 @@ function LandingPage({ setScreen }) {
             </h2>
           </div>
 
-          <div className="pillars-bento">
-            <div className="pillar-card pillar-card--featured">
-              <span className="pillar-icon-wrap">
-                <Globe size={18} strokeWidth={1.8} aria-hidden="true" />
-              </span>
-              <h3 className="pillar-title">
-                {written} of {KNOWLEDGE_STATS.topics} atlas topics have something behind them
-              </h3>
-              <p className="pillar-desc">
-                {KNOWLEDGE_STATS.fields} fields, {KNOWLEDGE_STATS.disciplines} disciplines.
-                The other {unwritten} topics are listed and marked "not written yet". They are
-                real parts of their fields; the lessons simply do not exist.
-              </p>
+          <div className="inventory-list">
+            <div className="inventory-item">
+              <span className="inventory-label">Atlas topics</span>
+              <span className="inventory-value">{written} of {KNOWLEDGE_STATS.topics} written</span>
             </div>
-
-            <div className="pillar-card">
-              <span className="pillar-icon-wrap">
-                <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
-              </span>
-              <h3 className="pillar-title">{CURIOUS_TERMS.length} dictionary entries</h3>
-              <p className="pillar-desc">
-                Nine subjects, plain-language explanations, and a source URL on every entry.
-                Searchable without a connection to anything.
-              </p>
+            <div className="inventory-item">
+              <span className="inventory-label">Dictionary entries</span>
+              <span className="inventory-value">{CURIOUS_TERMS.length}</span>
             </div>
-
-            <div className="pillar-card">
-              <span className="pillar-icon-wrap">
-                <BookOpen size={18} strokeWidth={1.8} aria-hidden="true" />
-              </span>
-              <h3 className="pillar-title">
-                {BLACK_HOLE_LEVELS.length} black hole levels, {TOTAL_ENTRIES} entries
-              </h3>
-              <p className="pillar-desc">
-                A deep read with a label on each claim: well-established, theoretical, or
-                contested. The labels are the point. Not everything in physics is settled and
-                the page says which is which.
-              </p>
+            <div className="inventory-item">
+              <span className="inventory-label">Black hole levels</span>
+              <span className="inventory-value">{BLACK_HOLE_LEVELS.length} levels, {TOTAL_ENTRIES} entries</span>
+            </div>
+            <div className="inventory-item">
+              <span className="inventory-label">Fields with content</span>
+              <span className="inventory-value">{fields.filter(f => f.written > 0).length} of {KNOWLEDGE_STATS.fields}</span>
             </div>
           </div>
+
+          <p className="inventory-note">
+            {unwritten} topics are listed and marked "not written yet". They are real parts of their fields; the lessons simply do not exist.
+          </p>
         </div>
       </section>
 
