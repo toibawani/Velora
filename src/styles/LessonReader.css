@@ -3,6 +3,9 @@
 .lesson-reader-header .learn-back-btn, .lesson-save-btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 48px; padding: var(--space-2) var(--space-4); color: var(--text-primary); background: transparent; border: 1px solid var(--border-default); border-radius: var(--radius-sm); }
 .lesson-save-btn { color: var(--accent-primary); }
 .lesson-save-btn.saved { background: var(--bg-tertiary); }
+.lesson-share-btn { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 48px; padding: var(--space-2) var(--space-4); color: var(--accent-primary); background: transparent; border: 1px solid var(--border-default); border-radius: var(--radius-sm); font: inherit; font-size: 0.9rem; cursor: pointer; }
+.lesson-share-btn:hover { border-color: var(--accent-primary); }
+.lesson-share-btn.copied { background: var(--bg-tertiary); border-color: var(--accent-primary); }
 .lesson-reader-main { width: min(100% - 2rem, 820px); margin: 0 auto; padding: var(--space-10) 0 var(--space-16); }
 .lesson-kicker, .lesson-kicker-line { color: var(--accent-primary); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
 .lesson-kicker { margin-bottom: var(--space-3); }

@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock, Sparkles, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock, Sparkles, Zap, Share2, Check } from 'lucide-react';
 import PeerExplanations from './PeerExplanations';
 import ConceptMap from './ConceptMap';
 import SmartReviewPlanner from './SmartReviewPlanner';
 import RabbitHoleSidebar from './RabbitHoleSidebar';
 import { trackEvent } from '../utils/analytics';
 import { trackLessonCompleted } from '../utils/siteAnalytics';
+import { copyText, COPY_OK } from '../utils/clipboard';
+import { buildLessonShareUrl } from '../utils/shareLinks';
 import { getReviewItems, addReviewItem, removeReviewItem } from '../utils/reviewPlanner';
 import { recordStudySession } from '../utils/analyticsStorage';
 import { parseInlineTerms } from './GlossaryTerm';
@@ -30,8 +32,11 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
   const [saved, setSaved] = useState(() => topic ? getReviewItems().some((item) => item.id === `${subject}:${topic.id}`) : false);
   const [rabbitHoleOpen, setRabbitHoleOpen] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const openedAt = useRef(Date.now());
   const mainRef = useRef(null);
+  const copyResetTimer = useRef(null);
+  useEffect(() => () => clearTimeout(copyResetTimer.current), []);
   useEffect(() => {
     openedAt.current = Date.now();
     setCompleted(false);
@@ -62,6 +67,24 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
     ? { id: 'relativity', name: 'Relativity Lab', tab: 'classic' }
     : null;
 
+  // Copy a clean, shareable link to this lesson. It resolves to the lesson for
+  // anyone who has already set VELORA up on this device.
+  const shareLesson = async () => {
+    const url = buildLessonShareUrl(subject, topic.id);
+    const result = await copyText(url);
+    if (result === COPY_OK) {
+      setCopiedLink(true);
+      clearTimeout(copyResetTimer.current);
+      copyResetTimer.current = setTimeout(() => setCopiedLink(false), 2500);
+      if (showToast) showToast('Link to this lesson copied.', 'success');
+    } else if (showToast) {
+      showToast(
+        'The browser would not let this page use the clipboard. Copy the address bar instead.',
+        'info',
+      );
+    }
+  };
+
   const toggleSaved = () => {
     const nextSaved = !saved;
     if (nextSaved) addReviewItem(topic, subject);
@@ -85,6 +108,15 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
             <Sparkles size={14} aria-hidden="true" /> Rabbit Hole
           </button>
           <button className={`lesson-save-btn ${saved ? 'saved' : ''}`} onClick={toggleSaved}>{saved ? 'Saved' : 'Save for review'}</button>
+          <button
+            type="button"
+            className={`lesson-share-btn ${copiedLink ? 'copied' : ''}`}
+            onClick={shareLesson}
+            aria-label="Copy a link to this lesson"
+          >
+            {copiedLink ? <Check size={14} aria-hidden="true" /> : <Share2 size={14} aria-hidden="true" />}
+            {copiedLink ? 'Link copied' : 'Share'}
+          </button>
         </div>
       </header>
       <main className="lesson-reader-main" ref={mainRef}>

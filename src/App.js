@@ -16,6 +16,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Toast from './components/Toast';
 import { KEYS, readValue } from './utils/storage';
 import { trackPageView, recordReturnVisit } from './utils/siteAnalytics';
+import { currentShareDestination } from './utils/shareLinks';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -115,6 +116,15 @@ function App() {
   useEffect(() => {
     recordReturnVisit();
   }, []);
+
+  // A shared link opens its target once a profile exists on this device. A
+  // brand-new visitor still passes through setup first, which the link cannot
+  // bypass; for them the hash simply waits until they are inside the app.
+  useEffect(() => {
+    if (!user) return;
+    applyShareDestination();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [learnView, setLearnView] = useState('overview');
@@ -173,6 +183,29 @@ function App() {
   };
 
   const clearGameRequest = () => setGameRequest(null);
+
+  // Open whatever a shared link points at, if anything. A link cannot bypass
+  // first-run setup (the app is account-free and on-device), but once a profile
+  // exists on this device the shared lesson or term opens straight away. The
+  // hash is cleared after reading so a refresh does not re-navigate.
+  const applyShareDestination = () => {
+    const dest = currentShareDestination();
+    if (!dest) return false;
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    } else if (typeof window.location !== 'undefined') {
+      window.location.hash = '';
+    }
+    if (dest.kind === 'lesson') {
+      openLesson(dest.subject, dest.topicId);
+      return true;
+    }
+    if (dest.kind === 'term') {
+      setScreen('dictionary');
+      return true;
+    }
+    return false;
+  };
 
   useKeyboardShortcuts({
     'cmd+k': () => setCommandPaletteOpen(true),
