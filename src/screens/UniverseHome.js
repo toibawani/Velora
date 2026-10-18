@@ -11,6 +11,8 @@ import AtlasIndex from '../components/AtlasIndex';
 import { PRIMARY_SCREENS } from '../navigation';
 import { trackEvent } from '../utils/analytics';
 import { trackTopicOpened } from '../utils/siteAnalytics';
+import { getTodayQuestion, isTodayQuestionAnswered, markTodayQuestionAnswered } from '../utils/todayQuestion';
+import { getLastLesson, saveLastLesson } from '../utils/resumePath';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
 
@@ -35,6 +37,9 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
   const [activeModuleName, setActiveModuleName] = useState(initialModule.name);
   const [selectedTopic, setSelectedTopic] = useState(initialModule.topics[0]);
   const [query, setQuery] = useState('');
+  const todayQuestion = getTodayQuestion();
+  const [answerRevealed, setAnswerRevealed] = useState(isTodayQuestionAnswered());
+  const lastLesson = getLastLesson();
 
   const activeField = KNOWLEDGE_FIELDS.find((field) => field.id === activeFieldId) || initialField;
   const activeDiscipline = activeField.disciplines.find((discipline) => discipline.id === activeDisciplineId) || activeField.disciplines[0];
@@ -156,6 +161,8 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
     // actually resolve and render it.
     if (resolution.kind === 'lesson') {
       setSelectedSubject(resolution.subject);
+      // Remember it so the atlas can offer "pick up where you left off".
+      saveLastLesson(resolution.subject, resolution.topicId, resolution.title);
       onOpenLesson?.(resolution.subject, resolution.topicId);
       return;
     }
@@ -253,6 +260,64 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
             <p>Field → discipline → subfield → topic</p>
           </aside>
         </section>
+
+        {/* Daily return hook: one question, the same for everyone today. */}
+        {todayQuestion && (
+          <section className="uh-card-section" aria-labelledby="today-question-heading">
+            <div className="uh-card-row uh-card-row--return">
+              <article className="uh-card uh-card--today" aria-labelledby="today-question-heading">
+                <div>
+                  <p className="uh-card-eyebrow">Today's question</p>
+                  <h2 id="today-question-heading">{todayQuestion.question}</h2>
+                  {answerRevealed ? (
+                    <>
+                      <p className="uh-card-answer">{todayQuestion.answer}</p>
+                      <p className="uh-card-hint">Hint: {todayQuestion.hint}</p>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      className="uh-card-reveal"
+                      onClick={() => {
+                        setAnswerRevealed(true);
+                        markTodayQuestionAnswered(true);
+                      }}
+                    >
+                      Show answer
+                    </button>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  className="uh-card-lookup"
+                  onClick={() => setScreen('dictionary')}
+                >
+                  Look up in Dictionary <ArrowRight size={14} />
+                </button>
+              </article>
+
+              {lastLesson && (
+                <article className="uh-card uh-card--resume">
+                  <div>
+                    <p className="uh-card-eyebrow">Pick up where you left off</p>
+                    <h2>{lastLesson.topicTitle}</h2>
+                    <p className="uh-card-subject">{lastLesson.subject}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="uh-card-resume"
+                    onClick={() => {
+                      setSelectedSubject(lastLesson.subject);
+                      onOpenLesson?.(lastLesson.subject, lastLesson.topicId);
+                    }}
+                  >
+                    Resume <ArrowRight size={14} />
+                  </button>
+                </article>
+              )}
+            </div>
+          </section>
+        )}
 
         <section id="knowledge-atlas" className="uh-atlas-section" aria-labelledby="atlas-heading">
           <div className="uh-section-heading-row">

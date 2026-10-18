@@ -45,6 +45,13 @@ export const KEYS = {
   // Return-visit counter for the 7-day aggregate measure. Stored as
   // { firstSeen, lastSeen, returnCount }; never sent as an identity.
   RETURN_VISITS: 'velora_return_visits',
+  // Today's question: the question shown today, and whether the visitor has
+  // answered it. Stored as { date, questionId, answered }. One question per
+  // calendar day, picked deterministically so everyone sees the same one.
+  TODAY_QUESTION: 'velora_today_question',
+  // Pick up where you left off: the last lesson opened, so the atlas can offer
+  // a one-tap resume. Stored as { subject, topicId, topicTitle, openedAt }.
+  LAST_LESSON: 'velora_last_lesson',
 };
 
 export const EXPLANATION_BOARD = (term) => `${KEYS.EXPLANATION_BOARD_PREFIX}${term}`;

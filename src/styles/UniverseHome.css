@@ -463,6 +463,119 @@
   .universe-home * { scroll-behavior: auto !important; transition: none !important; }
 }
 
+/* ---- Today's question & resume cards (daily return hook) ---- */
+.uh-card-section {
+  padding: 0 3vw var(--space-10);
+}
+
+.uh-card-row {
+  display: flex;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+
+.uh-card-row--return {
+  justify-content: flex-start;
+}
+
+.uh-card {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  background: var(--bg-elevated);
+  padding: var(--space-5);
+  min-width: 260px;
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.uh-card--today {
+  border-color: var(--accent-line);
+  background: var(--bg-tertiary);
+}
+
+.uh-card--resume {
+  border-color: var(--border-default);
+}
+
+.uh-card-eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.uh-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.uh-card-subject {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.uh-card-answer {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
+.uh-card-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.uh-card-reveal,
+.uh-card-lookup,
+.uh-card-resume {
+  margin-top: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.uh-card-reveal:hover,
+.uh-card-lookup:hover,
+.uh-card-resume:hover {
+  border-color: var(--accent-primary);
+}
+
+.uh-card-lookup,
+.uh-card-resume {
+  width: fit-content;
+  align-self: flex-start;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.uh-card-lookup:hover,
+.uh-card-resume:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+@media (max-width: 768px) {
+  .uh-card-section { padding: 0 var(--space-4) var(--space-8); }
+  .uh-card-row { gap: var(--space-4); }
+  .uh-card { min-width: 100%; flex: 1 1 100%; padding: var(--space-4); }
+}
+
 /* ---- Theme toggle (tri-state segmented) ---- */
 .theme-toggle {
   display: inline-flex;
