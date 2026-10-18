@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Target, Type, Link2, FileText, Puzzle, Orbit, Clock, ArrowRight, Brain, Zap } from 'lucide-react';
 import FlowStateGame from '../components/FlowStateGame';
 import ConceptScrabble from '../games/ConceptScrabble';
@@ -84,11 +84,22 @@ export const CLASSIC_GAMES = [
  * Offers both classic interactive modes and distraction-free Flow State learning
  * sessions tailored for deep conceptual mastery.
  */
-GameHub.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), initialTab: PropTypes.string };
+GameHub.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}), initialTab: PropTypes.string,
+  initialGame: PropTypes.string,
+  onGameOpened: PropTypes.func };
 
-function GameHub({ setScreen, initialTab = 'classic' }) {
+function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGameOpened }) {
   const [hubTab, setHubTab] = useState(initialTab); // 'brain' | 'sims' | 'classic'
-  const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedGame, setSelectedGame] = useState(initialGame || null);
+
+  // A lesson deep-linked here with a specific game. Open it once and tell the
+  // app to clear the request so a later, unprompted visit to games does not
+  // spring the same game on the reader again.
+  useEffect(() => {
+    if (!initialGame || !onGameOpened) return;
+    onGameOpened();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // What this device has actually recorded. Read once on mount, the same way
   // Journey reads it, so the two screens cannot disagree about the same numbers.
   const [analytics] = useState(() => getAnalyticsData());

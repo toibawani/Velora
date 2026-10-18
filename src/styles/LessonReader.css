@@ -29,3 +29,36 @@
 .lesson-sources a { color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; }
 .lesson-sources a:hover { color: var(--text-primary); }
 @media (max-width: 640px) { .lesson-reader-header { padding: var(--space-3) var(--space-4); } .lesson-reader-main { width: min(100% - 2rem, 820px); padding-top: var(--space-8); } .lesson-columns { grid-template-columns: 1fr; } .lesson-story, .lesson-callout, .lesson-section-card, .lesson-list-card { padding: var(--space-4); } }
+
+.lesson-related-game {
+  border-color: var(--accent-primary);
+  background: var(--bg-tertiary);
+}
+.lesson-related-game-btn {
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.lesson-related-game-btn:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* 375px mobile polish: keep readable line length and touch targets. */
+@media (max-width: 375px) {
+  .lesson-reader-main { padding: var(--space-8) 0 var(--space-14); }
+  .lesson-reader-main > h1 { font-size: clamp(1.75rem, 10vw, 2.75rem); line-height: 1.15; }
+  .lesson-story, .lesson-callout, .lesson-section-card, .lesson-list-card { padding: var(--space-3); margin: var(--space-4) 0; }
+  .lesson-story p, .lesson-block p, .lesson-callout p, .lesson-list-card p { font-size: 1rem; line-height: 1.6; }
+  .lesson-related-game-btn { width: 100%; justify-content: center; }
+}

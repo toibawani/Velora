@@ -186,7 +186,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
 
   // View: Full curriculum lesson
   if (currentView === 'lesson' && selectedTopic) {
-    return <LessonReader topic={selectedTopic} subject={selectedSubject || 'physics'} onBack={handleBack} showToast={showToast} onOpenDialogue={onOpenDialogue} />;
+    return <LessonReader topic={selectedTopic} subject={selectedSubject || 'physics'} setScreen={setScreen} onBack={handleBack} showToast={showToast} onOpenDialogue={onOpenDialogue} />;
   }
 
   // View: Flow State Game

@@ -122,6 +122,9 @@ function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [keyboardHelpOpen, setKeyboardHelpOpen] = useState(false);
   const [topicRequest, setTopicRequest] = useState(null);
+  // Which game a lesson points at, handed to the games hub so a reader can jump
+  // straight to the related game (for example Relativity Lab from black holes).
+  const [gameRequest, setGameRequest] = useState(null);
   // Which level a deep read should open on, when the topic that was tapped names
   // one. Null means "open at the top", which is what a generic entry point wants.
   const [deepReadLevel, setDeepReadLevel] = useState(null);
@@ -161,6 +164,15 @@ function App() {
     setLearnView(route.view);
     setScreen('learn');
   };
+
+  // A game request handed to the games hub by a lesson. Lets a lesson point at
+  // its related game instead of only at the games screen in general.
+  const openGame = (gameId, tab = 'classic') => {
+    setGameRequest({ gameId, tab });
+    setScreen('games');
+  };
+
+  const clearGameRequest = () => setGameRequest(null);
 
   useKeyboardShortcuts({
     'cmd+k': () => setCommandPaletteOpen(true),
@@ -234,6 +246,7 @@ function App() {
             deepReadLevel={deepReadLevel}
             pendingTopic={topicRequest}
             onLessonOpened={() => setTopicRequest(null)}
+            onOpenGame={openGame}
             onOpenDialogue={openDialogue}
             showToast={showToast}
           />
@@ -252,7 +265,12 @@ function App() {
         )}
 
         {screen === 'games' && user && (
-          <GameHubScreen setScreen={setScreen} />
+          <GameHubScreen
+            setScreen={setScreen}
+            initialGame={gameRequest?.gameId}
+            initialTab={gameRequest?.tab}
+            onGameOpened={clearGameRequest}
+          />
         )}
 
         {screen === 'journey' && user && (

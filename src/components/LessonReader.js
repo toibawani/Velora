@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Link2, Compass, BriefcaseBusiness, CircleHelp, Users, CalendarClock, Sparkles, Zap } from 'lucide-react';
 import PeerExplanations from './PeerExplanations';
 import ConceptMap from './ConceptMap';
 import SmartReviewPlanner from './SmartReviewPlanner';
@@ -23,9 +23,10 @@ LessonReader.propTypes = {
   onBack: PropTypes.func,
   showToast: PropTypes.func,
   onOpenDialogue: PropTypes.func,
+  onOpenGame: PropTypes.func,
 };
 
-function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue }) {
+function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpenGame }) {
   const [saved, setSaved] = useState(() => topic ? getReviewItems().some((item) => item.id === `${subject}:${topic.id}`) : false);
   const [rabbitHoleOpen, setRabbitHoleOpen] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -54,6 +55,12 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue }) {
     if (topic?.title) recordStudySession(topic.title, minutes, subject);
   }, [subject, topic?.title]);
   if (!topic) return null;
+
+  // The Black Holes lesson's related game is the Relativity Lab, which lets a
+  // reader play with event horizons right after reading about them.
+  const relatedGame = subject === 'physics' && topic?.id === 'black-holes'
+    ? { id: 'relativity', name: 'Relativity Lab', tab: 'classic' }
+    : null;
 
   const toggleSaved = () => {
     const nextSaved = !saved;
@@ -112,6 +119,19 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue }) {
         <section className="lesson-section-card"><div className="lesson-card-heading"><Compass size={17} /><h2>Map the idea</h2></div><ConceptMap subject={subject} /></section>
         <section className="lesson-section-card"><div className="lesson-card-heading"><Users size={17} /><h2>Compare explanations</h2></div><PeerExplanations topic={topic.title} onNotify={showToast} /></section>
         <section className="lesson-section-card"><div className="lesson-card-heading"><CalendarClock size={17} /><h2>Return to this later</h2></div><SmartReviewPlanner selectedSubject={subject} onNotify={showToast} /></section>
+        {relatedGame && onOpenGame && (
+          <section className="lesson-section-card lesson-related-game">
+            <div className="lesson-card-heading"><Zap size={17} /><h2>Keep going with a game</h2></div>
+            <p>{`Play with ${relatedGame.name.toLowerCase()} — event horizons, time dilation and length contraction — straight from the lesson you just read.`}</p>
+            <button
+              type="button"
+              className="lesson-related-game-btn"
+              onClick={() => onOpenGame(relatedGame.id, relatedGame.tab)}
+            >
+              Open {relatedGame.name} <ArrowRight size={14} />
+            </button>
+          </section>
+        )}
       </main>
       <RabbitHoleSidebar
         topicId={topic.id}
