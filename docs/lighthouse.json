@@ -1,0 +1,33 @@
+{
+  "url": "https://toibawani.github.io/Velora/",
+  "formFactor": "mobile",
+  "measuredAt": "2026-10-18",
+  "lighthouseVersion": "12.2.1",
+  "categories": {
+    "performance": 100,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100
+  },
+  "metrics": {
+    "firstContentfulPaint": "1.2 s",
+    "largestContentfulPaint": "1.7 s",
+    "totalBlockingTime": "10 ms",
+    "cumulativeLayoutShift": "0.003",
+    "speedIndex": "2.2 s"
+  },
+  "opportunities": [
+    {
+      "id": "unused-css-rules",
+      "title": "Reduce unused CSS",
+      "score": 0,
+      "detail": "Potential savings of 12 KiB"
+    },
+    {
+      "id": "unused-javascript",
+      "title": "Reduce unused JavaScript",
+      "score": 0,
+      "detail": "Potential savings of 39 KiB"
+    }
+  ]
+}
