@@ -79,11 +79,14 @@ const DEEP_READ_ROUTES = {
 };
 
 function App() {
-  const [screen, setScreen] = useState('splash');
   // The identity here is a name stored in this browser, read once at startup.
   // Before this, the user object lived only in useState and vanished on
   // refresh, which is why "Log out" used to end a session that never began.
   const [user, setUser] = useState(() => getProfile());
+  // A returning visitor has already read the welcome screen and already given
+  // a name, so asking again on every reload made the app look like it had
+  // forgotten them. The splash is the first-run screen, not a gate.
+  const [screen, setScreen] = useState(() => (getProfile() ? 'universe' : 'splash'));
 
   // Register already did this for its steps: move focus to the new step's heading
   // so a keyboard or screen-reader user lands on the content rather than being

@@ -45,6 +45,18 @@ test('offers a single honest way in, with no account language', () => {
   expect(screen.queryByText(/create account/i)).not.toBeInTheDocument();
 });
 
+test('a stored name skips the welcome screen and the name form', async () => {
+  writeValue(KEYS.LOCAL_PROFILE, { name: 'Ada', createdAt: '2026-01-01T00:00:00.000Z' });
+  writeValue(KEYS.ONBOARDING_DONE, true);
+  renderApp();
+  // The atlas is lazily imported, so this waits for it rather than asserting
+  // on the first paint.
+  expect(
+    await screen.findByRole('heading', { name: /follow your curiosity/i }, { timeout: 10000 })
+  ).toBeInTheDocument();
+  expect(screen.queryByLabelText('Display name')).not.toBeInTheDocument();
+});
+
 test('shows the stored name after a reload instead of forgetting it', () => {
   window.localStorage.setItem(
     'velora_local_profile',
@@ -95,18 +107,14 @@ describe('focus on route change', () => {
   const PATIENCE = { timeout: 10000 };
   jest.setTimeout(30000);
 
-  // The app opens on Splash even when a name is stored, so get there the way a
-  // returning visitor does: real clicks, not poked state.
+  // A returning visitor used to be walked back through the splash and the name
+  // form on every load, even though the name was already in storage. The app
+  // now opens on the atlas when a name exists, so this seeds the same storage
+  // and waits for the atlas rather than repeating the first-run screens.
   const startSignedIn = async () => {
     writeValue(KEYS.LOCAL_PROFILE, { name: 'Ada', createdAt: '2026-01-01T00:00:00.000Z' });
     writeValue(KEYS.ONBOARDING_DONE, true);
     renderApp();
-    fireEvent.click(screen.getByRole('button', { name: /start learning/i }));
-    await settle();
-    fireEvent.change(await screen.findByLabelText('Display name'), { target: { value: 'Ada' } });
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
-    await settle();
-    fireEvent.click(await screen.findByRole('button', { name: /start learning as/i }));
     // Wait for the bar, not for any "Insights" button: the header renders the
     // same shared list, so a bare findByRole matches two and throws.
     await waitFor(() => expect(bottomBarButton('Insights')).toBeInTheDocument(), PATIENCE);
