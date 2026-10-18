@@ -72,9 +72,12 @@
   z-index: 40;
   top: calc(100% + 0.4rem);
   left: 0;
-  /* Without a max-width the panel matches the paragraph width and reads as part
-     of the page rather than as an aside. */
-  max-width: min(22rem, 78vw);
+  /* A width, not a max-width. The containing block is an inline span, and an
+     absolutely positioned child of an inline box resolves its shrink-to-fit
+     width against the little space left on that line: with max-width alone the
+     panel collapsed to about fifty pixels and wrapped every second word.
+     The width is capped against the viewport so it cannot run off a phone. */
+  width: min(22rem, 78vw);
   display: block;
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--border-default);
@@ -114,7 +117,7 @@
    the text the reader was looking at. */
 @media (max-width: 560px) {
   .gt-popover {
-    max-width: min(20rem, 88vw);
+    width: min(20rem, 88vw);
   }
 
   .gt-root:last-of-type .gt-popover,
