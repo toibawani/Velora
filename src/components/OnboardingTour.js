@@ -33,7 +33,7 @@ const STEPS = [
     illustration: Orbit,
     title: 'Welcome to VELORA.',
     subtitle: 'This is not a boring education app.',
-    body: 'VELORA is a living intellectual cosmos. You don\'t passively watch videos here — you explore, discover, and synthesize ideas across physics, philosophy, and history. Expect to feel genuinely absorbed.',
+    body: 'VELORA is a living intellectual cosmos. You don\'t passively watch videos here. You explore, discover, and synthesize ideas across physics, philosophy, and history. Expect to feel genuinely absorbed.',
     cta: 'I\'m ready →'
   },
   {
@@ -68,7 +68,7 @@ const STEPS = [
     illustration: Sunrise,
     title: 'Set your daily learning intention.',
     subtitle: 'How much time do you want to spend exploring today?',
-    body: 'VELORA doesn\'t reward streaks or punish misses. Learning is personal — this is your commitment to yourself.',
+    body: 'VELORA doesn\'t reward streaks or punish misses. Learning is personal. This is your commitment to yourself.',
     cta: 'Lock In My Intention →',
     timeOptions: ['15 minutes', '30 minutes', '1 hour', 'As long as it takes']
   },
@@ -77,7 +77,7 @@ const STEPS = [
     illustration: Sparkles,
     title: 'You\'re ready to explore.',
     subtitle: 'Your intellectual cosmos awaits.',
-    body: 'Every day VELORA surfaces a Daily Spark — a single question that opens an entire universe of thought. Your first one is waiting. Go discover something extraordinary.',
+    body: 'Every day VELORA surfaces a Daily Spark. A single question that opens an entire universe of thought. Your first one is waiting. Go discover something extraordinary.',
     cta: 'Enter the Cosmos →'
   }
 ];

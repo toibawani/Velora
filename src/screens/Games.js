@@ -202,7 +202,7 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             <div className="hero-content">
               <h2>Master Concepts Through Deep Interaction</h2>
               <p>
-                Engage with scientific frameworks directly. No artificial scoreboards—only focus, clarity, and reflection.
+                Engage with scientific frameworks directly. No artificial scoreboards. Only focus, clarity, and reflection.
               </p>
             </div>
           </section>

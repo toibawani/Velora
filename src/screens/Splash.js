@@ -25,7 +25,7 @@ function SplashScreen({ setScreen }) {
 
         {/* Value proposition */}
         <p className="splash-description">
-          A calm learning space for physics, philosophy, and history—built for people who want to understand the why, not just pass the test.
+          A calm learning space for physics, philosophy, and history. Built for people who want to understand the why, not just pass the test.
         </p>
 
         {/* Actions */}

@@ -154,7 +154,7 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
         {relatedGame && onOpenGame && (
           <section className="lesson-section-card lesson-related-game">
             <div className="lesson-card-heading"><Zap size={17} /><h2>Keep going with a game</h2></div>
-            <p>{`Play with ${relatedGame.name.toLowerCase()} — event horizons, time dilation and length contraction — straight from the lesson you just read.`}</p>
+            <p>{`Play with ${relatedGame.name.toLowerCase()}. Event horizons, time dilation and length contraction. Straight from the lesson you just read.`}</p>
             <button
               type="button"
               className="lesson-related-game-btn"
