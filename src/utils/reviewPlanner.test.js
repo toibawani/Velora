@@ -16,7 +16,7 @@ describe('review planner storage', () => {
     expect(added[0].id).toBe('philosophy:stoicism');
 
     const completed = completeReviewItem(added[0].id);
-    expect(completed[0].retention).toBe(82);
+    expect(completed[0].retention).toBeUndefined();
     expect(new Date(completed[0].nextReview).getTime()).toBeGreaterThan(Date.now());
 
     expect(removeReviewItem(added[0].id)).toHaveLength(0);

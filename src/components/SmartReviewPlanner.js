@@ -19,7 +19,7 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
 
   const handleReviewNow = (id) => {
     setReviewItems(completeReviewItem(id));
-    if (onNotify) onNotify('Review recorded. Your next recall is in 7 days.', 'success');
+    if (onNotify) onNotify('Review recorded. The next one is scheduled in 7 days.', 'success');
   };
 
   const getDaysUntilReview = (nextReviewDate) => {
@@ -27,12 +27,6 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
     const next = new Date(nextReviewDate);
     const days = Math.ceil((next - now) / (1000 * 60 * 60 * 24));
     return days;
-  };
-
-  const getRetentionColor = (retention) => {
-    if (retention >= 80) return 'var(--color-success)';
-    if (retention >= 60) return 'var(--color-warning)';
-    return 'var(--color-info)';
   };
 
   // Returns the urgency and its wording, so the icon can be chosen from data
@@ -62,7 +56,8 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
       <div className="planner-header">
         <h2 className="planner-title">Smart Review Schedule</h2>
         <p className="planner-subtitle">
-          Based on spaced repetition for optimal retention
+          Lessons you saved, with the next review date stored on this device.
+          The intervals are fixed, not measured.
         </p>
       </div>
 
@@ -81,24 +76,6 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
               </div>
 
               <div className="review-middle">
-                <div className="retention-display">
-                  <div className="retention-bar">
-                    <div
-                      className="retention-fill"
-                      style={{
-                        width: `${item.retention}%`,
-                        background: getRetentionColor(item.retention),
-                      }}
-                    ></div>
-                  </div>
-                  <span
-                    className="retention-label"
-                    style={{ color: getRetentionColor(item.retention) }}
-                  >
-                    {item.retention}% retained
-                  </span>
-                </div>
-
                 <p className="review-timing">{renderReviewStatus(item.nextReview)}</p>
               </div>
 
@@ -117,30 +94,26 @@ function SmartReviewPlanner({ selectedSubject, onNotify }) {
       </div>
 
       <div className="spaced-repetition-info">
-        <h3 className="info-title">How Spaced Repetition Works</h3>
+        <h3 className="info-title">What the schedule actually does</h3>
         <div className="schedule-explanation">
           <div className="schedule-item">
             <span className="schedule-num">1</span>
-            <span className="schedule-text">Learn a topic</span>
+            <span className="schedule-text">Save a lesson for review</span>
           </div>
           <div className="schedule-arrow">→</div>
           <div className="schedule-item">
             <span className="schedule-num">2</span>
-            <span className="schedule-text">Review after 1 day</span>
+            <span className="schedule-text">It comes due the next day</span>
           </div>
           <div className="schedule-arrow">→</div>
           <div className="schedule-item">
             <span className="schedule-num">3</span>
-            <span className="schedule-text">Review after 3 days</span>
-          </div>
-          <div className="schedule-arrow">→</div>
-          <div className="schedule-item">
-            <span className="schedule-num">4</span>
-            <span className="schedule-text">Review after 7 days</span>
+            <span className="schedule-text">Press Review, and it returns in 7 days</span>
           </div>
         </div>
         <p className="info-note">
-          <Lightbulb size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />This science-backed method is 3x more effective than cramming!
+          <Lightbulb size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+          Nothing here measures how much you remember. The date is a fixed interval, not a prediction.
         </p>
       </div>
     </div>
