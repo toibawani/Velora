@@ -122,11 +122,49 @@ counts.levels = levelFiles.length;
 counts.levelEntries = bhEntries;
 
 // ---- Games ----------------------------------------------------------------
+// Counting files in src/games/ answers a different question from "how many
+// games can I open?". Five files live there, and the Brain Games tab holds
+// three more, so the README said 5 while the app offered 8. Both numbers were
+// true of different questions, which is how a count becomes a lie in practice.
+// The number reported here is the one a reader can check by opening the Games
+// screen: every game in 5 + 3, with simulations counted separately.
 const GAMES_DIR = path.join(ROOT, 'src', 'games');
-const games = fs.readdirSync(GAMES_DIR).filter((f) => f.endsWith('.js') && !f.endsWith('.test.js'));
+const gameFiles = fs.readdirSync(GAMES_DIR).filter((f) => f.endsWith('.js') && !f.endsWith('.test.js'));
+
+const gamesSource = fs.readFileSync(path.join(ROOT, 'src', 'screens', 'Games.js'), 'utf8');
+const classicBlock = (gamesSource.match(/export const CLASSIC_GAMES = \[([\s\S]*?)\n\];/) || [])[1];
+if (!classicBlock) throw new Error('CLASSIC_GAMES not found in src/screens/Games.js');
+const classicBlockEntries = (classicBlock.match(/id: '[a-z-]+'/g) || []).length;
+const classicSimulations = (classicBlock.match(/type: 'simulation'/g) || []).length;
+// Relativity Lab sits in the classic grid but is a simulation, so the game
+// count is the grid minus the entries marked as simulations.
+const classicGames = classicBlockEntries - classicSimulations;
+
+const brainSource = fs.readFileSync(path.join(ROOT, 'src', 'components', 'BrainGames.js'), 'utf8');
+const brainBlock = (brainSource.match(/export const BRAIN_GAMES = \[([\s\S]*?)\n\];/) || [])[1];
+if (!brainBlock) throw new Error('BRAIN_GAMES not found in src/components/BrainGames.js');
+const brainGames = (brainBlock.match(/id: '[a-z-]+'/g) || []).length;
+
+const simSource = fs.readFileSync(path.join(ROOT, 'src', 'components', 'PhysicsSimulations.js'), 'utf8');
+const simBlock = (simSource.match(/export const PHYSICS_SIMULATIONS = \[([\s\S]*?)\n\];/) || [])[1];
+if (!simBlock) throw new Error('PHYSICS_SIMULATIONS not found in src/components/PhysicsSimulations.js');
+const physicsSims = (simBlock.match(/id: '[a-z-]+'/g) || []).length;
+
+// A parser that silently returns zero would print a confident wrong number,
+// which is the failure this script exists to stop. Fail loudly instead.
+if (classicGames === 0 || brainGames === 0 || physicsSims === 0) {
+  throw new Error('Game arrays were found but no entries parsed; refusing to print a count');
+}
+
 console.log('\nGAMES');
-console.log('  ' + games.length + ': ' + games.map((f) => f.replace('.js', '')).join(', '));
-counts.games = games.length;
+console.log('  ' + String(classicGames).padEnd(4) + 'concept games: ' + gameFiles.map((f) => f.replace('.js', '')).join(', '));
+console.log('  ' + String(brainGames).padEnd(4) + 'brain games: ' + (brainBlock.match(/label: '([^']+)'/g) || []).map((l) => l.replace(/label: '|'/g, '')).join(', '));
+console.log('  ' + String(classicGames + brainGames).padEnd(4) + 'games total');
+console.log('  ' + String(physicsSims + classicSimulations).padEnd(4) + 'simulations (counted separately)');
+counts.games = classicGames + brainGames;
+counts.conceptGames = classicGames;
+counts.brainGames = brainGames;
+counts.simulations = physicsSims + classicSimulations;
 
 // ---- Tests: ask jest, do not count the word "test(" -----------------------
 const JEST_RESULT = path.join(os.tmpdir(), 'velora-jest-numbers.json');

@@ -979,14 +979,19 @@ export { EXPLAIN_PROMPTS, MYTH_QUESTIONS, CONNECT_PUZZLES };
 /* PropTypes for BrainGames */
 BrainGames.propTypes = { games: PropTypes.array, onGameSelect: PropTypes.func };
 
+// Exported so the Games hub and scripts/by-the-numbers.js can count the same
+// three entries the tab rail renders. The old count read files in src/games/
+// and reported 5 games while this tab offered 3 more.
+export const BRAIN_GAMES = [
+  { id: 'connect', label: 'Connect the Concept', icon: Brain },
+  { id: 'myth', label: 'Counterintuitive (True/Myth)', icon: Zap },
+  { id: 'explain', label: 'Explain It Back (30s Sprint)', icon: Lightbulb },
+];
+
 export default function BrainGames({ onBack }) {
   const [activeTab, setActiveTab] = useState('connect');
 
-  const tabs = [
-    { id: 'connect', label: 'Connect the Concept', icon: Brain },
-    { id: 'myth', label: 'Counterintuitive (True/Myth)', icon: Zap },
-    { id: 'explain', label: 'Explain It Back (30s Sprint)', icon: Lightbulb },
-  ];
+  const tabs = BRAIN_GAMES;
 
   return (
     <div className="brain-games-page">

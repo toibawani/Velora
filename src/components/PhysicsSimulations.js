@@ -1255,16 +1255,19 @@ function OrbitalMechanicsSim() {
 /* PropTypes for PhysicsSimulations */
 PhysicsSimulations.propTypes = { simulations: PropTypes.array, onSelect: PropTypes.func };
 
+// Exported so the hub can count simulations without keeping a second list.
+export const PHYSICS_SIMULATIONS = [
+  { id: 'newton', label: 'Newton’s 2nd Law (F=ma)', icon: Zap },
+  { id: 'projectile', label: 'Projectile Motion', icon: Target },
+  { id: 'freefall', label: 'Vacuum vs Air Drop', icon: ArrowDown },
+  { id: 'waves', label: 'Wave Interference', icon: Waves },
+  { id: 'orbit', label: 'Orbital Mechanics', icon: Orbit },
+];
+
 export default function PhysicsSimulations({ defaultSim = 'newton', onBack }) {
   const [activeTab, setActiveTab] = useState(defaultSim);
 
-  const tabs = [
-    { id: 'newton', label: 'Newton’s 2nd Law (F=ma)', icon: Zap },
-    { id: 'projectile', label: 'Projectile Motion', icon: Target },
-    { id: 'freefall', label: 'Vacuum vs Air Drop', icon: ArrowDown },
-    { id: 'waves', label: 'Wave Interference', icon: Waves },
-    { id: 'orbit', label: 'Orbital Mechanics', icon: Orbit },
-  ];
+  const tabs = PHYSICS_SIMULATIONS;
 
   return (
     <div className="physics-sims-container">

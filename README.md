@@ -45,6 +45,7 @@ workflow files. Run it and compare.
 | Fields / disciplines | 6 fields, 34 disciplines |
 | Dictionary entries | 138, every one with a source URL |
 | Black hole deep read | 8 levels, 61 entries |
+| Games / simulations | 8 games (5 concept, 3 brain), 6 simulations |
 | CI jobs / checks | 4 jobs, 8 checks (7 real-Chrome audits and the contrast gate) |
 | Lighthouse, mobile | performance 99, accessibility 100, best practices 100, SEO 100 |
 | Lighthouse measured | 18 October 2026, Lighthouse 12.2.1, [docs/lighthouse.json](docs/lighthouse.json) |
@@ -79,7 +80,8 @@ behind them yet.
 | Fields / disciplines | 6 / 34 |
 | Dictionary entries | 138 |
 | Black hole levels | 8 levels, 61 entries |
-| Game files in src/games/ | 5 |
+| Games (concept + brain) | 8 (5 + 3) |
+| Simulations | 6 |
 
 ### Not done yet
 

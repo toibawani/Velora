@@ -8,8 +8,8 @@ import DefinitionDuel from '../games/DefinitionDuel';
 import KnowledgeChain from '../games/KnowledgeChain';
 import WordPuzzle from '../games/WordPuzzle';
 import RelativityLab from '../components/RelativityLab';
-import PhysicsSimulations from '../components/PhysicsSimulations';
-import BrainGames from '../components/BrainGames';
+import BrainGames, { BRAIN_GAMES } from '../components/BrainGames';
+import PhysicsSimulations, { PHYSICS_SIMULATIONS } from '../components/PhysicsSimulations';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/Games.css';
 
@@ -77,6 +77,16 @@ export const CLASSIC_GAMES = [
   },
 ];
 
+// Every game the hub can open, counted from the arrays it renders. The README
+// and scripts/by-the-numbers.js read the same two exports, so the number cannot
+// say 5 in one place and 8 in another.
+export const TOTAL_SIMULATIONS =
+  PHYSICS_SIMULATIONS.length + CLASSIC_GAMES.filter((game) => game.type === 'simulation').length;
+
+// Relativity Lab sits in the classic grid and is a simulation, so it is
+// subtracted here and counted in TOTAL_SIMULATIONS instead.
+export const TOTAL_GAMES =
+  CLASSIC_GAMES.filter((game) => game.type !== 'simulation').length + BRAIN_GAMES.length;
 
 /**
  * GameHub
@@ -178,6 +188,12 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             <Puzzle size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> Concept Puzzles
           </button>
         </div>
+        <p
+          className="games-count-line"
+          style={{ flexBasis: '100%', margin: '10px 0 0', fontSize: '0.82rem', color: 'var(--text-tertiary)' }}
+        >
+          {TOTAL_GAMES} games and {TOTAL_SIMULATIONS} simulations, counted from the lists on this screen.
+        </p>
         {hubTab === 'classic' && (
           <div className="flow-mode-switch">
             <label className="mode-switch-label">
