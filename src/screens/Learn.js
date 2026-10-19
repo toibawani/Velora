@@ -436,8 +436,8 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               {(!subject.modules || subject.modules.length === 0) ? (
                 <EmptyState
                   icon={<BookOpen size={22} aria-hidden="true" />}
-                  title="No modules found"
-                  description="Complete topics or explore another subject to unlock tailored modules."
+                  title="No modules for this subject"
+                  description="Modules are written per subject, not unlocked by progress. Switch subject to see the ones that exist."
                   actionText="Switch Subject"
                   action={() => setSelectedSubject('physics')}
                 />
