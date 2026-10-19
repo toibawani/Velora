@@ -1,102 +1,88 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Users, NotebookPen, Check, Rocket, Trophy, Star, Lightbulb, Smile, Brain, GraduationCap } from 'lucide-react';
+import { ArrowLeft, NotebookPen, Check, GraduationCap } from 'lucide-react';
+import { KEYS, readValue, writeValue } from '../utils/storage';
+import { sanitizeText } from '../utils/sanitize';
 import '../styles/ShadowLearning.css';
 
 /**
- * ShadowLearning - anonymous peer-note board per topic, with submit and
- * lightweight moderation states.
+ * ShadowLearning - write an explanation of a concept in your own words.
+ *
+ * This screen used to open on three notes from "Anonymous #42", "#15" and "#7",
+ * with vote counts of 145, 89, 234 and a "Most Helpful" badge. Nobody wrote
+ * them, nobody voted on them, and the submit button said the note was "part of
+ * the community conversation" although it never left the component's state.
+ *
+ * What is real is the exercise: writing the explanation is the part that makes
+ * you notice what you do not understand. So the invented board is gone and the
+ * saved notes are the ones this browser actually wrote.
  */
-ShadowLearning.propTypes = { topic: PropTypes.string, onNotify: PropTypes.shape({"onNotify": PropTypes.func}) };
+ShadowLearning.propTypes = {
+  topic: PropTypes.shape({ name: PropTypes.string }),
+  onBack: PropTypes.func,
+  onNotify: PropTypes.func,
+};
 
-function ShadowLearning({ topic, onNotify }) {
+function readMine(term) {
+  const stored = readValue(KEYS.MY_EXPLANATIONS, []);
+  if (!Array.isArray(stored)) return [];
+  return stored.filter(
+    (note) => note && typeof note.text === 'string' && note.term === term
+  );
+}
+
+function ShadowLearning({ topic, onBack, onNotify }) {
+  const term = topic?.name || 'this topic';
   const [myNote, setMyNote] = useState('');
+  const [saved, setSaved] = useState(() => readMine(term));
   const [submitted, setSubmitted] = useState(false);
-  const [anonymousNotes, setAnonymousNotes] = useState([
-    {
-      id: 1,
-      text: 'Photosynthesis is plants eating sunlight and turning it into sugar. Sun → Energy → Food',
-      votes: { clear: 145, funny: 8, memorable: 92 },
-      author: 'Anonymous #42',
-    },
-    {
-      id: 2,
-      text: 'Its basically the opposite of respiration but with light instead of food',
-      votes: { clear: 89, funny: 12, memorable: 56 },
-      author: 'Anonymous #15',
-    },
-    {
-      id: 3,
-      text: 'Plants are solar panels that make candy with CO2 and water. They are very greedy.',
-      votes: { clear: 234, funny: 156, memorable: 198 },
-      author: 'Anonymous #7',
-    },
-  ]);
 
   const handleSubmitNote = () => {
-    if (myNote.trim().length < 20) {
-      if (onNotify) onNotify('Write at least 20 characters so another learner can follow your idea.', 'error');
+    const text = sanitizeText(myNote.trim());
+    if (text.length < 20) {
+      if (onNotify) onNotify('Write at least 20 characters so the idea is actually explained.', 'error');
       return;
     }
 
-    setAnonymousNotes([
-      ...anonymousNotes,
-      {
-        id: anonymousNotes.length + 1,
-        text: myNote,
-        votes: { clear: 0, funny: 0, memorable: 0 },
-        author: `You (Anonymous)`,
-      },
-    ]);
+    const entry = { term, text, date: new Date().toLocaleDateString() };
+    const stored = readValue(KEYS.MY_EXPLANATIONS, []);
+    const list = Array.isArray(stored) ? stored : [];
+    writeValue(KEYS.MY_EXPLANATIONS, [entry, ...list].slice(0, 10));
 
-    setSubmitted(true);
+    setSaved((current) => [entry, ...current]);
     setMyNote('');
-    if (onNotify) onNotify('Your note is now part of the community conversation.', 'success');
-
+    setSubmitted(true);
+    if (onNotify) onNotify('Saved on this device. Nothing was sent anywhere.', 'success');
     setTimeout(() => setSubmitted(false), 3000);
   };
 
-  const handleVote = (noteId, voteType) => {
-    setAnonymousNotes(
-      anonymousNotes.map((note) =>
-        note.id === noteId
-          ? {
-              ...note,
-              votes: {
-                ...note.votes,
-                [voteType]: note.votes[voteType] + 1,
-              },
-            }
-          : note
-      )
-    );
-  };
-
-  const topNote = [...anonymousNotes].sort(
-    (a, b) =>
-      b.votes.clear +
-      b.votes.funny +
-      b.votes.memorable -
-      (a.votes.clear + a.votes.funny + a.votes.memorable)
-  )[0];
-
   return (
     <div data-testid="shadow-learning" className="shadow-learning-container">
-      <h2><Users size={20} aria-hidden="true" style={{ verticalAlign: '-4px', marginRight: 8 }} />Community Notes: {topic?.name}</h2>
+      {onBack && (
+        <button type="button" className="learn-back-btn" onClick={onBack}>
+          <ArrowLeft size={15} aria-hidden="true" /> Back
+        </button>
+      )}
 
-      {/* Explain it to a 10-year-old */}
+      <h2>
+        <NotebookPen size={20} aria-hidden="true" style={{ verticalAlign: '-4px', marginRight: 8 }} />
+        Explain it back: {term}
+      </h2>
+
       <div className="my-note-section">
-        <h3><NotebookPen size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />Your Turn to Teach</h3>
+        <h3>Your turn to teach</h3>
         <p className="challenge">
-          Explain <strong>{topic?.name}</strong> in ONE sentence to a 10-year-old.
-          Keep it simple, clear, and memorable!
+          Explain <strong>{term}</strong> in one sentence to someone who has never
+          met the idea. If you cannot do it in one sentence, that is the part to
+          go back and read.
         </p>
         <textarea
-          placeholder="Example: 'Plants eat sunlight and turn it into food...'  (Make it creative!)"
+          placeholder="Write it the way you would say it out loud."
           value={myNote}
           onChange={(e) => setMyNote(e.target.value)}
           className="note-input-shadow"
           maxLength="280"
+          aria-label={`Your explanation of ${term}`}
         />
         <div className="note-meta">
           <span className="char-count">{myNote.length}/280</span>
@@ -107,81 +93,47 @@ function ShadowLearning({ topic, onNotify }) {
             {submitted ? (
               <>
                 <Check size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
-                Submitted!
+                Saved
               </>
             ) : (
               <>
-                <Rocket size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
-                Submit Note
+                <NotebookPen size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />
+                Save this explanation
               </>
             )}
           </button>
         </div>
       </div>
 
-      {/* Community Votes */}
       <div className="community-notes">
-        <h3><Trophy size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />Best Notes</h3>
+        <h3>
+          <GraduationCap size={18} aria-hidden="true" style={{ verticalAlign: '-3px', marginRight: 6 }} />
+          What you have written on this device
+        </h3>
 
-        {/* Top Voted */}
-        {topNote && (
-          <div className="top-note">
-            <div className="badge"><Star size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />Most Helpful</div>
-            <p className="note-text">"{topNote.text}"</p>
-            <div className="note-votes">
-              <span className="vote-count">
-                <Lightbulb size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Clear: {topNote.votes.clear}
-              </span>
-              <span className="vote-count">
-                <Smile size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Funny: {topNote.votes.funny}
-              </span>
-              <span className="vote-count">
-                <Brain size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 4 }} />Memorable: {topNote.votes.memorable}
-              </span>
-            </div>
-          </div>
-        )}
-
-        {/* All Notes */}
-        <div className="notes-list">
-          {anonymousNotes
-            .sort(
-              (a, b) =>
-                b.votes.clear +
-                b.votes.funny +
-                b.votes.memorable -
-                (a.votes.clear + a.votes.funny + a.votes.memorable)
-            )
-            .map((note) => (
-              <div key={note.id} className="note-item">
-                <p className="note-text">"{note.text}"</p>
-                <div className="note-voting">
-                  <button
-                    className="vote-btn clear"
-                    onClick={() => handleVote(note.id, 'clear')}
-                  >
-                    <Lightbulb size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Clear ({note.votes.clear})
-                  </button>
-                  <button
-                    className="vote-btn funny"
-                    onClick={() => handleVote(note.id, 'funny')}
-                  >
-                    <Smile size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Funny ({note.votes.funny})
-                  </button>
-                  <button
-                    className="vote-btn memorable"
-                    onClick={() => handleVote(note.id, 'memorable')}
-                  >
-                    <Brain size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} />Memorable ({note.votes.memorable})
-                  </button>
-                </div>
+        {saved.length === 0 ? (
+          <p className="challenge">
+            Nothing saved for this topic yet. The first one you write will appear here.
+          </p>
+        ) : (
+          <div className="notes-list">
+            {saved.map((note, idx) => (
+              <div key={`${note.date}-${idx}`} className="note-item">
+                <p className="note-text">&quot;{note.text}&quot;</p>
+                <span className="note-date">{note.date}</span>
               </div>
             ))}
-        </div>
+          </div>
+        )}
       </div>
 
       <div className="shadow-note">
-        <p><GraduationCap size={15} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /><strong>Why Anonymity?</strong> Removes ego and fear of being wrong. You learn faster when competing to explain simply, not to show off.</p>
+        <p>
+          <strong>There is no community here.</strong> VELORA has no server, so
+          these notes are not shared and nobody can reply to them. They are a
+          record of how you explained something today, which is useful the next
+          time you try.
+        </p>
       </div>
     </div>
   );

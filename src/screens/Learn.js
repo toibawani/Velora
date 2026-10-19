@@ -15,7 +15,7 @@ import {
   Headphones,
   Sparkles,
   Compass,
-  Users,
+  NotebookPen,
   BookOpen,
   Hourglass,
   Circle
@@ -591,7 +591,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                 <Disc size={24} strokeWidth={1.5} color="var(--color-accent)" />
               </span>
               <h4 className="tool-title">Black Holes Masterclass</h4>
-              <p className="tool-desc">10 deep visual chapters</p>
+              <p className="tool-desc">8 deep visual chapters</p>
             </div>
 
             <div
@@ -601,8 +601,8 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Edit3 size={24} strokeWidth={1.5} color="var(--color-accent)" />
               </span>
-              <h4 className="tool-title">AI Whiteboard</h4>
-              <p className="tool-desc">Draw & visualize concepts</p>
+              <h4 className="tool-title">Whiteboard</h4>
+              <p className="tool-desc">Draw a concept by hand</p>
             </div>
 
             <div
@@ -654,10 +654,10 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               onClick={() => setCurrentView('shadow-learning')}
             >
               <span className="tool-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Users size={24} strokeWidth={1.5} color="var(--color-accent)" />
+                <NotebookPen size={24} strokeWidth={1.5} color="var(--color-accent)" />
               </span>
-              <h4 className="tool-title">Shadow Learning</h4>
-              <p className="tool-desc">Learn from community</p>
+              <h4 className="tool-title">Explain It Back</h4>
+              <p className="tool-desc">Write it in your own words</p>
             </div>
 
             <div
