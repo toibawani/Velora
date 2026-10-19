@@ -54,7 +54,7 @@ function Analytics({ setScreen, user }) {
         {/* Welcome & Overview Header */}
         <section className="analytics-hero-section">
           <div className="hero-text-col">
-            <h2 className="analytics-greeting">Cognitive Insights for {user?.name || 'Explorer'}</h2>
+            <h2 className="analytics-greeting">Recorded activity for {user?.name || 'Explorer'}</h2>
             <p className="analytics-lead">
               Time this device recorded, and what it went on. Nothing here
               measures understanding, so no number claims to.

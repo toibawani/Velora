@@ -54,9 +54,9 @@ const STEPS = [
     id: 'style',
     illustration: Zap,
     title: 'How do you learn best?',
-    subtitle: 'VELORA adapts to your cognitive style.',
-    body: null,
-    cta: 'Personalize →',
+    subtitle: 'This is stored as your answer. Nothing is measured from it.',
+    body: 'The app does not change how a lesson is written based on this yet. It is a preference you can edit or clear in Settings.',
+    cta: 'Save this answer →',
     options: [
       { id: 'visual', label: 'Visual', icon: Eye, desc: 'Animated diagrams & canvas simulations' },
       { id: 'textual', label: 'Textual', icon: BookOpen, desc: 'Deep-read articles & paper distillations' },
