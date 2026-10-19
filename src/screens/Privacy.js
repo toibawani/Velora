@@ -2,106 +2,104 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Shield, EyeOff } from 'lucide-react';
 import { isOptedIn } from '../utils/siteAnalytics';
-import '../styles/Settings.css';
+import '../styles/Legal.css';
 
 /**
  * Privacy screen.
  *
- * Plain-sentence disclosure of the only thing VELORA can send out of this
- * browser: anonymous aggregate usage numbers to an analytics service, and only
- * when the visitor has switched it on in Settings. It is off by default.
- *
- * This screen also states, in plain terms, what the numbers cannot tell us — so
- * the disclosure is honest about its limits, not just its reach.
+ * Every sentence here is checked against what the code does. The stored data
+ * is localStorage. The only outbound request is the GoatCounter beacon in
+ * utils/siteAnalytics.js, which needs both an explicit opt-in and a configured
+ * endpoint. This deployment has no endpoint configured, so even the opt-in
+ * currently sends nothing.
  */
 
-Privacy.propTypes = { setScreen: PropTypes.shape({ setScreen: PropTypes.func }) };
+Privacy.propTypes = { setScreen: PropTypes.shape({ "setScreen": PropTypes.func }) };
 
 function Privacy({ setScreen }) {
   const optedIn = isOptedIn();
 
   return (
-    <div className="settings-page">
-      <header className="st-header">
-        <div>
-          <p className="st-eyebrow">This device</p>
-          <h1>Privacy</h1>
-        </div>
-        <button type="button" className="st-back" onClick={() => setScreen('universe')}>
-          Back to the atlas
+    <div className="legal-screen">
+      <nav className="legal-nav">
+        <button className="legal-back" onClick={() => setScreen('settings')}>
+          Back to Settings
         </button>
-      </header>
+      </nav>
 
-      <div className="st-body">
-        <section className="st-section" aria-labelledby="st-privacy-promise">
-          <h2 id="st-privacy-promise">The promise</h2>
-          <p className="st-section-note">
-            <EyeOff size={14} aria-hidden="true" /> VELORA is a no-account, no-backend app. Your
-            name, your notes, your questions and what you read never leave this
-            browser. There is no server, no tracking pixel and no advertising
-            identifier. Clearing your browser data deletes everything, because
-            there is no second copy anywhere.
-          </p>
-        </section>
+      <main className="legal-content">
+        <div className="legal-inner">
+          <h1>Privacy</h1>
+          <p className="legal-date">Last updated: 19 October 2026</p>
 
-        <section className="st-section" aria-labelledby="st-external-analytics">
-          <h2 id="st-external-analytics">External analytics</h2>
-          <p className="st-section-note">
-            <Shield size={14} aria-hidden="true" /> The only thing that can leave this browser is an
-            anonymous usage beacon to an analytics service (GoatCounter), and only if you switch it
-            on in Settings. It is off by default.
-          </p>
-          <p className="st-section-note">
-            When it is on, VELORA sends: which screens you open, which Atlas topics you open, whether
-            you read a lesson to the end, which games you complete, and how often you come back
-            within seven days. None of it is tied to you: no cookies, no fingerprinting, no email,
-            no name and no identifier. The numbers are aggregated by the service, not by VELORA.
-          </p>
-          <p className="st-section-note">
-            The beacon only fires if an analytics address has been configured by the person who
-            deployed VELORA. Until it is, switching the setting on changes nothing — nothing is
-            sent anywhere.
-          </p>
-        </section>
+          <section className="legal-section">
+            <h2>What stays here</h2>
+            <p>
+              <EyeOff size={14} aria-hidden="true" /> VELORA has no accounts and
+              no backend. Your name, your notes, your saved lessons, your
+              questions and the minutes recorded against each topic are stored in
+              this browser&apos;s localStorage. They are not sent to a server,
+              because there is no server to send them to. Clearing site data
+              deletes them, and there is no second copy to recover.
+            </p>
+          </section>
 
-        <section className="st-section" aria-labelledby="st-what-it-cannot-tell">
-          <h2 id="st-what-it-cannot-tell">What the numbers cannot tell us</h2>
-          <p className="st-section-note">
-            Even when analytics is on, there is a lot it cannot measure — and that is by design:
-          </p>
-          <p className="st-section-note">
-            • Who you are, or whether two visits belong to the same person.
-          </p>
-          <p className="st-section-note">
-            • What text you read, highlighted or skipped inside a lesson.
-          </p>
-          <p className="st-section-note">
-            • Whether you understood a lesson, only that you reached its end.
-          </p>
-          <p className="st-section-note">
-            • Anything you type: notes, questions, answers or a name.
-          </p>
-          <p className="st-section-note">
-            • What you do outside this app, or on any other site.
-          </p>
-          <p className="st-section-note">
-            • Your location, device model or anything that could fingerprint you.
-          </p>
-          <p className="st-section-note">
-            If a question matters more than a number, it is not measured here.
-          </p>
-        </section>
+          <section className="legal-section">
+            <h2>The one thing that can leave</h2>
+            <p>
+              <Shield size={14} aria-hidden="true" /> External analytics is a
+              single opt-in switch in Settings. It is off by default. A beacon is
+              only sent when that switch is on <strong>and</strong> whoever
+              deployed this build has configured a GoatCounter address. In this
+              deployment the address is blank, so switching it on currently sends
+              nothing at all.
+            </p>
+            <p>When both conditions are met, the app sends:</p>
+            <ul>
+              <li>which screen you opened, by route name</li>
+              <li>which Atlas field or topic you selected, with its title and subject</li>
+              <li>which lesson you started or finished, with its title and subject</li>
+              <li>the id of a game you completed</li>
+              <li>the theme you chose</li>
+              <li>an aggregate count of return visits within seven days</li>
+            </ul>
+            <p>
+              There are no cookies, no fingerprinting, no advertising identifier
+              and no name attached to any of it. The numbers are aggregated by
+              GoatCounter, not by VELORA. Nothing you type is sent: notes,
+              questions and explanations stay in this browser, and no event
+              carries their text.
+            </p>
+          </section>
 
-        <section className="st-section" aria-labelledby="st-control">
-          <h2 id="st-control">Control</h2>
-          <p className="st-section-note">
-            Switch external analytics{' '}
-            {optedIn ? 'on' : 'off'}{' '}
-            in Settings. Turning it off stops every beacon immediately, and nothing already sent can
-            be linked back to this device because nothing identifying was ever sent.
-          </p>
-        </section>
-      </div>
+          <section className="legal-section">
+            <h2>What the numbers cannot tell anyone</h2>
+            <p>Even when analytics is on, it cannot show:</p>
+            <ul>
+              <li>who you are, or whether two visits belong to the same person</li>
+              <li>what you read inside a lesson, or which parts you skipped</li>
+              <li>whether you understood a lesson, only that you reached its end</li>
+              <li>anything you typed: a name, a note, a question or an explanation</li>
+              <li>your location, your device model, or anything that could fingerprint you</li>
+              <li>what you do outside this app</li>
+            </ul>
+            <p>
+              It also cannot tell whether you learned anything. Nothing in this
+              app measures understanding, and no score here claims to.
+            </p>
+          </section>
+
+          <section className="legal-section">
+            <h2>Control</h2>
+            <p>
+              External analytics is currently <strong>{optedIn ? 'on' : 'off'}</strong>{' '}
+              for this browser. You can change it in Settings. Turning it off
+              stops every beacon immediately. Nothing already sent can be linked
+              back to this device, because nothing identifying was ever sent.
+            </p>
+          </section>
+        </div>
+      </main>
     </div>
   );
 }

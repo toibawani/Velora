@@ -238,10 +238,11 @@ function Settings({ user, setScreen, onForgetProfile }) {
           <h2 id="st-analytics">External analytics</h2>
           <p className="st-section-note">
             <Monitor size={14} aria-hidden="true" /> VELORA can send anonymous usage numbers to an
-            analytics service (page views, which Atlas topics open, whether a lesson is finished,
-            game completions and how often people come back within seven days). It cannot tell who
-            you are: there are no cookies, no fingerprinting, no email, no name and no identifier,
-            and nothing is sent at all unless you switch it on. It is off by default. The full
+            analytics service (page views, which Atlas topics open, which lesson titles start or
+            finish, game completions, the theme you chose and how often people come back within
+            seven days). It cannot tell who you are: there are no cookies, no fingerprinting, no
+            email, no name, no identifier, and no text you type. Nothing is sent at all unless you
+            switch it on, and it is off by default. The full
             disclosure, including what the numbers cannot tell us, is on the{' '}
             <button type="button" className="st-link" onClick={() => setScreen('privacy')}>
               Privacy page

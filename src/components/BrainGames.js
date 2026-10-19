@@ -398,8 +398,10 @@ function TrueOrMythGame() {
     const isCorrect = choice === question.answer;
     setSelectedAnswer(choice);
     setIsAnswered(true);
-    setTotalAnswered((prev) => prev + 1);
-    trackEvent('myth_question_answered', { subject: question.subject, correct: isCorrect });
+    setTotalAnswered((prev) => prev + 1);      // No correctness flag. The Privacy page promises that nothing about what
+      // you understand leaves the browser, and a right/wrong bit per question
+      // is exactly that, even without a name attached.
+      trackEvent('myth_question_answered', { subject: question.subject });
 
     if (isCorrect) {
       const nextStreak = streak + 1;

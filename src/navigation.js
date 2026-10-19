@@ -36,6 +36,7 @@ import {
   ListTodo,
   MessageSquareQuote,
   EyeOff,
+  FileText,
 } from 'lucide-react';
 
 export const SCREENS = [
@@ -133,6 +134,14 @@ export const SCREENS = [
     drawerLabel: 'Privacy',
     description: 'What leaves this browser, and what never does',
     icon: EyeOff,
+    primary: false,
+  },
+  {
+    id: 'terms',
+    label: 'Terms',
+    drawerLabel: 'Terms of Service',
+    description: 'The short terms that match what the app actually does',
+    icon: FileText,
     primary: false,
   },
 ];
