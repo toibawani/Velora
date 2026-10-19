@@ -72,11 +72,12 @@ test('the placeholder images are still there, and the page says so', () => {
   expect(allText).toContain('via.placeholder.com');
 });
 
-test('the invented vote counts on the peer board are still there, and named', () => {
+test('the invented vote counts are gone from the explanation board, and the page says so', () => {
   const peers = read('components', 'PeerExplanations.js');
-  expect(peers).toMatch(/DEFAULT_EXPLANATIONS/);
-  // The page calls these invented. Deleting the seeded rows makes that claim
-  // false, so the two have to change in the same commit.
+  expect(peers).not.toMatch(/DEFAULT_EXPLANATIONS/);
+  expect(peers).not.toMatch(/votes:/);
+  // The page describes the removal. If the seeded rows come back, this fails
+  // rather than letting the roadmap call a live problem a fixed one.
   expect(allText).toMatch(/explanations typed out in advance/i);
 });
 

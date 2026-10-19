@@ -1,69 +1,52 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef } from 'react';
-import { Lightbulb, Target, Smile, Brain } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 import EmptyState from './EmptyState';
 import { sanitizeText } from '../utils/sanitize';
 import { EXPLANATION_BOARD, readValue, writeValue } from '../utils/storage';
 import '../styles/PeerExplanations.css';
 
-const DEFAULT_EXPLANATIONS = [
-  { id: 1, text: 'Imagine spacetime as a rubber sheet. Heavy objects bend it, creating gravity. Nothing can escape once it bends too much.', votes: { clear: 24, funny: 3, mindBending: 8 }, timestamp: new Date(Date.now() - 3600000).toISOString() },
-  { id: 2, text: 'A black hole is where physics breaks. Time stops, space folds, and light gives up. It is the universe saying “I don’t know.”', votes: { clear: 12, funny: 42, mindBending: 18 }, timestamp: new Date(Date.now() - 7200000).toISOString() },
-  { id: 3, text: 'Think of it as an infinite trap. You can look in but never get out. Not even light escapes.', votes: { clear: 31, funny: 2, mindBending: 5 }, timestamp: new Date(Date.now() - 86400000).toISOString() }
-];
-
+/**
+ * An explanation board that only ever holds what this browser wrote.
+ *
+ * It used to ship three explanations with vote counts of 24, 12, 31 and 42,
+ * attributed to nobody. There is no server and no second reader, so every one
+ * of those numbers was invented, and the board opened on a conversation that
+ * had not happened. It now starts empty and says where what you write goes.
+ */
 const storageKey = (topic) => EXPLANATION_BOARD(topic.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-
-const VOTE_TYPES = ['clear', 'funny', 'mindBending'];
 
 /**
  * Stored explanations arrive from a previous version of this app, from a
- * half-finished write, or from someone poking at devtools. The old check only
- * asked whether `votes` was truthy, so `votes: {}` and `votes: "yes"` both
- * passed, and then every counter rendered NaN and the sort comparator returned
- * NaN, which left the list in whatever order it started in.
+ * half-finished write, or from someone poking at devtools. Keep the rows that
+ * have text and drop the rest rather than letting one bad row break the list.
  */
-const isValidVotes = (votes) =>
-  votes &&
-  typeof votes === 'object' &&
-  !Array.isArray(votes) &&
-  VOTE_TYPES.every((type) => Number.isFinite(votes[type]) && votes[type] >= 0);
-
 const isValidExplanation = (item) =>
   item &&
   typeof item.text === 'string' &&
   item.text.trim().length > 0 &&
   item.text.length <= 400 &&
-  isValidVotes(item.votes) &&
   (item.id === undefined || typeof item.id === 'string' || typeof item.id === 'number') &&
   (item.timestamp === undefined || typeof item.timestamp === 'string');
 
-/** Drop anything malformed rather than letting one bad row poison the list. */
 const readExplanations = (stored) =>
-  Array.isArray(stored) ? stored.filter(isValidExplanation) : null;
-
-PeerExplanations.propTypes = { topic: PropTypes.string, onNotify: PropTypes.shape({"onNotify": PropTypes.func}) };
-
-function PeerExplanations({ topic, onNotify }) {
-  const [explanations, setExplanations] = useState(() => {
-    const saved = readExplanations(readValue(storageKey(topic), null));
-    if (saved && saved.length) {
-      return saved.map((item) => ({
+  Array.isArray(stored)
+    ? stored.filter(isValidExplanation).map((item) => ({
         ...item,
-        votes: { ...Object.fromEntries(VOTE_TYPES.map((type) => [type, item.votes[type]])) },
         text: sanitizeText(item.text),
         // Rows written before this screen kept no timestamp. Falling back to
         // now is better than letting an Invalid Date reach the formatter,
         // which used to render the literal string "NaNd ago".
         timestamp: Number.isFinite(Date.parse(item.timestamp)) ? item.timestamp : new Date().toISOString(),
-      }));
-    }
-    return DEFAULT_EXPLANATIONS;
-  });
+      }))
+    : [];
 
+PeerExplanations.propTypes = { topic: PropTypes.string, onNotify: PropTypes.shape({ "onNotify": PropTypes.func }) };
+
+function PeerExplanations({ topic, onNotify }) {
+  const [explanations, setExplanations] = useState(() => readExplanations(readValue(storageKey(topic), null)));
   const [newExplanation, setNewExplanation] = useState('');
   const [inputError, setInputError] = useState('');
-  const [userVotes, setUserVotes] = useState({});
   const submittingRef = useRef(false);
 
   useEffect(() => {
@@ -73,12 +56,12 @@ function PeerExplanations({ topic, onNotify }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Someone mashing the button, or a form submitted twice by a stuck enter
-    // key, should not produce two identical posts.
+    // key, should not produce two identical entries.
     if (submittingRef.current) return;
     const rawText = newExplanation.trim();
     const text = sanitizeText(rawText);
     if (text.length < 10) {
-      setInputError('Add a little more detail so another learner can follow your thinking.');
+      setInputError('Add a little more detail so the next read of it makes sense.');
       submittingRef.current = false;
       return;
     }
@@ -88,33 +71,12 @@ function PeerExplanations({ topic, onNotify }) {
       return;
     }
 
-    const explanation = { id: Date.now(), text, votes: { clear: 0, funny: 0, mindBending: 0 }, timestamp: new Date().toISOString() };
+    const explanation = { id: Date.now(), text, timestamp: new Date().toISOString() };
     submittingRef.current = true;
     setExplanations((current) => [explanation, ...current]);
     setNewExplanation('');
     setInputError('');
-    if (onNotify) onNotify('Your explanation is now part of the conversation.', 'success');
-  };
-
-  const handleVote = (id, voteType) => {
-    if (!VOTE_TYPES.includes(voteType)) return;
-    const key = `${id}-${voteType}`;
-    if (userVotes[key]) {
-      if (onNotify) onNotify('You have already voted on this explanation.', 'info');
-      return;
-    }
-
-    // Functional update, so two quick clicks cannot both read the same list and
-    // one of the votes goes missing.
-    setExplanations((current) =>
-      current.map((exp) =>
-        exp.id === id
-          ? { ...exp, votes: { ...exp.votes, [voteType]: (exp.votes[voteType] || 0) + 1 } }
-          : exp
-      )
-    );
-
-    setUserVotes((current) => ({ ...current, [key]: true }));
+    if (onNotify) onNotify('Saved on this device. There is no server, so nobody else can read it.', 'success');
   };
 
   const getTimeAgo = (timestamp) => {
@@ -132,23 +94,24 @@ function PeerExplanations({ topic, onNotify }) {
   };
 
   const sortedExplanations = [...explanations].sort(
-    (a, b) => (b.votes.clear + b.votes.mindBending) - (a.votes.clear + a.votes.mindBending)
+    (a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp)
   );
 
   return (
     <div data-testid="peer-explanations" className="peer-explanations">
       <div className="explanations-header">
-        <h2 className="explanations-title">How Others Explain This</h2>
+        <h2 className="explanations-title">Your explanations</h2>
         <p className="explanations-subtitle">
-          Kept in this browser for now. Sharing them between people needs a server
-          and someone to read them first.
+          This board is stored in this browser. Nobody else can see it, because
+          there is no server and no other people here. It is a place to work out
+          how you would say a thing, not a feed.
         </p>
       </div>
 
       <form id="peer-explanation-form" className="explanation-input-box" onSubmit={handleSubmit}>
         <textarea
           className="explanation-input"
-          placeholder="Explain this concept in 1-2 sentences. Be clear, be creative!"
+          placeholder="Explain this concept in 1-2 sentences, in your own words."
           value={newExplanation}
           onChange={(e) => {
             setNewExplanation(e.target.value);
@@ -163,7 +126,7 @@ function PeerExplanations({ topic, onNotify }) {
         <div className="input-footer">
           <span className="char-count">{newExplanation.length}/200</span>
           <button className="submit-btn" type="submit">
-            Share Anonymously →
+            Save this explanation
           </button>
         </div>
       </form>
@@ -171,9 +134,9 @@ function PeerExplanations({ topic, onNotify }) {
       {sortedExplanations.length === 0 ? (
         <EmptyState
           icon={<Lightbulb size={28} aria-hidden="true" />}
-          title="No peer explanations yet"
-          description="Be the first to explain this concept in simple words for your peers."
-          actionText="Write First Explanation"
+          title="Nothing written yet"
+          description="Write the first explanation of this concept. It stays on this device."
+          actionText="Write an explanation"
           action={() => {
             const input = document.querySelector('.explanation-input');
             if (input) input.focus();
@@ -183,42 +146,9 @@ function PeerExplanations({ topic, onNotify }) {
         <div className="explanations-list">
           {sortedExplanations.map((exp) => (
             <div key={exp.id} className="explanation-card">
-              <p className="explanation-text">"{exp.text}"</p>
-
+              <p className="explanation-text">&quot;{exp.text}&quot;</p>
               <div className="explanation-footer">
                 <span className="time-ago">{getTimeAgo(exp.timestamp)}</span>
-
-                <div className="vote-buttons">
-                  <button
-                    className={`vote-btn clear ${userVotes[`${exp.id}-clear`] ? 'voted' : ''}`}
-                    onClick={() => handleVote(exp.id, 'clear')}
-                     disabled={Boolean(userVotes[`${exp.id}-clear`])}
-                     aria-label="Vote clear"
-                  >
-                    <span className="vote-icon"><Target size={16} aria-hidden="true" /></span>
-                    <span className="vote-count">{exp.votes.clear}</span>
-                  </button>
-
-                  <button
-                    className={`vote-btn funny ${userVotes[`${exp.id}-funny`] ? 'voted' : ''}`}
-                    onClick={() => handleVote(exp.id, 'funny')}
-                     disabled={Boolean(userVotes[`${exp.id}-funny`])}
-                     aria-label="Vote funny"
-                  >
-                    <span className="vote-icon"><Smile size={16} aria-hidden="true" /></span>
-                    <span className="vote-count">{exp.votes.funny}</span>
-                  </button>
-
-                  <button
-                    className={`vote-btn mindBending ${userVotes[`${exp.id}-mindBending`] ? 'voted' : ''}`}
-                    onClick={() => handleVote(exp.id, 'mindBending')}
-                     disabled={Boolean(userVotes[`${exp.id}-mindBending`])}
-                     aria-label="Vote mind-bending"
-                  >
-                    <span className="vote-icon"><Brain size={16} aria-hidden="true" /></span>
-                    <span className="vote-count">{exp.votes.mindBending}</span>
-                  </button>
-                </div>
               </div>
             </div>
           ))}

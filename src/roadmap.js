@@ -166,10 +166,10 @@ export const ROADMAP = [
           'Removed. A Journey screen showed five fixed achievements with mastery scores of 94, 88 and 92 beside them, identical for everyone including someone who had just arrived, because no measurement produced any of it. The screen now shows study sessions that were actually recorded.',
       },
       {
-        name: 'Peer explanations',
+        name: 'Explanations you write',
         state: 'partial',
         detail:
-          'The board where you write an explanation of a concept in your own words and vote on others is real, and what you write is stored. But it also ships three explanations typed out in advance, each with vote counts of 24, 12, 31, 42 and similar, which no person produced. Those are the same invented numbers the removed screens were deleted for, so this one is on the list to be looked at again.',
+          'Fixed, with a limit. The board where you explain a concept in your own words is real, and what you write is stored in this browser. It used to ship three explanations typed out in advance, with vote counts of 24, 12, 31, 42 and similar, which no person produced. Those rows and the vote controls were deleted; it now starts empty and says that nobody else can read what you write, because there is no server to share it through. Reading someone else still needs a backend.',
       },
       {
         name: 'Sharing and sync',
