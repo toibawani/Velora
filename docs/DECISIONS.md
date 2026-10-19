@@ -61,18 +61,23 @@ That proves the component renders, not that it works.
 
 ---
 
-## Why the npm 10 lockfile
+## Why the lockfile is tested with npm 10
 
-**What I chose:** The lockfile is generated with npm 10, not npm 8.
+**What I chose:** The lockfile is generated with npm 10, the version that ships
+with CI's Node 20, and checked there before it is trusted.
 
-**Why:** `npm ci` installs exactly what is in the lockfile. If the lockfile is
-from npm 8, `npm ci` on npm 10 will fail. The lockfile is a contract between
-the package manager and the machine. npm 10 changed internal defaults and I
-wanted a lockfile that does not surprise anyone who runs `npm ci` on a clean
-machine.
+**Why:** This is not theoretical. CI failed 58 runs out of 59 because the
+lockfile recorded a peer requirement for `yaml@^2.4.2` from tailwindcss's
+nested `postcss-load-config` but shipped no yaml 2.x entry (`6d8aaec`, 4 October
+2026). npm 11 on my laptop installed it anyway. npm 10 on the runner refused,
+so every job died at `npm ci` before a test ran. A day later npm 11 pruned the
+same entry again while installing a font and CI went red for the same reason
+(`3d1dd92`).
 
-**What I rejected:** Editing the lockfile by hand. It is generated. If you edit
-it, you get a lockfile that does not match the code.
+**What I rejected:** Regenerating the lockfile by hand or moving the runner to
+npm 11. Editing the lockfile gives you a lockfile that does not match the code,
+and moving the runner hides the gap instead of closing it. The fix is to run
+`npx npm@10 ci` on a clean clone and let the runner be the judge.
 
 ---
 
@@ -82,7 +87,7 @@ it, you get a lockfile that does not match the code.
 is a row in a table-like index. You click a topic to open it.
 
 **Why:** Cards are for browsing. The Atlas is for looking up. You do not
-"browse" through 573 topics. You search for a specific thing and you want it
+"browse" through 572 topics. You search for a specific thing and you want it
 formatted consistently, every row the same width, every letter the same size.
 
 **What I rejected:** A card grid. Cards take more vertical space, they wrap
@@ -112,11 +117,11 @@ understanding.
 
 **What I chose:** Each black hole and deep read entry has one of three labels:
 
-- `Well-established` — direct measurement, or a prediction confirmed to many
+- `Well-established`: direct measurement, or a prediction confirmed to many
   digits. The information paradox is not this.
-- `Theoretical` — a coherent model with no direct test yet. The theory of
+- `Theoretical`: a coherent model with no direct test yet. The theory of
   relativity is this.
-- `Unknown / contested` — active disagreement between competent people. The
+- `Unknown / contested`: active disagreement between competent people. The
   firewall debate is this.
 
 **Why:** If you write about black holes, you have to be honest about what is
@@ -131,11 +136,14 @@ claim, not the reader.
 
 ---
 
-## What the status labels mean (cont.) — the user counts
+## Where the counts come from
 
 **What I chose:** Every count in the README comes from a script, not from my
-memory. Run `node scripts/by-the-numbers.js` and you get the numbers. The
-script reads the data files and prints the counts. It does not estimate.
+memory. Run `node scripts/by-the-numbers.js` and you get the numbers. It reads
+the data files, compiles the real Atlas resolver, runs jest and parses the
+workflow files. It does not estimate. The first version of this script had two
+Atlas numbers typed in as constants, and both were wrong, which is why the
+script now measures them.
 
 **Why:** A recruiter can check the numbers by running the script. If I type
 them by hand, I can make a mistake. If I read them from the data, the numbers
