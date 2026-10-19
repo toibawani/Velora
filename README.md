@@ -40,7 +40,7 @@ workflow files. Run it and compare.
 
 | What | Measured value |
 |---|---|
-| Jest suites / tests | 83 suites, 686 tests, all passing |
+| Jest suites / tests | 82 suites, 682 tests, all passing |
 | Atlas topics with content | 54 of 572 |
 | Fields / disciplines | 6 fields, 34 disciplines |
 | Dictionary entries | 138, every one with a source URL |

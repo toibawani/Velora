@@ -24,7 +24,7 @@ why the choice was made. If a line feels like marketing, cut it.
 | 0:44 | Click **Gravitation** in Classical Mechanics. The panel above updates. | "Pick one that is written and the panel gives you the way in." |
 | 0:50 | Click **Read the lesson**. Scroll to section 04, then tap the dotted word **spacetime**. | "Explanations are written for someone who is stuck, not someone revising. The dotted words open a definition from the same glossary the content is checked against." |
 | 1:04 | Press Escape, go back to the atlas, click **Electric Charge** under Electromagnetism. | "And this is the part I care about. Electric Charge has no lesson. It says so, and it stays in the index so the shape of the field is visible." |
-| 1:14 | Switch to the GitHub Actions run for main. Show the green CI job and the job list. | "Eight checks run on every push: typecheck, 686 tests, a build, lint, a contrast gate, and audits that drive the built app in real Chrome at 1440 and 375. Every one of them was broken on purpose once, to prove it can fail." |
+| 1:14 | Switch to the GitHub Actions run for main. Show the green CI job and the job list. | "Eight checks run on every push: typecheck, 682 tests, a build, lint, a contrast gate, and audits that drive the built app in real Chrome at 1440 and 375. Every one of them was broken on purpose once, to prove it can fail." |
 | 1:26 | Back to the atlas, hold on the field counts. | "Fifty-four written, 518 not. That is the honest number, and it is the next thing I am working on." |
 
 ## Cut points
