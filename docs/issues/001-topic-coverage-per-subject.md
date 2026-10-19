@@ -20,7 +20,7 @@ for each subject:
 ## Why it matters
 
 Readers arrive at subjects other than philosophy and see a dead end. The
-Atlas should tell them honestly that the content is missing, not pretend it
+Atlas should say plainly that the content is missing, not pretend it
 exists. This is about trust, not completeness.
 
 ## Notes
