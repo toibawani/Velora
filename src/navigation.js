@@ -123,7 +123,7 @@ export const SCREENS = [
     id: 'dialogues',
     label: 'Dialogues',
     drawerLabel: 'Intellectual Dialogues',
-    description: 'Direct conversations with historical thinkers: Einstein, Socrates, Rumi, Curie, Chanakya, Ibn Rushd',
+    description: 'Scripted dialogues with six historical figures, written from their surviving work',
     icon: MessageSquareQuote,
     primary: false,
   },

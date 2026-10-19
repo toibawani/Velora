@@ -61,7 +61,7 @@ function ConversationBots({ setScreen, initialFigureId = 'einstein', showToast }
     setMessages(nextMessages);
     setInputText('');
 
-    // Generate authentic figure response
+    // Pick the scripted reply for this figure. Nothing is generated live.
     const botReplyText = generateBotResponse(activeFigureId, query, nextMessages);
     const botMessage = {
       sender: 'bot',
@@ -96,7 +96,7 @@ function ConversationBots({ setScreen, initialFigureId = 'einstein', showToast }
           <div className="dialogue-title-col">
             <h1 className="dialogue-title">Intellectual Dialogues</h1>
             <span className="dialogue-sub">
-              Converse directly with foundational thinkers within their own era and worldview
+              Scripted replies written in each figure&apos;s voice. Not the person, and not a live model.
             </span>
           </div>
         </div>
@@ -147,6 +147,12 @@ function ConversationBots({ setScreen, initialFigureId = 'einstein', showToast }
         </section>
 
         {/* Thoughtful Starter Questions */}
+        <p className="dialogue-disclaimer">
+          Every reply on this screen was written in advance and is chosen by
+          matching words in your question. It cannot answer something the
+          script does not cover, and it is not the historical person speaking.
+        </p>
+
         <section className="dialogue-starters-card" aria-label="Suggested inquiries">
           <span className="dialogue-starters-label">
             <Sparkles size={13} aria-hidden="true" /> Suggested Inquiries

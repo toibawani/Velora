@@ -35,7 +35,7 @@ describe('ConversationBots screen', () => {
     expect(screen.getByText(BOTS.socrates.bio)).toBeInTheDocument();
   });
 
-  test('sends a user message and generates an authentic bot response', () => {
+  test('sends a user message and returns the scripted reply', () => {
     render(<ConversationBots setScreen={() => {}} initialFigureId="socrates" />);
 
     const input = screen.getByLabelText(/Type your question for Socrates/i);
