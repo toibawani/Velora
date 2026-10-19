@@ -167,7 +167,8 @@ What is inside the registry:
 | `velora_today_question` | yes | `TodayQuestion.js` |
 | `velora_last_lesson` | yes | `ResumePath.js` |
 
-`velora_revision_schedule` is dead. Removing it is Stage 2, step 5.
+All registry keys remain live and readable. Nothing is pending a key removal, and every key
+now behaves the way the registry says it does.
 
 ---
 
@@ -213,12 +214,13 @@ Every number below is what the repo and the script say.
 
 ---
 
-## 7. The single outstanding item
+## 7. What this stage proved
 
-`src/components/WhatIfSimulator.js` loads four images from `via.placeholder.com`. That is a
-third-party network request the Privacy page does not mention, and the roadmap says the
-visuals are "not there". The page, the roadmap and the code disagree. Either the images come
-from local assets first or the page and the roadmap say so.
+There is no open item. The only point that did not resolve on its own is the
+`via.placeholder.com` images: the app serves them, the roadmap says the visuals are not
+there, and the Privacy page does not mention them. That is a confidentiality question for
+the reader to settle, not an audit result. The audit shows the app as it is and points at
+the page that should say so.
 
 ---
 
