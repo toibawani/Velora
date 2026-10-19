@@ -352,14 +352,14 @@ const playExplain = async (page) => {
 };
 
 /**
- * Plays the six Concept Puzzles games end to end.
+ * Plays the six cards in the Concept Puzzles tab end to end.
  *
  * The script used to snapshot the hub and then play only the three Brain Games
- * modes, while printing "every game reached and played". Six of the nine games -
- * Concept Check, Concept Scrabble, Knowledge Chain, Definition Duel, Concept
- * Puzzle and Relativity Lab - were never opened by anything. A deck with an
- * unreachable card, a crash on mount, or an input that never fires would have
- * passed CI every single time.
+ * modes, while printing "every game reached and played". The six cards in this
+ * tab - Concept Check, Concept Scrabble, Knowledge Chain, Definition Duel,
+ * Concept Puzzle and the Relativity Lab simulation - were never opened by
+ * anything. A deck with an unreachable card, a crash on mount, or an input that
+ * never fires would have passed CI every single time.
  *
  * It also checks that Definition Duel is actually serving the philosophy deck.
  * The ten philosophy terms are held to the philosophy entries by a unit test,
@@ -495,7 +495,7 @@ const backToClassicHub = async (page) => {
 };
 
 const playClassicGames = async (page) => {
-  // The six live under the Concept Puzzles tab, not the Brain Games one.
+  // The six cards live under the Concept Puzzles tab, not the Brain Games one.
   await page.evaluate(() => {
     const b = [...document.querySelectorAll('button')].find((x) => /concept puzzles/i.test(x.textContent));
     if (b) b.click();
@@ -643,7 +643,7 @@ const main = async () => {
     }
   }
 
-  // The six Concept Puzzles games, which until now nothing opened at all.
+  // The six cards in the Concept Puzzles tab, which nothing opened before.
   const classic = await playClassicGames(page);
   unreachable.push(...classic.unreachable);
 

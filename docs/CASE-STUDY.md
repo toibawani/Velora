@@ -72,7 +72,7 @@ lessons had a game that never mentioned it. The terms are now read from
 `PHILOSOPHY_LEVELS` rather than copied, so the two cannot drift apart, and a new
 check fails if a clue contains its own answer.
 
-**The audit that never opened six games.** The game audit answered one Connect
+**The audit that never opened six cards.** The game audit answered one Connect
 the Concept puzzle, then advanced by clicking any button whose text matched
 `/next/i`. That also matches the global "Next up" navigation item. So it walked
 out of the games screen, could not find the other tabs, printed "tab not found"
@@ -84,10 +84,10 @@ change mattered more: an unreachable game became a failure instead of a printed
 note. A week of output had been describing a report, not a gate.
 
 That was not the end of it. On the same day I found that the audit opened only
-the three Brain Games modes and none of the six Concept Puzzles games
-(`1ebb5c0`). A crash on mount or an input that never fired in those six would
-have passed CI forever, while the script printed "every game reached and
-played". The audit now opens and plays all six. Getting real coverage out of
+the three Brain Games modes and none of the six cards in the Concept Puzzles
+tab, five games and Relativity Lab (`1ebb5c0`). A crash on mount or an input
+that never fired in those six would have passed CI forever, while the script
+printed "every game reached and played". The audit now opens and plays all six. Getting real coverage out of
 Definition Duel exposed another version of the same problem: a wrong answer does
 not advance the card, so the script re-read the first clue twenty times and
 reported twenty clues. It now reads the game's own "the answer was X" feedback
