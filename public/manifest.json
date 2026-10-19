@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "VELORA",
+  "name": "VELORA: a reference book for curious people",
+  "description": "A no-account reference book. Every topic is listed from day one, and the ones with nothing written behind them say so.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#F6EFE4",
+  "background_color": "#F6EFE4"
 }

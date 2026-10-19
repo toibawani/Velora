@@ -40,7 +40,13 @@ function ShareAchievementModal({
   const parts = [`I just worked through ${milestone} on VELORA`];
   if (score) parts.push(score);
   else if (completed !== null) parts.push(`${completed} item${completed === 1 ? '' : 's'}`);
-  const shareCopy = `${parts.join(', ')}: https://velora.app`;
+  // velora.app is not this app. A share that pointed there sent people to a
+  // domain nobody had registered, so the link comes from the page itself.
+  const shareUrl =
+    typeof window !== 'undefined' && window.location
+      ? window.location.href.split('#')[0]
+      : '';
+  const shareCopy = shareUrl ? `${parts.join(', ')}: ${shareUrl}` : parts.join(', ');
 
   const handleShare = (platform) => {
     const encodedText = encodeURIComponent(shareCopy);
@@ -49,7 +55,7 @@ function ShareAchievementModal({
     } else if (platform === 'whatsapp') {
       window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
     } else if (platform === 'linkedin') {
-      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://velora.app')}&summary=${encodedText}`, '_blank');
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&summary=${encodedText}`, '_blank');
     }
   };
 
