@@ -1,16 +1,16 @@
 # VELORA Stage 1 audit
 
 Date: 19 October 2026
-Commit audited: a337918
+Commit audited: ba2cdae (the re-run), on top of a337918.
 
-This stage's instructions were to continue the interrupted Stage 1, but "Stage 1" as the
-original brief drew it does not exist here: every block of that brief's numbered checklist
-was already executed and reported in `docs/AUDIT-FINAL.md`, committed as `0cacea4
-docs(audit): record stage 0 findings and evidence`. This file re-audits the same tree so a
-new reader has the numbers in one place, and it records the single remaining follow-up this
-stage's re-check found.
+This stage's instructions asked for a "stage 1" report. They did not match the repository.
+Every block of that brief's numbered checklist was already executed and committed as
+`0cacea4 docs(audit): record stage 0 findings and evidence`, and the working tree already
+carried the full Stage 0 audit in `docs/AUDIT-FINAL.md`. The previous file is therefore
+kept as the Stage 0 record, and this file is the re-audit of the same tree that the new
+reader needs to see before any Stage 2 work starts.
 
-Nothing in the repository has changed since that commit is on `main`.
+Nothing in the repository has changed since `ba2cdae` is on `main`.
 
 ---
 
@@ -27,7 +27,7 @@ Source of truth used for every number:
   (6 fields, 34 disciplines, 572 topics, 54 written, 300 not written, 218 unmapped).
 - `src/data/dictionary/*.ts` (138 entries, 138 `sourceUrl` values).
 - `src/data/blackholes/` (8 levels, 61 entries).
-- `src/screens/Games.js` (`CLASSIC_GAMES` + the `simulation` entry inside it),
+- `src/screens/Games.js` (`CLASSIC_GAMES` + the one `simulation` entry inside it),
   `src/components/BrainGames.js` (`BRAIN_GAMES`, 3) and
   `src/components/PhysicsSimulations.js` (`PHYSICS_SIMULATIONS`, 5 + the `simulation`
   entry inside the classic grid). Total: 8 games, 6 simulations.
@@ -63,8 +63,8 @@ Source of truth used for every number:
    a global `npm install -g vercel`, and its "Pre-deployment checklist" asks for
    `npm run test -- --watchAll=false`, which `package.json` does not define. `incident-response.md`
    is a generic client-side incident runbook with no VELORA specifics; it also contains one
-   command error — `git checkout gh-pages` instead of `git checkout --orphan gh-pages`
-   — because a `gh-pages` branch cannot be created from a clean checkout of `main`.
+   small command error — `git checkout gh-pages` in the rollback section, which cannot
+   create a `gh-pages` branch from a clean checkout of `main`.
 
 4. `.env.example` (tracked) describes a Postgres/JWT/OpenAI backend, placeholder secrets,
    and a `CORS_ORIGIN` at a domain the project does not own. The app has no backend, so the
@@ -237,8 +237,8 @@ Not checked, and why:
 
 `src/components/WhatIfSimulator.js` loads four images from `via.placeholder.com`. That is a
 third-party network request the Privacy page does not mention, and the roadmap says the
-visuals "are not there". The page, the roadmap and the code disagree. Either the images come
-from `@fontsource`-style local assets first or the page and the roadmap say so.
+visuals are "not there". The page, the roadmap and the code disagree. Either the images come
+from local assets first or the page and the roadmap say so.
 
 ---
 
@@ -250,5 +250,5 @@ from `@fontsource`-style local assets first or the page and the roadmap say so.
 - [x] Audit claims in README, docs, meta and app copy
 - [x] Run jest, tsc, lint, build, contrast, counts and the latest CI
 - [x] Check the npm 10 lockfile
-- [ ] Re-read `docs/AUDIT-FINAL.md` and verify every claim with new output
+- [x] Re-read the previous audit and verify every claim with new output
 - [x] Write this file, commit and push, confirm CI
