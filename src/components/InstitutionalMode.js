@@ -86,8 +86,10 @@ function InstitutionalMode({ onBack }) {
             <section className="inst-hero-summary">
               <h3>Curriculum Integration & Lesson Guides</h3>
               <p>
-                Seamlessly bridge VELORA’s interactive visual simulations with your classroom syllabus.
-                Download Socratic lesson plans, discussion rubrics, and conceptual diagnostic checks.
+                Lesson frameworks for two topics, with the prompts and the
+                misconceptions each one targets. Everything below is on this
+                page. There is no separate download: the print button prints
+                the page you are reading, and there is no PDF behind it.
               </p>
             </section>
 
@@ -159,7 +161,7 @@ function InstitutionalMode({ onBack }) {
 
                     <div className="guide-card-footer">
                       <button className="guide-export-btn" onClick={() => window.print()}>
-                        Export Printable Lesson Plan PDF →
+                        Print this lesson framework
                       </button>
                     </div>
                   </div>
@@ -174,8 +176,10 @@ function InstitutionalMode({ onBack }) {
             <section className="inst-hero-summary">
               <h3>Transparent Developmental Insights</h3>
               <p>
-                VELORA replaces dopamine-trap scrolling with deep conceptual exploration.
-                Monitor focus velocity, educational value index, and conversation starters—without invasive tracking.
+                What this device recorded, and what it did not. There is no focus
+                measurement and no educational value index, so those panels say
+                Not measured rather than inventing a score. The conversation
+                starters are questions, not a report on your child.
               </p>
             </section>
 
@@ -187,7 +191,8 @@ function InstitutionalMode({ onBack }) {
                   <span className="stat-score-large">Not measured</span>
                 </div>
                 <p className="stat-sub-expl">
-                  Focus state is not yet measured. It will appear after a learner records a study session.
+                  No study session can produce this. Nothing in the app measures
+                  focus, so it stays Not measured.
                 </p>
               </div>
 
@@ -207,7 +212,8 @@ function InstitutionalMode({ onBack }) {
                   <span className="stat-score-large">Not measured</span>
                 </div>
                 <p className="stat-sub-expl">
-                  Uninterrupted deep focus sessions without algorithmic distractions.
+                  There is no measurement behind this panel. The app has no feed
+                  to interrupt, but that is a design choice, not a focus score.
                 </p>
               </div>
             </div>
