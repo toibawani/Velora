@@ -21,7 +21,10 @@ test('trades the immovable tiles for ones that move', () => {
 
   expect(tileValue('Sessions Logged')).toBe('2');
   expect(tileValue('Topics Touched')).toBe('2');
-  expect(tileValue('Total Focused Hours')).toBe('1.5');
+  expect(tileValue('Hours recorded')).toBe('1.5');
+  // The tile used to say Total Focused Hours. Nothing measures focus, so it now
+  // names the quantity it actually has: time between open and close.
+  expect(tileValue('Total Focused Hours')).toBeUndefined();
 
   expect(screen.queryByText(/Active Learning Streak/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/Mastered Modules/i)).not.toBeInTheDocument();

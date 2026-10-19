@@ -8,9 +8,9 @@ import '../styles/Analytics.css';
 /**
  * Analytics Screen
  *
- * Provides transparent, privacy-respecting insights into learning patterns,
- * time allocation, struggled concepts, cognitive learning style preferences,
- * and peak focus hours.
+ * Shows the time this device actually recorded, per topic. It deliberately does
+ * not claim to measure focus, learning style or mastery: those panels used to
+ * exist and were built from numbers nothing produced.
  */
 /**
  * A bar's colour is asked of the subject rather than carried in from the record:
@@ -27,6 +27,7 @@ function Analytics({ setScreen, user }) {
   const [analytics, setAnalytics] = useState(getAnalyticsData());
   const hasActivity = analytics.totalHoursStudied > 0 || analytics.topicTimeDistribution.length > 0;
   const domainCount = new Set(analytics.topicTimeDistribution.map((item) => item.subject)).size;
+  const activeDays = analytics.weeklyActivity.filter((day) => (day.sessions || 0) > 0).length;
   // Sessions are stored per day, so the count is a sum rather than a field.
   const sessionTotal = analytics.weeklyActivity.reduce((total, day) => total + (day.sessions || 0), 0);
 
@@ -45,7 +46,7 @@ function Analytics({ setScreen, user }) {
         <h1 className="analytics-brand-title">Personal Learning Analytics</h1>
         <div className="analytics-privacy-badge">
           <Shield size={14} aria-hidden="true" />
-          <span>100% On-Device & Private</span>
+          <span>Stored on this device</span>
         </div>
       </header>
 
@@ -55,7 +56,8 @@ function Analytics({ setScreen, user }) {
           <div className="hero-text-col">
             <h2 className="analytics-greeting">Cognitive Insights for {user?.name || 'Explorer'}</h2>
             <p className="analytics-lead">
-              Understand how your brain retains complex subjects and optimize your study cadence.
+              Time this device recorded, and what it went on. Nothing here
+              measures understanding, so no number claims to.
             </p>
           </div>
           <div className="analytics-scope-note">All activity is stored locally on this device.</div>
@@ -64,12 +66,12 @@ function Analytics({ setScreen, user }) {
         {/* Primary Metrics Grid */}
         <section className="analytics-metrics-grid">
           <div className="metric-box">
-            <span className="metric-caption">Total Focused Hours</span>
+            <span className="metric-caption">Hours recorded</span>
             <div className="metric-num-row">
               <span className="metric-big-num">{analytics.totalHoursStudied}</span>
               <span className="metric-unit">hrs</span>
             </div>
-            <span className="metric-subtext">{hasActivity ? `Across ${domainCount || 1} learning domain${domainCount === 1 ? '' : 's'}` : 'No sessions recorded yet'}</span>
+            <span className="metric-subtext">{hasActivity ? `Time between opening and closing a lesson, across ${domainCount || 1} domain${domainCount === 1 ? '' : 's'}` : 'No sessions recorded yet'}</span>
           </div>
 
           <div className="metric-box">
@@ -91,11 +93,12 @@ function Analytics({ setScreen, user }) {
           </div>
 
           <div className="metric-box">
-            <span className="metric-caption">Cognitive Velocity</span>
+            <span className="metric-caption">Days active</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">{hasActivity ? 'Baseline' : '—'}</span>
+              <span className="metric-big-num">{activeDays}</span>
+              <span className="metric-unit">days</span>
             </div>
-            <span className="metric-subtext">{hasActivity ? 'A baseline for future comparisons' : 'No comparison yet'}</span>
+            <span className="metric-subtext">Days this week with at least one closed session</span>
           </div>
         </section>
 
