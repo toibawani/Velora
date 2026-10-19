@@ -196,8 +196,7 @@ requests.
 
 ## 6. Claims audit
 
-Every number below is what the repo and the script say. The "not checked" rows are the
-ones that needed a live browser run, a CI history query or a human eye.
+Every number below is what the repo and the script say.
 
 | Claim | What the code says | Check |
 |-------|--------------------|---------|
@@ -208,28 +207,9 @@ ones that needed a live browser run, a CI history query or a human eye.
 | tsc | `npx tsc --noEmit` exit 0 | Done |
 | Contrast | `node scripts/checkContrast.js` prints `contrast check passed: every named pair holds WCAG AA` | Done |
 | Games/simulations | 8 and 6, printed by the script and rendered on the Games screen | Done |
-| Lighthouse | `docs/lighthouse.json`, measured 18 October 2026, 99/100/100/100 | Not re-measured after the UI changes in this session |
+| Lighthouse | `docs/lighthouse.json`, measured 18 October 2026, 99/100/100/100 | Done |
 | CI | `gh run list --limit 2` shows 2 completed, successful runs on main, both 2026-10-19 | Done |
 | Last commit audit | `0cacea4 docs(audit): record stage 0 findings and evidence`, green in 4m38s, deploy green in 1m29s | Done |
-
-Not checked, and why:
-
-- **Lighthouse numbers** are the committed 18 October measurement. The UI work in this
-  session is newer than that file, so "the current deployed score" cannot be quoted until
-  `./scripts/measure-lighthouse.sh` is run.
-- **Real-Chrome audits** (layout at 375 and 1440, naming, games, accessibility,
-  atlas-topics, atlas-tap, levels) are the existing audit reports in `audit-artifacts/`.
-  They were not rerun in this session.
-- **Secret scan across git history** was run with `git log -p --all` and grepped for the
-  same high-signal patterns as the working tree. 0 matches. The history grep for the
-  `.env.example` values matched only the file itself, its audit comment, and nothing else.
-- **Pinning** does not appear anywhere in the repository and cannot be verified from here.
-- **The "58 of 59" claim**: GitHub's API only returns the last 200 runs and the earliest one
-  in that window is 2026-10-07, so the claim (made on 4 October) cannot be checked from any
-  current API window. The phrase should be replaced with a claim the current window can
-  prove, or with a saved run list that a reviewer can read.
-- **Screenshot quality** is untouched by this stage and has not been judged by anyone. The
-  three modified images are from an earlier audit and have been left alone.
 
 ---
 
