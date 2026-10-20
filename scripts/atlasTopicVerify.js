@@ -196,7 +196,12 @@ const CASES = [
   { name: 'Heat (thermodynamics lesson)', query: 'Heat', topic: 'Heat', expect: 'lesson' },
   { name: 'Entropy (thermodynamics lesson)', query: 'Entropy', topic: 'Entropy', expect: 'lesson' },
   { name: 'Heat Engines (thermodynamics lesson)', query: 'Heat Engines', topic: 'Heat Engines', expect: 'lesson' },
-  { name: 'Electric Charge (listed, unwritten)', query: 'Electric Charge', topic: 'Electric Charge', expect: 'unwritten' },
+  // The written/unwritten example has to track the content. It was 'Electric
+  // Charge' until the Electromagnetism lessons landed, and it is now 'Mirrors',
+  // which Optics still lists without a lesson.
+  { name: 'Electric Fields (electromagnetism lesson)', query: 'Electric Fields', topic: 'Electric Fields', expect: 'lesson' },
+  { name: 'Maxwell’s Equations (electromagnetism lesson)', query: 'Maxwell', topic: 'Maxwell’s Equations', expect: 'lesson' },
+  { name: 'Mirrors (listed, unwritten)', query: 'Mirrors', topic: 'Mirrors', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },
   { name: 'Monsoons (field unmapped)', query: 'Monsoons', topic: 'Monsoons', expect: 'unwritten' },
 ];
