@@ -24,7 +24,7 @@ building it; the audit below checks that voice against the code and the data fil
 Source of truth used for every number:
 
 - `src/data/knowledgeFields.js` + `src/data/atlasResolution.ts` + `src/data/curriculum.js`
-  (6 fields, 34 disciplines, 572 topics, 54 written, 300 not written, 218 unmapped).
+  (6 fields, 34 disciplines, 572 topics, 91 written, 263 not written, 218 unmapped).
 - `src/data/dictionary/*.ts` (138 entries, 138 `sourceUrl` values).
 - `src/data/blackholes/` (8 levels, 61 entries).
 - `src/screens/Games.js` (`CLASSIC_GAMES` + the one `simulation` entry inside it),
@@ -201,8 +201,8 @@ Every number below is what the repo and the script say.
 
 | Claim | What the code says | Check |
 |-------|--------------------|---------|
-| Atlas 572/54/300/218 | `node scripts/by-the-numbers.js` prints exactly these | Done |
-| Jest | `CI=true npx react-scripts test --watchAll=false` → 82 suites, 682 tests, 682 passing | Done |
+| Atlas 572/91/263/218 | `node scripts/by-the-numbers.js` prints exactly these | Done |
+| Jest | `CI=true npx react-scripts test --watchAll=false` → 88 suites, 771 tests, 771 passing | Done |
 | Build | `npm run build` exit 0 | Done |
 | Lint | `npm run lint` exit 0 | Done |
 | tsc | `npx tsc --noEmit` exit 0 | Done |

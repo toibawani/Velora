@@ -18,7 +18,7 @@ why the choice was made. If a line feels like marketing, cut it.
 |---|---|---|
 | 0:00 | Welcome screen at `toibawani.github.io/Velora`. Do nothing for a beat. | "This is Velora. I tutor kids who memorise a fact for a test and forget it a week later. I wanted a place that explains why." |
 | 0:08 | Click **Look around first**. | "Before it asks for anything, it shows you what is here." |
-| 0:14 | Scroll the inventory slowly: 83 of 572, dictionary count, black hole levels. | "Eighty-three of the 572 atlas topics have a lesson or a deep read. The rest are listed and marked not written yet. I would rather show the gap than fill it with placeholder text." |
+| 0:14 | Scroll the inventory slowly: 91 of 572, dictionary count, black hole levels. | "Ninety-one of the 572 atlas topics have a lesson or a deep read. The rest are listed and marked not written yet. I would rather show the gap than fill it with placeholder text." |
 | 0:26 | Click **Set up this device**, type a name, Continue, then **Start learning**. | "No account. A name, stored in this browser, so it can say hello. There is no server to send it to." |
 | 0:38 | Atlas home. Scroll to the atlas section, where the selected topic sits above the index. | "Every topic is in the index, written or not." |
 | 0:44 | Click **Gravitation** in Classical Mechanics. The panel above updates. | "Pick one that is written and the panel gives you the way in." |

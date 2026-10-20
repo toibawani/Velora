@@ -1,7 +1,7 @@
 # Velora
 
-**A reference book for curious people. 83 of its 572 topics have a lesson or a
-deep read behind them. The other 489 say so.**
+**A reference book for curious people. 91 of its 572 topics have a lesson or a
+deep read behind them. The other 481 say so.**
 
 ## If you have 60 seconds
 
@@ -40,8 +40,8 @@ workflow files. Run it and compare.
 
 | What | Measured value |
 |---|---|
-| Jest suites / tests | 82 suites, 682 tests, all passing |
-| Atlas topics with content | 83 of 572 |
+| Jest suites / tests | 88 suites, 771 tests, all passing |
+| Atlas topics with content | 91 of 572 |
 | Fields / disciplines | 6 fields, 34 disciplines |
 | Dictionary entries | 138, every one with a source URL |
 | Black hole deep read | 8 levels, 61 entries |
@@ -69,14 +69,14 @@ to exercise.
 
 ## What is written, and what is not
 
-The Atlas lists 572 topics across six fields. 83 resolve to a lesson or a deep
-read. 271 resolve to "not written yet". The remaining 218 sit in Political
+The Atlas lists 572 topics across six fields. 91 resolve to a lesson or a deep
+read. 263 resolve to "not written yet". The remaining 218 sit in Political
 Science, Geography and Literature, which are listed in full with no curriculum
 behind them yet.
 
 | Counter | Value |
 |---|---|
-| Atlas topics (total / written) | 572 / 83 |
+| Atlas topics (total / written) | 572 / 91 |
 | Fields / disciplines | 6 / 34 |
 | Dictionary entries | 138 |
 | Black hole levels | 8 levels, 61 entries |
