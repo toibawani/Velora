@@ -154,6 +154,22 @@ describe('resolveAtlasTopic', () => {
       kind: 'lesson', subject: 'chemistry', topicId: 'chemical-bonding', title: 'Chemical Bonding', fieldId: 'science',
     });
 
+    // Biology arrived the same way and is the check that the first fix was
+    // general rather than a special case for one discipline: 'DNA' resolves to
+    // the biology lesson only because the discipline map says so, and under
+    // physics the same name is honestly unwritten.
+    expect(
+      resolveAtlasTopic({ fieldId: 'science', disciplineId: 'biology', moduleName: 'Molecular Biology', topic: 'DNA' })
+    ).toEqual({
+      kind: 'lesson', subject: 'biology', topicId: 'dna', title: 'DNA', fieldId: 'science',
+    });
+    expect(
+      resolveAtlasTopic({ fieldId: 'science', disciplineId: 'biology', moduleName: 'Cell Biology', topic: 'Cell Signaling' }).kind
+    ).toBe('lesson');
+    expect(
+      resolveAtlasTopic({ fieldId: 'science', disciplineId: 'physics', moduleName: '', topic: 'DNA' }).kind
+    ).toBe('unwritten');
+
     // The same topic name under the physics discipline stays unwritten. That is
     // what proves the discipline decides the subject rather than the field.
     expect(
@@ -192,13 +208,14 @@ describe('fieldCoverage', () => {
     const coverage = fieldCoverageByDiscipline(science as never);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Fifty-six written entry points across the whole science field: ten for
+    // Sixty-four written entry points across the whole science field: ten for
     // classical mechanics, five for Thermodynamics, seven for Electromagnetism,
     // seven for Optics, four for Waves, four for Modern Physics, seven for
-    // Chemistry, one for space science (black holes), and eleven for the
-    // computer science deep read. It was twenty-two before Thermodynamics
-    // landed and forty-nine before Chemistry.
-    expect(coverage.written).toBe(56);
+    // Chemistry, eight for Biology, one for space science (black holes), and
+    // eleven for the computer science deep read. It was twenty-two before
+    // Thermodynamics landed, forty-nine before Chemistry and fifty-six before
+    // Biology.
+    expect(coverage.written).toBe(64);
     expect(coverage.unmapped).toBe(0);
   });
 
@@ -208,15 +225,16 @@ describe('fieldCoverage', () => {
     // to 30 when the history levels did, and from 30 to 42 when computer
     // science did: eleven CS Atlas topics, plus "Quantum Computing" which the
     // Atlas lists under both physics and computer science and so counts twice.
-    // It is now 83, seven higher, because the seven Chemistry lessons landed.
-    // It was 76 after Modern Physics, 72 after Waves, 68 after Optics, 61 after
-    // Electromagnetism and 54 after Thermodynamics. If it fails, content was
-    // added, which is good news - raise it in the same commit as the content.
+    // It is now 91, eight higher, because the eight Biology lessons landed.
+    // It was 83 after Chemistry, 76 after Modern Physics, 72 after Waves, 68
+    // after Optics, 61 after Electromagnetism and 54 after Thermodynamics. If it
+    // fails, content was added, which is good news - raise it in the same commit
+    // as the content.
     //
-    // It is worth being precise about what 83 out of 572 means. It is not
-    // "eighty-three topics are done" in any sense a reader would recognise; it
-    // is eighty-three topics that open something real, against roughly five
-    // hundred that honestly report themselves as unwritten.
+    // It is worth being precise about what 91 out of 572 means. It is not
+    // "ninety-one topics are done" in any sense a reader would recognise; it
+    // is ninety-one topics that open something real, against roughly four
+    // hundred and eighty that honestly report themselves as unwritten.
     // Walked discipline by discipline. A flat list of topic names cannot answer
     // this question any more: Science holds six disciplines with different
     // curricula, and guessing one of them is what hid the chemistry lessons.
@@ -233,7 +251,7 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(83);
+    expect(written).toBe(91);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -266,11 +284,11 @@ describe('fieldCoverage', () => {
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
     //
-    // Science is 56: ten classical mechanics, five Thermodynamics lessons,
+    // Science is 64: ten classical mechanics, five Thermodynamics lessons,
     // seven Electromagnetism lessons, seven Optics lessons, four Waves lessons,
-    // four Modern Physics lessons, seven Chemistry lessons, one space science,
-    // eleven computer science.
-    expect(perField.science.written).toBe(56);
+    // four Modern Physics lessons, seven Chemistry lessons, eight Biology
+    // lessons, one space science, eleven computer science.
+    expect(perField.science.written).toBe(64);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -283,6 +301,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(83);
+    expect(summed).toBe(91);
   });
 });

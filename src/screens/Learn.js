@@ -19,7 +19,8 @@ import {
   BookOpen,
   Hourglass,
   Circle,
-  FlaskConical
+  FlaskConical,
+  Dna
 } from 'lucide-react';
 import MasteryPath from '../components/MasteryPath';
 import BlackHolesElite from '../components/BlackHolesElite';
@@ -107,7 +108,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
 
   const subjectId = selectedSubject || 'physics';
   const subjectRecord = measurePerformance('resolve_subject_data', () => CURRICULUM[subjectId]);
-  const subjectIcons = { physics: Atom, philosophy: Brain, history: Landmark, chemistry: FlaskConical };
+  const subjectIcons = { physics: Atom, philosophy: Brain, history: Landmark, chemistry: FlaskConical, biology: Dna };
   // Topic titles the learner has spent real time on in this subject.
   //
   // The match is on the title string, so a topic renamed in the curriculum would

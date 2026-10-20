@@ -16,6 +16,7 @@ import path from 'path';
 import ROADMAP, {
   atlasFieldCount,
   atlasTopicCount,
+  atlasWrittenCount,
   dictionaryTermCount,
   lessonSubjectCount,
   lessonTopicCount,
@@ -55,10 +56,21 @@ test('the page states those counts in words, not just in the data', () => {
 
 test('the page admits the atlas has more topics than there are lessons', () => {
   // This is the sentence that matters. An atlas advertising 572 topics against
-  // 12 written lessons is the largest gap in the app, and a roadmap that lists
-  // the atlas as simply "working" without saying so is not describing the app.
-  expect(atlasTopicCount).toBeGreaterThan(lessonTopicCount * 10);
-  expect(allText).toMatch(/written lessons exist for/i);
+  // a dozen written lessons is the largest gap in the app, and a roadmap that
+  // lists the atlas as simply "working" without saying so is not describing the
+  // app.
+  //
+  // The check used to be "ten atlas topics for every lesson", which is a
+  // proxy for coverage rather than coverage itself, and it failed the moment
+  // enough real content landed - which is the one thing this page wants to
+  // happen. It now asks the resolver how many topics actually open something
+  // and requires that number to be a real minority of the atlas. That is a
+  // harder condition than the ratio it replaces: a roadmap claiming the atlas
+  // is finished would fail this, and a lesson count growing by one would not.
+  expect(atlasWrittenCount).toBeGreaterThan(0);
+  expect(atlasWrittenCount).toBeLessThan(atlasTopicCount / 4);
+  expect(atlasTopicCount).toBeGreaterThan(lessonTopicCount * 5);
+  expect(allText).toMatch(/written content exists for/i);
   expect(allText).toMatch(/largest/i);
 });
 

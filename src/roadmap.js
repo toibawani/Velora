@@ -20,8 +20,9 @@
 // Counts come from the data files, not from memory. The test resolves these
 // same exports, so a number here cannot disagree with the data.
 import { CURRICULUM } from './data/curriculum';
-import { KNOWLEDGE_STATS } from './data/knowledgeFields';
+import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from './data/knowledgeFields';
 import { CURIOUS_TERMS } from './data/dictionary';
+import { fieldCoverageByDiscipline } from './data/atlasResolution';
 
 const lessonTopics = (subject) =>
   CURRICULUM[subject].modules.reduce((total, module) => total + module.topics.length, 0);
@@ -38,6 +39,19 @@ export const lessonTopicCount = Object.keys(CURRICULUM).reduce(
 );
 export const dictionaryTermCount = CURIOUS_TERMS.length;
 export const atlasTopicCount = KNOWLEDGE_STATS.topics;
+/**
+ * How many atlas topics actually open something.
+ *
+ * This is not the lesson count. The curriculum holds 61 lessons, but the atlas
+ * also opens deep reads, and some curriculum lessons live inside those reads
+ * rather than beside them, so the two numbers cannot be added or substituted
+ * for one another. The resolver is the only thing that knows the truth, so the
+ * roadmap asks it rather than counting lessons and calling the result coverage.
+ */
+export const atlasWrittenCount = KNOWLEDGE_FIELDS.reduce(
+  (total, field) => total + fieldCoverageByDiscipline(field).written,
+  0
+);
 export const atlasFieldCount = KNOWLEDGE_STATS.fields;
 export const atlasDisciplineCount = KNOWLEDGE_STATS.disciplines;
 export const lessonSubjectSummary = lessonSubjectList();
@@ -107,7 +121,7 @@ export const ROADMAP = [
       {
         name: 'The atlas has far more topics than there are lessons',
         state: 'partial',
-        detail: `The atlas lists ${atlasTopicCount} topics across ${atlasFieldCount} fields. Written lessons exist for ${lessonTopicCount} of them. Clicking a topic with no lesson says so and offers nothing in its place, which is honest but not much of a destination. Closing this gap is the largest single piece of work in this app.`,
+        detail: `The atlas lists ${atlasTopicCount} topics across ${atlasFieldCount} fields. Written content exists for ${atlasWrittenCount} of them, which is ${lessonTopicCount} lessons in the curriculum plus the philosophy, history, black hole and computer science deep reads. Clicking a topic with no lesson says so and offers nothing in its place, which is honest but not much of a destination. Closing this gap is the largest single piece of work in this app.`,
       },
       {
         name: 'What-if simulator',
@@ -181,7 +195,7 @@ export const ROADMAP = [
         name: 'Lessons for the remaining fields',
         state: 'notstarted',
         detail:
-          'Partly started. Chemistry has seven physical chemistry lessons at the atlas topics Atomic Structure through Solutions. The rest is not started: Biology, Earth and environmental science, space science and computer science have no lessons, and Political Science, Geography and Literature appear as browsable topics with no curriculum behind them. Mathematics, Psychology and Economics have dictionary entries but no atlas field and no lessons.',
+          'Partly started. Chemistry has seven physical chemistry lessons at the atlas topics Atomic Structure through Solutions, and Biology has eight across Cell Biology and Molecular Biology. Space science has the black hole deep read and computer science has eleven entries in its own deep read. The rest is not started: the other eight biology modules, Earth and environmental science, and Political Science, Geography and Literature, which appear as browsable topics with no curriculum behind them. Mathematics, Psychology and Economics have dictionary entries but no atlas field and no lessons.',
       },
     ],
   },

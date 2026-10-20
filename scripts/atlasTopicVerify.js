@@ -207,6 +207,16 @@ const CASES = [
   { name: 'Photoelectric Effect (modern physics)', query: 'Photoelectric', topic: 'Photoelectric Effect', expect: 'lesson' },
   { name: 'Chemical Bonding (chemistry)', query: 'Chemical Bonding', topic: 'Chemical Bonding', expect: 'lesson' },
   { name: 'Electrochemistry (chemistry)', query: 'Electrochemistry', topic: 'Electrochemistry', expect: 'lesson' },
+  // Biology sits under the same Science field as chemistry, so these are the
+  // check that the discipline map holds for a second subject rather than for
+  // the one it was written for.
+  { name: 'Cell Structure (biology)', query: 'Cell Structure', topic: 'Cell Structure', expect: 'lesson' },
+  { name: 'Cell Division (biology)', query: 'Cell Division', topic: 'Cell Division', expect: 'lesson' },
+  { name: 'DNA (biology)', query: 'DNA', topic: 'DNA', expect: 'lesson' },
+  { name: 'Protein Synthesis (biology)', query: 'Protein Synthesis', topic: 'Protein Synthesis', expect: 'lesson' },
+  // And the boundary: the next biology module has no lessons yet, so it has to
+  // say so rather than opening something that does not exist.
+  { name: 'Heredity (biology, listed, unwritten)', query: 'Heredity', topic: 'Heredity', expect: 'unwritten' },
   { name: 'Particle Physics (modern physics)', query: 'Particle Physics', topic: 'Particle Physics', expect: 'lesson' },
   { name: 'Quantum Tunneling (listed, unwritten)', query: 'Quantum Tunneling', topic: 'Quantum Tunneling', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },

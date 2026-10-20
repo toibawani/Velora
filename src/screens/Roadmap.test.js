@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import Roadmap from './Roadmap';
-import { lessonTopicCount, atlasTopicCount } from '../roadmap';
+import { lessonTopicCount, atlasTopicCount, atlasWrittenCount } from '../roadmap';
 
 const open = () => render(<Roadmap setScreen={jest.fn()} />);
 
@@ -44,7 +44,12 @@ test('states the gap between atlas topics and written lessons', () => {
     .getByRole('heading', { name: /atlas has far more topics/i })
     .closest('li');
   expect(within(row).getByText(new RegExp(`${atlasTopicCount} topics`))).toBeInTheDocument();
-  expect(within(row).getByText(new RegExp(`Written lessons exist for ${lessonTopicCount}`))).toBeInTheDocument();
+  // The row has to name the count of topics that actually open something, not
+  // just the lesson count: the deep reads hold written content that is not a
+  // lesson in the curriculum, so the lesson count on its own understates what
+  // a reader can open.
+  expect(within(row).getByText(new RegExp(`Written content exists for ${atlasWrittenCount}`))).toBeInTheDocument();
+  expect(within(row).getByText(new RegExp(`${lessonTopicCount} lessons in the curriculum`))).toBeInTheDocument();
 });
 
 test('promises no backend, in the intro where it belongs', () => {

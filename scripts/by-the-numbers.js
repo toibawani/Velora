@@ -49,10 +49,18 @@ fs.writeFileSync(path.join(atlasTemp, 'knowledgeFields.js'), kfSource);
 // The resolver is TypeScript that imports the curriculum data. Compiling the
 // real files (rather than re-implementing the rules here) is the point: the
 // count below is whatever the app itself answers.
-compileToTemp(
-  ['src/data/atlasResolution.ts', 'src/data/curriculum.js', 'src/data/physicsCurriculum.js', 'src/data/philosophyCurriculum.js', 'src/data/historyCurriculum.js', 'src/data/chemistryCurriculum.js'],
-  atlasTemp
-);
+// The curriculum modules are discovered from curriculum.js rather than listed
+// here. The hardcoded list was correct until Biology was added, and then this
+// script died with "Cannot find module './biologyCurriculum'" while the app
+// itself was fine - a count that breaks when a subject is added is a count
+// nobody can trust afterwards. Reading the imports means a new subject only
+// has to be written once.
+const curriculumSource = fs.readFileSync(path.join(ROOT, 'src/data/curriculum.js'), 'utf8');
+const curriculumImports = [...curriculumSource.matchAll(/from\s+'\.\/([^']+)'/g)].map((m) => `src/data/${m[1]}.js`);
+const curriculumFiles = [...new Set(curriculumImports)];
+if (!curriculumFiles.length) throw new Error('no curriculum modules found in src/data/curriculum.js');
+
+compileToTemp(['src/data/atlasResolution.ts', 'src/data/curriculum.js', ...curriculumFiles], atlasTemp);
 const { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } = require(path.join(atlasTemp, 'knowledgeFields.js'));
 const { fieldCoverageByDiscipline } = require(path.join(atlasTemp, 'atlasResolution.js'));
 

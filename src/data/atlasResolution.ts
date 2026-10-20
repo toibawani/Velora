@@ -220,6 +220,7 @@ const FIELD_SUBJECT: Record<string, string> = {
  */
 const DISCIPLINE_SUBJECT: Record<string, string> = {
   chemistry: 'chemistry',
+  biology: 'biology',
 };
 
 /**
