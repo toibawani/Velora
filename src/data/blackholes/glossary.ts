@@ -287,6 +287,23 @@ const TERMS: GlossaryEntry[] = [
     definition:
       'The smallest detail an opening can resolve, set by the wavelength divided by the aperture, so a bigger lens sees finer structure. No amount of magnification gets past it without extra information about the object.',
   },
+  // --- Waves -------------------------------------------------------------
+  {
+    term: 'standing-wave',
+    definition:
+      'A pattern made by two identical waves travelling in opposite directions, so the nodes stay still while the rest of the string or air column swings. A guitar string and an organ pipe both hold one.',
+  },
+  {
+    term: 'resonance',
+    definition:
+      'What happens when a system is driven at one of the frequencies it naturally vibrates at, so each push adds to the last and the motion grows until damping limits it. Useful in a radio, destructive in a bridge.',
+    see: 'standing-wave',
+  },
+  {
+    term: 'decibel',
+    definition:
+      'A logarithmic way to state a ratio, used for sound because the ear responds to huge ranges of pressure. Every 10 decibels is ten times the intensity, and 0 decibels is a reference pressure rather than silence.',
+  },
   {
     term: 'Hawking radiation',
     definition:

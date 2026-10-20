@@ -140,7 +140,7 @@ describe('editorial knowledge atlas', () => {
     // the element's own text rather than a regex over one text node.
     const coverage = screen.getByText((_, element) =>
       element?.className === 'uh-coverage' &&
-      /Science:\s*41\s*of 188 topics written/.test(element.textContent || '')
+      /Science:\s*45\s*of 188 topics written/.test(element.textContent || '')
     );
     expect(coverage).toBeInTheDocument();
   });
@@ -177,12 +177,12 @@ describe('atlas index', () => {
     expect(entries).toHaveLength(188);
     expect(markers).toHaveLength(188);
 
-    // Science resolves 41 topics to real content: ten classical mechanics, five
+    // Science resolves 45 topics to real content: ten classical mechanics, five
     // Thermodynamics lessons, seven Electromagnetism lessons, seven Optics
-    // lessons, one space science, eleven computer science. If the content grows,
-    // raise these in the same commit as the content.
-    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(41);
-    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(147);
+    // lessons, four Waves lessons, one space science, eleven computer science. If
+    // the content grows, raise these in the same commit as the content.
+    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(45);
+    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(143);
   });
 
   test('says "not written yet" in the accessible name, not just in colour', () => {
@@ -205,12 +205,12 @@ describe('atlas index', () => {
     renderUniverse();
 
     // The reader can compare fields at a glance: Literature is 0 of 92, Science
-    // is 41 of 188 - the ten classical-mechanics lessons, the five Thermodynamics
+    // is 45 of 188 - the ten classical-mechanics lessons, the five Thermodynamics
     // lessons, the seven Electromagnetism lessons, the seven Optics lessons, the
-    // space-science entry point, the eleven computer science topics and the
-    // Quantum Computing topic that both disciplines share. Nothing in the old
-    // layout made that comparison possible.
-    expect(screen.getByRole('button', { name: /^Science, .*41 of 188 topics written$/ })).toBeInTheDocument();
+    // four Waves lessons, the space-science entry point, the eleven computer
+    // science topics and the Quantum Computing topic that both disciplines share.
+    // Nothing in the old layout made that comparison possible.
+    expect(screen.getByRole('button', { name: /^Science, .*45 of 188 topics written$/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /^Literature, .*0 of 92 topics written$/ })).toBeInTheDocument();
   });
 });

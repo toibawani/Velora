@@ -202,6 +202,8 @@ const CASES = [
   { name: 'Electric Fields (electromagnetism lesson)', query: 'Electric Fields', topic: 'Electric Fields', expect: 'lesson' },
   { name: 'Maxwell’s Equations (electromagnetism lesson)', query: 'Maxwell', topic: 'Maxwell’s Equations', expect: 'lesson' },
   { name: 'Refraction (optics lesson)', query: 'Refraction', topic: 'Refraction', expect: 'lesson' },
+  { name: 'Sound (waves lesson)', query: 'Sound', topic: 'Sound', expect: 'lesson' },
+  { name: 'Resonance (waves lesson)', query: 'Resonance', topic: 'Resonance', expect: 'lesson' },
   { name: 'Nuclear Physics (listed, unwritten)', query: 'Nuclear Physics', topic: 'Nuclear Physics', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },
   { name: 'Monsoons (field unmapped)', query: 'Monsoons', topic: 'Monsoons', expect: 'unwritten' },
