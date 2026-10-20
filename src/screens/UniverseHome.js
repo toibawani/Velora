@@ -6,7 +6,7 @@ import {
   X,
 } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
-import { resolveAtlasTopic, fieldCoverage } from '../data/atlasResolution';
+import { resolveAtlasTopic, fieldCoverageByDiscipline } from '../data/atlasResolution';
 import AtlasIndex from '../components/AtlasIndex';
 import { PRIMARY_SCREENS } from '../navigation';
 import { trackEvent } from '../utils/analytics';
@@ -129,11 +129,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
    * has 573 topics" and "this app has 7 written topics", which the old layout
    * made impossible to see.
    */
-  const coverage = useMemo(() => {
-    const topics = activeField.disciplines.flatMap((discipline) =>
-      discipline.modules.flatMap((item) => item.topics));
-    return fieldCoverage(activeField.id, topics);
-  }, [activeField]);
+  const coverage = useMemo(() => fieldCoverageByDiscipline(activeField), [activeField]);
 
   // What the reader is being offered, in words, derived from the same resolver
   // the button uses. Previously this string was hardcoded per branch and drifted

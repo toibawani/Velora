@@ -181,7 +181,7 @@ export const ROADMAP = [
         name: 'Lessons for the remaining fields',
         state: 'notstarted',
         detail:
-          'Not started. Political Science, Geography and Literature appear in the atlas as browsable topics, and Biology, Chemistry, Mathematics, Psychology and Economics have dictionary entries, but neither has written lessons behind it.',
+          'Partly started. Chemistry has seven physical chemistry lessons at the atlas topics Atomic Structure through Solutions. The rest is not started: Biology, Earth and environmental science, space science and computer science have no lessons, and Political Science, Geography and Literature appear as browsable topics with no curriculum behind them. Mathematics, Psychology and Economics have dictionary entries but no atlas field and no lessons.',
       },
     ],
   },

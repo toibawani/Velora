@@ -205,6 +205,8 @@ const CASES = [
   { name: 'Sound (waves lesson)', query: 'Sound', topic: 'Sound', expect: 'lesson' },
   { name: 'Resonance (waves lesson)', query: 'Resonance', topic: 'Resonance', expect: 'lesson' },
   { name: 'Photoelectric Effect (modern physics)', query: 'Photoelectric', topic: 'Photoelectric Effect', expect: 'lesson' },
+  { name: 'Chemical Bonding (chemistry)', query: 'Chemical Bonding', topic: 'Chemical Bonding', expect: 'lesson' },
+  { name: 'Electrochemistry (chemistry)', query: 'Electrochemistry', topic: 'Electrochemistry', expect: 'lesson' },
   { name: 'Particle Physics (modern physics)', query: 'Particle Physics', topic: 'Particle Physics', expect: 'lesson' },
   { name: 'Quantum Tunneling (listed, unwritten)', query: 'Quantum Tunneling', topic: 'Quantum Tunneling', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },

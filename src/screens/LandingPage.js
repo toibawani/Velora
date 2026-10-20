@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { ArrowRight } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
-import { fieldCoverage } from '../data/atlasResolution';
+import { fieldCoverageByDiscipline } from '../data/atlasResolution';
 import { CURIOUS_TERMS } from '../data/dictionary';
 import { BLACK_HOLE_LEVELS, TOTAL_ENTRIES } from '../data/blackholes';
 import '../styles/LandingPage.css';
@@ -28,7 +28,7 @@ function LandingPage({ setScreen }) {
     const topics = field.disciplines.flatMap((discipline) =>
       discipline.modules.flatMap((moduleItem) => moduleItem.topics)
     );
-    const coverage = fieldCoverage(field.id, topics);
+    const coverage = fieldCoverageByDiscipline(field);
     return {
       id: field.id,
       label: field.label,

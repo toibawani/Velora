@@ -3,11 +3,16 @@
  * against the real Atlas data rather than against hand-written fixtures. A test
  * with invented topics would pass while the actual 573 stayed broken.
  */
-import { resolveAtlasTopic, fieldCoverage, slugify } from './atlasResolution';
+import { resolveAtlasTopic, fieldCoverageByDiscipline, slugify } from './atlasResolution';
 import { KNOWLEDGE_FIELDS } from './knowledgeFields';
 
-const at = (fieldId: string, topic: string) =>
-  resolveAtlasTopic({ fieldId, disciplineId: '', moduleName: '', topic });
+const at = (fieldId: string, topicOrDiscipline: string, maybeTopic?: string) =>
+  resolveAtlasTopic({
+    fieldId,
+    disciplineId: maybeTopic === undefined ? '' : topicOrDiscipline,
+    moduleName: '',
+    topic: maybeTopic === undefined ? topicOrDiscipline : maybeTopic,
+  });
 
 describe('slugify', () => {
   test('normalises the punctuation that separates Atlas names from slugs', () => {
@@ -138,6 +143,24 @@ describe('resolveAtlasTopic', () => {
     });
   });
 
+  test('a discipline with its own curriculum beats the field it sits in', () => {
+    // Science is one Atlas field holding six disciplines. Before the discipline
+    // was honoured, every chemistry topic was looked for in the physics
+    // curriculum and reported unwritten while the chemistry lesson sat in a
+    // separate file that nothing could reach.
+    expect(
+      resolveAtlasTopic({ fieldId: 'science', disciplineId: 'chemistry', moduleName: 'Physical Chemistry', topic: 'Chemical Bonding' })
+    ).toEqual({
+      kind: 'lesson', subject: 'chemistry', topicId: 'chemical-bonding', title: 'Chemical Bonding', fieldId: 'science',
+    });
+
+    // The same topic name under the physics discipline stays unwritten. That is
+    // what proves the discipline decides the subject rather than the field.
+    expect(
+      resolveAtlasTopic({ fieldId: 'science', disciplineId: 'physics', moduleName: '', topic: 'Chemical Bonding' }).kind
+    ).toBe('unwritten');
+  });
+
   test('distinguishes a field with no curriculum from a topic with no lesson', () => {
     // These are different failures and the UI says different things about them.
     expect(at('political-science', 'State').kind).toBe('unmapped-field');
@@ -164,17 +187,18 @@ describe('fieldCoverage', () => {
   test('counts written and unwritten topics per field', () => {
     const science = KNOWLEDGE_FIELDS.find((field) => field.id === 'science');
     expect(science).toBeDefined();
-    const topics = (science as (typeof KNOWLEDGE_FIELDS)[number]).disciplines.flatMap((d) =>
+    const topics = (science as unknown as { disciplines: Array<{ modules: Array<{ topics: string[] }> }> }).disciplines.flatMap((d) =>
       d.modules.flatMap((m) => m.topics));
-    const coverage = fieldCoverage('science', topics);
+    const coverage = fieldCoverageByDiscipline(science as never);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Forty-nine written entry points across the whole science field: ten for
+    // Fifty-six written entry points across the whole science field: ten for
     // classical mechanics, five for Thermodynamics, seven for Electromagnetism,
-    // seven for Optics, four for Waves, four for the Modern Physics lessons, one
-    // for space science (black holes), and eleven for the computer science deep
-    // read. It was twenty-two before Thermodynamics landed.
-    expect(coverage.written).toBe(49);
+    // seven for Optics, four for Waves, four for Modern Physics, seven for
+    // Chemistry, one for space science (black holes), and eleven for the
+    // computer science deep read. It was twenty-two before Thermodynamics
+    // landed and forty-nine before Chemistry.
+    expect(coverage.written).toBe(56);
     expect(coverage.unmapped).toBe(0);
   });
 
@@ -184,29 +208,32 @@ describe('fieldCoverage', () => {
     // to 30 when the history levels did, and from 30 to 42 when computer
     // science did: eleven CS Atlas topics, plus "Quantum Computing" which the
     // Atlas lists under both physics and computer science and so counts twice.
-    // It is now 76, four higher, because the four Modern Physics lessons landed.
-    // It was 72 after Waves, 68 after Optics, 61 after Electromagnetism and 54
-    // after Thermodynamics. If it fails, content was added, which is good news -
-    // raise it in the same commit as the content.
+    // It is now 83, seven higher, because the seven Chemistry lessons landed.
+    // It was 76 after Modern Physics, 72 after Waves, 68 after Optics, 61 after
+    // Electromagnetism and 54 after Thermodynamics. If it fails, content was
+    // added, which is good news - raise it in the same commit as the content.
     //
-    // It is worth being precise about what 76 out of 572 means. It is not
-    // "seventy-six topics are done" in any sense a reader would recognise; it is
-    // seventy-six topics that open something real, against roughly five hundred
-    // that honestly report themselves as unwritten.
-    const all: Array<[string, string]> = [];
+    // It is worth being precise about what 83 out of 572 means. It is not
+    // "eighty-three topics are done" in any sense a reader would recognise; it
+    // is eighty-three topics that open something real, against roughly five
+    // hundred that honestly report themselves as unwritten.
+    // Walked discipline by discipline. A flat list of topic names cannot answer
+    // this question any more: Science holds six disciplines with different
+    // curricula, and guessing one of them is what hid the chemistry lessons.
+    const all: Array<[string, string, string]> = [];
     KNOWLEDGE_FIELDS.forEach((f) => {
       f.disciplines.forEach((d) => {
         d.modules.forEach((m) => {
-          m.topics.forEach((t) => all.push([f.id, t]));
+          m.topics.forEach((t) => all.push([f.id, d.id, t]));
         });
       });
     });
-    const written = all.filter(([fieldId, topic]) => {
-      const kind = at(fieldId, topic).kind;
+    const written = all.filter(([fieldId, disciplineId, topic]) => {
+      const kind = at(fieldId, disciplineId, topic).kind;
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(76);
+    expect(written).toBe(83);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -218,12 +245,18 @@ describe('fieldCoverage', () => {
     // of real content, a total that looked fine, and a history field whose
     // taps still said "not written yet".
     const perField = KNOWLEDGE_FIELDS.reduce<Record<string, { written: number; total: number }>>((acc, f) => {
-      const topics = f.disciplines.flatMap((d) => d.modules.flatMap((m) => m.topics));
-      const written = topics.filter((t) => {
-        const kind = at(f.id, t).kind;
-        return kind === 'lesson' || kind === 'deep-read';
-      }).length;
-      acc[f.id] = { written, total: topics.length };
+      let written = 0;
+      let total = 0;
+      f.disciplines.forEach((d) => {
+        d.modules.forEach((m) => {
+          m.topics.forEach((t) => {
+            total += 1;
+            const kind = at(f.id, d.id, t).kind;
+            if (kind === 'lesson' || kind === 'deep-read') written += 1;
+          });
+        });
+      });
+      acc[f.id] = { written, total };
       return acc;
     }, {});
 
@@ -233,10 +266,11 @@ describe('fieldCoverage', () => {
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
     //
-    // Science is 49: ten classical mechanics, five Thermodynamics lessons,
+    // Science is 56: ten classical mechanics, five Thermodynamics lessons,
     // seven Electromagnetism lessons, seven Optics lessons, four Waves lessons,
-    // four Modern Physics lessons, one space science, eleven computer science.
-    expect(perField.science.written).toBe(49);
+    // four Modern Physics lessons, seven Chemistry lessons, one space science,
+    // eleven computer science.
+    expect(perField.science.written).toBe(56);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -249,6 +283,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(76);
+    expect(summed).toBe(83);
   });
 });

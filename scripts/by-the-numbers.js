@@ -50,11 +50,11 @@ fs.writeFileSync(path.join(atlasTemp, 'knowledgeFields.js'), kfSource);
 // real files (rather than re-implementing the rules here) is the point: the
 // count below is whatever the app itself answers.
 compileToTemp(
-  ['src/data/atlasResolution.ts', 'src/data/curriculum.js', 'src/data/physicsCurriculum.js', 'src/data/philosophyCurriculum.js', 'src/data/historyCurriculum.js'],
+  ['src/data/atlasResolution.ts', 'src/data/curriculum.js', 'src/data/physicsCurriculum.js', 'src/data/philosophyCurriculum.js', 'src/data/historyCurriculum.js', 'src/data/chemistryCurriculum.js'],
   atlasTemp
 );
 const { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } = require(path.join(atlasTemp, 'knowledgeFields.js'));
-const { fieldCoverage } = require(path.join(atlasTemp, 'atlasResolution.js'));
+const { fieldCoverageByDiscipline } = require(path.join(atlasTemp, 'atlasResolution.js'));
 
 const coverage = { written: 0, unwritten: 0, unmapped: 0 };
 const perField = [];
@@ -63,7 +63,7 @@ for (const field of KNOWLEDGE_FIELDS) {
   for (const discipline of field.disciplines) {
     for (const moduleItem of discipline.modules) topics.push(...moduleItem.topics);
   }
-  const tally = fieldCoverage(field.id, topics);
+  const tally = fieldCoverageByDiscipline(field);
   coverage.written += tally.written;
   coverage.unwritten += tally.unwritten;
   coverage.unmapped += tally.unmapped;

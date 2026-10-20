@@ -2,10 +2,11 @@ import { CURRICULUM, getTopic } from './curriculum';
 
 describe('VELORA curriculum', () => {
   test('contains the core subjects and requested topics', () => {
-    expect(Object.keys(CURRICULUM)).toEqual(['physics', 'philosophy', 'history']);
+    expect(Object.keys(CURRICULUM)).toEqual(['physics', 'philosophy', 'history', 'chemistry']);
     expect(getTopic('physics', 'black-holes').title).toBe('Black Holes');
     expect(getTopic('philosophy', 'stoicism').title).toBe('Stoicism');
     expect(getTopic('history', 'renaissance').title).toBe('The Renaissance');
+    expect(getTopic('chemistry', 'chemical-bonding').title).toBe('Chemical Bonding');
   });
 
   // A lesson that cannot say what it was checked against is asking to be

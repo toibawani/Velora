@@ -203,6 +203,26 @@ const FIELD_SUBJECT: Record<string, string> = {
 };
 
 /**
+ * Which curriculum subject an Atlas *discipline* resolves to.
+ *
+ * The field map above is the fallback and it is why this exists. Science is one
+ * Atlas field holding six disciplines with almost nothing in common, so mapping
+ * "science" to "physics" meant a chemistry topic could only ever resolve by
+ * accident: the resolver looked for "Chemical Bonding" among the physics
+ * lessons and reported every chemistry topic unwritten while the chemistry
+ * content sat in another file. A discipline with no entry here inherits the
+ * field's subject, which keeps the physics and space-science topics working
+ * exactly as they did.
+ *
+ * Only disciplines that have a curriculum appear here. Adding one for a subject
+ * with no lessons would change nothing a reader sees, because the lesson index
+ * would still come up empty, and the unwritten answer is the honest one.
+ */
+const DISCIPLINE_SUBJECT: Record<string, string> = {
+  chemistry: 'chemistry',
+};
+
+/**
  * Resolves one Atlas tap to real content, or to an honest reason there is none.
  *
  * Resolution order matters. Deep reads are checked before curriculum lessons
@@ -210,7 +230,7 @@ const FIELD_SUBJECT: Record<string, string> = {
  * material that actually exists; a lesson match on 'General Relativity' would
  * otherwise be a downgrade dressed up as a fix.
  */
-export const resolveAtlasTopic = ({ fieldId, topic }: AtlasAddress): AtlasResolution => {
+export const resolveAtlasTopic = ({ fieldId, disciplineId, topic }: AtlasAddress): AtlasResolution => {
   const topicSlug = slugify(topic);
 
   const deepRead = DEEP_READS[topicSlug];
@@ -218,7 +238,10 @@ export const resolveAtlasTopic = ({ fieldId, topic }: AtlasAddress): AtlasResolu
     return { kind: 'deep-read', readId: deepRead.readId, levelId: deepRead.levelId, title: deepRead.title, fieldId };
   }
 
-  const subject = FIELD_SUBJECT[fieldId];
+  // The discipline beats the field, because one field can hold several subjects.
+  // A discipline with no entry falls back to the field's subject, so every topic
+  // in the physics and space-science disciplines resolves as it always did.
+  const subject = DISCIPLINE_SUBJECT[disciplineId] ?? FIELD_SUBJECT[fieldId];
   if (!subject) {
     return { kind: 'unmapped-field', title: topic, fieldId };
   }
@@ -244,13 +267,54 @@ export const resolveAtlasTopic = ({ fieldId, topic }: AtlasAddress): AtlasResolu
  * 573 topics are all one click from a lesson. Before this, every field looked
  * identical from the outside because every tap behaved identically.
  */
-export const fieldCoverage = (fieldId: string, topics: string[]) => {
+export const fieldCoverage = (fieldId: string, topics: string[], disciplineId = '') => {
   const tally = { written: 0, unwritten: 0, unmapped: 0 };
   topics.forEach((topic) => {
-    const resolution = resolveAtlasTopic({ fieldId, disciplineId: '', moduleName: '', topic });
+    const resolution = resolveAtlasTopic({ fieldId, disciplineId, moduleName: '', topic });
     if (resolution.kind === 'lesson' || resolution.kind === 'deep-read') tally.written += 1;
     else if (resolution.kind === 'unmapped-field') tally.unmapped += 1;
     else tally.unwritten += 1;
+  });
+  return tally;
+};
+
+/**
+ * The shape fieldCoverageByDiscipline needs from a field.
+ *
+ * Declared structurally rather than imported from knowledgeFields so this file
+ * stays a pure data module with no dependency on the Atlas layout.
+ */
+export interface AtlasFieldShape {
+  id: string;
+  disciplines: Array<{ id: string; modules: Array<{ name: string; topics: string[] }> }>;
+}
+
+/**
+ * Coverage for a whole field, counted discipline by discipline.
+ *
+ * fieldCoverage alone cannot do this job, because it takes a flat list of topic
+ * names and therefore has to guess a discipline. That guess is exactly the bug
+ * that made chemistry invisible: a reader looking at Science saw a number that
+ * had been computed from the physics curriculum alone. Passing the discipline
+ * through is the whole fix, and this is the one place that walks the real shape
+ * of the Atlas so the three callers cannot each get it slightly different.
+ */
+export const fieldCoverageByDiscipline = (field: AtlasFieldShape) => {
+  const tally = { written: 0, unwritten: 0, unmapped: 0 };
+  field.disciplines.forEach((discipline) => {
+    discipline.modules.forEach((moduleItem) => {
+      moduleItem.topics.forEach((topic) => {
+        const resolution = resolveAtlasTopic({
+          fieldId: field.id,
+          disciplineId: discipline.id,
+          moduleName: moduleItem.name,
+          topic,
+        });
+        if (resolution.kind === 'lesson' || resolution.kind === 'deep-read') tally.written += 1;
+        else if (resolution.kind === 'unmapped-field') tally.unmapped += 1;
+        else tally.unwritten += 1;
+      });
+    });
   });
   return tally;
 };
