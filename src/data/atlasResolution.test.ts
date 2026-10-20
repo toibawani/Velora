@@ -117,12 +117,12 @@ describe('resolveAtlasTopic', () => {
   });
 
   test('reports an unwritten topic as unwritten instead of inventing content', () => {
-    // 'Mirrors' sits under Physics > Optics. This example has had to move twice:
-    // it was Entropy until the Thermodynamics lessons landed, then Electric
-    // Charge until the Electromagnetism ones did. Mirrors still has no lesson,
-    // so it is the honest case today.
-    expect(at('science', 'Mirrors')).toEqual({
-      kind: 'unwritten', reason: 'no-content-yet', title: 'Mirrors', fieldId: 'science',
+    // 'Nuclear Physics' sits under Physics > Modern Physics. This example has
+    // had to move three times: it was Entropy until Thermodynamics landed, then
+    // Electric Charge until Electromagnetism did, then Mirrors until Optics did.
+    // Nuclear Physics still has no lesson, so it is the honest case today.
+    expect(at('science', 'Nuclear Physics')).toEqual({
+      kind: 'unwritten', reason: 'no-content-yet', title: 'Nuclear Physics', fieldId: 'science',
     });
   });
 
@@ -169,14 +169,13 @@ describe('fieldCoverage', () => {
     const coverage = fieldCoverage('science', topics);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Thirty-four written entry points across the whole science field: ten for
+    // Forty-one written entry points across the whole science field: ten for
     // classical mechanics, five for the Thermodynamics lessons (Heat,
     // Temperature, Laws of Thermodynamics, Entropy, Heat Engines), seven for the
-    // Electromagnetism lessons (Charge, Fields, Potential, Current, Magnetism,
-    // Induction, Maxwell), one for space science (black holes), and eleven for
-    // the computer science deep read. It was twenty-two before the
-    // Thermodynamics lessons landed and twenty-seven after them.
-    expect(coverage.written).toBe(34);
+    // Electromagnetism lessons, seven for the Optics lessons, one for space
+    // science (black holes), and eleven for the computer science deep read. It
+    // was twenty-two before the Thermodynamics lessons landed.
+    expect(coverage.written).toBe(41);
     expect(coverage.unmapped).toBe(0);
   });
 
@@ -186,16 +185,15 @@ describe('fieldCoverage', () => {
     // to 30 when the history levels did, and from 30 to 42 when computer
     // science did: eleven CS Atlas topics, plus "Quantum Computing" which the
     // Atlas lists under both physics and computer science and so counts twice.
-    // It is now 61, seven higher, because the seven Electromagnetism lessons
-    // landed. It was 54 after the five Thermodynamics lessons and 42 before
-    // those. If it fails, content was added, which is good news - raise it in
-    // the same commit as the content.
+    // It is now 68, seven higher, because the seven Optics lessons landed. It
+    // was 61 after the Electromagnetism lessons and 54 after Thermodynamics. If
+    // it fails, content was added, which is good news - raise it in the same
+    // commit as the content.
     //
-    // It is worth being precise about what 61 out of 572 means. It is not
-    // "sixty-one topics are done" in any sense a reader would recognise; it is
-    // sixty-one topics that open something real, against roughly five hundred
-    // that honestly report themselves as unwritten. The number went up by seven
-    // and the gap went from 518 to 511, which is the honest way to read it.
+    // It is worth being precise about what 68 out of 572 means. It is not
+    // "sixty-eight topics are done" in any sense a reader would recognise; it is
+    // sixty-eight topics that open something real, against roughly five hundred
+    // that honestly report themselves as unwritten.
     const all: Array<[string, string]> = [];
     KNOWLEDGE_FIELDS.forEach((f) => {
       f.disciplines.forEach((d) => {
@@ -209,7 +207,7 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(61);
+    expect(written).toBe(68);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -236,10 +234,10 @@ describe('fieldCoverage', () => {
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
     //
-    // Science is 34: ten classical mechanics, five Thermodynamics lessons,
-    // seven Electromagnetism lessons, one space science, eleven computer
-    // science.
-    expect(perField.science.written).toBe(34);
+    // Science is 41: ten classical mechanics, five Thermodynamics lessons,
+    // seven Electromagnetism lessons, seven Optics lessons, one space science,
+    // eleven computer science.
+    expect(perField.science.written).toBe(41);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -252,6 +250,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(61);
+    expect(summed).toBe(68);
   });
 });

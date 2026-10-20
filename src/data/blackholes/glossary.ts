@@ -270,6 +270,23 @@ const TERMS: GlossaryEntry[] = [
     definition:
       'The disappearance of electrical resistance in some materials below a critical temperature, first seen in mercury at 4.2 kelvin in 1911. A current in a superconducting loop can keep flowing for years without decaying.',
   },
+  // --- Optics ------------------------------------------------------------
+  {
+    term: 'refractive-index',
+    definition:
+      'How much slower light travels in a material than in vacuum: water is 1.33 and glass about 1.5, so light crosses a glass block at two thirds of its vacuum speed. The number also sets how far a ray bends at a surface.',
+  },
+  {
+    term: 'total-internal-reflection',
+    definition:
+      'When light inside a dense medium hits the boundary at a shallow enough angle, none of it escapes and the surface acts as a perfect mirror. It is what keeps light inside an optical fibre.',
+    see: 'refractive-index',
+  },
+  {
+    term: 'diffraction-limit',
+    definition:
+      'The smallest detail an opening can resolve, set by the wavelength divided by the aperture, so a bigger lens sees finer structure. No amount of magnification gets past it without extra information about the object.',
+  },
   {
     term: 'Hawking radiation',
     definition:
