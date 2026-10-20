@@ -78,15 +78,15 @@ describe('editorial knowledge atlas', () => {
   test('an unwritten topic says so instead of navigating nowhere', () => {
     const { onOpenLesson, onOpenDeepRead, showToast } = renderUniverse();
 
-    // 'Electric Charge' sits under Electromagnetism, which the Atlas lists and
-    // which has no lesson written. This used to navigate to the physics topic
-    // index and silently drop the topic. The case used to be 'Entropy', which is
-    // now a written lesson, so it has to track the content rather than stay
-    // where it was.
-    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), { target: { value: 'Electric Charge' } });
-    fireEvent.click(screen.getByRole('button', { name: /Electric Charge.*Science/i }));
+    // 'Mirrors' sits under Optics, which the Atlas lists and which has no lesson
+    // written yet. This used to navigate to the physics topic index and silently
+    // drop the topic. The case has had to move twice as content landed: it was
+    // 'Entropy' until Thermodynamics was written, then 'Electric Charge' until
+    // Electromagnetism was, so it tracks the content rather than staying put.
+    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), { target: { value: 'Mirrors' } });
+    fireEvent.click(screen.getByRole('button', { name: /Mirrors.*Science/i }));
 
-    expect(screen.getByRole('heading', { name: 'Electric Charge' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Mirrors' })).toBeInTheDocument();
     // Every unwritten topic now carries the status in its accessible name, so
     // the call to action has to be found by exact label rather than by a loose
     // /Not written yet/ match that would hit 180 topic lines as well.
@@ -140,7 +140,7 @@ describe('editorial knowledge atlas', () => {
     // the element's own text rather than a regex over one text node.
     const coverage = screen.getByText((_, element) =>
       element?.className === 'uh-coverage' &&
-      /Science:\s*27\s*of 188 topics written/.test(element.textContent || '')
+      /Science:\s*34\s*of 188 topics written/.test(element.textContent || '')
     );
     expect(coverage).toBeInTheDocument();
   });
@@ -177,21 +177,22 @@ describe('atlas index', () => {
     expect(entries).toHaveLength(188);
     expect(markers).toHaveLength(188);
 
-    // Science resolves 27 topics to real content: ten classical mechanics, five
-    // Thermodynamics lessons, one space science, eleven computer science. If the
-    // content grows, raise these in the same commit as the content.
-    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(27);
-    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(161);
+    // Science resolves 34 topics to real content: ten classical mechanics, five
+    // Thermodynamics lessons, seven Electromagnetism lessons, one space science,
+    // eleven computer science. If the content grows, raise these in the same
+    // commit as the content.
+    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(34);
+    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(154);
   });
 
   test('says "not written yet" in the accessible name, not just in colour', () => {
     renderUniverse();
 
     // Status by marker colour alone would be invisible to a screen reader and
-    // to anyone who cannot separate the accent from the tertiary ink. Electric
-    // Charge is on Science, which is the field open on arrival, and it is still
-    // unwritten now that the Thermodynamics lessons have been written.
-    expect(screen.getByRole('button', { name: 'Electric Charge, not written yet' })).toBeInTheDocument();
+    // to anyone who cannot separate the accent from the tertiary ink. Mirrors is
+    // on Science, which is the field open on arrival, and it is still unwritten
+    // now that the Electromagnetism lessons have been written.
+    expect(screen.getByRole('button', { name: 'Mirrors, not written yet' })).toBeInTheDocument();
 
     // A written topic carries no such suffix, so the two states are
     // distinguishable by name alone. Black Holes sits under Astrophysics and
@@ -204,11 +205,12 @@ describe('atlas index', () => {
     renderUniverse();
 
     // The reader can compare fields at a glance: Literature is 0 of 92, Science
-    // is 27 of 188 - the ten classical-mechanics lessons, the five
-    // Thermodynamics lessons, the space-science entry point, the eleven computer
-    // science topics and the Quantum Computing topic that both disciplines share.
-    // Nothing in the old layout made that comparison possible.
-    expect(screen.getByRole('button', { name: /^Science, .*27 of 188 topics written$/ })).toBeInTheDocument();
+    // is 34 of 188 - the ten classical-mechanics lessons, the five
+    // Thermodynamics lessons, the seven Electromagnetism lessons, the
+    // space-science entry point, the eleven computer science topics and the
+    // Quantum Computing topic that both disciplines share. Nothing in the old
+    // layout made that comparison possible.
+    expect(screen.getByRole('button', { name: /^Science, .*34 of 188 topics written$/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /^Literature, .*0 of 92 topics written$/ })).toBeInTheDocument();
   });
 });

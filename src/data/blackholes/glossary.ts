@@ -246,6 +246,30 @@ const TERMS: GlossaryEntry[] = [
       'Any machine that turns a flow of heat from something hot into something cold into useful work, from a steam engine to a power station. It can never convert all of the heat it takes in.',
     see: 'entropy',
   },
+  // --- Electromagnetism --------------------------------------------------
+  // The electricity and magnetism lessons share this glossary for the same
+  // reason the thermodynamics ones do: one word, one definition, one place.
+  {
+    term: 'electric-field',
+    definition:
+      'The force a positive charge would feel at a point in space, divided by the size of that charge, measured in newtons per coulomb. A charge does not pull another directly; it fills the space around itself with this field, and the field pushes.',
+  },
+  {
+    term: 'electric-potential',
+    definition:
+      'The energy each coulomb of charge would gain or lose moving from one place to another, measured in volts. Only differences between two points mean anything, because the zero point is chosen rather than found.',
+    see: 'electric-field',
+  },
+  {
+    term: 'magnetic-flux',
+    definition:
+      'The amount of magnetic field passing through a loop of wire, counted in webers. A change in this number is what induces a voltage, which is why a magnet has to move to make a generator work.',
+  },
+  {
+    term: 'superconductivity',
+    definition:
+      'The disappearance of electrical resistance in some materials below a critical temperature, first seen in mercury at 4.2 kelvin in 1911. A current in a superconducting loop can keep flowing for years without decaying.',
+  },
   {
     term: 'Hawking radiation',
     definition:
