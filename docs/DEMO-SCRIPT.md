@@ -18,14 +18,14 @@ why the choice was made. If a line feels like marketing, cut it.
 |---|---|---|
 | 0:00 | Welcome screen at `toibawani.github.io/Velora`. Do nothing for a beat. | "This is Velora. I tutor kids who memorise a fact for a test and forget it a week later. I wanted a place that explains why." |
 | 0:08 | Click **Look around first**. | "Before it asks for anything, it shows you what is here." |
-| 0:14 | Scroll the inventory slowly: 72 of 572, dictionary count, black hole levels. | "Seventy-two of the 572 atlas topics have a lesson or a deep read. The rest are listed and marked not written yet. I would rather show the gap than fill it with placeholder text." |
+| 0:14 | Scroll the inventory slowly: 76 of 572, dictionary count, black hole levels. | "Seventy-six of the 572 atlas topics have a lesson or a deep read. The rest are listed and marked not written yet. I would rather show the gap than fill it with placeholder text." |
 | 0:26 | Click **Set up this device**, type a name, Continue, then **Start learning**. | "No account. A name, stored in this browser, so it can say hello. There is no server to send it to." |
 | 0:38 | Atlas home. Scroll to the atlas section, where the selected topic sits above the index. | "Every topic is in the index, written or not." |
 | 0:44 | Click **Gravitation** in Classical Mechanics. The panel above updates. | "Pick one that is written and the panel gives you the way in." |
 | 0:50 | Click **Read the lesson**. Scroll to section 04, then tap the dotted word **spacetime**. | "Explanations are written for someone who is stuck, not someone revising. The dotted words open a definition from the same glossary the content is checked against." |
 | 1:04 | Press Escape, go back to the atlas, click **Electric Charge** under Electromagnetism. | "And this is the part I care about. Electric Charge has no lesson. It says so, and it stays in the index so the shape of the field is visible." |
 | 1:14 | Switch to the GitHub Actions run for main. Show the green CI job and the job list. | "Eight checks run on every push: typecheck, 682 tests, a build, lint, a contrast gate, and audits that drive the built app in real Chrome at 1440 and 375. Every one of them was broken on purpose once, to prove it can fail." |
-| 1:26 | Back to the atlas, hold on the field counts. | "Seventy-two written, 500 not. That is the honest number, and it is the next thing I am working on." |
+| 1:26 | Back to the atlas, hold on the field counts. | "Seventy-six written, 496 not. That is the honest number, and it is the next thing I am working on." |
 
 ## Cut points
 

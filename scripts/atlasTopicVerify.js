@@ -197,14 +197,16 @@ const CASES = [
   { name: 'Entropy (thermodynamics lesson)', query: 'Entropy', topic: 'Entropy', expect: 'lesson' },
   { name: 'Heat Engines (thermodynamics lesson)', query: 'Heat Engines', topic: 'Heat Engines', expect: 'lesson' },
   // The written/unwritten example has to track the content. It has been
-  // Electric Charge, then Mirrors, and it is now Nuclear Physics, which Modern
-  // Physics still lists without a lesson.
+  // Electric Charge, Mirrors and Nuclear Physics, and it is now Quantum
+  // Tunneling, which the Quantum Physics module still lists without a lesson.
   { name: 'Electric Fields (electromagnetism lesson)', query: 'Electric Fields', topic: 'Electric Fields', expect: 'lesson' },
   { name: 'Maxwell’s Equations (electromagnetism lesson)', query: 'Maxwell', topic: 'Maxwell’s Equations', expect: 'lesson' },
   { name: 'Refraction (optics lesson)', query: 'Refraction', topic: 'Refraction', expect: 'lesson' },
   { name: 'Sound (waves lesson)', query: 'Sound', topic: 'Sound', expect: 'lesson' },
   { name: 'Resonance (waves lesson)', query: 'Resonance', topic: 'Resonance', expect: 'lesson' },
-  { name: 'Nuclear Physics (listed, unwritten)', query: 'Nuclear Physics', topic: 'Nuclear Physics', expect: 'unwritten' },
+  { name: 'Photoelectric Effect (modern physics)', query: 'Photoelectric', topic: 'Photoelectric Effect', expect: 'lesson' },
+  { name: 'Particle Physics (modern physics)', query: 'Particle Physics', topic: 'Particle Physics', expect: 'lesson' },
+  { name: 'Quantum Tunneling (listed, unwritten)', query: 'Quantum Tunneling', topic: 'Quantum Tunneling', expect: 'unwritten' },
   { name: 'Shakespeare (field unmapped)', query: 'Shakespeare', topic: 'Shakespeare', expect: 'unwritten' },
   { name: 'Monsoons (field unmapped)', query: 'Monsoons', topic: 'Monsoons', expect: 'unwritten' },
 ];

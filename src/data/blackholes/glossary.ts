@@ -304,6 +304,17 @@ const TERMS: GlossaryEntry[] = [
     definition:
       'A logarithmic way to state a ratio, used for sound because the ear responds to huge ranges of pressure. Every 10 decibels is ten times the intensity, and 0 decibels is a reference pressure rather than silence.',
   },
+  // --- Atoms, nuclei and particles ---------------------------------------
+  {
+    term: 'work-function',
+    definition:
+      'The minimum energy needed to pull an electron out of a metal surface, measured in electronvolts. Caesium is about 2.1 and platinum about 5.6, which is why a low work function matters for photocathodes.',
+  },
+  {
+    term: 'half-life',
+    definition:
+      'The time in which half of a sample of a radioactive substance decays. It is a property of the nucleus and cannot be changed by heating, cooling or chemistry, only by the nucleus itself.',
+  },
   {
     term: 'Hawking radiation',
     definition:
