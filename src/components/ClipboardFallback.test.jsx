@@ -45,7 +45,7 @@ describe('Copy buttons when the clipboard is unavailable', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /copy/i }));
 
-    await waitFor(() => expect(screen.getByRole('status')).toBeInTheDocument());
+    expect(await screen.findByRole('status')).toBeInTheDocument();
     expect(screen.queryByText(/caption copied/i)).not.toBeInTheDocument();
   });
 
@@ -55,6 +55,6 @@ describe('Copy buttons when the clipboard is unavailable', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /copy/i }));
 
-    await waitFor(() => expect(screen.getByText(/caption copied/i)).toBeInTheDocument());
+    expect(await screen.findByText(/caption copied/i)).toBeInTheDocument();
   });
 });
