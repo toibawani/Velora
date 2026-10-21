@@ -12,7 +12,9 @@ import BrainGames, {
 
 const openGame = async (name) => {
   fireEvent.click(screen.getByRole('tab', { name: new RegExp(name, 'i') }));
-  await act(async () => {});
+  // The tab switch settles synchronously; the empty act that used to sit here
+  // was only waiting for itself.
+  await Promise.resolve();
 };
 
 describe('Brain Games', () => {

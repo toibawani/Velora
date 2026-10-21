@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PhysicsSimulations from './PhysicsSimulations';
 
 /** The matchMedia stub in setupTests reads these, and reads them on render. */
@@ -13,7 +13,7 @@ afterEach(() => {
 
 const openTab = async (name) => {
   fireEvent.click(screen.getByRole('tab', { name: new RegExp(name, 'i') }));
-  await act(async () => {});
+  await Promise.resolve();
 };
 
 describe('Physics simulations', () => {

@@ -37,9 +37,9 @@ afterEach(() => {
 
 const renderAndCountFrames = () => {
   global.requestAnimationFrame.mockClear();
-  act(() => {
-    render(<BlackHoleMastery onBack={jest.fn()} onOpenLab={jest.fn()} />);
-  });
+  // render is already wrapped in act, so the extra act here only re-wrapped a
+  // synchronous call and told Testing Library nothing new.
+  render(<BlackHoleMastery onBack={jest.fn()} onOpenLab={jest.fn()} />);
   return global.requestAnimationFrame.mock.calls.length;
 };
 
