@@ -7,7 +7,6 @@ import {
   getOpenTasks,
   getTasks,
   MAX_LENGTH,
-  MIN_LENGTH,
   removeTask,
   reopenTask,
 } from './nextUp';

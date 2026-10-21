@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act, within } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import ConceptScrabble, { SCRABBLE_LEVELS } from './ConceptScrabble';
 
 const rackLetters = () =>
