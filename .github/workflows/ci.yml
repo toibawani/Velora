@@ -10,6 +10,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  authorship:
+    name: commit authorship
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The range below reaches back past the pushed tip, so the whole
+          # history has to be present.
+          fetch-depth: 0
+      # The local commit-msg hook in .githooks is the first line of defence and
+      # it is configuration, not code: a fresh clone, a runner, or any tool that
+      # passes --no-verify never sees it. This runs the same rule on the commits
+      # that actually arrived, so a trailer or a foreign identity cannot be
+      # pushed quietly even if the hook was bypassed.
+      - name: every new commit is mine and carries no credit trailer
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            range="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+          else
+            before="${{ github.event.before }}"
+            if [ -z "$before" ] || [ "$before" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$before^{commit}" 2>/dev/null; then
+              range="HEAD~1..HEAD"
+            else
+              range="$before..${{ github.sha }}"
+            fi
+          fi
+          node scripts/commitAuthorship.js "$range"
   verify:
     name: tsc, jest, build
     runs-on: ubuntu-latest
