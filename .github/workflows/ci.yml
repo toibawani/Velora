@@ -46,6 +46,10 @@ jobs:
         with:
           node-version: 20
           cache: npm
+      # The lockfile needs npm 10. Printing the version first means a lockfile
+      # failure names the toolchain instead of sending the next person to read
+      # package-lock.json.
+      - run: node --version && npm --version
       - run: npm ci
       # There was no CI at all until now: the build was broken by three dead
       # @import lines while 291 tests passed, so a green suite was not evidence.

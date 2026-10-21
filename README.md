@@ -99,9 +99,15 @@ behind them yet.
 ```bash
 git clone https://github.com/toibawani/Velora.git
 cd velora
-npm ci
+npm ci        # needs npm 10, the version that ships with Node 20
 npm start
 ```
+
+`package-lock.json` is generated with npm 10, which is what Node 20 ships. npm
+8 refuses the lockfile and npm 11 prunes an entry the runner needs, so a
+mismatch looks like a broken repository rather than a version difference. If
+`npm ci` fails on a lockfile error, run `npm --version` first; the answer is
+usually there.
 
 There are no environment variables. The app reads its content from files in this
 repository.
