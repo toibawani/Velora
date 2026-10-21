@@ -35,9 +35,12 @@ describe('Game hub listings', () => {
   test('no card advertises a colour outside the warm palette', () => {
     const { container } = render(<GameHub setScreen={() => {}} />);
     const icons = container.querySelectorAll('svg[stroke], .game-icon');
-    icons.forEach((icon) => {
-      const stroke = icon.getAttribute('color') || icon.getAttribute('stroke') || '';
-      if (stroke) expect(stroke.toLowerCase()).not.toMatch(/#?(2563eb|30d5c8|34c759|ff9f0a)/i);
+    const strokes = [...icons]
+      .map((icon) => icon.getAttribute('color') || icon.getAttribute('stroke') || '')
+      .filter(Boolean);
+    expect(strokes.length).toBeGreaterThan(0);
+    strokes.forEach((stroke) => {
+      expect(stroke.toLowerCase()).not.toMatch(/#?(2563eb|30d5c8|34c759|ff9f0a)/i);
     });
   });
 });

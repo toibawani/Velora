@@ -16,20 +16,30 @@ describe('security and RLS enforcement module', () => {
 
     test('rejects unauthenticated requests', () => {
       expect(() => enforceRLS(null, 'user-123', 'read')).toThrow(SecurityError);
+
+      // Capture the error and assert on it outside the catch: an expectation
+      // that only runs when something throws cannot fail when nothing does.
+      let thrown;
       try {
         enforceRLS(null, 'user-123', 'read');
       } catch (err) {
-        expect(err.code).toBe(SecurityErrorCode.UNAUTHORIZED);
+        thrown = err;
       }
+      expect(thrown).toBeInstanceOf(SecurityError);
+      expect(thrown.code).toBe(SecurityErrorCode.UNAUTHORIZED);
     });
 
     test('rejects unauthorized access when authUid != resourceUserId', () => {
       expect(() => enforceRLS('attacker', 'victim', 'delete')).toThrow(SecurityError);
+
+      let thrown;
       try {
         enforceRLS('attacker', 'victim', 'delete');
       } catch (err) {
-        expect(err.code).toBe(SecurityErrorCode.FORBIDDEN);
+        thrown = err;
       }
+      expect(thrown).toBeInstanceOf(SecurityError);
+      expect(thrown.code).toBe(SecurityErrorCode.FORBIDDEN);
     });
   });
 

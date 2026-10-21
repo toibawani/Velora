@@ -195,11 +195,8 @@ test('no row claims something is unbuilt when the file exists', () => {
       const file = screenFiles[item.name];
       if (!file) return;
       const exists = fs.existsSync(path.join(__dirname, file));
-      if (item.state === 'notstarted' || item.state === 'removed') {
-        expect({ name: item.name, exists }).toEqual({ name: item.name, exists: false });
-      } else {
-        expect({ name: item.name, exists }).toEqual({ name: item.name, exists: true });
-      }
+      const shouldExist = item.state !== 'notstarted' && item.state !== 'removed';
+      expect({ name: item.name, exists }).toEqual({ name: item.name, exists: shouldExist });
     });
   });
 });
@@ -238,7 +235,12 @@ test('nothing is listed as unbuilt under a name that does not match a screen', (
   const notStarted = ROADMAP.find((section) => section.id === 'notstarted');
   notStarted.items.forEach((item) => {
     expect(item.name.length).toBeLessThan(60);
-    // A row about something removed must say so in the name or the detail.
-    if (item.state === 'removed') expect(item.detail.length).toBeGreaterThan(80);
   });
+
+  // A row about something removed must say so in the name or the detail. The
+  // rows are selected first so the assertion is not conditional on the state
+  // inside a loop.
+  const removed = notStarted.items.filter((item) => item.state === 'removed');
+  expect(removed.length).toBeGreaterThan(0);
+  removed.forEach((item) => expect(item.detail.length).toBeGreaterThan(80));
 });

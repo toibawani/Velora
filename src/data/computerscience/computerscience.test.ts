@@ -237,18 +237,23 @@ test('states the contested cases concretely rather than just naming them', () =>
     const atlasTopics = (KNOWLEDGE_FIELDS.find((f) => f.id === 'science') as any).disciplines
       .find((d: any) => d.id === 'computer-science')
       .modules.flatMap((m: any) => m.topics);
+    // Split the list instead of asking inside the loop whether each entry is an
+    // Atlas topic: the exceptions are then a first-class assertion with a name,
+    // and the resolver check runs on everything else unconditionally.
+    const exceptions = allEntries
+      .map((entry) => entry.name)
+      .filter((name) => !atlasTopics.includes(name));
+    expect(exceptions.sort()).toEqual(['P vs NP', 'The Two Generals Problem']);
+
     allEntries.forEach((entry) => {
-      if (atlasTopics.includes(entry.name)) {
-        // The slug is a well-formed function of the name, and the resolver
-        // reaches it: a rename that updated only one side of this pair would
-        // produce a slug the DEEP_READS key no longer matches.
-        expect(slugify(entry.name)).not.toBe('');
-        expect(
-          resolveAtlasTopic({ fieldId: 'science', disciplineId: 'computer-science', moduleName: '', topic: entry.name }).kind
-        ).toBe('deep-read');
-        return;
-      }
-      expect(['P vs NP', 'The Two Generals Problem']).toContain(entry.name);
+      if (!atlasTopics.includes(entry.name)) return;
+      // The slug is a well-formed function of the name, and the resolver
+      // reaches it: a rename that updated only one side of this pair would
+      // produce a slug the DEEP_READS key no longer matches.
+      expect(slugify(entry.name)).not.toBe('');
+      expect(
+        resolveAtlasTopic({ fieldId: 'science', disciplineId: 'computer-science', moduleName: '', topic: entry.name }).kind
+      ).toBe('deep-read');
     });
   });
 

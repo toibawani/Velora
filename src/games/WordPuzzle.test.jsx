@@ -47,14 +47,19 @@ describe('Word Puzzle', () => {
     // testing the real ending instead of only the first seven answers.
     const answers = PUZZLES.map((p) => p.word.toLowerCase().split(' '));
 
-    answers.forEach((words, i) => {
+    answers.slice(0, -1).forEach((words) => {
       fill(...words);
       submit();
       act(() => jest.advanceTimersByTime(1300));
-      if (i === answers.length - 1) {
-        expect(screen.getByRole('heading', { name: /finished/i })).toBeInTheDocument();
-      }
     });
+
+    // The last puzzle is solved outside the loop, so the ending is asserted on
+    // the puzzle that produces it rather than inside a branch that the deck
+    // length decides.
+    fill(...answers[answers.length - 1]);
+    submit();
+    act(() => jest.advanceTimersByTime(1300));
+    expect(screen.getByRole('heading', { name: /finished/i })).toBeInTheDocument();
 
     expect(screen.getByText(`${PUZZLES.length * 100} points`)).toBeInTheDocument();
     expect(
