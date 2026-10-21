@@ -249,7 +249,7 @@ function Dictionary({ setScreen }) {
                         ) : (
                           <span className="source-text">{entry.source}</span>
                         )}
-                        {entry.verified === false && (
+                        {entry.verified !== true && (
                           <span className="source-flag" title="This entry has not been checked against its source yet.">
                             not checked yet
                           </span>

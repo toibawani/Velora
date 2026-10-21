@@ -91,3 +91,27 @@ describe('Curious Dictionary A-Z index', () => {
     expect(headings).toEqual(sorted);
   });
 });
+
+test('an entry with no verification mark says it is unchecked', () => {
+  render(<Dictionary setScreen={jest.fn()} />);
+
+  fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
+    target: { value: 'Conservation of Momentum' },
+  });
+
+  // Three entries carry verified: true. The rest carry no flag at all, and an
+  // absent flag used to render exactly like a checked entry, because only an
+  // explicit false showed the warning.
+  expect(screen.getByText('not checked yet')).toBeInTheDocument();
+});
+
+test('a checked entry carries no warning', () => {
+  render(<Dictionary setScreen={jest.fn()} />);
+
+  fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
+    target: { value: 'Event Horizon' },
+  });
+
+  expect(screen.getByText('Event Horizon')).toBeInTheDocument();
+  expect(screen.queryByText('not checked yet')).not.toBeInTheDocument();
+});
