@@ -224,7 +224,7 @@ describe('sprint content breadth', () => {
     const titleOf = () => screen.getByRole('heading', { level: 3 }).textContent
       .replace('Connect the Concept: ', '');
 
-    fireEvent.click(document.querySelector('.bg-option-btn'));
+    fireEvent.click(screen.getAllByTestId('bg-option')[0]);
     const next = screen.getByRole('button', { name: /next connection/i });
     fireEvent.click(next);
     fireEvent.click(next);
@@ -244,7 +244,7 @@ describe('sprint content breadth', () => {
     fireEvent.click(next);
     fireEvent.click(next);
 
-    const claim = document.querySelector('.bg-myth-claim').textContent;
+    const claim = screen.getByTestId('myth-claim').textContent;
     expect(claim).toContain(MYTH_QUESTIONS[1].claim.slice(0, 30));
     expect(claim).not.toContain(MYTH_QUESTIONS[2].claim.slice(0, 30));
     expect(screen.queryByRole('button', { name: /next intuition check/i })).not.toBeInTheDocument();
@@ -296,7 +296,7 @@ describe('sprint content breadth', () => {
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
     // One save, and the results are on screen.
     expect(readValue(KEYS.MY_EXPLANATIONS, []).length).toBe(1);
-    expect(document.querySelector('.bg-feynman-results')).toBeInTheDocument();
+    expect(screen.getByTestId('feynman-results')).toBeInTheDocument();
   });
 
   test('running out of time with nothing written says so rather than showing an empty quote', async () => {
@@ -308,7 +308,7 @@ describe('sprint content breadth', () => {
     fireEvent.click(screen.getByRole('button', { name: /start 30s timer/i }));
     act(() => { jest.advanceTimersByTime(31000); });
 
-    expect(document.querySelector('.bg-feynman-results')).toBeInTheDocument();
+    expect(screen.getByTestId('feynman-results')).toBeInTheDocument();
     expect(screen.getByText(/no explanation entered before time expired/i)).toBeInTheDocument();
     expect(readValue(KEYS.MY_EXPLANATIONS, [])).toEqual([]);
     jest.useRealTimers();

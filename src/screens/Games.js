@@ -296,16 +296,16 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             </p>
           ) : (
             <div className="stats-row">
-              <div className="stat-item">
-                <p className="stat-number">{sessionsLogged}</p>
+              <div className="stat-item" role="group" aria-label="Sessions logged">
+                <p className="stat-number" data-testid="stat-value">{sessionsLogged}</p>
                 <p className="stat-label">Sessions logged</p>
               </div>
-              <div className="stat-item">
-                <p className="stat-number">{conceptsTouched}</p>
+              <div className="stat-item" role="group" aria-label="Concepts touched">
+                <p className="stat-number" data-testid="stat-value">{conceptsTouched}</p>
                 <p className="stat-label">Concepts touched</p>
               </div>
-              <div className="stat-item">
-                <p className="stat-number">{analytics.totalHoursStudied}</p>
+              <div className="stat-item" role="group" aria-label="Hours recorded">
+                <p className="stat-number" data-testid="stat-value">{analytics.totalHoursStudied}</p>
                 <p className="stat-label">Hours recorded</p>
               </div>
             </div>

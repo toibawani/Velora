@@ -85,11 +85,8 @@ describe('focus on route change', () => {
   //
   // Throwing a named Error instead keeps the same retry behaviour and makes the
   // timeout say what it was waiting for.
-  const bottomBarButton = (name) => {
-    const bar = document.querySelector('.mobile-bottom-nav');
-    if (!bar) throw new Error('the bottom navigation bar has not mounted yet');
-    return within(bar).getByRole('button', { name });
-  };
+  const bottomBar = () => screen.getByRole('navigation', { name: 'Mobile Navigation' });
+  const bottomBarButton = (name) => within(bottomBar()).getByRole('button', { name });
 
   // Screens are lazily imported behind Suspense, so every wait here needs room
   // to actually arrive.
@@ -144,7 +141,7 @@ describe('focus on route change', () => {
     // What is being asserted is that focus eventually lands on the new route,
     // not that it happens within one tick. Waiting for it states that.
     await waitFor(() => {
-      expect(document.activeElement).toHaveAttribute('aria-label', 'Question desk');
+      expect(screen.getByLabelText('Question desk')).toHaveFocus();
     }, PATIENCE);
   });
 
@@ -152,6 +149,6 @@ describe('focus on route change', () => {
     await startSignedIn();
     fireEvent.click(bottomBarButton('Insights'));
     await settle();
-    expect(document.activeElement).toHaveAttribute('aria-label', 'Your progress');
+    expect(screen.getByLabelText('Your progress')).toHaveFocus();
   });
 });

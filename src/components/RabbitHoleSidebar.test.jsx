@@ -33,7 +33,7 @@ describe('RabbitHoleSidebar component', () => {
         onClose={() => {}}
       />
     );
-    expect(container.firstChild).toBeNull();
+    expect(container).toBeEmptyDOMElement();
   });
 
   test('renders dialog and cards when isOpen is true', () => {

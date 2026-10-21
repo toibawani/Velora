@@ -42,7 +42,7 @@ test('every nav entry carries a drawn icon rather than a text glyph', () => {
   // now SCREENS itself, so the test cannot fall behind the registry.
   SCREENS.forEach(({ drawerLabel }) => {
     const button = screen.getByRole('button', { name: drawerLabel });
-    expect(button.querySelector('svg')).not.toBeNull();
+    expect(button).toContainHTML('<svg');
   });
 });
 

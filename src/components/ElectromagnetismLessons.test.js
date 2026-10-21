@@ -23,7 +23,9 @@ const withMeta = (topic) => ({ ...topic, moduleTitle: em.title });
 const renderLesson = (topic) =>
   render(<LessonReader topic={withMeta(topic)} subject="physics" onBack={() => {}} showToast={() => {}} />);
 
-const mainText = (container) => container.querySelector('.lesson-reader-main').textContent || '';
+// The reader's body is the page's <main>, so it is reachable by role and the
+// tests do not need the render result at all.
+const mainText = () => screen.getByRole('main').textContent || '';
 
 beforeEach(() => localStorage.clear());
 
@@ -110,60 +112,60 @@ describe('the concrete facts the lessons claim actually render', () => {
   const lesson = (id) => em.topics.find((t) => t.id === id);
 
   test('Electric Charge carries Coulomb 1785, the elementary charge and Millikan', () => {
-    const { container } = renderLesson(lesson('electric-charge'));
-    expect(mainText(container)).toMatch(/measured the force between two charged objects in 1785 with a torsion balance/);
-    expect(mainText(container)).toMatch(/1\.602 x 10\^-19 coulombs/);
-    expect(mainText(container)).toMatch(/between 1909 and 1913 by watching charged oil droplets/);
-    expect(mainText(container)).toMatch(/6\.24 x 10\^18 electrons/);
+    renderLesson(lesson('electric-charge'));
+    expect(mainText()).toMatch(/measured the force between two charged objects in 1785 with a torsion balance/);
+    expect(mainText()).toMatch(/1\.602 x 10\^-19 coulombs/);
+    expect(mainText()).toMatch(/between 1909 and 1913 by watching charged oil droplets/);
+    expect(mainText()).toMatch(/6\.24 x 10\^18 electrons/);
   });
 
   test('Electric Fields carries the field definition, the breakdown strength and the Casimir dates', () => {
-    const { container } = renderLesson(lesson('electric-fields'));
-    expect(mainText(container)).toMatch(/measured in newtons per coulomb/);
-    expect(mainText(container)).toMatch(/roughly 120 volts per metre/);
-    expect(mainText(container)).toMatch(/around 3 million volts per metre/);
-    expect(mainText(container)).toMatch(/predicted in 1948 and measured in 1997/);
+    renderLesson(lesson('electric-fields'));
+    expect(mainText()).toMatch(/measured in newtons per coulomb/);
+    expect(mainText()).toMatch(/roughly 120 volts per metre/);
+    expect(mainText()).toMatch(/around 3 million volts per metre/);
+    expect(mainText()).toMatch(/predicted in 1948 and measured in 1997/);
   });
 
   test('Electric Potential works a kettle and a collider through the same definition', () => {
-    const { container } = renderLesson(lesson('electric-potential'));
-    expect(mainText(container)).toMatch(/One volt is one joule per coulomb/);
-    expect(mainText(container)).toMatch(/2,300 joules a second, or 2\.3 kilowatts/);
-    expect(mainText(container)).toMatch(/6\.8 trillion electronvolts/);
-    expect(mainText(container)).toMatch(/about 1\.1 microjoules/);
+    renderLesson(lesson('electric-potential'));
+    expect(mainText()).toMatch(/One volt is one joule per coulomb/);
+    expect(mainText()).toMatch(/2,300 joules a second, or 2\.3 kilowatts/);
+    expect(mainText()).toMatch(/6\.8 trillion electronvolts/);
+    expect(mainText()).toMatch(/about 1\.1 microjoules/);
   });
 
   test('Current Electricity names Ohm 1827, the drift velocity and Onnes 1911', () => {
-    const { container } = renderLesson(lesson('current-electricity'));
-    expect(mainText(container)).toMatch(/Georg Ohm published his law in 1827/);
-    expect(mainText(container)).toMatch(/a fraction of a millimetre per second/);
-    expect(mainText(container)).toMatch(/1\.7 x 10\^-8 ohm metres/);
-    expect(mainText(container)).toMatch(/below 4\.2 kelvin/);
-    expect(mainText(container)).toMatch(/in 1911, three years after he first liquefied helium/);
+    renderLesson(lesson('current-electricity'));
+    expect(mainText()).toMatch(/Georg Ohm published his law in 1827/);
+    expect(mainText()).toMatch(/a fraction of a millimetre per second/);
+    expect(mainText()).toMatch(/1\.7 x 10\^-8 ohm metres/);
+    expect(mainText()).toMatch(/below 4\.2 kelvin/);
+    expect(mainText()).toMatch(/in 1911, three years after he first liquefied helium/);
   });
 
   test('Magnetism dates Ørsted to 1820 and the last field reversal', () => {
-    const { container } = renderLesson(lesson('magnetism'));
-    expect(mainText(container)).toMatch(/In April 1820/);
-    expect(mainText(container)).toMatch(/between about 25 and 65 microtesla/);
-    expect(mainText(container)).toMatch(/about 780,000 years ago/);
-    expect(mainText(container)).toMatch(/in 1931 Paul Dirac showed/);
+    renderLesson(lesson('magnetism'));
+    expect(mainText()).toMatch(/In April 1820/);
+    expect(mainText()).toMatch(/between about 25 and 65 microtesla/);
+    expect(mainText()).toMatch(/about 780,000 years ago/);
+    expect(mainText()).toMatch(/in 1931 Paul Dirac showed/);
   });
 
   test('Electromagnetic Induction dates Faraday and Lenz, and states the disagreement', () => {
-    const { container } = renderLesson(lesson('electromagnetic-induction'));
-    expect(mainText(container)).toMatch(/On 29 August 1831/);
-    expect(mainText(container)).toMatch(/Heinrich Lenz stated this in 1834/);
-    expect(mainText(container)).toMatch(/20 to 100 kilohertz/);
-    expect(mainText(container)).toMatch(/Richard Feynman argued that the "flux rule"/);
+    renderLesson(lesson('electromagnetic-induction'));
+    expect(mainText()).toMatch(/On 29 August 1831/);
+    expect(mainText()).toMatch(/Heinrich Lenz stated this in 1834/);
+    expect(mainText()).toMatch(/20 to 100 kilohertz/);
+    expect(mainText()).toMatch(/Richard Feynman argued that the "flux rule"/);
   });
 
   test('Maxwell’s Equations carries 1861, 1865, Heaviside 1884 and the defined speed of light', () => {
-    const { container } = renderLesson(lesson('maxwells-equations'));
-    expect(mainText(container)).toMatch(/he added a displacement current in 1861/);
-    expect(mainText(container)).toMatch(/In 1865 James Clerk Maxwell published a paper/);
-    expect(mainText(container)).toMatch(/Oliver Heaviside rewrote them as the four vector equations taught today, in 1884/);
-    expect(mainText(container)).toMatch(/299,792,458 metres per second/);
-    expect(mainText(container)).toMatch(/Heinrich Hertz generated and detected these waves in 1887/);
+    renderLesson(lesson('maxwells-equations'));
+    expect(mainText()).toMatch(/he added a displacement current in 1861/);
+    expect(mainText()).toMatch(/In 1865 James Clerk Maxwell published a paper/);
+    expect(mainText()).toMatch(/Oliver Heaviside rewrote them as the four vector equations taught today, in 1884/);
+    expect(mainText()).toMatch(/299,792,458 metres per second/);
+    expect(mainText()).toMatch(/Heinrich Hertz generated and detected these waves in 1887/);
   });
 });

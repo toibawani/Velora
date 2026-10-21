@@ -251,16 +251,18 @@ describe('theme control in the header', () => {
   test('no header control is named exactly like a topic in the index', () => {
     renderUniverse();
 
-    const topicNames = Array.from(document.querySelectorAll('.aix-entry-text')).map((n) =>
-      n.textContent.trim()
-    );
-    const controlNames = Array.from(document.querySelectorAll('.theme-toggle-segment')).map((n) =>
-      n.textContent.trim()
-    );
+    const index = within(screen.getByTestId('atlas-index'));
+    const controlNames = screen
+      .getAllByTestId('theme-toggle-segment')
+      .map((control) => control.textContent.trim());
 
     // "Dark Matter" is in the index, so a control named "Dark" is ambiguous.
-    expect(topicNames).toContain('Dark Matter');
-    controlNames.forEach((name) => expect(topicNames).not.toContain(name));
+    // The check is on the entry's accessible name, which is the handle a reader
+    // navigating by name would actually use.
+    expect(index.getByRole('button', { name: /^Dark Matter/ })).toBeInTheDocument();
+    controlNames.forEach((name) => {
+      expect(index.queryByRole('button', { name: new RegExp(`^${name}(,|$)`) })).not.toBeInTheDocument();
+    });
   });
 
   test('the theme control is reachable only under its own group name', () => {

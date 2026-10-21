@@ -278,6 +278,7 @@ function ConnectConceptGame() {
                 key={optionIndex}
                 type="button"
                 className={`bg-option-btn ${stateClass} ${position === selectedOption ? 'selected' : ''}`}
+                data-testid="bg-option"
                 onClick={() => handleSelect(position)}
                 disabled={isAnswered}
               >
@@ -440,7 +441,7 @@ function TrueOrMythGame() {
 
       <div className="bg-myth-question-box">
         <span className="bg-myth-subject-tag">{question.subject}</span>
-        <blockquote className="bg-myth-claim">
+        <blockquote className="bg-myth-claim" data-testid="myth-claim">
           "{question.claim}"
         </blockquote>
       </div>
@@ -889,7 +890,7 @@ function ExplainItBackGame() {
           )}
         </div>
       ) : (
-        <div className="bg-feynman-results">
+        <div className="bg-feynman-results" data-testid="feynman-results">
           <div className="bg-your-distillation">
             <span className="bg-distill-label">YOUR DISTILLATION ({wordCount} words)</span>
             <blockquote className="bg-your-quote">

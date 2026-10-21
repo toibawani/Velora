@@ -77,11 +77,9 @@ test('adding ten concepts never places a node on another', () => {
   // Read the positions straight out of the rendered SVG. Before collision
   // avoidance this test could not exist: positions were Math.random(), so
   // placing ten nodes produced overlaps roughly a fifth of the time per node.
-  const svg = document.querySelector('.topology-svg');
-  const nodes = [...svg.querySelectorAll('g.topology-node')].map((g) => {
-    const [, x, y] = g.getAttribute('transform').match(/translate\(([-\d.]+),\s*([-\d.]+)\)/);
-    return { position: { x: Number(x), y: Number(y) } };
-  });
+  const nodes = screen.getAllByTestId('topology-node').map((node) => ({
+    position: { x: Number(node.dataset.x), y: Number(node.dataset.y) },
+  }));
 
   expect(nodes.length).toBe(14); // four seeds plus the ten added here
   for (let i = 0; i < nodes.length; i += 1) {

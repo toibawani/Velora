@@ -22,7 +22,9 @@ const withMeta = (topic) => ({ ...topic, moduleTitle: modern.title });
 const renderLesson = (topic) =>
   render(<LessonReader topic={withMeta(topic)} subject="physics" onBack={() => {}} showToast={() => {}} />);
 
-const mainText = (container) => container.querySelector('.lesson-reader-main').textContent || '';
+// The reader's body is the page's <main>, so it is reachable by role and the
+// tests do not need the render result at all.
+const mainText = () => screen.getByRole('main').textContent || '';
 
 beforeEach(() => localStorage.clear());
 
@@ -99,38 +101,38 @@ describe('the concrete facts the lessons claim actually render', () => {
   const lesson = (id) => modern.topics.find((t) => t.id === id);
 
   test('Photoelectric Effect works caesium against green and red light', () => {
-    const { container } = renderLesson(lesson('photoelectric-effect'));
-    expect(mainText(container)).toMatch(/Heinrich Hertz noticed in 1887/);
-    expect(mainText(container)).toMatch(/In 1905 Einstein proposed that light arrives in quanta/);
-    expect(mainText(container)).toMatch(/Caesium has a work function of about 2\.1 electronvolts/);
-    expect(mainText(container)).toMatch(/Green light at 550 nanometres carries 2\.25 electronvolts/);
-    expect(mainText(container)).toMatch(/threshold for caesium sits at about 590 nanometres/);
+    renderLesson(lesson('photoelectric-effect'));
+    expect(mainText()).toMatch(/Heinrich Hertz noticed in 1887/);
+    expect(mainText()).toMatch(/In 1905 Einstein proposed that light arrives in quanta/);
+    expect(mainText()).toMatch(/Caesium has a work function of about 2\.1 electronvolts/);
+    expect(mainText()).toMatch(/Green light at 550 nanometres carries 2\.25 electronvolts/);
+    expect(mainText()).toMatch(/threshold for caesium sits at about 590 nanometres/);
   });
 
   test('Atomic Physics carries Rutherford 1911, Balmer 1885 and the Bohr radius', () => {
-    const { container } = renderLesson(lesson('atomic-physics'));
-    expect(mainText(container)).toMatch(/about one in 8,000 came almost straight back/);
-    expect(mainText(container)).toMatch(/Johann Balmer noticed in 1885/);
-    expect(mainText(container)).toMatch(/H-alpha at 656\.3 nanometres/);
-    expect(mainText(container)).toMatch(/Bohr radius comes out at 0\.0529 nanometres/);
-    expect(mainText(container)).toMatch(/Franck-Hertz experiment in 1914/);
+    renderLesson(lesson('atomic-physics'));
+    expect(mainText()).toMatch(/about one in 8,000 came almost straight back/);
+    expect(mainText()).toMatch(/Johann Balmer noticed in 1885/);
+    expect(mainText()).toMatch(/H-alpha at 656\.3 nanometres/);
+    expect(mainText()).toMatch(/Bohr radius comes out at 0\.0529 nanometres/);
+    expect(mainText()).toMatch(/Franck-Hertz experiment in 1914/);
   });
 
   test('Nuclear Physics works the binding energy and dates the chain reaction', () => {
-    const { container } = renderLesson(lesson('nuclear-physics'));
-    expect(mainText(container)).toMatch(/One atomic mass unit is 931\.5 megaelectronvolts/);
-    expect(mainText(container)).toMatch(/about 7 MeV per nucleon/);
-    expect(mainText(container)).toMatch(/Lise Meitner and Otto Frisch worked out the interpretation/);
-    expect(mainText(container)).toMatch(/at Chicago on 2 December 1942/);
-    expect(mainText(container)).toMatch(/Carbon-14 has a half-life of 5,730 years/);
+    renderLesson(lesson('nuclear-physics'));
+    expect(mainText()).toMatch(/One atomic mass unit is 931\.5 megaelectronvolts/);
+    expect(mainText()).toMatch(/about 7 MeV per nucleon/);
+    expect(mainText()).toMatch(/Lise Meitner and Otto Frisch worked out the interpretation/);
+    expect(mainText()).toMatch(/at Chicago on 2 December 1942/);
+    expect(mainText()).toMatch(/Carbon-14 has a half-life of 5,730 years/);
   });
 
   test('Particle Physics lists the model and the 4 July 2012 announcement', () => {
-    const { container } = renderLesson(lesson('particle-physics'));
-    expect(mainText(container)).toMatch(/six quarks, named up, down, charm, strange, top and bottom/);
-    expect(mainText(container)).toMatch(/J\. J\. Thomson found the electron in 1897/);
-    expect(mainText(container)).toMatch(/the J\/psi discovery in November 1974/);
-    expect(mainText(container)).toMatch(/the Higgs at CERN on 4 July 2012/);
-    expect(mainText(container)).toMatch(/27 kilometre ring/);
+    renderLesson(lesson('particle-physics'));
+    expect(mainText()).toMatch(/six quarks, named up, down, charm, strange, top and bottom/);
+    expect(mainText()).toMatch(/J\. J\. Thomson found the electron in 1897/);
+    expect(mainText()).toMatch(/the J\/psi discovery in November 1974/);
+    expect(mainText()).toMatch(/the Higgs at CERN on 4 July 2012/);
+    expect(mainText()).toMatch(/27 kilometre ring/);
   });
 });

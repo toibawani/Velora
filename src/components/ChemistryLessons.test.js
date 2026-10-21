@@ -23,7 +23,9 @@ const withMeta = (topic) => ({ ...topic, moduleTitle: chemistry.modules[0].title
 const renderLesson = (topic) =>
   render(<LessonReader topic={withMeta(topic)} subject="chemistry" onBack={() => {}} showToast={() => {}} />);
 
-const mainText = (container) => container.querySelector('.lesson-reader-main').textContent || '';
+// The reader's body is the page's <main>, so it is reachable by role and the
+// tests do not need the render result at all.
+const mainText = () => screen.getByRole('main').textContent || '';
 
 beforeEach(() => localStorage.clear());
 
@@ -86,53 +88,53 @@ describe('the concrete facts the lessons claim actually render', () => {
   const lesson = (id) => chemistry.modules[0].topics.find((t) => t.id === id);
 
   test('Atomic Structure names Dalton 1808, Mendeleev 1869 and the hydrogen ionisation energy', () => {
-    const { container } = renderLesson(lesson('atomic-structure'));
-    expect(mainText(container)).toMatch(/John Dalton argued in 1808/);
-    expect(mainText(container)).toMatch(/Dmitri Mendeleev arranged the elements by atomic weight in 1869/);
-    expect(mainText(container)).toMatch(/13\.6 electronvolts/);
+    renderLesson(lesson('atomic-structure'));
+    expect(mainText()).toMatch(/John Dalton argued in 1808/);
+    expect(mainText()).toMatch(/Dmitri Mendeleev arranged the elements by atomic weight in 1869/);
+    expect(mainText()).toMatch(/13\.6 electronvolts/);
   });
 
   test('Chemical Bonding carries Lewis 1916, the 436 kJ/mol bond and Pauling 1932', () => {
-    const { container } = renderLesson(lesson('chemical-bonding'));
-    expect(mainText(container)).toMatch(/Gilbert Lewis proposed that atoms bond by sharing pairs of electrons/);
-    expect(mainText(container)).toMatch(/436 kilojoules per mole/);
-    expect(mainText(container)).toMatch(/Linus Pauling introduced electronegativity in 1932/);
-    expect(mainText(container)).toMatch(/104\.5 degrees/);
+    renderLesson(lesson('chemical-bonding'));
+    expect(mainText()).toMatch(/Gilbert Lewis proposed that atoms bond by sharing pairs of electrons/);
+    expect(mainText()).toMatch(/436 kilojoules per mole/);
+    expect(mainText()).toMatch(/Linus Pauling introduced electronegativity in 1932/);
+    expect(mainText()).toMatch(/104\.5 degrees/);
   });
 
   test('Thermodynamics dates Hess 1840 and Gibbs, and works the water case', () => {
-    const { container } = renderLesson(lesson('thermodynamics'));
-    expect(mainText(container)).toMatch(/Germain Hess noticed in 1840/);
-    expect(mainText(container)).toMatch(/890 kilojoules/);
-    expect(mainText(container)).toMatch(/22 joules per kelvin/);
-    expect(mainText(container)).toMatch(/Josiah Willard Gibbs worked out in the 1870s/);
+    renderLesson(lesson('thermodynamics'));
+    expect(mainText()).toMatch(/Germain Hess noticed in 1840/);
+    expect(mainText()).toMatch(/890 kilojoules/);
+    expect(mainText()).toMatch(/22 joules per kelvin/);
+    expect(mainText()).toMatch(/Josiah Willard Gibbs worked out in the 1870s/);
   });
 
   test('Chemical Equilibrium carries the Haber conditions and the water constant', () => {
-    const { container } = renderLesson(lesson('chemical-equilibrium'));
-    expect(mainText(container)).toMatch(/Henri Louis Le Chatelier stated a rule of thumb/);
-    expect(mainText(container)).toMatch(/200 atmospheres and 500 degrees Celsius/);
-    expect(mainText(container)).toMatch(/1\.0 x 10\^-14/);
+    renderLesson(lesson('chemical-equilibrium'));
+    expect(mainText()).toMatch(/Henri Louis Le Chatelier stated a rule of thumb/);
+    expect(mainText()).toMatch(/200 atmospheres and 500 degrees Celsius/);
+    expect(mainText()).toMatch(/1\.0 x 10\^-14/);
   });
 
   test('Chemical Kinetics dates Arrhenius 1889 and gives the enzyme rate', () => {
-    const { container } = renderLesson(lesson('chemical-kinetics'));
-    expect(mainText(container)).toMatch(/Svante Arrhenius explained why rates climb so steeply/);
-    expect(mainText(container)).toMatch(/Michaelis and Menten described their kinetics in 1913/);
-    expect(mainText(container)).toMatch(/a million reactions per second/);
+    renderLesson(lesson('chemical-kinetics'));
+    expect(mainText()).toMatch(/Svante Arrhenius explained why rates climb so steeply/);
+    expect(mainText()).toMatch(/Michaelis and Menten described their kinetics in 1913/);
+    expect(mainText()).toMatch(/a million reactions per second/);
   });
 
   test('Electrochemistry carries Daniell 1836, the Faraday constant and Sony 1991', () => {
-    const { container } = renderLesson(lesson('electrochemistry'));
-    expect(mainText(container)).toMatch(/John Frederic Daniell built a better cell in 1836/);
-    expect(mainText(container)).toMatch(/96,485 coulombs per mole/);
-    expect(mainText(container)).toMatch(/commercialised by Sony in 1991/);
+    renderLesson(lesson('electrochemistry'));
+    expect(mainText()).toMatch(/John Frederic Daniell built a better cell in 1836/);
+    expect(mainText()).toMatch(/96,485 coulombs per mole/);
+    expect(mainText()).toMatch(/commercialised by Sony in 1991/);
   });
 
   test('Solutions works the freezing point and the osmotic pressure', () => {
-    const { container } = renderLesson(lesson('solutions'));
-    expect(mainText(container)).toMatch(/drops by 1\.86 degrees Celsius per mole of particles per kilogram/);
-    expect(mainText(container)).toMatch(/about 7\.7 atmospheres/);
-    expect(mainText(container)).toMatch(/35 grams of dissolved salts per kilogram/);
+    renderLesson(lesson('solutions'));
+    expect(mainText()).toMatch(/drops by 1\.86 degrees Celsius per mole of particles per kilogram/);
+    expect(mainText()).toMatch(/about 7\.7 atmospheres/);
+    expect(mainText()).toMatch(/35 grams of dissolved salts per kilogram/);
   });
 });

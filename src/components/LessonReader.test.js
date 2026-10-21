@@ -33,7 +33,9 @@ const renderLesson = (topic) => {
 };
 
 /** The whole lesson body as one string, the way a reader reads it. */
-const mainText = (container) => container.querySelector('.lesson-reader-main').textContent || '';
+// The reader's body is the page's <main>, so it is reachable by role and the
+// tests do not need the render result at all.
+const mainText = () => screen.getByRole('main').textContent || '';
 
 beforeEach(() => localStorage.clear());
 
@@ -155,36 +157,36 @@ describe('the concrete facts the lessons claim actually render', () => {
   // main region's text is how a reader actually reads it, glossary links and
   // all.
   test('Heat carries Rumford 1798, the calorie-to-joule figure and the vacuum flask', () => {
-    const { container } = renderLesson(thermo.topics.find((t) => t.id === 'heat'));
-    expect(mainText(container)).toMatch(/In 1798 Benjamin Thompson, better known as Count Rumford, was supervising the boring of cannon at the Munich arsenal/);
-    expect(mainText(container)).toMatch(/a blunt, non-cutting boring tool produced almost no metal shavings/);
-    expect(mainText(container)).toMatch(/150 million kilometres of vacuum/);
+    renderLesson(thermo.topics.find((t) => t.id === 'heat'));
+    expect(mainText()).toMatch(/In 1798 Benjamin Thompson, better known as Count Rumford, was supervising the boring of cannon at the Munich arsenal/);
+    expect(mainText()).toMatch(/a blunt, non-cutting boring tool produced almost no metal shavings/);
+    expect(mainText()).toMatch(/150 million kilometres of vacuum/);
   });
 
   test('Temperature names the coldest reachable point and the gas law', () => {
-    const { container } = renderLesson(thermo.topics.find((t) => t.id === 'temperature'));
-    expect(mainText(container)).toMatch(/absolute zero, minus 273.15 degrees Celsius, written 0 K/);
-    expect(mainText(container)).toMatch(/The ideal gas law, pressure times volume equals number of moles times the gas constant times temperature/);
+    renderLesson(thermo.topics.find((t) => t.id === 'temperature'));
+    expect(mainText()).toMatch(/absolute zero, minus 273.15 degrees Celsius, written 0 K/);
+    expect(mainText()).toMatch(/The ideal gas law, pressure times volume equals number of moles times the gas constant times temperature/);
   });
 
   test('Laws of Thermodynamics dates Clausius, Kelvin, Planck and Nernst', () => {
-    const { container } = renderLesson(thermo.topics.find((t) => t.id === 'laws-of-thermodynamics'));
-    expect(mainText(container)).toMatch(/Clausius gave the second law its standard statement in 1850/);
-    expect(mainText(container)).toMatch(/Nernst put the law in its modern form around 1906 to 1912/);
+    renderLesson(thermo.topics.find((t) => t.id === 'laws-of-thermodynamics'));
+    expect(mainText()).toMatch(/Clausius gave the second law its standard statement in 1850/);
+    expect(mainText()).toMatch(/Nernst put the law in its modern form around 1906 to 1912/);
   });
 
   test('Entropy credits Boltzmann with the gravestone formula and Landauer 1961', () => {
-    const { container } = renderLesson(thermo.topics.find((t) => t.id === 'entropy'));
-    expect(mainText(container)).toMatch(/Ludwig Boltzmann gave entropy a concrete meaning in the 1870s/);
-    expect(mainText(container)).toMatch(/S equals k times the natural log of W into his gravestone in Vienna/);
-    expect(mainText(container)).toMatch(/Rolf Landauer showed in 1961/);
+    renderLesson(thermo.topics.find((t) => t.id === 'entropy'));
+    expect(mainText()).toMatch(/Ludwig Boltzmann gave entropy a concrete meaning in the 1870s/);
+    expect(mainText()).toMatch(/S equals k times the natural log of W into his gravestone in Vienna/);
+    expect(mainText()).toMatch(/Rolf Landauer showed in 1961/);
   });
 
   test('Heat Engines carries Carnot 1824 and a worked coal-plant ceiling', () => {
-    const { container } = renderLesson(thermo.topics.find((t) => t.id === 'heat-engines'));
-    expect(mainText(container)).toMatch(/Sadi Carnot published "Reflections on the Motive Power of Fire" in 1824/);
-    expect(mainText(container)).toMatch(/ideal ceiling near 64 percent/);
-    expect(mainText(container)).toMatch(/heat pump warming a house in winter can move several times more heat energy/);
+    renderLesson(thermo.topics.find((t) => t.id === 'heat-engines'));
+    expect(mainText()).toMatch(/Sadi Carnot published "Reflections on the Motive Power of Fire" in 1824/);
+    expect(mainText()).toMatch(/ideal ceiling near 64 percent/);
+    expect(mainText()).toMatch(/heat pump warming a house in winter can move several times more heat energy/);
   });
 });
 

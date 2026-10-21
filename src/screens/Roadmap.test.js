@@ -23,7 +23,9 @@ test('says collaboration was removed and why, rather than dropping it', () => {
   expect(screen.getByRole('heading', { name: 'Collaboration' })).toBeInTheDocument();
   // Several rows are removed, so this one is scoped to the Collaboration entry
   // rather than asserting on the first "Removed." anywhere on the page.
-  const row = screen.getByRole('heading', { name: 'Collaboration' }).closest('li');
+  const row = screen
+    .getAllByTestId('roadmap-item')
+    .find((item) => within(item).queryByRole('heading', { name: 'Collaboration' }));
   expect(within(row).getByText('Removed')).toBeInTheDocument();
   expect(within(row).getByText(/needs a backend/i)).toBeInTheDocument();
 });
@@ -41,8 +43,8 @@ test('states the gap between atlas topics and written lessons', () => {
   // This is the fact a reader most needs and least likely to guess. Scoped to
   // the row, because the footer also names both numbers.
   const row = screen
-    .getByRole('heading', { name: /atlas has far more topics/i })
-    .closest('li');
+    .getAllByTestId('roadmap-item')
+    .find((item) => within(item).queryByRole('heading', { name: /atlas has far more topics/i }));
   expect(within(row).getByText(new RegExp(`${atlasTopicCount} topics`))).toBeInTheDocument();
   // The row has to name the count of topics that actually open something, not
   // just the lesson count: the deep reads hold written content that is not a

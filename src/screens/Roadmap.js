@@ -64,7 +64,7 @@ function Roadmap({ setScreen }) {
             {section.items.map((item) => {
               const state = STATE_COPY[item.state] || STATE_COPY.live;
               return (
-                <li key={item.name} className="rm-item">
+                <li key={item.name} className="rm-item" data-testid="roadmap-item">
                   <div className="rm-item-head">
                     <h3>{item.name}</h3>
                     <span className={`rm-state ${state.className}`}>{state.label}</span>

@@ -44,7 +44,7 @@ describe('PeerExplanations', () => {
     render(<PeerExplanations topic="Stoicism" />);
 
     expect(window.__pwned).toBeUndefined();
-    expect(document.querySelector('img[src="x"]')).toBeNull();
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
     expect(screen.getByText(/look at this/)).toBeInTheDocument();
   });
 

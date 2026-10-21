@@ -22,7 +22,9 @@ const withMeta = (topic) => ({ ...topic, moduleTitle: optics.title });
 const renderLesson = (topic) =>
   render(<LessonReader topic={withMeta(topic)} subject="physics" onBack={() => {}} showToast={() => {}} />);
 
-const mainText = (container) => container.querySelector('.lesson-reader-main').textContent || '';
+// The reader's body is the page's <main>, so it is reachable by role and the
+// tests do not need the render result at all.
+const mainText = () => screen.getByRole('main').textContent || '';
 
 beforeEach(() => localStorage.clear());
 
@@ -101,64 +103,64 @@ describe('the concrete facts the lessons claim actually render', () => {
   const lesson = (id) => optics.topics.find((t) => t.id === id);
 
   test('Reflection carries the angle rule, the corner cube and the lunar laser ranging', () => {
-    const { container } = renderLesson(lesson('reflection'));
-    expect(mainText(container)).toMatch(/Euclid stated this around 300 BC in the Catoptrics/);
-    expect(mainText(container)).toMatch(/about 500 nanometres for visible light/);
-    expect(mainText(container)).toMatch(/Apollo 11 left an array of them on the Moon in July 1969/);
-    expect(mainText(container)).toMatch(/3\.8 centimetres a year/);
+    renderLesson(lesson('reflection'));
+    expect(mainText()).toMatch(/Euclid stated this around 300 BC in the Catoptrics/);
+    expect(mainText()).toMatch(/about 500 nanometres for visible light/);
+    expect(mainText()).toMatch(/Apollo 11 left an array of them on the Moon in July 1969/);
+    expect(mainText()).toMatch(/3\.8 centimetres a year/);
   });
 
   test('Refraction carries Snell 1621, the speed in water and the critical angles', () => {
-    const { container } = renderLesson(lesson('refraction'));
-    expect(mainText(container)).toMatch(/Willebrord Snell found the relation in 1621/);
-    expect(mainText(container)).toMatch(/René Descartes published the same law in 1637/);
-    expect(mainText(container)).toMatch(/about 225,000 kilometres per second/);
-    expect(mainText(container)).toMatch(/48\.6 degrees/);
-    expect(mainText(container)).toMatch(/below 20 decibels per kilometre in 1970/);
+    renderLesson(lesson('refraction'));
+    expect(mainText()).toMatch(/Willebrord Snell found the relation in 1621/);
+    expect(mainText()).toMatch(/René Descartes published the same law in 1637/);
+    expect(mainText()).toMatch(/about 225,000 kilometres per second/);
+    expect(mainText()).toMatch(/48\.6 degrees/);
+    expect(mainText()).toMatch(/below 20 decibels per kilometre in 1970/);
   });
 
   test('Lenses works the thin lens equation through a real example', () => {
-    const { container } = renderLesson(lesson('lenses'));
-    expect(mainText(container)).toMatch(/the image distance is 15 centimetres/);
-    expect(mainText(container)).toMatch(/minus 0\.5, so the image is half the size and inverted/);
-    expect(mainText(container)).toMatch(/about 60 dioptres/);
-    expect(mainText(container)).toMatch(/a 50 millimetre lens at f\/1\.8 has an aperture near 28 millimetres/);
-    expect(mainText(container)).toMatch(/Chester Moore Hall built the first achromatic doublet in 1733/);
+    renderLesson(lesson('lenses'));
+    expect(mainText()).toMatch(/the image distance is 15 centimetres/);
+    expect(mainText()).toMatch(/minus 0\.5, so the image is half the size and inverted/);
+    expect(mainText()).toMatch(/about 60 dioptres/);
+    expect(mainText()).toMatch(/a 50 millimetre lens at f\/1\.8 has an aperture near 28 millimetres/);
+    expect(mainText()).toMatch(/Chester Moore Hall built the first achromatic doublet in 1733/);
   });
 
   test('Mirrors carries the curved-mirror example and the Hubble mirror error', () => {
-    const { container } = renderLesson(lesson('mirrors'));
-    expect(mainText(container)).toMatch(/a radius of 60 centimetres: its focal length is 30/);
-    expect(mainText(container)).toMatch(/the image distance is 90, with a magnification of minus 2/);
-    expect(mainText(container)).toMatch(/about 2\.2 micrometres at the edge/);
-    expect(mainText(container)).toMatch(/Hubble launched in April 1990/);
-    expect(mainText(container)).toMatch(/installed corrective optics in December 1993/);
+    renderLesson(lesson('mirrors'));
+    expect(mainText()).toMatch(/a radius of 60 centimetres: its focal length is 30/);
+    expect(mainText()).toMatch(/the image distance is 90, with a magnification of minus 2/);
+    expect(mainText()).toMatch(/about 2\.2 micrometres at the edge/);
+    expect(mainText()).toMatch(/Hubble launched in April 1990/);
+    expect(mainText()).toMatch(/installed corrective optics in December 1993/);
   });
 
   test('Interference dates Young and gives a fringe spacing a reader could check', () => {
-    const { container } = renderLesson(lesson('interference'));
-    expect(mainText(container)).toMatch(/on 24 November 1801/);
-    expect(mainText(container)).toMatch(/the bands are 2\.2 millimetres apart/);
-    expect(mainText(container)).toMatch(/On 14 September 2015 it detected a strain of about 10\^-21/);
-    expect(mainText(container)).toMatch(/a thousandth of the width of a proton/);
+    renderLesson(lesson('interference'));
+    expect(mainText()).toMatch(/on 24 November 1801/);
+    expect(mainText()).toMatch(/the bands are 2\.2 millimetres apart/);
+    expect(mainText()).toMatch(/On 14 September 2015 it detected a strain of about 10\^-21/);
+    expect(mainText()).toMatch(/a thousandth of the width of a proton/);
   });
 
   test('Diffraction carries the Rayleigh figure, Photo 51 and the 2014 Nobel', () => {
-    const { container } = renderLesson(lesson('diffraction'));
-    expect(mainText(container)).toMatch(/Rayleigh stated the working rule in 1879/);
-    expect(mainText(container)).toMatch(/0\.058 arcseconds/);
-    expect(mainText(container)).toMatch(/Photo 51 of DNA in May 1952/);
-    expect(mainText(container)).toMatch(/published their model in April 1953/);
-    expect(mainText(container)).toMatch(/Ernst Abbe stated in 1873/);
-    expect(mainText(container)).toMatch(/The 2014 Nobel Prize in Chemistry/);
+    renderLesson(lesson('diffraction'));
+    expect(mainText()).toMatch(/Rayleigh stated the working rule in 1879/);
+    expect(mainText()).toMatch(/0\.058 arcseconds/);
+    expect(mainText()).toMatch(/Photo 51 of DNA in May 1952/);
+    expect(mainText()).toMatch(/published their model in April 1953/);
+    expect(mainText()).toMatch(/Ernst Abbe stated in 1873/);
+    expect(mainText()).toMatch(/The 2014 Nobel Prize in Chemistry/);
   });
 
   test('Polarization carries Malus 1808, Brewster 1815 and the 2022 Nobel', () => {
-    const { container } = renderLesson(lesson('polarization'));
-    expect(mainText(container)).toMatch(/Étienne-Louis Malus worked this out in 1808/);
-    expect(mainText(container)).toMatch(/David Brewster showed in 1815/);
-    expect(mainText(container)).toMatch(/about 56 degrees for glass and 53 for water/);
-    expect(mainText(container)).toMatch(/Edwin Land made the first practical polarising sheet in 1928/);
-    expect(mainText(container)).toMatch(/The 2022 Nobel Prize in Physics/);
+    renderLesson(lesson('polarization'));
+    expect(mainText()).toMatch(/Étienne-Louis Malus worked this out in 1808/);
+    expect(mainText()).toMatch(/David Brewster showed in 1815/);
+    expect(mainText()).toMatch(/about 56 degrees for glass and 53 for water/);
+    expect(mainText()).toMatch(/Edwin Land made the first practical polarising sheet in 1928/);
+    expect(mainText()).toMatch(/The 2022 Nobel Prize in Physics/);
   });
 });

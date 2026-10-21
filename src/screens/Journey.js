@@ -99,7 +99,7 @@ function LearningJourney({ setScreen }) {
                       </div>
                     ) : null}
 
-                    <h3 className="milestone-topic-title">{item.topic}</h3>
+                    <h3 className="milestone-topic-title" data-testid="milestone-topic-title">{item.topic}</h3>
 
                     <div className="milestone-stats-row">
                       <span className="time-stat">

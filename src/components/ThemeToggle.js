@@ -34,6 +34,7 @@ export default function ThemeToggle() {
           key={mode}
           type="button"
           className="theme-toggle-segment"
+          data-testid="theme-toggle-segment"
           aria-pressed={theme === mode}
           // The visible label alone is "Dark" or "Light", and both are common
           // words in the atlas: "Dark Matter" is a physics topic and the index

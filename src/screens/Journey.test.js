@@ -36,6 +36,6 @@ test('orders the timeline by where the time went', () => {
 
   render(<Journey setScreen={jest.fn()} />);
 
-  const titles = Array.from(document.querySelectorAll('.milestone-topic-title')).map((node) => node.textContent);
+  const titles = screen.getAllByTestId('milestone-topic-title').map((node) => node.textContent);
   expect(titles).toEqual(['Long Topic', 'Small Topic']);
 });

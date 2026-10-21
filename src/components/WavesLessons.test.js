@@ -20,7 +20,9 @@ const withMeta = (topic) => ({ ...topic, moduleTitle: waves.title });
 const renderLesson = (topic) =>
   render(<LessonReader topic={withMeta(topic)} subject="physics" onBack={() => {}} showToast={() => {}} />);
 
-const mainText = (container) => container.querySelector('.lesson-reader-main').textContent || '';
+// The reader's body is the page's <main>, so it is reachable by role and the
+// tests do not need the render result at all.
+const mainText = () => screen.getByRole('main').textContent || '';
 
 beforeEach(() => localStorage.clear());
 
@@ -93,32 +95,32 @@ describe('the concrete facts the lessons claim actually render', () => {
   const lesson = (id) => waves.topics.find((t) => t.id === id);
 
   test('Mechanical Waves works the string speed and names Oldham 1906', () => {
-    const { container } = renderLesson(lesson('mechanical-waves'));
-    expect(mainText(container)).toMatch(/the square root of 20,000, about 141 metres per second/);
-    expect(mainText(container)).toMatch(/P waves travel at roughly 6 to 8 kilometres per second/);
-    expect(mainText(container)).toMatch(/Richard Oldham noticed the missing S waves in 1906/);
+    renderLesson(lesson('mechanical-waves'));
+    expect(mainText()).toMatch(/the square root of 20,000, about 141 metres per second/);
+    expect(mainText()).toMatch(/P waves travel at roughly 6 to 8 kilometres per second/);
+    expect(mainText()).toMatch(/Richard Oldham noticed the missing S waves in 1906/);
   });
 
   test('Sound carries the speeds, the hearing range and the decibel reference', () => {
-    const { container } = renderLesson(lesson('sound'));
-    expect(mainText(container)).toMatch(/about 343 metres per second at 20 degrees Celsius/);
-    expect(mainText(container)).toMatch(/about 1,480 metres per second and steel about 5,000/);
-    expect(mainText(container)).toMatch(/about 20 hertz to 20 kilohertz/);
-    expect(mainText(container)).toMatch(/20 micropascals/);
-    expect(mainText(container)).toMatch(/on 14 October 1947/);
+    renderLesson(lesson('sound'));
+    expect(mainText()).toMatch(/about 343 metres per second at 20 degrees Celsius/);
+    expect(mainText()).toMatch(/about 1,480 metres per second and steel about 5,000/);
+    expect(mainText()).toMatch(/about 20 hertz to 20 kilohertz/);
+    expect(mainText()).toMatch(/20 micropascals/);
+    expect(mainText()).toMatch(/on 14 October 1947/);
   });
 
   test('Wave Motion works a wavelength, a beat and the fundamental', () => {
-    const { container } = renderLesson(lesson('wave-motion'));
-    expect(mainText(container)).toMatch(/a 440 hertz tone in air has a wavelength of 0\.78 metres/);
-    expect(mainText(container)).toMatch(/Two tuning forks at 440 and 444 hertz produce a beat every quarter second/);
-    expect(mainText(container)).toMatch(/The beat frequency is the difference, not the average/);
+    renderLesson(lesson('wave-motion'));
+    expect(mainText()).toMatch(/a 440 hertz tone in air has a wavelength of 0\.78 metres/);
+    expect(mainText()).toMatch(/Two tuning forks at 440 and 444 hertz produce a beat every quarter second/);
+    expect(mainText()).toMatch(/The beat frequency is the difference, not the average/);
   });
 
   test('Resonance dates Tacoma Narrows and names the dispute about it', () => {
-    const { container } = renderLesson(lesson('resonance'));
-    expect(mainText(container)).toMatch(/on 7 November 1940 in a steady wind of about 19 metres per second/);
-    expect(mainText(container)).toMatch(/In 1991 Billah and Scanlan went through the film/);
-    expect(mainText(container)).toMatch(/opened on 10 June 2000 and closed two days later/);
+    renderLesson(lesson('resonance'));
+    expect(mainText()).toMatch(/on 7 November 1940 in a steady wind of about 19 metres per second/);
+    expect(mainText()).toMatch(/In 1991 Billah and Scanlan went through the film/);
+    expect(mainText()).toMatch(/opened on 10 June 2000 and closed two days later/);
   });
 });

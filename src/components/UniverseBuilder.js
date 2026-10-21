@@ -356,7 +356,7 @@ function UniverseBuilder({ topic, onBack }) {
                 the coordinate space matches the element's ratio. The CSS sets
                 that ratio; this keeps the drawing and its box in agreement if
                 the viewBox ever changes. */}
-            <svg viewBox="0 0 540 380" preserveAspectRatio="xMidYMid meet" className="topology-svg">
+            <svg viewBox="0 0 540 380" preserveAspectRatio="xMidYMid meet" className="topology-svg" data-testid="topology-svg">
               {/* Grid background lines */}
               <defs>
                 <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
@@ -407,6 +407,9 @@ function UniverseBuilder({ topic, onBack }) {
                   <g
                     key={node.id}
                     className="topology-node"
+                    data-testid="topology-node"
+                    data-x={node.position.x}
+                    data-y={node.position.y}
                     transform={`translate(${node.position.x}, ${node.position.y})`}
                     onClick={() => setSelectedConcept(isSelected ? null : node)}
                   >

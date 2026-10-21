@@ -89,9 +89,12 @@ describe('the insights panel only reports what the device recorded', () => {
     render(<GameHub setScreen={() => {}} />);
 
     // Two sessions across two topics, and the hours the device actually stored.
-    expect(screen.getByText('Sessions logged').previousSibling).toHaveTextContent('2');
-    expect(screen.getByText('Concepts touched').previousSibling).toHaveTextContent('2');
-    expect(screen.getByText('Hours recorded').previousSibling).toHaveTextContent('1.5');
+    // Each figure sits in a named group, so the label identifies its own number
+    // without reading a sibling node.
+    const stat = (label) => within(screen.getByRole('group', { name: label })).getByTestId('stat-value');
+    expect(stat('Sessions logged')).toHaveTextContent('2');
+    expect(stat('Concepts touched')).toHaveTextContent('2');
+    expect(stat('Hours recorded')).toHaveTextContent('1.5');
     expect(screen.queryByText(/Nothing recorded yet/i)).not.toBeInTheDocument();
   });
 

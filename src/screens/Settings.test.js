@@ -85,7 +85,8 @@ test('says the change was not saved when the browser refuses the write', () => {
     // saved. There are two alerts here, and both are correct: the refusal above
     // this one, and the storage warning describeStorage raises when its own
     // probe fails. This one is the refusal.
-    expect(document.querySelector('.st-notice')).toHaveTextContent(/refused to save/i);
+    const notices = screen.getAllByRole('alert');
+    expect(notices.some((notice) => /refused to save/i.test(notice.textContent))).toBe(true);
     expect(screen.getByRole('button', { name: 'Textual' })).toHaveAttribute('aria-pressed', 'false');
     expect(screen.getByRole('button', { name: 'Visual' })).toHaveAttribute('aria-pressed', 'true');
   } finally {
@@ -124,7 +125,7 @@ test('offers System alongside light and dark', () => {
 
 test('has no reminder switches, and says why', () => {
   open();
-  const section = screen.getByRole('heading', { name: 'Reminders' }).closest('section');
+  const section = screen.getByRole('region', { name: 'Reminders' });
 
   // The brief asked for reminder preferences "if any exist". None do: there is
   // no service worker, no permission request and no server, so a toggle here
@@ -137,7 +138,7 @@ test('has no reminder switches, and says why', () => {
 
 test('names the profile as a local name, not an account', () => {
   open();
-  const section = screen.getByRole('heading', { name: /name on this device/i }).closest('section');
+  const section = screen.getByRole('region', { name: /name on this device/i });
   expect(within(section).getByText(/not an account/i)).toBeInTheDocument();
   expect(within(section).getByText(/Ada/)).toBeInTheDocument();
 });
