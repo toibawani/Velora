@@ -44,9 +44,9 @@ test('changing the learning style persists it', () => {
 
 test('a change is still there after a reload', () => {
   seed({ domain: 'physics', style: 'visual', time: '30 minutes' });
-  const first = open();
+  const view = open();
   fireEvent.click(screen.getByRole('button', { name: 'Interactive' }));
-  first.unmount();
+  view.unmount();
 
   // Remount from storage only, which is what a reload does. If the change had
   // lived in component state, this is where it disappears.
@@ -58,9 +58,9 @@ test('a change is still there after a reload', () => {
 
 test('clearing an answer removes it rather than only unselecting the button', () => {
   seed({ domain: 'physics', style: 'visual', time: null });
-  const first = open();
+  const view = open();
   fireEvent.click(screen.getByRole('button', { name: 'Clear this answer' }));
-  first.unmount();
+  view.unmount();
 
   open();
 
@@ -97,7 +97,7 @@ test('says the change was not saved when the browser refuses the write', () => {
 });
 
 test('the theme control changes the real theme and persists it', () => {
-  const first = open();
+  const view = open();
   fireEvent.click(screen.getByRole('button', { name: 'Dark' }));
 
   expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
@@ -106,7 +106,7 @@ test('the theme control changes the real theme and persists it', () => {
   // does not see a cream flash. That script is the reason the theme is the one
   // key in this app that is not written through the registry.
   expect(window.localStorage.getItem(KEYS.THEME)).toBe('dark');
-  first.unmount();
+  view.unmount();
 
   open();
   expect(screen.getByRole('button', { name: 'Dark' })).toHaveAttribute('aria-pressed', 'true');

@@ -38,9 +38,9 @@ test('adds an item and shows it', () => {
 });
 
 test('the list is still there after a reload', () => {
-  const first = open();
+  const view = open();
   add('Find the primary source for that Nietzsche quote');
-  first.unmount();
+  view.unmount();
 
   // Remounted from storage only, which is what a reload does. A list held in
   // component state would come back empty here.
