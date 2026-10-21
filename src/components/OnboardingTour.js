@@ -138,7 +138,7 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
         </div>
 
         {/* Illustration */}
-        <div className="onboarding-illustration"><Illustration size={40} aria-hidden="true" /></div>
+        <div className="onboarding-illustration" data-testid="onboarding-illustration"><Illustration size={40} aria-hidden="true" /></div>
 
         {/* Text */}
         <div className="onboarding-text-block">

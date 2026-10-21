@@ -16,7 +16,7 @@ function EmptyState({ icon, title, description, action, actionText, onAction, ac
   return (
     <div data-testid="empty-state"
           className="empty-state">
-      <div className="empty-icon">{icon}</div>
+      <div className="empty-icon" data-testid="empty-state-icon">{icon}</div>
       <h3 className="empty-title">{title}</h3>
       <p className="empty-desc">{description}</p>
       {handleAction && buttonText && (

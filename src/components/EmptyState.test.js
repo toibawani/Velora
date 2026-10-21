@@ -5,7 +5,7 @@ import EmptyState from './EmptyState';
 
 describe('EmptyState Component', () => {
   test('renders icon, title, and description correctly', () => {
-    const { container } = render(
+    render(
       <EmptyState
         icon={<BookOpen size={28} aria-hidden="true" />}
         title="No reviews yet"
@@ -17,7 +17,9 @@ describe('EmptyState Component', () => {
 
     // The icon is a component now, so the assertion is on the svg it renders
     // rather than on a glyph that used to arrive as a font.
-    expect(container.querySelector('.empty-icon svg')).toBeInTheDocument();
+    // toContainHTML keeps the assertion on the rendered markup without reaching
+    // into the node tree for an icon that has no accessible role by design.
+    expect(screen.getByTestId('empty-state-icon')).toContainHTML('<svg');
     expect(screen.getByText('No reviews yet')).toBeInTheDocument();
     expect(screen.getByText('Complete topics to unlock smart reviews')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /start learning/i })).toBeInTheDocument();

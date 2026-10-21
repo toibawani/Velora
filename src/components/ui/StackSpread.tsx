@@ -136,7 +136,7 @@ function Plate({
 
   if (!animate) {
     return (
-      <div className="stack-plate stack-plate-still" style={baseStyle}>
+      <div className="stack-plate stack-plate-still" data-testid="stack-plate" style={baseStyle}>
         <PlateArtwork plate={plate} index={index} />
         <span className="stack-plate-tag">{plate.subject}</span>
       </div>
@@ -155,7 +155,7 @@ function Plate({
   };
 
   return (
-    <div className="stack-plate stack-plate-moving" style={motionStyle}>
+    <div className="stack-plate stack-plate-moving" data-testid="stack-plate" style={motionStyle}>
       <PlateArtwork plate={plate} index={index} />
       <span className="stack-plate-tag">{plate.subject}</span>
     </div>
@@ -336,7 +336,7 @@ export default function StackSpread(_props: StackSpreadProps) {
   });
 
   return (
-    <div className={`stack-field${animate ? "" : " stack-field--still"}`}>
+    <div className={`stack-field${animate ? "" : " stack-field--still"}`} data-testid="stack-field">
       <div
         className="stack-field-stage"
         ref={containerRef}

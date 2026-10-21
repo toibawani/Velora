@@ -87,7 +87,7 @@ function TopicLine({ field, discipline, moduleName, topic, isSelected, onSelect 
 
 function AtlasIndex({ field, disciplines, selected, onSelect }) {
   return (
-    <div className="aix-index">
+    <div className="aix-index" data-testid="atlas-index">
       {disciplines.map((discipline) => {
         const topicCount = discipline.modules.reduce((total, item) => total + item.topics.length, 0);
         return (

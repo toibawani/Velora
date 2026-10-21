@@ -236,12 +236,13 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
               type="button"
               key={game.id}
               className="game-card-large"
+              data-testid="game-card"
               onClick={() => setSelectedGame(game.id)}
               style={{ '--game-color': game.color, textAlign: 'left' }}
             >
               <div className="game-card-header">
                 <span className="game-icon-large" style={{ display: 'flex', alignItems: 'center' }}>
-                  <GameIcon size={24} strokeWidth={1.5} color={game.color} />
+                  <GameIcon size={24} strokeWidth={1.5} color={game.color} data-testid="game-icon" />
                 </span>
                 <h3>{game.name}</h3>
               </div>

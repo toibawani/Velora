@@ -13,7 +13,7 @@ function LoadingCard({ count = 3, label = "Loading content", compact = false }) 
   return (
     <div className="loading-container" aria-label={label} role="status" aria-busy="true">
       {[...Array(count)].map((_, i) => (
-        <div key={i} className="loading-card" aria-hidden="true">
+        <div key={i} className="loading-card" aria-hidden="true" data-testid="loading-card">
           <div className="skeleton-line skeleton-title"></div>
           {!compact && (
             <>

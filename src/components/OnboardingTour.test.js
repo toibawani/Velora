@@ -6,10 +6,10 @@ import OnboardingTour from './OnboardingTour';
 // so nothing checked that the first-run flow still renders after the swap to
 // icon components.
 test('opens on the welcome step and draws an icon rather than a glyph', () => {
-  const { container } = render(<OnboardingTour onComplete={jest.fn()} />);
+  render(<OnboardingTour onComplete={jest.fn()} />);
 
   expect(screen.getByText('Welcome to VELORA.')).toBeInTheDocument();
-  expect(container.querySelector('.onboarding-illustration svg')).toBeInTheDocument();
+  expect(screen.getByTestId('onboarding-illustration')).toContainHTML('<svg');
 });
 
 test('the domain step offers real choices and the flow can be completed', () => {

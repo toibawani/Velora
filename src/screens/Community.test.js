@@ -7,8 +7,7 @@ const open = () => render(<Community setScreen={jest.fn()} />);
 beforeEach(() => localStorage.clear());
 
 test('the fabricated community is not recoverable from the screen', () => {
-  const { container } = open();
-  const text = container.textContent;
+  open();
 
   // Every phrase here was printed as fact by the old discussion feed: invented
   // handles, invented vote counts, invented rooms and a report button that
@@ -22,7 +21,7 @@ test('the fabricated community is not recoverable from the screen', () => {
     /Report for safety review/i,
     /\bvotes?\b/i,
     /\bupvote/i,
-  ].forEach((pattern) => expect(text).not.toMatch(pattern));
+  ].forEach((pattern) => expect(screen.queryByText(pattern)).not.toBeInTheDocument());
 });
 
 test('an untouched desk says so rather than showing something made up', () => {
@@ -90,14 +89,16 @@ test('the note rows keep class names nothing else in the bundle claims', () => {
     ])
   );
 
-  const { container } = open();
+  open();
 
   // ShadowLearning.css styles .note-item and .notes-list for its own cards, and
   // every component stylesheet ends up in one global bundle, so the bare names
   // painted a white card behind each note in a dark theme. Only the browser
-  // showed it: the markup was correct and the tests all passed.
-  expect(container.querySelector('.desk-note-item')).not.toBeNull();
-  expect(container.querySelector('.note-item')).toBeNull();
+  // showed it: the markup was correct and the tests all passed. The note itself
+  // is found by its test id, and the assertion is on the class it carries.
+  const note = screen.getByTestId('question-note');
+  expect(note).toHaveClass('desk-note-item');
+  expect(note).not.toHaveClass('note-item');
 });
 
 test('says a question was not saved when the browser refuses the write', () => {

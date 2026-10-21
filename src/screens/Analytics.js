@@ -65,37 +65,37 @@ function Analytics({ setScreen, user }) {
 
         {/* Primary Metrics Grid */}
         <section className="analytics-metrics-grid">
-          <div className="metric-box">
+          <div className="metric-box" role="group" aria-label="Hours recorded">
             <span className="metric-caption">Hours recorded</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">{analytics.totalHoursStudied}</span>
+              <span className="metric-big-num" data-testid="metric-value">{analytics.totalHoursStudied}</span>
               <span className="metric-unit">hrs</span>
             </div>
             <span className="metric-subtext">{hasActivity ? `Time between opening and closing a lesson, across ${domainCount || 1} domain${domainCount === 1 ? '' : 's'}` : 'No sessions recorded yet'}</span>
           </div>
 
-          <div className="metric-box">
+          <div className="metric-box" role="group" aria-label="Sessions Logged">
             <span className="metric-caption">Sessions Logged</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">{sessionTotal}</span>
+              <span className="metric-big-num" data-testid="metric-value">{sessionTotal}</span>
               <span className="metric-unit">closed</span>
             </div>
             <span className="metric-subtext">Counted when a lesson closes</span>
           </div>
 
-          <div className="metric-box">
+          <div className="metric-box" role="group" aria-label="Topics Touched">
             <span className="metric-caption">Topics Touched</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">{analytics.topicTimeDistribution.length}</span>
+              <span className="metric-big-num" data-testid="metric-value">{analytics.topicTimeDistribution.length}</span>
               <span className="metric-unit">topics</span>
             </div>
             <span className="metric-subtext">Only topics with minutes against them</span>
           </div>
 
-          <div className="metric-box">
+          <div className="metric-box" role="group" aria-label="Days active">
             <span className="metric-caption">Days active</span>
             <div className="metric-num-row">
-              <span className="metric-big-num">{activeDays}</span>
+              <span className="metric-big-num" data-testid="metric-value">{activeDays}</span>
               <span className="metric-unit">days</span>
             </div>
             <span className="metric-subtext">Days this week with at least one closed session</span>
@@ -170,6 +170,7 @@ function Analytics({ setScreen, user }) {
                     <div className="bar-track">
                       <div
                         className="bar-fill"
+                        data-testid="bar-fill"
                         style={{
                           width: `${Math.min((item.hours / 8) * 100, 100)}%`,
                           background: barColor(item.subject)

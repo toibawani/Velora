@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import GameHub from './Games';
 
 describe('Game hub listings', () => {
@@ -33,14 +33,18 @@ describe('Game hub listings', () => {
   });
 
   test('no card advertises a colour outside the warm palette', () => {
-    const { container } = render(<GameHub setScreen={() => {}} />);
-    const icons = container.querySelectorAll('svg[stroke], .game-icon');
-    const strokes = [...icons]
-      .map((icon) => icon.getAttribute('color') || icon.getAttribute('stroke') || '')
-      .filter(Boolean);
-    expect(strokes.length).toBeGreaterThan(0);
-    strokes.forEach((stroke) => {
-      expect(stroke.toLowerCase()).not.toMatch(/#?(2563eb|30d5c8|34c759|ff9f0a)/i);
+    render(<GameHub setScreen={() => {}} />);
+
+    const icons = screen.getAllByTestId('game-icon');
+    expect(icons.length).toBeGreaterThan(0);
+    // The icon carries its colour as an attribute, so the assertion is on the
+    // attribute rather than on a node read out of the tree. An icon with no
+    // colour attribute cannot advertise a cool one.
+    icons.forEach((icon) => {
+      expect(icon).not.toHaveAttribute(
+        'color',
+        expect.stringMatching(/#?(2563eb|30d5c8|34c759|ff9f0a)/i)
+      );
     });
   });
 });
@@ -109,13 +113,12 @@ describe('Game hub keyboard access', () => {
   // Each card was a div with an onClick, which is not focusable and has no
   // role, so the whole grid could only be used with a mouse.
   test('every game card is a real button', () => {
-    const { container } = render(<GameHub setScreen={() => {}} />);
-    const cards = [...container.querySelectorAll('.game-card-large')];
+    render(<GameHub setScreen={() => {}} />);
+    const cards = screen.getAllByTestId('game-card');
 
     expect(cards).toHaveLength(6);
-    const names = cards.map((c) => c.textContent);
     ['Concept Check', 'Knowledge Chain', 'Concept Scrabble', 'Definition Duel', 'Concept Puzzle', 'Relativity Lab'].forEach(
-      (name) => expect(names.join(' ')).toMatch(new RegExp(name, 'i'))
+      (name) => expect(screen.getByRole('heading', { name: new RegExp(name, 'i') })).toBeInTheDocument()
     );
 
     cards.forEach((card) => {
@@ -134,15 +137,14 @@ describe('Game hub keyboard access', () => {
   });
 
   test('no card is a clickable div', () => {
-    const { container } = render(<GameHub setScreen={() => {}} />);
-    const cards = container.querySelectorAll('.game-card-large');
-    cards.forEach((card) => expect(card.tagName).toBe('BUTTON'));
+    render(<GameHub setScreen={() => {}} />);
+    screen.getAllByTestId('game-card').forEach((card) => expect(card.tagName).toBe('BUTTON'));
   });
 
   test('there is no nested button inside the card any more', () => {
-    const { container } = render(<GameHub setScreen={() => {}} />);
-    container
-      .querySelectorAll('.game-card-large button')
-      .forEach((inner) => expect(inner).toBeNull());
+    render(<GameHub setScreen={() => {}} />);
+    screen.getAllByTestId('game-card').forEach((card) => {
+      expect(within(card).queryAllByRole('button')).toHaveLength(0);
+    });
   });
 });

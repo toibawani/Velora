@@ -243,7 +243,7 @@ function Community({ setScreen, onOpenLesson }) {
                 {(entry.notes || []).length > 0 && (
                   <ul className="desk-notes-list">
                     {entry.notes.map((note) => (
-                      <li className="desk-note-item" key={note.id}>
+                      <li className="desk-note-item" data-testid="question-note" key={note.id}>
                         <span className="note-body">{note.text}</span>
                         <span className="note-time">{whenLabel(note.createdAt)}</span>
                       </li>

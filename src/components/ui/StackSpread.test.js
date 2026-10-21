@@ -17,60 +17,65 @@ afterEach(() => {
   global.__veloraMediaPrefs = {};
 });
 
+const STAGE_NAME = /eight drawn plates/i;
+
 describe('StackSpread', () => {
   test('shows every plate, and the plates are drawn rather than linked stock', () => {
     renderWith({});
 
-    const { container } = renderWith({});
-    const plates = Array.from(container.querySelectorAll('img'));
-    const sources = plates.map((node) => node.getAttribute('src') || '');
+    // The plates are images with real alt text, so they can be found the way a
+    // reader using a screen reader finds them rather than by class name.
+    const plates = screen.getAllByRole('img');
+    expect(plates).toHaveLength(8);
 
-    expect(sources).toHaveLength(8);
-    sources.forEach((src) => {
-      expect(src).toContain('/hero-plates/');
-      expect(src).toMatch(/\.svg$/);
+    plates.forEach((plate) => {
+      expect(plate).toHaveAttribute('src', expect.stringContaining('/hero-plates/'));
+      expect(plate).toHaveAttribute('src', expect.stringMatching(/\.svg$/));
+      expect(plate).toHaveAttribute('src', expect.not.stringMatching(/^https?:/));
+      // Every plate needs its own description, not one shared label.
+      expect(plate).toHaveAttribute('alt', expect.stringMatching(/\w/));
     });
-    expect(sources.join(' ')).toContain('pendulum.svg');
-    expect(sources.join(' ')).toContain('manuscript.svg');
-    // The brief rules out stock photography, so nothing may point off-site.
-    expect(sources.some((src) => /^https?:/.test(src))).toBe(false);
 
-    // Every plate needs its own description, not one shared label.
-    plates.forEach((node) => {
-      expect(node.getAttribute('alt') || '').toMatch(/\w/);
-    });
+    // Two named drawings have to be among them, or the set could be eight
+    // copies of one file and every assertion above would still pass.
+    expect(screen.getByAltText(/a pendulum drawn hanging straight down/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/a page of text with a reader's note/i)).toBeInTheDocument();
   });
 
   test('tidies itself into a grid when motion is welcome', () => {
-    const { container } = renderWith({ reduce: false });
+    renderWith({ reduce: false });
 
-    expect(container.querySelector('.stack-field--still')).toBeNull();
+    expect(screen.getByTestId('stack-field')).not.toHaveClass('stack-field--still');
+    screen.getAllByTestId('stack-plate').forEach((plate) => {
+      expect(plate).toHaveClass('stack-plate-moving');
+    });
   });
 
   test('renders the finished grid as still markup when motion is reduced', () => {
-    const { container } = renderWith({ reduce: true });
+    renderWith({ reduce: true });
 
     // The reduced branch should not merely animate less. It should be the end
     // state, with no fan offsets, and nothing asking for a compositor layer.
-    expect(container.querySelector('.stack-field--still')).not.toBeNull();
-    expect(container.querySelectorAll('.stack-plate-still')).toHaveLength(8);
+    expect(screen.getByTestId('stack-field')).toHaveClass('stack-field--still');
 
-    // A motion-driven plate would carry a transform matrix. The still plates
-    // position themselves with left/top and a static rotation instead.
-    const plates = container.querySelectorAll('.stack-plate');
+    const plates = screen.getAllByTestId('stack-plate');
     expect(plates).toHaveLength(8);
     plates.forEach((plate) => {
-      expect(plate.style.transform || '').not.toMatch(/matrix/);
-      expect(plate.style.left).toMatch(/calc/);
+      expect(plate).toHaveClass('stack-plate-still');
+      // A motion-driven plate would carry a transform matrix. The still plates
+      // position themselves with left/top and a static rotation instead.
+      expect(plate).toHaveAttribute('style', expect.not.stringContaining('matrix'));
+      expect(plate).toHaveAttribute('style', expect.stringContaining('calc(50%'));
     });
   });
 
   test('leaves the pointer alone on a touch device', () => {
-    const { container } = renderWith({ reduce: false, fine: false });
-    const stage = container.querySelector('.stack-field-stage');
+    renderWith({ reduce: false, fine: false });
+    const stage = screen.getByRole('group', { name: STAGE_NAME });
 
     // No handler means nothing to fire on a scroll-driven touch pass.
     expect(stage.onpointermove).toBeFalsy();
+    expect(stage.onpointerleave).toBeFalsy();
   });
 
   test('says in plain words what the field is', () => {

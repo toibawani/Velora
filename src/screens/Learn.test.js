@@ -47,10 +47,12 @@ test('a module is only started once the learner has time on one of its topics', 
 test('progress counts the topics logged, not a fixed zero', () => {
   moduleOne.topics.slice(0, 2).forEach((topic) => recordStudySession(topic.title, 5, 'physics'));
 
-  const { container } = open();
+  open();
   const expected = `${Math.round((2 / moduleOne.topics.length) * 100)}%`;
 
-  expect(container.querySelector('.progress-text').textContent).toBe(expected);
+  // Several percentages can be on this screen; the progress readout is the one
+  // carrying the progress class, selected as part of the text query.
+  expect(screen.getByText(expected, { selector: '.progress-text' })).toBeInTheDocument();
 });
 
 test('a lesson request from another screen opens that exact lesson', () => {

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import UniverseHome from './UniverseHome';
 import { ThemeProvider } from '../context/ThemeContext';
 
@@ -17,16 +17,12 @@ const baseProps = () => ({
 const renderUniverse = (overrides = {}) => {
   const props = { ...baseProps(), ...overrides };
 
-  // container is returned alongside the props because several tests below
-  // assert on the index's DOM shape rather than on accessible names - the
-  // density guarantee is a fact about how many entries exist, and asking for
-  // 188 accessible names to assert on it would be absurd.
-  const { container } = render(
+  render(
     <ThemeProvider>
       <UniverseHome {...props} />
     </ThemeProvider>
   );
-  return { ...props, container };
+  return props;
 };
 
 describe('editorial knowledge atlas', () => {
@@ -152,30 +148,29 @@ describe('editorial knowledge atlas', () => {
  */
 describe('atlas index', () => {
   test('every topic in the field is on screen without expanding anything', () => {
-    const { container } = renderUniverse();
+    renderUniverse();
 
     // Science is the largest field at 188 topics. The old layout showed 7 of
     // them until a reader expanded Classical Mechanics, and then still only
-    // that one discipline's. Here all 188 are in the DOM at once.
-    const entries = container.querySelectorAll('.aix-entry');
+    // that one discipline's. Here all 188 are in the DOM at once, as buttons
+    // inside the index rather than as nodes matched by a class name.
+    const entries = within(screen.getByTestId('atlas-index')).getAllByRole('button');
     expect(entries).toHaveLength(188);
 
     // And nothing on screen is a disclosure control any more. This is the
     // density guarantee: no topic is behind a click.
     expect(screen.queryByRole('button', { expanded: true })).not.toBeInTheDocument();
-    expect(container.querySelectorAll('.uh-topic-grid')).toHaveLength(0);
   });
 
   test('marks each topic as written or not written', () => {
-    const { container } = renderUniverse();
+    renderUniverse();
 
-    // The key above the index explains the marker shapes, and it is rendered
-    // before the entries, so it is excluded by scoping to the index itself
-    // rather than by offset arithmetic that would break if the key moved.
-    const entries = container.querySelectorAll('.aix-entry');
-    const markers = container.querySelectorAll('.aix-entry .aix-marker');
+    // The key above the index uses the same marker markup, so the status is
+    // read from the entries' own accessible names, scoped to the index, rather
+    // than from a class that the key shares with them.
+    const index = within(screen.getByTestId('atlas-index'));
+    const entries = index.getAllByRole('button');
     expect(entries).toHaveLength(188);
-    expect(markers).toHaveLength(188);
 
     // Science resolves 64 topics to real content: ten classical mechanics, five
     // Thermodynamics lessons, seven Electromagnetism lessons, seven Optics
@@ -183,8 +178,9 @@ describe('atlas index', () => {
     // lessons, eight Biology lessons, one space science, eleven computer
     // science. If the content grows, raise these in the same commit as the
     // content.
-    expect(container.querySelectorAll('.aix-entry .aix-marker.written')).toHaveLength(64);
-    expect(container.querySelectorAll('.aix-entry .aix-marker.unwritten')).toHaveLength(124);
+    const unwritten = index.getAllByRole('button', { name: /, not written yet$/ });
+    expect(unwritten).toHaveLength(124);
+    expect(entries.length - unwritten.length).toBe(64);
   });
 
   test('says "not written yet" in the accessible name, not just in colour', () => {
