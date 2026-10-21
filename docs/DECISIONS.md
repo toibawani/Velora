@@ -113,6 +113,27 @@ understanding.
 
 ---
 
+## Why Create React App, and why that is parked rather than chosen
+
+**What I chose:** Stay on `react-scripts` 5 for now, and write down what would
+have to be true to leave it.
+
+**Why:** CRA was the default React setup in 2021 and it still builds this app,
+runs its tests and serves it to Pages. Replacing it is not a feature a reader can
+see. The cost of moving is concrete: the webpack configuration exists only
+inside `react-scripts`, so any customisation means ejecting or switching
+bundlers outright; `npm test` is CRA's Jest wrapper rather than a plain Jest
+config; and the hash-based asset paths that Pages deploys are produced by the
+CRA build. None of that is hard to redo, and all of it would be redone at once,
+with no user-visible change to show for it.
+
+**What I rejected:** Pretending the choice was current, or migrating for the
+sake of the tooling. The honest position is that CRA is parked. The trigger to
+leave is a build-time or tooling problem that CRA cannot solve, not the fact
+that something newer exists.
+
+---
+
 ## What the status labels mean
 
 **What I chose:** Each black hole and deep read entry has one of three labels:
