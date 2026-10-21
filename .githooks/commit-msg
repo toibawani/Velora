@@ -1,0 +1,55 @@
+#!/bin/sh
+# Refuse commits that credit anyone but toibawani.
+#
+# Two things went wrong in this repository's history and neither was caught by
+# reading the log: 41 commits carried a Co-Authored-By trailer naming an agent,
+# and one commit was made as "apple <apple@apples-MacBook-Air.local>". The
+# trailer is the easy one, because any tool that writes a commit message adds
+# it; the identity is the quiet one, because a stray `git config` or a CI
+# runner's default environment is enough to produce it.
+#
+# This hook runs at commit time, before the object exists, and exits non-zero
+# so the commit never lands. scripts/commitAuthorship.js enforces the same
+# rules in CI for commits that arrive by push or pull request.
+
+msg_file="$1"
+status=0
+
+if [ -z "$msg_file" ] || [ ! -f "$msg_file" ]; then
+	echo "commit-msg: no message file given" >&2
+	exit 1
+fi
+
+trailers=$(grep -in '^[[:space:]]*co-authored-by[[:space:]]*:' "$msg_file")
+if [ -n "$trailers" ]; then
+	echo "commit-msg: refusing a Co-Authored-By trailer:" >&2
+	echo "$trailers" | sed 's/^/  /' >&2
+	echo "  Remove the line. Do not name an agent as an author of a commit." >&2
+	status=1
+fi
+
+# `git var` resolves exactly the identity this commit will use, including
+# GIT_AUTHOR_NAME/GIT_AUTHOR_EMAIL environment overrides, so this catches the
+# case where the config is right and the environment is not.
+author_ident=$(GIT_AUTHOR_DATE='@0 +0000' git var GIT_AUTHOR_IDENT 2>/dev/null)
+author_name=${author_ident%% <*}
+author_rest=${author_ident#*<}
+author_email=${author_rest%%>*}
+
+committer_ident=$(GIT_COMMITTER_DATE='@0 +0000' git var GIT_COMMITTER_IDENT 2>/dev/null)
+committer_name=${committer_ident%% <*}
+committer_rest=${committer_ident#*<}
+committer_email=${committer_rest%%>*}
+
+if [ "$author_name" != "toibawani" ] || [ "$author_email" != "toibawani14@gmail.com" ]; then
+	echo "commit-msg: author is '$author_name <$author_email>', not 'toibawani <toibawani14@gmail.com>'" >&2
+	echo "  Fix with: git config user.name toibawani && git config user.email toibawani14@gmail.com" >&2
+	status=1
+fi
+
+if [ "$committer_name" != "toibawani" ] || [ "$committer_email" != "toibawani14@gmail.com" ]; then
+	echo "commit-msg: committer is '$committer_name <$committer_email>', not 'toibawani <toibawani14@gmail.com>'" >&2
+	status=1
+fi
+
+exit $status
