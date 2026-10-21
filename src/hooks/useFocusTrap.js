@@ -30,8 +30,16 @@ export const useFocusTrap = (isOpen, containerRef, { onClose } = {}) => {
       }
       if (event.key !== 'Tab') return;
 
+      /*
+       * No visibility filter here. offsetParent is null for every element in
+       * jsdom, so filtering on it left exactly one item in the list under test -
+       * the element that already had focus - and the trap wrapped focus to
+       * itself. It looked implemented and did nothing, which is the shape of
+       * bug this repository keeps writing about. Nothing inside these dialogs is
+       * hidden by CSS, so the list is the real tab order.
+       */
       const items = Array.from(container.querySelectorAll(FOCUSABLE)).filter(
-        (el) => el.offsetParent !== null || el === document.activeElement
+        (el) => el.getAttribute('aria-hidden') !== 'true'
       );
       if (items.length === 0) return;
 

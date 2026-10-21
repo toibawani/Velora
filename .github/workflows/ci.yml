@@ -63,9 +63,11 @@ jobs:
       # text on accent, muted metadata). A palette edit that drops a token below
       # AA now fails here rather than shipping cream-on-cream.
       - run: node scripts/checkContrast.js
-      # ESLint currently runs over app source only. Every remaining violation is
-      # in *.test.* files and is tracked as debt; see the lint job below.
-      - run: npm run lint
+      # Every file, tests included. This ran over app source only until the
+      # 135 violations in the test files were paid off, and a lint that skips
+      # the debt is how that debt grew: a test file could add a container
+      # query or a conditional expectation and nothing said so.
+      - run: npm run lint:all
   layout:
     name: layout regression (real Chrome, built app)
     runs-on: ubuntu-latest
