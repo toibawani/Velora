@@ -3,8 +3,8 @@
    ========================================================================== */
 
 .institutional-mode-container {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-10);
   margin: var(--space-12) 0;
@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border-subtle, #282828);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: var(--space-6);
   margin-bottom: var(--space-8);
   flex-wrap: wrap;
@@ -38,13 +38,13 @@
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .role-switch-pills {
   display: flex;
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #333333);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-1);
   gap: var(--space-1);
@@ -53,7 +53,7 @@
 .role-pill {
   background: transparent;
   border: none;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
@@ -75,14 +75,14 @@
   margin: 0 0 var(--space-2) 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .inst-hero-summary p {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.6;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
 }
 
 /* Age Band Selector */
@@ -94,9 +94,9 @@
 }
 
 .age-btn {
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #333333);
-  color: var(--text-secondary, #b0b0b0);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
@@ -124,8 +124,8 @@
 }
 
 .educator-guide-card {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-8);
   display: flex;
@@ -137,7 +137,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid var(--border-subtle, #282828);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: var(--space-4);
   flex-wrap: wrap;
   gap: var(--space-4);
@@ -155,7 +155,7 @@
   margin: var(--space-1) 0 0 0;
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .curriculum-align-tags {
@@ -197,20 +197,20 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .col-text {
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: var(--text-primary, #e0e0e0);
+  color: var(--text-primary);
 }
 
 .guide-ul {
   margin: 0;
   padding-left: var(--space-5);
-  color: var(--text-secondary, #b8b8b8);
+  color: var(--text-secondary);
   font-size: 0.88rem;
   line-height: 1.5;
   display: flex;
@@ -223,7 +223,7 @@
 }
 
 .guide-card-footer {
-  border-top: 1px solid var(--border-subtle, #282828);
+  border-top: 1px solid var(--border-subtle);
   padding-top: var(--space-4);
   display: flex;
   justify-content: flex-end;
@@ -261,8 +261,8 @@
 }
 
 .parent-stat-box {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-6);
   display: flex;
@@ -275,7 +275,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .stat-score-large {
@@ -289,12 +289,12 @@
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
 }
 
 .conversation-starters-card {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-8);
 }
@@ -303,13 +303,13 @@
   margin: 0 0 var(--space-1) 0;
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .starter-sub {
   margin: 0 0 var(--space-6) 0;
   font-size: 0.9rem;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
 }
 
 .starters-list {
@@ -323,7 +323,7 @@
   align-items: flex-start;
   gap: var(--space-4);
   background: var(--bg-secondary);
-  border: 1px solid var(--border-default, #2a2a2a);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-4) var(--space-5);
 }
@@ -352,12 +352,12 @@
   margin: 0;
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
   line-height: 1.45;
 }
 
 .starter-tip {
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--text-secondary, #b0b0b0);
+  color: var(--text-secondary);
 }

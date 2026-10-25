@@ -51,7 +51,7 @@
 }
 
 .rm-back:hover {
-  border-color: var(--accent-primary, var(--color-accent));
+  border-color: var(--accent-primary);
 }
 
 .rm-intro,
@@ -132,7 +132,7 @@
 .rm-item {
   padding: var(--space-4) var(--space-4);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md, 12px);
+  border-radius: var(--radius-md);
   background: var(--bg-elevated);
 }
 

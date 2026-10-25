@@ -218,7 +218,7 @@
 
 .bhm-rail-item.current {
   border-left-color: var(--accent-primary) !important;
-  background: var(--accent-soft, var(--wash)) !important;
+  background: var(--accent-soft) !important;
   color: var(--text-primary) !important;
 }
 

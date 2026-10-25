@@ -40,7 +40,7 @@
 }
 
 .gt-dotted {
-  border-bottom: 1px dotted var(--accent-primary, var(--color-accent));
+  border-bottom: 1px dotted var(--accent-primary);
   /* The dotted underline is the affordance. text-decoration would sit on the
      baseline of a wrapped line and clash with the line above. */
   padding-bottom: 0.05em;
@@ -58,7 +58,7 @@
 }
 
 .gt-trigger:focus-visible {
-  outline: 2px solid var(--ring, var(--accent-primary, var(--color-accent)));
+  outline: 2px solid var(--ring, var(--accent-primary));
   outline-offset: 2px;
   border-radius: var(--radius-xs);
 }
@@ -83,7 +83,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   background: var(--bg-elevated);
-  box-shadow: 0 12px 32px -12px var(--shadow-color, rgba(62, 39, 24, 0.35));
+  box-shadow: 0 12px 32px -12px var(--shadow-color);
   color: var(--text-primary);
   font-size: 0.95rem;
   line-height: 1.55;
@@ -93,8 +93,8 @@
 .gt-popover-term {
   display: block;
   margin-bottom: var(--space-1);
-  font-weight: var(--weight-semibold, 600);
-  color: var(--accent-primary, var(--color-accent));
+  font-weight: var(--weight-semibold);
+  color: var(--accent-primary);
 }
 
 .gt-popover-body {
@@ -108,7 +108,7 @@
   padding-top: var(--space-2);
   border-top: 1px solid var(--border-subtle);
   font-size: 0.82rem;
-  color: var(--text-tertiary, var(--text-secondary));
+  color: var(--text-tertiary);
 }
 
 /* On a narrow screen a left-anchored panel runs off the right edge on a term

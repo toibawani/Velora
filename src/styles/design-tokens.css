@@ -252,6 +252,7 @@
 
   /* ---- Transitions ---- */
   --ease-standard: ease-out;
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);  /* expressive entrance */
   --duration-fast: 150ms;
   --duration-normal: 200ms;
 

@@ -20,7 +20,7 @@
 .selector-title {
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -32,9 +32,9 @@
 }
 
 .term-pill {
-  background: var(--bg-secondary, #1a1a1a);
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px solid var(--border-default, #333333);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
@@ -57,8 +57,8 @@
 .sketchbook-card {
   display: grid;
   grid-template-columns: 340px 1fr;
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   overflow: hidden;
   text-align: left;
@@ -73,7 +73,7 @@
 /* Illustration Side */
 .sketchbook-illustration-side {
   background: var(--bg-secondary);
-  border-right: 1px solid var(--border-default, #2a2a2a);
+  border-right: 1px solid var(--border-default);
   padding: var(--space-8) var(--space-6);
   display: flex;
   flex-direction: column;
@@ -107,7 +107,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-tertiary, #777777);
+  color: var(--text-tertiary);
   font-weight: 600;
 }
 
@@ -123,7 +123,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid var(--border-subtle, #282828);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: var(--space-4);
   flex-wrap: wrap;
   gap: var(--space-4);
@@ -141,13 +141,13 @@
   margin: var(--space-1) 0 0 0;
   font-size: 1.65rem;
   font-weight: 800;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .save-kit-btn {
   background: transparent;
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px solid var(--border-default, #3a3a3a);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   font-size: 0.8rem;
@@ -180,19 +180,19 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
 }
 
 .section-content {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.65;
-  color: var(--text-primary, #e0e0e0);
+  color: var(--text-primary);
 }
 
 .section-content.italic {
   font-style: italic;
-  color: var(--text-secondary, #b8b8b8);
+  color: var(--text-secondary);
 }
 
 /* Parts list */
@@ -204,8 +204,8 @@
 }
 
 .part-item {
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #303030);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-4);
   transition: all 0.2s ease;
@@ -228,7 +228,7 @@
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--text-secondary, #a8a8a8);
+  color: var(--text-secondary);
 }
 
 /* Everyday Connection Box */
@@ -270,8 +270,8 @@
 }
 
 .interactive-challenge-panel {
-  background: var(--bg-tertiary, #222222);
-  border: 1px solid var(--border-default, #333333);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-5);
   display: flex;
@@ -296,7 +296,7 @@
 .close-panel-btn {
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
   font-size: 1.25rem;
   cursor: pointer;
 }
@@ -316,7 +316,7 @@
 
 .challenge-opt-btn {
   background: var(--bg-secondary);
-  color: var(--text-primary, #e0e0e0);
+  color: var(--text-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);

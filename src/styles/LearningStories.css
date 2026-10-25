@@ -103,13 +103,13 @@
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--text-secondary, #5f5e5a);
+  color: var(--text-secondary);
 }
 
 /* Reader Card */
 .story-reader-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-10);
   display: flex;
@@ -121,14 +121,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border-subtle, #282828);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: var(--space-4);
 }
 
 .chapter-count-indicator {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
 }
 
 .chapter-stepper-dots {
@@ -165,8 +165,8 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--text-tertiary, #888888);
-  background: var(--bg-tertiary, #222222);
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-xs);
 }
@@ -175,7 +175,7 @@
   margin: 0;
   font-size: 1.45rem;
   font-weight: 800;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
   line-height: 1.35;
 }
 
@@ -183,7 +183,7 @@
   margin: 0;
   font-size: 1.05rem;
   line-height: 1.75;
-  color: var(--text-primary, #dedede);
+  color: var(--text-primary);
 }
 
 .chapter-takeaway-box {
@@ -207,21 +207,21 @@
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.6;
-  color: var(--text-primary, #f0f0f0);
+  color: var(--text-primary);
 }
 
 .reader-navigation-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid var(--border-subtle, #282828);
+  border-top: 1px solid var(--border-subtle);
   padding-top: var(--space-5);
 }
 
 .reader-prev-btn {
   background: transparent;
-  color: var(--text-secondary, #a0a0a0);
-  border: 1px solid var(--border-default, #333333);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;

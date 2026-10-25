@@ -618,7 +618,7 @@
 }
 
 .bg-peer-note {
-  margin: 0 0 var(--space-3, 12px);
+  margin: 0 0 var(--space-3);
   font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--text-secondary);
@@ -630,14 +630,14 @@
 }
 
 .bg-paused-note {
-  margin: 0 0 var(--space-3, 12px);
+  margin: 0 0 var(--space-3);
   padding: var(--space-2) var(--space-3);
   font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--text-secondary);
   background: var(--bg-secondary);
-  border: 1px solid var(--border-default, var(--border-default));
-  border-radius: var(--radius-sm, 12px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
 }
 
 .bg-result-source {

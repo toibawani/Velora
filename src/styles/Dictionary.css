@@ -477,14 +477,14 @@
 
 /* A source you can actually open, and an honest label on the ones you cannot. */
 .source-link {
-  color: var(--accent-primary, var(--accent-primary));
+  color: var(--accent-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
 }
 
 .source-link:hover {
-  color: var(--accent-hover, var(--accent-primary-hover));
+  color: var(--accent-primary-hover);
 }
 
 .source-flag {
@@ -493,9 +493,9 @@
   font-size: 0.6875rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--text-secondary, var(--text-secondary));
-  background: var(--bg-surface-hover, var(--bg-tertiary));
-  border: 1px solid var(--border-default, var(--border-default));
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-full);
   cursor: help;
 }
@@ -508,22 +508,22 @@
 .dict-letter-bar {
   position: sticky;
   top: var(--dict-navbar-h, 73px);
-  z-index: calc(var(--z-sticky, 100) - 1);
+  z-index: calc(var(--z-sticky) - 1);
   display: flex;
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   margin-bottom: var(--space-4);
-  background: var(--color-bg, var(--bg-elevated));
+  background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-md);
   box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 .dict-letter-bar-label,
 .dict-result-count {
   font-size: 0.75rem;
-  color: var(--text-secondary, var(--text-secondary));
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 

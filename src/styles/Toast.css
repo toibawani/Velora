@@ -4,14 +4,14 @@
   right: 2rem;
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-md);
   padding: var(--space-4) var(--space-5);
-  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.12));
+  box-shadow: var(--shadow-md);
   display: flex;
   align-items: center;
   gap: var(--space-3);
   animation: toast-slide-in 0.25s ease;
-  z-index: var(--z-toast, 10000);
+  z-index: var(--z-toast);
   max-width: 360px;
   min-width: 220px;
   font-family: var(--font-sans);
@@ -23,7 +23,7 @@
 .toast-dot {
   width: 8px;
   height: 8px;
-  border-radius: var(--radius-full, 999px);
+  border-radius: var(--radius-full);
   flex-shrink: 0;
 }
 
@@ -69,7 +69,7 @@
 .toast-close:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
-  border-radius: var(--radius-xs, 3px);
+  border-radius: var(--radius-xs);
 }
 
 @keyframes toast-slide-in {

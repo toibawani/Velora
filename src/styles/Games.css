@@ -25,7 +25,7 @@
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: var(--z-sticky, 40);
+  z-index: var(--z-sticky);
   gap: var(--space-4);
 }
 
@@ -311,7 +311,7 @@
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: var(--z-sticky, 40);
+  z-index: var(--z-sticky);
 }
 
 .game-back-btn {

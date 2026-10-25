@@ -172,7 +172,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
-  background: #06080d;
+  background: var(--inverse-surface);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -335,7 +335,7 @@
   margin: var(--space-1) 0 var(--space-4);
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: var(--text-secondary, var(--text-secondary));
+  color: var(--text-secondary);
 }
 
 .rel-preset-note.is-fictional {

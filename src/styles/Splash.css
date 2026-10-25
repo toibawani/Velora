@@ -37,7 +37,7 @@
   max-width: 400px;
   width: 100%;
   text-align: center;
-  animation: splash-enter 0.55s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) both;
+  animation: splash-enter 0.55s var(--ease-spring) both;
 }
 
 @keyframes splash-enter {
@@ -184,8 +184,8 @@
      read as two elements colliding rather than as a caption. */
   margin-bottom: var(--space-5);
   background: transparent !important;
-  color: var(--text-secondary, var(--text-secondary)) !important;
-  border: 1px solid var(--border-default, var(--border-default)) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-default) !important;
   box-shadow: none !important;
   padding: var(--space-2) var(--space-5) !important;
   font-size: 0.875rem !important;
@@ -196,7 +196,7 @@
 
 .splash .splash-browse:hover {
   background: var(--accent-soft) !important;
-  color: var(--text-primary, var(--text-primary)) !important;
-  border-color: var(--border-strong, var(--border-strong)) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-strong) !important;
   box-shadow: none !important;
 }

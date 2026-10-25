@@ -20,8 +20,8 @@
 }
 
 .onboarding-card {
-  background: var(--bg-secondary, --text-primary);
-  border: 1px solid var(--border-default, --text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
   max-width: 580px;
   width: 100%;
@@ -49,7 +49,7 @@
 .onboarding-progress-track {
   width: 100%;
   height: 4px;
-  background: var(--bg-tertiary, --text-secondary);
+  background: var(--bg-tertiary);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -66,7 +66,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-tertiary, --text-tertiary);
+  color: var(--text-tertiary);
 }
 
 .onboarding-illustration {
@@ -86,13 +86,13 @@
   font-size: 1.75rem;
   font-weight: 900;
   letter-spacing: -0.03em;
-  color: var(--text-primary, --bg-primary);
+  color: var(--text-primary);
 }
 
 .onboarding-subtitle {
   margin: 0;
   font-size: 1rem;
-  color: var(--text-secondary, --text-tertiary);
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -100,7 +100,7 @@
   margin: var(--space-1) 0 0;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--text-secondary, --text-tertiary);
+  color: var(--text-secondary);
   max-width: 440px;
 }
 
@@ -124,8 +124,8 @@
 }
 
 .onboarding-option-card {
-  background: var(--bg-tertiary, --bg-secondary);
-  border: 1px solid var(--border-default, --border-default);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-4) var(--space-3);
   display: flex;
@@ -155,12 +155,12 @@
 .opt-label {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--text-primary, --bg-primary);
+  color: var(--text-primary);
 }
 
 .opt-desc {
   font-size: 0.75rem;
-  color: var(--text-tertiary, --text-tertiary);
+  color: var(--text-tertiary);
   line-height: 1.3;
 }
 
@@ -174,9 +174,9 @@
 }
 
 .time-option-btn {
-  background: var(--bg-tertiary, --bg-secondary);
-  border: 1px solid var(--border-default, --border-default);
-  color: var(--text-secondary, --text-tertiary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-md);
   font-size: 0.9rem;
@@ -224,7 +224,7 @@
 .onboarding-skip-link {
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #666666);
+  color: var(--text-tertiary);
   font-size: 0.82rem;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -232,5 +232,5 @@
 }
 
 .onboarding-skip-link:hover {
-  color: var(--text-secondary, --text-tertiary);
+  color: var(--text-secondary);
 }

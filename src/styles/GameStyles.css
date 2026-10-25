@@ -766,11 +766,11 @@
 .chain-instruction {
   margin: 0 0 var(--space-3);
   font-size: 0.8125rem;
-  color: var(--text-secondary, var(--text-secondary));
+  color: var(--text-secondary);
 }
 
 .chain-link {
-  color: var(--text-secondary, var(--text-secondary));
+  color: var(--text-secondary);
   font-weight: 700;
   padding: 0 var(--space-1);
 }
@@ -778,9 +778,9 @@
 .chain-links-explained {
   margin: var(--space-3) 0;
   padding: var(--space-3) var(--space-4);
-  background: var(--bg-primary, var(--bg-elevated));
+  background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm, 6px);
+  border-radius: var(--radius-sm);
   text-align: left;
 }
 
@@ -793,7 +793,7 @@
   margin: var(--space-1) 0 0;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--text-secondary, var(--text-secondary));
+  color: var(--text-secondary);
 }
 
 .result-right {

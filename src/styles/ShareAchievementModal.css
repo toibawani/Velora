@@ -18,8 +18,8 @@
 }
 
 .share-modal-card {
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-default, #2a2a2a);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   max-width: 520px;
   width: 100%;
@@ -41,8 +41,8 @@
   font-weight: 800;
   letter-spacing: 0.06em;
   color: var(--color-warning);
-  background: rgba(255, 214, 10, 0.12);
-  border: 1px solid rgba(255, 214, 10, 0.25);
+  background: var(--color-warning-soft);
+  border: 1px solid var(--warning-line);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-xs);
 }
@@ -50,7 +50,7 @@
 .share-close-btn {
   background: transparent;
   border: none;
-  color: var(--text-tertiary, #888888);
+  color: var(--text-tertiary);
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -60,8 +60,8 @@
 }
 
 .achievement-graphic-card {
-  background: var(--bg-tertiary, #202020);
-  border: 1px solid var(--border-default, #2e2e2e);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-8) var(--space-6);
   margin-bottom: var(--space-6);
@@ -88,7 +88,7 @@
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -0.02em;
-  color: var(--text-primary, #ffffff);
+  color: var(--text-primary);
 }
 
 .achievement-recipient {
@@ -101,13 +101,13 @@
   margin: var(--space-2) 0 0 0;
   font-size: 0.85rem;
   line-height: 1.5;
-  color: var(--text-secondary, #a0a0a0);
+  color: var(--text-secondary);
   max-width: 380px;
 }
 
 .share-caption-box {
   background: var(--bg-secondary);
-  border: 1px solid var(--border-default, #2e2e2e);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-4);
   margin-bottom: var(--space-6);
@@ -118,7 +118,7 @@
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--text-secondary, #cccccc);
+  color: var(--text-secondary);
   font-style: italic;
 }
 
@@ -153,9 +153,9 @@
   transition: background var(--duration-fast) var(--ease-standard),
               border-color var(--duration-fast) var(--ease-standard),
               color var(--duration-fast) var(--ease-standard);
-  border: 1px solid var(--border-default, #333333);
-  background: var(--bg-tertiary, #222222);
-  color: var(--text-primary, #e0e0e0);
+  border: 1px solid var(--border-default);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 .viral-btn::before {
@@ -215,12 +215,12 @@
 .viral-btn.copy::before { display: none; }
 
 .share-copy-fallback {
-  margin: var(--space-4, 16px) 0 0;
+  margin: var(--space-4) 0 0;
   padding: var(--space-3) var(--space-3);
   font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--text-secondary, var(--text-secondary));
-  background: var(--bg-secondary, var(--bg-tertiary));
-  border: 1px solid var(--border-default, rgba(62, 39, 24, 0.12));
-  border-radius: var(--radius-sm, 12px);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
 }
