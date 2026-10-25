@@ -1,160 +1,52 @@
-/**
- * Biology curriculum for VELORA.
- *
- * The second subject outside the original three, written after the Chemistry
- * batch. Like chemistry, the Atlas files these topics under Science > Biology
- * while the field-to-subject map points science at physics, so without the
- * discipline map in atlasResolution.ts every one of these eight lessons would
- * have been reported unwritten with the content sitting in this file.
- *
- * Scope of this batch: the first two Atlas modules, Cell Biology and Molecular
- * Biology, in the order the Atlas lists them. The remaining eight modules
- * (Genetics, Microbiology, Botany, Zoology, Human Biology, Ecology, Evolution,
- * Specialized Fields) are not written, and the Atlas says so rather than
- * implying otherwise.
- */
 export const BIOLOGY_CURRICULUM = {
   name: 'Biology',
   description: 'How matter that copies itself builds cells, tissues and histories.',
   modules: [
     { id: 'cell-biology', title: 'Cell biology', intro: 'What a cell is, what is inside one, and how one becomes two.', topics: [
-      { id: 'cell-structure', title: 'Cell Structure', kicker: 'The smallest thing that is unambiguously alive', minutes: 15,
-        story: 'Robert Hooke pointed a microscope at a thin slice of cork in 1665 and saw rows of empty boxes, which he called cells because they looked like the rooms monks slept in. They were dead walls. It took another two centuries to work out that the living thing is what used to be inside them, and that everything alive is made of one or more.', 
-        sections: [
-          { heading: 'Two centuries from seeing to understanding', body: 'Antonie van Leeuwenhoek saw living cells in pond water in the 1670s, but the connection between cells and organisms was not made until 1838, when Matthias Schleiden argued that plants are made of cells and Theodor Schwann extended the claim to animals the following year. Rudolf Virchow added the part that matters most in 1855: every cell comes from an existing cell, "omnis cellula e cellula". That is why a cut heals by division rather than by spontaneous generation of new tissue.' },
-          { heading: 'Two architectures, one boundary', body: 'A bacterial cell is typically 1 to 2 micrometres across and has no internal membranes: its DNA sits in a region called the nucleoid, and its ribosomes float in the cytoplasm. A human cell is typically 10 to 100 micrometres across and keeps its DNA inside a nucleus. Both, without exception, are wrapped in a lipid bilayer about 5 nanometres thick, and both run the same chemistry. The smallest known free-living cells, the mycoplasmas, are about 0.2 micrometres across and have about 500 genes.' },
-          { heading: 'Why membranes, and not walls', body: 'A membrane is two layers of phospholipid with their water-loving heads facing out and their tails inward, which assembles itself in water with no machinery. Proteins sit in it and control what passes. That selectivity is what makes a cell a cell: it holds a chemical mixture far from equilibrium with its surroundings, and it can only do that by controlling the border. A dead cell is one whose membrane has stopped doing that, which is why membrane integrity is the standard test for whether something is alive.' },
-          { heading: 'Scale, and the reason for it', body: 'A cell cannot simply grow larger, because its volume rises with the cube of its length while its surface area rises with the square, so the membrane cannot keep up with the chemistry inside it. That is why large organisms are made of many small cells rather than one big one, and why an egg cell (about 0.1 millimetres, the largest human cell) is a special case that has to be provisioned rather than fed. The same arithmetic is why the biggest single cells on Earth are the ones with the least demanding metabolism: a nerve cell reaches a metre by being very thin.' }
-        ], connections: ['Organelles are the internal compartments the next lesson opens up.', 'Cell division is how the "every cell from a cell" rule is carried out.', 'Membranes are the reason signalling has anything to cross.'], 
-        uncertainty: 'How the first cells formed is unresolved in detail. Lipid vesicles that grow and divide without any genes have been made in the laboratory, and RNA can copy itself under carefully chosen conditions, but a single continuous story from chemistry to a cell has not been demonstrated. The claim is that it happened, not that we can yet retrace it.', 
-        career: 'Cell and tissue culture, clinical pathology, microbiology, and any work in regenerative medicine that has to keep cells alive outside a body.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 4.1 Studying Cells', url: 'https://openstax.org/books/biology-2e/pages/4-1-studying-cells' },
-          { label: 'OpenStax Biology 2e, 4.3 Eukaryotic Cells', url: 'https://openstax.org/books/biology-2e/pages/4-3-eukaryotic-cells' },
-          { label: 'Wikipedia, "Cell theory" (Schleiden, Schwann, Virchow)', url: 'https://en.wikipedia.org/wiki/Cell_theory' }
-        ]
-      },
-      { id: 'organelles', title: 'Organelles', kicker: 'Two of them used to be bacteria, and the evidence is in their DNA', minutes: 15,
-        story: 'A eukaryotic cell is a set of compartments with different chemistries running at once. The lysosome is acidic enough to dissolve a bacterium, and two micrometres away the cytosol is at neutral pH and would be destroyed by that acidity. Compartmentalisation is not decoration: it is what lets incompatible reactions share one cell.', 
-        sections: [
-          { heading: 'The compartments and their jobs', body: 'The nucleus holds the chromosomes and is where RNA is made. The endoplasmic reticulum is a folded membrane network where proteins are assembled and folded, and the smooth version makes lipids. The Golgi apparatus, described by Camillo Golgi in 1898, packages and addresses proteins for delivery. Lysosomes, identified by Christian de Duve in 1955, contain about sixty hydrolytic enzymes at pH near 5 and break down worn-out parts and swallowed material. Mitochondria make ATP; chloroplasts, in plants, run photosynthesis.' },
-          { heading: 'Mitochondria were free-living bacteria', body: 'Lynn Margulis argued in 1967 that mitochondria and chloroplasts descend from bacteria that were engulfed and kept. The evidence is unusually direct: mitochondria have their own circular DNA, their own ribosomes that look bacterial, and they divide on their own schedule rather than with the cell. Their DNA in humans is 16,569 base pairs and is inherited only from the mother, which is why it is used to trace maternal lineages back tens of thousands of years.' },
-          { heading: 'The energy numbers', body: 'A typical human cell holds a few hundred to a couple of thousand mitochondria, and each has folded inner membranes called cristae that multiply its surface area for the electron transport chain. The chain moves electrons through four protein complexes and uses the energy to pump protons, and ATP synthase then lets them back through to make ATP. The gradient across the inner membrane is roughly 150 to 180 millivolts, and a working heart cell turns over its entire ATP supply in seconds.' },
-          { heading: 'What a diagram leaves out', body: 'The textbook picture of labelled blobs floating in space is wrong in a way that changes what you can infer. The organelles touch, exchange material and signal to each other: mitochondria contact the endoplasmic reticulum at specific junctions, and the Golgi is fed continuously by vesicles rather than sitting still. The cell is closer to a dense, constantly moving factory floor than to a museum display, and the number of contacts is now measurable rather than metaphorical.' }
-        ], connections: ['The endosymbiotic story is evolution happening inside a cell.', 'ATP from mitochondria is the currency every other lesson spends.', 'Protein synthesis starts in the cytosol and finishes in the ER.'], 
-        uncertainty: 'How many endosymbiotic events there were is still argued. The origin of the chloroplast is reasonably settled, but the origin of the mitochondrion and whether other organelles (the nucleus among them) also came from engulfed cells are live questions, and the answer bears on how eukaryotic complexity arose at all.', 
-        career: 'Metabolic and mitochondrial disease diagnosis, drug targeting to specific compartments, and biotechnology that engineers chloroplasts or yeast organelles.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 4.4 The Endomembrane System and Proteins', url: 'https://openstax.org/books/biology-2e/pages/4-4-the-endomembrane-system-and-proteins' },
-          { label: 'Wikipedia, "Organelle" (the compartments and their functions)', url: 'https://en.wikipedia.org/wiki/Organelle' },
-          { label: 'Wikipedia, "Endosymbiont" (Margulis, 1967, and the genetic evidence)', url: 'https://en.wikipedia.org/wiki/Endosymbiont' }
-        ]
-      },
-      { id: 'cell-division', title: 'Cell Division', kicker: 'Copying three billion letters without losing one', minutes: 15,
-        story: 'Your body replaces roughly tens of billions of cells a day, and each replacement needs a full copy of the genome. The copying is accurate to about one error per billion letters, which is the difference between a working tissue and a tumour. Almost all of the machinery exists to make that accuracy possible.', 
-        sections: [
-          { heading: 'The cycle, and its clock', body: 'A dividing human cell runs a cycle of roughly 24 hours: about 11 hours of G1 growth, 8 hours of S phase copying DNA, 4 hours of G2 checking, and about an hour of mitosis. The length varies enormously by cell type: some gut lining cells divide every day, some liver cells almost never, and neurons mostly not at all. The 2001 Nobel Prize in Physiology or Medicine went to Leland Hartwell, Tim Hunt and Paul Nurse for identifying the cyclins and cyclin-dependent kinases that drive that clock.' },
-          { heading: 'Mitosis makes an identical pair', body: 'The 46 chromosomes are already duplicated into 92 sister chromatids when mitosis starts. They condense, attach to spindle fibres from opposite poles, line up on the metaphase plate, and are pulled apart so each daughter gets 46. The spindle checkpoint will not let the process continue until every chromosome is attached to both poles, which is why the error rate is as low as it is. Cytokinesis then pinches the cell in two.' },
-          { heading: 'Meiosis makes four different cells', body: 'Meiosis runs the process twice with one round of DNA copying, so a cell with 46 chromosomes produces four cells with 23. Crossing over in the first division swaps segments between paired chromosomes, and the independent assortment of 23 pairs gives 2^23, about 8.4 million, combinations before any crossing over is counted. Dealing two packs of cards at once is the usual picture: twenty-three pairs, each pair landing two ways, and multiplying the choices is where that number comes from. That is where the genetic variety of a species comes from, and why siblings are not identical.' },
-          { heading: 'When it goes wrong', body: 'A failure of separation is called nondisjunction, and the resulting cell has too many or too few chromosomes. Trisomy 21, an extra copy of chromosome 21, is the commonest viable example and the cause of Down syndrome; it occurs in roughly one in 700 births and the risk rises steeply with maternal age. Cancer is the other failure mode, usually a set of mutations in the checkpoint genes that let damaged cells divide anyway. HeLa cells, taken from Henrietta Lacks in 1951 without her knowledge or consent, are descendants of one cervical tumour and have been used in research ever since; the consent failure is now part of how the field teaches research ethics.' }
-        ], connections: ['DNA replication in S phase is the next lesson but one.', 'Mutations arise from copying errors, which is where genetics begins.', 'Checkpoint failure connects cell biology to cancer medicine.'], 
-        uncertainty: 'Why human eggs accumulate chromosome errors with age is not settled, and it matters clinically because it drives the age-related rise in Down syndrome and in miscarriage. Several mechanisms have been proposed, including the gradual loss of the protein cohesin that holds chromosomes together, and none is accepted as the whole explanation.', 
-        career: 'Cancer research and oncology, in vitro fertilisation and reproductive genetics, stem cell biology, and chromosome-based prenatal testing.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 10.1 Cell Division', url: 'https://openstax.org/books/biology-2e/pages/10-1-cell-division' },
-          { label: 'OpenStax Biology 2e, 10.2 The Cell Cycle', url: 'https://openstax.org/books/biology-2e/pages/10-2-the-cell-cycle' },
-          { label: 'Wikipedia, "Mitosis" (the stages and the spindle checkpoint)', url: 'https://en.wikipedia.org/wiki/Mitosis' },
-          { label: 'Wikipedia, "HeLa" (Henrietta Lacks, 1951, and the consent dispute)', url: 'https://en.wikipedia.org/wiki/HeLa' }
-        ]
-      },
-      { id: 'cell-signaling', title: 'Cell Signaling', kicker: 'A molecule arrives, and the cell changes what it is doing', minutes: 14,
-        story: 'Adrenaline reaches the heart within seconds and makes it beat harder. The molecule itself does almost nothing; it binds one receptor on the outside of a cell and is then gone. Everything that follows is the cell talking to itself, and the amplification in that chain is why one molecule can produce a visible response.', 
-        sections: [
-          { heading: 'Three ways to send a message', body: 'A cell can signal to itself (autocrine), to its neighbours (paracrine), or into the bloodstream to reach distant tissue (endocrine). Neurotransmitters are a fourth case, released across a gap of about 20 nanometres and cleared within milliseconds. The chemistry is the same in all four; what differs is the distance and the speed of removal, which is what sets how long the signal lasts.' },
-          { heading: 'Receptors, and the second messenger', body: 'A hormone cannot cross a lipid membrane if it is water-soluble, so it binds a receptor on the surface and the receptor passes the message inward. Earl Sutherland described the first such relay in 1957: adrenaline binds a receptor, the receptor activates an enzyme, and the enzyme converts ATP into cyclic AMP, which then switches on the next protein in the chain. Cyclic AMP is a second messenger, and because one receptor can activate many enzyme molecules, the signal is amplified at every step. Think of the receptor as a doorman: the hormone cannot cross a membrane, so it tells the doorman at the door, and the doorman starts a chain inside in which every link tells several others. That chain is why a few molecules at the surface can move a mountain of glucose in the liver. The amplification is the point: a handful of adrenaline molecules can end up mobilising a million glucose units or more.' },
-          { heading: 'Switches that are chemical, not mechanical', body: 'Most of the relay works by adding or removing phosphate groups. A kinase attaches a phosphate to a protein and a phosphatase removes it, and each such change flips a protein between active and inactive. The largest family, the G-protein-coupled receptors, has around 800 members in humans and is the target of roughly a third of all prescription drugs, from beta blockers to antihistamines. The 2012 Nobel Prize in Chemistry went to Robert Lefkowitz and Brian Kobilka for working out how those receptors look and behave.' },
-          { heading: 'Nitric oxide, the exception that proved useful', body: 'In the 1980s it turned out that a gas can be a signalling molecule. Nitric oxide is produced in blood vessel walls, diffuses into the smooth muscle beside it, and relaxes it, which widens the vessel. Robert Furchgott, Louis Ignarro and Ferid Murad shared the 1998 Nobel Prize for the discovery, and it explained why nitroglycerin relieves angina: the body converts it into nitric oxide. A signal that is a dissolved gas cannot be stored in vesicles or removed by an enzyme in the same way, so it acts only as far as it can diffuse before reacting, which is a few tens of micrometres.' }
-        ], connections: ['The receptor is a protein built by the machinery in the next two lessons.', 'Endocrine signalling is the subject of the human biology module.', 'Signal amplification is why a hormone can act at nanomolar concentrations.'], 
-        uncertainty: 'Whether cells process signals by summing graded inputs or by genuinely switching between discrete states is still debated, and the answer probably differs by cell type. The noisy, single-cell measurements now possible show huge variation between genetically identical cells, which undermines the averaged picture that textbooks present.', 
-        career: 'Pharmacology and drug discovery, immunology, cancer biology (many tumours carry broken growth-factor pathways), and synthetic biology that rewires receptors on purpose.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 9.1 Signaling Molecules and Cellular Receptors', url: 'https://openstax.org/books/biology-2e/pages/9-1-signaling-molecules-and-cellular-receptors' },
-          { label: 'Wikipedia, "Cell signaling" (the four modes and the relay)', url: 'https://en.wikipedia.org/wiki/Cell_signaling' },
-          { label: 'Wikipedia, "Nitric oxide" (Furchgott, Ignarro, Murad, Nobel 1998)', url: 'https://en.wikipedia.org/wiki/Nitric_oxide' }
-        ]
-      }
+      { id: 'cell-structure', title: 'Cell Structure', kicker: 'The smallest thing that is unambiguously alive', minutes: 15 },
+      { id: 'organelles', title: 'Organelles', kicker: 'Two of them used to be bacteria, and the evidence is in their DNA', minutes: 15 },
+      { id: 'cell-division', title: 'Cell Division', kicker: 'Copying three billion letters without losing one', minutes: 15 },
+      { id: 'cell-signaling', title: 'Cell Signaling', kicker: 'A molecule arrives, and the cell changes what it is doing', minutes: 14 }
     ] },
     { id: 'molecular-biology', title: 'Molecular biology', intro: 'The molecule that copies itself, and the two others that read it.', topics: [
-      { id: 'dna', title: 'DNA', kicker: 'Two metres of it per cell, and a photograph that decided the question', minutes: 15,
-        story: 'In 1869 a Swiss chemist named Friedrich Miescher extracted a phosphorus-rich substance from the nuclei of pus cells and called it nuclein. It sat in the literature for seventy-five years while most biologists assumed protein carried heredity, on the reasoning that protein had twenty building blocks and DNA only four. The reasoning was wrong.', 
-        sections: [
-          { heading: 'Nuclein, then nothing for decades', body: 'Miescher had found DNA and did not know what it was for. Oswald Avery, Colin MacLeod and Maclyn McCarty showed in 1944 that transferring purified DNA from one strain of pneumococcus to another changed the recipient permanently, which is heredity in a test tube. The result was received with scepticism, partly because it implied a molecule with four repeated units could carry information. Alfred Hershey and Martha Chase confirmed it in 1952 by showing that radioactively labelled DNA, not protein, enters the bacteria when a virus infects one.' },
-          { heading: 'The structure, and whose photograph it was', body: 'James Watson and Francis Crick published the double helix in April 1953, built on Rosalind Franklin and Maurice Wilkins\'s X-ray diffraction work: Franklin\'s photograph 51 showed the helical pattern clearly, and her measurement of the molecule\'s dimensions was used without her knowledge or permission. The structure explains the copying. Each strand is a chain of A, T, G and C, and adenine pairs only with thymine while guanine pairs only with cytosine, so one strand determines the other.' },
-          { heading: 'Base pairing was measured before it was explained', body: 'Erwin Chargaff had found in 1950 that the amount of adenine equals the amount of thymine and guanine equals cytosine, in every organism he checked. He did not know why. The helix explains it: the hydrogen bonds only line up in those pairs. A useful picture is a set of keys and locks - adenine opens thymine, guanine opens cytosine, and nothing else fits - which is why one strand is enough to rebuild the other from the pairing rules alone. The human genome holds about 3.1 billion base pairs, roughly 2 metres of DNA per cell, packed into a nucleus about 6 micrometres across by winding around histone proteins. Stretched end to end, the DNA in one human body would run about 7 x 10^10 kilometres, roughly 500 times the distance from the Earth to the Sun.' },
-          { heading: 'What the double helix does not explain', body: 'The structure says how DNA copies. It does not say what any particular stretch of it is for, and that gap is where most of modern biology lives. Only about 1.5 per cent of the human genome codes for protein, and the rest was once dismissed as junk; the ENCODE project argued in 2012 that around 80 per cent of it shows some biochemical activity, a claim evolutionary biologists contested sharply on the grounds that activity is not the same as function. Which stretches actually matter is still being worked out, and it is why the same variant of one gene can mean a mild symptom in one person and a serious one in another.' }
-        ], connections: ['RNA carries the message this molecule holds.', 'Copying errors are mutations, which genetics is built on.', 'Gene expression is the process of reading it selectively.'], 
-        uncertainty: 'The percentage of the genome that is functional is genuinely contested: ENCODE\'s 80 per cent figure and the evolutionary estimate of roughly 10 to 15 per cent come from different definitions of function, and the disagreement is about which definition should be used rather than about the measurements.', 
-        career: 'Genomic medicine and genetic testing, forensic identification, agriculture and crop breeding, and the whole of the sequencing industry.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 14.1 Historical Basis of Modern Understanding', url: 'https://openstax.org/books/biology-2e/pages/14-1-historical-basis-of-modern-understanding' },
-          { label: 'OpenStax Biology 2e, 14.3 Basics of DNA Replication', url: 'https://openstax.org/books/biology-2e/pages/14-3-basics-of-dna-replication' },
-          { label: 'Wikipedia, "DNA" (Miescher, Avery, the 1953 structure)', url: 'https://en.wikipedia.org/wiki/DNA' },
-          { label: 'Wikipedia, "ENCODE" (the 2012 function claim and the criticism)', url: 'https://en.wikipedia.org/wiki/ENCODE' }
-        ]
-      },
-      { id: 'rna', title: 'RNA', kicker: 'The working copy, and possibly the original molecule', minutes: 14,
-        story: 'DNA cannot leave the nucleus without being destroyed, and the ribosomes that build protein are outside it. So the cell makes a disposable copy. RNA is chemically close enough to DNA to carry the same message and unstable enough that the cell can throw it away, which is the property that makes regulation possible at all.', 
-        sections: [
-          { heading: 'Three kinds, three jobs', body: 'Messenger RNA carries the sequence from the gene to the ribosome. Transfer RNA is the adaptor: one end reads a three-letter codon and the other carries the matching amino acid. Ribosomal RNA is part of the ribosome itself and catalyses the formation of the peptide bond. In a typical cell, rRNA is by far the most abundant, which is a clue to where the real chemistry happens.' },
-          { heading: 'Transcription, and the processing that follows', body: 'An enzyme called RNA polymerase reads the template strand and builds a complementary RNA, substituting uracil for thymine. In bacteria this happens in the cytoplasm and translation can begin on a transcript that is still being made. In eukaryotes the transcript is processed first: a cap is added to the front, a tail of about 200 adenine bases to the back, and sections called introns are cut out. Introns were discovered in 1977 by Phillip Sharp and Richard Roberts, who shared the 1993 Nobel Prize for it, and the finding was a surprise because it meant a gene is not a continuous stretch of instructions.' },
-          { heading: 'Splicing is why one gene can make several proteins', body: 'Alternative splicing lets the same transcript be cut in different ways, so one gene can produce a family of related proteins. Roughly 95 per cent of human genes with more than one exon are spliced in more than one way, and the resulting protein count is a large part of why 20,000 genes can build a body with far more distinct proteins than that. A mutation at a splice site can cause disease without changing a single amino acid, because it changes which pieces are joined rather than what any one piece says.' },
-          { heading: 'RNA that does chemistry, and the RNA world', body: 'In 1982 Thomas Cech found an RNA that spliced itself with no protein involved, and Sidney Altman found another; they shared the 1989 Nobel Prize in Chemistry. A molecule that both stores information and catalyses reactions removes the chicken-and-egg problem of which came first, DNA or protein. Walter Gilbert named the idea the RNA world in 1986: RNA as the original molecule, with DNA later taking over storage and protein taking over catalysis. The ribosome itself is a ribozyme, which is a living fossil of that arrangement, since the peptide bond is made by its RNA and not by its proteins.' }
-        ], connections: ['DNA is the archive this molecule copies from.', 'The ribosome that reads it is the next lesson.', 'Splicing is a major source of the protein diversity genomics has to explain.'], 
-        uncertainty: 'The RNA world is a hypothesis, not a result. No self-replicating RNA capable of building a cell has been demonstrated, and the strongest support is indirect: ribozymes exist, the ribosome is one, and RNA can be both carrier and catalyst. Chemists have made partial self-replicators in the lab; nobody has made the leap from one to a metabolism.', 
-        career: 'mRNA vaccine and therapeutic design, RNA interference drug development, diagnostics, and the study of splicing-related disease.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 15.4 RNA Processing in Eukaryotes', url: 'https://openstax.org/books/biology-2e/pages/15-4-rna-processing-in-eukaryotes' },
-          { label: 'Wikipedia, "RNA splicing" (Sharp, Roberts, 1977)', url: 'https://en.wikipedia.org/wiki/RNA_splicing' },
-          { label: 'Wikipedia, "RNA world" (Gilbert, 1986, and the evidence for it)', url: 'https://en.wikipedia.org/wiki/RNA_world' }
-        ]
-      },
-      { id: 'gene-expression', title: 'Gene Expression', kicker: 'Every cell has the same genome and does something different with it', minutes: 14,
-        story: 'A liver cell and a neuron in your body carry identical DNA. One makes albumin and the other makes dopamine receptors, and the difference is not which genes they own but which ones they switch on. That switch is the answer to how a single fertilised cell becomes a body with a few hundred cell types.', 
-        sections: [
-          { heading: 'The central dogma, as stated and as often misread', body: 'Francis Crick described the flow of information as DNA to RNA to protein, and added that it does not run backwards. The qualification matters, because the slogan is often taken to mean one gene gives one protein and that the arrow is the whole story. Neither is true: alternative splicing breaks the first, and the regulation of when and how much a gene is read is where almost all the interesting control lives. Retroviruses do run the arrow backwards, using reverse transcriptase to write RNA into DNA, which is why HIV is so hard to clear.' },
-          { heading: 'Bacteria: the operon', body: 'François Jacob and Jacques Monod described the lac operon in 1961: a set of genes that make the enzymes for digesting lactose, switched on only when lactose is present and glucose is not. A repressor protein sits on the DNA and blocks the polymerase; a sugar molecule binds the repressor and releases it. It is a switch with a padlock on it: the repressor is the padlock, lactose is the key that lifts it, and the genes underneath are what the switch turns on. It was the first concrete mechanism for gene regulation and it won the 1965 Nobel Prize in Physiology or Medicine. The logic is still the model for how a cell responds to what is available.' },
-          { heading: 'Eukaryotes: many more layers', body: 'Human cells add several layers. Transcription factors bind enhancer sequences that can be tens of thousands of bases away, looping the DNA to bring them into contact with the gene. Chromatin is packed or opened, and chemical marks on the histones and on the DNA itself change how accessible a region is. X-inactivation silences one entire copy of the X chromosome in every female cell, decided early in development and then inherited by all that cell\'s descendants, which is why tortoiseshell cats are female. There are about 20,000 protein-coding genes in the human genome, a number that fell from an earlier guess of 100,000 once the genome was sequenced.' },
-          { heading: 'What "epigenetic" does and does not mean', body: 'Epigenetic marks change gene activity without changing the sequence, and some are inherited across cell divisions, which is uncontroversial and essential. The further claim, that marks acquired during a lifetime are inherited by children, is much weaker than popular writing suggests: the evidence in humans is thin, the mechanisms for erasing marks in the germ line are well documented, and several headline results have not replicated. The 2022 discovery that a father\'s diet can affect offspring through sperm RNA has real support in mice; how far it extends to people is unknown.' }
-        ], connections: ['The transcript this process produces is the previous lesson\'s RNA.', 'Cell differentiation is why tissues differ despite identical DNA.', 'Most disease genetics involves regulation, not just protein sequence.'], 
-        uncertainty: 'How much of human gene regulation is sequence-specific versus emergent from chromatin state is unresolved, and it is a serious obstacle in interpreting genome-wide association studies, which keep pointing at non-coding regions whose effect on a gene nobody can yet predict from sequence alone.', 
-        career: 'Developmental biology, stem cell research, drug discovery aimed at transcription, and the interpretation of clinical genome sequencing.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 15.2 Prokaryotic Transcription', url: 'https://openstax.org/books/biology-2e/pages/15-2-prokaryotic-transcription' },
-          { label: 'Wikipedia, "Gene expression" (the central dogma and its layers)', url: 'https://en.wikipedia.org/wiki/Gene_expression' },
-          { label: 'Wikipedia, "Lac operon" (Jacob and Monod, 1961)', url: 'https://en.wikipedia.org/wiki/Lac_operon' }
-        ]
-      },
-      { id: 'protein-synthesis', title: 'Protein Synthesis', kicker: 'A four-letter alphabet writes a twenty-letter protein', minutes: 14,
-        story: 'There are four bases and twenty amino acids, so the code cannot be one base per amino acid or two (sixteen, too few). Three gives sixty-four combinations, which is more than enough and therefore has to be redundant. That arithmetic was done before anyone found the code, and the answer turned out to be exactly three.', 
-        sections: [
-          { heading: 'Cracking the code', body: 'Marshall Nirenberg and Heinrich Matthaei built a synthetic RNA of only uracil in 1961 and got a protein of only phenylalanine, which identified the first codon. Har Gobind Khorana worked out the rest by making defined sequences, and Robert Holley determined the structure of the first transfer RNA. All three shared the 1968 Nobel Prize. The code is read in triplets: AUG starts, UAA, UAG and UGA stop, and the other sixty-one specify amino acids, so most amino acids have several codons.' },
-          { heading: 'The machine that reads it', body: 'A ribosome is two subunits made of ribosomal RNA and protein, and it has three sites where transfer RNAs come and go. It works like a workbench with three clamps: one holds the growing chain, one holds the incoming amino acid, and one is where the chain is handed over from one to the other. The incoming transfer RNA pairs its three-base anticodon with the codon, the growing chain is transferred onto the new amino acid, and the ribosome moves one codon along. Venkatraman Ramakrishnan, Thomas Steitz and Ada Yonath shared the 2009 Nobel Prize in Chemistry for determining its structure at atomic resolution, which showed that the catalytic centre is RNA, not protein.' },
-          { heading: 'Speed and cost', body: 'A bacterial ribosome adds about 15 to 20 amino acids per second; a eukaryotic one is slower, closer to 5 to 10. A 400-amino-acid protein therefore takes roughly half a minute to make, and a cell making a lot of one protein runs thousands of ribosomes on the same transcript at once. The energy cost is about four high-energy phosphate bonds per amino acid added, which is why protein synthesis is one of the most expensive things a cell does and why it is so tightly regulated.' },
-          { heading: 'Folding is the part the sequence does not specify', body: 'A finished chain is not yet a protein. It has to fold, and Christian Anfinsen\'s work in the 1960s, which won the 1972 Nobel Prize in Chemistry, showed that the sequence alone determines the folded shape for a small protein. For larger ones, folding needs chaperone proteins and often takes several attempts. Misfolding causes disease: in sickle cell anaemia a single change of one amino acid in haemoglobin makes the molecules stick together and distort the red cell, and in prion diseases a misfolded protein converts healthy copies of itself into the same wrong shape. Structure prediction took a step change in 2020 when AlphaFold reached accuracy competitive with experiment for many proteins, though the folding process in a living cell remains harder than the final shape.' }
-        ], connections: ['The genetic code is the bridge from DNA to function.', 'Mutations that change one codon are the material of genetic disease.', 'Ribosomes are the target of many antibiotics, which is why they are studied so hard.'], 
-        uncertainty: 'How a newly made chain finds its way to one specific folded state among the enormous number of possibilities is still not fully understood, and chaperones are part of the answer rather than a detail. AlphaFold predicts structures from sequences with impressive accuracy, but it does not tell you how the cell gets there, and it is least reliable for exactly the disordered and multi-state proteins that matter in signalling.', 
-        career: 'Biologics and antibody manufacturing, antibiotic development, structural biology, and protein engineering for industrial enzymes.', 
-        sources: [
-          { label: 'OpenStax Biology 2e, 15.1 The Genetic Code', url: 'https://openstax.org/books/biology-2e/pages/15-1-the-genetic-code' },
-          { label: 'OpenStax Biology 2e, 15.5 Ribosomes and Protein Synthesis', url: 'https://openstax.org/books/biology-2e/pages/15-5-ribosomes-and-protein-synthesis' },
-          { label: 'Wikipedia, "Genetic code" (Nirenberg, Khorana, Holley)', url: 'https://en.wikipedia.org/wiki/Genetic_code' },
-          { label: 'Wikipedia, "Ribosome" (the structure work, Nobel 2009)', url: 'https://en.wikipedia.org/wiki/Ribosome' }
-        ]
-      }
+      { id: 'dna', title: 'DNA', kicker: 'Two metres of it per cell, and a photograph that decided the question', minutes: 15 },
+      { id: 'rna', title: 'RNA', kicker: 'The working copy, and possibly the original molecule', minutes: 14 },
+      { id: 'gene-expression', title: 'Gene Expression', kicker: 'Every cell has the same genome and does something different with it', minutes: 14 },
+      { id: 'protein-synthesis', title: 'Protein Synthesis', kicker: 'A four-letter alphabet writes a twenty-letter protein', minutes: 14 }
     ] },
-
-  { id: "ecology", title: "Ecology", intro: "How organisms interact with each other and with the planet.", topics: [] },
-  { id: "evolution", title: "Evolution", intro: "How life changes over time, and how every organism is related.", topics: [] },
-  { id: "specialized-fields", title: "Specialized Fields", intro: "Advanced biology topics at the frontiers of research.", topics: [] }
-  ]
-};
+    { id: 'genetics', title: 'Genetics', intro: 'How traits are passed from parents to offspring.', topics: [
+      { id: 'heredity', title: 'Heredity', kicker: 'The code passes from parent to child', minutes: 13 },
+      { id: 'mutations', title: 'Mutations', kicker: 'Changes in the DNA sequence', minutes: 13 },
+      { id: 'genetic-disorders', title: 'Genetic Disorders', kicker: 'When genes go wrong', minutes: 13 },
+      { id: 'genomics', title: 'Genomics', kicker: 'Reading the whole genome', minutes: 12 }
+    ] },
+    { id: 'microbiology', title: 'Microbiology', intro: 'The study of microscopic organisms.', topics: [
+      { id: 'bacteria', title: 'Bacteria', kicker: 'Single-celled organisms without a nucleus', minutes: 13 },
+      { id: 'viruses', title: 'Viruses', kicker: 'Genetic material wrapped in protein', minutes: 12 },
+      { id: 'fungi', title: 'Fungi', kicker: 'Organisms that include mushrooms and yeast', minutes: 12 },
+      { id: 'protozoa', title: 'Protozoa', kicker: 'Single-celled organisms with a nucleus', minutes: 12 }
+    ] },
+    { id: 'botany', title: 'Botany', intro: 'The study of plants.', topics: [
+      { id: 'plant-structure', title: 'Plant Structure', kicker: 'Roots, stems and leaves', minutes: 13 },
+      { id: 'plant-physiology', title: 'Plant Physiology', kicker: 'Photosynthesis and transpiration', minutes: 13 },
+      { id: 'reproduction', title: 'Reproduction', kicker: 'Flowers, seeds and fruit', minutes: 12 },
+      { id: 'plant-evolution', title: 'Plant Evolution', kicker: 'How plants changed the planet', minutes: 12 }
+    ] },
+    { id: 'zoology', title: 'Zoology', intro: 'The study of animals.', topics: [
+      { id: 'animal-anatomy', title: 'Animal Anatomy', kicker: 'Tissue types, body plans and homeostasis', minutes: 13 },
+      { id: 'animal-physiology', title: 'Animal Physiology', kicker: 'Gas exchange, circulation, digestion and temperature', minutes: 13 },
+      { id: 'animal-behaviour', title: 'Animal Behaviour', kicker: 'Innate and learned communication and social', minutes: 12 }
+    ] },
+    { id: 'human-biology', title: 'Human Biology', intro: 'The organ systems that keep the human body functioning.', topics: [
+      { id: 'anatomy', title: 'Anatomy', kicker: 'Body regions, systems and anatomical terms', minutes: 13 },
+      { id: 'physiology', title: 'Physiology', kicker: 'Homeostasis, negative feedback and energy', minutes: 13 },
+      { id: 'nervous-system', title: 'Nervous System', kicker: 'Neurons, brain and synapses', minutes: 12 },
+      { id: 'circulatory-system', title: 'Circulatory System', kicker: 'Heart chambers, vessels and blood', minutes: 12 },
+      { id: 'respiratory-system', title: 'Respiratory System', kicker: 'Lungs, alveoli and breathing mechanics', minutes: 12 },
+      { id: 'digestive-system', title: 'Digestive System', kicker: 'Alimentary canal, absorption and liver', minutes: 12 },
+      { id: 'endocrine-system', title: 'Endocrine System', kicker: 'Glands, hormones and feedback', minutes: 12 }
+    ] },
+    { id: 'ecology', title: 'Ecology', intro: 'How organisms interact with each other and with the planet.', topics: [] },
+    { id: 'evolution', title: 'Evolution', intro: 'How life changes over time, and how every organism is related.', topics: [] },
+    { id: 'specialized-fields', title: 'Specialized Fields', intro: 'Advanced biology topics at the frontiers of research.', topics: [] }
+  ]};
