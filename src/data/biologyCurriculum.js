@@ -151,6 +151,10 @@ export const BIOLOGY_CURRICULUM = {
           { label: 'Wikipedia, "Ribosome" (the structure work, Nobel 2009)', url: 'https://en.wikipedia.org/wiki/Ribosome' }
         ]
       }
-    ] }
+    ] },
+
+  { id: "ecology", title: "Ecology", intro: "How organisms interact with each other and with the planet.", topics: [] },
+  { id: "evolution", title: "Evolution", intro: "How life changes over time, and how every organism is related.", topics: [] },
+  { id: "specialized-fields", title: "Specialized Fields", intro: "Advanced biology topics at the frontiers of research.", topics: [] }
   ]
 };
