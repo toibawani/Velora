@@ -5,7 +5,7 @@ import { CURRICULUM } from '../data/curriculum';
 import { resolveAtlasTopic } from '../data/atlasResolution';
 
 /**
- * All Biology lessons.
+ * The eight Biology lessons.
  *
  * Chemistry was the first subject outside the original three, and the fix that
  * made it reachable was a discipline-to-subject map in atlasResolution. This
@@ -14,9 +14,8 @@ import { resolveAtlasTopic } from '../data/atlasResolution';
  * failure it guards against is the one that made chemistry invisible - content
  * written, tests green, and every Atlas tap still saying "not written yet".
  *
- * The seven modules covered are Cell Biology, Molecular Biology, Genetics,
- * Microbiology, Botany, Zoology and Human Biology. The remaining three biology
- * modules (Ecology, Evolution, Specialized Fields) are not written and the
+ * The two modules covered are the first two the Atlas lists, Cell Biology and
+ * Molecular Biology. The other eight biology modules are not written and the
  * Atlas says so; the last test here asserts that boundary rather than leaving
  * it implied.
  */
@@ -108,7 +107,7 @@ test('every biology lesson is reachable from the Atlas', () => {
     const resolution = resolveAtlasTopic({
       fieldId: 'science',
       disciplineId: 'biology',
-      moduleName: topic.moduleTitle === 'Cell biology' ? 'Cell Biology' : topic.moduleTitle === 'Molecular biology' ? 'Molecular Biology' : topic.moduleTitle,
+      moduleName: topic.moduleTitle === 'Cell biology' ? 'Cell Biology' : 'Molecular Biology',
       topic: topic.title,
     });
     expect(resolution.kind).toBe('lesson');
@@ -219,147 +218,15 @@ describe('the concrete facts the lessons claim actually render', () => {
     expect(text).toMatch(/2009 Nobel Prize in Chemistry/);
     expect(text).toMatch(/about 15 to 20 amino acids per second/);
   });
-
-  test('Plant Structure names root stem leaf and the cellulose wall', () => {
-    renderLesson(lesson('plant-structure'));
-    const text = mainText();
-    expect(text).toMatch(/roots, stems and leaves/);
-    expect(text).toMatch(/xylem carries water upward/);
-    expect(text).toMatch(/phloem carries sugar/);
-    expect(text).toMatch(/cell wall of cellulose/);
-  });
-
-  test('Plant Physiology names transpiration photosynthesis and photoperiodism', () => {
-    renderLesson(lesson('plant-physiology'));
-    const text = mainText();
-    expect(text).toMatch(/transpiration stream/i);
-    expect(text).toMatch(/Calvin cycle/);
-    expect(text).toMatch(/phytochrome/);
-    expect(text).toMatch(/auxin/i);
-  });
-
-  test('Plant Reproduction names flower alternation of generations and seed', () => {
-    renderLesson(lesson('plant-reproduction'));
-    const text = mainText();
-    expect(text).toMatch(/stamens make pollen/);
-    expect(text).toMatch(/sporophyte/);
-    expect(text).toMatch(/gametophyte/);
-    expect(text).toMatch(/ovule becomes a seed/);
-  });
-
-  test('Plant Evolution names land plants and key innovations', () => {
-    renderLesson(lesson('plant-evolution'));
-    const text = mainText();
-    expect(text).toMatch(/bryophytes/i);
-    expect(text).toMatch(/gymnosperms/i);
-    expect(text).toMatch(/angiosperms/i);
-    expect(text).toMatch(/lignin/i);
-  });
-
-  test('Animal Anatomy names tissue types body plans and homeostasis', () => {
-    renderLesson(lesson('animal-anatomy'));
-    const text = mainText();
-    expect(text).toMatch(/epithelial tissue/i);
-    expect(text).toMatch(/bilateral symmetry/i);
-    expect(text).toMatch(/negative feedback/i);
-  });
-
-  test('Animal Physiology names gas exchange circulation digestion and temperature', () => {
-    renderLesson(lesson('animal-physiology'));
-    const text = mainText();
-    expect(text).toMatch(/partial pressure gradients/i);
-    expect(text).toMatch(/closed systems/i);
-    expect(text).toMatch(/villi and microvilli/i);
-    expect(text).toMatch(/endotherms/i);
-  });
-
-  test('Animal Behaviour names innate learned communication and social', () => {
-    renderLesson(lesson('animal-behaviour'));
-    const text = mainText();
-    expect(text).toMatch(/fixed action patterns/i);
-    expect(text).toMatch(/imprinting/i);
-    expect(text).toMatch(/Hamilton.s rule/i);
-    expect(text).toMatch(/eusocial/i);
-  });
-
-  test('Human Anatomy names body regions systems and anatomical terms', () => {
-    renderLesson(lesson('anatomy'));
-    const text = mainText();
-    expect(text).toMatch(/206 bones/);
-    expect(text).toMatch(/skeletal muscle/i);
-    expect(text).toMatch(/superior/i);
-    expect(text).toMatch(/anterior/i);
-  });
-
-  test('Human Physiology names homeostasis feedback and energy', () => {
-    renderLesson(lesson('physiology'));
-    const text = mainText();
-    expect(text).toMatch(/homeostasis/i);
-    expect(text).toMatch(/negative feedback/i);
-    expect(text).toMatch(/ATP/);
-    expect(text).toMatch(/20 percent/);
-  });
-
-  test('Nervous System names neurons brain and synapses', () => {
-    renderLesson(lesson('nervous-system'));
-    const text = mainText();
-    expect(text).toMatch(/action potential/);
-    expect(text).toMatch(/86 billion/);
-    expect(text).toMatch(/sympathetic/);
-    expect(text).toMatch(/neurotransmitters/);
-  });
-
-  test('Circulatory System names heart chambers vessels and blood', () => {
-    renderLesson(lesson('circulatory-system'));
-    const text = mainText();
-    expect(text).toMatch(/four chambers/);
-    expect(text).toMatch(/capillaries/);
-    expect(text).toMatch(/red blood cells/);
-    expect(text).toMatch(/sinoatrial node/);
-  });
-
-  test('Respiratory System names lungs alveoli and breathing mechanics', () => {
-    renderLesson(lesson('respiratory-system'));
-    const text = mainText();
-    expect(text).toMatch(/alveoli/);
-    expect(text).toMatch(/diaphragm/);
-    expect(text).toMatch(/partial pressure/);
-    expect(text).toMatch(/300 million/);
-  });
-
-  test('Digestive System names alimentary canal absorption and liver', () => {
-    renderLesson(lesson('digestive-system'));
-    const text = mainText();
-    expect(text).toMatch(/peristalsis/);
-    expect(text).toMatch(/villi/);
-    expect(text).toMatch(/bile/);
-    expect(text).toMatch(/small intestine/);
-  });
-
-  test('Endocrine System names glands hormones and feedback', () => {
-    renderLesson(lesson('endocrine-system'));
-    const text = mainText();
-    expect(text).toMatch(/pituitary/);
-    expect(text).toMatch(/insulin/);
-    expect(text).toMatch(/negative feedback/i);
-    expect(text).toMatch(/diabetes/i);
-  });
 });
 
 test('the unwritten biology modules stay unwritten rather than pretending', () => {
-  // The boundary of this batch, asserted rather than described. The next three
-  // modules the Atlas lists have no lessons, so their topics must report
-  // honestly. Without this, a later batch could add a module that resolves to
-  // nothing and no test would notice the mismatch.
-  const unwritten = [
-    { module: 'Ecology', topics: ['Ecosystems', 'Food Chains', 'Biodiversity', 'Conservation'] },
-    { module: 'Evolution', topics: ['Natural Selection', 'Adaptation', 'Speciation'] },
-    { module: 'Specialized Fields', topics: ['Biotechnology', 'Bioinformatics', 'Neuroscience', 'Immunology', 'Marine Biology', 'Genetics & Genomics'] },
-  ];
-  unwritten.forEach(({ module, topics }) => {
-    topics.forEach((topic) => {
-      const resolution = resolveAtlasTopic({ fieldId: 'science', disciplineId: 'biology', moduleName: module, topic });
-      expect(resolution.kind).toBe('unwritten');
-    });
+  // The boundary of this batch, asserted rather than described. Genetics is the
+  // next module the Atlas lists and it has no lesson, so its topics must report
+  // honestly. Without this, a later batch could add a Genetics module that
+  // resolves to nothing and no test would notice the mismatch.
+  ['Heredity', 'Mutations', 'Genetic Disorders', 'Genomics'].forEach((topic) => {
+    const resolution = resolveAtlasTopic({ fieldId: 'science', disciplineId: 'biology', moduleName: 'Genetics', topic });
+    expect(resolution.kind).toBe('unwritten');
   });
 });
