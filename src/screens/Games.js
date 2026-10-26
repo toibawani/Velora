@@ -248,12 +248,12 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
                 <h3>{game.name}</h3>
               </div>
 
-              <p className="game-description">{game.description}</p>
+              <p className="game-description" data-testid="game-description">{game.description}</p>
 
               <div className="game-meta-row">
-                <span className="game-difficulty">{game.difficulty}</span>
+                <span className="game-difficulty" data-testid="game-difficulty">{game.difficulty}</span>
                 {game.fixedLength && (
-                  <span className="game-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <span className="game-duration" data-testid="game-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                     <Clock size={12} strokeWidth={1.5} />
                     <span>{game.fixedLength}</span>
                   </span>
