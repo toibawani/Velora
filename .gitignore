@@ -30,6 +30,5 @@ coverage
 *.swo
 *~
 
-# OS specific
-.DS_Store
-``
+# tool working directories
+.freebuff/
