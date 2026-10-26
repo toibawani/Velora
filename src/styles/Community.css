@@ -389,6 +389,23 @@
     display: none;
   }
 
+  /* The note row is an input with a long placeholder plus two buttons. The
+     input's min-content width kept it from shrinking, so at 320px the
+     Discard button sat 45px past the right edge. Give the input its own line
+     and let the two actions share the next one. */
+  .reply-input-row {
+    flex-wrap: wrap;
+  }
+
+  .reply-input {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .reply-submit-btn {
+    flex: 1;
+  }
+
   .disc-discard-btn > svg {
     display: none;
   }
