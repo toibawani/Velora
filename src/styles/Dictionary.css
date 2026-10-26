@@ -99,12 +99,25 @@
 }
 
 .dict-stat-pill {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
   font-size: 0.75rem;
   color: var(--text-secondary);
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
+}
+
+/* The verified count is the smaller half of a two-part claim, and it is the
+   half that can be zero. Keeping it on its own line when the pill runs out of
+   room is better than hiding it at 320px, where it is most useful. */
+.dict-verified-count {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.85;
   white-space: nowrap;
 }
 

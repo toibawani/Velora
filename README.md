@@ -84,10 +84,17 @@ behind them yet.
 |---|---|
 | Atlas topics (total / written) | 572 / 91 |
 | Fields / disciplines | 6 / 34 |
-| Dictionary entries | 138 |
+| Dictionary entries | 138, 3 checked against their source |
 | Black hole levels | 8 levels, 61 entries |
 | Games (concept + brain) | 8 (5 + 3) |
 | Simulations | 6 |
+
+The dictionary's `verified` flag is a claim about checking, not about having a
+link. An entry earns it only after someone opens the listed source, reads the
+explanation and example against it, and finds nothing that needs correcting.
+Three entries have been through that; the other 135 render "not checked yet" on
+the card, and the header states the count. A source URL on its own is not
+verification, and the screen no longer presents it as if it were.
 
 ### Not done yet
 

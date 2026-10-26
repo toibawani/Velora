@@ -58,6 +58,17 @@ function dedupeById(terms: DictionaryTerm[]): DictionaryTerm[] {
 
 export const CURIOUS_TERMS: DictionaryTerm[] = dedupeById(ALL_TERMS);
 
+/**
+ * How many entries someone has actually read back against the source.
+ *
+ * The field is optional, so "not marked" and "checked and wrong" are different
+ * states: an absent flag means nobody has verified it, and the console says so
+ * on the entry rather than leaving it looking checked. This count exists so the
+ * screen can state the same thing in one number instead of making a reader
+ * expand 138 entries to work it out.
+ */
+export const verifiedTermCount = CURIOUS_TERMS.filter((term) => term.verified === true).length;
+
 /** The filter value the console uses for "every subject". */
 export type SubjectFilter = DictionarySubjectId | 'all';
 

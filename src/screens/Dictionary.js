@@ -7,6 +7,7 @@ import {
   countTermsByLetter,
   countTermsBySubject,
   selectTerms,
+  verifiedTermCount,
 } from '../data/dictionary';
 import '../styles/Dictionary.css';
 
@@ -89,6 +90,16 @@ function Dictionary({ setScreen }) {
         </div>
         <div className="dict-stat-pill">
           <span>{CURIOUS_TERMS.length} Concepts Index</span>
+          {/* The count that matters more than the size. An absent verified flag
+              means nobody has read the entry against its source, so saying it
+              here is the honest version of a number that otherwise reads as
+              "138 checked". */}
+          <span
+            className="dict-verified-count"
+            title="Entries read back against their listed source, not entries with a source link."
+          >
+            {verifiedTermCount} of {CURIOUS_TERMS.length} checked against source
+          </span>
         </div>
       </header>
 

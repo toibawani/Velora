@@ -5,6 +5,7 @@ import {
   countTermsBySubject,
   matchesQuery,
   selectTerms,
+  verifiedTermCount,
 } from './index';
 import type { DictionaryTerm } from './types';
 import { PHYSICS_TERMS } from './physics';
@@ -41,6 +42,15 @@ describe('Curious Dictionary data', () => {
   test('the merge drops nothing that is not a duplicate', () => {
     expect(CURIOUS_TERMS.length).toBe(new Set(EVERY_TERM.map((t) => t.id)).size);
     expect(CURIOUS_TERMS.length).toBe(EVERY_TERM.length);
+  });
+
+  test('the verified count counts only entries marked true', () => {
+    // Absent is not the same as false. The flag means someone read the entry
+    // back against its source, and most entries have not been. A count that
+    // included "unmarked" would say 138 and mean nothing.
+    expect(verifiedTermCount).toBe(EVERY_TERM.filter((term) => term.verified === true).length);
+    expect(verifiedTermCount).toBeLessThan(CURIOUS_TERMS.length);
+    expect(verifiedTermCount).toBeGreaterThan(0);
   });
 
   test('every entry is complete and readable', () => {

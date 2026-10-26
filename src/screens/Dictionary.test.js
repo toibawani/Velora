@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Dictionary from './Dictionary';
+import { CURIOUS_TERMS, verifiedTermCount } from '../data/dictionary';
 
 describe('Curious Dictionary', () => {
   test('renders top-level Curious Dictionary with cross-subject terms', () => {
@@ -10,6 +11,17 @@ describe('Curious Dictionary', () => {
     expect(screen.getByText('Curious Dictionary')).toBeInTheDocument();
     expect(screen.getByText('Momentum')).toBeInTheDocument();
     expect(screen.getByText('Epistemology')).toBeInTheDocument();
+  });
+
+  test('states how many entries were read back against their source', () => {
+    render(<Dictionary setScreen={() => {}} />);
+
+    // The size of the dictionary is not the same claim as its accuracy. This
+    // screen used to show only the size, and an unmarked entry looked exactly
+    // like a checked one inside the list.
+    expect(
+      screen.getByText(`${verifiedTermCount} of ${CURIOUS_TERMS.length} checked against source`)
+    ).toBeInTheDocument();
   });
 
   test('filters by cross-subject search query', () => {
