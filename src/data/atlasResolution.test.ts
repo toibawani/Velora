@@ -208,14 +208,13 @@ describe('fieldCoverage', () => {
     const coverage = fieldCoverageByDiscipline(science as never);
 
     expect(coverage.written + coverage.unwritten + coverage.unmapped).toBe(topics.length);
-    // Sixty-four written entry points across the whole science field: ten for
-    // classical mechanics, five for Thermodynamics, seven for Electromagnetism,
-    // seven for Optics, four for Waves, four for Modern Physics, seven for
-    // Chemistry, eight for Biology, one for space science (black holes), and
-    // eleven for the computer science deep read. It was twenty-two before
-    // Thermodynamics landed, forty-nine before Chemistry and fifty-six before
-    // Biology.
-    expect(coverage.written).toBe(64);
+    // Eighty-nine written entry points across the whole science field: thirty-
+    // seven physics lessons and deep reads, thirty-two chemistry lessons, eight
+    // biology lessons, one space-science deep read (black holes), and eleven
+    // computer-science deep reads. The count is measured from the real Atlas,
+    // not from the older seven-chemistry estimate that predated the full
+    // chemistry batch. Every planned biology stub is excluded.
+    expect(coverage.written).toBe(89);
     expect(coverage.unmapped).toBe(0);
   });
 
@@ -231,10 +230,16 @@ describe('fieldCoverage', () => {
     // fails, content was added, which is good news - raise it in the same commit
     // as the content.
     //
-    // It is worth being precise about what 91 out of 572 means. It is not
-    // "ninety-one topics are done" in any sense a reader would recognise; it
-    // is ninety-one topics that open something real, against roughly four
-    // hundred and eighty that honestly report themselves as unwritten.
+    // It is worth being precise about what 116 out of 572 means. It is not
+    // "one hundred and sixteen topics are done" in any sense a reader would
+    // recognise; it is that many topics that open something real, against
+    // roughly four hundred and fifty that honestly report themselves as
+    // unwritten.
+    //
+    // The science total moved from 64 to 89 because the chemistry curriculum
+    // now writes all 32 of its Atlas topics rather than the seven the old
+    // comment counted. No biology stub is included: the eight written biology
+    // lessons are the only biology entry points in this number.
     // Walked discipline by discipline. A flat list of topic names cannot answer
     // this question any more: Science holds six disciplines with different
     // curricula, and guessing one of them is what hid the chemistry lessons.
@@ -251,7 +256,7 @@ describe('fieldCoverage', () => {
       return kind === 'lesson' || kind === 'deep-read';
     }).length;
 
-    expect(written).toBe(91);
+    expect(written).toBe(116);
     expect(all.length).toBeGreaterThan(500);
   });
 
@@ -284,11 +289,10 @@ describe('fieldCoverage', () => {
     // philosophy is 13 and history is 14. A coverage assertion written from a
     // guess is worse than none, because the guess reads as knowledge.
     //
-    // Science is 64: ten classical mechanics, five Thermodynamics lessons,
-    // seven Electromagnetism lessons, seven Optics lessons, four Waves lessons,
-    // four Modern Physics lessons, seven Chemistry lessons, eight Biology
-    // lessons, one space science, eleven computer science.
-    expect(perField.science.written).toBe(64);
+    // Science is 89: thirty-seven physics entry points, thirty-two chemistry
+    // lessons, eight biology lessons, one space-science deep read, and eleven
+    // computer-science deep reads.
+    expect(perField.science.written).toBe(89);
     expect(perField.philosophy.written).toBe(13);
     // History: two pre-existing lessons, plus the twelve history entries.
     expect(perField.history.written).toBe(14);
@@ -301,6 +305,6 @@ describe('fieldCoverage', () => {
     // And the parts still have to add up to the whole, which is what catches a
     // field being added to the map but never counted.
     const summed = Object.values(perField).reduce((total, field) => total + field.written, 0);
-    expect(summed).toBe(91);
+    expect(summed).toBe(116);
   });
 });

@@ -10,8 +10,10 @@
  * Scope of this batch: the first two Atlas modules, Cell Biology and Molecular
  * Biology, in the order the Atlas lists them. The remaining eight modules
  * (Genetics, Microbiology, Botany, Zoology, Human Biology, Ecology, Evolution,
- * Specialized Fields) are not written, and the Atlas says so rather than
- * implying otherwise.
+ * Specialized Fields) are listed here as topic stubs and nothing more. They
+ * have no story, sections or sources, and the resolver only indexes topics that
+ * carry lesson content, so the Atlas reports every one of them as unwritten
+ * rather than opening a reader that has nothing to read.
  */
 export const BIOLOGY_CURRICULUM = {
   name: 'Biology',
@@ -153,14 +155,56 @@ export const BIOLOGY_CURRICULUM = {
       }
     ] },
 
-  { id: "ecology", title: "Ecology", intro: "How organisms interact with each other and with the planet.", topics: [
-      { id: "organisms-interact", title: "Organisms Interact", kicker: "Every organism interacts with its environment and other organisms", minutes: 13 }
+    { id: 'genetics', title: 'Genetics', intro: 'How traits are passed from parents to offspring.', topics: [
+      { id: 'heredity', title: 'Heredity', kicker: 'The code passes from parent to child', minutes: 13 },
+      { id: 'mutations', title: 'Mutations', kicker: 'Changes in the DNA sequence', minutes: 13 },
+      { id: 'genetic-disorders', title: 'Genetic Disorders', kicker: 'When genes go wrong', minutes: 13 },
+      { id: 'genomics', title: 'Genomics', kicker: 'Reading the whole genome', minutes: 12 }
     ] },
-  { id: "evolution", title: "Evolution", intro: "How life changes over time, and how every organism is related.", topics: [
-      { id: "natural-selection", title: "Natural Selection", kicker: "Differential survival and reproduction", minutes: 13 }
+    { id: 'microbiology', title: 'Microbiology', intro: 'The study of microscopic organisms.', topics: [
+      { id: 'bacteria', title: 'Bacteria', kicker: 'Single-celled organisms without a nucleus', minutes: 13 },
+      { id: 'viruses', title: 'Viruses', kicker: 'Genetic material wrapped in protein', minutes: 12 },
+      { id: 'fungi', title: 'Fungi', kicker: 'Organisms that include mushrooms and yeast', minutes: 12 },
+      { id: 'protozoa', title: 'Protozoa', kicker: 'Single-celled organisms with a nucleus', minutes: 12 }
     ] },
-  { id: "specialized-fields", title: "Specialized Fields", intro: "Advanced biology topics at the frontiers of research.", topics: [
-      { id: "systems-biology", title: "Systems Biology", kicker: "Modeling complex biological networks", minutes: 13 }
+    { id: 'botany', title: 'Botany', intro: 'The study of plants.', topics: [
+      { id: 'plant-structure', title: 'Plant Structure', kicker: 'Roots, stems and leaves', minutes: 13 },
+      { id: 'plant-physiology', title: 'Plant Physiology', kicker: 'Photosynthesis and transpiration', minutes: 13 },
+      { id: 'reproduction', title: 'Reproduction', kicker: 'Flowers, seeds and fruit', minutes: 12 },
+      { id: 'plant-evolution', title: 'Plant Evolution', kicker: 'How plants changed the planet', minutes: 12 }
+    ] },
+    { id: 'zoology', title: 'Zoology', intro: 'The study of animals.', topics: [
+      { id: 'animal-anatomy', title: 'Animal Anatomy', kicker: 'Tissue types, body plans and homeostasis', minutes: 13 },
+      { id: 'animal-physiology', title: 'Animal Physiology', kicker: 'Gas exchange, circulation, digestion and temperature', minutes: 13 },
+      { id: 'animal-behaviour', title: 'Animal Behaviour', kicker: 'Innate and learned communication and social behaviour', minutes: 12 }
+    ] },
+    { id: 'human-biology', title: 'Human Biology', intro: 'The organ systems that keep the human body functioning.', topics: [
+      { id: 'anatomy', title: 'Anatomy', kicker: 'Body regions, systems and anatomical terms', minutes: 13 },
+      { id: 'physiology', title: 'Physiology', kicker: 'Homeostasis, negative feedback and energy', minutes: 13 },
+      { id: 'nervous-system', title: 'Nervous System', kicker: 'Neurons, brain and synapses', minutes: 12 },
+      { id: 'circulatory-system', title: 'Circulatory System', kicker: 'Heart chambers, vessels and blood', minutes: 12 },
+      { id: 'respiratory-system', title: 'Respiratory System', kicker: 'Lungs, alveoli and breathing mechanics', minutes: 12 },
+      { id: 'digestive-system', title: 'Digestive System', kicker: 'Alimentary canal, absorption and liver', minutes: 12 },
+      { id: 'endocrine-system', title: 'Endocrine System', kicker: 'Glands, hormones and feedback', minutes: 12 }
+    ] },
+    { id: 'ecology', title: 'Ecology', intro: 'How organisms interact with each other and with the planet.', topics: [
+      { id: 'ecosystems', title: 'Ecosystems', kicker: 'Communities and the physical environment they share', minutes: 13 },
+      { id: 'food-chains', title: 'Food Chains', kicker: 'Energy flows through ecosystems in networks', minutes: 12 },
+      { id: 'biodiversity', title: 'Biodiversity', kicker: 'The variety of life at every scale', minutes: 12 },
+      { id: 'conservation', title: 'Conservation', kicker: 'Protecting species and the places they need', minutes: 12 }
+    ] },
+    { id: 'evolution', title: 'Evolution', intro: 'How life changes over time, and how every organism is related.', topics: [
+      { id: 'natural-selection', title: 'Natural Selection', kicker: 'Differential survival and reproduction', minutes: 13 },
+      { id: 'adaptation', title: 'Adaptation', kicker: 'Traits shaped by the problems an organism faces', minutes: 12 },
+      { id: 'speciation', title: 'Speciation', kicker: 'How one lineage becomes two', minutes: 12 }
+    ] },
+    { id: 'specialized-fields', title: 'Specialized Fields', intro: 'Advanced biology topics at the frontiers of research.', topics: [
+      { id: 'biotechnology', title: 'Biotechnology', kicker: 'Using living systems to make useful things', minutes: 13 },
+      { id: 'bioinformatics', title: 'Bioinformatics', kicker: 'Making sense of biological data at scale', minutes: 12 },
+      { id: 'neuroscience', title: 'Neuroscience', kicker: 'How nervous systems produce behaviour', minutes: 12 },
+      { id: 'immunology', title: 'Immunology', kicker: 'How bodies tell self from invader', minutes: 12 },
+      { id: 'marine-biology', title: 'Marine Biology', kicker: 'Life in salt water, from plankton to whales', minutes: 12 },
+      { id: 'genetics-and-genomics', title: 'Genetics & Genomics', kicker: 'The whole genome, not one gene at a time', minutes: 12 }
     ] }
   ]
 };

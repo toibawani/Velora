@@ -52,7 +52,23 @@ export const slugify = (value: string): string =>
  * Built once at module load rather than rebuilt per tap: the Atlas renders a
  * topic list per discipline, and a 573-topic field would otherwise re-flatten
  * the curriculum on every keystroke of the search box.
+ *
+ * Only topics that carry lesson content are indexed. A curriculum file also
+ * lists topics that are planned but not written yet - a title, an id and a
+ * reading estimate, with no story or sections - and treating those as lessons
+ * was worse than not listing them: the Atlas said "read the lesson", the
+ * reader opened LessonReader, and the page crashed on an undefined sections
+ * array. The stub is still useful, because it keeps the Atlas order honest,
+ * but it must resolve to 'unwritten' until someone writes it.
  */
+const hasLessonContent = (topic: unknown): boolean => {
+  const candidate = topic as { story?: unknown; sections?: unknown } | null;
+  return typeof candidate?.story === 'string'
+    && candidate.story.trim().length > 0
+    && Array.isArray(candidate.sections)
+    && candidate.sections.length > 0;
+};
+
 const LESSON_INDEX: Array<{
   subject: string;
   topicId: string;
@@ -60,12 +76,14 @@ const LESSON_INDEX: Array<{
   titleSlug: string;
 }> = Object.entries(CURRICULUM).flatMap(([subject, curriculum]) =>
   (curriculum?.modules ?? []).flatMap((module) =>
-    (module?.topics ?? []).map((topic) => ({
-      subject,
-      topicId: topic.id,
-      title: topic.title,
-      titleSlug: slugify(topic.title),
-    }))
+    (module?.topics ?? [])
+      .filter(hasLessonContent)
+      .map((topic) => ({
+        subject,
+        topicId: topic.id,
+        title: topic.title,
+        titleSlug: slugify(topic.title),
+      }))
   )
 );
 /** An Atlas topic located precisely enough that no two collide. */

@@ -15,9 +15,10 @@ import { resolveAtlasTopic } from '../data/atlasResolution';
  * written, tests green, and every Atlas tap still saying "not written yet".
  *
  * The two modules covered are the first two the Atlas lists, Cell Biology and
- * Molecular Biology. The other eight biology modules are not written and the
- * Atlas says so; the last test here asserts that boundary rather than leaving
- * it implied.
+ * Molecular Biology. The other eight biology modules are listed in Atlas order
+ * with topic stubs and no lesson content, and the Atlas says so; the tests here
+ * render only written topics and assert that every stub resolves as unwritten
+ * rather than opening an empty reader.
  */
 jest.mock('./ConceptMap', () => () => <div data-testid="concept-map" />);
 jest.mock('./PeerExplanations', () => () => <div data-testid="peer-explanations" />);
@@ -27,6 +28,8 @@ const biology = CURRICULUM.biology;
 const allTopics = biology.modules.flatMap((module) =>
   module.topics.map((topic) => ({ ...topic, moduleTitle: module.title }))
 );
+const writtenTopics = allTopics.filter((topic) => topic.sections?.length > 0);
+const stubTopics = allTopics.filter((topic) => !topic.sections?.length);
 
 const renderLesson = (topic) =>
   render(<LessonReader topic={topic} subject="biology" onBack={() => {}} showToast={() => {}} />);
@@ -97,11 +100,11 @@ test('the first six biology modules hold the Atlas topics in Atlas order', () =>
   ]);
 });
 
-test('every biology lesson is reachable from the Atlas', () => {
+test('every written biology lesson is reachable from the Atlas', () => {
   // Before the discipline map, all eight of these resolved to 'unwritten'
   // because the Science field maps to the physics curriculum and the biology
   // lessons live in a different file.
-  allTopics.forEach((topic) => {
+  writtenTopics.forEach((topic) => {
     const module = biology.modules.find((m) => m.title === topic.moduleTitle);
     expect(module).toBeDefined();
     const resolution = resolveAtlasTopic({
@@ -125,7 +128,7 @@ test('a biology topic is not silently borrowed from the physics curriculum', () 
 });
 
 describe('each biology lesson renders its core parts', () => {
-  allTopics.forEach((topic) => {
+  writtenTopics.forEach((topic) => {
     test(`renders "${topic.title}" with kicker, sections, sources and connections`, () => {
       renderLesson(topic);
 
@@ -221,12 +224,19 @@ describe('the concrete facts the lessons claim actually render', () => {
 });
 
 test('the unwritten biology modules stay unwritten rather than pretending', () => {
-  // The boundary of this batch, asserted rather than described. Genetics is the
-  // next module the Atlas lists and it has no lesson, so its topics must report
-  // honestly. Without this, a later batch could add a Genetics module that
-  // resolves to nothing and no test would notice the mismatch.
-  ['Heredity', 'Mutations', 'Genetic Disorders', 'Genomics'].forEach((topic) => {
-    const resolution = resolveAtlasTopic({ fieldId: 'science', disciplineId: 'biology', moduleName: 'Genetics', topic });
+  // The boundary of this batch, asserted rather than described. Every topic in
+  // the eight unwritten modules must report honestly, and the Atlas must not be
+  // able to turn a title-only stub into a lesson. Without this, a later batch
+  // could add a module that resolves to a reader with nothing in it and no test
+  // would notice the mismatch.
+  expect(stubTopics.length).toBe(35);
+  stubTopics.forEach((topic) => {
+    const resolution = resolveAtlasTopic({
+      fieldId: 'science',
+      disciplineId: 'biology',
+      moduleName: topic.moduleTitle,
+      topic: topic.title,
+    });
     expect(resolution.kind).toBe('unwritten');
   });
 });

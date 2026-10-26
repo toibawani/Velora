@@ -125,7 +125,12 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
     ...subjectRecord,
     icon: subjectIcons[subjectId],
     modules: subjectRecord.modules.map((module) => {
-      const topics = module.topics.map((topic) => ({ ...topic, name: topic.title, lessons: topic.sections.length }));
+      // A module can list a topic before anyone has written it. Those stubs
+      // have no sections array at all, and reading .length on it crashed the
+      // whole biology overview - including the Cell Structure lesson, which
+      // only rendered after this line had already run for every module. Zero
+      // is the honest count: there are no parts to read yet.
+      const topics = module.topics.map((topic) => ({ ...topic, name: topic.title, lessons: topic.sections?.length ?? 0 }));
       const loggedTopics = topics.filter((topic) => loggedTopicKeys.has(String(topic.title || '').trim().toLowerCase())).length;
       return {
         ...module,

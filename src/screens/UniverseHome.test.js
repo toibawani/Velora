@@ -133,10 +133,12 @@ describe('editorial knowledge atlas', () => {
 
     // The old layout had no way to show this, which is how 7 written topics
     // came to look like 573. The count is split across a <strong>, so match on
-    // the element's own text rather than a regex over one text node.
+    // the element's own text rather than a regex over one text node. The 89 is
+    // the resolver's count of science topics that open real content; the other
+    // 99 science entries are listed and marked unwritten.
     const coverage = screen.getByText((_, element) =>
       element?.className === 'uh-coverage' &&
-      /Science:\s*64\s*of 188 topics written/.test(element.textContent || '')
+      /Science:\s*89\s*of 188 topics written/.test(element.textContent || '')
     );
     expect(coverage).toBeInTheDocument();
   });
@@ -172,15 +174,14 @@ describe('atlas index', () => {
     const entries = index.getAllByRole('button');
     expect(entries).toHaveLength(188);
 
-    // Science resolves 64 topics to real content: ten classical mechanics, five
-    // Thermodynamics lessons, seven Electromagnetism lessons, seven Optics
-    // lessons, four Waves lessons, four Modern Physics lessons, seven Chemistry
-    // lessons, eight Biology lessons, one space science, eleven computer
-    // science. If the content grows, raise these in the same commit as the
-    // content.
+    // Science resolves 89 topics to real content: thirty-seven physics entry
+    // points, thirty-two Chemistry lessons, eight Biology lessons, one space
+    // science entry point, eleven computer-science deep reads. The other 99
+    // are listed and honestly marked unwritten. If the content grows, raise
+    // these in the same commit as the content.
     const unwritten = index.getAllByRole('button', { name: /, not written yet$/ });
-    expect(unwritten).toHaveLength(124);
-    expect(entries.length - unwritten.length).toBe(64);
+    expect(unwritten).toHaveLength(99);
+    expect(entries.length - unwritten.length).toBe(89);
   });
 
   test('says "not written yet" in the accessible name, not just in colour', () => {
@@ -203,14 +204,12 @@ describe('atlas index', () => {
     renderUniverse();
 
     // The reader can compare fields at a glance: Literature is 0 of 92, Science
-    // is 64 of 188 - the ten classical-mechanics lessons, the five Thermodynamics
-    // lessons, the seven Electromagnetism lessons, the seven Optics lessons, the
-    // four Waves lessons, the four Modern Physics lessons, the seven Chemistry
-    // lessons, the eight Biology lessons, the space-science entry point, the
-    // eleven computer science topics and the Quantum Computing topic that both
-    // disciplines share. Nothing in the old layout made that comparison
-    // possible.
-    expect(screen.getByRole('button', { name: /^Science, .*64 of 188 topics written$/ })).toBeInTheDocument();
+    // is 89 of 188 - thirty-seven physics entry points, thirty-two Chemistry
+    // lessons, eight Biology lessons, the space-science entry point, eleven
+    // computer-science deep reads, and the Quantum Computing topic that both
+    // physics and computer science share. Nothing in the old layout made that
+    // comparison possible.
+    expect(screen.getByRole('button', { name: /^Science, .*89 of 188 topics written$/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /^Literature, .*0 of 92 topics written$/ })).toBeInTheDocument();
   });
 });
