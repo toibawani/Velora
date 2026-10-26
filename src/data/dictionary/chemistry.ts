@@ -175,4 +175,15 @@ export const CHEMISTRY_TERMS: DictionaryTerm[] = [
     source: 'Faraday, "On Faradaic laws" (1833)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Electrolysis',
   },
+  {
+    id: 'x-ray-crystallography',
+    term: 'X-ray Crystallography',
+    subject: 'chemistry',
+    letter: 'X',
+    tagline: 'Shine X-rays through a crystal and read the pattern to find where the atoms are.',
+    explanation: 'X-rays have a wavelength comparable to the spacing between atoms, so a crystal scatters them into a pattern of spots. The spots are a diffraction pattern, and the distances between them encode the arrangement that produced them. Solving a structure means working backwards from that pattern, which is why the first structures took years.',
+    example: 'Rosalind Franklin’s photograph 51, taken in 1952, showed the characteristic cross of a helix and gave Watson and Crick the dimensions they needed. The same method later mapped penicillin and insulin, and it is still how a new drug’s shape is checked against its target.',
+    source: 'Bragg, "The Structure of Some Crystals as Indicated by Their Diffraction of X-rays" (1913)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/X-ray_crystallography',
+  },
 ];

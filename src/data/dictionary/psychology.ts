@@ -175,4 +175,15 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     source: 'Hastings, "The circadian system" (2000)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Circadian_rhythm',
   },
+  {
+    id: 'yerkes-dodson-law',
+    term: 'Yerkes–Dodson Law',
+    subject: 'psychology',
+    letter: 'Y',
+    tagline: 'A little arousal sharpens performance; too much wrecks it.',
+    explanation: 'Performance rises with arousal up to a point, then falls. The curve is not the same for every task: a simple one tolerates more pressure before it breaks down, while a difficult one is already past its peak at a moderate level of stress. The popular shorthand is that pressure helps easy tasks and hurts hard ones.',
+    example: 'A sprinter may run a personal best in front of a crowd, while the same crowd makes a chess player blunder a line they know. The task difficulty, not the person’s toughness, is what decides which side of the curve the pressure lands on.',
+    source: 'Yerkes and Dodson, "The relation of strength of stimulus to rapidity of habit-formation" (1908)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law',
+  },
 ];
