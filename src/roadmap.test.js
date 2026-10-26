@@ -37,9 +37,16 @@ test('the counts on the page are the counts in the data files', () => {
   expect(atlasFieldCount).toBe(KNOWLEDGE_STATS.fields);
   expect(dictionaryTermCount).toBe(CURIOUS_TERMS.length);
 
+  // Planned topics are titles, not lessons. Counting them here would have
+  // made the roadmap claim 121 written lessons while 89 have sections to read,
+  // and it would also have broken the minority check below by inflating the
+  // denominator with content that does not exist.
   const realLessonCount = Object.keys(CURRICULUM).reduce(
     (total, subject) =>
-      total + CURRICULUM[subject].modules.reduce((sum, module) => sum + module.topics.length, 0),
+      total + CURRICULUM[subject].modules.reduce(
+        (sum, module) => sum + module.topics.filter((topic) => topic.sections?.length > 0).length,
+        0
+      ),
     0
   );
   expect(lessonTopicCount).toBe(realLessonCount);

@@ -24,8 +24,17 @@ import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from './data/knowledgeFields';
 import { CURIOUS_TERMS } from './data/dictionary';
 import { fieldCoverageByDiscipline } from './data/atlasResolution';
 
+// A curriculum file lists planned topics as well as written ones. A planned
+// topic is a title with no story and no sections; counting it as a lesson made
+// the roadmap claim 121 written lessons when 89 have anything to read. The
+// roadmap is a page about what exists, so it counts only the written ones.
+const isWritten = (topic) => Array.isArray(topic.sections) && topic.sections.length > 0;
+
 const lessonTopics = (subject) =>
-  CURRICULUM[subject].modules.reduce((total, module) => total + module.topics.length, 0);
+  CURRICULUM[subject].modules.reduce(
+    (total, module) => total + module.topics.filter(isWritten).length,
+    0
+  );
 
 const lessonSubjectList = () =>
   Object.keys(CURRICULUM)
@@ -42,11 +51,12 @@ export const atlasTopicCount = KNOWLEDGE_STATS.topics;
 /**
  * How many atlas topics actually open something.
  *
- * This is not the lesson count. The curriculum holds 61 lessons, but the atlas
- * also opens deep reads, and some curriculum lessons live inside those reads
- * rather than beside them, so the two numbers cannot be added or substituted
- * for one another. The resolver is the only thing that knows the truth, so the
- * roadmap asks it rather than counting lessons and calling the result coverage.
+ * This is not the lesson count. The curriculum holds 89 written lessons, but
+ * the atlas also opens deep reads, and some curriculum lessons live inside
+ * those reads rather than beside them, so the two numbers cannot be added or
+ * substituted for one another. The resolver is the only thing that knows the
+ * truth, so the roadmap asks it rather than counting lessons and calling the
+ * result coverage.
  */
 export const atlasWrittenCount = KNOWLEDGE_FIELDS.reduce(
   (total, field) => total + fieldCoverageByDiscipline(field).written,
