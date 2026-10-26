@@ -20,9 +20,26 @@
     display: block;
   }
 
+  /* Six items at their 52px minimum need 312px, and the bar's own padding
+     takes the rest. On a 320px phone that pushed the last item 4px past the
+     edge, which the 375px audit never saw. Shrink the targets to 44px and the
+     gutters to 4px only on the narrowest screens; 44px is the floor, so this
+     is a smaller target, not an untappable one. */
+  .mobile-nav-btn {
+    min-width: 44px;
+    padding: 2px;
+  }
+
   /* Add padding bottom to pages so content is not obscured by bottom bar */
   body, .universe-home, .learn-container, .analytics-page-root, .games-hub-new, .community-page {
     padding-bottom: var(--space-16) !important;
+  }
+}
+
+@media (max-width: 340px) {
+  .mobile-bottom-nav {
+    padding-left: 4px;
+    padding-right: 4px;
   }
 }
 
