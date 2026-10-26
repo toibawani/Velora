@@ -6,14 +6,23 @@
  * can offer a one-tap resume. Stored as
  * { subject, topicId, topicTitle, openedAt } in localStorage; nothing leaves
  * the device.
+ *
+ * The key comes from utils/storage.js like every other key. This module used to
+ * spell the raw key itself, which meant the registry's list of keys was missing
+ * the one the resume card depends on: a rename in storage.js would have
+ * silently orphaned every saved lesson.
  */
+
+import { KEYS } from './storage';
+
+const LAST_LESSON_KEY = KEYS.LAST_LESSON;
 
 export const saveLastLesson = (subject, topicId, topicTitle) => {
   try {
     if (typeof window === 'undefined' || !window.localStorage) return false;
     const now = Date.now();
     window.localStorage.setItem(
-      'velora_last_lesson',
+      LAST_LESSON_KEY,
       JSON.stringify({ subject, topicId, topicTitle, openedAt: now }),
     );
     return true;
@@ -25,7 +34,7 @@ export const saveLastLesson = (subject, topicId, topicTitle) => {
 export const getLastLesson = () => {
   try {
     if (typeof window === 'undefined' || !window.localStorage) return null;
-    const raw = window.localStorage.getItem('velora_last_lesson');
+    const raw = window.localStorage.getItem(LAST_LESSON_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== 'object') return null;
@@ -39,7 +48,7 @@ export const getLastLesson = () => {
 export const clearLastLesson = () => {
   try {
     if (typeof window === 'undefined' || !window.localStorage) return false;
-    window.localStorage.removeItem('velora_last_lesson');
+    window.localStorage.removeItem(LAST_LESSON_KEY);
     return true;
   } catch {
     return false;

@@ -1,3 +1,5 @@
+import { KEYS } from './storage';
+
 /**
  * VELORA utility module
  * todayQuestion
@@ -86,7 +88,7 @@ const QUESTIONS = [
   },
 ];
 
-const key = 'velora_today_question';
+const key = KEYS.TODAY_QUESTION;
 
 /** Day index within the year (0-based), used to pick the question of the day. */
 const dayOfYear = () => {

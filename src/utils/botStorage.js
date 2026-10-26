@@ -7,8 +7,9 @@
 
 import { secureUserStorage } from './security';
 import { sanitizeText } from './sanitize';
+import { KEYS } from './storage';
 
-const STORAGE_PREFIX = 'velora_dialogue';
+const STORAGE_PREFIX = KEYS.DIALOGUE_PREFIX;
 
 /**
  * Returns the conversation transcript for a specific figure.

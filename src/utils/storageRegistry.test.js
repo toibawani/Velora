@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import {
   KEYS,
   FAILURE,
@@ -104,4 +106,30 @@ test('says plainly that nothing can be saved when a write is refused', () => {
 test('every registered key is unique', () => {
   const values = Object.values(KEYS);
   expect(new Set(values).size).toBe(values.length);
+});
+
+test('no module outside storage.js spells a velora key itself', () => {
+  // The registry's own rules say this, and four modules had broken it: resume,
+  // dialogues, today's question and site analytics each held a literal key, so
+  // the list of keys was not the list of keys. A rename in storage.js would
+  // have silently orphaned their data. Tests are excluded because they assert
+  // the literal values are stable, which is the opposite of a problem.
+  const root = path.join(__dirname, '..');
+  const files = [];
+  const walk = (dir) => {
+    fs.readdirSync(dir, { withFileTypes: true }).forEach((entry) => {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (/\.(js|jsx|ts|tsx)$/.test(entry.name)) files.push(full);
+    });
+  };
+  walk(root);
+
+  const offenders = files
+    .filter((file) => !/\.test\./.test(path.basename(file)))
+    .filter((file) => path.basename(file) !== 'storage.js')
+    .filter((file) => /['"]velora_/.test(fs.readFileSync(file, 'utf8')))
+    .map((file) => path.relative(root, file));
+
+  expect(offenders).toEqual([]);
 });

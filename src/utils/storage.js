@@ -52,6 +52,10 @@ export const KEYS = {
   // Pick up where you left off: the last lesson opened, so the atlas can offer
   // a one-tap resume. Stored as { subject, topicId, topicTitle, openedAt }.
   LAST_LESSON: 'velora_last_lesson',
+  // Dialogue transcripts are one key per historical figure, e.g.
+  // velora_dialogue_socrates. Kept here for the same reason as the others: a
+  // prefix spelled in two files is a prefix that drifts.
+  DIALOGUE_PREFIX: 'velora_dialogue',
 };
 
 export const EXPLANATION_BOARD = (term) => `${KEYS.EXPLANATION_BOARD_PREFIX}${term}`;

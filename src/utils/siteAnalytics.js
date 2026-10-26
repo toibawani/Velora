@@ -1,3 +1,5 @@
+import { KEYS } from './storage';
+
 /**
  * VELORA utility module
  * siteAnalytics
@@ -102,10 +104,10 @@ const writeJson = (key, value) => {
 };
 
 /** Returns true only when the visitor has explicitly opted in to external analytics. */
-export const isOptedIn = () => readJson('velora_analytics_optin', false) === true;
+export const isOptedIn = () => readJson(KEYS.ANALYTICS_OPTIN, false) === true;
 
 /** Opts the visitor in or out of external analytics. Returns whether the write landed. */
-export const setOptedIn = (enabled) => writeJson('velora_analytics_optin', Boolean(enabled));
+export const setOptedIn = (enabled) => writeJson(KEYS.ANALYTICS_OPTIN, Boolean(enabled));
 
 /** Track an aggregate event. No-op when not opted in or when no endpoint is configured. */
 export const trackEvent = (eventName, data = {}) => {
@@ -149,7 +151,7 @@ export const trackGameCompleted = (game) =>
  */
 export const recordReturnVisit = () => {
   const now = Date.now();
-  const stored = readJson('velora_return_visits', null);
+  const stored = readJson(KEYS.RETURN_VISITS, null);
   const sevenDays = 7 * 24 * 60 * 60 * 1000;
   let firstSeen = now;
   let lastSeen = now;
@@ -172,7 +174,7 @@ export const recordReturnVisit = () => {
   }
 
   const payload = { firstSeen, lastSeen: now, returnCount };
-  writeJson('velora_return_visits', payload);
+  writeJson(KEYS.RETURN_VISITS, payload);
 
   // Only report a return when one actually happened; a first visit is not a
   // return visit and produces no beacon at all.
