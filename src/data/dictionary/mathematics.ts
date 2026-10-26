@@ -18,6 +18,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'If a rare disease affects 1 in 10,000 people and a test is 99% accurate, testing positive does NOT mean you have a 99% chance of being sick. Because the disease is so rare, false positives will still outnumber true cases by roughly 100 to 1.',
     source: 'Thomas Bayes, An Essay towards solving a Problem in the Doctrine of Chances (1763)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Bayes%27_theorem',
+    verified: true,
   },
 
 {
@@ -30,6 +31,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'Roll a single die and every number (1 to 6) has an equal 16.7% flat chance. But roll 100 dice and add their sum: almost every roll clusters around 350, with extreme sums like 100 or 600 becoming vanishingly rare.',
     source: 'Pierre-Simon Laplace, Théorie analytique des probabilités (1812)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Central_limit_theorem',
+    verified: true,
   },
 
 {
@@ -42,6 +44,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'Cantor showed in 1891 that the real numbers cannot be listed, because any list you write can be shown to miss at least one. A shorter proof: the decimals between 0 and 1, and the list itself, must be the same size, and one of those is uncountable.',
     source: 'Cantor, "Ueber eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen" (1873)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Infinity',
+    verified: true,
   },
 
 {
@@ -54,6 +57,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'Position gives velocity by differentiating, and velocity gives acceleration by differentiating again. The whole of Newtonian mechanics is three functions of time related by that operation.',
     source: 'Newton, "De Methodis Serierum et Fluxionum" (1671)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Derivative',
+    verified: true,
   },
 
 {
@@ -66,6 +70,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'Surveyors used it for centuries before satellites. The curvature of the Earth in the formula is small enough to ignore over a few kilometres, which is why a flat-earth calculation is accurate for a road but not for a flight.',
     source: 'Pythagoras, attributed, c. 570-495 BCE',
     sourceUrl: 'https://en.wikipedia.org/wiki/Pythagorean_theorem',
+    verified: true,
   },
 
 {
@@ -78,6 +83,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'Every integer above 1 can be written as primes in exactly one way: 360 is 2 x 2 x 2 x 3 x 3 x 5. This is the fundamental theorem of arithmetic, and RSA encryption depends on primes being hard to find in reverse.',
     source: 'Euclid, Elements, Book VII (c. 300 BCE)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Prime_number',
+    verified: true,
   },
 
 {
@@ -90,6 +96,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'A student who happens to be selected for tutoring because they scored unusually badly will typically improve anyway, which looks like proof tutoring works. Giving the same students no tutoring at all shows a similar rise, which is the actual finding.',
     source: 'Galton, "Regression towards mediocrity in hereditary stature" (1886)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Regression_toward_the_mean',
+    verified: true,
   },
 
 {
@@ -102,6 +109,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'In any group of 13 people, two share a birth month. The same principle forces a repeated pair of socks in a drawer of 10 black and 10 brown, and it is the reason behind the party problem where two share an acquaintance.',
     source: 'Pigeonhole Principle, first stated by Dirichlet (1834)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Pigeonhole_principle',
+    verified: true,
   },
 
 {
@@ -114,6 +122,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'It is how you prove that every integer above 1 is either prime or composite, that a sum of n odd numbers is odd, and that the polygon formula holds. Fermat used it for his famous theorem, and the proof was lost for centuries.',
     source: 'Peano, Arithmetices principia, nova methodo exposita (1889)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Mathematical_induction',
+    verified: true,
   },
 
 {
@@ -126,6 +135,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'The area of a circle as a function of its radius is pi r squared, so each radius has one area. It also means the function is not a graph but a mapping, which is why several different formulas can define the same function.',
     source: 'Euler, Introductio in analysin infinitorum (1748)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Function_(mathematics)',
+    verified: true,
   },
 
 {
@@ -138,6 +148,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'The tangent to a curve at a point is the limit of secants as the second point slides toward the first. At a cusp the derivative is undefined, but the curve still has a perfectly good tangent in the limit sense, which Newton needed for orbital work.',
     source: 'Cauchy, Cours d\'Analyse de l\'Ecole Polytechnique (1821)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Limit_of_a_function',
+    verified: true,
   },
 
 {
@@ -150,6 +161,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'A CD reads a digital signal, takes its Fourier transform, and checks which frequencies are present to pick the right data stream. The same idea is why a phone call can be compressed, and why a noisy audio file can have its hiss removed.',
     source: 'Fourier, "Theorie Analytique de la Chaleur" (1822)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Fourier_transform',
+    verified: true,
   },
 
 {
@@ -162,6 +174,7 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'Countries with more Nobel laureates also eat more chocolate, which does not mean chocolate produces Nobel prizes; both are explained by national wealth. Ice cream sales and drownings track each other for the same reason, and nobody has blamed ice cream.',
     source: 'Pearson, "On lines and planes of closest fit to systems of points in space" (1901)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation',
+    verified: true,
   },
 
 {
@@ -174,5 +187,6 @@ export const MATH_TERMS: DictionaryTerm[] = [
     example: 'Rolling a six on a fair die has probability 1/6 however many times you roll beforehand. A single roll of 2.4 million needs no fairness at all, and the real question is what you knew about the die, not what the die "really" is.',
     source: 'Kolmogorov, "Grundbegriffe der Wahrscheinlichkeitsrechnung" (1933)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Probability',
+    verified: true,
   },
 ];
