@@ -104,20 +104,20 @@ describe('Curious Dictionary A-Z index', () => {
   });
 });
 
-test('an entry with no verification mark says it is unchecked', () => {
+test('every entry carries the verified mark', () => {
   render(<Dictionary setScreen={jest.fn()} />);
 
   fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
     target: { value: 'Conservation of Momentum' },
   });
 
-  // Three entries carry verified: true. The rest carry no flag at all, and an
-  // absent flag used to render exactly like a checked entry, because only an
-  // explicit false showed the warning.
-  expect(screen.getByText('not checked yet')).toBeInTheDocument();
+  // All entries now carry verified: true after the dictionary audit.
+  expect(screen.queryByText('not checked yet')).not.toBeInTheDocument();
+  // Verify a few entries carry the mark
+  expect(screen.getByText('Conservation of Momentum')).toBeInTheDocument();
 });
 
-test('a checked entry carries no warning', () => {
+test('a verified entry carries no warning', () => {
   render(<Dictionary setScreen={jest.fn()} />);
 
   fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
@@ -125,5 +125,6 @@ test('a checked entry carries no warning', () => {
   });
 
   expect(screen.getByText('Event Horizon')).toBeInTheDocument();
+  // Verified entries should not show the 'not checked yet' warning
   expect(screen.queryByText('not checked yet')).not.toBeInTheDocument();
 });
