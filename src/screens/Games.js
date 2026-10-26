@@ -237,6 +237,7 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
               key={game.id}
               className="game-card-large"
               data-testid="game-card"
+              aria-label={game.name}
               onClick={() => setSelectedGame(game.id)}
               style={{ '--game-color': game.color, textAlign: 'left' }}
             >
