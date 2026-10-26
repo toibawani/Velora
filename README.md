@@ -56,9 +56,15 @@ node scripts/by-the-numbers.js        # prints all of the above
 ```
 
 The 8 CI checks are not decoration. They drive the built app in real Chrome at
-1440 and 375, walk every screen, open and play every game, probe every atlas
-field, verify every black hole level, and fail on a console error. The contrast
-gate composites the design tokens and fails below WCAG AA.
+1440 and 375, walk every screen, open real lessons (not only screens), open and
+play every game, probe every atlas field, verify every black hole level, and
+fail on a console error. The contrast gate composites the design tokens and
+fails below WCAG AA.
+
+The rule for new content: a written subject's first lesson is added to
+`LESSONS` in `scripts/layoutCheck.js` in the same commit that writes it.
+`src/auditCoverage.test.js` fails if that list stops naming the newest written
+subjects, so a subject cannot be published without a 375px measurement.
 
 Two of the suites check the checks: `src/fabricatedScreens.test.js` fails if a
 screen prints a number it cannot measure or a person it cannot see, and

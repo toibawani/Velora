@@ -87,6 +87,26 @@ test('the npm scripts CI invokes are the ones that exist', () => {
     });
 });
 
+test('the layout audit opens real lessons, not only screens', () => {
+  // Screens are in navigation.js; lessons are not. The audit walked the
+  // registry for months and never opened a lesson, so the one page type with
+  // tables, worked examples and long source URLs was never measured at 375.
+  // Chemistry and Biology are the newest written subjects, and the audit has
+  // to keep opening both rather than drift back to screens only.
+  const source = read('scripts', 'layoutCheck.js');
+  expect(source).toMatch(/waitForSelector\('\.lesson-reader/);
+
+  const start = source.indexOf('const LESSONS = [');
+  expect(start).toBeGreaterThan(-1);
+  const list = source.slice(start, source.indexOf('];', start));
+  ['chemistry', 'biology'].forEach((subject) => {
+    expect({ subject, listed: list.includes(`subject: '${subject}'`) }).toEqual({
+      subject,
+      listed: true,
+    });
+  });
+});
+
 test('every audit script resolves Chrome through the shared resolver', () => {
   // Each script used to carry its own copy of the browser path list, and the
   // copies had drifted: four of them knew only the macOS bundle and

@@ -206,6 +206,46 @@ const SCREENS = [
   ...REGISTRY.filter((screen) => !screen.primary).map((screen) => ({ name: screen.drawerLabel, label: screen.drawerLabel, drawer: true })),
 ];
 
+// Lessons are not screens. The loop below reaches every entry in
+// navigation.js, but a lesson opens inside Learn and is reached by tapping a
+// topic, so no lesson was ever measured - which is the one kind of page that
+// carries tables, worked examples and long unbroken source URLs. The reader
+// sets its own measure cap, and a table that fits at 1440 can still push the
+// document past a 375px viewport.
+//
+// The rule for new content: a subject whose first lesson is not listed here has
+// never been measured, so adding one means adding its first written topic to
+// this list in the same commit. Chemistry and Biology are the two newest
+// written subjects, and both are opened through the app's own resume card
+// rather than by reaching into React state.
+const LESSONS = [
+  { subject: 'chemistry', topicId: 'atomic-structure', topicTitle: 'Atomic Structure' },
+  { subject: 'biology', topicId: 'cell-structure', topicTitle: 'Cell Structure' },
+];
+
+// Opens one lesson the way a reader does: set the last lesson that the atlas
+// offers to resume, go to the atlas, press Resume, and wait for the reader.
+const openLesson = async (page, lesson) => {
+  await page.evaluate((entry) => {
+    localStorage.setItem(
+      'velora_last_lesson',
+      JSON.stringify({ ...entry, openedAt: Date.now() })
+    );
+  }, lesson);
+  const onAtlas = await clickByText(page, 'Atlas');
+  if (!onAtlas) return false;
+  await new Promise((r) => setTimeout(r, 800));
+  const clicked = await page.evaluate(() => {
+    const resume = document.querySelector('.uh-card-resume');
+    if (!resume) return false;
+    resume.click();
+    return true;
+  });
+  if (!clicked) return false;
+  await page.waitForSelector('.lesson-reader .lesson-reader-main', { timeout: 15000 });
+  return true;
+};
+
 // Opens the drawer and clicks a drawer item. The drawer closes on navigation, so
 // each drawer screen is reached by the same two clicks a person makes.
 const clickDrawerItem = async (page, text) => {
@@ -348,6 +388,42 @@ const main = async () => {
           offenders: m.offenders,
         });
       }
+    }
+
+    // Measured after the screen walk, at both widths. A lesson that will not
+    // open is a failure in its own right: the audit exists to prove the reader
+    // is reachable, not only that it does not overflow if someone finds it.
+    for (const lesson of LESSONS) {
+      const name = `${lesson.subject}: ${lesson.topicTitle}`;
+      let opened = false;
+      try {
+        opened = await openLesson(page, lesson);
+      } catch (err) {
+        failures.push({ width, screen: name, reason: `reader did not open: ${err.message}` });
+        continue;
+      }
+      if (!opened) {
+        failures.push({ width, screen: name, reason: 'resume card not found on the atlas' });
+        continue;
+      }
+      await new Promise((r) => setTimeout(r, 500));
+      const m = await measure(page);
+      const overflow = m.scrollWidth - m.clientWidth;
+      console.log(
+        `${width}px ${name.padEnd(10)} scrollWidth=${m.scrollWidth} clientWidth=${m.clientWidth} offenders=${m.offenders.length}`
+      );
+      if (overflow > 1 || m.offenders.length) {
+        failures.push({
+          width,
+          screen: name,
+          reason: `${m.offenders.length} element(s) past the right edge in a lesson, scrollWidth overflow ${overflow}px`,
+          offenders: m.offenders,
+        });
+      }
+      // Leave the reader so the next lesson starts from the atlas, and so a
+      // failure in one lesson does not hide the other behind a dead click.
+      await page.evaluate(() => document.querySelector('.learn-back-btn')?.click());
+      await new Promise((r) => setTimeout(r, 600));
     }
 
     for (const e of consoleErrors.slice(0, 5)) {
