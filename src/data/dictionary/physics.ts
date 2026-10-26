@@ -18,6 +18,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'A 0.145 kg baseball flying at 95 mph carries enough momentum to break fingers, while a pebble with identical speed barely stings.',
     source: 'Newton, Philosophiae Naturalis Principia Mathematica (1687)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Momentum',
+    verified: true,
   },
 
 {
@@ -30,6 +31,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'When a subway car suddenly brakes and your upper body lurches forward, that isn’t a phantom force pushing you—it’s your own mass trying to maintain the 30 mph it was traveling a second ago.',
     source: 'Galileo Galilei, Dialogue Concerning the Two Chief World Systems (1632)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Inertia',
+    verified: true,
   },
 
 {
@@ -42,6 +44,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Drop an egg on tile: there is only one atomic arrangement that forms an unbroken shell, but billions of ways for yolk and albumen to splat across the floor. You will never see the mess spontaneously reassemble.',
     source: 'Ludwig Boltzmann, Lectures on Gas Theory (1896)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Entropy_(thermodynamics)',
+    verified: true,
   },
 
 {
@@ -54,6 +57,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Sound waves from two violins pass through the same pocket of air simultaneously without smashing each other; until measured, a particle behaves with that exact same overlapping wave nature.',
     source: 'Dirac, The Principles of Quantum Mechanics (1930)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Quantum_superposition',
+    verified: true,
   },
 
 {
@@ -83,6 +87,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Ice skaters spinning in pairs make this obvious. When one pushes the other outward, the skater left behind rotates faster, because her smaller remaining mass has to keep the same total spin.',
     source: 'Newton, Philosophiae Naturalis Principia Mathematica (1687)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Conservation_of_momentum',
+    verified: true,
   },
 
 {
@@ -95,6 +100,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Earth needs about 11.2 km/s to let go of you at the surface. The Moon needs only 2.38 km/s, which is why getting off it is so much easier despite gravity being a sixth as strong.',
     source: 'Newton, Principia, Book III (1687)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Escape_velocity',
+    verified: true,
   },
 
 {
@@ -107,6 +113,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Einstein explained this in 1905 by insisting light comes in discrete packets. Make the packets energetic enough and they knock electrons free; add more of them and you only get more electrons, not faster ones.',
     source: 'Einstein, "On a Heuristic Viewpoint Concerning the Production and Transformation of Light" (1905)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Photoelectric_effect',
+    verified: true,
   },
 
 {
@@ -119,6 +126,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Electrons fired one at a time through a narrow slit still build up an interference pattern on the far side, one dot at a time. Each electron passed through as a particle; the accumulated picture is unmistakably a wave.',
     source: 'de Broglie, "Recherches sur la theorie des Quanta" (1924)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Wave%E2%80%93particle_duality',
+    verified: true,
   },
 
 {
@@ -131,6 +139,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'A pencil half-submerged in water looks broken at the waterline. The light coming from the submerged part is bent on the way out, so your brain places that part higher than it really is.',
     source: 'Snell, "Cyclometricus" (1621)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Refraction',
+    verified: true,
   },
 
 {
@@ -143,6 +152,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'The Earth has one, tilted about 11 degrees from its rotation axis, which is why a compass in Alaska points at the geographic north pole rather than the true magnetic one.',
     source: 'Maxwell, "On Faraday Law of Induction" (1865)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Magnetic_field',
+    verified: true,
   },
 
 {
@@ -155,6 +165,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Every generator works this way, spinning a coil through a magnet. A bicycle dynamo is the same idea in miniature, and it is why it lights up only while the wheel turns.',
     source: 'Faraday, "On Induction" (1831)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Electromagnetic_induction',
+    verified: true,
   },
 
 {
@@ -167,6 +178,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Halving the resistance of a bulb on a fixed supply doubles its current, and therefore its power, which is why bulbs fail most often the moment a dimmer switch is turned up.',
     source: 'Ohm, "Die galvanische Kette" (1827)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Ohm%27s_law',
+    verified: true,
   },
 
 {
@@ -179,6 +191,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Fire electrons one per second at two slits and the detector builds the same interference fringes. No individual electron can know about both slits, so the pattern has to be in how the particles and the apparatus are set up together.',
     source: 'Young, "On the Theory of Light and Colours" (1802)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Double-slit_experiment',
+    verified: true,
   },
 
 {
@@ -191,6 +204,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'A kilogram of uranium releasing fission energy gives about eight times the energy of burning a kilogram of coal. What is doing the work is E equals mc squared, applied to a mass difference of roughly 0.1 percent.',
     source: 'Hahn and Strassmann, paper on uranium fission (1939)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Nuclear_fission',
+    verified: true,
   },
 
 {
@@ -203,6 +217,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Carbon-14 has a half-life near 5,730 years, so wood dated to 6,000 years old is about half decayed. Cobalt-60, used to sterilise equipment, halves in about five years and is still giving off heat years later.',
     source: 'Becquerel, "Rayons emis par l uranium" (1896)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Radioactivity',
+    verified: true,
   },
 
 {
@@ -215,6 +230,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'A freely falling elevator drops the same way whether it is near the floor of the Empire State Building or in deep space, because the passenger is not feeling their own weight either way.',
     source: 'Einstein, "On the Relativity Principle and the Foundations of General Relativity" (1907)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Equivalence_principle',
+    verified: true,
   },
 
   // Added to fill letters that held nothing at all. The A-Z bar renders every
@@ -232,6 +248,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'The Moon orbits at about 384,000 km and the much-farther Voyager 1 takes thousands of years to complete one circuit of the Sun. Kepler worked all of this out in 1609 from Tycho Brahe’s naked-eye measurements, with no idea gravity was responsible.',
     source: 'Kepler, Astronomia Nova (1609) and Harmonices Mundi (1619)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion',
+    verified: true,
   },
   {
     id: 'quantum-tunnelling',
@@ -243,6 +260,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Alpha decay in uranium is exactly this: an alpha particle leaks out of the nucleus through the nuclear potential barrier, and that tunnelling rate is what sets uranium’s half-life of 4.5 billion years. Scanning tunnelling microscopy reads individual atoms by feeling a tip across that same barrier.',
     source: 'George Gamow, "Quantum Theory and the Alpha Decay" (1928)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Quantum_tunnelling',
+    verified: true,
   },
   {
     id: 'x-rays',
@@ -254,6 +272,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Your dentist sends X-rays through your jaw because bone absorbs them and soft tissue does not, so the difference in what reaches the film is your teeth. Turned on a sample and you get the dot pattern of diffraction, which is how the double-slit experiment was first run.',
     source: 'Röntgen, "Über eine neue Art von Strahlen" (1895)',
     sourceUrl: 'https://en.wikipedia.org/wiki/X-ray',
+    verified: true,
   },
   {
     id: 'yttrium',
@@ -265,6 +284,7 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'Most of it is now used in one place: yttrium aluminium garnet crystals, which take a tiny amount of the rare earth element and make lasers that cut steel and surgical instruments. A material that was a quarry byproduct for two centuries turned out to be load-bearing.',
     source: 'Jöns Jacob Berzelius, "On the yttrium earths" (1828)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Yttrium',
+    verified: true,
   },
   {
     id: 'zeeman-effect',
@@ -276,5 +296,6 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     example: 'The same effect is why the sunspots at the centre of the sun’s spectrum are dark: light leaving a strong magnetic field splits into components, and the atom absorbs the ones pointing at us. You can see the sun’s magnetic field by looking at how it changes the light.',
     source: 'Pieter Zeeman, "On the Effect of Magnetism on Radiation" (1896)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Zeeman_effect',
+    verified: true,
   },
 ];
