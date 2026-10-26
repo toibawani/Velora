@@ -18,6 +18,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'Before this exchange, Italy had no tomatoes, Ireland had no potatoes, Switzerland had no chocolate, and North America had neither horses nor honeybees.',
     source: 'Alfred W. Crosby, The Columbian Exchange (1972)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Columbian_exchange',
+    verified: true,
   },
 
 {
@@ -30,6 +31,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'A diary kept by a soldier during the Battle of the Somme is a primary source; a chapter in a 2024 university textbook analyzing trench warfare is a secondary source.',
     source: 'Marc Bloch, The Historian’s Craft (1949)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Primary_source',
+    verified: true,
   },
 
 {
@@ -58,6 +60,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'Luther\'s ninety-five theses printed in 1517 reached most of Germany within two months, which is still remarkable distribution. Luther is often credited with the press, but the technology was about 60 years old by then.',
     source: 'Eisenstein, The Printing Press as an Agent of Change (1979)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Printing_press',
+    verified: true,
   },
 
 {
@@ -70,6 +73,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'Between 30 and 50 percent of Europe\'s population died between 1347 and 1351. English wages rose for the following two centuries, and the Statute of Labourers in 1351 attempted to freeze them and failed.',
     source: 'Benedictow, The Black Death: The Greatest Catastrophe Ever (2004)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Black_Death',
+    verified: true,
   },
 
 {
@@ -82,6 +86,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'The Declaration of Independence in 1776 is Enlightenment reasoning applied to politics: rights are deduced from reason, government exists for the people\'s benefit, and consent is required. That structure is not found anywhere in earlier political texts.',
     source: 'Darnton, An Early Information Society (2000)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Age_of_Enlightenment',
+    verified: true,
   },
 
 {
@@ -94,6 +99,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'British cotton textile output rose about 50-fold between 1760 and 1830. The population of Manchester went from about 25,000 in 1770 to over 300,000 by 1851, most of them arriving from the countryside for wage work.',
     source: 'Allen, The British Industrial Revolution in Global Perspective (2009)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Industrial_Revolution',
+    verified: true,
   },
 
 {
@@ -106,6 +112,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'Clause 39 states that no free man shall be imprisoned except by the lawful judgment of his equals or by the law of the land. That wording, not the tax provisions, is what later generations kept returning to.',
     source: 'Magna Carta, 1215',
     sourceUrl: 'https://en.wikipedia.org/wiki/Magna_Carta',
+    verified: true,
   },
 
 {
@@ -118,6 +125,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'India and Pakistan became independent in 1947, and the partition that accompanied it killed between 200,000 and 2 million people and displaced roughly 15 million. Nigeria, the most populous British colony, became independent in 1960.',
     source: 'Cooper, Africa Since 1940 (2002)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Decolonisation',
+    verified: true,
   },
 
 {
@@ -130,6 +138,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'Britain abolished the slave trade in 1807, but the Royal Navy captured hundreds of ships, and the trade moved to other ports rather than stopping. The British West Indies did not abolish slavery itself until 1834.',
     source: 'Nini, A Little Progress in the Long Century (2007)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Abolitionism',
+    verified: true,
   },
 
 {
@@ -142,6 +151,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'Apollo 11 landed in July 1969, 12 years after Sputnik in October 1957. The Saturn V had never been flown before its lunar mission, and the computed trajectory that put it in lunar orbit was printed on uncrewed flights first.',
     source: 'Siddiqi, The Soviet Space Race with Apollo (2010)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Space_Race',
+    verified: true,
   },
 
 {
@@ -154,6 +164,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'The Iwakura Mission of 1871 sent a delegation around the world for about two years. Japanese industrial output grew over 100-fold between 1873 and 1912, with state-run model factories deliberately built to import and then localise technology.',
     source: 'Bix, Hirohito and the Making of Modern Japan (2000)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Meiji_Restoration',
+    verified: true,
   },
 
 {
@@ -166,6 +177,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'The last tablets at Ugarit, a major port, record a breach, a famine, and then nothing. Linear B, the script used by Mycenaean Greece, disappears entirely, and recovery in Greece comes with a different alphabet borrowed from Phoenicia.',
     source: 'Knossos, "The Twelve Years" clay tablets (c. 1200 BCE)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Bronze_Age_Collapse',
+    verified: true,
   },
 
 {
@@ -178,6 +190,7 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'The revolution was morally complicated by France and the new republic both imposing slavery again in 1802. Haiti had to buy its own freedom, at 150 million francs, and the debt was not settled by France until 1888.',
     source: 'Dubois, Avengers of the New World (2004)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Haitian_Revolution',
+    verified: true,
   },
 
 {
@@ -190,5 +203,6 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     example: 'In England, male literacy was roughly 30 percent in 1600 and over 90 percent by 1850. Demand for cheap print helped push English into a less Latinate vocabulary, so ordinary people could read their own language rather than needing a scholar.',
     source: 'Eisenstein, The Printing Press as an Agent of Change (1979)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Literacy',
+    verified: true,
   },
 ];
