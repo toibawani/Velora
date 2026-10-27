@@ -93,6 +93,60 @@ describe('Definition Duel', () => {
   });
 });
 
+/*
+ * A card with no way past it. The only controls were the input and Submit, so
+ * a definition the player could not name held the round until the clock ran
+ * out - sixty seconds of a timed game spent on one card.
+ */
+describe('getting unstuck on a card', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2026-01-01T12:00:00Z'));
+  });
+  afterEach(() => jest.useRealTimers());
+
+  test('a hint says the shape of the answer rather than the answer', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    const word = DUEL_PAIRS[0].word;
+
+    fireEvent.click(screen.getByRole('button', { name: /hint/i }));
+
+    const hint = screen.getByText(/starts with/i).textContent;
+    expect(hint).toContain(word[0].toUpperCase());
+    // The whole answer must not be in the hint, which is the only thing that
+    // makes it a hint rather than a reveal.
+    expect(hint.toLowerCase()).not.toContain(word.toLowerCase());
+  });
+
+  test('the hint can only be taken once per card', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /hint/i }));
+    expect(screen.getByRole('button', { name: /hint/i })).toBeDisabled();
+  });
+
+  test('a hinted answer is worth half, and an unhinted one is not', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /hint/i }));
+    answer(DUEL_PAIRS[0].word);
+    expect(screen.getByText('Score: 5')).toBeInTheDocument();
+  });
+
+  test('the next card is not still wearing the last card\'s hint', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /hint/i }));
+    answer(DUEL_PAIRS[0].word);
+    act(() => jest.advanceTimersByTime(900));
+
+    expect(screen.queryByText(/starts with/i)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /hint/i })).toBeEnabled();
+
+    // And the second card is worth full marks, because its hint was not used.
+    answer(DUEL_PAIRS[1].word);
+    expect(screen.getByText('Score: 15')).toBeInTheDocument();
+  });
+});
+
 describe('duel content breadth', () => {
   test('offers enough terms that one sitting is not the whole game', () => {
     expect(DUEL_PAIRS.length).toBeGreaterThanOrEqual(15);

@@ -88,6 +88,13 @@ function DefinitionDuel({ onBack }) {
   const [userInput, setUserInput] = useState('');
   const [feedback, setFeedback] = useState('');
   const [correct, setCorrect] = useState(false);
+  const [hintText, setHintText] = useState('');
+
+  // Cards where the hint was used. A Set rather than a flag, because the hint
+  // belongs to the card it was asked for: nulling a boolean on advance would
+  // already have lost which card it was, and a revealed answer is a different
+  // thing from a recalled one when the score is added up.
+  const hintedRef = useRef(new Set());
 
   // A wall-clock deadline rather than a counter that ticks once a second. A
   // counter keeps running in a backgrounded tab, which handed out free seconds
@@ -167,8 +174,12 @@ function DefinitionDuel({ onBack }) {
 
     setFeedback('Correct.');
     setCorrect(true);
-    setScore((prev) => prev + POINTS_PER_CORRECT);
+    // A hinted card is worth half. Any other arrangement would make the hint a
+    // free answer key, and marking it zero would mean the honest thing to do
+    // with a card you are stuck on is nothing at all.
+    setScore((prev) => prev + (hintedRef.current.has(currentPair) ? POINTS_PER_CORRECT / 2 : POINTS_PER_CORRECT));
     setUserInput('');
+    setHintText('');
 
     const isLast = currentPair === DUEL_PAIRS.length - 1;
     if (isLast) {
@@ -182,8 +193,24 @@ function DefinitionDuel({ onBack }) {
       setCurrentPair((prev) => prev + 1);
       setFeedback('');
       setCorrect(false);
+      setHintText('');
     }, 800);
   }, [currentPair, endGame, gameActive, userInput]);
+
+  /**
+   * A second letter is most of a one-word answer, so the hint gives the shape
+   * rather than the spelling: how many words, and the first letter of the first
+   * one. Enough to turn a blank into a memory, not enough to be the answer.
+   */
+  const handleHint = useCallback(() => {
+    if (!gameActive) return;
+    const { word } = DUEL_PAIRS[currentPair];
+    hintedRef.current.add(currentPair);
+    const parts = word.split(' ');
+    setHintText(
+      `${parts.length > 1 ? `${parts.length} words. ` : ''}Starts with ${word[0].toUpperCase()}.`
+    );
+  }, [currentPair, gameActive]);
 
   const pair = DUEL_PAIRS[currentPair];
   const maxScore = DUEL_PAIRS.length * POINTS_PER_CORRECT;
@@ -240,7 +267,22 @@ function DefinitionDuel({ onBack }) {
               <button className="btn-duel-submit" onClick={handleSubmit} disabled={!userInput.trim()}>
                 Submit
               </button>
+              <button
+                type="button"
+                className="btn-duel-hint"
+                onClick={handleHint}
+                disabled={hintText !== ''}
+                aria-label="Show a hint for this definition"
+              >
+                Hint
+              </button>
             </div>
+
+            {hintText && (
+              <p className="duel-hint" role="status">
+                {hintText} This card is worth half its points now.
+              </p>
+            )}
 
             {feedback && (
               <p className={`duel-feedback ${correct ? 'correct' : 'incorrect'}`} role="status">
