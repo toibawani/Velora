@@ -10,6 +10,15 @@ import WordPuzzle from '../games/WordPuzzle';
 import RelativityLab from '../components/RelativityLab';
 import BrainGames, { BRAIN_GAMES } from '../components/BrainGames';
 import PhysicsSimulations, { PHYSICS_SIMULATIONS } from '../components/PhysicsSimulations';
+// The decks themselves, so each card can say how much there is to do and that
+// number cannot drift from the game it describes. The descriptions above used
+// to carry the counts in prose, and one of them still claimed ten questions
+// while the deck held fourteen.
+import { QUIZ_QUESTIONS } from '../games/QuantumQuiz';
+import { DUEL_PAIRS } from '../games/DefinitionDuel';
+import { PUZZLES } from '../games/WordPuzzle';
+import { SCRABBLE_LEVELS } from '../games/ConceptScrabble';
+import { CHAINS } from '../games/KnowledgeChain';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import '../styles/Games.css';
 
@@ -28,6 +37,8 @@ export const CLASSIC_GAMES = [
     icon: Target,
     color: '--text-secondary',
     difficulty: 'Mixed',
+    itemCount: QUIZ_QUESTIONS.length,
+    itemUnit: 'questions',
   },
   {
     id: 'scrabble',
@@ -37,6 +48,8 @@ export const CLASSIC_GAMES = [
     icon: Type,
     color: '--text-secondary',
     difficulty: 'Easy',
+    itemCount: SCRABBLE_LEVELS.length,
+    itemUnit: 'terms',
   },
   {
     id: 'chain',
@@ -46,6 +59,8 @@ export const CLASSIC_GAMES = [
     icon: Link2,
     color: '--text-secondary',
     difficulty: 'Medium',
+    itemCount: CHAINS.length,
+    itemUnit: 'chains',
   },
   {
     id: 'duel',
@@ -56,6 +71,8 @@ export const CLASSIC_GAMES = [
     color: '--text-secondary',
     difficulty: 'Medium',
     fixedLength: '60 seconds',
+    itemCount: DUEL_PAIRS.length,
+    itemUnit: 'definitions',
   },
   {
     id: 'puzzle',
@@ -65,6 +82,8 @@ export const CLASSIC_GAMES = [
     icon: Puzzle,
     color: '--text-tertiary',
     difficulty: 'Easy',
+    itemCount: PUZZLES.length,
+    itemUnit: 'puzzles',
   },
   {
     id: 'relativity',
@@ -291,6 +310,11 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
 
               <div className="game-meta-row">
                 <span className="game-difficulty" data-testid="game-difficulty">{game.difficulty}</span>
+                {game.itemCount > 0 && (
+                  <span className="game-length" data-testid="game-length">
+                    {game.itemCount} {game.itemUnit}
+                  </span>
+                )}
                 {game.fixedLength && (
                   <span className="game-duration" data-testid="game-duration" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                     <Clock size={12} strokeWidth={1.5} />

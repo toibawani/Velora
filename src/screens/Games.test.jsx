@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, within } from '@testing-library/react';
-import GameHub from './Games';
+import GameHub, { CLASSIC_GAMES } from './Games';
+import { QUIZ_QUESTIONS } from '../games/QuantumQuiz';
+import { DUEL_PAIRS } from '../games/DefinitionDuel';
+import { PUZZLES } from '../games/WordPuzzle';
+import { SCRABBLE_LEVELS } from '../games/ConceptScrabble';
+import { CHAINS } from '../games/KnowledgeChain';
 
 describe('Game hub listings', () => {
   test('every game is described in plain words, without inflated names', () => {
@@ -158,6 +163,43 @@ describe('the difficulty filter', () => {
     render(<GameHub setScreen={() => {}} />);
     const all = screen.getByRole('button', { name: /^All/ });
     expect(all).toHaveTextContent('6');
+  });
+});
+
+/*
+ * Every card said what kind of game it was and nothing about how much of it
+ * there is, so "Concept Check" and a fourteen question deck looked the same as
+ * a game with three questions in it.
+ */
+describe('how much there is to do, counted from the decks', () => {
+  test('every classic game that has a deck says how big it is', () => {
+    render(<GameHub setScreen={() => {}} />);
+
+    ['Concept Check', 'Knowledge Chain', 'Concept Scrabble', 'Definition Duel', 'Concept Puzzle'].forEach(
+      (name) => {
+        const card = screen
+          .getAllByTestId('game-card')
+          .find((node) => within(node).queryByText(name));
+        expect(within(card).getByTestId('game-length').textContent).toMatch(/^\d+ \w+$/);
+      }
+    );
+  });
+
+  test('the numbers are the decks, not a copy of them', () => {
+    // Read from the same exports the games use, so growing a deck moves the
+    // card with it rather than leaving the card advertising the old size.
+    const byId = Object.fromEntries(CLASSIC_GAMES.map((game) => [game.id, game]));
+    expect(byId.quiz.itemCount).toBe(QUIZ_QUESTIONS.length);
+    expect(byId.duel.itemCount).toBe(DUEL_PAIRS.length);
+    expect(byId.puzzle.itemCount).toBe(PUZZLES.length);
+    expect(byId.scrabble.itemCount).toBe(SCRABBLE_LEVELS.length);
+    expect(byId.chain.itemCount).toBe(CHAINS.length);
+  });
+
+  test('a simulation with no deck does not claim a count', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const relativity = CLASSIC_GAMES.find((game) => game.id === 'relativity');
+    expect(relativity.itemCount).toBeUndefined();
   });
 });
 
