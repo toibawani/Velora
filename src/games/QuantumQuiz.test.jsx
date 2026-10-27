@@ -272,6 +272,47 @@ describe('Concept Check quiz', () => {
     jest.useRealTimers();
   });
 
+  /*
+   * Replaying meant leaving for the games hub and opening the game again.
+   */
+  test('a finished round can be played again without leaving the game', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    for (let i = 0; i < QUIZ_QUESTIONS.length; i += 1) {
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    // Back on question one with the counters cleared, not a second round
+    // carrying the first one's score.
+    expect(screen.getByText(QUIZ_QUESTIONS[0].question)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /quiz complete/i })).not.toBeInTheDocument();
+  });
+
+  test('the replay clears what was missed, so the review is about this round', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    for (let i = 0; i < QUIZ_QUESTIONS.length; i += 1) {
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    QUIZ_QUESTIONS.forEach((question, index) => {
+      const order = optionOrder(index, question.options.length);
+      fireEvent.click(
+        screen.getAllByRole('button', { name: /^[A-D]\s/ })[order.indexOf(question.correct)]
+      );
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    });
+
+    expect(screen.getByText(/every one right/i)).toBeInTheDocument();
+    expect(document.querySelector('.quiz-review')).toBeNull();
+  });
+
   test('finishing reports how many were right, not a raw score out of ten', () => {
     // The deck was ten questions; the test looped a hardcoded ten and asserted
     // "of 10 correct". Both the loop and the expectation are now derived from

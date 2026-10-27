@@ -268,6 +268,25 @@ function QuantumQuiz({ onBack }) {
   // and the displayed order stays separate from the data order.
   const options = useMemo(() => shuffledOptions(currentQuestion), [currentQuestion]);
 
+  /**
+   * Back to the first question with nothing carried over.
+   *
+   * The only way to play again was to leave for the games hub and come back,
+   * which also threw away the round the player had just finished reading the
+   * explanations from. Resetting has to clear all five pieces of state - score,
+   * count, the missed list, the selected answer and the answered flag - or a
+   * second round starts halfway through the first one's results.
+   */
+  const handleReplay = useCallback(() => {
+    setCurrentQuestion(0);
+    setScore(0);
+    setCorrectCount(0);
+    setSelectedAnswer(null);
+    setAnswered(false);
+    setGameOver(false);
+    setMissed([]);
+  }, []);
+
   const handleAnswerClick = useCallback(
     (index) => {
       // Without this a second click on another option rewrote the answer after
@@ -385,9 +404,14 @@ function QuantumQuiz({ onBack }) {
             </div>
           )}
 
-          <button className="btn-restart" onClick={onBack}>
-            Back to Games
-          </button>
+          <div className="game-over-actions">
+            <button className="btn-restart" onClick={handleReplay}>
+              Play again
+            </button>
+            <button className="btn-restart secondary" onClick={onBack}>
+              Back to Games
+            </button>
+          </div>
         </div>
       </div>
     );
