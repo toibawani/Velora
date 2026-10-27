@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import QuantumQuiz, { QUIZ_QUESTIONS } from './QuantumQuiz';
+import QuantumQuiz, { QUIZ_QUESTIONS, optionOrder } from './QuantumQuiz';
 import { CLASSIC_GAMES } from '../screens/Games';
 import { PHILOSOPHY_LEVELS } from '../data/philosophy';
 import { CURIOUS_TERMS } from '../data/dictionary';
@@ -128,6 +128,37 @@ describe('Concept Check quiz', () => {
     act(() => jest.advanceTimersByTime(3000));
     expect(screen.getByText(QUIZ_QUESTIONS[1].question)).toBeInTheDocument();
     jest.useRealTimers();
+  });
+
+  /*
+   * The options were drawn in the order they are written in the data, which put
+   * the right answer first on a third of the deck. A player who read nothing
+   * could score by always taking A.
+   */
+  test('the answer is not always in the same slot', () => {
+    const slots = QUIZ_QUESTIONS.map((question, index) => {
+      const order = optionOrder(index, question.options.length);
+      return order.indexOf(question.correct);
+    });
+
+    // Every question keeps its options intact - a shuffle that dropped or
+    // duplicated one would show up here rather than as a wrong answer later.
+    QUIZ_QUESTIONS.forEach((question, index) => {
+      const order = optionOrder(index, question.options.length);
+      expect(order.slice().sort((a, b) => a - b)).toEqual(question.options.map((_, i) => i));
+    });
+
+    // And the deck does not put the answer in one place. Asking for more than
+    // three distinct slots across fourteen questions rules out a fixed slot and
+    // rules out "always the first" with room to spare.
+    expect(new Set(slots).size).toBeGreaterThan(3);
+  });
+
+  test('which slot the answer lands in is not the first one every time', () => {
+    const firstSlots = QUIZ_QUESTIONS.filter(
+      (question, index) => optionOrder(index, question.options.length)[0] === question.correct
+    ).length;
+    expect(firstSlots).toBeLessThan(QUIZ_QUESTIONS.length / 3);
   });
 
   test('the correct answer scores once', () => {

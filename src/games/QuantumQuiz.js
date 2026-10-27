@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import '../styles/GameStyles.css';
 
 /**
@@ -212,6 +212,40 @@ const QUIZ_QUESTIONS = [
 
 const POINTS_PER_CORRECT = 10;
 
+/**
+ * Where each option is drawn on screen.
+ *
+ * The options were rendered in the order they are written in the data, and the
+ * data happens to put the right answer first on five of the fourteen questions
+ * and second on most of the rest. Nothing shuffled them, so a player who never
+ * read a word could score well by always taking A, and a player who did read
+ * them learned "the long one is usually right" - the answer's position was
+ * information about the deck rather than about the subject.
+ *
+ * Deterministic rather than random: the same question always lays out the same
+ * way, so a re-render cannot move the options while a finger is on the way to
+ * one, and a replay of a question the player just saw is not a new guess at
+ * where the answer went. What it removes is the fixed link between a question
+ * and the slot its answer sits in, which is the thing that was being learned.
+ */
+function optionOrder(questionIndex, count) {
+  const stride = count > 2 ? count - 1 : 1;
+  const offset = (questionIndex * 5 + 1) % count;
+  const order = [];
+  for (let i = 0; i < count; i += 1) order.push((offset + i * stride) % count);
+  const isIdentity = order.every((value, position) => value === position);
+  return isIdentity ? order.slice().reverse() : order;
+}
+
+/** The options in the order they are drawn, paired with the index they are graded by. */
+function shuffledOptions(questionIndex) {
+  const { options } = QUIZ_QUESTIONS[questionIndex];
+  return optionOrder(questionIndex, options.length).map((original) => ({
+    original,
+    text: options[original],
+  }));
+}
+
 QuantumQuiz.propTypes = { onBack: PropTypes.func };
 
 function QuantumQuiz({ onBack }) {
@@ -224,6 +258,9 @@ function QuantumQuiz({ onBack }) {
 
   const question = QUIZ_QUESTIONS[currentQuestion];
   const isLast = currentQuestion === QUIZ_QUESTIONS.length - 1;
+  // Positions in the original options array, so `question.correct` still grades
+  // and the displayed order stays separate from the data order.
+  const options = useMemo(() => shuffledOptions(currentQuestion), [currentQuestion]);
 
   const handleAnswerClick = useCallback(
     (index) => {
@@ -316,22 +353,22 @@ function QuantumQuiz({ onBack }) {
         </div>
 
         <div className="quiz-options">
-          {question.options.map((option, index) => {
-            const isChosen = selectedAnswer === index;
-            const isCorrectOption = index === question.correct;
+          {options.map(({ original, text }, index) => {
+            const isChosen = selectedAnswer === original;
+            const isCorrectOption = original === question.correct;
             return (
               <button
-                key={option}
+                key={text}
                 type="button"
                 className={`quiz-option ${
                   isChosen ? (isCorrectOption ? 'correct' : 'incorrect') : ''
                 } ${answered && isCorrectOption ? 'show-correct' : ''}`}
-                onClick={() => handleAnswerClick(index)}
+                onClick={() => handleAnswerClick(original)}
                 disabled={answered}
                 aria-pressed={isChosen}
               >
                 <span className="option-number">{String.fromCharCode(65 + index)}</span>
-                <span className="option-text">{option}</span>
+                <span className="option-text">{text}</span>
                 {answered && isCorrectOption && <span className="checkmark">&#10003;</span>}
                 {answered && isChosen && !isCorrectOption && <span className="cross">&#10007;</span>}
               </button>
@@ -358,5 +395,5 @@ function QuantumQuiz({ onBack }) {
   );
 }
 
-export { QUIZ_QUESTIONS };
+export { QUIZ_QUESTIONS, optionOrder, shuffledOptions };
 export default QuantumQuiz;
