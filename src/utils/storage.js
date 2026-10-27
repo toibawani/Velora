@@ -52,6 +52,12 @@ export const KEYS = {
   // Pick up where you left off: the last lesson opened, so the atlas can offer
   // a one-tap resume. Stored as { subject, topicId, topicTitle, openedAt }.
   LAST_LESSON: 'velora_last_lesson',
+  // What each game has actually produced on this device: the best round and
+  // how many rounds have been played, keyed by game id. The hub used to show
+  // nothing about a game until it was open, so the only way to know that
+  // Concept Scrabble had never been finished was to open it and look. Stored as
+  // { <gameId>: { best, max, plays, at } }.
+  GAME_RESULTS: 'velora_game_results',
   // Dialogue transcripts are one key per historical figure, e.g.
   // velora_dialogue_socrates. Kept here for the same reason as the others: a
   // prefix spelled in two files is a prefix that drifts.
