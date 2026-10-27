@@ -224,6 +224,54 @@ describe('Concept Check quiz', () => {
     expect(screen.getByText('Score: 10')).toBeInTheDocument();
   });
 
+  /*
+   * The end screen could say how many were right and nothing about which. The
+   * explanation for a wrong answer was on screen for a few seconds and then
+   * discarded with the question it belonged to.
+   */
+  test('the end screen lists the questions that were answered wrong', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    // Every question answered wrong: option A is only the right one by luck.
+    for (let i = 0; i < QUIZ_QUESTIONS.length; i += 1) {
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+
+    const review = document.querySelector('.quiz-review');
+    expect(review).not.toBeNull();
+
+    // Whatever came out wrong is on the list, with its reasoning. Read from the
+    // deck rather than hardcoded, so adding a question cannot leave this
+    // passing on a subset of them.
+    const shown = review.textContent;
+    const wrong = QUIZ_QUESTIONS.filter((question) => {
+      const order = optionOrder(QUIZ_QUESTIONS.indexOf(question), question.options.length);
+      return order[0] !== question.correct;
+    });
+    expect(wrong.length).toBeGreaterThan(0);
+    wrong.forEach((question) => {
+      expect(shown).toContain(question.question);
+      expect(shown).toContain(question.explanation);
+    });
+  });
+
+  test('a perfect round has nothing to review', () => {
+    jest.useFakeTimers();
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    QUIZ_QUESTIONS.forEach((question, index) => {
+      const order = optionOrder(index, question.options.length);
+      const position = order.indexOf(question.correct);
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[position]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    });
+
+    expect(screen.getByText(/every one right/i)).toBeInTheDocument();
+    expect(document.querySelector('.quiz-review')).toBeNull();
+    jest.useRealTimers();
+  });
+
   test('finishing reports how many were right, not a raw score out of ten', () => {
     // The deck was ten questions; the test looped a hardcoded ten and asserted
     // "of 10 correct". Both the loop and the expectation are now derived from

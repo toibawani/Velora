@@ -255,6 +255,12 @@ function QuantumQuiz({ onBack }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  // Which questions were answered wrong, in the order they came up. The
+  // explanation was shown for a few seconds mid-round and then thrown away with
+  // the question, so the end screen could say "10 of 14" and nothing else -
+  // and the four that needed rereading were the four the player could not
+  // remember which ones they were.
+  const [missed, setMissed] = useState([]);
 
   const question = QUIZ_QUESTIONS[currentQuestion];
   const isLast = currentQuestion === QUIZ_QUESTIONS.length - 1;
@@ -272,9 +278,11 @@ function QuantumQuiz({ onBack }) {
       if (index === question.correct) {
         setScore((prev) => prev + POINTS_PER_CORRECT);
         setCorrectCount((prev) => prev + 1);
+      } else {
+        setMissed((prev) => (prev.includes(currentQuestion) ? prev : [...prev, currentQuestion]));
       }
     },
-    [answered, question.correct]
+    [answered, currentQuestion, question.correct]
   );
 
   const handleNext = useCallback(() => {
@@ -343,9 +351,40 @@ function QuantumQuiz({ onBack }) {
               <p>Worth another look at the one you missed below.</p>
             )}
             {percentage < 80 && (
-              <p>Play it again and read the explanations, they are the point.</p>
+              <p>The ones below are worth rereading, they are the point.</p>
             )}
           </div>
+
+          {/*
+            * The questions that were answered wrong, with the reasoning. The
+            * explanation was already on screen for each one during the round and
+            * then discarded with the question, which left the end screen able to
+            * say how many were right and nothing about which - the score is the
+            * least useful thing this screen knows.
+            */}
+          {missed.length > 0 && (
+            <div className="quiz-review">
+              <h3>
+                {missed.length === 1 ? 'The one that got away' : `The ${missed.length} that got away`}
+              </h3>
+              <ul className="quiz-review-list">
+                {missed.map((index) => {
+                  const item = QUIZ_QUESTIONS[index];
+                  return (
+                    <li key={item.question} className="quiz-review-item">
+                      <p className="quiz-review-question">{item.question}</p>
+                      <p className="quiz-review-answer">
+                        <span className="quiz-review-label">Answer:</span>{' '}
+                        {item.options[item.correct]}
+                      </p>
+                      <p className="quiz-review-explanation">{item.explanation}</p>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+
           <button className="btn-restart" onClick={onBack}>
             Back to Games
           </button>
