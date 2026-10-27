@@ -219,6 +219,29 @@ function WordPuzzle({ onBack }) {
     setSettled(false);
   }, [currentPuzzle, isLast]);
 
+  /**
+   * Start again from puzzle one.
+   *
+   * The end screen offered only Back to Games, so a second pass through a
+   * sixteen puzzle deck meant leaving for the hub and reopening the game. Every
+   * counter has to be cleared here, not just the position: the settled latch in
+   * particular, because leaving it set would make the first answer of the new
+   * round unrecordable.
+   */
+  const handleReplay = useCallback(() => {
+    clearTimeout(advanceRef.current);
+    setCurrentPuzzle(0);
+    setUserAnswers(Array(PUZZLES[0].blanks).fill(''));
+    setScore(0);
+    setSolved(0);
+    setUnaided(0);
+    setRevealedCount(0);
+    setMessage('');
+    setRevealed(false);
+    setFinished(false);
+    setSettled(false);
+  }, []);
+
   const handleInputChange = useCallback((index, value) => {
     setUserAnswers((prev) => {
       const next = [...prev];
@@ -273,9 +296,14 @@ function WordPuzzle({ onBack }) {
           <p className="game-completed-msg">
             You worked out {unaided} of {total} unaided.
           </p>
-          <button className="btn-restart" onClick={onBack}>
-            Back to Games
-          </button>
+          <div className="game-over-actions">
+            <button className="btn-restart" onClick={handleReplay}>
+              Play again
+            </button>
+            <button className="btn-restart secondary" onClick={onBack}>
+              Back to Games
+            </button>
+          </div>
         </div>
       </div>
     );

@@ -183,6 +183,58 @@ describe('Word Puzzle', () => {
   });
 });
 
+/*
+ * The end screen offered only Back to Games, so a second pass through sixteen
+ * puzzles meant leaving for the hub and reopening the game.
+ */
+describe('playing the deck again', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => jest.useRealTimers());
+
+  const finishDeck = () => {
+    // The advance is booked on a timer, including the one that produces the end
+    // screen, so every puzzle needs the window run out - not just the ones
+    // before the last.
+    PUZZLES.forEach((puzzle) => {
+      fill(...puzzle.word.split(' '));
+      submit();
+      act(() => jest.advanceTimersByTime(1300));
+    });
+  };
+
+  test('the deck can be played again without leaving the game', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    finishDeck();
+    expect(screen.getByRole('heading', { name: /finished/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    expect(screen.getByText(PUZZLES[0].sentence)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  test('the new round can be answered, so the settled latch was cleared', () => {
+    // Every counter is reset, and if settled were left set the first answer of
+    // the second round would score nothing and never advance.
+    render(<WordPuzzle onBack={() => {}} />);
+    finishDeck();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    fill(...PUZZLES[0].word.split(' '));
+    submit();
+    expect(screen.getByText('Score: 100')).toBeInTheDocument();
+  });
+
+  test('a second round does not report the first round result', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    finishDeck();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+    finishDeck();
+
+    expect(screen.getByText(new RegExp(`You worked out ${PUZZLES.length} of ${PUZZLES.length} unaided`))).toBeInTheDocument();
+  });
+});
+
 describe('puzzle data integrity', () => {
   test('the philosophy answers are the dictionary\'s own terms, not new coinages', () => {
     // Six philosophy answers now sit in a deck that had none. They are read from
