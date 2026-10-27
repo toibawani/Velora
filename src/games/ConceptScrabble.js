@@ -235,6 +235,28 @@ function ConceptScrabble({ onBack }) {
     advanceRef.current = setTimeout(goToNextLevel, 1200);
   }, [goToNextLevel, level.word, selectedLetters, settled]);
 
+  /**
+   * Back to level one with a clear board.
+   *
+   * The end screen offered only Back to Games, so playing the rack again meant
+   * leaving for the hub and reopening the game. The settled flag and the pending
+   * advance both have to go, or a replay inherits the last level's booked move
+   * and jumps a level on its own.
+   */
+  const handleReplay = useCallback(() => {
+    clearTimeout(advanceRef.current);
+    clearTimeout(shakeRef.current);
+    setCurrentLevel(0);
+    setSelectedLetters([]);
+    setScore(0);
+    setSolvedCount(0);
+    setSkipped(0);
+    setGameOver(false);
+    setMessage('');
+    setShake(false);
+    setSettled(false);
+  }, []);
+
   const handleSkip = useCallback(() => {
     // Skipping a level already solved would throw away the level just earned
     // and cost a second advance on top of the one already booked.
@@ -254,9 +276,14 @@ function ConceptScrabble({ onBack }) {
             You solved {solvedCount} of {total}
             {skipped > 0 ? `, and skipped ${skipped}.` : ', with none skipped.'}
           </p>
-          <button className="btn-restart" onClick={onBack}>
-            Back to Games
-          </button>
+          <div className="game-over-actions">
+            <button className="btn-restart" onClick={handleReplay}>
+              Play again
+            </button>
+            <button className="btn-restart secondary" onClick={onBack}>
+              Back to Games
+            </button>
+          </div>
         </div>
       </div>
     );

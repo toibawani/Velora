@@ -111,6 +111,80 @@ describe('Concept Scrabble', () => {
   });
 });
 
+/*
+ * The end screen offered only Back to Games, so playing the rack again meant
+ * leaving for the hub and reopening the game.
+ */
+describe('playing the rack again', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    let seed = 1;
+    jest.spyOn(Math, 'random').mockImplementation(() => {
+      seed = (seed * 9301 + 49297) % 233280;
+      return seed / 233280;
+    });
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.useRealTimers();
+  });
+
+  const solveEveryLevel = () => {
+    SCRABBLE_LEVELS.forEach(() => {
+      // Read the answer from the definition on screen rather than from the list
+      // by position, so this keeps working when the deck is reordered.
+      const definition = document.querySelector('.definition-text').textContent;
+      const answer = SCRABBLE_LEVELS.find((l) => l.definition === definition).word;
+      buildWord(answer);
+      fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+      act(() => jest.advanceTimersByTime(1300));
+    });
+  };
+
+  test('the rack can be played again without leaving the game', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    solveEveryLevel();
+    expect(screen.getByRole('heading', { name: /finished/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    expect(screen.getByText(SCRABBLE_LEVELS[0].definition)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  test('the cleared board holds no letters from the round that just ended', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    solveEveryLevel();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    expect(document.querySelector('.built-word .placeholder')).not.toBeNull();
+    expect(screen.getByRole('button', { name: /submit word/i })).toBeDisabled();
+  });
+
+  test('the new round can be solved, so the settled flag was cleared', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    solveEveryLevel();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    buildWord(SCRABBLE_LEVELS[0].word);
+    fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+    expect(screen.getByText('Score: 100')).toBeInTheDocument();
+  });
+
+  test('a second round does not inherit the first round skip count', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    SCRABBLE_LEVELS.forEach(() => {
+      fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
+    });
+    expect(screen.getByText(new RegExp(`skipped ${SCRABBLE_LEVELS.length}`, 'i'))).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+    solveEveryLevel();
+
+    expect(screen.getByText(/with none skipped/i)).toBeInTheDocument();
+  });
+});
+
 describe('scrabble content breadth', () => {
   test('offers enough words that one sitting is not the whole game', () => {
     expect(SCRABBLE_LEVELS.length).toBeGreaterThanOrEqual(14);
