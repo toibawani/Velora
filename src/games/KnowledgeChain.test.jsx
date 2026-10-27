@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import KnowledgeChain, { CHAINS, boardOrder } from './KnowledgeChain';
+import KnowledgeChain, { CHAINS, boardOrder, POINTS_PER_CHAIN, HINT_PENALTY } from './KnowledgeChain';
 
 const pick = (...labels) => {
   labels.forEach((label) => {
@@ -144,6 +144,86 @@ describe('the board does not hand over the answer', () => {
     // this hold: the buttons must not move out from under a half-finished pick.
     expect(boardOrder(2, 4)).toEqual(boardOrder(2, 4));
     expect(boardOrder(2, 4)).not.toEqual(boardOrder(3, 4));
+  });
+});
+
+/*
+ * The board scrambles the concepts, and the only way to test a guess was to
+ * commit the whole chain, so a player stuck on one link had nothing to do but
+ * keep guessing at all four.
+ */
+describe('a hint for a chain that will not come', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => {
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
+  });
+
+  test('the hint names the next concept in the chain', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+
+    // Nothing picked yet, so the next one is the first concept. The concept is
+    // wrapped in a <strong>, so the assertion reads the paragraph rather than
+    // one node inside it.
+    fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
+    expect(document.querySelector('.chain-hint').textContent).toContain(CHAINS[0].concepts[0]);
+  });
+
+  test('the hint follows the picks rather than repeating the first concept', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
+    fireEvent.click(screen.getByRole('button', { name: CHAINS[0].concepts[0] }));
+
+    const hint = document.querySelector('.chain-hint').textContent;
+    expect(hint).toContain(CHAINS[0].concepts[1]);
+    expect(hint).not.toContain(`: ${CHAINS[0].concepts[0]}.`);
+  });
+
+  test('a hinted chain scores less than a chain worked out unaided', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
+
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+
+    expect(screen.getByText(`Score: ${POINTS_PER_CHAIN - HINT_PENALTY}`)).toBeInTheDocument();
+  });
+
+  test('the penalty never takes a solved chain below zero', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    for (let i = 0; i < 6; i += 1) {
+      fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
+    }
+
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  test('the next chain starts unhinted', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+    act(() => jest.advanceTimersByTime(3000));
+
+    expect(screen.queryByText(/next in the chain/i)).not.toBeInTheDocument();
+    pick(...CHAINS[1].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+
+    expect(screen.getByText(`Score: ${POINTS_PER_CHAIN + (POINTS_PER_CHAIN - HINT_PENALTY)}`)).toBeInTheDocument();
+  });
+
+  test('Start Over clears the hints along with the picks', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /start over/i }));
+
+    expect(screen.queryByText(/next in the chain/i)).not.toBeInTheDocument();
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+    expect(screen.getByText(`Score: ${POINTS_PER_CHAIN}`)).toBeInTheDocument();
   });
 });
 

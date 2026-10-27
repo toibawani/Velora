@@ -97,6 +97,13 @@ const CHAINS = [
   },
 ];
 
+const POINTS_PER_CHAIN = 50;
+// A hinted chain is still solved, so it still scores; it just scores less. The
+// hint exists to unstick a player who is staring at four concepts and cannot
+// see the link, and a hint that zeroed the chain would make that the wrong
+// thing to do.
+const HINT_PENALTY = 20;
+
 const isCorrectOrder = (selected, total) =>
   selected.length === total && selected.every((index, position) => index === position);
 
@@ -140,6 +147,7 @@ function KnowledgeChain({ onBack }) {
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState('');
   const [solved, setSolved] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
   const advanceRef = useRef(null);
 
   const chain = CHAINS[currentChain];
@@ -173,7 +181,7 @@ function KnowledgeChain({ onBack }) {
     }
 
     setSolved(true);
-    setScore((prev) => prev + 50);
+    setScore((prev) => prev + Math.max(0, POINTS_PER_CHAIN - HINT_PENALTY * hintsUsed));
     setMessage('Correct, and the links are what make it a chain rather than a list.');
 
     if (!isLastChain) {
@@ -182,15 +190,31 @@ function KnowledgeChain({ onBack }) {
         setSelectedConcepts([]);
         setSolved(false);
         setMessage('');
+        setHintsUsed(0);
       }, 2600);
     }
-  }, [chain, isLastChain, selectedConcepts, solved]);
+  }, [chain, hintsUsed, isLastChain, selectedConcepts, solved]);
+
+  /**
+   * Name the concept that comes next.
+   *
+   * The board scrambles the concepts, so the puzzle is which one follows which
+   * - and the shape of being stuck is four plausible candidates in a row with
+   * no way to test a guess except committing the whole chain. The hint gives
+   * the next link rather than the whole chain, so a chain solved with one hint
+   * was still mostly worked out, and the score says so.
+   */
+  const handleHint = useCallback(() => {
+    if (solved) return;
+    setHintsUsed((prev) => prev + 1);
+  }, [solved]);
 
   const handleReset = useCallback(() => {
     clearTimeout(advanceRef.current);
     setSelectedConcepts([]);
     setSolved(false);
     setMessage('');
+    setHintsUsed(0);
   }, []);
 
   return (
@@ -257,9 +281,24 @@ function KnowledgeChain({ onBack }) {
           </p>
         )}
 
+        {hintsUsed > 0 && !solved && (
+          <p className="chain-hint" role="status">
+            Next in the chain: <strong>{chain.concepts[selectedConcepts.length]}</strong>. This
+            chain is worth {Math.max(0, POINTS_PER_CHAIN - HINT_PENALTY * hintsUsed)} of its{' '}
+            {POINTS_PER_CHAIN} points.
+          </p>
+        )}
+
         <div className="chain-actions">
           <button className="btn-undo" onClick={handleUndo} disabled={selectedConcepts.length === 0 || solved}>
             &larr; Undo
+          </button>
+          <button
+            className="btn-chain-hint"
+            onClick={handleHint}
+            disabled={solved || selectedConcepts.length === chain.concepts.length}
+          >
+            Hint
           </button>
           <button
             className="btn-submit-chain"
@@ -282,6 +321,6 @@ function KnowledgeChain({ onBack }) {
   );
 }
 
-export { CHAINS, boardOrder };
+export { CHAINS, boardOrder, POINTS_PER_CHAIN, HINT_PENALTY };
 
 export default KnowledgeChain;
