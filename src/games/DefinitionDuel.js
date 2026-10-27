@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { recordGameResult } from '../utils/gameResults';
 import '../styles/GameStyles.css';
+
+/** The id this game is filed under, in stored results and in the hub's list. */
+export const DEFINITION_DUEL_GAME_ID = 'duel';
 
 /**
  * Definitions were loose enough to be wrong: photosynthesis does not convert
@@ -105,6 +109,11 @@ function DefinitionDuel({ onBack }) {
   // to anyone who switched away, and a laptop that slept mid-round kept the
   // full minute on return.
   const deadlineRef = useRef(null);
+  // Reported once per round, from the end-of-round state rather than from the
+  // moment the clock ran out: the last card's points are only in `score` after
+  // the re-render, so reading it inside endGame would bank a round one answer
+  // short of what the end screen shows.
+  const recordedRef = useRef(false);
   const pausedAtRef = useRef(0);
   const tickRef = useRef(null);
   const advanceRef = useRef(null);
@@ -161,6 +170,19 @@ function DefinitionDuel({ onBack }) {
     },
     []
   );
+
+  useEffect(() => {
+    if (gameActive) {
+      recordedRef.current = false;
+      return;
+    }
+    if (recordedRef.current) return;
+    recordedRef.current = true;
+    recordGameResult(DEFINITION_DUEL_GAME_ID, {
+      score,
+      max: DUEL_PAIRS.length * POINTS_PER_CORRECT,
+    });
+  }, [gameActive, score]);
 
   const handleSubmit = useCallback(() => {
     if (!gameActive || !userInput.trim()) return;

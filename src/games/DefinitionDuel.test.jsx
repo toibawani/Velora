@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import DefinitionDuel, { DUEL_PAIRS } from './DefinitionDuel';
+import DefinitionDuel, { DUEL_PAIRS, DEFINITION_DUEL_GAME_ID } from './DefinitionDuel';
+import { getGameResult } from '../utils/gameResults';
 import { SCRABBLE_LEVELS } from './ConceptScrabble';
 import { PHILOSOPHY_LEVELS } from '../data/philosophy';
 
@@ -13,6 +14,7 @@ describe('Definition Duel', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date('2026-01-01T12:00:00Z'));
+    window.localStorage.clear();
   });
   afterEach(() => jest.useRealTimers());
 
@@ -48,6 +50,45 @@ describe('Definition Duel', () => {
 
     expect(screen.getByText(/all cards done/i)).toBeInTheDocument();
     expect(screen.queryByText(/time'?s up/i)).not.toBeInTheDocument();
+  });
+
+  /*
+   * A finished round left the score on a screen nobody could return to. The
+   * hub therefore knew nothing about the sixty seconds that had just been spent.
+   */
+  test('a round that ends is recorded, counted from the card that ended it', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    DUEL_PAIRS.forEach((pair) => {
+      answer(pair.word);
+      act(() => jest.advanceTimersByTime(900));
+    });
+
+    // Every card answered: the record has to include the last one, which is the
+    // answer that reached the end screen.
+    expect(getGameResult(DEFINITION_DUEL_GAME_ID)).toMatchObject({
+      best: DUEL_PAIRS.length * 10,
+      max: DUEL_PAIRS.length * 10,
+      plays: 1,
+    });
+  });
+
+  test('a round that runs out of time is recorded too, with what it reached', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    answer(firstWord);
+    act(() => jest.advanceTimersByTime(900));
+    act(() => jest.advanceTimersByTime(61_000));
+
+    expect(getGameResult(DEFINITION_DUEL_GAME_ID)).toMatchObject({ best: 10, plays: 1 });
+  });
+
+  test('a hinted card is recorded at the half it actually scored', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /show a hint/i }));
+    answer(firstWord);
+    act(() => jest.advanceTimersByTime(900));
+    act(() => jest.advanceTimersByTime(61_000));
+
+    expect(getGameResult(DEFINITION_DUEL_GAME_ID).best).toBe(5);
   });
 
   // Accuracy used to divide by every card in the deck, so answering three
@@ -102,6 +143,7 @@ describe('getting unstuck on a card', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date('2026-01-01T12:00:00Z'));
+    window.localStorage.clear();
   });
   afterEach(() => jest.useRealTimers());
 
