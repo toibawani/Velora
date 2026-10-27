@@ -202,6 +202,33 @@ function DefinitionDuel({ onBack }) {
   }, [currentPair, endGame, gameActive, userInput]);
 
   /**
+   * Start a fresh round without leaving the game.
+   *
+   * The clock is not reset here: it is armed by the effect on `gameActive`, so
+   * flipping that back to true is what gives the new round its full minute.
+   * settledRef has to be cleared by hand, because it is the latch that stops a
+   * second end being booked, and leaving it set meant a replay began already
+   * over.
+   */
+  const handleReplay = useCallback(() => {
+    settledRef.current = false;
+    clearInterval(tickRef.current);
+    clearTimeout(advanceRef.current);
+    hintedRef.current = new Set();
+    setCurrentPair(0);
+    setTimeLeft(ROUND_SECONDS);
+    setScore(0);
+    setAttempts(0);
+    setSkipped(0);
+    setFinished(false);
+    setUserInput('');
+    setFeedback('');
+    setCorrect(false);
+    setHintText('');
+    setGameActive(true);
+  }, []);
+
+  /**
    * Pass on a card. Counted separately from a wrong answer, because a card the
    * player could not name is not a card they got wrong, and mixing the two
    * would leave the accuracy figure explaining neither.
@@ -348,9 +375,14 @@ function DefinitionDuel({ onBack }) {
                   : `${skipped} cards were passed over rather than answered.`}
               </p>
             )}
-            <button className="btn-restart" onClick={onBack}>
-              Back to Games
-            </button>
+            <div className="game-over-actions">
+              <button className="btn-restart" onClick={handleReplay}>
+                Play again
+              </button>
+              <button className="btn-restart secondary" onClick={onBack}>
+                Back to Games
+              </button>
+            </div>
           </div>
         )}
       </div>

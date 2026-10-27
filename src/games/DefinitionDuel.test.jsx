@@ -163,6 +163,32 @@ describe('getting unstuck on a card', () => {
     expect(screen.queryByText(/passed over/i)).not.toBeInTheDocument();
   });
 
+  test('a finished round can be played again without leaving the game', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    act(() => jest.advanceTimersByTime(61_000));
+    expect(screen.getByText(/time'?s up/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    // Back on the first card, with the clock wound back to a full minute and
+    // the round not already over - the latch that books the end has to be
+    // cleared or the new round starts finished.
+    expect(screen.getByText(DUEL_PAIRS[0].definition)).toBeInTheDocument();
+    expect(screen.getByText('60s')).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+    expect(screen.queryByText(/time'?s up/i)).not.toBeInTheDocument();
+  });
+
+  test('the replay clock runs for real, not from where the last round stopped', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    act(() => jest.advanceTimersByTime(30_000));
+    act(() => jest.advanceTimersByTime(31_000));
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    act(() => jest.advanceTimersByTime(10_000));
+    expect(screen.getByText('50s')).toBeInTheDocument();
+  });
+
   test('skipping the last card ends the round rather than stalling on it', () => {
     render(<DefinitionDuel onBack={() => {}} />);
     DUEL_PAIRS.forEach(() => fireEvent.click(screen.getByRole('button', { name: /skip/i })));
