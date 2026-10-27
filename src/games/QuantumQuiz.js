@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import '../styles/GameStyles.css';
 
 /**
@@ -287,6 +287,44 @@ function QuantumQuiz({ onBack }) {
     setAnswered(false);
   }, [isLast]);
 
+  /*
+   * Number keys pick an option and Enter advances.
+   *
+   * The card already tells the player the options are 1 to 4 - the option
+   * badges are the letters A to D, and the only way to use one was to move the
+   * mouse and click. On a fourteen question deck that is fourteen trips away
+   * from the keyboard for anyone reading along, and the key that does the
+   * obvious thing did nothing.
+   *
+   * A is the first option drawn, not the first option in the data, because the
+   * letters label what is on screen rather than what is in the source.
+   */
+  useEffect(() => {
+    if (gameOver) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+      if (answered) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          handleNext();
+        }
+        return;
+      }
+
+      const position = /^[1-9]$/.test(event.key)
+        ? Number(event.key) - 1
+        : 'abcd'.indexOf(event.key.toLowerCase());
+      if (position < 0 || position >= options.length) return;
+      event.preventDefault();
+      handleAnswerClick(options[position].original);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [answered, gameOver, handleAnswerClick, handleNext, options]);
+
   if (gameOver) {
     const total = QUIZ_QUESTIONS.length;
     const percentage = Math.round((correctCount / total) * 100);
@@ -351,6 +389,11 @@ function QuantumQuiz({ onBack }) {
         <div className="quiz-question">
           <h3>{question.question}</h3>
         </div>
+
+        <p className="quiz-keyhint" aria-hidden="true">
+          Press 1&ndash;{options.length} or A&ndash;{String.fromCharCode(64 + options.length)} to answer,
+          then Enter for the next question.
+        </p>
 
         <div className="quiz-options">
           {options.map(({ original, text }, index) => {

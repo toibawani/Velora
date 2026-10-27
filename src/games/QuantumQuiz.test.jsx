@@ -161,6 +161,63 @@ describe('Concept Check quiz', () => {
     expect(firstSlots).toBeLessThan(QUIZ_QUESTIONS.length / 3);
   });
 
+  /*
+   * The card tells the player the options are A to D and there was no way to
+   * use a letter without a mouse.
+   */
+  test('a number key answers the question', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    fireEvent.keyDown(window, { key: '1' });
+
+    // One of the four is marked, so the deck has moved on from "unanswered".
+    expect(screen.getByRole('button', { name: /next question/i })).toBeInTheDocument();
+  });
+
+  test('a letter key answers the question too', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    fireEvent.keyDown(window, { key: 'c' });
+    expect(screen.getByRole('button', { name: /next question/i })).toBeInTheDocument();
+  });
+
+  test('the key picks the option on screen rather than the one in the data', () => {
+    // The letters label the drawn order. If the handler were fed the data order
+    // it would mark a different option than the one the badge points at, so the
+    // press of "A" has to match the first button rendered.
+    render(<QuantumQuiz onBack={() => {}} />);
+    const first = screen.getAllByRole('button', { name: /^A\s/ })[0];
+    const firstText = first.querySelector('.option-text').textContent;
+
+    fireEvent.keyDown(window, { key: 'a' });
+    expect(screen.getByRole('button', { name: /^A\s/ })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: new RegExp(`^A\\s${firstText}`) })).toBeInTheDocument();
+  });
+
+  test('a key press after answering does not change the answer', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    fireEvent.keyDown(window, { key: '1' });
+    const score = screen.getByText(/^Score: /).textContent;
+
+    fireEvent.keyDown(window, { key: '2' });
+    fireEvent.keyDown(window, { key: '3' });
+    expect(screen.getByText(score)).toBeInTheDocument();
+  });
+
+  test('Enter advances once the question is answered', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    fireEvent.keyDown(window, { key: '1' });
+    fireEvent.keyDown(window, { key: 'Enter' });
+
+    expect(screen.getByText(QUIZ_QUESTIONS[1].question)).toBeInTheDocument();
+  });
+
+  test('keys with a modifier are left to the browser', () => {
+    // Cmd+1 switches browser tabs. Preventing it would make the shortcut the
+    // only thing on the page and break a keyboard convention older than it.
+    render(<QuantumQuiz onBack={() => {}} />);
+    fireEvent.keyDown(window, { key: '1', metaKey: true });
+    expect(screen.queryByRole('button', { name: /next question/i })).not.toBeInTheDocument();
+  });
+
   test('the correct answer scores once', () => {
     render(<QuantumQuiz onBack={() => {}} />);
     pick('The boundary beyond which nothing escapes');
