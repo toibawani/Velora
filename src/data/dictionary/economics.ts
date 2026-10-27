@@ -18,7 +18,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'If you spend an evening studying physics, the dollar cost is zero, but the opportunity cost is the two-hour dinner with your closest friend or the progress you could have made on your novel.',
     source: 'Friedrich von Wieser, Theorie der gesellschaftlichen Wirtschaft (1914)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Opportunity_cost',
-    verified: true,
   },
 
 {
@@ -31,7 +30,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'David Ricardo proved that if Portugal is better at making both wine and cloth than England, both nations still get richer by having Portugal concentrate on wine and England on cloth and trading between themselves.',
     source: 'David Ricardo, Principles of Political Economy and Taxation (1817)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Comparative_advantage',
-    verified: true,
   },
 
 {
@@ -44,7 +42,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'Zimbabwe in 2008 reached a rate where a lifetime of savings bought a week of bread. Germany in 1923 reached roughly 29,500 percent a year, the most extreme case of a currency printing failure in a major economy.',
     source: 'Friedman, "The Counter-Revolution in Monetary Economics" (1968)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Inflation',
-    verified: true,
   },
 
 {
@@ -57,7 +54,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'A shortage from a port closure should raise prices and ration by price, but during the 2022 energy crisis European governments capped prices instead, which deliberately traded a shortage for a financial loss on every unit sold.',
     source: 'Smith, An Inquiry into the Nature and Causes of the Wealth of Nations (1776)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Supply_and_demand',
-    verified: true,
   },
 
 {
@@ -70,7 +66,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'A hurricane raises GDP, because spending money to repair damage is counted as output. The same is true of a health-related absence that briefly improves the unemployment rate, and a more expensive house is counted as more output than a cheaper one.',
     source: 'Simons, "Gross Domestic Product" (FRED, 1935)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Gross_domestic_product',
-    verified: true,
   },
 
 {
@@ -83,7 +78,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'The Federal Reserve raised its target from 0 to 5.25 percent in sixteen months in 2022-23, the fastest tightening since 1981, specifically to slow an inflation it had been late to treat as a problem.',
     source: 'Friedman and Schwartz, A Monetary History of the United States (1963)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Central_bank',
-    verified: true,
   },
 
 {
@@ -96,7 +90,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'Banks that believed the US government would not let them fail kept making riskier loans through the 2000s, which is a case of moral hazard with a very high eventual cost. Deposit insurance solves a different problem and creates its own smaller version of the same one.',
     source: 'Arrow, "Uncertainty and the Welfare Economics of Medical Care" (1963)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Moral_hazard',
-    verified: true,
   },
 
 {
@@ -109,7 +102,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'A per-unit tax rarely changes the quantity sold, so in that textbook case there is no deadweight loss at all. Real taxes change behaviour, which is why the estimated cost of one percentage point of income tax is far below what a flat rate would imply.',
     source: 'Harberger, "The Welfare Aspects of Taxes and Prices" (1938)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Deadweight_loss',
-    verified: true,
   },
 
 {
@@ -122,7 +114,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'A factory that can dump waste into a river pays less than the cost it imposes downstream, so the cheap good is not actually cheap. Carbon is the same problem, except the damage is global and the delay makes it invisible to voters.',
     source: 'Pigou, The Economics of Welfare (1920)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Externality',
-    verified: true,
   },
 
 {
@@ -135,7 +126,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'People stopped holding Weimar marks within weeks and switched to goods, foreign currency, or barter, which is why the prices look so extreme. The shops had restocked daily because anything held was worthless by morning.',
     source: 'Cagan, "The Monetary History of the United States" (1956)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Hyperinflation',
-    verified: true,
   },
 
 {
@@ -148,7 +138,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'Continuing a coal plant costs fuel and maintenance; the capital was spent years ago. Shutting it down and buying gas instead compares those ongoing costs only, which is why decommissioning decisions routinely ignore the original build price on both sides.',
     source: 'Arkes and Blumer, "The Psychology of Sunk Cost" (1985)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Sunk_cost',
-    verified: true,
   },
 
 {
@@ -161,7 +150,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'Insulin is famously price inelastic, which is precisely why pricing it was indefensible. Raising the fare on a commuter rail line 10 percent might cost 2 percent of passengers, and that asymmetry is why operators raise prices on captive riders.',
     source: 'Marshall, Principles of Economics (1895)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Price_elasticity_of_demand',
-    verified: true,
   },
 
 {
@@ -174,7 +162,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'A Gini of 0.30 means the average household in a country receives about 70 percent of the median household income. Both the US and Sweden moved this figure substantially over the twentieth century, in opposite directions, without either changing the definition.',
     source: 'Gini, "Variabilita e Mutabilita" (1912)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Gini_coefficient',
-    verified: true,
   },
 
 {
@@ -187,7 +174,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'A US-listed share and its Hong Kong listing track the same company, and a gap between them is arbitraged within minutes by institutional traders. When a 30 percent gap sits open for a day, the explanation is almost always a capital restriction rather than a free profit.',
     source: 'Vince, "The Mathematics of Money Management" (1990)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Arbitrage',
-    verified: true,
   },
   {
     id: 'keynesian-economics',
@@ -199,7 +185,6 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'In the 1930s, the US unemployment rate peaked near 25 percent. Wartime spending, not a recovery in private investment, is what pulled output back to its earlier path, which is the case Keynesians point to when they argue that the timing matters more than the size of a stimulus.',
     source: 'John Maynard Keynes, The General Theory of Employment, Interest and Money (1936)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Keynesian_economics',
-    verified: true,
   },
   {
     id: 'zero-sum-game',
@@ -211,6 +196,5 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     example: 'Poker is zero-sum before the house takes its cut: every chip one player wins comes from another player’s stack. A wage negotiation is not, because a pay rise can be funded by productivity that did not exist before the agreement.',
     source: 'John von Neumann and Oskar Morgenstern, Theory of Games and Economic Behavior (1944)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Zero-sum_game',
-    verified: true,
   },
 ];

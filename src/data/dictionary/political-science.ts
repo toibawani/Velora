@@ -18,7 +18,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'In the United States, Congress passes a budget, the President can veto it, Congress can override the veto with a two-thirds majority, and the Supreme Court can strike the resulting statute down if it violates constitutional rights.',
     source: 'Baron de Montesquieu, The Spirit of the Laws (1748)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Separation_of_powers',
-    verified: true,
   },
 
 {
@@ -31,7 +30,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'Overfishing in international waters: if a boat skipper holds back out of environmental concern, other trawlers simply take those fish anyway. Without binding international treaties, everyone rushes to harvest until the fishery collapses.',
     source: 'Garrett Hardin, Science (1968) / Elinor Ostrom, Governing the Commons (1990)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Tragedy_of_the_commons',
-    verified: true,
   },
 
 {
@@ -44,7 +42,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'Marbury v. Madison in 1803 set the United States on the strong footing, striking down a federal law over a minor point of procedure. Britain, by contrast, has no written constitution and no court with that power.',
     source: 'Marbury v. Madison, 5 U.S. 137 (1803)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Judicial_review',
-    verified: true,
   },
 
 {
@@ -57,7 +54,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'Medicaid is jointly funded but jointly administered, and that shared arrangement has produced decades of litigation between states and the federal government over reimbursement rates. A clean division of powers would not need a lawsuit to resolve it.',
     source: 'Hamilton, Federalist No. 15 (1780)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Federalism',
-    verified: true,
   },
 
 {
@@ -70,7 +66,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'In Everson v. Board of Education (1947), the US Supreme Court struck down a New Jersey program paying for children to be taken to religious school, which remains the strongest statement of the principle in the country.',
     source: 'Jefferson, "A Well-Regulated Militia" letter to Mazzei (1809)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Separation_of_church_and_state_in_the_United_States',
-    verified: true,
   },
 
 {
@@ -83,7 +78,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The term was coined in 1812 after the district drawn for one Massachusetts legislator was so contorted that a newspaper cartoon showed it shaped like a salamander, and the name stuck.',
     source: 'Elbridge Gerry, "The Gerrys and the Men of the People" (1812)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Gerrymandering',
-    verified: true,
   },
 
 {
@@ -96,7 +90,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The 1946 Nuremberg trials put senior officials on trial under a legal standard that had not existed before, precisely because those officials had governed a state where no law bound them. That is what the concept is for.',
     source: 'Albert Venn Dicey, Introduction to the Study of the Law of the Constitution (1885)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Rule_of_law',
-    verified: true,
   },
 
 {
@@ -109,7 +102,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The writ was suspended in the UK repeatedly during the Irish conflict, and in the US it was suspended by Lincoln in 1861 and by Wilson in 1918. Each suspension prompted a fight over whether the executive may suspend it, and none of those fights fully settled the question.',
     source: ' habeas corpus, 29 Car. 2 c. 9 (1679)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Habeas_corpus',
-    verified: true,
   },
 
 {
@@ -122,7 +114,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The Salt March of 1930, where Gandhi walked 385 km to the sea to make salt illegally, was obeyed in the open and the participants went to prison for it. That contrast with a hidden breach is what made the tactic politically effective rather than merely illegal.',
     source: 'Thoreau, "Resistance to Civil Government" (1849)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Civil_disobedience',
-    verified: true,
   },
 
 {
@@ -135,7 +126,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The 2013 filibuster of the Comprehensive Immigration Reform Act ran for 21 hours of continuous speaking. The nuclear option that followed in 2013 closed the debate for certain categories of nomination, cutting the tactic back sharply.',
     source: 'Senate Rule XXII, Standing Rules of the Senate',
     sourceUrl: 'https://en.wikipedia.org/wiki/Filibuster',
-    verified: true,
   },
 
 {
@@ -148,7 +138,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'New Zealand in 1893 was the first self-governing country where women got the vote, by a margin of 13 votes. Britain took until 1918, and the United States fought a civil war and passed three amendments before most of its own citizens could vote.',
     source: 'Property Qualification and the Representation of the People Act (1867)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Women%27s_suffrage',
-    verified: true,
   },
 
 {
@@ -161,7 +150,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The Open Lobbying Act of 2007 in the US requires lobbyists to register and disclose their clients and payments quarterly. The disclosure is what turns a private arrangement into something a voter can check.',
     source: 'Title II of the Internal Revenue Code, Lobbying Disclosure Act (2007)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Lobbying',
-    verified: true,
   },
 
 {
@@ -174,7 +162,6 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The US has amended its constitution 27 times, and the first ten were the Bill of Rights, ratified in 1791. The most recent, the 27th, was in 1992, so the record includes long stretches of no change at all.',
     source: 'United States Constitution, Article V',
     sourceUrl: 'https://en.wikipedia.org/wiki/Constitutional_amendment',
-    verified: true,
   },
 
 {
@@ -187,6 +174,5 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     example: 'The US Supreme Court put it plainly in McCulloch v. Maryland in 1819: the people are the sole fountain of all just authority. That case upheld a national bank, which is a much more permissive reading than the sentence alone suggests.',
     source: 'McCulloch v. Maryland, 17 U.S. 316 (1819)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Popular_sovereignty',
-    verified: true,
   },
 ];

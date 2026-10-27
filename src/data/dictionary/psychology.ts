@@ -18,7 +18,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'Aesop’s fable of the fox who leaps repeatedly for high-hanging grapes and fails: rather than admit he isn’t tall or athletic enough, he walks away insisting the grapes were sour anyway.',
     source: 'Leon Festinger, A Theory of Cognitive Dissonance (1957)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Cognitive_dissonance',
-    verified: true,
   },
 
 {
@@ -31,7 +30,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'If you believe full moons make hospital emergency rooms chaotic, you will take vivid mental note of every unruly patient during a full moon, but completely ignore busy nights during a crescent moon.',
     source: 'Peter Wason, Quarterly Journal of Experimental Psychology (1960)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Confirmation_bias',
-    verified: true,
   },
 
 {
@@ -44,7 +42,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'Pavlov conditioned dogs to salivate at a bell, but the everyday version is the smell of a school canteen making you hungry before lunch. Phobias are usually the same process running in the other direction.',
     source: 'Pavlov, Lectures on Conditioned Reflexes (1927)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Classical_conditioning',
-    verified: true,
   },
 
 {
@@ -57,7 +54,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'A slot machine is built on this. The reinforcement is unpredictable, and variable schedules of reinforcement produce the most persistent behaviour, which is why they are the hardest to extinguish.',
     source: 'Skinner, The Behavior of Organisms (1938)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Operant_conditioning',
-    verified: true,
   },
 
 {
@@ -70,7 +66,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'A study of 13,000 flashcards in a 2021 Science paper found spaced scheduling roughly halved the number of reviews needed for the same recall. Cramming gets you to the exam; spacing gets you to the exam and the re-exam.',
     source: 'Roediger and Karpicke, "Test Enhanced Learning" (2006)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Spaced_repetition',
-    verified: true,
   },
 
 {
@@ -83,7 +78,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'Miller reported the magical number seven in 1956, but later work put the real figure closer to four, once grouping is controlled. The number of things you can hold is not the number of things you know.',
     source: 'Baddeley and Hitch, "Working Memory" (1974)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Working_memory',
-    verified: true,
   },
 
 {
@@ -96,7 +90,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'The original 1999 study gave participants a test of logic and general knowledge. Those in the bottom quartile were the most confident in their performance, and the top quartile were the least confident, despite scoring far better.',
     source: 'Dunning and Kruger, "Unskilled and Unaware" (1999)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect',
-    verified: true,
   },
 
 {
@@ -109,7 +102,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'A classic study asked participants to explain a late essay, and a late essay from a student was blamed on the student while the same lateness from a professor was excused by their commute. Same person, same behaviour, different explanation.',
     source: 'Ross, "The Fundamental Attribution Error" (1977)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Fundamental_attribution_error',
-    verified: true,
   },
 
 {
@@ -122,7 +114,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'Sunk cost is why people finish a novel they hate and why governments keep funding a project long after the case for it collapsed. The 2012 US presidential race had a climate scientist and a NASA strategist both say sunk cost decided it.',
     source: 'Arkes and Blumer, "The Psychology of Sunk Cost" (1985)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Sunk_cost_fallacy',
-    verified: true,
   },
 
 {
@@ -135,7 +126,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'Kahneman tested this by giving one group a painful ice pressor trial lasting 60 seconds and another the same trial lasting 120 seconds, with a longer trial including a mild 60 second stretch at the end. Most people preferred the long one, which predicts that stretching every holiday by a painful end would improve every memory.',
     source: 'Kahneman, Fredrickson, Schreiber, and Redelmeier, "When More Pain Is Preferred to Less" (1993)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Peak%E2%80%93end_rule',
-    verified: true,
   },
 
 {
@@ -148,7 +138,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'The honest placebo is the open-label placebo, where patients are told they are getting a sugar pill with no active ingredient and still improve. Reviews of trials in irritable bowel syndrome found rates around 40 percent on average.',
     source: 'Kaptchuk, "The Placebo Effect in Medicine" (2020)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Placebo',
-    verified: true,
   },
 
 {
@@ -161,7 +150,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'Tversky and Kahneman had participants spin a numbered wheel, then asked for a percentage; groups given 10 or 65 estimated 15 and 45 respectively, when the correct answer was the same 10 percent. A wheel of chance changed the answer.',
     source: 'Tversky and Kahneman, "Judgment under Uncertainty" (1974)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Anchoring',
-    verified: true,
   },
 
 {
@@ -174,7 +162,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'Lepper, Greene, and Nisbett gave children drawing materials; those promised a reward drew less and produced less interesting pictures. The finding is well replicated and it is a real problem for classroom and app design.',
     source: 'Deci and Ryan, "The Need for Self-Determination" (1985)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Intrinsic_motivation',
-    verified: true,
   },
 
 {
@@ -187,7 +174,6 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'The Nobel Prize in Physiology or Medicine in 2017 went to the researchers who identified the clock genes in fruit flies. People isolated from clocks without light signals still drift towards a 24.2 hour cycle, longer than the day.',
     source: 'Hastings, "The circadian system" (2000)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Circadian_rhythm',
-    verified: true,
   },
   {
     id: 'yerkes-dodson-law',
@@ -199,6 +185,5 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     example: 'A sprinter may run a personal best in front of a crowd, while the same crowd makes a chess player blunder a line they know. The task difficulty, not the person’s toughness, is what decides which side of the curve the pressure lands on.',
     source: 'Yerkes and Dodson, "The relation of strength of stimulus to rapidity of habit-formation" (1908)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law',
-    verified: true,
   },
 ];
