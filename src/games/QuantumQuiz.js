@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { recordGameResult } from '../utils/gameResults';
 import '../styles/GameStyles.css';
+
+/** The id this game is filed under, in stored results and in the hub's list. */
+export const QUIZ_GAME_ID = 'quiz';
 
 /**
  * Every answer carries an explanation of why it is right. A multiple choice
@@ -261,6 +265,10 @@ function QuantumQuiz({ onBack }) {
   // and the four that needed rereading were the four the player could not
   // remember which ones they were.
   const [missed, setMissed] = useState([]);
+  // The round is reported once. Finish is reachable from both the button and
+  // Enter, and pressing either twice in the same tick would otherwise book two
+  // plays for one sitting.
+  const recordedRef = useRef(false);
 
   const question = QUIZ_QUESTIONS[currentQuestion];
   const isLast = currentQuestion === QUIZ_QUESTIONS.length - 1;
@@ -285,6 +293,7 @@ function QuantumQuiz({ onBack }) {
     setAnswered(false);
     setGameOver(false);
     setMissed([]);
+    recordedRef.current = false;
   }, []);
 
   const handleAnswerClick = useCallback(
@@ -307,12 +316,22 @@ function QuantumQuiz({ onBack }) {
   const handleNext = useCallback(() => {
     if (isLast) {
       setGameOver(true);
+      // The round is recorded here rather than in an effect on gameOver, so the
+      // score that lands is the one this round earned before any of it was
+      // cleared for a replay.
+      if (!recordedRef.current) {
+        recordedRef.current = true;
+        recordGameResult(QUIZ_GAME_ID, {
+          score,
+          max: QUIZ_QUESTIONS.length * POINTS_PER_CORRECT,
+        });
+      }
       return;
     }
     setCurrentQuestion((prev) => prev + 1);
     setSelectedAnswer(null);
     setAnswered(false);
-  }, [isLast]);
+  }, [isLast, score]);
 
   /*
    * Number keys pick an option and Enter advances.

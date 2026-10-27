@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import QuantumQuiz, { QUIZ_QUESTIONS, optionOrder } from './QuantumQuiz';
+import QuantumQuiz, { QUIZ_QUESTIONS, optionOrder, QUIZ_GAME_ID } from './QuantumQuiz';
+import { getGameResult } from '../utils/gameResults';
 import { CLASSIC_GAMES } from '../screens/Games';
 import { PHILOSOPHY_LEVELS } from '../data/philosophy';
 import { CURIOUS_TERMS } from '../data/dictionary';
@@ -8,6 +9,10 @@ import { CURIOUS_TERMS } from '../data/dictionary';
 const pick = (text) => fireEvent.click(screen.getByRole('button', { name: new RegExp(text, 'i') }));
 
 describe('Concept Check quiz', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
   // The screen was called the Quantum Quiz and had no quantum content.
   test('is no longer named after content it does not have', () => {
     render(<QuantumQuiz onBack={() => {}} />);
@@ -311,6 +316,43 @@ describe('Concept Check quiz', () => {
 
     expect(screen.getByText(/every one right/i)).toBeInTheDocument();
     expect(document.querySelector('.quiz-review')).toBeNull();
+  });
+
+  /*
+   * A finished round left nothing behind. The score was component state, so
+   * going back to the hub erased the only evidence that the deck had ever been
+   * played, and the card there could say nothing about it.
+   */
+  test('a finished round is recorded, out of what the deck can pay', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    QUIZ_QUESTIONS.forEach((question, index) => {
+      const order = optionOrder(index, question.options.length);
+      fireEvent.click(
+        screen.getAllByRole('button', { name: /^[A-D]\s/ })[order.indexOf(question.correct)]
+      );
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    });
+
+    const record = getGameResult(QUIZ_GAME_ID);
+    expect(record).toMatchObject({ best: QUIZ_QUESTIONS.length * 10, plays: 1 });
+    expect(record.max).toBe(QUIZ_QUESTIONS.length * 10);
+  });
+
+  test('a replayed round counts as a second play rather than replacing the first', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    const playOnce = () => {
+      for (let i = 0; i < QUIZ_QUESTIONS.length; i += 1) {
+        fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+        fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+      }
+    };
+
+    playOnce();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+    playOnce();
+
+    expect(getGameResult(QUIZ_GAME_ID).plays).toBe(2);
   });
 
   test('finishing reports how many were right, not a raw score out of ten', () => {
