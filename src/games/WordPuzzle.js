@@ -187,6 +187,20 @@ function WordPuzzle({ onBack }) {
   // the animation.
   const [settled, setSettled] = useState(false);
   const advanceRef = useRef(null);
+  const firstInputRef = useRef(null);
+
+  /*
+   * The first box is focused when the puzzle appears.
+   *
+   * Nothing was focused, so every puzzle in a sixteen puzzle deck began with a
+   * click into a text box before a single letter could be typed - and the box
+   * sits below the sentence the player is reading, so the pointer had to travel
+   * there and back on each one. Focus is moved only when the puzzle changes, so
+   * it cannot pull the cursor out of a box being typed into.
+   */
+  useEffect(() => {
+    firstInputRef.current?.focus();
+  }, [currentPuzzle]);
 
   const puzzle = PUZZLES[currentPuzzle];
   const isLast = currentPuzzle === PUZZLES.length - 1;
@@ -306,11 +320,18 @@ function WordPuzzle({ onBack }) {
           {userAnswers.map((answer, idx) => (
             <input
               key={idx}
+              ref={idx === 0 ? firstInputRef : null}
               type="text"
               placeholder={`Word ${idx + 1}`}
               aria-label={`Word ${idx + 1}`}
               value={answer}
               onChange={(e) => handleInputChange(idx, e.target.value)}
+              // Enter submits rather than doing nothing. A one-box puzzle has
+              // nowhere else to go, and a two-box puzzle has no reason to make
+              // the player reach for the button to send what they just typed.
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSubmit();
+              }}
               className="puzzle-input"
               disabled={revealed}
             />

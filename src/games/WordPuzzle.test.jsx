@@ -127,6 +127,40 @@ describe('Word Puzzle', () => {
     expect(screen.getByText(`Puzzle 1/${PUZZLES.length}`)).toBeInTheDocument();
   });
 
+  /*
+   * Nothing was focused, so every puzzle began with a click into a box before a
+   * letter could be typed.
+   */
+  test('the first box is ready to type into when a puzzle appears', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    expect(screen.getByLabelText('Word 1')).toHaveFocus();
+  });
+
+  test('Enter submits the answer', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    fill('black', 'hole');
+    fireEvent.keyDown(screen.getByLabelText('Word 2'), { key: 'Enter' });
+    expect(screen.getByText('Score: 100')).toBeInTheDocument();
+  });
+
+  test('Enter on an incomplete answer does not score', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    fill('black');
+    fireEvent.keyDown(screen.getByLabelText('Word 1'), { key: 'Enter' });
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  test('the focus follows the puzzle rather than staying on the last one', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    fill('black', 'hole');
+    submit();
+    act(() => jest.advanceTimersByTime(1300));
+
+    // Puzzle two has one blank, and that blank is the one holding the cursor.
+    expect(screen.getByLabelText('Word 1')).toHaveValue('');
+    expect(screen.getByLabelText('Word 1')).toHaveFocus();
+  });
+
   test('the answer is matched regardless of case and spacing', () => {
     render(<WordPuzzle onBack={() => {}} />);
     fill('  BLACK ', 'hole  ');
