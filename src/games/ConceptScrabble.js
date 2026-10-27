@@ -205,6 +205,39 @@ function ConceptScrabble({ onBack }) {
     setSelectedLetters((prev) => prev.filter((tile) => tile.id !== idToRemove));
   }, []);
 
+  /**
+   * Empty the board in one action.
+   *
+   * Taking back a wrongly-built word meant clicking each of its letters in
+   * turn, and the longest words here are eleven characters - an anagram attempt
+   * that started wrong cost eleven separate clicks to undo, on a game where
+   * trying a wrong arrangement is the actual activity.
+   */
+  const handleClearBoard = useCallback(() => {
+    setSelectedLetters([]);
+    setMessage('');
+  }, []);
+
+  /**
+   * Backspace takes the last letter off the board rather than out of the word.
+   *
+   * The tiles are not text inputs, so the key did nothing at all and the only
+   * route back was the mouse. Typing a word and pressing a key that normally
+   * undoes a keystroke should not be the one place it does not.
+   */
+  useEffect(() => {
+    if (settled || gameOver) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key !== 'Backspace') return;
+      event.preventDefault();
+      setSelectedLetters((prev) => prev.slice(0, -1));
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [gameOver, settled]);
+
   const goToNextLevel = useCallback(() => {
     if (isLastLevel) {
       setGameOver(true);
@@ -376,6 +409,13 @@ function ConceptScrabble({ onBack }) {
         <div className="game-actions">
           <button className="btn-submit" onClick={handleSubmit} disabled={selectedLetters.length === 0 || settled}>
             Submit word
+          </button>
+          <button
+            className="btn-clear"
+            onClick={handleClearBoard}
+            disabled={selectedLetters.length === 0 || settled}
+          >
+            Clear board
           </button>
           <button className="btn-skip" onClick={handleSkip} disabled={settled}>
             Skip level

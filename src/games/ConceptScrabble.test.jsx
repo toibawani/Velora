@@ -95,6 +95,39 @@ describe('Concept Scrabble', () => {
     expect(screen.queryByText(/completed all/i)).not.toBeInTheDocument();
   });
 
+  /*
+   * Taking back a wrong arrangement meant clicking each letter off in turn, on
+   * a game whose whole activity is trying arrangements.
+   */
+  test('the board can be emptied in one action', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    const word = SCRABBLE_LEVELS[0].word;
+    buildWord(word.slice(0, 4));
+
+    fireEvent.click(screen.getByRole('button', { name: /clear board/i }));
+
+    expect(document.querySelector('.built-word .placeholder')).not.toBeNull();
+    expect(rackLetters()).toEqual(expect.arrayContaining(word.split('')));
+    // And the tiles released by the clear can be picked up again.
+    const letter = screen.getAllByRole('button', { name: /^Letter / }).find((b) => b.textContent === word[0]);
+    expect(letter).toBeEnabled();
+  });
+
+  test('Clear board is disabled on an empty board', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    expect(screen.getByRole('button', { name: /clear board/i })).toBeDisabled();
+  });
+
+  test('Backspace takes the last letter off the board', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    const word = SCRABBLE_LEVELS[0].word;
+    buildWord(word.slice(0, 3));
+
+    fireEvent.keyDown(window, { key: 'Backspace' });
+
+    expect(document.querySelectorAll('.built-letter')).toHaveLength(2);
+  });
+
   test('the hint no longer gives away the letter count', () => {
     render(<ConceptScrabble onBack={() => {}} />);
     // Level one used to read "Two words, no space", and later levels gave the
