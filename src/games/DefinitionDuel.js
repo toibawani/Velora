@@ -89,6 +89,10 @@ function DefinitionDuel({ onBack }) {
   const [feedback, setFeedback] = useState('');
   const [correct, setCorrect] = useState(false);
   const [hintText, setHintText] = useState('');
+  // Cards passed over without answering. Counted and reported, because a card
+  // skipped and a card the clock beat are different outcomes and the end screen
+  // telling the player only the score loses the one they can act on.
+  const [skipped, setSkipped] = useState(0);
 
   // Cards where the hint was used. A Set rather than a flag, because the hint
   // belongs to the card it was asked for: nulling a boolean on advance would
@@ -198,6 +202,27 @@ function DefinitionDuel({ onBack }) {
   }, [currentPair, endGame, gameActive, userInput]);
 
   /**
+   * Pass on a card. Counted separately from a wrong answer, because a card the
+   * player could not name is not a card they got wrong, and mixing the two
+   * would leave the accuracy figure explaining neither.
+   */
+  const handleSkip = useCallback(() => {
+    if (!gameActive) return;
+    clearTimeout(advanceRef.current);
+    setSkipped((prev) => prev + 1);
+    setFeedback('');
+    setCorrect(false);
+    setHintText('');
+    setUserInput('');
+
+    if (currentPair === DUEL_PAIRS.length - 1) {
+      endGame(false);
+      return;
+    }
+    setCurrentPair((prev) => prev + 1);
+  }, [currentPair, endGame, gameActive]);
+
+  /**
    * A second letter is most of a one-word answer, so the hint gives the shape
    * rather than the spelling: how many words, and the first letter of the first
    * one. Enough to turn a blank into a memory, not enough to be the answer.
@@ -276,6 +301,14 @@ function DefinitionDuel({ onBack }) {
               >
                 Hint
               </button>
+              <button
+                type="button"
+                className="btn-duel-skip"
+                onClick={handleSkip}
+                aria-label="Skip this definition"
+              >
+                Skip
+              </button>
             </div>
 
             {hintText && (
@@ -308,6 +341,13 @@ function DefinitionDuel({ onBack }) {
             <p className="accuracy">
               {finished ? `You got through all ${DUEL_PAIRS.length} definitions.` : `You reached card ${currentPair + 1} of ${DUEL_PAIRS.length}.`}
             </p>
+            {skipped > 0 && (
+              <p className="accuracy">
+                {skipped === 1
+                  ? 'One card was passed over rather than answered.'
+                  : `${skipped} cards were passed over rather than answered.`}
+              </p>
+            )}
             <button className="btn-restart" onClick={onBack}>
               Back to Games
             </button>

@@ -132,6 +132,44 @@ describe('getting unstuck on a card', () => {
     expect(screen.getByText('Score: 5')).toBeInTheDocument();
   });
 
+  test('a card can be passed over instead of holding the round', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /skip/i }));
+
+    // Straight to the next definition, with the input cleared for it.
+    expect(screen.getByText(DUEL_PAIRS[1].definition)).toBeInTheDocument();
+    expect(screen.getByLabelText(/type the term/i)).toHaveValue('');
+  });
+
+  test('a skipped card is reported as passed over, not as got wrong', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    DUEL_PAIRS.forEach((_, i) => {
+      if (i > 0) fireEvent.click(screen.getByRole('button', { name: /skip/i }));
+      else fireEvent.click(screen.getByRole('button', { name: /skip/i }));
+    });
+
+    expect(screen.getByText(/cards were passed over rather than answered/i)).toBeInTheDocument();
+    // No answers were attempted, so accuracy has nothing to report and says so.
+    expect(screen.getByText(/no answers attempted/i)).toBeInTheDocument();
+  });
+
+  test('a round with nothing skipped does not mention skipping', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    answer(DUEL_PAIRS[0].word);
+    act(() => jest.advanceTimersByTime(900));
+    act(() => jest.advanceTimersByTime(61_000));
+
+    expect(screen.queryByText(/passed over/i)).not.toBeInTheDocument();
+  });
+
+  test('skipping the last card ends the round rather than stalling on it', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    DUEL_PAIRS.forEach(() => fireEvent.click(screen.getByRole('button', { name: /skip/i })));
+
+    expect(screen.getByText(/all cards done/i)).toBeInTheDocument();
+  });
+
   test('the next card is not still wearing the last card\'s hint', () => {
     render(<DefinitionDuel onBack={() => {}} />);
     fireEvent.click(screen.getByRole('button', { name: /hint/i }));
