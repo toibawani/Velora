@@ -217,6 +217,24 @@ function KnowledgeChain({ onBack }) {
     setHintsUsed(0);
   }, []);
 
+  /**
+   * Back to the first chain with the score cleared.
+   *
+   * Solving the last chain ended the game in place: the panel said "All chains
+   * done. Final score 400" and the only control left was Start Over, which
+   * cleared the board on the chain already solved. There was no way to play the
+   * set again or to leave for the hub.
+   */
+  const handleReplay = useCallback(() => {
+    clearTimeout(advanceRef.current);
+    setCurrentChain(0);
+    setSelectedConcepts([]);
+    setScore(0);
+    setMessage('');
+    setSolved(false);
+    setHintsUsed(0);
+  }, []);
+
   return (
     <div className="game-screen">
       <div className="game-header">
@@ -315,7 +333,19 @@ function KnowledgeChain({ onBack }) {
         <p className="chain-progress">
           Chain {currentChain + 1}/{CHAINS.length}
         </p>
-        {isLastChain && solved && <p className="chain-progress">All chains done. Final score {score}.</p>}
+        {isLastChain && solved && (
+          <>
+            <p className="chain-progress">All chains done. Final score {score}.</p>
+            <div className="game-over-actions">
+              <button className="btn-restart" onClick={handleReplay}>
+                Play again
+              </button>
+              <button className="btn-restart secondary" onClick={onBack}>
+                Back to Games
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

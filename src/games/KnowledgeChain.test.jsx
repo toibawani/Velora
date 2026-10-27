@@ -227,6 +227,56 @@ describe('a hint for a chain that will not come', () => {
   });
 });
 
+/*
+ * Solving the last chain ended the game in place with no way back to the first
+ * one and no way out besides the Back button in the header.
+ */
+describe('finishing the set', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => {
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
+  });
+
+  const solveEveryChain = () => {
+    CHAINS.forEach((chain) => {
+      pick(...chain.concepts);
+      fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+      act(() => jest.advanceTimersByTime(3000));
+    });
+  };
+
+  test('finishing the last chain offers a way to play the set again', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    solveEveryChain();
+
+    expect(screen.getByText(new RegExp(`All chains done`))).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /play again/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /back to games/i })).toBeInTheDocument();
+  });
+
+  test('the replay returns to the first chain with the score cleared', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    solveEveryChain();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    expect(screen.getByText('Chain 1/' + CHAINS.length)).toBeInTheDocument();
+    expect(screen.getByText(CHAINS[0].title)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+    expect(screen.queryByText(/all chains done/i)).not.toBeInTheDocument();
+  });
+
+  test('a second pass through the set can be solved', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+    solveEveryChain();
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+    expect(screen.getByText(`Score: ${POINTS_PER_CHAIN}`)).toBeInTheDocument();
+  });
+});
+
 describe('chain content quality', () => {
   // The double-submit trace finds nothing here, for the same structural reason
   // as Concept Check but by a different mechanism: every control on the screen
