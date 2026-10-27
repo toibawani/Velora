@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import '../styles/GameStyles.css';
 
 /**
@@ -100,6 +100,38 @@ const CHAINS = [
 const isCorrectOrder = (selected, total) =>
   selected.length === total && selected.every((index, position) => index === position);
 
+/**
+ * The order the four concept buttons are laid out in.
+ *
+ * They used to be rendered straight off `chain.concepts`, which is the answer.
+ * So the board showed DNA, Genes, Proteins, Cells left to right in the order
+ * they belong, and the shortest winning line was to click them left to right -
+ * the game was asking whether you could read, not whether you knew the chain.
+ * A test checked that clicking DNA, Proteins, Genes, Cells was rejected, which
+ * is true and was never the problem.
+ *
+ * This returns a permutation that is never the identity, so there is no round
+ * where the puzzle answers itself. It is derived from the chain index rather
+ * than from Math.random, because a re-render mid-move must not reshuffle the
+ * buttons under the player's cursor - the same chain always lays out the same
+ * way, and a different chain lays out differently.
+ */
+function boardOrder(chainIndex, count) {
+  // A stride coprime with the count visits every position exactly once, which
+  // is what makes this a permutation rather than something that can drop a
+  // button or draw one twice.
+  const stride = count % 2 === 0 ? count - 1 : count - 2;
+  const offset = (chainIndex * 3) % count;
+  const order = [];
+  for (let i = 0; i < count; i += 1) order.push((offset + i * stride) % count);
+
+  // Guard rather than an assumption: for a four-concept chain the identity
+  // cannot come out of the line above, but a chain of a different length could,
+  // and the identity is the one output this function exists to prevent.
+  const isIdentity = order.every((value, position) => value === position);
+  return isIdentity ? order.slice().reverse() : order;
+}
+
 KnowledgeChain.propTypes = { onBack: PropTypes.func };
 
 function KnowledgeChain({ onBack }) {
@@ -112,6 +144,12 @@ function KnowledgeChain({ onBack }) {
 
   const chain = CHAINS[currentChain];
   const isLastChain = currentChain === CHAINS.length - 1;
+  // The buttons are laid out in a scrambled order; the picks are still recorded
+  // as positions in `chain.concepts`, which is what `isCorrectOrder` grades.
+  const buttonOrder = useMemo(
+    () => boardOrder(currentChain, chain.concepts.length),
+    [chain.concepts.length, currentChain]
+  );
 
   // Moving on used to be a bare setTimeout that nothing could cancel, so
   // unmounting inside that 1.5s window set state on a component that is gone
@@ -197,17 +235,17 @@ function KnowledgeChain({ onBack }) {
         )}
 
         <div className="concepts-grid-chain">
-          {chain.concepts.map((concept, idx) => {
+          {buttonOrder.map((idx) => {
             const isSelected = selectedConcepts.includes(idx);
             return (
               <button
-                key={concept}
+                key={chain.concepts[idx]}
                 type="button"
                 className={`concept-btn ${isSelected ? 'selected' : ''}`}
                 onClick={() => handleConceptClick(idx)}
                 disabled={isSelected || solved}
               >
-                {concept}
+                {chain.concepts[idx]}
               </button>
             );
           })}
@@ -244,6 +282,6 @@ function KnowledgeChain({ onBack }) {
   );
 }
 
-export { CHAINS };
+export { CHAINS, boardOrder };
 
 export default KnowledgeChain;

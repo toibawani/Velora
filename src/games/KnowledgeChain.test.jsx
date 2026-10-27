@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import KnowledgeChain, { CHAINS } from './KnowledgeChain';
+import KnowledgeChain, { CHAINS, boardOrder } from './KnowledgeChain';
 
 const pick = (...labels) => {
   labels.forEach((label) => {
@@ -105,6 +105,45 @@ describe('Knowledge Chain', () => {
 
     expect(screen.getByText('Chain 2/' + CHAINS.length)).toBeInTheDocument();
     expect(screen.getByText('Chemistry Chain')).toBeInTheDocument();
+  });
+});
+
+/*
+ * The board used to render the four concept buttons straight off
+ * `chain.concepts`, which is the answer. The player could win by reading the
+ * buttons from left to right, and nothing noticed, because the test that
+ * covered ordering fed the concepts in deliberately wrong orders.
+ */
+describe('the board does not hand over the answer', () => {
+  test('clicking the buttons in the order they are laid out is not the solution', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+
+    const board = screen.getAllByRole('button', { name: new RegExp(`^(${CHAINS[0].concepts.join('|')})$`) });
+    // Every concept is on the board exactly once, in some order.
+    expect(board.map((button) => button.textContent).sort()).toEqual(CHAINS[0].concepts.slice().sort());
+
+    board.forEach((button) => fireEvent.click(button));
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+
+    expect(screen.getByText(/wrong order/i)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  test('no chain is laid out in its own answer order', () => {
+    // Every chain, not just the one that happens to be on screen first: a
+    // single chain that comes out in order is a round that answers itself.
+    CHAINS.forEach((chain, index) => {
+      const order = boardOrder(index, chain.concepts.length);
+      expect(order.slice().sort((a, b) => a - b)).toEqual(chain.concepts.map((_, i) => i));
+      expect(order).not.toEqual(chain.concepts.map((_, i) => i));
+    });
+  });
+
+  test('a chain always lays out the same way, so a re-render cannot reshuffle it', () => {
+    // Derived from the chain index rather than Math.random, which is what makes
+    // this hold: the buttons must not move out from under a half-finished pick.
+    expect(boardOrder(2, 4)).toEqual(boardOrder(2, 4));
+    expect(boardOrder(2, 4)).not.toEqual(boardOrder(3, 4));
   });
 });
 
