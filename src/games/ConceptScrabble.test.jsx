@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import ConceptScrabble, { SCRABBLE_LEVELS } from './ConceptScrabble';
+import ConceptScrabble, { SCRABBLE_LEVELS, SCRABBLE_GAME_ID, POINTS_PER_WORD } from './ConceptScrabble';
+import { getGameResult } from '../utils/gameResults';
 
 const rackLetters = () =>
   screen.getAllByRole('button', { name: /^Letter / }).map((b) => b.textContent);
@@ -17,6 +18,7 @@ const buildWord = (word) => {
 describe('Concept Scrabble', () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    window.localStorage.clear();
     // Seed the shuffle so the rack is predictable.
     let seed = 1;
     jest.spyOn(Math, 'random').mockImplementation(() => {
@@ -27,6 +29,44 @@ describe('Concept Scrabble', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     jest.useRealTimers();
+  });
+
+  /*
+   * A finished rack left nothing behind, so the hub could not say whether the
+   * game had ever been completed and the score was gone the moment it was left.
+   */
+  test('a finished pass is recorded, out of what the rack can pay', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+
+    SCRABBLE_LEVELS.forEach((lv) => {
+      buildWord(lv.word);
+      fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+      act(() => jest.advanceTimersByTime(1300));
+    });
+
+    expect(getGameResult(SCRABBLE_GAME_ID)).toMatchObject({
+      best: SCRABBLE_LEVELS.length * POINTS_PER_WORD,
+      max: SCRABBLE_LEVELS.length * POINTS_PER_WORD,
+      plays: 1,
+    });
+  });
+
+  test('a skipped level is recorded as the lower score it produced', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+
+    SCRABBLE_LEVELS.forEach((lv, index) => {
+      if (index === 0) {
+        fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
+        return;
+      }
+      buildWord(lv.word);
+      fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+      act(() => jest.advanceTimersByTime(1300));
+    });
+
+    expect(getGameResult(SCRABBLE_GAME_ID).best).toBe(
+      (SCRABBLE_LEVELS.length - 1) * POINTS_PER_WORD
+    );
   });
 
   // This is the bug the whole game rested on. The rack was recomputed on

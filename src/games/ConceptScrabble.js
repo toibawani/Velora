@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { recordGameResult } from '../utils/gameResults';
 import '../styles/GameStyles.css';
+
+/** The id this game is filed under, in stored results and in the hub's list. */
+export const SCRABBLE_GAME_ID = 'scrabble';
 
 /**
  * Hints used to give the answer away: "11 letters" for SINGULARITY and "8
@@ -176,6 +180,23 @@ function ConceptScrabble({ onBack }) {
   const [settled, setSettled] = useState(false);
   const advanceRef = useRef(null);
   const shakeRef = useRef(null);
+  // Reported once per pass through the rack. The last word's 100 points are
+  // only in `score` after the re-render, so the record is taken from the end
+  // screen rather than from the moment the last word was submitted.
+  const recordedRef = useRef(false);
+
+  useEffect(() => {
+    if (!gameOver) {
+      recordedRef.current = false;
+      return;
+    }
+    if (recordedRef.current) return;
+    recordedRef.current = true;
+    recordGameResult(SCRABBLE_GAME_ID, {
+      score,
+      max: SCRABBLE_LEVELS.length * POINTS_PER_WORD,
+    });
+  }, [gameOver, score]);
 
   const level = SCRABBLE_LEVELS[currentLevel];
   const isLastLevel = currentLevel === SCRABBLE_LEVELS.length - 1;
@@ -426,6 +447,6 @@ function ConceptScrabble({ onBack }) {
   );
 }
 
-export { SCRABBLE_LEVELS };
+export { SCRABBLE_LEVELS, POINTS_PER_WORD };
 
 export default ConceptScrabble;
