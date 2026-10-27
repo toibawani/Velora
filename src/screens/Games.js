@@ -122,6 +122,17 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   // default meant the six real games underneath could not be reached at all
   // unless you found this checkbox and turned it off.
   const [useFlowMode, setUseFlowMode] = useState(false);
+  // Which difficulties to show on the classic tab. 'All' rather than an empty
+  // set, so the default is the whole grid and filtering is something you opt
+  // into rather than something you have to undo.
+  const [difficultyFilter, setDifficultyFilter] = useState('All');
+
+  // The label a card carries, read off the card itself rather than a list here,
+  // so a difficulty added to a game cannot be missing from the filter.
+  const DIFFICULTIES = ['All', ...new Set(CLASSIC_GAMES.map((game) => game.difficulty))];
+  const visibleGames = CLASSIC_GAMES.filter(
+    (game) => difficultyFilter === 'All' || game.difficulty === difficultyFilter
+  );
 
   // Render selected game in Flow State or Classic mode
   if (selectedGame) {
@@ -223,9 +234,37 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             </div>
           </section>
 
+      {/* Difficulty filter.
+        *
+        * Six cards sat in one grid with a difficulty printed on each and no way
+        * to use it, so someone with ten minutes and no appetite for Relativity
+        * Lab had to read all six cards to find the two marked Easy. Every label
+        * on the filter is read off the cards, so a game given a new difficulty
+        * shows up here without anyone remembering to add it.
+        */}
+      <div className="games-difficulty-filter" role="group" aria-label="Filter games by difficulty">
+        <span className="games-filter-label">Difficulty</span>
+        {DIFFICULTIES.map((level) => (
+          <button
+            key={level}
+            type="button"
+            className={`pill-btn ${difficultyFilter === level ? 'active' : ''}`}
+            aria-pressed={difficultyFilter === level}
+            onClick={() => setDifficultyFilter(level)}
+          >
+            {level}
+            <span className="games-filter-count">
+              {level === 'All'
+                ? CLASSIC_GAMES.length
+                : CLASSIC_GAMES.filter((game) => game.difficulty === level).length}
+            </span>
+          </button>
+        ))}
+      </div>
+
       {/* Games Grid */}
       <main className="games-grid-main">
-        {CLASSIC_GAMES.map((game) => {
+        {visibleGames.map((game) => {
           const GameIcon = game.icon;
           return (
             // A div with an onClick is not focusable, has no role, and cannot
@@ -267,6 +306,11 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             </button>
           );
         })}
+        {visibleGames.length === 0 && (
+          <p className="games-grid-empty">
+            No game on this list is marked {difficultyFilter}.
+          </p>
+        )}
       </main>
 
       {/* Stats */}

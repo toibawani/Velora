@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import GameHub from './Games';
 
 describe('Game hub listings', () => {
@@ -109,6 +109,55 @@ describe('the insights panel only reports what the device recorded', () => {
     expect(screen.queryByText('92%')).not.toBeInTheDocument();
     expect(screen.queryByText('15')).not.toBeInTheDocument();
     expect(screen.queryByText('18')).not.toBeInTheDocument();
+  });
+});
+
+/*
+ * Six cards sat in one grid with a difficulty printed on each and no way to use
+ * it, so finding the easy ones meant reading all six.
+ */
+describe('the difficulty filter', () => {
+  beforeEach(() => localStorage.clear());
+
+  test('the grid holds every game until a difficulty is chosen', () => {
+    render(<GameHub setScreen={() => {}} />);
+    expect(screen.getAllByTestId('game-card')).toHaveLength(6);
+  });
+
+  test('choosing a difficulty leaves only the games marked with it', () => {
+    render(<GameHub setScreen={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /^Easy/ }));
+
+    const cards = screen.getAllByTestId('game-card');
+    expect(cards.length).toBeGreaterThan(0);
+    cards.forEach((card) => {
+      expect(within(card).getByTestId('game-difficulty')).toHaveTextContent('Easy');
+    });
+    expect(cards.length).toBeLessThan(6);
+  });
+
+  test('every difficulty on a card is offered as a filter', () => {
+    render(<GameHub setScreen={() => {}} />);
+    // Read from the cards rather than from a list in the test, so a game given
+    // a new difficulty cannot be unfilterable.
+    const seen = new Set(screen.getAllByTestId('game-difficulty').map((n) => n.textContent));
+    seen.forEach((level) => {
+      expect(screen.getByRole('button', { name: new RegExp(`^${level}`) })).toBeInTheDocument();
+    });
+  });
+
+  test('All puts the grid back', () => {
+    render(<GameHub setScreen={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /^Easy/ }));
+    fireEvent.click(screen.getByRole('button', { name: /^All/ }));
+    expect(screen.getAllByTestId('game-card')).toHaveLength(6);
+  });
+
+  test('the filter says how many games each difficulty holds', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const all = screen.getByRole('button', { name: /^All/ });
+    expect(all).toHaveTextContent('6');
   });
 });
 
