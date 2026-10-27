@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { recordGameResult } from '../utils/gameResults';
 import '../styles/GameStyles.css';
+
+/** The id this game is filed under, in stored results and in the hub's list. */
+export const WORD_PUZZLE_GAME_ID = 'puzzle';
 
 /**
  * The last puzzle had no ending. handleSubmit advanced to the next puzzle only
@@ -188,6 +192,25 @@ function WordPuzzle({ onBack }) {
   const [settled, setSettled] = useState(false);
   const advanceRef = useRef(null);
   const firstInputRef = useRef(null);
+  // The round is reported once per pass through the deck. Recorded in an effect
+  // on the end screen rather than at the moment the last puzzle was answered,
+  // because the score is state and the final 100 points are only in it after
+  // the re-render - reading it any earlier would understate the round by the one
+  // puzzle that finished it.
+  const recordedRef = useRef(false);
+
+  useEffect(() => {
+    if (!finished) {
+      recordedRef.current = false;
+      return;
+    }
+    if (recordedRef.current) return;
+    recordedRef.current = true;
+    recordGameResult(WORD_PUZZLE_GAME_ID, {
+      score,
+      max: PUZZLES.length * POINTS_PER_PUZZLE,
+    });
+  }, [finished, score]);
 
   /*
    * The first box is focused when the puzzle appears.

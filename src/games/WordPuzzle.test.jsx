@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import WordPuzzle, { PUZZLES } from './WordPuzzle';
+import WordPuzzle, { PUZZLES, WORD_PUZZLE_GAME_ID } from './WordPuzzle';
 import { SCRABBLE_LEVELS } from './ConceptScrabble';
+import { getGameResult } from '../utils/gameResults';
 import { CURIOUS_TERMS } from '../data/dictionary';
 
 // Read from the dictionary so the cross-game test identifies the philosophy
@@ -19,8 +20,57 @@ const fill = (...words) => {
 const submit = () => fireEvent.click(screen.getByRole('button', { name: /submit answer/i }));
 
 describe('Word Puzzle', () => {
-  beforeEach(() => jest.useFakeTimers());
+  beforeEach(() => {
+    jest.useFakeTimers();
+    window.localStorage.clear();
+  });
   afterEach(() => jest.useRealTimers());
+
+  // The end screen arrives on the advance booked by the last correct answer,
+  // about 1.2s after it, so the clock is wound past it here. Answering the last
+  // puzzle is not itself the end of the round.
+  const playWholeDeck = () => {
+    PUZZLES.forEach((p) => {
+      fill(...p.word.toLowerCase().split(' '));
+      submit();
+      act(() => jest.advanceTimersByTime(1300));
+    });
+    act(() => jest.advanceTimersByTime(1300));
+  };
+
+  /*
+   * A finished pass left no trace. The score was component state, so the hub
+   * had no way to say the deck had ever been played through.
+   */
+  test('a finished pass is recorded, out of what the deck can pay', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    playWholeDeck();
+
+    expect(getGameResult(WORD_PUZZLE_GAME_ID)).toMatchObject({
+      best: PUZZLES.length * 100,
+      max: PUZZLES.length * 100,
+      plays: 1,
+    });
+  });
+
+  test('the recorded score includes the puzzle that ended the deck', () => {
+    // The score is state, so reading it at the moment the last puzzle was
+    // answered would miss the 100 that answer earned and every stored best
+    // would be a puzzle short.
+    render(<WordPuzzle onBack={() => {}} />);
+    playWholeDeck();
+    expect(getGameResult(WORD_PUZZLE_GAME_ID).best).toBe(PUZZLES.length * 100);
+  });
+
+  test('a second pass counts as another play, not a replacement', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    playWholeDeck();
+    act(() => jest.advanceTimersByTime(1300));
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+    playWholeDeck();
+
+    expect(getGameResult(WORD_PUZZLE_GAME_ID).plays).toBe(2);
+  });
 
   test('the right words score and move to the next puzzle', () => {
     render(<WordPuzzle onBack={() => {}} />);
