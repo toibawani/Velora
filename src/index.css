@@ -124,3 +124,34 @@ button:focus:not(:focus-visible),
 .game-card-large:hover {
   box-shadow: var(--shadow-md) !important;
 }
+
+
+/* Button hover states - subtle color changes, no lift physics */
+button:not(:disabled):hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+button:not(:disabled):focus-visible:hover {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Primary accent button hover */
+.universe-home .uh-primary:hover,
+.splash-btn-primary:hover,
+.uh-topic-preview > button:hover {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+}
+
+/* Secondary text button hover */
+.uh-icon-button:hover,
+.uh-nav-item:hover,
+.uh-card-reveal:hover,
+.uh-card-lookup:hover,
+.uh-card-resume:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
