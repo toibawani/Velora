@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { Check, Download, HardDrive, Monitor, Moon, Sun, Upload, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { FAILURE, describeStorage } from '../utils/storage';
+import { FAILURE, describeStorage, describeStoredKey, storageUsage } from '../utils/storage';
+import { formatBytes } from '../utils/format';
 import {
   IMPORT_MODE,
   buildBackup,
@@ -73,6 +74,7 @@ function Settings({ user, setScreen, onForgetProfile }) {
   const [preferences, setPreferences] = useState(() => getOnboardingPreferences());
   const [notice, setNotice] = useState(null);
   const storage = describeStorage();
+  const usage = storageUsage();
   const [analyticsOn, setAnalyticsOn] = useState(isOptedIn());
   const [exportNotice, setExportNotice] = useState(null);
   const [importMode, setImportMode] = useState(IMPORT_MODE.MERGE);
@@ -321,6 +323,28 @@ function Settings({ user, setScreen, onForgetProfile }) {
             have played. None of it is transmitted anywhere, and clearing your browser data deletes
             all of it. There is no second copy, because there is nowhere for one to be.
           </p>
+
+          {usage.available && usage.keys.length > 0 && (
+            <div className="st-usage">
+              <p className="st-usage-total" role="status">
+                {formatBytes(usage.totalBytes)} across {usage.keys.length}{' '}
+                {usage.keys.length === 1 ? 'saved item' : 'saved items'} in this browser.
+              </p>
+              <ul className="st-usage-list" aria-label="Largest saved items">
+                {usage.keys.slice(0, 6).map((entry) => (
+                  <li key={entry.key} className="st-usage-row">
+                    <span className="st-usage-name">{describeStoredKey(entry.key)}</span>
+                    <span className="st-usage-size">{formatBytes(entry.bytes)}</span>
+                  </li>
+                ))}
+              </ul>
+              {usage.keys.length > 6 && (
+                <p className="st-usage-note">
+                  and {usage.keys.length - 6} smaller {usage.keys.length - 6 === 1 ? 'item' : 'items'}
+                </p>
+              )}
+            </div>
+          )}
         </section>
 
         <section className="st-section" aria-labelledby="st-data">

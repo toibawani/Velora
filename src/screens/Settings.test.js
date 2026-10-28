@@ -180,7 +180,9 @@ test('exports every stored key into a dated JSON file', () => {
   const backup = JSON.parse(text);
   expect(backup.app).toBe('velora');
   expect(backup.entries.some((entry) => entry.key === KEYS.QUESTION_DESK)).toBe(true);
-  expect(screen.getByRole('status')).toHaveTextContent(/prepared a file/i);
+  expect(
+    within(screen.getByRole('region', { name: /take your data with you/i })).getByRole('status'),
+  ).toHaveTextContent(/prepared a file/i);
 });
 
 test('says the download did not start rather than implying it did', () => {
@@ -189,7 +191,9 @@ test('says the download did not start rather than implying it did', () => {
 
   fireEvent.click(screen.getByRole('button', { name: /export everything as json/i }));
 
-  expect(screen.getByRole('status')).toHaveTextContent(/would not start a download/i);
+  expect(
+    within(screen.getByRole('region', { name: /take your data with you/i })).getByRole('status'),
+  ).toHaveTextContent(/would not start a download/i);
 });
 
 const backupFile = (entries, overrides = {}) =>
@@ -289,6 +293,38 @@ test('merge mode restores in one press and keeps what the file omits', async () 
 
   expect(screen.getByText(/1 key restored/i)).toBeInTheDocument();
   expect(window.localStorage.getItem(KEYS.MYTH_STREAK)).not.toBeNull();
+});
+
+test('says how much is stored, in named rows rather than key strings', () => {
+  writeValue(KEYS.QUESTION_DESK, [{ question: 'x'.repeat(400) }]);
+  writeValue(KEYS.GAME_RESULTS, { scrabble: { best: 10, max: 20, plays: 1 } });
+  open();
+
+  const region = screen.getByRole('region', { name: /what is stored/i });
+  expect(within(region).getByRole('status')).toHaveTextContent(/saved items in this browser/i);
+
+  const rows = within(region).getByRole('list', { name: /largest saved items/i });
+  expect(within(rows).getByText('Question desk')).toBeInTheDocument();
+  expect(within(rows).getByText('Game results')).toBeInTheDocument();
+  // The raw key is not something a person can act on, and it must not leak in.
+  expect(within(region).queryByText(/velora_/)).not.toBeInTheDocument();
+  // The largest row is listed first.
+  const names = within(rows)
+    .getAllByRole('listitem')
+    .map((row) => row.textContent);
+  expect(names[0]).toMatch(/Question desk/);
+});
+
+test('lists at most six rows and counts the rest', () => {
+  Object.values(KEYS)
+    .filter((key) => key.startsWith('velora_') && !key.includes('PREFIX') && key !== KEYS.THEME)
+    .slice(0, 8)
+    .forEach((key, index) => writeValue(key, 'x'.repeat(10 * (index + 1))));
+  open();
+
+  const rows = screen.getByRole('list', { name: /largest saved items/i });
+  expect(within(rows).getAllByRole('listitem')).toHaveLength(6);
+  expect(screen.getByText(/and \d+ smaller items?/i)).toBeInTheDocument();
 });
 
 test('goes back to the atlas', () => {
