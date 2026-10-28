@@ -31,6 +31,35 @@
   margin-bottom: var(--space-6);
 }
 
+.review-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.review-summary {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
+}
+
+.review-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.review-group-title {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
 .no-reviews {
   text-align: center;
   padding: var(--space-8);
@@ -57,6 +86,51 @@
 .review-item:hover {
   border-color: var(--border-strong);
   box-shadow: var(--shadow-hover);
+}
+
+.review-item.is-due {
+  border-color: var(--color-border);
+  box-shadow: inset 3px 0 0 var(--color-error);
+}
+
+.review-step {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.review-timing-icon {
+  vertical-align: -2px;
+  margin-right: 5px;
+}
+
+.review-timing.tone-late,
+.review-timing.tone-now {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.review-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: stretch;
+}
+
+.review-snooze {
+  padding: var(--space-1) var(--space-3);
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.review-snooze:hover {
+  border-color: var(--border-strong);
+  color: var(--color-text);
 }
 
 .review-left {
@@ -121,6 +195,10 @@
 }
 
 .review-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
   padding: var(--space-2) var(--space-4);
   background: var(--color-accent);
   color: var(--color-bg);
@@ -138,6 +216,11 @@
 .review-btn:hover {
   background: var(--accent-primary-hover);
   box-shadow: var(--shadow-hover);
+}
+
+.review-btn.due {
+  background: var(--color-error);
+  color: var(--color-bg);
 }
 
 .review-btn:active {
@@ -206,6 +289,11 @@
   line-height: 1.5;
 }
 
+.info-note-icon {
+  vertical-align: -2px;
+  margin-right: 6px;
+}
+
 @media (max-width: 768px) {
   .smart-review-planner {
     padding: var(--space-5);
@@ -217,6 +305,10 @@
   }
 
   .review-btn {
+    width: 100%;
+  }
+
+  .review-snooze {
     width: 100%;
   }
 
