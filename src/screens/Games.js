@@ -20,7 +20,7 @@ import { PUZZLES } from '../games/WordPuzzle';
 import { SCRABBLE_LEVELS } from '../games/ConceptScrabble';
 import { CHAINS } from '../games/KnowledgeChain';
 import { getAnalyticsData } from '../utils/analyticsStorage';
-import { getGameResults, formatResult } from '../utils/gameResults';
+import { getGameResults, getLastPlayedGame, formatResult } from '../utils/gameResults';
 import '../styles/Games.css';
 
 // Names, colours and time limits are taken from what these games actually
@@ -156,6 +156,17 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   // into rather than something you have to undo.
   const [difficultyFilter, setDifficultyFilter] = useState('All');
 
+  // The game played most recently, so the hub can offer to pick it up again.
+  // Read off the same records the cards use, so the strip and the card cannot
+  // disagree about which game was last.
+  const lastPlayed = useMemo(
+    () => (selectedGame ? null : getLastPlayedGame()),
+    [selectedGame]
+  );
+  const lastPlayedGame = lastPlayed
+    ? CLASSIC_GAMES.find((game) => game.id === lastPlayed.gameId)
+    : null;
+
   // The label a card carries, read off the card itself rather than a list here,
   // so a difficulty added to a game cannot be missing from the filter.
   const DIFFICULTIES = ['All', ...new Set(CLASSIC_GAMES.map((game) => game.difficulty))];
@@ -290,6 +301,31 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
           </button>
         ))}
       </div>
+
+      {/* Pick up where you left off.
+        *
+        * Six games are a lot to scan when you came back to finish the round you
+        * started, and the score you were chasing was the only thing on the
+        * screen that remembered it. This offers that game directly.
+        */}
+      {lastPlayedGame && (
+        <div className="games-resume" data-testid="games-resume">
+          <p className="games-resume-text">
+            Last played: <strong>{lastPlayedGame.name}</strong>
+            <span className="games-resume-score">
+              {' '}
+              &middot; best {formatResult(lastPlayed)}
+            </span>
+          </p>
+          <button
+            type="button"
+            className="pill-btn"
+            onClick={() => setSelectedGame(lastPlayedGame.id)}
+          >
+            Play it again
+          </button>
+        </div>
+      )}
 
       {/* Games Grid */}
       <main className="games-grid-main">

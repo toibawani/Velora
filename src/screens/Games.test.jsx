@@ -239,6 +239,35 @@ describe('what each game has actually produced', () => {
     expect(within(cardFor('Concept Check')).getByTestId('game-best')).toHaveTextContent('Best 90 of 140');
   });
 
+  test('the game finished most recently is offered again, with its best', () => {
+    expect(screen.queryByTestId('games-resume')).toBeNull();
+
+    recordGameResult('chain', { score: 150, max: 400 });
+    render(<GameHub setScreen={() => {}} />);
+
+    const strip = screen.getByTestId('games-resume');
+    expect(strip).toHaveTextContent('Knowledge Chain');
+    expect(strip).toHaveTextContent('best 150 of 400');
+  });
+
+  test('the offer follows the newest round, not the first one recorded', () => {
+    recordGameResult('quiz', { score: 90, max: 140 });
+    recordGameResult('puzzle', { score: 20, max: 100 });
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(screen.getByTestId('games-resume')).toHaveTextContent('Concept Puzzle');
+  });
+
+  test('the offer opens the game it names', () => {
+    recordGameResult('duel', { score: 30, max: 60 });
+    render(<GameHub setScreen={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /play it again/i }));
+    // Opening a game replaces the hub, so the strip goes with it.
+    expect(screen.queryByTestId('games-resume')).toBeNull();
+    expect(screen.getByRole('heading', { name: 'Definition Duel' })).toBeInTheDocument();
+  });
+
   test('the number of rounds played is shown, and counted in the singular', () => {
     recordGameResult('duel', { score: 30, max: 60 });
     render(<GameHub setScreen={() => {}} />);
