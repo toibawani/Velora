@@ -1,202 +1,209 @@
 /* ==========================================================================
-   Splash.css — First Impression Welcome Gate
-   --------------------------------------------------------------------------
-   Minimal, confident, premium. Full-screen centered brand with a smooth
-   fade-in entrance, subtle radial ambient glow, and two crisp CTAs.
-   Zero gradients, zero clutter. Token-backed for light & dark mode.
+   Splash.css — the cover of the book
+
+   Two columns on a wide screen: what this is, and what is inside it. Centred
+   single-column stack below 860px, where the counts become a list under the
+   actions rather than a panel beside them.
+
+   No entrance animation, no ambient glow, no drop shadows. A cover does not
+   fade in.
    ========================================================================== */
 
-/* ==================== ROOT ==================== */
 .splash {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-primary);
-  padding: var(--space-8);
-  position: relative;
-  overflow: hidden;
+  padding: clamp(1.5rem, 5vw, 4rem);
 }
 
-/* Ambient radial glow — barely perceptible depth cue */
-.splash::before {
-  content: '';
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  height: 500px;
-  background: transparent;
-  pointer-events: none;
-}
-
-/* ==================== CONTENT ==================== */
-.splash-content {
-  position: relative;
-  max-width: 400px;
+.splash-panel {
   width: 100%;
-  text-align: center;
-  animation: splash-enter 0.55s var(--ease-spring) both;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
 }
 
-@keyframes splash-enter {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ==================== LEFT: the statement ==================== */
+
+.splash-copy {
+  max-width: 34rem;
 }
 
-/* ==================== BRAND ==================== */
-.splash-brand {
-  margin-bottom: var(--space-8);
+.splash-eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--accent-primary);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .splash-wordmark {
-  font-family: var(--font-sans);
-  font-weight: 900;
-  font-size: 3.25rem;
-  letter-spacing: -0.05em;
+  margin: 0 0 var(--space-3);
   color: var(--text-primary);
-  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4.5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
   line-height: 1;
 }
 
 .splash-tagline {
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  line-height: 1.55;
   margin: 0;
+  max-width: 32rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
-/* ==================== DESCRIPTION ==================== */
-.splash-description {
-  font-size: 0.9rem;
-  color: var(--text-tertiary);
-  line-height: 1.7;
-  margin: 0 0 var(--space-10);
-  padding: 0 var(--space-2);
-}
+/* ==================== ACTIONS ==================== */
 
-/* ==================== ACTION BUTTONS ==================== */
 .splash-actions {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--space-3);
-  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+  margin: var(--space-6) 0 var(--space-5);
 }
 
 .splash-btn {
-  width: 100%;
-  padding: var(--space-4) var(--space-5);
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background-color 0.18s ease, transform 0.18s ease,
-              box-shadow 0.18s ease, border-color 0.18s ease, color 0.18s ease;
-  border: none;
   box-sizing: border-box;
 }
 
 .splash-btn-primary {
-  background: var(--accent-blue);
+  background: var(--accent-primary);
   color: var(--accent-contrast);
-  box-shadow: 0 8px 20px var(--accent-shadow);
+  border: 1px solid var(--accent-primary);
 }
 
 .splash-btn-primary:hover {
-  background: var(--accent-blue-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px var(--accent-shadow);
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
 }
 
-.splash-btn-secondary {
+.splash-browse {
+  min-height: 40px;
+  padding: 0 var(--space-4);
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
-.splash-btn-secondary:hover {
-  border-color: var(--border-strong);
+.splash-browse:hover {
   color: var(--text-primary);
-  background: var(--bg-secondary);
+  border-color: var(--border-strong);
+  background: var(--bg-tertiary);
 }
 
 /* ==================== FOOTER MICRO-COPY ==================== */
+
 .splash-footer {
-  font-size: 0.775rem;
-  color: var(--text-tertiary);
   margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
   line-height: 1.5;
 }
 
-/* ==================== DOMAIN STRIP (optional enhancement) ==================== */
-.splash-domains {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-8);
+/* ==================== RIGHT: what is inside ==================== */
+
+.splash-contents {
+  border-left: 1px solid var(--border-default);
+  padding-left: clamp(1.25rem, 3vw, 2.25rem);
 }
 
-.splash-domain-dot {
-  font-size: 0.75rem;
-  font-weight: 600;
+.splash-contents-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
   color: var(--text-tertiary);
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
-  white-space: nowrap;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.splash-contents-list {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.splash-contents-list > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.splash-contents-list dt {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.splash-contents-list dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.splash-contents-note {
+  margin: var(--space-4) 0 0;
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  line-height: 1.5;
 }
 
 /* ==================== RESPONSIVE ==================== */
-@media (max-width: 480px) {
+
+@media (max-width: 860px) {
   .splash {
-    padding: var(--space-6);
     align-items: flex-start;
-    padding-top: var(--space-16);
+    padding-top: clamp(2.5rem, 12vh, 5rem);
   }
 
-  .splash-wordmark {
-    font-size: 2.5rem;
+  .splash-panel {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
   }
 
-  .splash-tagline {
-    font-size: 0.95rem;
+  .splash-contents {
+    border-left: 0;
+    border-top: 1px solid var(--border-default);
+    padding-left: 0;
+    padding-top: var(--space-5);
   }
 
-  .splash-description {
-    font-size: 0.85rem;
+  .splash-actions {
+    flex-direction: column;
+    align-items: stretch;
   }
-}
-/* The "look around" route. Under the global filled-button rule this has to opt
-   back out explicitly, the same way the other secondary actions do. */
-.splash .splash-browse {
-  /* The footer sits directly under this button. With no bottom margin the
-     "No account, no email" line touched the button's border at 375px, which
-     read as two elements colliding rather than as a caption. */
-  margin-bottom: var(--space-5);
-  background: transparent !important;
-  color: var(--text-secondary) !important;
-  border: 1px solid var(--border-default) !important;
-  box-shadow: none !important;
-  padding: var(--space-2) var(--space-5) !important;
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  cursor: pointer;
-  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
-}
 
-.splash .splash-browse:hover {
-  background: var(--accent-soft) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-strong) !important;
-  box-shadow: none !important;
+  .splash-btn,
+  .splash-browse {
+    justify-content: center;
+    width: 100%;
+  }
 }
