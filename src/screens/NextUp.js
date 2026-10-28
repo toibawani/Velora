@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AlertTriangle, BookOpen, Check, ListTodo, Trash2, Undo2 } from 'lucide-react';
+import { AlertTriangle, BookOpen, Check, ListTodo, Pencil, Trash2, Undo2 } from 'lucide-react';
 import { CURRICULUM } from '../data/curriculum';
 import {
   MAX_LENGTH,
@@ -14,6 +14,7 @@ import {
   removeTask,
   reopenTask,
   restoreTask,
+  updateTask,
 } from '../utils/nextUp';
 import { findTopic, topicChoices } from '../utils/questionDesk';
 import { FAILURE } from '../utils/storage';
@@ -68,6 +69,10 @@ function NextUp({ setScreen, onOpenLesson }) {
   // item someone had written down on purpose.
   const [undoItem, setUndoItem] = useState(null);
   const undoTimer = useRef(null);
+  // The row being edited, if any. One at a time: a list of open textareas is a
+  // form, and this is a list of notes.
+  const [editingId, setEditingId] = useState(null);
+  const [editDraft, setEditDraft] = useState('');
   useEffect(() => () => clearTimeout(undoTimer.current), []);
 
   const trimmed = draft.trim();
@@ -121,6 +126,30 @@ function NextUp({ setScreen, onOpenLesson }) {
     undoTimer.current = setTimeout(() => setUndoItem(null), 8000);
   };
 
+  const startEditing = (item) => {
+    setEditingId(item.id);
+    setEditDraft(item.text);
+  };
+
+  /**
+   * Saves the edit, or says why it was not saved.
+   *
+   * The save is refused for the same length limits as the add form rather than
+   * truncating: a silently shortened note is worse than one that did not save,
+   * because the first looks like it worked.
+   */
+  const commitEdit = () => {
+    const { updated } = updateTask(editingId, { text: editDraft });
+    refresh();
+    reportWrite();
+    if (!updated) {
+      setNotice(`An item has to be between ${MIN_LENGTH} and ${MAX_LENGTH} characters. That edit was not saved.`);
+      return;
+    }
+    setEditingId(null);
+    setNotice(null);
+  };
+
   const handleUndo = () => {
     if (!undoItem) return;
     restoreTask(undoItem);
@@ -144,10 +173,47 @@ function NextUp({ setScreen, onOpenLesson }) {
 
   const renderItem = (item) => {
     const topic = item.topicId ? findTopic(item.subject, item.topicId) : null;
+    const editing = editingId === item.id;
     return (
-      <li key={item.id} className={`nu-item ${item.done ? 'done' : ''}`}>
+      <li key={item.id} className={`nu-item ${item.done ? 'done' : ''} ${editing ? 'editing' : ''}`}>
         <div className="nu-item-main">
-          <p className="nu-item-text">{item.text}</p>
+          {editing ? (
+            <div className="nu-edit">
+              <label className="nu-sr-only" htmlFor={`nu-edit-${item.id}`}>
+                Edit “{item.text}”
+              </label>
+              <textarea
+                id={`nu-edit-${item.id}`}
+                className="nu-edit-input"
+                rows={2}
+                value={editDraft}
+                onChange={(event) => setEditDraft(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') {
+                    event.preventDefault();
+                    setEditingId(null);
+                  }
+                  if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    commitEdit();
+                  }
+                }}
+              />
+              <div className="nu-edit-actions">
+                <button type="button" className="nu-edit-save" onClick={commitEdit}>
+                  Save
+                </button>
+                <button type="button" className="nu-action" onClick={() => setEditingId(null)}>
+                  Cancel
+                </button>
+                <span className="nu-edit-hint">
+                  {editDraft.trim().length} of {MAX_LENGTH} characters · Escape cancels
+                </span>
+              </div>
+            </div>
+          ) : (
+            <p className="nu-item-text">{item.text}</p>
+          )}
           <div className="nu-item-meta">
             <span>{whenLabel(item.createdAt)}</span>
             {item.subject && <span>{CURRICULUM[item.subject]?.name || item.subject}</span>}
@@ -160,6 +226,16 @@ function NextUp({ setScreen, onOpenLesson }) {
           )}
         </div>
         <div className="nu-item-actions">
+          {!editing && (
+            <button
+              type="button"
+              className="nu-action"
+              onClick={() => startEditing(item)}
+              aria-label={`Edit "${item.text}"`}
+            >
+              <Pencil size={15} aria-hidden="true" /> Edit
+            </button>
+          )}
           {item.done ? (
             <button
               type="button"

@@ -152,6 +152,85 @@ test('deletes an item', () => {
   expect(screen.getByText('A thing that stays on the list')).toBeInTheDocument();
 });
 
+/*
+ * An item typed in a hurry was permanent: the only fix was to delete it and
+ * type it again, which lost its date and any lesson it pointed at.
+ */
+test('an item can be edited in place', () => {
+  open();
+  add('look up hawking radiation');
+  const before = stored()[0];
+
+  fireEvent.click(screen.getByRole('button', { name: /edit "look up hawking radiation"/i }));
+  const field = screen.getByLabelText(/edit “look up hawking radiation”/i);
+  expect(field).toHaveValue('look up hawking radiation');
+
+  fireEvent.change(field, { target: { value: 'Read up on Hawking radiation properly' } });
+  fireEvent.click(screen.getByRole('button', { name: /^save$/i }));
+
+  expect(screen.getByText('Read up on Hawking radiation properly')).toBeInTheDocument();
+  expect(screen.queryByText('look up hawking radiation')).not.toBeInTheDocument();
+  // Same row, not a new one: the date and the id survive the edit.
+  expect(stored()).toHaveLength(1);
+  expect(stored()[0]).toMatchObject({ id: before.id, createdAt: before.createdAt });
+  expect(stored()[0].text).toBe('Read up on Hawking radiation properly');
+});
+
+test('Escape abandons an edit without writing it', () => {
+  open();
+  add('A note that stays as written');
+
+  fireEvent.click(screen.getByRole('button', { name: /edit "A note that stays as written"/i }));
+  const field = screen.getByLabelText(/edit “a note that stays as written”/i);
+  fireEvent.change(field, { target: { value: 'Something entirely different' } });
+  fireEvent.keyDown(field, { key: 'Escape' });
+
+  expect(screen.getByText('A note that stays as written')).toBeInTheDocument();
+  expect(stored()[0].text).toBe('A note that stays as written');
+});
+
+test('an edit too short to keep is refused rather than saved', () => {
+  open();
+  add('An item with a reasonable length');
+
+  fireEvent.click(screen.getByRole('button', { name: /edit "An item with a reasonable length"/i }));
+  fireEvent.change(screen.getByLabelText(/edit “an item with a reasonable length”/i), {
+    target: { value: ' a ' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /^save$/i }));
+
+  expect(screen.getByRole('alert')).toHaveTextContent(/not saved/i);
+  expect(stored()[0].text).toBe('An item with a reasonable length');
+  // Still editing, so the typed text is not thrown away silently.
+  expect(screen.getByLabelText(/edit “an item with a reasonable length”/i)).toBeInTheDocument();
+});
+
+test('only one item is edited at a time', () => {
+  open();
+  add('First item on the list');
+  add('Second item on the list');
+
+  fireEvent.click(screen.getByRole('button', { name: /edit "First item on the list"/i }));
+  fireEvent.click(screen.getByRole('button', { name: /edit "Second item on the list"/i }));
+
+  expect(screen.queryByLabelText(/edit “first item on the list”/i)).toBeNull();
+  expect(screen.getByLabelText(/edit “second item on the list”/i)).toBeInTheDocument();
+});
+
+test('a typo in a finished item can still be fixed', () => {
+  open();
+  add('An item with a typo innit');
+  fireEvent.click(screen.getByRole('button', { name: /mark .* as done/i }));
+
+  fireEvent.click(screen.getByRole('button', { name: /edit "An item with a typo innit"/i }));
+  fireEvent.change(screen.getByLabelText(/edit “an item with a typo innit”/i), {
+    target: { value: 'An item with the typo fixed' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /^save$/i }));
+
+  expect(stored()[0]).toMatchObject({ text: 'An item with the typo fixed', done: true });
+});
+
 test('a deleted item can be put back, with its date and its lesson intact', () => {
   open();
 
