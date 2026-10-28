@@ -666,6 +666,8 @@
 @media (max-width: 768px) {
   .uh-card-section { padding: 0 var(--space-4) var(--space-8); }
   .uh-card-row { gap: var(--space-4); }
+}
+
 .uh-card {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
@@ -683,43 +685,61 @@
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* ---- Theme toggle (tri-state segmented) ---- */
-/* Compact segmented control: three icons in one 26px-tall well. It used to be
-   three labelled pills inside a glass pill, which took a third of the header and
-   made a colour preference the most prominent thing on a page about ideas. */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 2px;
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-}
 
-.theme-toggle-segment {
-  width: 28px;
-  height: 24px;
-  min-height: 0;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  color: var(--text-tertiary);
-  font-size: 0; /* The icon carries it; the label stays in the accessible name. */
-}
 
-.theme-toggle-segment svg { flex: none; }
-.theme-toggle-segment span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 
-.theme-toggle-segment:hover {
-  color: var(--text-primary);
-  background: var(--bg-elevated);
-}
 
-.theme-toggle-segment[aria-pressed='true'] {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  box-shadow: 0 1px 2px rgba(50, 30, 20, 0.12);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
