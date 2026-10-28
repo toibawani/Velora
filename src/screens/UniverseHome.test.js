@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import UniverseHome from './UniverseHome';
 import { ThemeProvider } from '../context/ThemeContext';
+import { saveLastLesson, saveLessonProgress } from '../utils/resumePath';
 
 /** The props every render in this file needs, as fresh mocks each time. */
 const baseProps = () => ({
@@ -24,6 +25,43 @@ const renderUniverse = (overrides = {}) => {
   );
   return props;
 };
+
+/*
+ * "Pick up where you left off" read the same whether a lesson had been opened
+ * once or read halfway through, because the card had no position to show.
+ */
+describe('the resume card', () => {
+  beforeEach(() => localStorage.clear());
+
+  test('says how much of the lesson is left', () => {
+    saveLastLesson('physics', 'black-holes', 'Black Holes');
+    saveLessonProgress('physics', 'black-holes', 62);
+    renderUniverse();
+
+    const card = screen.getByText('Pick up where you left off').closest('article');
+    expect(within(card).getByText('62% read')).toBeInTheDocument();
+    expect(within(card).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '62');
+  });
+
+  test('a lesson with no recorded position shows no bar rather than an empty one', () => {
+    saveLastLesson('physics', 'black-holes', 'Black Holes');
+    renderUniverse();
+
+    const card = screen.getByText('Pick up where you left off').closest('article');
+    expect(within(card).queryByRole('progressbar')).toBeNull();
+    // And there is still a way back in.
+    expect(within(card).getByRole('button', { name: /resume/i })).toBeInTheDocument();
+  });
+
+  test('resuming opens the lesson the card names', () => {
+    saveLastLesson('philosophy', 'platos-cave', "Plato's Cave");
+    const props = renderUniverse();
+
+    fireEvent.click(screen.getByRole('button', { name: /resume/i }));
+
+    expect(props.onOpenLesson).toHaveBeenCalledWith('philosophy', 'platos-cave');
+  });
+});
 
 describe('editorial knowledge atlas', () => {
   test('shows the six major fields and hierarchical topic preview', () => {

@@ -298,6 +298,27 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
                     <p className="uh-card-eyebrow">Pick up where you left off</p>
                     <h2>{lastLesson.topicTitle}</h2>
                     <p className="uh-card-subject">{lastLesson.subject}</p>
+                    {/* How much of the lesson is left. "Pick up where you left
+                      * off" without a position reads the same for a lesson
+                      * opened once and one read halfway through. */}
+                    {Number.isFinite(lastLesson.percent) && (
+                      <>
+                        <div
+                          className="uh-resume-bar"
+                          role="progressbar"
+                          aria-label={`${lastLesson.topicTitle} read`}
+                          aria-valuenow={lastLesson.percent}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                        >
+                          <span
+                            className="uh-resume-fill"
+                            style={{ width: `${lastLesson.percent}%` }}
+                          />
+                        </div>
+                        <p className="uh-resume-percent">{lastLesson.percent}% read</p>
+                      </>
+                    )}
                   </div>
                   <button
                     type="button"

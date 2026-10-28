@@ -574,6 +574,30 @@
   font-weight: 600;
 }
 
+.uh-resume-bar {
+  width: 100%;
+  max-width: 220px;
+  height: 4px;
+  margin-top: var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  overflow: hidden;
+}
+
+.uh-resume-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: inherit;
+}
+
+.uh-resume-percent {
+  margin: var(--space-1) 0 0;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
 .uh-card-lookup:hover,
 .uh-card-resume:hover {
   background: var(--accent-primary);
