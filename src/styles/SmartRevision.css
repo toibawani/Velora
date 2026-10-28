@@ -89,7 +89,21 @@
 }
 
 .meta-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.revision-item.is-due {
+  box-shadow: inset 3px 0 0 var(--color-error);
+}
+
+.revision-count {
+  margin: 0 0 var(--space-1);
+  font-size: 0.8125rem;
+  font-weight: 600;
   color: var(--color-text-muted);
 }
 
