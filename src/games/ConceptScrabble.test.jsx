@@ -146,7 +146,7 @@ describe('Concept Scrabble', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /clear board/i }));
 
-    expect(document.querySelector('.built-word .placeholder')).not.toBeNull();
+    expect(screen.getByTestId('built-placeholder')).toBeInTheDocument();
     expect(rackLetters()).toEqual(expect.arrayContaining(word.split('')));
     // And the tiles released by the clear can be picked up again.
     const letter = screen.getAllByRole('button', { name: /^Letter / }).find((b) => b.textContent === word[0]);
@@ -165,7 +165,7 @@ describe('Concept Scrabble', () => {
 
     fireEvent.keyDown(window, { key: 'Backspace' });
 
-    expect(document.querySelectorAll('.built-letter')).toHaveLength(2);
+    expect(screen.getAllByTestId('built-letter')).toHaveLength(2);
   });
 
   test('the hint no longer gives away the letter count', () => {
@@ -206,7 +206,7 @@ describe('playing the rack again', () => {
     SCRABBLE_LEVELS.forEach(() => {
       // Read the answer from the definition on screen rather than from the list
       // by position, so this keeps working when the deck is reordered.
-      const definition = document.querySelector('.definition-text').textContent;
+      const definition = screen.getByTestId('definition-text').textContent;
       const answer = SCRABBLE_LEVELS.find((l) => l.definition === definition).word;
       buildWord(answer);
       fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
@@ -230,7 +230,7 @@ describe('playing the rack again', () => {
     solveEveryLevel();
     fireEvent.click(screen.getByRole('button', { name: /play again/i }));
 
-    expect(document.querySelector('.built-word .placeholder')).not.toBeNull();
+    expect(screen.getByTestId('built-placeholder')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit word/i })).toBeDisabled();
   });
 

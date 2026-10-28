@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, within } from '@testing-library/react';
 import QuantumQuiz, { QUIZ_QUESTIONS, optionOrder, QUIZ_GAME_ID } from './QuantumQuiz';
 import { getGameResult } from '../utils/gameResults';
 import { CLASSIC_GAMES } from '../screens/Games';
@@ -190,7 +190,7 @@ describe('Concept Check quiz', () => {
     // press of "A" has to match the first button rendered.
     render(<QuantumQuiz onBack={() => {}} />);
     const first = screen.getAllByRole('button', { name: /^A\s/ })[0];
-    const firstText = first.querySelector('.option-text').textContent;
+    const firstText = within(first).getByTestId('option-text').textContent;
 
     fireEvent.keyDown(window, { key: 'a' });
     expect(screen.getByRole('button', { name: /^A\s/ })).toHaveAttribute('aria-pressed', 'true');
@@ -243,8 +243,7 @@ describe('Concept Check quiz', () => {
       fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
     }
 
-    const review = document.querySelector('.quiz-review');
-    expect(review).not.toBeNull();
+    const review = screen.getByTestId('quiz-review');
 
     // Whatever came out wrong is on the list, with its reasoning. Read from the
     // deck rather than hardcoded, so adding a question cannot leave this
@@ -273,7 +272,7 @@ describe('Concept Check quiz', () => {
     });
 
     expect(screen.getByText(/every one right/i)).toBeInTheDocument();
-    expect(document.querySelector('.quiz-review')).toBeNull();
+    expect(screen.queryByTestId('quiz-review')).toBeNull();
     jest.useRealTimers();
   });
 
@@ -315,7 +314,7 @@ describe('Concept Check quiz', () => {
     });
 
     expect(screen.getByText(/every one right/i)).toBeInTheDocument();
-    expect(document.querySelector('.quiz-review')).toBeNull();
+    expect(screen.queryByTestId('quiz-review')).toBeNull();
   });
 
   /*

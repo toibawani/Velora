@@ -401,7 +401,7 @@ function QuantumQuiz({ onBack }) {
             * least useful thing this screen knows.
             */}
           {missed.length > 0 && (
-            <div className="quiz-review">
+            <div className="quiz-review" data-testid="quiz-review">
               <h3>
                 {missed.length === 1 ? 'The one that got away' : `The ${missed.length} that got away`}
               </h3>
@@ -493,7 +493,7 @@ function QuantumQuiz({ onBack }) {
                 aria-pressed={isChosen}
               >
                 <span className="option-number">{String.fromCharCode(65 + index)}</span>
-                <span className="option-text">{text}</span>
+                <span className="option-text" data-testid="option-text">{text}</span>
                 {answered && isCorrectOption && <span className="checkmark">&#10003;</span>}
                 {answered && isChosen && !isCorrectOption && <span className="cross">&#10007;</span>}
               </button>

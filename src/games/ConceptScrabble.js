@@ -374,20 +374,21 @@ function ConceptScrabble({ onBack }) {
         </div>
 
         <div className="definition-box">
-          <p className="definition-text">{level.definition}</p>
+          <p className="definition-text" data-testid="definition-text">{level.definition}</p>
           <p className="hint-text">
             {level.category} &middot; {level.hint}
           </p>
         </div>
 
         <div className={`word-builder ${shake ? 'shake' : ''}`}>
-          <div className="built-word">
+          <div className="built-word" data-testid="built-word">
             {selectedLetters.length > 0 ? (
               selectedLetters.map((tile) => (
                 <button
                   key={tile.id}
                   type="button"
                   className="built-letter"
+                  data-testid="built-letter"
                   onClick={() => handleRemoveLetter(tile.id)}
                   aria-label={`Remove ${tile.letter}`}
                 >
@@ -395,7 +396,9 @@ function ConceptScrabble({ onBack }) {
                 </button>
               ))
             ) : (
-              <p className="placeholder">Click letters below to build the word</p>
+              <p className="placeholder" data-testid="built-placeholder">
+                Click letters below to build the word
+              </p>
             )}
           </div>
         </div>
