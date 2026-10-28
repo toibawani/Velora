@@ -1,6 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import KnowledgeChain, { CHAINS, boardOrder, POINTS_PER_CHAIN, HINT_PENALTY } from './KnowledgeChain';
+import KnowledgeChain, {
+  CHAINS,
+  boardOrder,
+  POINTS_PER_CHAIN,
+  HINT_PENALTY,
+  KNOWLEDGE_CHAIN_GAME_ID,
+} from './KnowledgeChain';
+import { getGameResults } from '../utils/gameResults';
 
 const pick = (...labels) => {
   labels.forEach((label) => {
@@ -166,7 +173,7 @@ describe('a hint for a chain that will not come', () => {
     // wrapped in a <strong>, so the assertion reads the paragraph rather than
     // one node inside it.
     fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
-    expect(document.querySelector('.chain-hint').textContent).toContain(CHAINS[0].concepts[0]);
+    expect(screen.getByTestId('chain-hint')).toHaveTextContent(CHAINS[0].concepts[0]);
   });
 
   test('the hint follows the picks rather than repeating the first concept', () => {
@@ -174,7 +181,7 @@ describe('a hint for a chain that will not come', () => {
     fireEvent.click(screen.getByRole('button', { name: /^hint$/i }));
     fireEvent.click(screen.getByRole('button', { name: CHAINS[0].concepts[0] }));
 
-    const hint = document.querySelector('.chain-hint').textContent;
+    const hint = screen.getByTestId('chain-hint').textContent;
     expect(hint).toContain(CHAINS[0].concepts[1]);
     expect(hint).not.toContain(`: ${CHAINS[0].concepts[0]}.`);
   });
@@ -253,6 +260,33 @@ describe('finishing the set', () => {
     expect(screen.getByText(new RegExp(`All chains done`))).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /play again/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /back to games/i })).toBeInTheDocument();
+  });
+
+  test('finishing the set records one round, with the score it was won on', () => {
+    localStorage.clear();
+    render(<KnowledgeChain onBack={() => {}} />);
+    solveEveryChain();
+
+    // One record for eight chains, because a chain is a question and the set
+    // is the round. Recording each one would report eight plays per game.
+    const record = getGameResults()[KNOWLEDGE_CHAIN_GAME_ID];
+    expect(record).toBeDefined();
+    expect(record.plays).toBe(1);
+    expect(record.best).toBe(CHAINS.length * POINTS_PER_CHAIN);
+  });
+
+  test('leaving partway through the set records nothing', () => {
+    localStorage.clear();
+    const { unmount } = render(<KnowledgeChain onBack={() => {}} />);
+
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+    act(() => jest.advanceTimersByTime(3000));
+    unmount();
+
+    // An unfinished set is not a play. Counting it would let a player who
+    // opened the game and walked away look like they had finished it.
+    expect(getGameResults()[KNOWLEDGE_CHAIN_GAME_ID]).toBeUndefined();
   });
 
   test('the replay returns to the first chain with the score cleared', () => {

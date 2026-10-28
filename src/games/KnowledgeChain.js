@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { recordGameResult } from '../utils/gameResults';
 import '../styles/GameStyles.css';
 
 /**
@@ -97,6 +98,9 @@ const CHAINS = [
   },
 ];
 
+/** The id this game is recorded under in the hub's per-game history. */
+export const KNOWLEDGE_CHAIN_GAME_ID = 'chain';
+
 const POINTS_PER_CHAIN = 50;
 // A hinted chain is still solved, so it still scores; it just scores less. The
 // hint exists to unstick a player who is staring at four concepts and cannot
@@ -180,9 +184,22 @@ function KnowledgeChain({ onBack }) {
       return;
     }
 
+    const earned = Math.max(0, POINTS_PER_CHAIN - HINT_PENALTY * hintsUsed);
+    const finalScore = score + earned;
+
     setSolved(true);
-    setScore((prev) => prev + Math.max(0, POINTS_PER_CHAIN - HINT_PENALTY * hintsUsed));
+    setScore(finalScore);
     setMessage('Correct, and the links are what make it a chain rather than a list.');
+
+    // Only the last chain ends a round, so that is the only moment there is a
+    // final score to keep. Recording every chain would count one game as eight
+    // plays and let the hub offer to reopen a round the player is still inside.
+    if (isLastChain) {
+      recordGameResult(KNOWLEDGE_CHAIN_GAME_ID, {
+        score: finalScore,
+        max: CHAINS.length * POINTS_PER_CHAIN,
+      });
+    }
 
     if (!isLastChain) {
       advanceRef.current = setTimeout(() => {
@@ -193,7 +210,7 @@ function KnowledgeChain({ onBack }) {
         setHintsUsed(0);
       }, 2600);
     }
-  }, [chain, hintsUsed, isLastChain, selectedConcepts, solved]);
+  }, [chain, hintsUsed, isLastChain, score, selectedConcepts, solved]);
 
   /**
    * Name the concept that comes next.
@@ -300,7 +317,7 @@ function KnowledgeChain({ onBack }) {
         )}
 
         {hintsUsed > 0 && !solved && (
-          <p className="chain-hint" role="status">
+          <p className="chain-hint" role="status" data-testid="chain-hint">
             Next in the chain: <strong>{chain.concepts[selectedConcepts.length]}</strong>. This
             chain is worth {Math.max(0, POINTS_PER_CHAIN - HINT_PENALTY * hintsUsed)} of its{' '}
             {POINTS_PER_CHAIN} points.
