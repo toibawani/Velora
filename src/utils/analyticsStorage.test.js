@@ -1,4 +1,4 @@
-import { getAnalyticsData, recordStudySession } from './analyticsStorage';
+import { getAnalyticsData, hoursFromMinutes, recordStudySession } from './analyticsStorage';
 import { safeSet } from './storage';
 
 describe('analytics storage', () => {
@@ -36,6 +36,46 @@ describe('analytics storage', () => {
     const activity = getAnalyticsData().weeklyActivity.find((item) => item.day === new Date().toLocaleDateString('en-US', { weekday: 'short' }));
     expect(activity.sessions).toBe(2);
     expect(activity.hours).toBe(0.5);
+  });
+
+  test('short sessions accumulate instead of rounding away to nothing', () => {
+    // One minute is 0.0167 hours; four of them stored as rounded hours would be
+    // 0.0 four times over and the total would never move.
+    for (let i = 0; i < 4; i += 1) recordStudySession('Entropy', 1, 'physics');
+
+    const data = getAnalyticsData();
+    expect(data.totalMinutes).toBe(4);
+    expect(data.totalHoursStudied).toBe(0.1);
+
+    const topic = data.topicTimeDistribution.find((item) => item.topic === 'Entropy');
+    expect(topic.minutes).toBe(4);
+    expect(topic.hours).toBe(0.1);
+  });
+
+  test('a record written with hours only is converted rather than lost', () => {
+    localStorage.setItem(
+      'velora_learning_analytics',
+      JSON.stringify({
+        v: 1,
+        data: {
+          totalHoursStudied: 1.5,
+          topicTimeDistribution: [{ topic: 'Optics', hours: 0.5, subject: 'physics' }],
+          weeklyActivity: [{ day: 'Mon', hours: 1.5, sessions: 2 }],
+        },
+      }),
+    );
+
+    const data = getAnalyticsData();
+    expect(data.totalMinutes).toBe(90);
+    expect(data.topicTimeDistribution[0]).toMatchObject({ minutes: 30, hours: 0.5 });
+    expect(data.weeklyActivity[0]).toMatchObject({ minutes: 90, hours: 1.5 });
+  });
+
+  test('hours from minutes keeps the one decimal the screens show', () => {
+    expect(hoursFromMinutes(0)).toBe(0);
+    expect(hoursFromMinutes(4)).toBe(0.1);
+    expect(hoursFromMinutes(30)).toBe(0.5);
+    expect(hoursFromMinutes(90)).toBe(1.5);
   });
 
   test('records only valid study sessions', () => {
