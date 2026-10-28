@@ -361,6 +361,78 @@ describe('Escape', () => {
 });
 
 /*
+ * Tabbing through 144 entries to reach the sixth one is a scroll, not
+ * navigation, and the arrows did nothing at all.
+ */
+describe('moving through the list from the keyboard', () => {
+  const cards = () => screen.getAllByRole('article');
+
+  test('the down arrow moves focus to the next entry', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const first = cards()[0];
+    first.focus();
+
+    fireEvent.keyDown(first, { key: 'ArrowDown' });
+    expect(cards()[1]).toHaveFocus();
+  });
+
+  test('the up arrow moves back', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const all = cards();
+    all[2].focus();
+
+    fireEvent.keyDown(all[2], { key: 'ArrowUp' });
+    expect(all[1]).toHaveFocus();
+  });
+
+  test('moving does not open the entries it passes', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const first = cards()[0];
+    first.focus();
+
+    fireEvent.keyDown(first, { key: 'ArrowDown' });
+    fireEvent.keyDown(cards()[1], { key: 'ArrowDown' });
+
+    expect(screen.queryAllByTestId('related-term')).toHaveLength(0);
+  });
+
+  test('Home and End jump to either end', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const all = cards();
+    all[3].focus();
+
+    fireEvent.keyDown(all[3], { key: 'End' });
+    expect(all[all.length - 1]).toHaveFocus();
+
+    fireEvent.keyDown(all[all.length - 1], { key: 'Home' });
+    expect(all[0]).toHaveFocus();
+  });
+
+  test('Enter still opens the focused entry', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const first = cards()[0];
+    first.focus();
+
+    fireEvent.keyDown(first, { key: 'Enter' });
+    expect(screen.getAllByTestId('related-term').length).toBeGreaterThan(0);
+  });
+
+  test('the arrows stop at the ends instead of wrapping silently', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const all = cards();
+    all[0].focus();
+
+    fireEvent.keyDown(all[0], { key: 'ArrowUp' });
+    expect(all[0]).toHaveFocus();
+
+    const last = all[all.length - 1];
+    last.focus();
+    fireEvent.keyDown(last, { key: 'ArrowDown' });
+    expect(last).toHaveFocus();
+  });
+});
+
+/*
  * The list had exactly one order, alphabetical, and no way to read a new
  * subject quickly or to see what the dictionary covers.
  */

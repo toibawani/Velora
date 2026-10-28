@@ -465,6 +465,38 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
                     if (event.key === 'Enter' || event.key === ' ') {
                       event.preventDefault();
                       setActiveEntryId(isExpanded ? null : entry.id);
+                      return;
+                    }
+
+                    // Moving down 144 entries with the tab key is a scroll, not
+                    // navigation. The arrows step from one card to the next and
+                    // Home/End jump to either end of the list, without opening
+                    // anything on the way past.
+                    if (
+                      event.key === 'ArrowDown' ||
+                      event.key === 'ArrowUp' ||
+                      event.key === 'Home' ||
+                      event.key === 'End'
+                    ) {
+                      event.preventDefault();
+                      const cards = Array.from(document.querySelectorAll('[id^="dict-entry-"]'));
+                      // Found by the id this card was given rather than from
+                      // the event: the synthetic event's currentTarget is not
+                      // the node the list was queried with.
+                      const at = cards.findIndex(
+                        (card) => card.id === `dict-entry-${entry.id}`
+                      );
+                      const next =
+                        event.key === 'ArrowDown'
+                          ? cards[at + 1]
+                          : event.key === 'ArrowUp'
+                          ? cards[at - 1]
+                          : event.key === 'Home'
+                          ? cards[0]
+                          : cards[cards.length - 1];
+                      if (!next) return;
+                      if (next.focus) next.focus({ preventScroll: true });
+                      if (next.scrollIntoView) next.scrollIntoView({ block: 'nearest' });
                     }
                   }}
                 >
