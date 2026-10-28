@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Target, Type, Link2, FileText, Puzzle, Orbit, Clock, ArrowRight, Brain, Zap } from 'lucide-react';
 import FlowStateGame from '../components/FlowStateGame';
 import ConceptScrabble from '../games/ConceptScrabble';
@@ -121,6 +121,7 @@ GameHub.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}),
 function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGameOpened }) {
   const [hubTab, setHubTab] = useState(initialTab); // 'brain' | 'sims' | 'classic'
   const [selectedGame, setSelectedGame] = useState(initialGame || null);
+  const cardRefs = useRef([]);
 
   // A lesson deep-linked here with a specific game. Open it once and tell the
   // app to clear the request so a later, unprompted visit to games does not
@@ -173,6 +174,41 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   const visibleGames = CLASSIC_GAMES.filter(
     (game) => difficultyFilter === 'All' || game.difficulty === difficultyFilter
   );
+
+  /**
+   * Arrow keys move between cards, Home and End to the ends of the row.
+   *
+   * The cards became real buttons so they could be reached with Tab, but six of
+   * them in a grid still means six tab stops between the filter and the insights
+   * panel, and a grid you can only walk through in document order is a grid
+   * nobody uses from the keyboard. Up and Down move by a row, counted from the
+   * cards themselves rather than from a hardcoded column count, because the grid
+   * reflows to two columns and then one as the window narrows.
+   */
+  const handleGridKeyDown = (event) => {
+    const cards = cardRefs.current.filter(Boolean);
+    if (cards.length === 0) return;
+    const current = cards.indexOf(document.activeElement);
+    if (current === -1) return;
+
+    const firstRowTop = cards[0].offsetTop;
+    const columns = cards.filter((card) => card.offsetTop === firstRowTop).length || 1;
+
+    const moves = {
+      ArrowRight: current + 1,
+      ArrowLeft: current - 1,
+      ArrowDown: current + columns,
+      ArrowUp: current - columns,
+      Home: 0,
+      End: cards.length - 1,
+    };
+
+    if (!(event.key in moves)) return;
+    event.preventDefault();
+    const next = Math.min(Math.max(moves[event.key], 0), cards.length - 1);
+    if (next === current) return;
+    cards[next].focus();
+  };
 
   // Render selected game in Flow State or Classic mode
   if (selectedGame) {
@@ -328,8 +364,8 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
       )}
 
       {/* Games Grid */}
-      <main className="games-grid-main">
-        {visibleGames.map((game) => {
+      <main className="games-grid-main" onKeyDown={handleGridKeyDown}>
+        {visibleGames.map((game, index) => {
           const GameIcon = game.icon;
           return (
             // A div with an onClick is not focusable, has no role, and cannot
@@ -339,6 +375,9 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             <button
               type="button"
               key={game.id}
+              ref={(node) => {
+                cardRefs.current[index] = node;
+              }}
               className="game-card-large"
               data-testid="game-card"
               aria-label={game.name}

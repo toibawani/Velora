@@ -307,6 +307,49 @@ describe('Game hub keyboard access', () => {
     expect(card).toHaveFocus();
   });
 
+  test('arrow keys move between cards', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const cards = screen.getAllByTestId('game-card');
+
+    cards[0].focus();
+    fireEvent.keyDown(cards[0], { key: 'ArrowRight' });
+    expect(cards[1]).toHaveFocus();
+
+    fireEvent.keyDown(cards[1], { key: 'ArrowLeft' });
+    expect(cards[0]).toHaveFocus();
+  });
+
+  test('Home and End jump to the ends of the grid', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const cards = screen.getAllByTestId('game-card');
+
+    cards[2].focus();
+    fireEvent.keyDown(cards[2], { key: 'End' });
+    expect(cards[cards.length - 1]).toHaveFocus();
+
+    fireEvent.keyDown(cards[cards.length - 1], { key: 'Home' });
+    expect(cards[0]).toHaveFocus();
+  });
+
+  test('the arrows stop at the edges rather than wrapping silently', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const cards = screen.getAllByTestId('game-card');
+
+    cards[0].focus();
+    fireEvent.keyDown(cards[0], { key: 'ArrowLeft' });
+    expect(cards[0]).toHaveFocus();
+  });
+
+  test('a key that is not a navigation key is left alone', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const cards = screen.getAllByTestId('game-card');
+    cards[0].focus();
+
+    const event = new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true });
+    fireEvent(cards[0], event);
+    expect(event.defaultPrevented).toBe(false);
+  });
+
   test('no card is a clickable div', () => {
     render(<GameHub setScreen={() => {}} />);
     screen.getAllByTestId('game-card').forEach((card) => expect(card.tagName).toBe('BUTTON'));
