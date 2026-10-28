@@ -116,10 +116,63 @@ const setDone = (taskId, done) => {
   return write(tasks);
 };
 
+/**
+ * Rewrites the text of an item, keeping its id and its place.
+ *
+ * An item written in a hurry - "look up hawking radiation" - was permanent: the
+ * only fix was to delete it and retype, which lost when it was added and any
+ * lesson it pointed at. The id survives, so a pointer and a timestamp do too.
+ */
+export const updateTask = (taskId, { text, subject, topicId } = {}) => {
+  const trimmed = String(text == null ? '' : text).trim();
+  if (trimmed.length < MIN_LENGTH || trimmed.length > MAX_LENGTH) {
+    lastWriteResult = FAILURE.FAILED;
+    return { tasks: getTasks(), result: lastWriteResult, updated: false };
+  }
+
+  const tasks = getTasks().map((item) =>
+    item.id === taskId
+      ? {
+          ...item,
+          text: trimmed,
+          subject:
+            subject === undefined
+              ? item.subject
+              : typeof subject === 'string' && subject !== ''
+              ? subject
+              : null,
+          topicId:
+            topicId === undefined
+              ? item.topicId
+              : typeof topicId === 'string' && topicId !== ''
+              ? topicId
+              : null,
+        }
+      : item,
+  );
+  return { tasks: write(tasks), result: lastWriteResult, updated: true };
+};
+
+/**
+ * Puts a deleted item back where it was.
+ *
+ * Delete had no undo, and it sits next to Done: one mis-click removed something
+ * someone had written down on purpose. Passing the whole item back means the
+ * id, the date and the lesson it points at all survive the round trip.
+ */
+export const restoreTask = (task) => {
+  if (!isValidItem(task) || getTasks().some((item) => item.id === task.id)) return getTasks();
+  return write([task, ...getTasks()]);
+};
+
 export const completeTask = (taskId) => setDone(taskId, true);
 export const reopenTask = (taskId) => setDone(taskId, false);
 
-export const removeTask = (taskId) => write(getTasks().filter((item) => item.id !== taskId));
+/** Removes one item and returns both the new list and what was removed. */
+export const removeTask = (taskId) => {
+  const removed = getTasks().find((item) => item.id === taskId) || null;
+  return { tasks: write(getTasks().filter((item) => item.id !== taskId)), removed };
+};
 
 /** Removes everything. Separate from removeTask so the screen can say so. */
 export const clearCompleted = () => write(getTasks().filter((item) => !item.done));

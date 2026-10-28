@@ -9,6 +9,8 @@ import {
   MAX_LENGTH,
   removeTask,
   reopenTask,
+  restoreTask,
+  updateTask,
 } from './nextUp';
 import { FAILURE, KEYS, readValue } from './storage';
 
@@ -118,6 +120,81 @@ describe('next up', () => {
     clearCompleted();
 
     expect(getTasks().map((item) => item.id)).toEqual([b.id]);
+  });
+
+  test('editing an item keeps its id and its date', () => {
+    const added = addTask({ text: 'look up hawking radiation' }).tasks[0];
+
+    const { tasks, result, updated } = updateTask(added.id, { text: 'Read up on Hawking radiation' });
+
+    expect(result).toBe(FAILURE.NONE);
+    expect(updated).toBe(true);
+    expect(tasks).toHaveLength(1);
+    expect(tasks[0]).toMatchObject({
+      id: added.id,
+      text: 'Read up on Hawking radiation',
+      createdAt: added.createdAt,
+    });
+  });
+
+  test('editing refuses text that would be dropped on the next read', () => {
+    const added = addTask({ text: 'A real item worth keeping' }).tasks[0];
+
+    expect(updateTask(added.id, { text: ' a ' })).toMatchObject({ result: FAILURE.FAILED, updated: false });
+    expect(updateTask(added.id, { text: 'x'.repeat(MAX_LENGTH + 1) }).updated).toBe(false);
+    // The original is untouched, not half-written.
+    expect(getTasks()[0].text).toBe('A real item worth keeping');
+  });
+
+  test('editing can drop the lesson pointer without touching the subject', () => {
+    const added = addTask({ text: 'Something to come back to', subject: 'physics', topicId: 'black-holes' })
+      .tasks[0];
+    expect(added.topicId).toBe('black-holes');
+
+    const { tasks } = updateTask(added.id, { text: 'Something to come back to later', topicId: null });
+    expect(tasks[0].topicId).toBeNull();
+    expect(tasks[0].subject).toBe('physics');
+  });
+
+  test('a delete reports what it removed, so it can be undone', () => {
+    const added = addTask({ text: 'Deleted by mistake, probably' }).tasks[0];
+
+    const { tasks, removed } = removeTask(added.id);
+
+    expect(tasks).toEqual([]);
+    expect(removed).toMatchObject({ id: added.id, text: 'Deleted by mistake, probably' });
+  });
+
+  test('a removed item goes back with its id, its date and its lesson', () => {
+    const added = addTask({ text: 'Restored from the undo button', subject: 'history', topicId: null })
+      .tasks[0];
+    addTask({ text: 'Another item to keep the list busy' });
+    const { removed } = removeTask(added.id);
+
+    const restored = restoreTask(removed);
+
+    expect(restored).toHaveLength(2);
+    expect(getTasks().find((item) => item.id === added.id)).toMatchObject({
+      text: 'Restored from the undo button',
+      createdAt: added.createdAt,
+      subject: 'history',
+    });
+  });
+
+  test('restoring the same item twice cannot duplicate it', () => {
+    const added = addTask({ text: 'Only ever one of these' }).tasks[0];
+    const { removed } = removeTask(added.id);
+
+    restoreTask(removed);
+    restoreTask(removed);
+
+    expect(getTasks()).toHaveLength(1);
+  });
+
+  test('restoring something that is not an item is refused', () => {
+    addTask({ text: 'A real item already here' });
+    expect(restoreTask(null)).toHaveLength(1);
+    expect(restoreTask({ id: 'x', text: '' })).toHaveLength(1);
   });
 
   test('reports a refused write instead of returning a list as if it saved', () => {
