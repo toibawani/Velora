@@ -12,6 +12,45 @@ import {
 import '../styles/Dictionary.css';
 
 /**
+ * How the result list can be ordered.
+ *
+ * The list was alphabetical and nothing else, which is the right default for a
+ * dictionary and the wrong only option for someone revising: "shortest first"
+ * is how you read a new subject quickly, and "by subject" is how you see what
+ * the dictionary actually covers. Every order is a total one - ties fall back
+ * to the term - so the list cannot reshuffle between renders.
+ */
+export const DICTIONARY_ORDERS = [
+  {
+    id: 'az',
+    label: 'A to Z',
+    compare: (a, b) => a.term.localeCompare(b.term),
+  },
+  {
+    id: 'za',
+    label: 'Z to A',
+    compare: (a, b) => b.term.localeCompare(a.term),
+  },
+  {
+    id: 'subject',
+    label: 'By subject',
+    compare: (a, b) =>
+      a.subject.localeCompare(b.subject) || a.term.localeCompare(b.term),
+  },
+  {
+    id: 'shortest',
+    label: 'Shortest first',
+    compare: (a, b) =>
+      (a.explanation || '').length - (b.explanation || '').length ||
+      a.term.localeCompare(b.term),
+  },
+];
+
+/** The comparator for an order id, defaulting to alphabetical. */
+export const comparatorFor = (orderId) =>
+  (DICTIONARY_ORDERS.find((order) => order.id === orderId) || DICTIONARY_ORDERS[0]).compare;
+
+/**
  * Dictionary - term lookup across subjects with letter and subject filters,
  * plus curious-term discovery on the landing side.
  */
@@ -24,6 +63,7 @@ function Dictionary({ setScreen }) {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
   const [activeEntryId, setActiveEntryId] = useState(null);
+  const [orderId, setOrderId] = useState('az');
   const navbarRef = useRef(null);
 
   // The A-Z bar sticks directly underneath the navbar, so it needs to know
@@ -56,6 +96,15 @@ function Dictionary({ setScreen }) {
   const filteredTerms = useMemo(
     () => selectTerms({ query: searchQuery, subject: selectedSubject, letter: selectedLetter }),
     [searchQuery, selectedSubject, selectedLetter]
+  );
+
+  // Sorting a copy, because the selection comes from the data module and a
+  // comparator that mutated it would leave the dictionary in a different order
+  // on the next visit. The count below stays on `filteredTerms`, which holds
+  // exactly the same entries.
+  const orderedTerms = useMemo(
+    () => [...filteredTerms].sort(comparatorFor(orderId)),
+    [filteredTerms, orderId]
   );
 
   // How many terms sit under each letter, so the bar can say what a click will
@@ -129,6 +178,26 @@ function Dictionary({ setScreen }) {
                 <X size={15} />
               </button>
             )}
+          </div>
+
+          {/* Order. A native select rather than another row of pills, because
+              this is a preference about the list and not a filter on it. */}
+          <div className="dict-order-row">
+            <label className="dict-order-label" htmlFor="dict-order">
+              Order
+            </label>
+            <select
+              id="dict-order"
+              className="dict-order-select"
+              value={orderId}
+              onChange={(e) => setOrderId(e.target.value)}
+            >
+              {DICTIONARY_ORDERS.map((order) => (
+                <option key={order.id} value={order.id}>
+                  {order.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Subject Pills */}
@@ -214,7 +283,7 @@ function Dictionary({ setScreen }) {
               </button>
             </div>
           ) : (
-            filteredTerms.map((entry) => {
+            orderedTerms.map((entry) => {
               const isExpanded = activeEntryId === entry.id;
               return (
                 <article
@@ -230,7 +299,10 @@ function Dictionary({ setScreen }) {
                         <p className="entry-tagline">{entry.tagline}</p>
                       </div>
                     </div>
-                    <span className={`entry-domain-badge domain-${entry.subject}`}>
+                    <span
+                      className={`entry-domain-badge domain-${entry.subject}`}
+                      data-testid="entry-subject"
+                    >
                       {entry.subject.replace('-', ' ')}
                     </span>
                   </div>

@@ -104,6 +104,64 @@ describe('Curious Dictionary A-Z index', () => {
   });
 });
 
+/*
+ * The list had exactly one order, alphabetical, and no way to read a new
+ * subject quickly or to see what the dictionary covers.
+ */
+describe('ordering the entries', () => {
+  const terms = () => screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
+  const choose = (label) => fireEvent.change(screen.getByLabelText('Order'), { target: { value: label } });
+
+  test('alphabetical is the order you land on', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const shown = terms();
+    expect(shown).toEqual([...shown].sort((a, b) => a.localeCompare(b)));
+  });
+
+  test('Z to A reverses it', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const az = terms();
+    choose('za');
+    expect(terms()).toEqual([...az].reverse());
+  });
+
+  test('by subject groups every entry under one subject before the next', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    choose('subject');
+
+    const subjects = screen.getAllByTestId('entry-subject').map((node) => node.textContent);
+    expect(subjects).toEqual([...subjects].sort((a, b) => a.localeCompare(b)));
+    // And it really did group rather than merely allow a sorted reading.
+    const runs = subjects.filter((subject, i) => subject !== subjects[i - 1]);
+    expect(new Set(runs).size).toBe(runs.length);
+  });
+
+  test('shortest first starts with the shortest explanation', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    choose('shortest');
+
+    // Read the explanations off the data and compare against what is shown, so
+    // the test describes the rule and not one particular entry.
+    const byLength = [...CURIOUS_TERMS].sort(
+      (a, b) => (a.explanation || '').length - (b.explanation || '').length || a.term.localeCompare(b.term)
+    );
+    const shown = terms();
+    expect(shown[0]).toBe(byLength[0].term);
+    expect(shown[1]).toBe(byLength[1].term);
+  });
+
+  test('changing the order does not change which entries are listed', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const count = screen.getByText(/entries$/).textContent;
+    const before = terms().slice().sort();
+
+    choose('shortest');
+
+    expect(screen.getByText(/entries$/).textContent).toBe(count);
+    expect(terms().slice().sort()).toEqual(before);
+  });
+});
+
 test('an entry with no verification mark says it is unchecked', () => {
   render(<Dictionary setScreen={jest.fn()} />);
 
