@@ -322,15 +322,16 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
 
       {hubTab === 'classic' && (
         <>
-          {/* Hero */}
-          <section className="games-hero">
-            <div className="hero-content">
-              <h2>Master Concepts Through Deep Interaction</h2>
-              <p>
-                Engage with scientific frameworks directly. No artificial scoreboards. Only focus, clarity, and reflection.
-              </p>
-            </div>
-          </section>
+          {/* The hero that used to sit here said "Master Concepts Through Deep
+            * Interaction" in three rem of display type above the six games, and
+            * then the insights panel below it said "no artificial scoreboards"
+            * beside a row of invented statistics. Neither sentence was needed:
+            * the games are listed underneath, and what they measure is on each
+            * card. What is left is the line that describes the set. */}
+          <p className="games-intro">
+            Six rounds you can finish in a sitting. Each one scores the round you played and keeps
+            the result on this device.
+          </p>
 
       {/* Difficulty filter.
         *

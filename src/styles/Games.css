@@ -95,28 +95,15 @@
   margin-bottom: var(--space-10);
 }
 
-.hero-content {
+/* One line of orientation under the header instead of a marketing hero. */
+.games-intro {
   max-width: 1200px;
-  margin: 0 auto;
-}
-
-.hero-content h2 {
-  margin: 0 0 var(--space-2);
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
-  line-height: 1.15;
-}
-
-.hero-content p {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
+  margin: var(--space-6) auto var(--space-2);
+  padding: 0 var(--space-8);
   color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 68ch;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  max-width: min(1200px, 68ch);
 }
 
 /* ==================== GAMES GRID ==================== */
@@ -143,9 +130,9 @@
   gap: var(--space-4);
 }
 
-.game-card-large:first-child {
-  grid-column: span 2;
-}
+/* Every round is one card in the grid. The first card used to span two columns,
+   which made concept check look like the featured product and the other five
+   like secondary links to it. */
 
 .game-card-large:hover {
   border-color: var(--border-strong);
@@ -301,21 +288,24 @@
   vertical-align: 1px;
 }
 
+/* The card is the control, so this is a destination marker rather than a second
+   button drawn inside the first one. It used to be a full-width filled pill in
+   the card's colour, which put six heavy blocks under six card titles. */
 .play-btn-large {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  background: var(--game-color, var(--accent-primary));
-  color: var(--text-inverse);
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  padding: 0;
+  background: transparent;
+  color: var(--text-secondary);
   font-weight: 600;
-  font-size: 0.875rem;
-  transition: opacity var(--duration-fast) var(--ease-standard);
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
 }
 
-.play-btn-large:hover {
-  opacity: 0.9;
+.game-card-large:hover .play-btn-large {
+  color: var(--text-primary);
 }
 
 /* ==================== STATS PANEL ==================== */
@@ -1061,22 +1051,23 @@
 
 .game-over-screen h2 {
   font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 800;
+  font-size: 1.5rem;
+  font-weight: 650;
   color: var(--text-primary);
   margin: 0;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
 }
 
 .final-score {
   font-family: var(--font-mono);
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--accent-primary);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
   margin: var(--space-2) 0;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .percentage {
