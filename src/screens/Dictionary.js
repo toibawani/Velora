@@ -65,6 +65,7 @@ function Dictionary({ setScreen }) {
   const [activeEntryId, setActiveEntryId] = useState(null);
   const [orderId, setOrderId] = useState('az');
   const navbarRef = useRef(null);
+  const searchRef = useRef(null);
 
   // The A-Z bar sticks directly underneath the navbar, so it needs to know
   // how tall that is. Measured rather than hardcoded, because the navbar
@@ -86,6 +87,31 @@ function Dictionary({ setScreen }) {
       window.removeEventListener('resize', publish);
       document.documentElement.style.removeProperty('--dict-navbar-h');
     };
+  }, []);
+
+  /**
+   * "/" puts the cursor in the search box.
+   *
+   * The dictionary is a list of 138 entries with one input at the top, and the
+   * only way to reach it was to scroll to the top and click. The handler stays
+   * off while someone is typing: a slash inside the search box, or inside any
+   * other field the app eventually puts on this screen, has to reach the field
+   * rather than be eaten as a shortcut.
+   */
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return;
+      const target = event.target;
+      const tag = target && target.tagName ? target.tagName.toLowerCase() : '';
+      if (['input', 'textarea', 'select'].includes(tag) || (target && target.isContentEditable)) {
+        return;
+      }
+      event.preventDefault();
+      if (searchRef.current) searchRef.current.focus();
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
   // Cross-subject search and filtering. The rules live in the data module so
@@ -159,6 +185,7 @@ function Dictionary({ setScreen }) {
             <Search size={18} className="search-icon-svg" />
             <input
               type="text"
+              ref={searchRef}
               className="dict-search-input"
               placeholder="Search across all subjects (e.g. momentum, cognitive dissonance, entropy, Rawls)..."
               value={searchQuery}
@@ -168,6 +195,13 @@ function Dictionary({ setScreen }) {
               }}
               aria-label="Search across all subjects"
             />
+            {/* The shortcut is invisible otherwise, and a key nobody is told
+                about is a key nobody uses. */}
+            {!searchQuery && (
+              <kbd className="dict-search-kbd" aria-hidden="true">
+                /
+              </kbd>
+            )}
             {searchQuery && (
               <button
                 type="button"

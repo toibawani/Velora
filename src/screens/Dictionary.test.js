@@ -105,6 +105,52 @@ describe('Curious Dictionary A-Z index', () => {
 });
 
 /*
+ * The search box was only reachable by scrolling to the top and clicking it,
+ * which on a 138-entry list is the one thing you do most.
+ */
+describe('the / shortcut', () => {
+  test('puts the cursor in the search box', () => {
+    render(<Dictionary setScreen={() => {}} />);
+
+    const input = screen.getByLabelText(/search across all subjects/i);
+    expect(input).not.toHaveFocus();
+
+    fireEvent.keyDown(document.body, { key: '/' });
+    expect(input).toHaveFocus();
+  });
+
+  test('does not steal a slash typed into the search box', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const input = screen.getByLabelText(/search across all subjects/i);
+    input.focus();
+
+    // A slash is a legitimate character in a query ("S/Z ratio"), and
+    // preventDefault here would make it impossible to type one.
+    const event = new KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true });
+    fireEvent(input, event);
+    expect(event.defaultPrevented).toBe(false);
+  });
+
+  test('leaves other keys alone', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const input = screen.getByLabelText(/search across all subjects/i);
+
+    fireEvent.keyDown(document.body, { key: 'k' });
+    expect(input).not.toHaveFocus();
+  });
+
+  test('the shortcut is advertised while the box is empty only', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    expect(screen.getByText('/', { selector: 'kbd' })).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
+      target: { value: 'entropy' },
+    });
+    expect(screen.queryByText('/', { selector: 'kbd' })).toBeNull();
+  });
+});
+
+/*
  * The list had exactly one order, alphabetical, and no way to read a new
  * subject quickly or to see what the dictionary covers.
  */

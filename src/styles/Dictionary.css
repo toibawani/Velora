@@ -191,6 +191,18 @@
   color: var(--text-primary);
 }
 
+/* The "/" hint, shown only while the box is empty. */
+.dict-search-kbd {
+  font-family: inherit;
+  font-size: 0.72rem;
+  line-height: 1;
+  padding: 3px 6px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xs);
+  color: var(--text-tertiary);
+  background: var(--bg-primary);
+}
+
 /* Subject Horizontal Scroll / Wrap */
 /* Order of the result list: a small labelled control, not a filter. */
 .dict-order-row {
