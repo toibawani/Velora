@@ -5,6 +5,7 @@ import HighlightedText from '../components/HighlightedText';
 import { copyText, COPY_OK } from '../utils/clipboard';
 import { buildTermShareUrl } from '../utils/shareLinks';
 import { rememberTerm, resolveRecentTerms } from '../utils/recentTerms';
+import { getPreference, setPreference } from '../utils/preferences';
 import {
   CURIOUS_TERMS,
   DICTIONARY_SUBJECTS,
@@ -51,6 +52,9 @@ export const DICTIONARY_ORDERS = [
   },
 ];
 
+/** The preference key the chosen order is remembered under. */
+const ORDER_PREFERENCE = 'dictionary_order';
+
 /** The comparator for an order id, defaulting to alphabetical. */
 export const comparatorFor = (orderId) =>
   (DICTIONARY_ORDERS.find((order) => order.id === orderId) || DICTIONARY_ORDERS[0]).compare;
@@ -74,7 +78,15 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
   const [selectedSubject, setSelectedSubject] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
   const [activeEntryId, setActiveEntryId] = useState(null);
-  const [orderId, setOrderId] = useState('az');
+  // The order survives a visit. Someone revising a subject chooses "shortest
+  // first" once, and having the list snap back to A-Z on every return made the
+  // control feel like it had not worked. A stored id that names no order - an
+  // older build, a hand-edited value - falls back to alphabetical rather than
+  // leaving the select on a blank option.
+  const [orderId, setOrderId] = useState(() => {
+    const stored = getPreference(ORDER_PREFERENCE, 'az');
+    return DICTIONARY_ORDERS.some((order) => order.id === stored) ? stored : 'az';
+  });
   const navbarRef = useRef(null);
   const searchRef = useRef(null);
   // Set when an entry is opened from a link inside another entry, so the
@@ -332,7 +344,10 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
               id="dict-order"
               className="dict-order-select"
               value={orderId}
-              onChange={(e) => setOrderId(e.target.value)}
+              onChange={(e) => {
+                setOrderId(e.target.value);
+                setPreference(ORDER_PREFERENCE, e.target.value);
+              }}
             >
               {DICTIONARY_ORDERS.map((order) => (
                 <option key={order.id} value={order.id}>

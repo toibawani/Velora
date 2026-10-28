@@ -478,6 +478,30 @@ describe('ordering the entries', () => {
     expect(shown[1]).toBe(byLength[1].term);
   });
 
+  test('the chosen order survives a reload', () => {
+    const view = render(<Dictionary setScreen={() => {}} />);
+    choose('shortest');
+    view.unmount();
+
+    render(<Dictionary setScreen={() => {}} />);
+    expect(screen.getByLabelText('Order')).toHaveValue('shortest');
+    // And the list is actually in that order, not just the control.
+    const byLength = [...CURIOUS_TERMS].sort(
+      (a, b) =>
+        (a.explanation || '').length - (b.explanation || '').length || a.term.localeCompare(b.term),
+    );
+    expect(terms()[0]).toBe(byLength[0].term);
+  });
+
+  test('a stored order that no longer exists falls back to alphabetical', () => {
+    localStorage.setItem('velora_pref_dictionary_order', JSON.stringify({ v: 1, data: 'sideways' }));
+    render(<Dictionary setScreen={() => {}} />);
+
+    expect(screen.getByLabelText('Order')).toHaveValue('az');
+    const shown = terms();
+    expect(shown).toEqual([...shown].sort((a, b) => a.localeCompare(b)));
+  });
+
   test('changing the order does not change which entries are listed', () => {
     render(<Dictionary setScreen={() => {}} />);
     const count = screen.getByText(/entries$/).textContent;
