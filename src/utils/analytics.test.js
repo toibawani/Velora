@@ -1,4 +1,5 @@
-import { trackEvent, getAnalytics, clearAnalytics } from './analytics';
+import { EVENT_RETENTION_DAYS, trackEvent, getAnalytics, clearAnalytics, pruneAnalytics } from './analytics';
+import { KEYS } from './storage';
 
 describe('Analytics utilities', () => {
   beforeEach(() => {
@@ -36,6 +37,53 @@ describe('Analytics utilities', () => {
     }
     const events = getAnalytics();
     expect(events.length).toBe(100);
+  });
+
+  test('an event past the retention window is not returned', () => {
+    const old = new Date(Date.now() - (EVENT_RETENTION_DAYS + 2) * 86400000).toISOString();
+    const fresh = new Date().toISOString();
+    localStorage.setItem(
+      KEYS.EVENTS,
+      JSON.stringify({
+        v: 1,
+        data: [
+          { name: 'ancient', timestamp: old },
+          { name: 'today', timestamp: fresh },
+        ],
+      }),
+    );
+
+    expect(getAnalytics().map((event) => event.name)).toEqual(['today']);
+  });
+
+  test('pruning deletes what reading already ignores', () => {
+    const old = new Date(Date.now() - (EVENT_RETENTION_DAYS + 2) * 86400000).toISOString();
+    const fresh = new Date().toISOString();
+    localStorage.setItem(
+      KEYS.EVENTS,
+      JSON.stringify({
+        v: 1,
+        data: [
+          { name: 'ancient', timestamp: old },
+          { name: 'today', timestamp: fresh },
+        ],
+      }),
+    );
+
+    expect(pruneAnalytics()).toBe(1);
+    const stored = JSON.parse(localStorage.getItem(KEYS.EVENTS)).data;
+    expect(stored).toHaveLength(1);
+    expect(stored[0].name).toBe('today');
+  });
+
+  test('pruning an empty log does nothing and says so', () => {
+    expect(pruneAnalytics()).toBe(0);
+     expect(localStorage.getItem(KEYS.EVENTS)).toBeNull();
+  });
+
+  test('an event with no timestamp is kept rather than silently dropped', () => {
+    localStorage.setItem(KEYS.EVENTS, JSON.stringify({ v: 1, data: [{ name: 'unreadable' }] }));
+    expect(getAnalytics().map((event) => event.name)).toEqual(['unreadable']);
   });
 
   test('clearAnalytics removes all events', () => {
