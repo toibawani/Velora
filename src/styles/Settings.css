@@ -262,21 +262,37 @@
 .st-file-input {
   font: inherit;
   font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   max-width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.st-file-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .st-file-input::file-selector-button {
   min-height: 40px;
   margin-right: var(--space-3);
   padding: 0 var(--space-4);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  background: var(--bg-elevated);
-  color: var(--text-primary);
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
   font: inherit;
   font-size: 0.875rem;
   cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.st-file-input::file-selector-button:hover {
+  background: var(--accent-primary-hover);
 }
 
 .st-import-preview {
