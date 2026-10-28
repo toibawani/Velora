@@ -164,12 +164,20 @@
 
 .dict-search-input {
   flex: 1;
-  background: transparent;
-  border: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 0.9375rem;
+  padding: var(--space-2) var(--space-4);
   outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dict-search-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .dict-search-input::placeholder {
