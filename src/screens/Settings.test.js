@@ -3,6 +3,14 @@ import { render, screen, fireEvent, within } from '@testing-library/react';
 import Settings from './Settings';
 import { ThemeProvider } from '../context/ThemeContext';
 import { KEYS, writeValue } from '../utils/storage';
+import { downloadText } from '../utils/download';
+
+// The download itself is the browser's job; jsdom has no object URLs at all.
+// Mocking it is what lets the test read the file the screen would have written.
+jest.mock('../utils/download', () => ({
+  ...jest.requireActual('../utils/download'),
+  downloadText: jest.fn(() => true),
+}));
 
 const open = (props = {}) =>
   render(
@@ -16,6 +24,9 @@ const stored = () => JSON.parse(window.localStorage.getItem(KEYS.ONBOARDING_PREF
 
 beforeEach(() => {
   localStorage.clear();
+  // CRA's jest config resets mock implementations between tests, so the
+  // factory's default does not survive to the next one.
+  downloadText.mockImplementation(() => true);
 });
 
 test('shows the answer already given, rather than starting blank', () => {
@@ -153,6 +164,32 @@ test('the remove-name control says what it does rather than signing out', () => 
   // removed an account flow over.
   expect(onForgetProfile).toHaveBeenCalled();
   expect(screen.queryByRole('button', { name: /sign ?out/i })).not.toBeInTheDocument();
+});
+
+test('exports every stored key into a dated JSON file', () => {
+  writeValue(KEYS.QUESTION_DESK, [{ question: 'Why is entropy time-asymmetric?' }]);
+  downloadText.mockClear();
+  open();
+
+  fireEvent.click(screen.getByRole('button', { name: /export everything as json/i }));
+
+  expect(downloadText).toHaveBeenCalledTimes(1);
+  const [fileName, text] = downloadText.mock.calls[0];
+  expect(fileName).toMatch(/^velora-backup-\d{4}-\d{2}-\d{2}\.json$/);
+
+  const backup = JSON.parse(text);
+  expect(backup.app).toBe('velora');
+  expect(backup.entries.some((entry) => entry.key === KEYS.QUESTION_DESK)).toBe(true);
+  expect(screen.getByRole('status')).toHaveTextContent(/prepared a file/i);
+});
+
+test('says the download did not start rather than implying it did', () => {
+  downloadText.mockImplementationOnce(() => false);
+  open();
+
+  fireEvent.click(screen.getByRole('button', { name: /export everything as json/i }));
+
+  expect(screen.getByRole('status')).toHaveTextContent(/would not start a download/i);
 });
 
 test('goes back to the atlas', () => {

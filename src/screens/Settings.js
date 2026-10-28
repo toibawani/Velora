@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Check, HardDrive, Monitor, Moon, Sun, User } from 'lucide-react';
+import { Check, Download, HardDrive, Monitor, Moon, Sun, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { FAILURE, describeStorage } from '../utils/storage';
+import { buildBackup, describeBackup, serialiseBackup } from '../utils/backup';
+import { backupFileName, downloadText } from '../utils/download';
 import {
   STYLE_OPTIONS,
   TIME_OPTIONS,
@@ -63,6 +65,24 @@ function Settings({ user, setScreen, onForgetProfile }) {
   const [notice, setNotice] = useState(null);
   const storage = describeStorage();
   const [analyticsOn, setAnalyticsOn] = useState(isOptedIn());
+  const [exportNotice, setExportNotice] = useState(null);
+
+  /**
+   * Writes every stored key to a file the browser downloads.
+   *
+   * The wording says the file was prepared rather than saved: nothing in the
+   * page can see whether the download finished, and a browser that blocks
+   * downloads is a real case on a shared school machine.
+   */
+  const exportData = () => {
+    const backup = buildBackup();
+    const started = downloadText(backupFileName(), serialiseBackup(backup));
+    setExportNotice(
+      started
+        ? `Prepared a file with ${describeBackup(backup)}. Check your downloads folder; nothing was uploaded anywhere.`
+        : 'This browser would not start a download. Everything is still here, so nothing was lost.',
+    );
+  };
 
   const saveAnalytics = (enabled) => {
     const ok = setOptedIn(enabled);
@@ -232,6 +252,25 @@ function Settings({ user, setScreen, onForgetProfile }) {
             have played. None of it is transmitted anywhere, and clearing your browser data deletes
             all of it. There is no second copy, because there is nowhere for one to be.
           </p>
+        </section>
+
+        <section className="st-section" aria-labelledby="st-data">
+          <h2 id="st-data">Take your data with you</h2>
+          <p className="st-section-note">
+            <Download size={14} aria-hidden="true" /> Because everything lives in this browser and
+            there is no account, a new laptop or a cleared cache takes all of it. Export writes one
+            JSON file you keep yourself: your name, your questions, your saved lessons, your games
+            and these settings. It is built in the page and handed to your downloads folder, so
+            nothing is uploaded to do it.
+          </p>
+          <button type="button" className="st-primary" onClick={exportData}>
+            <Download size={14} aria-hidden="true" /> Export everything as JSON
+          </button>
+          {exportNotice && (
+            <p className="st-notice-quiet" role="status">
+              {exportNotice}
+            </p>
+          )}
         </section>
 
         <section className="st-section" aria-labelledby="st-analytics">
