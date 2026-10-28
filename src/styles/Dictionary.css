@@ -479,6 +479,35 @@
   color: var(--text-secondary);
 }
 
+.entry-link-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.entry-copy-link {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.entry-copy-link:hover,
+.entry-copy-link:focus-visible {
+  color: var(--text-primary);
+}
+
+.entry-copy-error {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+}
+
 /* Where to go next, inside an expanded entry. */
 .entry-related {
   display: flex;

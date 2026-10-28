@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
 import HighlightedText from '../components/HighlightedText';
+import { copyText, COPY_OK } from '../utils/clipboard';
+import { buildTermShareUrl } from '../utils/shareLinks';
 import {
   CURIOUS_TERMS,
   DICTIONARY_SUBJECTS,
@@ -77,6 +79,10 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
   // Set when an entry is opened from a link inside another entry, so the
   // scroll happens for that jump and not for every card the reader unfolds.
   const scrollPendingRef = useRef(false);
+  // Which entry was copied, and what the browser said about it. The clipboard
+  // helper reports failure rather than swallowing it, so the button can say
+  // "blocked" instead of claiming a link that is not on the clipboard.
+  const [copyState, setCopyState] = useState(null);
 
   // The A-Z bar sticks directly underneath the navbar, so it needs to know
   // how tall that is. Measured rather than hardcoded, because the navbar
@@ -134,6 +140,11 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
    * card, otherwise a keyboard user is left at the top of a list they did not
    * ask to see.
    */
+  const handleCopyLink = async (entry) => {
+    const status = await copyText(buildTermShareUrl(entry.id));
+    setCopyState({ id: entry.id, status });
+  };
+
   const openEntry = (entryId) => {
     setSearchQuery('');
     setSelectedSubject('all');
@@ -450,6 +461,33 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
                           </span>
                         )}
                       </div>
+                    )}
+
+                    {/* A permanent link to this entry. A shared link only
+                      * works if there is a way to make one. Only rendered
+                      * while the entry is open: 144 copy buttons in the
+                      * document is a tab trap, not an affordance. */}
+                    {isExpanded && (
+                    <div className="entry-link-row">
+                      <button
+                        type="button"
+                        className="entry-copy-link"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          handleCopyLink(entry);
+                        }}
+                      >
+                        {copyState && copyState.id === entry.id && copyState.status === COPY_OK
+                          ? 'Link copied'
+                          : 'Copy link to this entry'}
+                      </button>
+                      {copyState && copyState.id === entry.id && copyState.status !== COPY_OK && (
+                        <span className="entry-copy-error" role="status">
+                          This browser would not let the page use the clipboard, so copy the
+                          address bar instead.
+                        </span>
+                      )}
+                    </div>
                     )}
 
                     {/* Where to go next. Derived from the wording of the

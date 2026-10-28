@@ -105,6 +105,50 @@ describe('Curious Dictionary A-Z index', () => {
 });
 
 /*
+ * A permanent link is only useful if there is a way to make one, and the
+ * clipboard can refuse on a plain http origin.
+ */
+describe('copying a link to an entry', () => {
+  const originalClipboard = navigator.clipboard;
+
+  afterEach(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      value: originalClipboard,
+      configurable: true,
+    });
+  });
+
+  const withClipboard = (writeText) =>
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });
+
+  const openEntropy = () =>
+    fireEvent.click(screen.getByRole('heading', { level: 2, name: 'Entropy' }));
+
+  test('copies a link that names the entry', async () => {
+    const writeText = jest.fn().mockResolvedValue(undefined);
+    withClipboard(writeText);
+    render(<Dictionary setScreen={() => {}} />);
+    openEntropy();
+
+    fireEvent.click(screen.getByRole('button', { name: /copy link to this entry/i }));
+
+    await screen.findByText(/link copied/i);
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('#/term/entropy'));
+  });
+
+  test('says the clipboard was blocked rather than claiming a copy', async () => {
+    withClipboard(jest.fn().mockRejectedValue(new Error('denied')));
+    render(<Dictionary setScreen={() => {}} />);
+    openEntropy();
+
+    fireEvent.click(screen.getByRole('button', { name: /copy link to this entry/i }));
+
+    expect(await screen.findByText(/would not let the page use the clipboard/i)).toBeInTheDocument();
+    expect(screen.queryByText(/link copied/i)).toBeNull();
+  });
+});
+
+/*
  * A shared link is `#/term/{id}`. The app opened the dictionary for it and then
  * dropped the id, so the link delivered the reader to the top of 144 entries.
  */
