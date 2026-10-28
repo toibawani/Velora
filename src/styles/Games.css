@@ -198,6 +198,23 @@
   color: var(--text-secondary);
 }
 
+/*
+ * "Best 1200 of 1600". Present only on a card whose game has been finished, so
+ * the line never appears as a zero or as an empty promise.
+ */
+.game-best {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.game-plays {
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
 .play-btn-large {
   width: 100%;
   padding: var(--space-3) var(--space-4);

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Target, Type, Link2, FileText, Puzzle, Orbit, Clock, ArrowRight, Brain, Zap } from 'lucide-react';
 import FlowStateGame from '../components/FlowStateGame';
 import ConceptScrabble from '../games/ConceptScrabble';
@@ -20,6 +20,7 @@ import { PUZZLES } from '../games/WordPuzzle';
 import { SCRABBLE_LEVELS } from '../games/ConceptScrabble';
 import { CHAINS } from '../games/KnowledgeChain';
 import { getAnalyticsData } from '../utils/analyticsStorage';
+import { getGameResults, formatResult } from '../utils/gameResults';
 import '../styles/Games.css';
 
 // Names, colours and time limits are taken from what these games actually
@@ -132,6 +133,15 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   // What this device has actually recorded. Read once on mount, the same way
   // Journey reads it, so the two screens cannot disagree about the same numbers.
   const [analytics] = useState(() => getAnalyticsData());
+  // What the games on this device have produced, so a card can say "best 1200
+  // of 1600" instead of nothing at all. Read whenever the hub is the visible
+  // screen again rather than once on mount: the hub stays mounted while a game
+  // is open, so a value read at mount would be missing the round the player
+  // just finished and would go stale in exactly the moment it matters.
+  const gameResults = useMemo(
+    () => (selectedGame ? {} : getGameResults()),
+    [selectedGame]
+  );
   const sessionsLogged = analytics.weeklyActivity.reduce(
     (total, day) => total + (day.sessions || 0),
     0
@@ -307,6 +317,20 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
               </div>
 
               <p className="game-description" data-testid="game-description">{game.description}</p>
+
+              {/* Only present once a round has been finished. An "unplayed"
+                * marker on every card would be noise, and a zero would read as
+                * a score rather than as an absence. */}
+              {gameResults[game.id] && (
+                <p className="game-best" data-testid="game-best">
+                  Best {formatResult(gameResults[game.id])}
+                  <span className="game-plays">
+                    {' '}
+                    &middot; {gameResults[game.id].plays}{' '}
+                    {gameResults[game.id].plays === 1 ? 'round' : 'rounds'} played
+                  </span>
+                </p>
+              )}
 
               <div className="game-meta-row">
                 <span className="game-difficulty" data-testid="game-difficulty">{game.difficulty}</span>

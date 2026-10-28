@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, screen, fireEvent, within } from '@testing-library/react';
+import { render, screen, fireEvent, within, cleanup } from '@testing-library/react';
 import GameHub, { CLASSIC_GAMES } from './Games';
 import { QUIZ_QUESTIONS } from '../games/QuantumQuiz';
 import { DUEL_PAIRS } from '../games/DefinitionDuel';
 import { PUZZLES } from '../games/WordPuzzle';
 import { SCRABBLE_LEVELS } from '../games/ConceptScrabble';
 import { CHAINS } from '../games/KnowledgeChain';
+import { recordGameResult } from '../utils/gameResults';
 
 describe('Game hub listings', () => {
   test('every game is described in plain words, without inflated names', () => {
@@ -200,6 +201,53 @@ describe('how much there is to do, counted from the decks', () => {
     render(<GameHub setScreen={() => {}} />);
     const relativity = CLASSIC_GAMES.find((game) => game.id === 'relativity');
     expect(relativity.itemCount).toBeUndefined();
+  });
+});
+
+/*
+ * A card said nothing about whether its game had ever been finished, so the
+ * only way to find out was to open it and look. The score was also thrown away
+ * with the round, which made playing again pointless.
+ */
+describe('what each game has actually produced', () => {
+  const cardFor = (name) =>
+    screen.getAllByTestId('game-card').find((node) => within(node).queryByText(name));
+
+  beforeEach(() => localStorage.clear());
+
+  test('a game that has never been finished shows no score at all', () => {
+    render(<GameHub setScreen={() => {}} />);
+    expect(screen.queryAllByTestId('game-best')).toHaveLength(0);
+  });
+
+  test('a finished round puts its best score on the card that owns it', () => {
+    recordGameResult('puzzle', { score: 1200, max: 1600 });
+    render(<GameHub setScreen={() => {}} />);
+
+    const card = cardFor('Concept Puzzle');
+    expect(within(card).getByTestId('game-best')).toHaveTextContent('Best 1200 of 1600');
+    // And only there: a score that showed up on another card would be a score
+    // attributed to a game that did not earn it.
+    expect(within(cardFor('Concept Check')).queryByTestId('game-best')).toBeNull();
+  });
+
+  test('the best round is the highest, not the last', () => {
+    recordGameResult('quiz', { score: 90, max: 140 });
+    recordGameResult('quiz', { score: 40, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(within(cardFor('Concept Check')).getByTestId('game-best')).toHaveTextContent('Best 90 of 140');
+  });
+
+  test('the number of rounds played is shown, and counted in the singular', () => {
+    recordGameResult('duel', { score: 30, max: 60 });
+    render(<GameHub setScreen={() => {}} />);
+    expect(within(cardFor('Definition Duel')).getByTestId('game-best')).toHaveTextContent('1 round');
+
+    cleanup();
+    recordGameResult('duel', { score: 10, max: 60 });
+    render(<GameHub setScreen={() => {}} />);
+    expect(within(cardFor('Definition Duel')).getByTestId('game-best')).toHaveTextContent('2 rounds');
   });
 });
 
