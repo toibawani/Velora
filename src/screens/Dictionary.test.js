@@ -406,6 +406,7 @@ describe('moving through the list from the keyboard', () => {
 
     fireEvent.keyDown(all[all.length - 1], { key: 'Home' });
     expect(all[0]).toHaveFocus();
+    expect(cards()[0]).toHaveAttribute('tabindex', '0');
   });
 
   test('Enter still opens the focused entry', () => {
@@ -415,6 +416,26 @@ describe('moving through the list from the keyboard', () => {
 
     fireEvent.keyDown(first, { key: 'Enter' });
     expect(screen.getAllByTestId('related-term').length).toBeGreaterThan(0);
+  });
+
+  test('the list is one tab stop, not one per entry', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const all = cards();
+
+    expect(all[0]).toHaveAttribute('tabindex', '0');
+    expect(all.slice(1).every((card) => card.getAttribute('tabindex') === '-1')).toBe(true);
+  });
+
+  test('the tab stop follows the card that was last focused', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const all = cards();
+
+    all[0].focus();
+    for (let i = 0; i < 3; i += 1) fireEvent.keyDown(cards()[i], { key: 'ArrowDown' });
+
+    const after = cards();
+    expect(after[3]).toHaveAttribute('tabindex', '0');
+    expect(after[0]).toHaveAttribute('tabindex', '-1');
   });
 
   test('the arrows stop at the ends instead of wrapping silently', () => {

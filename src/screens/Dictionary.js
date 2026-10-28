@@ -100,6 +100,9 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
   // once on mount and refreshed when an entry opens, which is the only moment
   // the list can change.
   const [recent, setRecent] = useState(() => resolveRecentTerms(CURIOUS_TERMS));
+  // Which card is the one Tab lands on. Roving tabindex: the list is one stop,
+  // not 144, and arrows move within it.
+  const [focusIndex, setFocusIndex] = useState(0);
 
   // The A-Z bar sticks directly underneath the navbar, so it needs to know
   // how tall that is. Measured rather than hardcoded, because the navbar
@@ -463,16 +466,23 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
               </button>
             </div>
           ) : (
-            orderedTerms.map((entry) => {
+            orderedTerms.map((entry, index) => {
               const isExpanded = activeEntryId === entry.id;
               return (
                 <article
                   key={entry.id}
                   id={`dict-entry-${entry.id}`}
-                  tabIndex={-1}
+                  // One card in the tab order at a time - the one that was last
+                  // focused - so the key reaches the list once and the arrows
+                  // do the rest. 144 tab stops is a scroll, not navigation.
+                  tabIndex={focusIndex === index ? 0 : -1}
+                  onFocus={() => setFocusIndex(index)}
                   aria-label={entry.term}
                   className={`lexicon-entry-card ${isExpanded ? 'expanded' : ''}`}
-                  onClick={() => setActiveEntryId(isExpanded ? null : entry.id)}
+                  onClick={() => {
+                    setFocusIndex(index);
+                    setActiveEntryId(isExpanded ? null : entry.id);
+                  }}
                   onKeyDown={(event) => {
                     // The header is a normal click target, so it needs the same
                     // affordance from the keyboard rather than being a mouse
@@ -510,6 +520,17 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
                           ? cards[0]
                           : cards[cards.length - 1];
                       if (!next) return;
+                      // The tab stop follows the focus, so leaving the list and
+                      // coming back lands where it was left.
+                      const targetIndex =
+                        event.key === 'ArrowDown'
+                          ? at + 1
+                          : event.key === 'ArrowUp'
+                          ? at - 1
+                          : event.key === 'Home'
+                          ? 0
+                          : cards.length - 1;
+                      setFocusIndex(targetIndex);
                       if (next.focus) next.focus({ preventScroll: true });
                       if (next.scrollIntoView) next.scrollIntoView({ block: 'nearest' });
                     }
