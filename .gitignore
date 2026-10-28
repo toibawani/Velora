@@ -32,3 +32,6 @@ coverage
 
 # tool working directories
 .freebuff/
+
+# artefacts written by the layout audit when a check fails (CI uploads them)
+audit-artifacts/
