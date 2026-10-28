@@ -20,7 +20,13 @@ import { PUZZLES } from '../games/WordPuzzle';
 import { SCRABBLE_LEVELS } from '../games/ConceptScrabble';
 import { CHAINS } from '../games/KnowledgeChain';
 import { getAnalyticsData } from '../utils/analyticsStorage';
-import { getGameResults, getLastPlayedGame, formatResult } from '../utils/gameResults';
+import {
+  bestDate,
+  formatResult,
+  getGameResults,
+  getLastPlayedGame,
+  isLatestBest,
+} from '../utils/gameResults';
 import '../styles/Games.css';
 
 // Names, colours and time limits are taken from what these games actually
@@ -351,6 +357,12 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             <span className="games-resume-score">
               {' '}
               &middot; best {formatResult(lastPlayed)}
+              {Number.isFinite(lastPlayed.lastScore) && lastPlayed.lastScore !== lastPlayed.best && (
+                <>
+                  {' '}
+                  &middot; last round {lastPlayed.lastScore}
+                </>
+              )}
             </span>
           </p>
           <button
@@ -399,10 +411,29 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
               {gameResults[game.id] && (
                 <p className="game-best" data-testid="game-best">
                   Best {formatResult(gameResults[game.id])}
+                  {/* The best number alone cannot say whether it was set just
+                    * now or a fortnight ago, and a player who has just beaten
+                    * their record should not have to work that out from the
+                    * digits. */}
+                  {isLatestBest(gameResults[game.id]) && (
+                    <span className="game-best-new" data-testid="game-best-new">
+                      New best
+                    </span>
+                  )}
                   <span className="game-plays">
                     {' '}
                     &middot; {gameResults[game.id].plays}{' '}
                     {gameResults[game.id].plays === 1 ? 'round' : 'rounds'} played
+                    {bestDate(gameResults[game.id]) && (
+                      <>
+                        {' '}
+                        &middot; best set{' '}
+                        {new Date(bestDate(gameResults[game.id])).toLocaleDateString(undefined, {
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </>
+                    )}
                   </span>
                 </p>
               )}

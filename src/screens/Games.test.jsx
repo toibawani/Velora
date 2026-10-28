@@ -268,6 +268,45 @@ describe('what each game has actually produced', () => {
     expect(screen.getByRole('heading', { name: 'Definition Duel' })).toBeInTheDocument();
   });
 
+  test('a card says when the best was set, not only what it was', () => {
+    recordGameResult('quiz', { score: 90, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(within(cardFor('Concept Check')).getByTestId('game-best')).toHaveTextContent(
+      /best set \w{3} \d{1,2}/i,
+    );
+  });
+
+  test('a new record is marked as one', () => {
+    recordGameResult('quiz', { score: 40, max: 140 });
+    recordGameResult('quiz', { score: 90, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(within(cardFor('Concept Check')).getByTestId('game-best-new')).toHaveTextContent(
+      /new best/i,
+    );
+    // Only on the game that earned it.
+    expect(within(cardFor('Concept Puzzle')).queryByTestId('game-best-new')).toBeNull();
+  });
+
+  test('a worse round leaves the badge off, because nothing was beaten', () => {
+    recordGameResult('quiz', { score: 90, max: 140 });
+    recordGameResult('quiz', { score: 40, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(within(cardFor('Concept Check')).queryByTestId('game-best-new')).toBeNull();
+  });
+
+  test('the offer to play again separates the best from the last round', () => {
+    recordGameResult('quiz', { score: 90, max: 140 });
+    recordGameResult('quiz', { score: 40, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    const strip = screen.getByTestId('games-resume');
+    expect(strip).toHaveTextContent('best 90 of 140');
+    expect(strip).toHaveTextContent('last round 40');
+  });
+
   test('the number of rounds played is shown, and counted in the singular', () => {
     recordGameResult('duel', { score: 30, max: 60 });
     render(<GameHub setScreen={() => {}} />);
