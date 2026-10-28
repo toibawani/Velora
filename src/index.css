@@ -1,157 +1,516 @@
-/* These names predate the token system and are still referenced by feature
-   CSS. They now alias the semantic roles from design-tokens.css instead of
-   re-declaring raw hex — the old duplicate :root block here silently won
-   against design-tokens.css (same names, later import), which is how dark
-   mode ended up painting cream-on-cream. Aliasing instead of re-declaring
-   keeps design-tokens.css the only place a color is chosen. */
+/* ==========================================================================
+   Freebuff Index CSS — professional polish, focus states, tokens, transitions
+   ========================================================================== */
+
 :root {
-  --bg-main: var(--bg-primary);
-  --bg-surface: var(--bg-elevated);
-  --bg-surface-hover: var(--bg-tertiary);
-  --border-color: var(--border-default);
-  --accent-hover: var(--accent-primary-hover);
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 48px;
+  --radius-full: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.15);
+  --shadow-none: none;
+
+  --ease-standard: ease-out;
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sharp: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-hover: 0.15s;
+
+  --bg-primary: #f8f9fa;
+  --bg-surface: #ffffff;
+  --bg-tertiary: #f1f3f5;
+  --bg-secondary: #e9ecef;
+
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-tertiary: #adb5bd;
+  --text-inverse: #ffffff;
+
+  --accent-primary: #3b82f6;
+  --accent-primary-hover: #2563eb;
+  --accent-contrast: #ffffff;
+  --accent-soft: #e0f2ff;
+  --accent-subtle: #e0f2ff3d;
+
+  --border-default: #d1d5db;
+  --border-strong: #9ca3af;
+  --border-subtle: #e5e7eb;
+
+  --ui-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --display-font: "DM Display", "Playfair Display", Georgia, serif;
+}
+
+/* ==========================================================================
+   Global base
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background-color: var(--bg-main) !important;
-  color: var(--text-primary) !important;
-  /* The reading face, not the UI sans. Everything that inherits from body is
-     prose by default: paragraphs, list items, definition text. Chrome sets
-     --font-ui or --font-sans explicitly where it needs the sans, so nav labels
-     and buttons are unaffected. */
-  font-family: var(--font-body);
-  font-weight: var(--weight-regular);
+  font-family: var(--ui-font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  margin: 0;
+  line-height: 1.5;
 }
 
-/* Prose inherits the reading face explicitly rather than relying on the body
-   rule, because several feature stylesheets set font-family on their own screen
-   root (.analytics-root, .games-root, .community-root and friends all declare
-   --font-sans) and that would otherwise leak the sans back into paragraphs. */
-p, li, dd, blockquote {
-  font-family: var(--font-body);
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* Headings belong to Fraunces everywhere. This block is the single owner of the
-   heading face: App.css used to declare the same selector with --font-sans and,
-   being imported later, silently overrode this one app-wide. Its comment has
-   been replaced there to point here. */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
-  /* Fraunces carries an optical-size axis. Telling the browser which optical
-     size to use is what keeps a 5rem hero and a 1.25rem card heading looking
-     like the same voice rather than one stretched and one shrunk. */
-  font-optical-sizing: auto;
-  text-wrap: balance;
+/* ==========================================================================
+   Focus states — accessible, professional
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--ring, var(--accent-primary));
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 4px var(--accent-soft, var(--accent-soft));
 }
 
-h1 {
-  font-weight: var(--weight-black);
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
 }
 
-/* Italic display accents (the emphasized word in the hero headline) want
-   Fraunces' own italic rather than the browser's slanted approximation. */
-h1 em, h2 em, h3 em {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: var(--weight-bold);
-}
+/* ==========================================================================
+   Button styles — professional, intentional interactions
+   ========================================================================== */
 
-/* Layout containers inherit the page instead of painting a second surface. */
-div, section, main {
-  background-color: transparent;
-}
-
-/*
- * Buttons: a quiet baseline, not a style.
- *
- * This used to paint every button in the product solid sienna at 999px radius
- * with a drop shadow, using !important. Two things followed from that. Every
- * screen invented its own button and then had it overridden into the same fat
- * pill, so nothing on any page could look like the primary action on that page;
- * and because the override used !important, the per-feature styles that were
- * written to fix it lost, which is why forty CSS files agree and the product
- * still looked like one template.
- *
- * What is left is what every button genuinely needs: the UI face, a pointer, and
- * no browser chrome. Shape and fill belong to the component, which is where the
- * decision about whether something is a primary action actually lives.
- */
 button {
-  font-family: var(--font-ui);
-  font-weight: var(--weight-semibold);
+  font-family: var(--ui-font);
+  font-weight: 600;
   color: inherit;
   background: transparent;
   border: 0;
   border-radius: var(--radius-sm);
   padding: 0;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+              transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:disabled {
   cursor: not-allowed;
+  opacity: 0.4;
 }
 
-button:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+/* Primary accent button */
+button.uh-primary,
+button.splash-btn-primary,
+button.btn-submit,
+button.btn-duel-submit {
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+  border: 1px solid var(--accent-primary);
 }
 
-/* Elevated focus state for interactive elements - subtle ring using the theme ring token.
- * Consistent across the app so the user always knows what's focused.
- */
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-a:focus-visible,
-[role="button"]:focus-visible,
-interactive:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-/* Remove default outline on mouse clicks only */
-button:focus:not(:focus-visible),
-
-/* Subtle elevation lift on card hover across the app */
-.card:hover,
-.uh-card:hover,
-.game-card-large:hover {
-  box-shadow: var(--shadow-md) !important;
-}
-
-
-/* Button hover states - subtle color changes, no lift physics */
-button:not(:disabled):hover {
-  background-color: var(--bg-tertiary);
-  color: var(--text-primary);
-}
-
-button:not(:disabled):focus-visible:hover {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-/* Primary accent button hover */
-.universe-home .uh-primary:hover,
-.splash-btn-primary:hover,
-.uh-topic-preview > button:hover {
+button.uh-primary:hover,
+button.splash-btn-primary:hover,
+button.btn-submit:hover:not(:disabled),
+button.btn-duel-submit:hover:not(:disabled) {
   background: var(--accent-primary-hover);
   border-color: var(--accent-primary-hover);
 }
 
-/* Secondary text button hover */
-.uh-icon-button:hover,
-.uh-nav-item:hover,
-.uh-card-reveal:hover,
-.uh-card-lookup:hover,
-.uh-card-resume:hover {
+/* Secondary interactive buttons */
+button.uh-icon-button,
+button.uh-nav-item,
+button.uh-card-reveal,
+button.uh-card-lookup,
+button.uh-card-resume,
+button.splash-browse,
+button.back-btn-games {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+button.uh-icon-button:hover,
+button.uh-nav-item:hover,
+button.uh-card-reveal:hover,
+button.uh-card-lookup:hover,
+button.uh-card-resume:hover,
+button.splash-browse:hover,
+button.back-btn-games:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* Ghost buttons — only for buttons not explicitly styled above */
+button:not(.uh-primary):not(.splash-btn-primary):not(.uh-icon-button):not(.uh-nav-item):not(.uh-card-reveal):not(.uh-card-lookup):not(.uh-card-resume):not(.splash-browse):not(.back-btn-games) {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+
+button:not(:disabled):hover:not(.uh-primary):not(.splash-btn-primary):not(.uh-icon-button):not(.uh-nav-item):not(.uh-card-reveal):not(.uh-card-lookup):not(.uh-card-resume):not(.splash-browse):not(.back-btn-games) {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* Focus-visible + hover combined */
+button:focus-visible:hover,
+button:hover:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* ==========================================================================
+   Improved card styles
+   ========================================================================== */
+
+.card,
+.uh-card,
+.game-card-large {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.card:hover,
+.uh-card:hover,
+.game-card-large:hover {
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Splash screen refinements
+   ========================================================================== */
+
+.splash {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+
+.splash-panel {
+  width: 100%;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.splash-copy {
+  max-width: 34rem;
+}
+
+.splash-eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--accent-primary);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.splash-wordmark {
+  margin: 0 0 var(--space-3);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4.5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+.splash-tagline {
+  margin: 0;
+  max-width: 32rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.splash-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin: var(--space-6) 0 var(--space-5);
+}
+
+.splash-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.splash-btn-primary {
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+  border: 1px solid var(--accent-primary);
+}
+
+.splash-btn-primary:hover {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+}
+
+.splash-browse {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.splash-browse:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background: var(--bg-tertiary);
+}
+
+.splash-footer {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .splash {
+    align-items: flex-start;
+    padding-top: clamp(2.5rem, 12vh, 5rem);
+  }
+
+  .splash-panel {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .splash-contents {
+    border-left: 0;
+    border-top: 1px solid var(--border-default);
+    padding-left: 0;
+    padding-top: var(--space-5);
+  }
+
+  .splash-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .splash-btn,
+  .splash-browse {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Theme toggle
+   ========================================================================== */
+
+.theme-toggle {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.theme-toggle-segment {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle-segment:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.theme-toggle-segment[data-testid="theme-toggle-segment"][aria-pressed="true"] {
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+  border-color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Additional utility styles
+   ========================================================================== */
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: text-decoration 0.15s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-primary-hover);
+}
+
+input,
+textarea {
+  font-family: var(--ui-font);
+  font-size: 0.9rem;
+  padding: var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Input with icon */
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.input-with-icon input {
+  padding-left: calc(var(--space-3) + var(--space-2));
+}
+
+/* ==========================================================================
+   Panel / side styles
+   ========================================================================== */
+
+.sidebar {
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-default);
+  min-height: 100vh;
+  padding: var(--space-6);
+}
+
+.sidebar a {
+  color: var(--text-secondary);
+  display: block;
+  padding: var(--space-2) 0;
+  border-radius: var(--radius-sm);
+  margin: var(--space-1) 0;
+  font-size: 0.875rem;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+/* ==========================================================================
+   Table styles
+   ==========================================*/
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-4) 0;
+}
+
+th,
+td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Alert / toast styles
+   ========================================================================== */
+
+.alert {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  margin: var(--space-4) 0;
+  font-size: 0.875rem;
+}
+
+.alert-success {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+}
+
+.alert-error {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+}
+
+.alert-info {
+  background: var(--accent-soft);
+  color: var(--accent-primary);
 }
