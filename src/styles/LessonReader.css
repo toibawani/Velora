@@ -33,6 +33,61 @@
 .lesson-sources a:hover { color: var(--text-primary); }
 @media (max-width: 640px) { .lesson-reader-header { padding: var(--space-3) var(--space-4); } .lesson-reader-main { width: min(100% - 2rem, 820px); padding-top: var(--space-8); } .lesson-columns { grid-template-columns: 1fr; } .lesson-story, .lesson-callout, .lesson-section-card, .lesson-list-card { padding: var(--space-4); } }
 
+.lesson-resume {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin: 0 0 var(--space-6);
+  padding: var(--space-4);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-tertiary);
+}
+
+.lesson-resume-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.lesson-resume-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.lesson-resume-jump {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-full);
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lesson-resume-start {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.lesson-resume-start:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
 .lesson-related-game {
   border-color: var(--accent-primary);
   background: var(--bg-tertiary);

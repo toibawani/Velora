@@ -10,6 +10,11 @@ import { trackLessonCompleted } from '../utils/siteAnalytics';
 import { copyText, COPY_OK } from '../utils/clipboard';
 import { buildLessonShareUrl } from '../utils/shareLinks';
 import { getReviewItems, addReviewItem, removeReviewItem } from '../utils/reviewPlanner';
+import {
+  getLessonProgress,
+  saveLessonProgress,
+  shouldOfferResume,
+} from '../utils/resumePath';
 import { recordStudySession } from '../utils/analyticsStorage';
 import { parseInlineTerms } from './GlossaryTerm';
 
@@ -33,6 +38,15 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
   const [rabbitHoleOpen, setRabbitHoleOpen] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  // How far through this lesson the reader got last time, when that is worth
+  // offering. A lesson reopened at its first heading when someone was two
+  // thirds down it is the reason this exists.
+  const [resumeAt, setResumeAt] = useState(null);
+  // The newest position seen, so a close can save without waiting for the next
+  // throttled write.
+  const lastPercent = useRef(null);
+  const lastSavedPercent = useRef(null);
+  const lastSavedAt = useRef(0);
   const openedAt = useRef(Date.now());
   const mainRef = useRef(null);
   const copyResetTimer = useRef(null);
@@ -40,13 +54,38 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
   useEffect(() => {
     openedAt.current = Date.now();
     setCompleted(false);
+
+    const stored = topic ? getLessonProgress(subject, topic.id) : null;
+    lastPercent.current = stored;
+    lastSavedPercent.current = stored;
+    setResumeAt(shouldOfferResume(stored) ? stored : null);
+    // A different lesson starts at the top. Restoring the previous page's
+    // offset would open the new one somewhere in the middle.
+    if (mainRef.current) mainRef.current.scrollTop = 0;
   }, [subject, topic?.id]);
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return;
     const onScroll = () => {
-      if (completed) return;
       const { scrollTop, scrollHeight, clientHeight } = main;
+
+      // Where the reader is, as a share of what there is to scroll. Guarded
+      // because a page shorter than its viewport has nothing to divide by.
+      const scrollable = scrollHeight - clientHeight;
+      if (scrollable > 0) {
+        const percent = Math.round((scrollTop / scrollable) * 100);
+        lastPercent.current = percent;
+        const now = Date.now();
+        // Throttled: one write per half second of scrolling is plenty for a
+        // position that only matters when the page is closed.
+        if (now - lastSavedAt.current > 500 && percent !== lastSavedPercent.current) {
+          lastSavedAt.current = now;
+          lastSavedPercent.current = percent;
+          saveLessonProgress(subject, topic?.id, percent);
+        }
+      }
+
+      if (completed) return;
       const scrolledToEnd = scrollHeight - scrollTop - clientHeight < 120;
       if (!scrolledToEnd) return;
       setCompleted(true);
@@ -58,7 +97,12 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
   useEffect(() => () => {
     const minutes = Math.max(1, Math.round((Date.now() - openedAt.current) / 60000));
     if (topic?.title) recordStudySession(topic.title, minutes, subject);
-  }, [subject, topic?.title]);
+    // One last write on the way out, so closing the tab mid-read does not lose
+    // the position to the throttle.
+    if (topic?.id && lastPercent.current !== null) {
+      saveLessonProgress(subject, topic.id, lastPercent.current);
+    }
+  }, [subject, topic?.title, topic?.id]);
   if (!topic) return null;
 
   // The Black Holes lesson's related game is the Relativity Lab, which lets a
@@ -120,6 +164,45 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
         </div>
       </header>
       <main className="lesson-reader-main" ref={mainRef}>
+        {resumeAt !== null && (
+          <div className="lesson-resume" role="status" data-testid="lesson-resume">
+            <p className="lesson-resume-text">
+              You were {resumeAt}% through this lesson last time.
+            </p>
+            <div className="lesson-resume-actions">
+              <button
+                type="button"
+                className="lesson-resume-jump"
+                onClick={() => {
+                  const main = mainRef.current;
+                  if (main) {
+                    const scrollable = main.scrollHeight - main.clientHeight;
+                    if (scrollable > 0) main.scrollTop = Math.round((resumeAt / 100) * scrollable);
+                  }
+                  setResumeAt(null);
+                }}
+              >
+                Jump back to {resumeAt}%
+              </button>
+              <button
+                type="button"
+                className="lesson-resume-start"
+                onClick={() => {
+                  // Choosing the top is a position too: without recording it,
+                  // the old percent would come back the next time the lesson
+                  // opened.
+                  if (mainRef.current) mainRef.current.scrollTop = 0;
+                  lastPercent.current = 0;
+                  lastSavedPercent.current = 0;
+                  saveLessonProgress(subject, topic.id, 0);
+                  setResumeAt(null);
+                }}
+              >
+                Start from the top
+              </button>
+            </div>
+          </div>
+        )}
         <div className="lesson-kicker">{topic.moduleTitle} · {topic.minutes} min read</div>
         <h1>{topic.title}</h1>
         <p className="lesson-kicker-line">{topic.kicker}</p>

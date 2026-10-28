@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import LessonReader from './LessonReader';
 import { PHYSICS_CURRICULUM } from '../data/physicsCurriculum';
+import { saveLastLesson, saveLessonProgress, getLessonProgress } from '../utils/resumePath';
 
 /**
  * The five Thermodynamics lessons, rendered the way Learn.js renders them.
@@ -143,6 +144,71 @@ test('every {{term}} used across the five lessons resolves to a glossary entry',
   });
 });
 
+
+/*
+ * Reopening a lesson started at the first heading even for someone who had read
+ * two thirds of it, so the position was stored and never used.
+ */
+describe('picking a lesson back up where it was left', () => {
+  const topic = () => thermo.topics.find((t) => t.id === 'entropy');
+  const seed = (percent) => {
+    saveLastLesson('physics', 'entropy', 'Entropy');
+    saveLessonProgress('physics', 'entropy', percent);
+  };
+
+  test('offers the position it stored', () => {
+    seed(42);
+    renderLesson(topic());
+
+    const prompt = screen.getByTestId('lesson-resume');
+    expect(prompt).toHaveTextContent(/42% through this lesson/i);
+    expect(screen.getByRole('button', { name: /jump back to 42%/i })).toBeInTheDocument();
+  });
+
+  test('a lesson barely started is not offered back', () => {
+    seed(2);
+    renderLesson(topic());
+    expect(screen.queryByTestId('lesson-resume')).toBeNull();
+  });
+
+  test('a lesson that was finished is not offered back', () => {
+    seed(98);
+    renderLesson(topic());
+    expect(screen.queryByTestId('lesson-resume')).toBeNull();
+  });
+
+  test('a lesson that has never been read has nothing to offer', () => {
+    renderLesson(topic());
+    expect(screen.queryByTestId('lesson-resume')).toBeNull();
+  });
+
+  test('the offer goes away once it has been used', () => {
+    seed(42);
+    renderLesson(topic());
+
+    fireEvent.click(screen.getByRole('button', { name: /jump back to 42%/i }));
+
+    expect(screen.queryByTestId('lesson-resume')).toBeNull();
+  });
+
+  test('reading from the top is a real choice, not a dismissal that saves nothing', () => {
+    seed(42);
+    renderLesson(topic());
+
+    fireEvent.click(screen.getByRole('button', { name: /start from the top/i }));
+
+    expect(screen.queryByTestId('lesson-resume')).toBeNull();
+    // Closing the page records where the reader actually is, which after
+    // starting over is the top - not the old position.
+    expect(getLessonProgress('physics', 'entropy')).toBe(0);
+  });
+
+  test('the offer belongs to its own lesson', () => {
+    seed(42);
+    renderLesson(thermo.topics.find((t) => t.id === 'heat'));
+    expect(screen.queryByTestId('lesson-resume')).toBeNull();
+  });
+});
 
 describe('the concrete facts the lessons claim actually render', () => {
   // These are asserted as literal strings, not read back from the data, so a
