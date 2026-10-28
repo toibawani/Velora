@@ -10,6 +10,10 @@ import {
   writeValue,
   removeValue,
   describeStorage,
+  listStoredKeys,
+  storageUsage,
+  clearStoredData,
+  KEY_PREFIX,
 } from './storage';
 
 beforeEach(() => {
@@ -87,6 +91,62 @@ test('removes a value', () => {
 
 test('namespaces per-term explanation boards', () => {
   expect(EXPLANATION_BOARD('stoicism')).toBe('velora_explanations_stoicism');
+});
+
+test('lists only the keys this app owns, including runtime families', () => {
+  writeValue(KEYS.QUESTION_DESK, []);
+  writeValue(EXPLANATION_BOARD('momentum'), { lines: [] });
+  writeValue(`${KEYS.PREFERENCE_PREFIX}sort`, 'az');
+  window.localStorage.setItem('someone_elses_key', 'keep me');
+
+  expect(listStoredKeys()).toEqual(
+    [KEYS.QUESTION_DESK, EXPLANATION_BOARD('momentum'), `${KEYS.PREFERENCE_PREFIX}sort`].sort(),
+  );
+  expect(listStoredKeys().every((key) => key.startsWith(KEY_PREFIX))).toBe(true);
+});
+
+test('reports space per key, largest first', () => {
+  writeValue(KEYS.QUESTION_DESK, [{ question: 'x'.repeat(200) }]);
+  writeValue(KEYS.MYTH_STREAK, 1);
+
+  const usage = storageUsage();
+  expect(usage.available).toBe(true);
+  expect(usage.keys).toHaveLength(2);
+  expect(usage.keys[0].key).toBe(KEYS.QUESTION_DESK);
+  expect(usage.totalBytes).toBeGreaterThan(100);
+  expect(usage.totalCharacters).toBeGreaterThan(100);
+  expect(usage.keys[0].bytes).toBeGreaterThanOrEqual(usage.keys[0].characters);
+});
+
+test('counts nothing when storage is unavailable', () => {
+  const descriptor = Object.getOwnPropertyDescriptor(window, 'localStorage');
+  Object.defineProperty(window, 'localStorage', {
+    configurable: true,
+    get() {
+      throw new DOMException('denied');
+    },
+  });
+
+  expect(storageUsage()).toEqual({
+    available: false,
+    keys: [],
+    totalBytes: 0,
+    totalCharacters: 0,
+  });
+  expect(listStoredKeys()).toEqual([]);
+  expect(clearStoredData()).toBe(0);
+
+  if (descriptor) Object.defineProperty(window, 'localStorage', descriptor);
+});
+
+test('clearing removes this app\'s keys and leaves anything else alone', () => {
+  writeValue(KEYS.QUESTION_DESK, []);
+  writeValue(EXPLANATION_BOARD('momentum'), { lines: [] });
+  window.localStorage.setItem('someone_elses_key', 'keep me');
+
+  expect(clearStoredData()).toBe(2);
+  expect(listStoredKeys()).toEqual([]);
+  expect(window.localStorage.getItem('someone_elses_key')).toBe('keep me');
 });
 
 test('describes a working store as available', () => {

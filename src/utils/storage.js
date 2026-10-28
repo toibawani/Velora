@@ -64,7 +64,99 @@ export const KEYS = {
   DIALOGUE_PREFIX: 'velora_dialogue',
 };
 
+/**
+ * The prefix every key this app owns starts with.
+ *
+ * Keys are enumerated by prefix rather than by walking the registry object,
+ * because three families (preferences, explanation boards, dialogues) are built
+ * at runtime and never appear as literal KEYS values. A backup that walked the
+ * object would silently leave them out, which is the one thing a backup must
+ * not do.
+ */
+export const KEY_PREFIX = 'velora_';
+
 export const EXPLANATION_BOARD = (term) => `${KEYS.EXPLANATION_BOARD_PREFIX}${term}`;
+
+/**
+ * Every key in this browser that belongs to VELORA, sorted by name.
+ *
+ * Only this module spells the prefix, so the filter here and the key names in
+ * the registry cannot disagree.
+ */
+export const listStoredKeys = () => {
+  const store = storage();
+  if (!store) return [];
+  const found = [];
+  try {
+    for (let index = 0; index < store.length; index += 1) {
+      const key = store.key(index);
+      if (typeof key === 'string' && key.startsWith(KEY_PREFIX)) found.push(key);
+    }
+  } catch {
+    return found.sort();
+  }
+  return found.sort();
+};
+
+const byteLength = (text) => {
+  if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(text).length;
+  // Every character counts as two bytes rather than one. An estimate that is
+  // too high is safe here; the number is only ever shown next to a quota.
+  return text.length * 2;
+};
+
+/**
+ * How much space this browser is holding on VELORA's behalf.
+ *
+ * Both the stored characters and the raw bytes are reported because they answer
+ * different questions: a person reading the list wants to know which family is
+ * large, and a person comparing against a 5 MB quota wants bytes. Storage
+ * browsers measure in UTF-16 units, so `bytes` is the figure to compare with
+ * the quota and `characters` is the figure that adds up to it exactly.
+ */
+export const storageUsage = () => {
+  const store = storage();
+  if (!store) return { available: false, keys: [], totalBytes: 0, totalCharacters: 0 };
+
+  const keys = listStoredKeys().map((key) => {
+    let raw = '';
+    try {
+      raw = store.getItem(key) || '';
+    } catch {
+      raw = '';
+    }
+    return { key, characters: raw.length, bytes: byteLength(raw) };
+  });
+
+  keys.sort((first, second) => second.bytes - first.bytes || first.key.localeCompare(second.key));
+  return {
+    available: true,
+    keys,
+    totalBytes: keys.reduce((sum, entry) => sum + entry.bytes, 0),
+    totalCharacters: keys.reduce((sum, entry) => sum + entry.characters, 0),
+  };
+};
+
+/**
+ * Deletes every VELORA key in this browser and reports how many went.
+ *
+ * Scoped to the prefix on purpose: localStorage is shared with every other app
+ * on the origin, and a reset that called clear() would take their data too.
+ */
+export const clearStoredData = () => {
+  const store = storage();
+  if (!store) return 0;
+  let removed = 0;
+  listStoredKeys().forEach((key) => {
+    try {
+      store.removeItem(key);
+      removed += 1;
+    } catch {
+      // Leave the rest alone rather than abandoning the loop.
+    }
+  });
+  return removed;
+};
 
 /** The version written by this build. A key with no migrations uses 1. */
 export const CURRENT_VERSION = 1;
