@@ -112,29 +112,50 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
   }, []);
 
   /**
-   * "/" puts the cursor in the search box.
+   * "/" puts the cursor in the search box; Escape takes it back out.
    *
    * The dictionary is a list of 138 entries with one input at the top, and the
    * only way to reach it was to scroll to the top and click. The handler stays
    * off while someone is typing: a slash inside the search box, or inside any
    * other field the app eventually puts on this screen, has to reach the field
    * rather than be eaten as a shortcut.
+   *
+   * Escape is the same idea in reverse, and it is why the handler reads the
+   * current query and open entry rather than being registered once: it unwinds
+   * one step at a time - clear the search, then close the open entry, then do
+   * nothing - so one press never discards both.
    */
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
       const target = event.target;
       const tag = target && target.tagName ? target.tagName.toLowerCase() : '';
-      if (['input', 'textarea', 'select'].includes(tag) || (target && target.isContentEditable)) {
+      const typing =
+        ['input', 'textarea', 'select'].includes(tag) || (target && target.isContentEditable);
+
+      if (event.key === 'Escape') {
+        if (searchQuery) {
+          event.preventDefault();
+          setSearchQuery('');
+          return;
+        }
+        if (activeEntryId) {
+          event.preventDefault();
+          setActiveEntryId(null);
+          return;
+        }
+        if (typing && searchRef.current) searchRef.current.blur();
         return;
       }
+
+      if (event.key !== '/' || typing) return;
       event.preventDefault();
       if (searchRef.current) searchRef.current.focus();
     };
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, [searchQuery, activeEntryId]);
 
   /**
    * Opens one entry by id, whatever the current filters are.

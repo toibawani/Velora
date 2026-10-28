@@ -307,6 +307,60 @@ describe('the / shortcut', () => {
 });
 
 /*
+ * Escape is the way out of anything that narrowed the list, and the screen had
+ * no way out that was not a click on a small control.
+ */
+describe('Escape', () => {
+  const escape = () => fireEvent.keyDown(document.body, { key: 'Escape' });
+
+  test('clears the search first', () => {
+    render(<Dictionary setScreen={() => {}} />);
+
+    const input = screen.getByLabelText(/search across all subjects/i);
+    fireEvent.change(input, { target: { value: 'entropy' } });
+    expect(input).toHaveValue('entropy');
+
+    escape();
+    expect(input).toHaveValue('');
+    expect(screen.getAllByRole('heading', { level: 2 }).length).toBeGreaterThan(1);
+  });
+
+  test('then closes the open entry rather than doing nothing', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    fireEvent.click(screen.getByRole('heading', { level: 2, name: 'Momentum' }));
+    expect(screen.getAllByTestId('related-term').length).toBeGreaterThan(0);
+
+    escape();
+    expect(screen.queryAllByTestId('related-term')).toHaveLength(0);
+  });
+
+  test('unwinds one step at a time', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    fireEvent.click(screen.getByRole('heading', { level: 2, name: 'Momentum' }));
+    fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
+      target: { value: 'moment' },
+    });
+
+    escape();
+    // The query is gone and the entry that was open is still open.
+    expect(screen.getByLabelText(/search across all subjects/i)).toHaveValue('');
+    expect(screen.getAllByTestId('related-term').length).toBeGreaterThan(0);
+
+    escape();
+    expect(screen.queryAllByTestId('related-term')).toHaveLength(0);
+  });
+
+  test('leaves the / shortcut working after being used', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    const input = screen.getByLabelText(/search across all subjects/i);
+
+    escape();
+    fireEvent.keyDown(document.body, { key: '/' });
+    expect(input).toHaveFocus();
+  });
+});
+
+/*
  * The list had exactly one order, alphabetical, and no way to read a new
  * subject quickly or to see what the dictionary covers.
  */
