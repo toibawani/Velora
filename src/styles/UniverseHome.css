@@ -7,10 +7,10 @@
 .universe-home,
 .universe-home.min-h-screen {
   min-height: 100vh;
-  background:
-    radial-gradient(900px 420px at 8% -10%, var(--ambient-warm), transparent 60%),
-    radial-gradient(700px 380px at 100% 0%, var(--ambient-light), transparent 55%),
-    var(--bg-primary);
+  /* Flat paper. Two large radial washes used to warm the top corners of every
+     visit; at 900px they read as a gradient, not as light, and a reference book
+     does not have one. The cream itself is the identity. */
+  background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body);
 }
@@ -48,7 +48,7 @@
 .universe-home .border-b { border-bottom-style: solid; }
 .universe-home .border-\[\#3E2718\]\/10 { border-color: var(--border-default); }
 .universe-home .font-serif { font-family: var(--font-display); }
-.universe-home .text-2xl { font-size: clamp(2rem, 4vw, 3.1rem); }
+.universe-home .text-2xl { font-size: clamp(1.5rem, 2.6vw, 2rem); }
 .universe-home .font-light { font-weight: 460; }
 .universe-home .tracking-wide { letter-spacing: -0.035em; }
 .universe-home .text-\[\#2C2118\] { color: var(--text-primary); }
@@ -67,8 +67,8 @@
 .universe-home .shadow-lg { box-shadow: 0 14px 30px var(--shadow-color); }
 
 .uh-header {
-  min-height: 78px;
-  padding: 0 3vw;
+  min-height: 60px;
+  padding: 0 2vw;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -112,46 +112,81 @@
 }
 .uh-brand small { color: var(--text-tertiary); font-size: 0.72rem; font-style: italic; letter-spacing: 0; }
 
-.uh-nav-links { justify-self: center; gap: var(--space-1) !important; padding: var(--space-1); background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); }
-.uh-nav-item {
-  min-height: 38px;
-  padding: var(--space-2) var(--space-4) !important;
-  background: transparent !important;
-  color: var(--text-secondary) !important;
-  border: 0 !important;
-  border-radius: var(--radius-full) !important;
-  box-shadow: none !important;
-  font-size: 0.92rem !important;
+/* Navigation reads as a row of links on the header, not as a floating pill
+   inside a floating pill. The active item is marked with weight and a hairline
+   under it, which is what a tab in a reference site looks like. */
+.uh-nav-links {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  background: transparent;
+  border: 0;
 }
-.uh-nav-item:hover { color: var(--text-primary) !important; background: var(--accent-soft) !important; box-shadow: none !important; transform: none; }
-.uh-nav-item.active { color: var(--inverse-text) !important; background: var(--inverse-surface) !important; }
+
+.uh-nav-item {
+  position: relative;
+  min-height: 34px;
+  padding: 0 var(--space-3);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  letter-spacing: 0.005em;
+}
+
+.uh-nav-item:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.uh-nav-item.active {
+  color: var(--text-primary);
+  background: transparent;
+  font-weight: 600;
+}
+
+.uh-nav-item.active::after {
+  content: '';
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: 3px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent-primary);
+}
 
 .uh-header-actions { justify-self: end; display: flex; align-items: center; gap: var(--space-3); }
-.uh-user-greeting { max-width: 190px; overflow: hidden; color: var(--text-secondary); font-size: 0.92rem; font-style: italic; text-overflow: ellipsis; white-space: nowrap; }
+.uh-user-greeting { max-width: 190px; overflow: hidden; color: var(--text-secondary); font-size: 0.875rem; text-overflow: ellipsis; white-space: nowrap; }
 .uh-icon-button {
-  width: 42px;
-  height: 42px;
-  padding: 0 !important;
-  background: var(--bg-elevated) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-default) !important;
-  border-radius: var(--radius-full) !important;
-  box-shadow: none !important;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
 }
-.uh-icon-button:hover { background: var(--bg-tertiary) !important; box-shadow: none !important; transform: none; }
+.uh-icon-button:hover { background: var(--bg-tertiary); color: var(--text-primary); }
 
 .uh-main {
-  width: min(100% - 2rem, 1180px);
+  width: min(100% - 2rem, 1120px);
   margin: 0 auto;
-  padding: clamp(2.5rem, 6vw, 4.5rem) 0 5rem;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem) 0 4rem;
 }
 
+/* The hero is a page header, not a landing page. It used to run to six and a
+   half rem of display type across four lines, which pushed the first thing
+   anyone can act on - the atlas itself - below the fold on a laptop. */
 .uh-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.55fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: end;
-  padding: 0.5rem 0 clamp(3.5rem, 7vw, 5.5rem);
+  grid-template-columns: minmax(0, 1.6fr) minmax(240px, 0.6fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+  padding: 0 0 clamp(2rem, 4vw, 3rem);
 }
 
 .uh-eyebrow {
@@ -166,48 +201,56 @@
 }
 
 .uh-hero h1 {
-  max-width: 11ch;
+  max-width: 22ch;
   margin: 0;
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(3.4rem, 7vw, 6.4rem);
-  font-weight: 500;
-  letter-spacing: -0.045em;
-  line-height: 0.92;
+  font-size: clamp(2rem, 3.4vw, 2.85rem);
+  font-weight: 550;
+  letter-spacing: -0.022em;
+  line-height: 1.12;
 }
 
 .uh-lede {
-  max-width: 38rem;
-  margin: var(--space-6) 0 0;
+  max-width: 34rem;
+  margin: var(--space-4) 0 0;
   color: var(--text-secondary) !important;
-  font-size: clamp(1.05rem, 1.5vw, 1.22rem);
-  line-height: 1.65;
+  font-size: 1.02rem;
+  line-height: 1.6;
 }
 
-.uh-hero-actions { display: flex; align-items: center; gap: var(--space-4); margin-top: var(--space-8); flex-wrap: wrap; }
-.uh-hero-actions > span { color: var(--text-tertiary); font-size: 0.95rem; font-style: italic; }
+.uh-hero-actions { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-6); flex-wrap: wrap; }
+.uh-hero-actions > span { color: var(--text-tertiary); font-size: 0.875rem; }
+
+/* One filled button on the page, because there is one primary action on it. */
 .universe-home .uh-primary {
-  min-height: 48px;
-  background: var(--accent-primary) !important;
-  color: var(--accent-contrast) !important;
-  border-radius: var(--radius-full) !important;
-  box-shadow: 0 12px 24px var(--shadow-color) !important;
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
 }
-.universe-home .uh-primary:hover { background: var(--accent-primary-hover) !important; transform: translateY(-1px); }
+
+.universe-home .uh-primary:hover {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+}
 
 .uh-hero-index {
-  padding: var(--space-6) var(--space-5) var(--space-5);
+  padding: var(--space-5);
   background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-2xl);
-  box-shadow: 0 18px 40px var(--shadow-color);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
 }
-.uh-index-label { color: var(--text-tertiary); font-size: 0.78rem; font-style: italic; }
+.uh-index-label { color: var(--text-tertiary); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .uh-hero-index dl { display: grid; gap: 0; margin: var(--space-3) 0 var(--space-2); }
 .uh-hero-index dl div { display: flex; align-items: baseline; justify-content: space-between; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
 .uh-hero-index dt { color: var(--text-secondary); font-size: 0.95rem; }
-.uh-hero-index dd { margin: 0; color: var(--text-primary); font-family: var(--font-display); font-size: 1.85rem; font-weight: var(--weight-semibold); }
-.uh-hero-index > p:last-child { margin: var(--space-3) 0 0; color: var(--text-tertiary); font-size: 0.84rem; font-style: italic; }
+.uh-hero-index dd { margin: 0; color: var(--text-primary); font-family: var(--font-display); font-size: 1.35rem; font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; }
+.uh-hero-index > p:last-child { margin: var(--space-3) 0 0; color: var(--text-tertiary); font-size: 0.78rem; }
 
 .uh-atlas-section { scroll-margin-top: var(--space-16); }
 .uh-section-heading-row {
@@ -223,8 +266,8 @@
   color: var(--text-primary);
   font-family: var(--font-display);
   font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 1.02;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 .uh-section-heading-row > p { margin: 0 0 var(--space-1); color: var(--text-secondary); font-size: 1.02rem; line-height: 1.6; }
 
@@ -232,18 +275,17 @@
 .uh-search-wrap > svg { position: absolute; left: 1.15rem; z-index: 2; color: var(--text-tertiary); pointer-events: none; }
 .uh-search-wrap input {
   width: 100%;
-  min-height: 62px;
-  padding: 0 var(--space-12);
+  min-height: 44px;
+  padding: 0 var(--space-10);
   color: var(--text-primary);
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  box-shadow: 0 10px 24px var(--shadow-color);
+  border-radius: var(--radius-md);
   outline: none;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
 }
-.uh-search-wrap input::placeholder { color: var(--text-tertiary); font-style: italic; }
-.uh-search-wrap input:focus { border-color: var(--accent-shadow); box-shadow: 0 0 0 4px var(--accent-soft); }
+.uh-search-wrap input::placeholder { color: var(--text-tertiary); }
+.uh-search-wrap input:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px var(--accent-soft); }
 .uh-search-wrap > button {
   position: absolute;
   right: 0.7rem;
@@ -491,14 +533,17 @@
 
 .uh-card {
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   background: var(--bg-elevated);
-  padding: var(--space-5);
+  padding: var(--space-4) var(--space-5);
   min-width: 260px;
-  flex: 1 1 260px;
+  /* Capped, because a single card in a flex row used to stretch to the full
+     1120px page width and leave one sentence in a band of empty paper. */
+  flex: 0 1 420px;
+  max-width: 520px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .uh-card--today {
@@ -551,10 +596,11 @@
 .uh-card-lookup,
 .uh-card-resume {
   margin-top: var(--space-1);
-  padding: var(--space-2) var(--space-4);
+  min-height: 34px;
+  padding: 0 var(--space-3);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  background: transparent;
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
   color: var(--text-primary);
   font-size: 0.85rem;
 }
@@ -569,8 +615,9 @@
 .uh-card-resume {
   width: fit-content;
   align-self: flex-start;
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
@@ -611,35 +658,42 @@
 }
 
 /* ---- Theme toggle (tri-state segmented) ---- */
+/* Compact segmented control: three icons in one 26px-tall well. It used to be
+   three labelled pills inside a glass pill, which took a third of the header and
+   made a colour preference the most prominent thing on a page about ideas. */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1);
-  background: var(--bg-glass);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  gap: 2px;
+  padding: 2px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
 }
 
 .theme-toggle-segment {
-  min-height: 32px;
-  padding: 0 var(--space-3) !important;
-  border-radius: var(--radius-full) !important;
+  width: 28px;
+  height: 24px;
+  min-height: 0;
+  padding: 0;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-ui);
-  font-size: 0.76rem !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.01em;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--text-tertiary);
+  font-size: 0; /* The icon carries it; the label stays in the accessible name. */
 }
 
 .theme-toggle-segment svg { flex: none; }
+.theme-toggle-segment span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 
-@media (max-width: 900px) {
-  .theme-toggle-segment span { display: none; }
-  .theme-toggle-segment { padding: 0 !important; width: 34px; justify-content: center; }
+.theme-toggle-segment:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.theme-toggle-segment[aria-pressed='true'] {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(50, 30, 20, 0.12);
 }

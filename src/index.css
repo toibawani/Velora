@@ -64,30 +64,51 @@ div, section, main {
   background-color: transparent;
 }
 
-/* Global button override — warm sienna, never indigo. */
+/*
+ * Buttons: a quiet baseline, not a style.
+ *
+ * This used to paint every button in the product solid sienna at 999px radius
+ * with a drop shadow, using !important. Two things followed from that. Every
+ * screen invented its own button and then had it overridden into the same fat
+ * pill, so nothing on any page could look like the primary action on that page;
+ * and because the override used !important, the per-feature styles that were
+ * written to fix it lost, which is why forty CSS files agree and the product
+ * still looked like one template.
+ *
+ * What is left is what every button genuinely needs: the UI face, a pointer, and
+ * no browser chrome. Shape and fill belong to the component, which is where the
+ * decision about whether something is a primary action actually lives.
+ */
 button {
-  background-color: var(--accent-primary) !important;
-  color: var(--accent-contrast) !important;
-  border-radius: var(--radius-full) !important;
-  border: none !important;
-  padding: var(--space-3) var(--space-5) !important;
   font-family: var(--font-ui);
-  /* Was 560, which is not a weight this app loads. Source Sans 3 ships static
-     instances at 300/400/600/700, so 560 resolved to 600 anyway - ask for the
-     weight that actually gets drawn. */
-  font-weight: var(--weight-semibold) !important;
-  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+  font-weight: var(--weight-semibold);
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
-button:hover {
-  background-color: var(--accent-hover) !important;
-  box-shadow: 0 8px 18px var(--accent-shadow) !important;
+button:disabled {
+  cursor: not-allowed;
 }
 
-/* Global card styling override. */
-.card, [class*="card"], [class*="Card"] {
-  background: var(--bg-surface) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: var(--radius-2xl) !important;
-  color: var(--text-primary) !important;
+button:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/*
+ * Cards are surfaces, and a surface is a border and a background - not a shape.
+ * The radius override here forced every card in the app to 24px regardless of
+ * what its own stylesheet said, which is why a statistics panel and a list row
+ * were drawn with the same bubble geometry. Feature CSS owns the radius now.
+ */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
 }

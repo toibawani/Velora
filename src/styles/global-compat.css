@@ -42,7 +42,6 @@ a:focus-visible,
 .letter-pill:not(.active),
 .sub-filter-pill:not(.active),
 .dict-reset-filter-btn,
-.theme-toggle-segment,
 [class*="icon-button"] {
   background: transparent !important;
   color: var(--text-secondary) !important;
@@ -62,19 +61,13 @@ a:focus-visible,
 .letter-pill:not(.active):hover,
 .sub-filter-pill:not(.active):hover,
 .dict-reset-filter-btn:hover,
-.theme-toggle-segment:hover,
 [class*="icon-button"]:hover {
   background: var(--accent-soft) !important;
   color: var(--text-primary) !important;
   box-shadow: none !important;
 }
 
-/* The active theme segment opts out of the transparent reset above. */
-.theme-toggle-segment[aria-pressed="true"] {
-  background: var(--accent-soft) !important;
-  color: var(--accent-primary) !important;
-  border-color: var(--accent-line) !important;
-}
+
 
 /* The required substring card selector also matches card headings and content
    blocks. Those descendants are reset here without weakening the exact rule. */

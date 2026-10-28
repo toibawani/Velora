@@ -225,13 +225,19 @@
      make an index read as printed rather than as a set of cards, which is why
      the small steps stay small; the large steps exist so the big surfaces can
      stop being special cases. */
+  /* The upper half of this scale was drawn for marketing-page surfaces: 24px
+     hero cards and a 32px page container. At that size a radius stops reading
+     as a rounded corner and starts reading as a bubble, and because the hero
+     steps were used for ordinary panels the whole product looked like a set of
+     oversized cards. Anything above 16px is now reserved for the single
+     full-width sheet the atlas is drawn on. */
   --radius-xs: 3px;   /* badges, tight chips */
   --radius-sm: 6px;   /* buttons, inputs. Was 5px; snapped to the 3/6/8 family */
   --radius-md: 8px;   /* cards */
-  --radius-lg: 12px;  /* large cards, dropdowns */
-  --radius-xl: 18px;  /* feature panels */
-  --radius-2xl: 24px; /* hero cards, search results */
-  --radius-3xl: 32px; /* the atlas container and other page-scale surfaces */
+  --radius-lg: 10px;  /* large cards, dropdowns */
+  --radius-xl: 12px;  /* feature panels */
+  --radius-2xl: 14px; /* hero cards, search results */
+  --radius-3xl: 18px; /* the atlas container and other page-scale surfaces */
   /* NOW CORRECT. This used to resolve to 8px - identical to --radius-lg - so
      every one of roughly thirty selectors that asked for a pill by name drew a
      slightly rounded rectangle instead. The file previously documented the bug

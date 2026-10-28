@@ -237,7 +237,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
             <div className="uh-hero-actions">
               <button
                 type="button"
-                className="uh-primary bg-[--text-secondary] hover:bg-[--text-secondary] text-[--bg-primary] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[--text-secondary]/20 transition-all"
+                className="uh-primary"
                 onClick={scrollToAtlas}
               >
                 Explore the atlas <ArrowRight size={17} />
@@ -409,7 +409,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
           </p>
           <button
             type="button"
-            className="uh-primary bg-[--text-secondary] hover:bg-[--text-secondary] text-[--bg-primary] font-medium px-5 py-2.5 rounded-full shadow-lg shadow-[--text-secondary]/20 transition-all"
+            className="uh-primary"
             onClick={openLearningPath}
           >
             {outcomeLabel} <ArrowRight size={17} />
