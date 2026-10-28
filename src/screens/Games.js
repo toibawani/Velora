@@ -22,6 +22,7 @@ import { CHAINS } from '../games/KnowledgeChain';
 import { getAnalyticsData } from '../utils/analyticsStorage';
 import {
   bestDate,
+  clearGameResults,
   formatResult,
   getGameResults,
   getLastPlayedGame,
@@ -145,10 +146,15 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   // screen again rather than once on mount: the hub stays mounted while a game
   // is open, so a value read at mount would be missing the round the player
   // just finished and would go stale in exactly the moment it matters.
+  // `resultsVersion` is bumped when the records are deliberately erased, because
+  // the memo below would otherwise keep the copy it read before the erase.
+  const [resultsVersion, setResultsVersion] = useState(0);
   const gameResults = useMemo(
     () => (selectedGame ? {} : getGameResults()),
-    [selectedGame]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedGame, resultsVersion]
   );
+  const [confirmForget, setConfirmForget] = useState(false);
   const sessionsLogged = analytics.weeklyActivity.reduce(
     (total, day) => total + (day.sessions || 0),
     0
@@ -173,7 +179,8 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   // disagree about which game was last.
   const lastPlayed = useMemo(
     () => (selectedGame ? null : getLastPlayedGame()),
-    [selectedGame]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedGame, resultsVersion]
   );
   const lastPlayedGame = lastPlayed
     ? CLASSIC_GAMES.find((game) => game.id === lastPlayed.gameId)
@@ -503,6 +510,34 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
           </p>
         )}
       </main>
+
+      {/* Records are the one thing on this screen worth having an off switch.
+        * They are the only stored data the hub itself produces, and someone
+        * handing a laptop on should not have to clear the whole browser to stop
+        * the next person reading their scores. */}
+      {playedGames.length > 0 && (
+        <div className="games-records" data-testid="games-records">
+          <p className="games-records-text">
+            {playedGames.length} of {CLASSIC_GAMES.length} games have a score stored in this
+            browser. Nothing above is sent anywhere.
+          </p>
+          <button
+            type="button"
+            className={confirmForget ? 'games-forget confirm' : 'games-forget'}
+            onClick={() => {
+              if (!confirmForget) {
+                setConfirmForget(true);
+                return;
+              }
+              clearGameResults();
+              setConfirmForget(false);
+              setResultsVersion((version) => version + 1);
+            }}
+          >
+            {confirmForget ? 'Forget every game score now' : 'Forget game scores'}
+          </button>
+        </div>
+      )}
 
       {/* Stats */}
         {/*

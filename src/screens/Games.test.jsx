@@ -397,6 +397,35 @@ describe('filtering by what has been played', () => {
   });
 });
 
+/*
+ * Scores are the only thing the hub itself stores, and the only way to remove
+ * them was to clear the whole browser.
+ */
+describe('forgetting the scores', () => {
+  beforeEach(() => localStorage.clear());
+
+  test('nothing is offered while no game has a score', () => {
+    render(<GameHub setScreen={() => {}} />);
+    expect(screen.queryByTestId('games-records')).toBeNull();
+  });
+
+  test('a score can be forgotten, and the cards stop claiming it', () => {
+    recordGameResult('quiz', { score: 90, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /forget game scores/i }));
+    // First press only asks.
+    expect(screen.getAllByTestId('game-best').length).toBe(1);
+
+    fireEvent.click(screen.getByRole('button', { name: /forget every game score now/i }));
+
+    expect(screen.queryAllByTestId('game-best')).toHaveLength(0);
+    expect(screen.queryByTestId('games-records')).toBeNull();
+    expect(screen.queryByTestId('games-resume')).toBeNull();
+    expect(JSON.parse(localStorage.getItem('velora_game_results')).data).toEqual({});
+  });
+});
+
 describe('Game hub keyboard access', () => {
   // Each card was a div with an onClick, which is not focusable and has no
   // role, so the whole grid could only be used with a mouse.
