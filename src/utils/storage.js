@@ -78,6 +78,60 @@ export const KEY_PREFIX = 'velora_';
 export const EXPLANATION_BOARD = (term) => `${KEYS.EXPLANATION_BOARD_PREFIX}${term}`;
 
 /**
+ * What each stored family holds, in words.
+ *
+ * The Settings screen lists what is taking up space, and `velora_pref_sort` is
+ * not an answer a person can act on. The labels live here, beside the keys, so
+ * a new key without a label is visible in one file rather than showing up as an
+ * opaque string on a screen.
+ */
+const KEY_LABELS = {
+  [KEYS.THEME]: 'Chosen theme',
+  [KEYS.PREFERENCES]: 'Preferences',
+  [KEYS.ONBOARDING_DONE]: 'Setup completed',
+  [KEYS.ONBOARDING_PREFERENCES]: 'Setup answers',
+  [KEYS.LOCAL_PROFILE]: 'Name on this device',
+  [KEYS.QUESTION_DESK]: 'Question desk',
+  [KEYS.LEARNING_ANALYTICS]: 'Study time',
+  [KEYS.EVENTS]: 'Usage events',
+  [KEYS.REVIEWS]: 'Review schedule',
+  [KEYS.REVISION_SCHEDULE]: 'Revision schedule',
+  [KEYS.PERFORMANCE_LOG]: 'Slow operations log',
+  [KEYS.LAST_ERROR]: 'Last error',
+  [KEYS.LAST_OPERATION_ERROR]: 'Last failed operation',
+  [KEYS.MY_EXPLANATIONS]: 'Your explanations',
+  [KEYS.MYTH_STREAK]: 'Myth streak',
+  [KEYS.TASKS]: 'Next up list',
+  [KEYS.ANALYTICS_OPTIN]: 'Analytics opt-in',
+  [KEYS.RETURN_VISITS]: 'Return visits',
+  [KEYS.TODAY_QUESTION]: 'Today’s question',
+  [KEYS.LAST_LESSON]: 'Last lesson opened',
+  [KEYS.GAME_RESULTS]: 'Game results',
+};
+
+/**
+ * A human name for a stored key, falling back to the family it belongs to.
+ *
+ * The fallback is deliberately not empty: a key added without a label should
+ * read as "Saved item (velora_new_thing)" on screen rather than as a blank row,
+ * so the gap is obvious without being unreadable.
+ */
+export const describeStoredKey = (key) => {
+  if (typeof key !== 'string') return 'Saved item';
+  if (KEY_LABELS[key]) return KEY_LABELS[key];
+  if (key.startsWith(KEYS.EXPLANATION_BOARD_PREFIX)) {
+    return `Explanation board · ${key.slice(KEYS.EXPLANATION_BOARD_PREFIX.length)}`;
+  }
+  if (key.startsWith(KEYS.DIALOGUE_PREFIX)) {
+    return `Dialogue · ${key.slice(KEYS.DIALOGUE_PREFIX.length)}`;
+  }
+  if (key.startsWith(KEYS.PREFERENCE_PREFIX)) {
+    return `Preference · ${key.slice(KEYS.PREFERENCE_PREFIX.length)}`;
+  }
+  return `Saved item · ${key.replace(KEY_PREFIX, '')}`;
+};
+
+/**
  * Every key in this browser that belongs to VELORA, sorted by name.
  *
  * Only this module spells the prefix, so the filter here and the key names in

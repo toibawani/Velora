@@ -13,6 +13,7 @@ import {
   listStoredKeys,
   storageUsage,
   clearStoredData,
+  describeStoredKey,
   KEY_PREFIX,
 } from './storage';
 
@@ -147,6 +148,18 @@ test('clearing removes this app\'s keys and leaves anything else alone', () => {
   expect(clearStoredData()).toBe(2);
   expect(listStoredKeys()).toEqual([]);
   expect(window.localStorage.getItem('someone_elses_key')).toBe('keep me');
+});
+
+test('names each stored family in words a person could act on', () => {
+  expect(describeStoredKey(KEYS.QUESTION_DESK)).toBe('Question desk');
+  expect(describeStoredKey(EXPLANATION_BOARD('momentum'))).toBe('Explanation board · momentum');
+  expect(describeStoredKey(`${KEYS.DIALOGUE_PREFIX}socrates`)).toBe('Dialogue · socrates');
+  expect(describeStoredKey(`${KEYS.PREFERENCE_PREFIX}sort`)).toBe('Preference · sort');
+});
+
+test('gives an unlabelled key a readable fallback rather than a blank row', () => {
+  expect(describeStoredKey(`${KEY_PREFIX}invented`)).toBe('Saved item · invented');
+  expect(describeStoredKey(undefined)).toBe('Saved item');
 });
 
 test('describes a working store as available', () => {
