@@ -58,6 +58,10 @@ export const KEYS = {
   // Concept Scrabble had never been finished was to open it and look. Stored as
   // { <gameId>: { best, max, plays, at } }.
   GAME_RESULTS: 'velora_game_results',
+  // Dictionary entries opened recently, newest first, as ids. The console had
+  // no memory of what someone had just read, so going back to an entry that was
+  // open a minute ago meant searching for it again.
+  RECENT_TERMS: 'velora_recent_terms',
   // Dialogue transcripts are one key per historical figure, e.g.
   // velora_dialogue_socrates. Kept here for the same reason as the others: a
   // prefix spelled in two files is a prefix that drifts.
@@ -107,6 +111,7 @@ const KEY_LABELS = {
   [KEYS.TODAY_QUESTION]: 'Today’s question',
   [KEYS.LAST_LESSON]: 'Last lesson opened',
   [KEYS.GAME_RESULTS]: 'Game results',
+  [KEYS.RECENT_TERMS]: 'Recently opened terms',
 };
 
 /**
