@@ -178,6 +178,46 @@
   margin-top: var(--space-1);
 }
 
+.nu-undo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  font-size: 0.9rem;
+}
+
+.nu-undo-text {
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nu-undo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nu-undo-btn:hover {
+  background: var(--accent-soft, var(--bg-secondary));
+}
+
 .nu-section h2 {
   margin: 0 0 var(--space-2);
   font-family: var(--font-serif);

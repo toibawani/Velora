@@ -152,6 +152,67 @@ test('deletes an item', () => {
   expect(screen.getByText('A thing that stays on the list')).toBeInTheDocument();
 });
 
+test('a deleted item can be put back, with its date and its lesson intact', () => {
+  open();
+
+  const topicSelect = screen.getByLabelText(/related lesson/i);
+  const firstLesson = [...topicSelect.options].find((option) => option.value !== '');
+  fireEvent.change(topicSelect, { target: { value: firstLesson.value } });
+  add('Deleted by mistake, probably');
+  const before = stored()[0];
+
+  fireEvent.click(screen.getByRole('button', { name: /delete "Deleted by mistake, probably"/i }));
+  expect(screen.queryByText('Deleted by mistake, probably')).not.toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: /put it back/i }));
+
+  expect(screen.getByText('Deleted by mistake, probably')).toBeInTheDocument();
+  expect(stored()[0]).toEqual(before);
+  expect(screen.queryByTestId('nu-undo')).not.toBeInTheDocument();
+});
+
+/*
+ * Delete sits beside Done and had no undo, so one mis-click destroyed an item
+ * written down on purpose.
+ */
+test('the undo strip names the item it would restore', () => {
+  open();
+  add('Something worth keeping around');
+
+  fireEvent.click(screen.getByRole('button', { name: /delete "Something worth keeping around"/i }));
+
+  expect(screen.getByTestId('nu-undo')).toHaveTextContent('Something worth keeping around');
+});
+
+test('a second delete replaces the offer rather than stacking two', () => {
+  open();
+  add('First item to delete');
+  add('Second item to delete');
+
+  fireEvent.click(screen.getByRole('button', { name: /delete "First item to delete"/i }));
+  fireEvent.click(screen.getByRole('button', { name: /delete "Second item to delete"/i }));
+
+  expect(screen.getAllByTestId('nu-undo')).toHaveLength(1);
+  expect(screen.getByTestId('nu-undo')).toHaveTextContent('Second item to delete');
+});
+
+test('the undo strip is not shown when nothing has been deleted', () => {
+  open();
+  add('An item that stays where it is');
+  expect(screen.queryByTestId('nu-undo')).not.toBeInTheDocument();
+});
+
+test('nothing is left to undo once an item is marked done', () => {
+  open();
+  add('An item to complete instead of delete');
+
+  fireEvent.click(screen.getByRole('button', { name: /mark .* as done/i }));
+
+  // Done is reversible by Reopen; offering "put it back" as well would be two
+  // controls for one action, with different results.
+  expect(screen.queryByTestId('nu-undo')).not.toBeInTheDocument();
+});
+
 test('removes the done items in one action, leaving the open ones', () => {
   open();
   add('First thing to finish');

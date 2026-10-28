@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AlertTriangle, BookOpen, Check, ListTodo, Trash2, Undo2 } from 'lucide-react';
 import { CURRICULUM } from '../data/curriculum';
 import {
@@ -13,6 +13,7 @@ import {
   getOpenTasks,
   removeTask,
   reopenTask,
+  restoreTask,
 } from '../utils/nextUp';
 import { findTopic, topicChoices } from '../utils/questionDesk';
 import { FAILURE } from '../utils/storage';
@@ -62,6 +63,12 @@ function NextUp({ setScreen, onOpenLesson }) {
   const [draftSubject, setDraftSubject] = useState(SUBJECTS[0].id);
   const [draftTopic, setDraftTopic] = useState('');
   const [notice, setNotice] = useState(null);
+  // The item just deleted, held long enough to be put back. Delete sits beside
+  // Done and removes without asking; without this, one mis-click destroyed an
+  // item someone had written down on purpose.
+  const [undoItem, setUndoItem] = useState(null);
+  const undoTimer = useRef(null);
+  useEffect(() => () => clearTimeout(undoTimer.current), []);
 
   const trimmed = draft.trim();
   const tooShort = trimmed.length > 0 && trimmed.length < MIN_LENGTH;
@@ -104,7 +111,21 @@ function NextUp({ setScreen, onOpenLesson }) {
   };
 
   const handleRemove = (id) => {
-    removeTask(id);
+    const { removed } = removeTask(id);
+    refresh();
+    reportWrite();
+
+    if (!removed) return;
+    setUndoItem(removed);
+    clearTimeout(undoTimer.current);
+    undoTimer.current = setTimeout(() => setUndoItem(null), 8000);
+  };
+
+  const handleUndo = () => {
+    if (!undoItem) return;
+    restoreTask(undoItem);
+    setUndoItem(null);
+    clearTimeout(undoTimer.current);
     refresh();
     reportWrite();
   };
@@ -269,6 +290,15 @@ function NextUp({ setScreen, onOpenLesson }) {
           <p className="nu-alert" role="alert">
             <AlertTriangle size={16} aria-hidden="true" /> {notice}
           </p>
+        )}
+
+        {undoItem && (
+          <div className="nu-undo" role="status" data-testid="nu-undo">
+            <span className="nu-undo-text">Deleted “{undoItem.text}”.</span>
+            <button type="button" className="nu-undo-btn" onClick={handleUndo}>
+              <Undo2 size={14} aria-hidden="true" /> Put it back
+            </button>
+          </div>
         )}
 
         <section className="nu-section" aria-labelledby="nu-open">
