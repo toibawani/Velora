@@ -96,19 +96,31 @@ button:disabled {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
-/*
- * Cards are surfaces, and a surface is a border and a background - not a shape.
- * The radius override here forced every card in the app to 24px regardless of
- * what its own stylesheet said, which is why a statistics panel and a list row
- * were drawn with the same bubble geometry. Feature CSS owns the radius now.
+/* Elevated focus state for interactive elements - subtle ring using the theme ring token.
+ * Consistent across the app so the user always knows what's focused.
  */
-.card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  color: var(--text-primary);
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+interactive:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove default outline on mouse clicks only */
+button:focus:not(:focus-visible),
+
+/* Subtle elevation lift on card hover across the app */
+.card:hover,
+.uh-card:hover,
+.game-card-large:hover {
+  box-shadow: var(--shadow-md) !important;
 }

@@ -167,8 +167,18 @@
   padding: 0;
   background: transparent;
   color: var(--text-secondary);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.uh-icon-button:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 .uh-icon-button:hover { background: var(--bg-tertiary); color: var(--text-primary); }
 
@@ -532,7 +542,7 @@
 }
 
 .uh-card {
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   background: var(--bg-elevated);
   padding: var(--space-4) var(--space-5);
@@ -544,6 +554,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .uh-card--today {
@@ -654,7 +666,21 @@
 @media (max-width: 768px) {
   .uh-card-section { padding: 0 var(--space-4) var(--space-8); }
   .uh-card-row { gap: var(--space-4); }
-  .uh-card { min-width: 100%; flex: 1 1 100%; padding: var(--space-4); }
+.uh-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  padding: var(--space-4) var(--space-5);
+  min-width: 260px;
+  /* Capped, because a single card in a flex row used to stretch to the full
+     1120px page width and leave one sentence in a band of empty paper. */
+  flex: 0 1 420px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 /* ---- Theme toggle (tri-state segmented) ---- */
