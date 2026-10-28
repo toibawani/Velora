@@ -1,9 +1,18 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { Check, Download, HardDrive, Monitor, Moon, Sun, User } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Check, Download, HardDrive, Monitor, Moon, Sun, Upload, User } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { FAILURE, describeStorage } from '../utils/storage';
-import { buildBackup, describeBackup, serialiseBackup } from '../utils/backup';
+import {
+  IMPORT_MODE,
+  buildBackup,
+  describeBackup,
+  describeImport,
+  explainParseFailure,
+  importBackup,
+  parseBackup,
+  serialiseBackup,
+} from '../utils/backup';
 import { backupFileName, downloadText } from '../utils/download';
 import {
   STYLE_OPTIONS,
@@ -66,6 +75,11 @@ function Settings({ user, setScreen, onForgetProfile }) {
   const storage = describeStorage();
   const [analyticsOn, setAnalyticsOn] = useState(isOptedIn());
   const [exportNotice, setExportNotice] = useState(null);
+  const [importMode, setImportMode] = useState(IMPORT_MODE.MERGE);
+  const [pendingImport, setPendingImport] = useState(null);
+  const [importNotice, setImportNotice] = useState(null);
+  const [confirmingReplace, setConfirmingReplace] = useState(false);
+  const fileInput = useRef(null);
 
   /**
    * Writes every stored key to a file the browser downloads.
@@ -112,6 +126,61 @@ function Settings({ user, setScreen, onForgetProfile }) {
       return;
     }
     setNotice(failureMessage(result));
+  };
+
+  /**
+   * Reads a chosen file and parses it, without writing anything yet.
+   *
+   * Restoring on file selection would mean the contents of a file nobody has
+   * confirmed overwrote a question written this morning. The file is held here
+   * until the person presses restore, and the page can say what is in it first.
+   */
+  const chooseFile = (event) => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const parsed = parseBackup(String(reader.result || ''));
+      if (!parsed.ok) {
+        setPendingImport(null);
+        setImportNotice(explainParseFailure(parsed.reason));
+        return;
+      }
+      setPendingImport({ backup: parsed.backup, fileName: file.name, dropped: parsed.dropped });
+      setImportNotice(null);
+      setConfirmingReplace(false);
+    };
+    reader.onerror = () => {
+      setPendingImport(null);
+      setImportNotice('That file could not be read. Try choosing it again.');
+    };
+    reader.readAsText(file);
+  };
+
+  const restore = () => {
+    if (!pendingImport) return;
+
+    // Replace can delete data the file does not contain, so it takes a second
+    // press. Merge does not, and stays a single press.
+    if (importMode === IMPORT_MODE.REPLACE && !confirmingReplace) {
+      setConfirmingReplace(true);
+      setImportNotice(
+        'Restoring in replace mode deletes everything on this device that the file does not contain, including anything written since the export. Press again to do that.',
+      );
+      return;
+    }
+
+    const result = importBackup(pendingImport.backup, { mode: importMode });
+    setImportNotice(describeImport(result));
+    setPendingImport(null);
+    setConfirmingReplace(false);
+
+    // The rest of this page was read from storage when it rendered, so two
+    // controls would otherwise keep showing the values from before the restore.
+    setPreferences(getOnboardingPreferences());
+    setAnalyticsOn(isOptedIn());
+    if (fileInput.current) fileInput.current.value = '';
   };
 
   return (
@@ -271,6 +340,75 @@ function Settings({ user, setScreen, onForgetProfile }) {
               {exportNotice}
             </p>
           )}
+
+          <div className="st-import">
+            <label className="st-label" htmlFor="st-import-file">
+              Restore from a backup file
+            </label>
+            <input
+              id="st-import-file"
+              ref={fileInput}
+              type="file"
+              className="st-file-input"
+              accept="application/json,.json"
+              onChange={chooseFile}
+            />
+
+            {pendingImport && (
+              <div className="st-import-preview" role="group" aria-label="Chosen backup">
+                <p className="st-import-line">
+                  <Upload size={14} aria-hidden="true" /> {pendingImport.fileName} ·{' '}
+                  {describeBackup(pendingImport.backup)}
+                  {pendingImport.backup.exportedAt &&
+                    ` · exported ${new Date(pendingImport.backup.exportedAt).toLocaleDateString()}`}
+                  {pendingImport.dropped > 0 && ` · ${pendingImport.dropped} unreadable entries ignored`}
+                </p>
+
+                <div className="st-choice-row" role="group" aria-label="How to restore">
+                  <button
+                    type="button"
+                    className={`st-choice ${importMode === IMPORT_MODE.MERGE ? 'selected' : ''}`}
+                    onClick={() => {
+                      setImportMode(IMPORT_MODE.MERGE);
+                      setConfirmingReplace(false);
+                      setImportNotice(null);
+                    }}
+                    aria-pressed={importMode === IMPORT_MODE.MERGE}
+                  >
+                    {importMode === IMPORT_MODE.MERGE && <Check size={14} aria-hidden="true" />}
+                    Add what is in the file
+                  </button>
+                  <button
+                    type="button"
+                    className={`st-choice ${importMode === IMPORT_MODE.REPLACE ? 'selected' : ''}`}
+                    onClick={() => {
+                      setImportMode(IMPORT_MODE.REPLACE);
+                      setConfirmingReplace(false);
+                      setImportNotice(null);
+                    }}
+                    aria-pressed={importMode === IMPORT_MODE.REPLACE}
+                  >
+                    {importMode === IMPORT_MODE.REPLACE && <Check size={14} aria-hidden="true" />}
+                    Replace everything here
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  className={confirmingReplace ? 'st-danger' : 'st-primary'}
+                  onClick={restore}
+                >
+                  {confirmingReplace ? 'Replace everything now' : 'Restore this file'}
+                </button>
+              </div>
+            )}
+
+            {importNotice && (
+              <p className="st-notice-quiet" role="status">
+                {importNotice}
+              </p>
+            )}
+          </div>
         </section>
 
         <section className="st-section" aria-labelledby="st-analytics">

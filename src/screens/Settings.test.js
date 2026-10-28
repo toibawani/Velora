@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, within } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import Settings from './Settings';
 import { ThemeProvider } from '../context/ThemeContext';
 import { KEYS, writeValue } from '../utils/storage';
@@ -190,6 +190,105 @@ test('says the download did not start rather than implying it did', () => {
   fireEvent.click(screen.getByRole('button', { name: /export everything as json/i }));
 
   expect(screen.getByRole('status')).toHaveTextContent(/would not start a download/i);
+});
+
+const backupFile = (entries, overrides = {}) =>
+  JSON.stringify({
+    app: 'velora',
+    format: 1,
+    exportedAt: '2026-10-20T10:00:00.000Z',
+    origin: 'https://example.test',
+    entries,
+    ...overrides,
+  });
+
+const chooseFile = (text) => {
+  const file = new File([text], 'velora-backup-2026-10-20.json', { type: 'application/json' });
+  fireEvent.change(screen.getByLabelText(/restore from a backup file/i), {
+    target: { files: [file] },
+  });
+};
+
+const chosenBackup = () => screen.queryByRole('group', { name: /chosen backup/i });
+
+const waitForBackup = () => waitFor(() => expect(chosenBackup()).toBeInTheDocument());
+
+test('restores a backup file, and says what it did', async () => {
+  seed({ domain: 'physics', style: 'visual', time: null });
+  open();
+
+  chooseFile(
+    backupFile([
+      { key: KEYS.ONBOARDING_PREFERENCES, value: { domain: 'history', style: 'textual', time: '10 minutes' } },
+      { key: KEYS.QUESTION_DESK, value: [{ question: 'Restored question' }] },
+    ]),
+  );
+  await waitForBackup();
+
+  expect(within(chosenBackup()).getByText(/2 saved keys/)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: /restore this file/i }));
+
+  expect(screen.getByText(/2 keys restored/i)).toBeInTheDocument();
+  expect(stored().data.style).toBe('textual');
+  // The control above has to move with the restore, not keep showing the value
+  // from before the file was read.
+  expect(screen.getByRole('button', { name: 'Textual' })).toHaveAttribute('aria-pressed', 'true');
+  expect(chosenBackup()).not.toBeInTheDocument();
+});
+
+test('refuses a file that is not a backup, before writing anything', async () => {
+  writeValue(KEYS.QUESTION_DESK, [{ question: 'Still here' }]);
+  open();
+
+  chooseFile(JSON.stringify({ hello: 'world' }));
+
+  await waitFor(() => expect(screen.getByText(/not a VELORA backup/i)).toBeInTheDocument());
+  expect(chosenBackup()).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /restore this file/i })).not.toBeInTheDocument();
+  expect(JSON.parse(window.localStorage.getItem(KEYS.QUESTION_DESK)).data).toEqual([
+    { question: 'Still here' },
+  ]);
+});
+
+test('says why a file could not be read rather than failing silently', async () => {
+  open();
+  chooseFile('this is not json');
+  await waitFor(() => expect(screen.getByText(/not JSON/i)).toBeInTheDocument());
+});
+
+test('replace mode asks twice, because it deletes what the file does not contain', async () => {
+  writeValue(KEYS.MYTH_STREAK, 4);
+  open();
+
+  chooseFile(backupFile([{ key: KEYS.QUESTION_DESK, value: [] }]));
+  await waitForBackup();
+
+  fireEvent.click(screen.getByRole('button', { name: /replace everything here/i }));
+  fireEvent.click(screen.getByRole('button', { name: /restore this file/i }));
+
+  // First press only explains; nothing has been written or removed yet.
+  expect(screen.getByText(/press again/i)).toBeInTheDocument();
+  expect(window.localStorage.getItem(KEYS.MYTH_STREAK)).not.toBeNull();
+
+  fireEvent.click(screen.getByRole('button', { name: /replace everything now/i }));
+
+  // The count of replaced keys includes the theme, which the provider stores
+  // like everything else, so it is asserted as a shape rather than a number.
+  expect(screen.getByText(/1 key restored, \d+ replaced/i)).toBeInTheDocument();
+  expect(window.localStorage.getItem(KEYS.MYTH_STREAK)).toBeNull();
+});
+
+test('merge mode restores in one press and keeps what the file omits', async () => {
+  writeValue(KEYS.MYTH_STREAK, 4);
+  open();
+
+  chooseFile(backupFile([{ key: KEYS.QUESTION_DESK, value: [] }]));
+  await waitForBackup();
+
+  fireEvent.click(screen.getByRole('button', { name: /restore this file/i }));
+
+  expect(screen.getByText(/1 key restored/i)).toBeInTheDocument();
+  expect(window.localStorage.getItem(KEYS.MYTH_STREAK)).not.toBeNull();
 });
 
 test('goes back to the atlas', () => {
