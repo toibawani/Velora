@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
+import { ArrowLeft, Search, X, BookOpen, History } from 'lucide-react';
 import HighlightedText from '../components/HighlightedText';
 import { copyText, COPY_OK } from '../utils/clipboard';
 import { buildTermShareUrl } from '../utils/shareLinks';
+import { rememberTerm, resolveRecentTerms } from '../utils/recentTerms';
 import {
   CURIOUS_TERMS,
   DICTIONARY_SUBJECTS,
@@ -83,6 +84,10 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
   // helper reports failure rather than swallowing it, so the button can say
   // "blocked" instead of claiming a link that is not on the clipboard.
   const [copyState, setCopyState] = useState(null);
+  // Entries opened recently, resolved against the entries that exist now. Read
+  // once on mount and refreshed when an entry opens, which is the only moment
+  // the list can change.
+  const [recent, setRecent] = useState(() => resolveRecentTerms(CURIOUS_TERMS));
 
   // The A-Z bar sticks directly underneath the navbar, so it needs to know
   // how tall that is. Measured rather than hardcoded, because the navbar
@@ -173,6 +178,19 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
     if (onTermOpened) onTermOpened();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialTerm]);
+
+  /**
+   * Records what was opened, and refreshes the strip that lists it.
+   *
+   * One effect rather than a call at each of the four places an entry can open
+   * (a card, a related chip, a deep link, a recent chip), because four call
+   * sites is how one of them ends up forgetting.
+   */
+  useEffect(() => {
+    if (!activeEntryId) return;
+    rememberTerm(activeEntryId);
+    setRecent(resolveRecentTerms(CURIOUS_TERMS));
+  }, [activeEntryId]);
 
   useEffect(() => {
     if (!scrollPendingRef.current || !activeEntryId) return;
@@ -327,6 +345,29 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
           </div>
 
         </section>
+
+        {/* Recently opened. Only while nothing is filtering the list: the strip
+            is a shortcut back to something already read, and it belongs above a
+            list of everything rather than above a search result. */}
+        {recent.length > 0 && !searchQuery && selectedSubject === 'all' && selectedLetter === 'ALL' && (
+          <section className="dict-recent" aria-label="Recently opened">
+            <span className="dict-recent-label">
+              <History size={13} aria-hidden="true" /> Recently opened
+            </span>
+            <div className="dict-recent-chips">
+              {recent.map((term) => (
+                <button
+                  key={term.id}
+                  type="button"
+                  className={`dict-recent-chip ${activeEntryId === term.id ? 'active' : ''}`}
+                  onClick={() => openEntry(term.id)}
+                >
+                  {term.term}
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* A-to-Z index. Sits outside the controls card so it can stay put
             while the list scrolls underneath it. */}

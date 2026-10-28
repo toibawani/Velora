@@ -364,6 +364,79 @@ describe('ordering the entries', () => {
   });
 });
 
+/*
+ * The console remembered nothing between visits, so going back to an entry read
+ * a minute ago meant searching for its name again.
+ */
+describe('recently opened entries', () => {
+  const strip = () => screen.queryByRole('region', { name: /recently opened/i });
+  const open = (name) => fireEvent.click(screen.getByRole('heading', { level: 2, name }));
+
+  beforeEach(() => localStorage.clear());
+
+  test('nothing is offered before anything has been opened', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    expect(strip()).not.toBeInTheDocument();
+  });
+
+  test('an opened entry is offered afterwards, newest first', () => {
+    render(<Dictionary setScreen={() => {}} />);
+
+    open('Momentum');
+    expect(within(strip()).getByRole('button', { name: 'Momentum' })).toBeInTheDocument();
+
+    open('Entropy');
+    const chips = within(strip()).getAllByRole('button').map((chip) => chip.textContent);
+    expect(chips[0]).toBe('Entropy');
+    expect(chips).toContain('Momentum');
+  });
+
+  test('a chip opens that entry again', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    open('Momentum');
+    open('Entropy');
+
+    fireEvent.click(within(strip()).getByRole('button', { name: 'Momentum' }));
+
+    // An open entry is the only one showing its related row.
+    expect(screen.getAllByTestId('related-term').length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Momentum' }).closest('.lexicon-entry-card'),
+    ).toHaveClass('expanded');
+  });
+
+  test('the strip stays out of the way while searching or filtering', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    open('Momentum');
+    expect(strip()).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
+      target: { value: 'entropy' },
+    });
+    expect(strip()).not.toBeInTheDocument();
+  });
+
+  test('the history survives a reload', () => {
+    const view = render(<Dictionary setScreen={() => {}} />);
+    open('Entropy');
+    view.unmount();
+
+    render(<Dictionary setScreen={() => {}} />);
+    expect(within(strip()).getByRole('button', { name: 'Entropy' })).toBeInTheDocument();
+  });
+
+  test('a stored id for an entry that no longer exists is not shown', () => {
+    localStorage.setItem(
+      'velora_recent_terms',
+      JSON.stringify({ v: 1, data: ['entropy-phys', 'term-that-was-removed'] }),
+    );
+    render(<Dictionary setScreen={() => {}} />);
+
+    const chips = within(strip()).getAllByRole('button').map((chip) => chip.textContent);
+    expect(chips).toEqual(['Entropy']);
+  });
+});
+
 test('an entry with no verification mark says it is unchecked', () => {
   render(<Dictionary setScreen={jest.fn()} />);
 

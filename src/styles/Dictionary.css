@@ -637,6 +637,58 @@
    where it would disappear behind it. The offset matches the navbar padding
    and content height; --dict-navbar-h is set to that measured height so the
    two cannot drift apart if the navbar restyles. */
+.dict-recent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.dict-recent-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.dict-recent-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.dict-recent-chip {
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: var(--bg-secondary);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.dict-recent-chip:hover {
+  border-color: var(--accent-primary);
+}
+
+.dict-recent-chip.active {
+  border-color: var(--accent-primary);
+  background: var(--accent-soft, var(--bg-tertiary));
+  font-weight: 600;
+}
+
 .dict-letter-bar {
   position: sticky;
   top: var(--dict-navbar-h, 73px);
