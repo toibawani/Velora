@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import Dictionary from './Dictionary';
 import { CURIOUS_TERMS, verifiedTermCount } from '../data/dictionary';
 
@@ -31,7 +31,7 @@ describe('Curious Dictionary', () => {
     const searchInput = screen.getByLabelText(/search across all subjects/i);
     fireEvent.change(searchInput, { target: { value: 'momentum' } });
 
-    expect(screen.getByText('Momentum')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Momentum' })).toBeInTheDocument();
     expect(screen.queryByText('Epistemology')).not.toBeInTheDocument();
   });
 
@@ -101,6 +101,44 @@ describe('Curious Dictionary A-Z index', () => {
     const headings = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
     const sorted = [...headings].sort((a, b) => a.localeCompare(b));
     expect(headings).toEqual(sorted);
+  });
+});
+
+/*
+ * Filtering told you which entries matched and left you to find the word in
+ * each one - sometimes on the third line you looked at.
+ */
+describe('what the search actually matched', () => {
+  test('the matched characters in a term are marked', () => {
+    render(<Dictionary setScreen={() => {}} />);
+
+    fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
+      target: { value: 'entropy' },
+    });
+
+    // Several entries mention entropy, so every one of them marks it.
+    expect(screen.getAllByText('Entropy', { selector: 'mark' }).length).toBeGreaterThan(0);
+  });
+
+  test('a partial match marks only the part that matched', () => {
+    render(<Dictionary setScreen={() => {}} />);
+
+    fireEvent.change(screen.getByLabelText(/search across all subjects/i), {
+      target: { value: 'moment' },
+    });
+
+    // "Momentum" contains it; the mark holds the typed characters, not the
+    // whole word, so the reader can see what they searched for. Scoped to one
+    // heading, because several terms contain the same letters.
+    const heading = screen
+      .getAllByRole('heading', { level: 2 })
+      .find((node) => node.textContent === 'Momentum');
+    expect(within(heading).getByText('Moment', { selector: 'mark' })).toBeInTheDocument();
+  });
+
+  test('nothing is marked when the search box is empty', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    expect(screen.queryAllByText(/.+/, { selector: 'mark' })).toHaveLength(0);
   });
 });
 
@@ -228,6 +266,6 @@ test('a checked entry carries no warning', () => {
     target: { value: 'Event Horizon' },
   });
 
-  expect(screen.getByText('Event Horizon')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Event Horizon' })).toBeInTheDocument();
   expect(screen.queryByText('not checked yet')).not.toBeInTheDocument();
 });

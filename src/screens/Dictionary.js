@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { ArrowLeft, Search, X, BookOpen } from 'lucide-react';
+import HighlightedText from '../components/HighlightedText';
 import {
   CURIOUS_TERMS,
   DICTIONARY_SUBJECTS,
@@ -329,8 +330,16 @@ function Dictionary({ setScreen }) {
                     <div className="entry-title-wrap">
                       <span className="entry-letter-badge">{entry.letter}</span>
                       <div>
-                        <h2 className="entry-term">{entry.term}</h2>
-                        <p className="entry-tagline">{entry.tagline}</p>
+                        {/* The list already narrowed to the matching entries;
+                          * marking the matched characters inside each one is
+                          * what saves the reader hunting for the word in a card
+                          * with three blocks of text on it. */}
+                        <h2 className="entry-term">
+                          <HighlightedText text={entry.term} query={searchQuery} />
+                        </h2>
+                        <p className="entry-tagline">
+                          <HighlightedText text={entry.tagline} query={searchQuery} />
+                        </p>
                       </div>
                     </div>
                     <span

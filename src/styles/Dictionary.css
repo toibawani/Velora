@@ -387,6 +387,20 @@
   flex-shrink: 0;
 }
 
+/*
+ * The matched characters inside a term or tagline. Underlined as well as
+ * tinted, because a background tint alone is invisible to a reader who cannot
+ * distinguish it from the card behind it.
+ */
+.text-match {
+  background: transparent;
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--accent-primary);
+}
+
 .entry-term {
   margin: 0 0 var(--space-1);
   font-family: var(--font-display);
