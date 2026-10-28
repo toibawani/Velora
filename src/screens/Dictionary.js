@@ -58,9 +58,15 @@ export const comparatorFor = (orderId) =>
  */
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-Dictionary.propTypes = { setScreen: PropTypes.shape({"setScreen": PropTypes.func}) };
+Dictionary.propTypes = {
+  setScreen: PropTypes.shape({ setScreen: PropTypes.func }),
+  /** An entry id another screen or a shared link asked for. */
+  initialTerm: PropTypes.string,
+  /** Called once that request has been honoured, so it does not fire again. */
+  onTermOpened: PropTypes.func,
+};
 
-function Dictionary({ setScreen }) {
+function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('all');
   const [selectedLetter, setSelectedLetter] = useState('ALL');
@@ -135,6 +141,27 @@ function Dictionary({ setScreen }) {
     setActiveEntryId(entryId);
     scrollPendingRef.current = true;
   };
+
+  /**
+   * Honour a request to open one entry.
+   *
+   * A shared `#/term/{id}` link opened this screen and then dropped the id, so
+   * the reader landed at the top of 144 entries with no sign of which one the
+   * link was about. An id that is not in the dictionary opens nothing and is
+   * cleared, rather than leaving the request to fire again on the next visit.
+   */
+  useEffect(() => {
+    if (!initialTerm) return;
+    if (CURIOUS_TERMS.some((term) => term.id === initialTerm)) {
+      setSearchQuery('');
+      setSelectedSubject('all');
+      setSelectedLetter('ALL');
+      setActiveEntryId(initialTerm);
+      scrollPendingRef.current = true;
+    }
+    if (onTermOpened) onTermOpened();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialTerm]);
 
   useEffect(() => {
     if (!scrollPendingRef.current || !activeEntryId) return;

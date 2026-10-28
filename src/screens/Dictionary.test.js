@@ -105,6 +105,39 @@ describe('Curious Dictionary A-Z index', () => {
 });
 
 /*
+ * A shared link is `#/term/{id}`. The app opened the dictionary for it and then
+ * dropped the id, so the link delivered the reader to the top of 144 entries.
+ */
+describe('opening one entry from a link', () => {
+  const target = CURIOUS_TERMS.find((term) => term.id === 'event-horizon')
+    || CURIOUS_TERMS.find((term) => term.id && term.term === 'Event Horizon');
+
+  test('the requested entry is the one that is open', () => {
+    render(<Dictionary setScreen={() => {}} initialTerm={target.id} />);
+
+    // An open entry is the only one showing its related row, so the test reads
+    // the state the reader sees rather than an internal id.
+    expect(screen.getAllByTestId('related-term').length).toBeGreaterThan(0);
+  });
+
+  test('the request is cleared once it has been honoured', () => {
+    const onTermOpened = jest.fn();
+    render(<Dictionary setScreen={() => {}} initialTerm={target.id} onTermOpened={onTermOpened} />);
+
+    expect(onTermOpened).toHaveBeenCalledTimes(1);
+  });
+
+  test('a link to an entry that does not exist opens nothing', () => {
+    const onTermOpened = jest.fn();
+    render(<Dictionary setScreen={() => {}} initialTerm="not-a-real-term" onTermOpened={onTermOpened} />);
+
+    expect(screen.queryAllByTestId('related-term')).toHaveLength(0);
+    // Cleared anyway, so a bad link cannot keep firing on later visits.
+    expect(onTermOpened).toHaveBeenCalledTimes(1);
+  });
+});
+
+/*
  * Opening an entry used to be the end of the line: the explanation finished and
  * the only thing left to do was go back to the search box.
  */

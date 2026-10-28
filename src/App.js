@@ -140,6 +140,8 @@ function App() {
   // Which game a lesson points at, handed to the games hub so a reader can jump
   // straight to the related game (for example Relativity Lab from black holes).
   const [gameRequest, setGameRequest] = useState(null);
+  // Which dictionary entry was asked for, if any.
+  const [termRequest, setTermRequest] = useState(null);
   // Which level a deep read should open on, when the topic that was tapped names
   // one. Null means "open at the top", which is what a generic entry point wants.
   const [deepReadLevel, setDeepReadLevel] = useState(null);
@@ -153,6 +155,18 @@ function App() {
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
   };
+
+  // A request to open one dictionary entry. The Dictionary keeps its own state,
+  // so a shared link or another screen has to hand the id over rather than
+  // expect the screen to find it. `#/term/event-horizon` used to open the
+  // dictionary and drop the id on the floor.
+  const openTerm = (termId) => {
+    if (!termId) return;
+    setTermRequest(termId);
+    setScreen('dictionary');
+  };
+
+  const clearTermRequest = () => setTermRequest(null);
 
   // A lesson request handed to Learn by another screen. Until now the only way
   // into a lesson was to navigate to Learn and find the topic by hand, which is
@@ -206,7 +220,7 @@ function App() {
       return true;
     }
     if (dest.kind === 'term') {
-      setScreen('dictionary');
+      openTerm(dest.termId);
       return true;
     }
     return false;
@@ -299,7 +313,11 @@ function App() {
         )}
 
         {screen === 'dictionary' && user && (
-          <DictionaryScreen setScreen={setScreen} />
+          <DictionaryScreen
+            setScreen={setScreen}
+            initialTerm={termRequest}
+            onTermOpened={clearTermRequest}
+          />
         )}
 
         {screen === 'games' && user && (
