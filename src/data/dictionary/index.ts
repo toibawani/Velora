@@ -16,6 +16,9 @@ import { ECONOMICS_TERMS } from './economics';
 
 export type { DictionaryLetter, DictionarySubject, DictionarySubjectId, DictionaryTerm } from './types';
 export { DICTIONARY_SUBJECTS };
+// Related entries are derived, not authored, so they live in their own module
+// and are re-exported here to keep the screen's import list to one entry point.
+export { relatedTerms, relationScore } from './relations';
 
 /**
  * Everything the dictionary holds, in one list.

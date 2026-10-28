@@ -9,6 +9,7 @@ import {
   countTermsBySubject,
   selectTerms,
   verifiedTermCount,
+  relatedTerms,
 } from '../data/dictionary';
 import '../styles/Dictionary.css';
 
@@ -67,6 +68,9 @@ function Dictionary({ setScreen }) {
   const [orderId, setOrderId] = useState('az');
   const navbarRef = useRef(null);
   const searchRef = useRef(null);
+  // Set when an entry is opened from a link inside another entry, so the
+  // scroll happens for that jump and not for every card the reader unfolds.
+  const scrollPendingRef = useRef(false);
 
   // The A-Z bar sticks directly underneath the navbar, so it needs to know
   // how tall that is. Measured rather than hardcoded, because the navbar
@@ -114,6 +118,32 @@ function Dictionary({ setScreen }) {
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
+
+  /**
+   * Opens one entry by id, whatever the current filters are.
+   *
+   * A related entry is usually not in the current result set - it can be a
+   * different subject, or under a letter the reader filtered to - so jumping to
+   * it means clearing the filters that would hide it. Focus moves with the
+   * card, otherwise a keyboard user is left at the top of a list they did not
+   * ask to see.
+   */
+  const openEntry = (entryId) => {
+    setSearchQuery('');
+    setSelectedSubject('all');
+    setSelectedLetter('ALL');
+    setActiveEntryId(entryId);
+    scrollPendingRef.current = true;
+  };
+
+  useEffect(() => {
+    if (!scrollPendingRef.current || !activeEntryId) return;
+    scrollPendingRef.current = false;
+    const node = document.getElementById(`dict-entry-${activeEntryId}`);
+    if (!node) return;
+    if (node.scrollIntoView) node.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    if (node.focus) node.focus({ preventScroll: true });
+  }, [activeEntryId]);
 
   // Cross-subject search and filtering. The rules live in the data module so
   // the counts shown on the letter bar and the subject rail are computed from
@@ -323,8 +353,20 @@ function Dictionary({ setScreen }) {
               return (
                 <article
                   key={entry.id}
+                  id={`dict-entry-${entry.id}`}
+                  tabIndex={-1}
+                  aria-label={entry.term}
                   className={`lexicon-entry-card ${isExpanded ? 'expanded' : ''}`}
                   onClick={() => setActiveEntryId(isExpanded ? null : entry.id)}
+                  onKeyDown={(event) => {
+                    // The header is a normal click target, so it needs the same
+                    // affordance from the keyboard rather than being a mouse
+                    // only way into the explanation.
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      setActiveEntryId(isExpanded ? null : entry.id);
+                    }
+                  }}
                 >
                   <div className="entry-head-row">
                     <div className="entry-title-wrap">
@@ -382,6 +424,35 @@ function Dictionary({ setScreen }) {
                         )}
                       </div>
                     )}
+
+                    {/* Where to go next. Derived from the wording of the
+                      * entries, so it is offered as "Related" and not as a
+                      * prerequisite or a claim about the order to read them. */}
+                    {isExpanded && (() => {
+                      const related = relatedTerms(entry, CURIOUS_TERMS, 3);
+                      if (related.length === 0) return null;
+                      return (
+                        <div className="entry-related">
+                          <span className="related-label">Related</span>
+                          {related.map((next) => (
+                            <button
+                              key={next.id}
+                              type="button"
+                              className="related-chip"
+                              data-testid="related-term"
+                              onClick={(event) => {
+                                // The card itself toggles on click; a jump has to
+                                // reach the chip rather than the wrapper.
+                                event.stopPropagation();
+                                openEntry(next.id);
+                              }}
+                            >
+                              {next.term}
+                            </button>
+                          ))}
+                        </div>
+                      );
+                    })()}
                   </div>
                 </article>
               );

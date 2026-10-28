@@ -105,6 +105,47 @@ describe('Curious Dictionary A-Z index', () => {
 });
 
 /*
+ * Opening an entry used to be the end of the line: the explanation finished and
+ * the only thing left to do was go back to the search box.
+ */
+describe('following a thread from one entry to the next', () => {
+  const openMomentum = () =>
+    fireEvent.click(screen.getByRole('heading', { level: 2, name: 'Momentum' }));
+
+  test('an opened entry offers other entries', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    openMomentum();
+
+    const chips = screen.getAllByTestId('related-term');
+    expect(chips.length).toBeGreaterThan(0);
+    chips.forEach((chip) => expect(chip).not.toHaveTextContent(/^Momentum$/));
+  });
+
+  test('a collapsed entry offers nothing, so the list stays scannable', () => {
+    render(<Dictionary setScreen={() => {}} />);
+    expect(screen.queryAllByTestId('related-term')).toHaveLength(0);
+  });
+
+  test('a suggestion opens that entry even when a filter would hide it', () => {
+    render(<Dictionary setScreen={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Economics/ }));
+    const card = screen
+      .getAllByRole('heading', { level: 2 })
+      .find((node) => node.textContent === 'Supply and Demand');
+    fireEvent.click(card);
+
+    const chip = screen.getAllByTestId('related-term')[0];
+    const name = chip.textContent;
+    fireEvent.click(chip);
+
+    // The target is not in the economics list, so following the link has to
+    // clear the filter rather than leave the reader on an empty-looking card.
+    expect(screen.getByRole('heading', { level: 2, name })).toBeInTheDocument();
+  });
+});
+
+/*
  * Filtering told you which entries matched and left you to find the word in
  * each one - sometimes on the third line you looked at.
  */
