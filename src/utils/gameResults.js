@@ -26,6 +26,23 @@ import { KEYS, readValue, writeValue } from './storage';
 /** The shape stored under KEYS.GAME_RESULTS: game id to one record. */
 export const EMPTY_RESULTS = {};
 
+/**
+ * How many recent rounds each game keeps.
+ *
+ * Best and plays were enough to say what a game had produced and nothing about
+ * how it was going. Five is enough for a player to see the last few attempts
+ * without turning the record into a database: the number the card shows is
+ * still the best, and the history only exists to say whether the latest round
+ * was it.
+ */
+export const RECENT_ROUNDS = 5;
+
+const isRound = (round) =>
+  round !== null &&
+  typeof round === 'object' &&
+  Number.isFinite(Number(round.score)) &&
+  typeof round.at === 'string';
+
 const isRecord = (value) =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
 
@@ -47,11 +64,29 @@ export function getGameResults() {
     const best = Number(record.best);
     const max = Number(record.max);
     const plays = Number(record.plays);
+    // A record written before rounds were kept has none, and one written by
+    // something else may have anything at all in this field.
+    const rounds = Array.isArray(record.rounds)
+      ? record.rounds.filter(isRound).slice(0, RECENT_ROUNDS).map((round) => ({
+          score: Number(round.score),
+          max: Number.isFinite(Number(round.max)) ? Number(round.max) : 0,
+          at: round.at,
+        }))
+      : [];
+    const lastScore = Number(record.lastScore);
+
     results[gameId] = {
       best: Number.isFinite(best) ? best : 0,
       max: Number.isFinite(max) ? max : 0,
       plays: Number.isFinite(plays) && plays > 0 ? Math.floor(plays) : 0,
       at: typeof record.at === 'string' ? record.at : null,
+      lastScore: Number.isFinite(lastScore)
+        ? lastScore
+        : rounds.length > 0
+        ? rounds[0].score
+        : null,
+      bestAt: typeof record.bestAt === 'string' ? record.bestAt : null,
+      rounds,
     };
   });
   return results;
@@ -81,17 +116,56 @@ export function recordGameResult(gameId, { score, max } = {}) {
   const rounded = Number.isFinite(numericScore) ? numericScore : 0;
   const maxValue = Number.isFinite(numericMax) ? numericMax : previous.max;
 
+  const stamp = nextStamp();
+  const beatTheBest = rounded > previous.best;
   const record = {
     best: Math.max(previous.best, rounded),
     max: Math.max(previous.max, maxValue),
     plays: previous.plays + 1,
-    at: nextStamp(),
+    at: stamp,
+    // The last round played, kept apart from `best`. Without it there is no way
+    // to tell a player who just scored 1200 from one who scored 1200 last week.
+    lastScore: rounded,
+    // When the best was set. A best with no date reads as something earned today.
+    bestAt: beatTheBest ? stamp : previous.bestAt || previous.at || null,
+    rounds: [
+      { score: rounded, max: maxValue, at: stamp },
+      ...(previous.rounds || []),
+    ].slice(0, RECENT_ROUNDS),
   };
 
   const next = { ...results, [gameId]: record };
   writeValue(KEYS.GAME_RESULTS, next);
   return record;
 }
+
+/**
+ * Whether the newest round is the best one, or merely another try.
+ *
+ * Only after more than one round: calling a first round a new best says nothing
+ * a player does not already know, and the card already shows the score.
+ */
+export const isLatestBest = (record) =>
+  Boolean(
+    record &&
+      record.plays > 1 &&
+      Array.isArray(record.rounds) &&
+      record.rounds.length > 0 &&
+      record.rounds[0].score >= record.best,
+  );
+
+/** When the best round happened, or null when no date was kept. */
+export const bestDate = (record) => {
+  if (!record) return null;
+  const stored = record.bestAt || (record.rounds && record.rounds[0] && record.rounds[0].at);
+  return typeof stored === 'string' ? stored : null;
+};
+
+/** Forgets every game's record on this device. */
+export const clearGameResults = () => {
+  writeValue(KEYS.GAME_RESULTS, {});
+  return {};
+};
 
 /** The game most recently finished, or null. The hub offers to reopen it. */
 export function getLastPlayedGame() {
