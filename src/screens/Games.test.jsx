@@ -319,6 +319,84 @@ describe('what each game has actually produced', () => {
   });
 });
 
+/*
+ * The cards said which games had been finished and offered no way to use it, so
+ * someone who had played four of six still read all six to find the other two.
+ */
+describe('filtering by what has been played', () => {
+  const cards = () => screen.getAllByTestId('game-card');
+  const filter = (label) =>
+    fireEvent.click(within(screen.getByRole('group', { name: /by progress/i })).getByRole('button', { name: new RegExp(label) }));
+
+  beforeEach(() => localStorage.clear());
+
+  test('the grid starts with every game, played or not', () => {
+    recordGameResult('quiz', { score: 10, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(cards()).toHaveLength(6);
+    expect(within(screen.getByRole('group', { name: /by progress/i })).getByRole('button', { name: /^Any/ })).toHaveTextContent('6');
+  });
+
+  test('Not yet leaves only the games with no record', () => {
+    recordGameResult('quiz', { score: 10, max: 140 });
+    recordGameResult('puzzle', { score: 20, max: 100 });
+    render(<GameHub setScreen={() => {}} />);
+
+    filter('Not yet');
+
+    expect(cards()).toHaveLength(4);
+    expect(cards().every((card) => within(card).queryByTestId('game-best') === null)).toBe(true);
+  });
+
+  test('Finished leaves only the games that have one', () => {
+    recordGameResult('quiz', { score: 10, max: 140 });
+    recordGameResult('puzzle', { score: 20, max: 100 });
+    render(<GameHub setScreen={() => {}} />);
+
+    filter('Finished');
+
+    expect(cards()).toHaveLength(2);
+    expect(cards().every((card) => within(card).queryByTestId('game-best') !== null)).toBe(true);
+  });
+
+  test('the counts are the records, not a list kept here', () => {
+    recordGameResult('quiz', { score: 10, max: 140 });
+    render(<GameHub setScreen={() => {}} />);
+
+    const group = screen.getByRole('group', { name: /by progress/i });
+    expect(within(group).getByRole('button', { name: /^Finished/ })).toHaveTextContent('1');
+    expect(within(group).getByRole('button', { name: /^Not yet/ })).toHaveTextContent('5');
+  });
+
+  test('the progress and difficulty filters apply together', () => {
+    // Concept Check and Knowledge Chain are both Medium, and only one of them
+    // has been played.
+    recordGameResult('chain', { score: 40, max: 400 });
+    render(<GameHub setScreen={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /^Medium/ }));
+    filter('Not yet');
+
+    expect(cards().length).toBeGreaterThan(0);
+    cards().forEach((card) => {
+      expect(within(card).getByTestId('game-difficulty')).toHaveTextContent('Medium');
+      expect(within(card).queryByTestId('game-best')).toBeNull();
+    });
+    expect(cards().length).toBeLessThan(2);
+  });
+
+  test('says so when a filter leaves nothing, rather than showing a blank grid', () => {
+    CLASSIC_GAMES.forEach((game) => recordGameResult(game.id, { score: 1, max: 2 }));
+    render(<GameHub setScreen={() => {}} />);
+
+    filter('Not yet');
+
+    expect(screen.getByText(/has been finished/i)).toBeInTheDocument();
+    expect(screen.queryAllByTestId('game-card')).toHaveLength(0);
+  });
+});
+
 describe('Game hub keyboard access', () => {
   // Each card was a div with an onClick, which is not focusable and has no
   // role, so the whole grid could only be used with a mouse.

@@ -162,6 +162,11 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   // set, so the default is the whole grid and filtering is something you opt
   // into rather than something you have to undo.
   const [difficultyFilter, setDifficultyFilter] = useState('All');
+  // Which games have actually been finished on this device. The grid mixes six
+  // games with nothing in common except a subject, and someone who has played
+  // four of them wants the other two; someone revisiting wants the ones they
+  // know. Read off the records, so it cannot drift from the badges.
+  const [progressFilter, setProgressFilter] = useState('all');
 
   // The game played most recently, so the hub can offer to pick it up again.
   // Read off the same records the cards use, so the strip and the card cannot
@@ -177,8 +182,12 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   // The label a card carries, read off the card itself rather than a list here,
   // so a difficulty added to a game cannot be missing from the filter.
   const DIFFICULTIES = ['All', ...new Set(CLASSIC_GAMES.map((game) => game.difficulty))];
+  const playedGames = CLASSIC_GAMES.filter((game) => Boolean(gameResults[game.id]));
   const visibleGames = CLASSIC_GAMES.filter(
-    (game) => difficultyFilter === 'All' || game.difficulty === difficultyFilter
+    (game) =>
+      (difficultyFilter === 'All' || game.difficulty === difficultyFilter) &&
+      (progressFilter === 'all' ||
+        (progressFilter === 'played' ? Boolean(gameResults[game.id]) : !gameResults[game.id]))
   );
 
   /**
@@ -344,6 +353,30 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
         ))}
       </div>
 
+      {/* Progress filter. The cards already said which games had been finished;
+        * this is the switch that uses it. Counts are read from the same records
+        * the cards read, so a card cannot show a score on a list that says the
+        * game is unplayed. */}
+      <div className="games-difficulty-filter" role="group" aria-label="Filter games by progress">
+        <span className="games-filter-label">Played</span>
+        {[
+          { id: 'all', label: 'Any', count: CLASSIC_GAMES.length },
+          { id: 'played', label: 'Finished', count: playedGames.length },
+          { id: 'unplayed', label: 'Not yet', count: CLASSIC_GAMES.length - playedGames.length },
+        ].map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            className={`pill-btn ${progressFilter === option.id ? 'active' : ''}`}
+            aria-pressed={progressFilter === option.id}
+            onClick={() => setProgressFilter(option.id)}
+          >
+            {option.label}
+            <span className="games-filter-count">{option.count}</span>
+          </button>
+        ))}
+      </div>
+
       {/* Pick up where you left off.
         *
         * Six games are a lot to scan when you came back to finish the round you
@@ -462,7 +495,11 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
         })}
         {visibleGames.length === 0 && (
           <p className="games-grid-empty">
-            No game on this list is marked {difficultyFilter}.
+            {progressFilter === 'unplayed'
+              ? `Every ${difficultyFilter === 'All' ? '' : `${difficultyFilter} `}game on this list has been finished.`
+              : progressFilter === 'played'
+              ? `No ${difficultyFilter === 'All' ? '' : `${difficultyFilter} `}game has been finished yet.`
+              : `No game on this list is marked ${difficultyFilter}.`}
           </p>
         )}
       </main>
