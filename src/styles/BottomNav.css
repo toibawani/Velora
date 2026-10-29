@@ -97,3 +97,74 @@
 .mobile-nav-btn.active .mobile-nav-icon {
   transform: translateY(-1px);
 }
+
+/* ==========================================================================
+   Collection pass — the dock
+   --------------------------------------------------------------------------
+   The bar was a full-bleed strip pinned to the bottom edge with a hairline on
+   top. It now floats: a dark lozenge inset from the edges, with the active
+   destination carried on a lifted paper chip. A dock that sits above the page
+   reads as an object you can pick up, and it stops competing with the content
+   scrolling underneath it.
+   ========================================================================== */
+
+.mobile-bottom-nav {
+  left: 50%;
+  right: auto;
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(calc(100% - 24px), 30rem);
+  padding: 6px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--field-ink);
+  box-shadow: 0 14px 34px rgba(24, 16, 9, 0.28);
+  z-index: 900;
+}
+
+.mobile-bottom-nav-inner {
+  gap: 2px;
+  max-width: none;
+}
+
+.mobile-nav-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 46px;
+  padding: 6px 4px;
+  border-radius: var(--radius-full);
+  color: var(--field-ink-text);
+  opacity: 0.62;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              opacity var(--duration-fast) var(--ease-standard);
+}
+
+.mobile-nav-btn:hover {
+  opacity: 0.9;
+  background: transparent;
+}
+
+.mobile-nav-btn.active {
+  background: var(--field-ink-text);
+  color: var(--field-ink);
+  opacity: 1;
+}
+
+.mobile-nav-btn.active .mobile-nav-icon svg {
+  color: var(--field-ink) !important;
+}
+
+.mobile-nav-label {
+  font-family: var(--font-sans);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* The dock is opaque, so the label of the destination under it does not need
+   to be legible. Six uppercase labels inside a 375px lozenge is still tight,
+   so the two longest are allowed to truncate rather than shrink the type. */
+.mobile-nav-btn:not(.active) .mobile-nav-label {
+  opacity: 0.85;
+}
