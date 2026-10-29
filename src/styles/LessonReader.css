@@ -120,3 +120,297 @@
   .lesson-story p, .lesson-block p, .lesson-callout p, .lesson-list-card p { font-size: 1rem; line-height: 1.6; }
   .lesson-related-game-btn { width: 100%; justify-content: center; }
 }
+
+/* ==========================================================================
+   Collection pass — the reading room
+   --------------------------------------------------------------------------
+   A lesson is the one screen in the product that is only text, so this pass
+   removes almost everything: the chips become outlined lozenges in the header,
+   the "story" and the numbered sections lose their cards and keep their type,
+   and the callout becomes the single pigment block in the piece. Reading width
+   is 68 characters in the reading serif at 1.0625rem with 1.75 leading, which
+   is the setting the Dictionary and the deep reads already use.
+
+   The drop cap on the story is the only decorative move on the page, and it is
+   there because the story is the one paragraph the reader is meant to slow
+   down for.
+   ========================================================================== */
+
+.lesson-reader-header {
+  min-height: 60px;
+  padding: var(--space-3) clamp(1rem, 3vw, 2rem);
+  background: var(--bg-glass-strong);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lesson-reader-header .learn-back-btn,
+.lesson-save-btn,
+.lesson-share-btn {
+  min-height: 34px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.lesson-save-btn,
+.lesson-share-btn {
+  color: var(--text-secondary);
+}
+
+.lesson-save-btn.saved,
+.lesson-share-btn.copied {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.lesson-reader-main {
+  width: min(100% - 2.5rem, 760px);
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(6rem, 10vw, 8rem);
+}
+
+.lesson-kicker {
+  margin-bottom: var(--space-4);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.lesson-reader-main > h1 {
+  max-width: 20ch;
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.6vw, 4rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
+  font-weight: 600;
+  letter-spacing: -0.038em;
+  line-height: 0.92;
+}
+
+.lesson-kicker-line {
+  max-width: 46ch;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+/* ---- The story: the standfirst, with a drop cap ---- */
+
+.lesson-story {
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.lesson-story p {
+  max-width: 68ch;
+  color: var(--text-primary);
+  font-family: var(--font-reading);
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.lesson-story p::first-letter {
+  float: left;
+  margin: 0.04em 0.1em 0 0;
+  color: var(--accent-primary);
+  font-family: var(--font-display);
+  font-size: 3.4em;
+  font-weight: 600;
+  line-height: 0.82;
+}
+
+.lesson-section-label {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+/* ---- Numbered sections ---- */
+
+.lesson-section-list {
+  gap: 0;
+}
+
+.lesson-block {
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: clamp(1.75rem, 3vw, 2.5rem) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lesson-block-number {
+  padding-top: 0.35rem;
+  color: var(--accent-primary);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lesson-block h2 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+}
+
+.lesson-block p {
+  max-width: 68ch;
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+/* ---- The one pigment block ---- */
+
+.lesson-callout {
+  margin: clamp(2rem, 4vw, 3rem) 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 0;
+  border-radius: var(--radius-3xl);
+  background: var(--field-butter);
+  color: var(--field-butter-ink);
+}
+
+.lesson-callout-heading {
+  color: inherit;
+  opacity: 0.8;
+  gap: var(--space-2);
+}
+
+.lesson-callout-heading h2 {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lesson-callout p {
+  margin-top: var(--space-3);
+  color: inherit;
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+/* ---- The supporting blocks ---- */
+
+.lesson-section-card,
+.lesson-list-card {
+  margin: clamp(1.5rem, 3vw, 2rem) 0;
+  padding: clamp(1.5rem, 3vw, 2rem) 0 0;
+  border: 0;
+  border-top: 1px solid var(--border-default);
+  border-radius: 0;
+  background: transparent;
+}
+
+.lesson-card-heading {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.lesson-block h2,
+.lesson-card-heading h2,
+.lesson-callout h2 {
+  letter-spacing: -0.02em;
+}
+
+.lesson-card-heading h2 {
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lesson-list-card ul {
+  max-width: 64ch;
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.lesson-list-card p {
+  max-width: 64ch;
+  font-family: var(--font-reading);
+}
+
+.lesson-columns {
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.lesson-sources ul {
+  font-family: var(--font-reading);
+  font-size: 1rem;
+}
+
+/* ---- The inline way back in ---- */
+
+.lesson-resume {
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
+  background: var(--wash);
+}
+
+.lesson-resume-jump,
+.lesson-resume-start {
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.lesson-related-game-btn {
+  border-radius: var(--radius-full);
+  border: 1px solid var(--field-ink);
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  min-height: 42px;
+  padding: 0 var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .lesson-block {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .lesson-block-number {
+    padding-top: 0;
+  }
+
+  .lesson-story p::first-letter {
+    font-size: 2.8em;
+  }
+}
