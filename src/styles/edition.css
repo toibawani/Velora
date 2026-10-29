@@ -616,3 +616,45 @@ a.vl-card:hover {
     transform: none;
   }
 }
+
+/* ==========================================================================
+   Night edition
+   --------------------------------------------------------------------------
+   The dark theme is not the light theme dimmed: the papers become inks and the
+   inks become papers, which is why the pigment fields above get their own dark
+   values. Two consequences are easy to get wrong and both were:
+
+   1. A meter or a track inside a field must be drawn in the field's own ink,
+      not in white or black. On a peach plate in daylight the track is white; on
+      the same plate at night it is a lighter wash of the ink. A hard-coded
+      black track disappears completely.
+   2. A solid ink slab (button, dock, toast) inverts at night, so its label must
+      take the field's paper value rather than assuming white.
+   ========================================================================== */
+
+/* Any translucent white detail drawn inside a pigment field flips direction at
+   night, because the field is now dark. `--field-tint` is that decision in one
+   place, so a new field component cannot get it wrong by accident. */
+:root {
+  --field-tint: rgba(255, 255, 255, 0.42);
+  --field-tint-strong: rgba(255, 255, 255, 0.62);
+}
+
+:root[data-theme='dark'] {
+  --field-tint: rgba(255, 255, 255, 0.18);
+  --field-tint-strong: rgba(255, 255, 255, 0.3);
+}
+
+/* Ink slabs at night are light slabs, so their shadow has to be a glow rather
+   than the daylight drop shadow, which reads as a smudge under a light object. */
+:root[data-theme='dark'] .vl-btn,
+:root[data-theme='dark'] .mobile-bottom-nav,
+:root[data-theme='dark'] .toast {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+
+/* A hairline rule on a dark ground needs a touch more alpha than the role
+   provides, or a page of rules reads as a page of faint gaps. */
+:root[data-theme='dark'] .vl-rule {
+  background: var(--border-default);
+}

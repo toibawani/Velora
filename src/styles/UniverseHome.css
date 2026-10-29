@@ -1186,11 +1186,7 @@
   max-width: 100%;
   height: 3px;
   margin-top: var(--space-4);
-  background: rgba(255, 255, 255, 0.32);
-}
-
-:root[data-theme='dark'] .uh-resume-bar {
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--field-tint);
 }
 
 .uh-resume-fill {
