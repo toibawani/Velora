@@ -1,80 +1,151 @@
 /* ==========================================================================
-   Freebuff Index CSS — professional polish, focus states, tokens, transitions
+   index.css — the page itself
+   --------------------------------------------------------------------------
+   This file used to style every button in the application from here, with a
+   selector that began `button:not(...)` and listed eight exceptions. That is
+   why the product looked like one material: a global rule always wins over a
+   page's own intent unless the page out-specifies it, so every new screen was
+   drawn inside a shape it had not chosen.
+
+   What belongs here is what no page should have to say for itself: the page
+   ground and its paper grain, the base type, focus rings, selection, scroll
+   bars, and the reduced-motion switch. Buttons, cards and fields are page
+   decisions and live with their pages (see styles/edition.css for the shared
+   primitives).
    ========================================================================== */
 
-:root {
-  --radius-xs: 3px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
-  --radius-3xl: 48px;
-  --radius-full: 999px;
-
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.15);
-  --shadow-none: none;
-
-  --ease-standard: ease-out;
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-sharp: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
-
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
-  --duration-slow: 300ms;
-  --duration-hover: 0.15s;
-
-  --bg-primary: #f8f9fa;
-  --bg-surface: #ffffff;
-  --bg-tertiary: #f1f3f5;
-  --bg-secondary: #e9ecef;
-
-  --text-primary: #212529;
-  --text-secondary: #6c757d;
-  --text-tertiary: #adb5bd;
-  --text-inverse: #ffffff;
-
-  --accent-primary: #3b82f6;
-  --accent-primary-hover: #2563eb;
-  --accent-contrast: #ffffff;
-  --accent-soft: #e0f2ff;
-  --accent-subtle: #e0f2ff3d;
-
-  --border-default: #d1d5db;
-  --border-strong: #9ca3af;
-  --border-subtle: #e5e7eb;
-
-  --ui-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --display-font: "DM Display", "Playfair Display", Georgia, serif;
-}
-
-/* ==========================================================================
-   Global base
-   ========================================================================== */
-
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--ui-font);
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
   margin: 0;
-  line-height: 1.5;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Reduced motion */
+/* The grain is applied to the body rather than the html element so it scrolls
+   with the page and never shows a seam where a fixed layer would end. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--texture-paper);
+  opacity: var(--texture-paper-alpha);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+}
+
+/* ---- Focus ----
+   One ring for everything, drawn outside the element so it is visible on cards
+   that already have a border. `:focus-visible` only, so a mouse click does not
+   leave a ring behind on the button it pressed. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+}
+
+/* ---- Links ----
+   No global link colour: a link in running prose is underlined in the text
+   colour, and a link that is a button is a button. Colouring every anchor
+   sienna made ordinary cross-references look like the primary action. */
+a {
+  color: inherit;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 0.18em;
+}
+
+/* ---- Form controls ----
+   Only the box model and the family. Each screen sets its own shape, because a
+   search field on the Dictionary and a name field on setup are not the same
+   object. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ---- Scrollbar ---- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: var(--radius-full);
+  background-clip: content-box;
+  background-color: var(--border-strong);
+}
+
+/* ---- Reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
@@ -82,435 +153,4 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* ==========================================================================
-   Focus states — accessible, professional
-   ========================================================================== */
-
-:focus-visible {
-  outline: 2px solid var(--ring, var(--accent-primary));
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 0 0 4px var(--accent-soft, var(--accent-soft));
-}
-
-button:focus:not(:focus-visible),
-input:focus:not(:focus-visible),
-textarea:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* ==========================================================================
-   Button styles — professional, intentional interactions
-   ========================================================================== */
-
-button {
-  font-family: var(--ui-font);
-  font-weight: 600;
-  color: inherit;
-  background: transparent;
-  border: 0;
-  border-radius: var(--radius-sm);
-  padding: 0;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
-              transform 0.15s ease, box-shadow 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-/* Primary accent button */
-button.uh-primary,
-button.splash-btn-primary,
-button.btn-submit,
-button.btn-duel-submit {
-  background: var(--accent-primary);
-  color: var(--accent-contrast);
-  border: 1px solid var(--accent-primary);
-}
-
-button.uh-primary:hover,
-button.splash-btn-primary:hover,
-button.btn-submit:hover:not(:disabled),
-button.btn-duel-submit:hover:not(:disabled) {
-  background: var(--accent-primary-hover);
-  border-color: var(--accent-primary-hover);
-}
-
-/* Secondary interactive buttons */
-button.uh-icon-button,
-button.uh-nav-item,
-button.uh-card-reveal,
-button.uh-card-lookup,
-button.uh-card-resume,
-button.splash-browse,
-button.back-btn-games {
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-}
-
-button.uh-icon-button:hover,
-button.uh-nav-item:hover,
-button.uh-card-reveal:hover,
-button.uh-card-lookup:hover,
-button.uh-card-resume:hover,
-button.splash-browse:hover,
-button.back-btn-games:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
-
-/* Ghost buttons — only for buttons not explicitly styled above */
-button:not(.uh-primary):not(.splash-btn-primary):not(.uh-icon-button):not(.uh-nav-item):not(.uh-card-reveal):not(.uh-card-lookup):not(.uh-card-resume):not(.splash-browse):not(.back-btn-games) {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-default);
-}
-
-button:not(:disabled):hover:not(.uh-primary):not(.splash-btn-primary):not(.uh-icon-button):not(.uh-nav-item):not(.uh-card-reveal):not(.uh-card-lookup):not(.uh-card-resume):not(.splash-browse):not(.back-btn-games) {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
-
-/* Focus-visible + hover combined */
-button:focus-visible:hover,
-button:hover:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 0 0 4px var(--accent-soft);
-}
-
-/* ==========================================================================
-   Improved card styles
-   ========================================================================== */
-
-.card,
-.uh-card,
-.game-card-large {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  color: var(--text-primary);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-}
-
-.card:hover,
-.uh-card:hover,
-.game-card-large:hover {
-  border-color: var(--border-subtle);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-/* ==========================================================================
-   Splash screen refinements
-   ========================================================================== */
-
-.splash {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-primary);
-  padding: clamp(1.5rem, 5vw, 4rem);
-}
-
-.splash-panel {
-  width: 100%;
-  max-width: 980px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
-  gap: clamp(2rem, 6vw, 5rem);
-  align-items: center;
-}
-
-.splash-copy {
-  max-width: 34rem;
-}
-
-.splash-eyebrow {
-  margin: 0 0 var(--space-3);
-  color: var(--accent-primary);
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.splash-wordmark {
-  margin: 0 0 var(--space-3);
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 4.5vw, 3rem);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  line-height: 1;
-}
-
-.splash-tagline {
-  margin: 0;
-  max-width: 32rem;
-  color: var(--text-secondary);
-  font-size: 1.05rem;
-  line-height: 1.6;
-}
-
-.splash-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  margin: var(--space-6) 0 var(--space-5);
-}
-
-.splash-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 40px;
-  padding: 0 var(--space-4);
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-.splash-btn-primary {
-  background: var(--accent-primary);
-  color: var(--accent-contrast);
-  border: 1px solid var(--accent-primary);
-}
-
-.splash-btn-primary:hover {
-  background: var(--accent-primary-hover);
-  border-color: var(--accent-primary-hover);
-}
-
-.splash-browse {
-  min-height: 40px;
-  padding: 0 var(--space-4);
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.splash-browse:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-  background: var(--bg-tertiary);
-}
-
-.splash-footer {
-  margin: 0;
-  color: var(--text-tertiary);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-}
-
-/* ==========================================================================
-   Responsive
-   ========================================================================== */
-
-@media (max-width: 860px) {
-  .splash {
-    align-items: flex-start;
-    padding-top: clamp(2.5rem, 12vh, 5rem);
-  }
-
-  .splash-panel {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
-
-  .splash-contents {
-    border-left: 0;
-    border-top: 1px solid var(--border-default);
-    padding-left: 0;
-    padding-top: var(--space-5);
-  }
-
-  .splash-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .splash-btn,
-  .splash-browse {
-    justify-content: center;
-    width: 100%;
-  }
-}
-
-/* ==========================================================================
-   Theme toggle
-   ========================================================================== */
-
-.theme-toggle {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.theme-toggle-segment {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.theme-toggle-segment:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
-
-.theme-toggle-segment[data-testid="theme-toggle-segment"][aria-pressed="true"] {
-  background: var(--accent-primary);
-  color: var(--accent-contrast);
-  border-color: var(--accent-primary);
-}
-
-/* ==========================================================================
-   Additional utility styles
-   ========================================================================== */
-
-a {
-  color: var(--accent-primary);
-  text-decoration: none;
-  transition: text-decoration 0.15s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--accent-primary-hover);
-}
-
-input,
-textarea {
-  font-family: var(--ui-font);
-  font-size: 0.9rem;
-  padding: var(--space-3);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-input:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
-/* Input with icon */
-.input-with-icon {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.input-with-icon input {
-  padding-left: calc(var(--space-3) + var(--space-2));
-}
-
-/* ==========================================================================
-   Panel / side styles
-   ========================================================================== */
-
-.sidebar {
-  background: var(--bg-surface);
-  border-right: 1px solid var(--border-default);
-  min-height: 100vh;
-  padding: var(--space-6);
-}
-
-.sidebar a {
-  color: var(--text-secondary);
-  display: block;
-  padding: var(--space-2) 0;
-  border-radius: var(--radius-sm);
-  margin: var(--space-1) 0;
-  font-size: 0.875rem;
-  transition: color 0.15s ease, background-color 0.15s ease;
-}
-
-.sidebar a:hover,
-.sidebar a.active {
-  color: var(--text-primary);
-  background: var(--bg-tertiary);
-}
-
-/* ==========================================================================
-   Table styles
-   ==========================================*/
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: var(--space-4) 0;
-}
-
-th,
-td {
-  padding: var(--space-3);
-  border-bottom: 1px solid var(--border-default);
-  text-align: left;
-}
-
-th {
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-/* ==========================================================================
-   Alert / toast styles
-   ========================================================================== */
-
-.alert {
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  margin: var(--space-4) 0;
-  font-size: 0.875rem;
-}
-
-.alert-success {
-  background: var(--accent-soft);
-  color: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
-}
-
-.alert-error {
-  background: #fee2e2;
-  color: #dc2626;
-  border: 1px solid #dc2626;
-}
-
-.alert-info {
-  background: var(--accent-soft);
-  color: var(--accent-primary);
 }
