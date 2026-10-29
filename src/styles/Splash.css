@@ -35,6 +35,7 @@
   padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--border-default);
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  padding-left: calc(var(--space-4) * 2);
 }
 
 .splash-imprint {
