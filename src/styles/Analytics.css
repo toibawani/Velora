@@ -418,3 +418,151 @@
   color: var(--accent-green);
   font-weight: var(--weight-semibold);
 }
+/* ==========================================================================
+   Collection pass — insights as an instrument panel
+   --------------------------------------------------------------------------
+   Four metrics sat in four identical boxes, each with its own border, and the
+   timeframe switch was a segmented control made of boxes inside a box. The
+   metrics are now figures divided by rules — no containers — and the switch is
+   a lozenge. What a reader wants from this page is the number and the sentence
+   under it; the box around them was never doing any work.
+   ========================================================================== */
+
+.analytics-page-root {
+  font-family: var(--font-body);
+}
+
+.analytics-top-nav {
+  padding: var(--space-4) clamp(1.25rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-glass-strong);
+}
+
+.analytics-back-btn {
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+}
+
+.analytics-brand-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.analytics-privacy-badge {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.analytics-main-container {
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.analytics-hero-section {
+  align-items: flex-end;
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.analytics-greeting {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.96;
+}
+
+.analytics-lead,
+.analytics-scope-note {
+  max-width: 60ch;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+/* ---- Timeframe: one lozenge, not nested boxes ---- */
+
+.timeframe-toggle-group {
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: 1px solid var(--field-line-strong);
+}
+
+.timeframe-btn {
+  padding: 0 var(--space-3);
+  min-height: 28px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.timeframe-btn.active {
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  border-radius: var(--radius-full);
+}
+
+/* ---- Metrics: figures divided by rules ---- */
+
+.analytics-metrics-grid {
+  gap: 0;
+  border-top: 1px solid var(--border-default);
+}
+
+.metric-box {
+  padding: var(--space-5) var(--space-5) var(--space-5) 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+}
+
+.metric-caption {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-tertiary);
+}
+
+.metric-big-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 4.5vw, 3.6rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.metric-unit {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+.metric-subtext {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* ---- Charts and lists ---- */
+
+.analytics-split-layout {
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.analytics-col {
+  gap: var(--space-4);
+}
