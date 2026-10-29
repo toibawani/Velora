@@ -187,3 +187,152 @@
   color: var(--text-muted);
   flex-shrink: 0;
 }
+/* ==========================================================================
+   Collection pass — the journey as a ledger
+   --------------------------------------------------------------------------
+   Three counts were printed as a row of small chips with clock icons, and every
+   recorded session was another bordered card beside a timeline dot. The counts
+   are now figures set in the display face — the only thing on this page that is
+   actually a number — and the feed is a single ruled column with an ink dot per
+   entry, so the page reads as a record rather than a list of cards.
+   ========================================================================== */
+
+.journey-navbar {
+  align-items: flex-start;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 4vw, 3rem) var(--space-5);
+  background: transparent;
+}
+
+.journey-nav-left {
+  align-items: flex-start;
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+
+.journey-back-btn {
+  margin-top: var(--space-1);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+}
+
+.journey-title-col {
+  gap: var(--space-2);
+}
+
+.journey-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.journey-sub {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.journey-main-layout {
+  padding: 0 clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
+}
+
+/* ---- Totals as figures ---- */
+
+.journey-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.journey-summary-item {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4) var(--space-2) 0;
+  border: 0;
+  background: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.journey-summary-item > svg {
+  display: none;
+}
+
+/* The number is the string itself, so it is emphasised rather than re-set: this
+   markup is "12 hours recorded", not a figure and a label. */
+.journey-summary-item {
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ---- The feed ---- */
+
+.journey-timeline-feed {
+  position: relative;
+}
+
+.journey-timeline-feed::before {
+  background: var(--border-default);
+}
+
+.journey-node-marker {
+  border: 1px solid var(--border-default);
+  background: var(--bg-primary);
+  color: var(--accent-primary);
+}
+
+.journey-entry-card {
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+  padding: var(--space-4) 0;
+}
+
+.journey-entry-card:hover {
+  background: transparent;
+  border-color: var(--border-default);
+  transform: none;
+}
+
+.milestone-day-tag {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  padding: 2px var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.milestone-topic-title {
+  margin: var(--space-2) 0 var(--space-1);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.time-stat {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
