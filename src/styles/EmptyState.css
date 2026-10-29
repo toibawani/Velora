@@ -53,3 +53,61 @@
 .empty-btn:active {
   transform: translateY(0);
 }
+
+/* ==========================================================================
+   Collection pass — the empty state
+   --------------------------------------------------------------------------
+   A dashed box is the visual language of a missing module. An empty state is not
+   a broken panel: it is a sentence and one action, so it is drawn as a centred
+   block of type with a rule above and below it, and no container at all.
+   ========================================================================== */
+
+.empty-state {
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
+  border: 0;
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+  border-radius: 0;
+  background: transparent;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0;
+}
+
+.empty-icon {
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-4);
+}
+
+.empty-title {
+  margin: 0 auto var(--space-3);
+  max-width: 24ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.empty-desc {
+  margin: 0 auto var(--space-5);
+  max-width: 44ch;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.empty-btn {
+  min-height: 42px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--field-ink);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.empty-btn:hover {
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+}

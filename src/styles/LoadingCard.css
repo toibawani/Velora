@@ -65,3 +65,38 @@
     opacity: 0.7;
   }
 }
+
+/* ==========================================================================
+   Collection pass — the loading state
+   --------------------------------------------------------------------------
+   Skeleton cards with a warm shimmer say "content is coming" without drawing a
+   second, different card system. The blocks inherit the new radius so a
+   placeholder is the same shape as the thing that replaces it.
+   ========================================================================== */
+
+.loading-card {
+  border-radius: var(--radius-2xl);
+  background: var(--wash);
+  border: 1px solid var(--border-subtle);
+}
+
+.loading-container {
+  gap: var(--space-3);
+}
+
+@keyframes vl-pulse {
+  from { opacity: 0.5; }
+  50%  { opacity: 0.85; }
+  to   { opacity: 0.5; }
+}
+
+.loading-card {
+  animation: vl-pulse 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-card {
+    animation: none;
+    opacity: 0.7;
+  }
+}
