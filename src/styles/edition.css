@@ -1,0 +1,550 @@
+/* ==========================================================================
+   edition.css — the Collection
+   --------------------------------------------------------------------------
+   Velora is a reference book, so each screen is read as a printed spread
+   rather than as a dashboard: a flat colour field, one oversized statement in
+   Fraunces, a hairline rule, and an object (an arch, a scallop, a disc) that
+   carries the eye down the page.
+
+   This file owns only the primitives those spreads share. Page CSS composes
+   them; it never re-declares them. Nothing here is a utility class in the
+   atomic sense — each name is a move that appears on more than one screen.
+
+   Everything is drawn from the theme roles in design-tokens.css so both
+   themes stay correct. The only literals are the five pigment fields, because
+   a pigment is not a role: "blush" and "butter" are specific papers, and the
+   dark theme mixes its own inks rather than dimming these.
+   ========================================================================== */
+
+:root {
+  /* ---- Pigment fields ----
+     Flat, unblended papers. These are the blocks of colour the layout is built
+     from — not tints of the accent, and never gradients. Each one has a text
+     partner (a deep ink) because a field always carries type. */
+  --field-cream: #FBF6EC;
+  --field-blush: #F0D3CB;
+  --field-butter: #EFD58E;
+  --field-sage: #D8DFC4;
+  --field-lilac: #D9D3EC;
+  --field-clay: #E3BFA8;
+  --field-ink: #221A12;
+
+  --field-blush-ink: #57241A;
+  --field-butter-ink: #4A3608;
+  --field-sage-ink: #2E3618;
+  --field-lilac-ink: #2F2450;
+  --field-clay-ink: #4E2A18;
+  --field-ink-text: #FBF6EC;
+
+  /* A field is a surface, so it needs its own hairline and its own edge tone,
+     otherwise every block on the page is outlined in the same brown and the
+     composition flattens back out. */
+  --field-line: rgba(50, 30, 20, 0.16);
+  --field-line-strong: rgba(50, 30, 20, 0.34);
+
+  /* ---- Editorial rules ---- */
+  --rule-hair: 1px solid var(--border-default);
+  --rule-ink: 1px solid var(--text-primary);
+
+  /* ---- Motion ----
+     One entrance and one hover lift for the whole product. The entrance is
+     short and the distance is small: a spread settling onto the page, not an
+     element flying in. */
+  --enter-duration: 520ms;
+  --enter-distance: 14px;
+  --enter-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme='dark'] {
+  /* The dark theme is a night edition: the papers become inks, the inks become
+     papers. Values are chosen for their own contrast rather than derived by
+     lightening the light-theme hex, which is how pastel fields end up glowing. */
+  --field-cream: #241A12;
+  --field-blush: #40241F;
+  --field-butter: #3E3115;
+  --field-sage: #26301C;
+  --field-lilac: #2A2440;
+  --field-clay: #3A241A;
+  --field-ink: #F3E9DA;
+
+  --field-blush-ink: #F6D8CE;
+  --field-butter-ink: #F4E2B4;
+  --field-sage-ink: #DCE6C6;
+  --field-lilac-ink: #DED7F5;
+  --field-clay-ink: #F0D3BC;
+  --field-ink-text: #1A1209;
+
+  --field-line: rgba(242, 233, 221, 0.16);
+  --field-line-strong: rgba(242, 233, 221, 0.32);
+}
+
+/* ==========================================================================
+   Page room
+   ========================================================================== */
+
+/* Every screen sits on the same paper with the same margins, so moving between
+   them does not move the left edge. The measure is wider than the 68ch reading
+   column on purpose: a spread has a margin of white to hold objects in. */
+.vl-page {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 4vw, 3.5rem) clamp(1.25rem, 4vw, 3rem) clamp(6rem, 10vw, 8rem);
+}
+
+.vl-page--wide {
+  max-width: 1320px;
+}
+
+/* ==========================================================================
+   Type
+   ========================================================================== */
+
+/* The one statement a screen gets. Fraunces at display size, tight tracking,
+   tight leading. The italic half is a separate span so the sentence can change
+   voice mid-line without changing size. */
+.vl-statement {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.4vw, 4.5rem);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  letter-spacing: -0.028em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.vl-statement em,
+.vl-statement .vl-statement-em {
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.vl-heading {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.12;
+}
+
+/* Kicker: the small uppercase line that precedes a section. Two weights of the
+   same idea — plain, and with a rule running out of it. */
+.vl-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.vl-kicker--rule::after {
+  content: '';
+  width: clamp(2rem, 8vw, 5rem);
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.vl-kicker--accent {
+  color: var(--accent-primary);
+}
+
+/* Lede: the sentence directly under a statement. Serif, one step down, and
+   capped at the narrow measure so it never runs as wide as the headline. */
+.vl-lede {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.25vw, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Section header: kicker above, heading below, optional trailing link. Used by
+   every page that has more than one section, so the rhythm is identical. */
+.vl-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.vl-section-head > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ==========================================================================
+   Rules and numerals
+   ========================================================================== */
+
+.vl-rule {
+  height: 1px;
+  border: 0;
+  margin: var(--space-8) 0;
+  background: var(--border-default);
+}
+
+/* An index numeral: the 01 / 02 sequence that marks a spread in a book. Set in
+   the display face at a size where it stops being a number and becomes a
+   marker, in the accent so it never competes with body text. */
+.vl-numeral {
+  color: var(--accent-primary);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.vl-numeral::before {
+  content: '';
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  margin-right: var(--space-3);
+  vertical-align: middle;
+  background: var(--border-strong);
+}
+
+/* ==========================================================================
+   Fields
+   ========================================================================== */
+
+/* A field is a flat block of pigment with type inside it. It has no shadow: the
+   colour is the object. */
+.vl-field {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: var(--radius-3xl);
+  background: var(--field-cream);
+  color: var(--text-primary);
+  isolation: isolate;
+}
+
+.vl-field--blush { background: var(--field-blush); color: var(--field-blush-ink); }
+.vl-field--butter { background: var(--field-butter); color: var(--field-butter-ink); }
+.vl-field--sage { background: var(--field-sage); color: var(--field-sage-ink); }
+.vl-field--lilac { background: var(--field-lilac); color: var(--field-lilac-ink); }
+.vl-field--clay { background: var(--field-clay); color: var(--field-clay-ink); }
+.vl-field--ink { background: var(--field-ink); color: var(--field-ink-text); }
+
+/* Type inside a field inherits the field's ink, including any inherited muted
+   roles, so a heading on blush is never espresso-on-blush. */
+.vl-field :is(h1, h2, h3, h4, p, span, dt, dd, li, a) {
+  color: inherit;
+}
+
+.vl-field--ink .vl-kicker,
+.vl-field--ink .vl-lede {
+  color: inherit;
+  opacity: 0.72;
+}
+
+/* ==========================================================================
+   Shapes — arch, scallop, disc
+   --------------------------------------------------------------------------
+   The three silhouettes the spreads are built around, taken from print and
+   packaging rather than from app chrome. Each is a surface, not an ornament:
+   the arch holds an image or a numeral, the scallop holds a photograph, the
+   disc holds a single statistic.
+   ========================================================================== */
+
+/* An arched window: a full semicircle on top, a small radius at the foot. Drawn
+   with an elliptical radius rather than clip-path so text inside still wraps to
+   a rectangle and the edge stays anti-aliased. */
+.vl-arch {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50% 50% var(--radius-xl) var(--radius-xl) / 34% 34% var(--radius-xl) var(--radius-xl);
+  background: var(--field-cream);
+}
+
+/* A scalloped edge, as on a ticket or a stamp. The mask repeats a row of
+   half-circles along one edge; --scallop-size controls how coarse they are. */
+.vl-scallop {
+  --scallop-size: 18px;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  -webkit-mask-image:
+    radial-gradient(circle at 50% 100%, transparent calc(var(--scallop-size) / 2), #000 calc(var(--scallop-size) / 2 + 0.5px)),
+    linear-gradient(#000 0 0);
+  mask-image:
+    radial-gradient(circle at 50% 100%, transparent calc(var(--scallop-size) / 2), #000 calc(var(--scallop-size) / 2 + 0.5px)),
+    linear-gradient(#000 0 0);
+  -webkit-mask-size: var(--scallop-size) 100%, 100% 100%;
+  mask-size: var(--scallop-size) 100%, 100% 100%;
+  -webkit-mask-repeat: repeat-x, no-repeat;
+  mask-repeat: repeat-x, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* A disc: one number, one ring. The ring is a hairline rather than a border so
+   it can sit inside an arch without doubling the edge. */
+.vl-disc {
+  display: grid;
+  place-items: center;
+  width: var(--disc-size, 10rem);
+  height: var(--disc-size, 10rem);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--field-line);
+  background: var(--field-cream);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* A plain pigment dot. Small, flat, used to punctuate a line of type. */
+.vl-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+/* A soft organic blob, for the one decorative shape a page may place behind
+   type. Percentages, not pixels, so it scales with its container. */
+.vl-blob {
+  border-radius: 62% 38% 47% 53% / 51% 44% 56% 49%;
+}
+
+/* ==========================================================================
+   Buttons and chips
+   ========================================================================== */
+
+/* The pill: a small outlined tag. Quiet enough to sit in a row of twelve. */
+.vl-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 30px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+
+.vl-pill:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.vl-pill[aria-pressed='true'],
+.vl-pill--on {
+  border-color: var(--field-ink);
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+/* Inside a field the pill belongs to the field, so it draws with the field's
+   ink rather than the page's brown. */
+.vl-field .vl-pill {
+  border-color: currentColor;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.vl-field .vl-pill:hover,
+.vl-field .vl-pill[aria-pressed='true'] {
+  opacity: 1;
+  background: currentColor;
+}
+
+.vl-field .vl-pill[aria-pressed='true'] > * {
+  color: var(--field-cream);
+}
+
+/* The button: a solid slab with a full radius, not a nudged rectangle. Ink on
+   paper by default; on a field it inverts so the action is always the darkest
+   thing in the block. */
+.vl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 46px;
+  padding: 0 var(--space-6);
+  border: 1px solid var(--field-ink);
+  border-radius: var(--radius-full);
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.vl-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.vl-btn:active {
+  transform: translateY(0);
+}
+
+.vl-btn--quiet {
+  background: transparent;
+  border-color: var(--field-line-strong);
+  color: var(--text-primary);
+}
+
+.vl-btn--quiet:hover {
+  border-color: var(--text-primary);
+  background: var(--wash);
+}
+
+.vl-field .vl-btn--quiet {
+  border-color: currentColor;
+  color: inherit;
+}
+
+/* A text action that is only a word and an underline that grows on hover. Used
+   where a button would be too heavy, e.g. "See all". */
+.vl-textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  background: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+
+.vl-textlink:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.vl-field .vl-textlink {
+  border-color: currentColor;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.vl-field .vl-textlink:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+/* A leaf: something you pick up and turn over. Hairline edge, generous radius,
+   no shadow at rest. Shadow is reserved for "this is above the page" — a
+   hovered card or a floating dock — so the page keeps its flat printed feel. */
+.vl-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-2xl);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  text-align: left;
+  transition: border-color var(--duration-normal) var(--ease-standard),
+              transform var(--duration-normal) var(--ease-standard),
+              box-shadow var(--duration-normal) var(--ease-standard);
+}
+
+.vl-card[data-interactive='true'],
+button.vl-card,
+a.vl-card {
+  cursor: pointer;
+}
+
+.vl-card[data-interactive='true']:hover,
+button.vl-card:hover,
+a.vl-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   Motion
+   ========================================================================== */
+
+/* The entrance: a spread settling. Stagger with --i on the element; the cap at
+   6 keeps a long list from taking a second and a half to appear. */
+@keyframes vl-settle {
+  from {
+    opacity: 0;
+    transform: translateY(var(--enter-distance));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vl-settle {
+  animation: vl-settle var(--enter-duration) var(--enter-ease) both;
+  animation-delay: calc(min(var(--i, 0), 6) * 55ms);
+}
+
+/* A slow drift for purely decorative shapes. Two keyframes, no easing tricks:
+   at this amplitude anything faster reads as a loading indicator. */
+@keyframes vl-drift {
+  from { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(0, -10px, 0) rotate(1.5deg); }
+  to   { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+
+.vl-drift {
+  animation: vl-drift 14s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vl-settle,
+  .vl-drift {
+    animation: none;
+  }
+
+  .vl-btn:hover,
+  .vl-card:hover {
+    transform: none;
+  }
+}

@@ -38,6 +38,10 @@ import '@fontsource/source-serif-4/latin-400-italic.css';
 // Preserve compatibility tokens for existing feature screens while index.css
 // owns the new global editorial surface.
 import './styles/design-tokens.css';
+// The Collection layer: pigment fields, arch/scallop shapes, pills and the
+// editorial type scale. It sits between the tokens and the page CSS so every
+// screen can compose it without re-declaring a primitive.
+import './styles/edition.css';
 import './index.css';
 import App from './App';
 import './styles/global-compat.css';
