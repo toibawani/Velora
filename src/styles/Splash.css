@@ -1,12 +1,14 @@
 /* ==========================================================================
-   Splash.css — the cover of the book
+   Splash.css — the cover
+   --------------------------------------------------------------------------
+   Three objects on one sheet: a blush plate carrying the drawing, the title
+   column, and a butter index panel with the counts. They are deliberately not
+   the same height and not the same width — a cover is composed, not tabulated.
 
-   Two columns on a wide screen: what this is, and what is inside it. Centred
-   single-column stack below 860px, where the counts become a list under the
-   actions rather than a panel beside them.
-
-   No entrance animation, no ambient glow, no drop shadows. A cover does not
-   fade in.
+   Below 1000px the plate moves to the top as a banner and the index becomes a
+   four-across strip under the actions. Below 640px everything is one column and
+   the counts become a two-column list, which is the only arrangement where
+   four numbers still read as a list.
    ========================================================================== */
 
 .splash {
@@ -14,186 +16,271 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: clamp(1.25rem, 3.5vw, 2.75rem);
   background: var(--bg-primary);
-  padding: clamp(1.5rem, 5vw, 4rem);
 }
 
-.splash-panel {
+.splash-cover {
   width: 100%;
-  max-width: 980px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
-  gap: clamp(2rem, 6vw, 5rem);
-  align-items: center;
+  max-width: 1240px;
 }
 
-/* ==================== LEFT: the statement ==================== */
+/* ==================== Masthead ==================== */
 
-.splash-copy {
-  max-width: 34rem;
+.splash-topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.splash-eyebrow {
-  margin: 0 0 var(--space-3);
-  color: var(--accent-primary);
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
+.splash-logo {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.32em;
+}
+
+.splash-edition {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
+/* ==================== The three objects ==================== */
+
+.splash-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.3fr) minmax(0, 0.68fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
+  align-items: stretch;
+}
+
+/* ---- Plate ---- */
+
+.splash-plate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin: 0;
+  padding: clamp(1.25rem, 2.2vw, 1.75rem);
+  border-radius: var(--radius-3xl) var(--radius-3xl) var(--radius-xl) var(--radius-xl);
+  min-height: 27rem;
+}
+
+.splash-plate-art {
+  width: 100%;
+  height: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  color: var(--field-blush-ink);
+}
+
+.splash-plate-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid currentColor;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* ---- Statement ---- */
+
+.splash-statement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 1.8vw, 1.5rem);
+  padding: clamp(0.5rem, 2vw, 2rem) clamp(0.25rem, 1.5vw, 1.5rem);
+}
+
 .splash-wordmark {
-  margin: 0 0 var(--space-3);
+  margin: 0;
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 4.5vw, 3rem);
+  font-size: clamp(3.25rem, 7.4vw, 6.5rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  line-height: 1;
+  letter-spacing: -0.035em;
+  line-height: 0.86;
 }
 
 .splash-tagline {
-  margin: 0;
-  max-width: 32rem;
+  max-width: 33ch;
   color: var(--text-secondary);
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.62;
 }
-
-/* ==================== ACTIONS ==================== */
 
 .splash-actions {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   flex-wrap: wrap;
-  margin: var(--space-6) 0 var(--space-5);
+  margin-top: var(--space-2);
 }
 
-.splash-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 40px;
-  padding: 0 var(--space-4);
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  box-sizing: border-box;
+.splash-start {
+  min-width: 11.5rem;
 }
 
-.splash-btn-primary {
-  background: var(--accent-primary);
-  color: var(--accent-contrast);
-  border: 1px solid var(--accent-primary);
-}
-
-.splash-btn-primary:hover {
-  background: var(--accent-primary-hover);
-  border-color: var(--accent-primary-hover);
-}
-
-.splash-browse {
-  min-height: 40px;
-  padding: 0 var(--space-4);
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.splash-browse:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-  background: var(--bg-tertiary);
-}
-
-/* ==================== FOOTER MICRO-COPY ==================== */
-
+/* The bare confirmation line. It is a footnote, so it is set like one: small,
+   muted, and separated from the actions by a rule. */
 .splash-footer {
-  margin: 0;
+  max-width: 32ch;
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
   color: var(--text-tertiary);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-/* ==================== RIGHT: what is inside ==================== */
+/* ---- Index panel ---- */
 
-.splash-contents {
-  border-left: 1px solid var(--border-default);
-  padding-left: clamp(1.25rem, 3vw, 2.25rem);
+.splash-index {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+  border-radius: var(--radius-3xl);
 }
 
-.splash-contents-label {
-  display: inline-flex;
+.splash-index-label {
+  display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin: 0 0 var(--space-4);
-  color: var(--text-tertiary);
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
+  margin-bottom: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  opacity: 0.72;
 }
 
-.splash-contents-list {
+.splash-index-list {
+  display: flex;
+  flex-direction: column;
   margin: 0;
-  display: grid;
-  gap: var(--space-3);
+  flex: 1 1 auto;
 }
 
-.splash-contents-list > div {
+/* Rows, not cards. The rule between them is what makes four numbers read as one
+   table rather than four floating statistics. */
+.splash-index-list > div {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid currentColor;
 }
 
-.splash-contents-list dt {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
+.splash-index-list > div:first-child {
+  border-top: 1px solid currentColor;
 }
 
-.splash-contents-list dd {
-  margin: 0;
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-.splash-contents-note {
-  margin: var(--space-4) 0 0;
-  color: var(--text-tertiary);
+.splash-index-list dt {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.82;
 }
 
-/* ==================== RESPONSIVE ==================== */
+.splash-index-list dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
 
-@media (max-width: 860px) {
+.splash-index-note {
+  margin-top: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.71875rem;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 1000px) {
+  .splash-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'statement plate'
+      'index index';
+  }
+
+  .splash-statement { grid-area: statement; }
+  .splash-plate { grid-area: plate; min-height: 20rem; }
+  .splash-index { grid-area: index; }
+
+  .splash-index-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .splash-index-list > div {
+    flex: 1 1 8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    border-bottom: 0;
+    border-top: 1px solid currentColor;
+    padding-top: var(--space-3);
+  }
+
+  .splash-index-list > div:first-child {
+    border-top: 1px solid currentColor;
+  }
+}
+
+@media (max-width: 680px) {
   .splash {
     align-items: flex-start;
-    padding-top: clamp(2.5rem, 12vh, 5rem);
   }
 
-  .splash-panel {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
+  .splash-edition {
+    display: none;
   }
 
-  .splash-contents {
-    border-left: 0;
-    border-top: 1px solid var(--border-default);
-    padding-left: 0;
-    padding-top: var(--space-5);
+  .splash-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'statement'
+      'plate'
+      'index';
+  }
+
+  .splash-statement {
+    padding: 0;
+  }
+
+  .splash-plate {
+    min-height: 17rem;
   }
 
   .splash-actions {
@@ -201,9 +288,11 @@
     align-items: stretch;
   }
 
-  .splash-btn,
-  .splash-browse {
-    justify-content: center;
+  .splash-actions .vl-btn {
     width: 100%;
+  }
+
+  .splash-index-list > div {
+    flex-basis: calc(50% - var(--space-4));
   }
 }
