@@ -177,3 +177,50 @@
   border-color: var(--border-strong);
   color: var(--text-primary);
 }
+/* ==========================================================================
+   Collection pass — the mastery path
+   --------------------------------------------------------------------------
+   The syllabus card was a box with a header and a progress bar. It sits directly
+   under the subject masthead, so it is the first thing a reader meets on Learn;
+   it now opens with a rule and an overline rather than a border, and the
+   progress is a hairline in the accent instead of a filled pill track.
+   ========================================================================== */
+
+.mastery-path-card {
+  padding: clamp(1.25rem, 2.6vw, 1.75rem) 0;
+  border: 0;
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+  border-radius: 0;
+  background: transparent;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.path-overline {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--text-tertiary);
+}
+
+.path-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+}
+
+.mastery-path-card .progress-track,
+.mastery-path-card .path-progress-track {
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--border-subtle);
+}
+
+.mastery-path-card .progress-fill,
+.mastery-path-card .path-progress-fill {
+  background: var(--accent-primary);
+  border-radius: var(--radius-full);
+}

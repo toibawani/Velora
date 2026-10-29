@@ -183,3 +183,91 @@
     justify-content: center;
   }
 }
+/* ==========================================================================
+   Collection pass — the featured masterclass
+   --------------------------------------------------------------------------
+   The card was a pale panel with a border and eight internal sections divided
+   by rules, which is close to right. What it needed was a ground of its own so
+   it reads as the featured piece in a syllabus rather than as one more module,
+   and a statement for its title.
+
+   Ink is the right field here: this is the one item on the Learn page that is
+   presented as a feature, and a dark plate is the heaviest object the system
+   has. Everything inside inherits its ink so no rule about text colour has to
+   be repeated per block.
+   ========================================================================== */
+
+.black-holes-elite {
+  padding: clamp(1.75rem, 3.4vw, 2.75rem);
+  border: 0;
+  border-radius: var(--radius-3xl);
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.black-holes-elite:hover {
+  border-color: transparent;
+}
+
+.black-holes-elite .elite-section {
+  border-bottom-color: currentColor;
+  opacity: 1;
+}
+
+/* On a dark plate every rule has to be the plate's own ink at low strength, or
+   the divisions are invisible. */
+.black-holes-elite .elite-section {
+  border-bottom: 1px solid var(--field-tint);
+}
+
+.black-holes-elite :is(h1, h2, h3, h4, p, span, li, strong, em, a) {
+  color: inherit;
+}
+
+.black-holes-elite .path-overline,
+.black-holes-elite .section-title,
+.black-holes-elite .elite-eyebrow {
+  color: inherit;
+  opacity: 0.72;
+}
+
+.black-holes-elite .section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+  opacity: 1;
+}
+
+.black-holes-elite p {
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.86;
+}
+
+.black-holes-elite .elite-cta {
+  border: 0;
+  border-top: 1px solid var(--field-tint);
+  border-radius: 0;
+  padding-top: var(--space-5);
+  background: transparent;
+}
+
+.black-holes-elite .elite-cta-buttons button {
+  min-height: 42px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--field-ink-text);
+  border-radius: var(--radius-full);
+  background: var(--field-ink-text);
+  color: var(--field-ink);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.black-holes-elite .elite-cta-buttons button + button {
+  background: transparent;
+  color: var(--field-ink-text);
+}
