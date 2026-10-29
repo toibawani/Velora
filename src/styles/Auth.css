@@ -575,3 +575,282 @@ button.auth-link:hover span {
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+/* ==========================================================================
+   Collection pass — the gate as a spread
+   --------------------------------------------------------------------------
+   Setup was a single centred card with a faux wordmark printed above the
+   question by ::before, and every sentence centred underneath it. It is now two
+   panels: a blush plate that holds the step numeral, the question and the
+   explanation of where the name goes, and a paper panel that holds only the
+   fields. The question and the consent text sit together on the left, which is
+   where they were always supposed to be read.
+   ========================================================================== */
+
+.auth-container {
+  align-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+
+/* The page-wide hairline frame is gone: the card is the object now, and two
+   rectangles competing for the same edge is what made the old gate busy. */
+.auth-container::before {
+  display: none;
+}
+
+.auth-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  width: 100%;
+  max-width: 1020px;
+  min-height: min(40rem, calc(100vh - 5rem));
+  padding: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  animation: none;
+}
+
+/* The wordmark was printed by ::before on the card. The plate carries its own
+   label now, so the pseudo-element has nothing left to say. */
+.auth-card::before {
+  display: none;
+}
+
+.auth-plate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: clamp(1.75rem, 3vw, 2.75rem);
+  border-radius: 0;
+}
+
+.auth-plate-numeral {
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 4.75rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.8;
+  opacity: 0.34;
+}
+
+.auth-plate-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.auth-plate-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.auth-plate .auth-title {
+  color: inherit;
+  font-size: clamp(1.9rem, 2.9vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  text-align: left;
+}
+
+.auth-plate .auth-subtitle {
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  opacity: 0.82;
+  text-align: left;
+}
+
+.auth-plate-foot {
+  padding-top: var(--space-3);
+  border-top: 1px solid currentColor;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.auth-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+/* ---- Fields ---- */
+
+.auth-panel .form-group label,
+.auth-panel .form-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.auth-panel .form-group input {
+  min-height: 58px;
+  padding: 0 var(--space-4);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.auth-panel .form-group input:focus-visible {
+  border-color: var(--text-primary);
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.auth-field-hint,
+.auth-field-error {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+/* ---- Actions ---- */
+
+.auth-panel .btn-primary {
+  min-height: 50px;
+  padding: 0 var(--space-6);
+  background: var(--field-ink);
+  border: 1px solid var(--field-ink);
+  border-radius: var(--radius-full);
+  color: var(--field-ink-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
+
+.auth-panel .btn-primary:hover {
+  background: var(--field-ink);
+  filter: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.auth-panel .btn-secondary {
+  min-height: 50px;
+  padding: 0 var(--space-5);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-weight: 600;
+}
+
+.auth-panel .btn-secondary:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.auth-panel .btn-full {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+/* ---- Chips ---- */
+
+.auth-panel .subject-pill,
+.auth-panel .goal-pill {
+  min-height: 42px;
+  background: transparent;
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.auth-panel .subject-pill:hover,
+.auth-panel .goal-pill:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.auth-panel .subject-pill.selected,
+.auth-panel .goal-pill.selected {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.auth-panel .step-heading {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Foot ---- */
+
+.auth-panel .auth-local-note {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.auth-panel .auth-footer {
+  margin: 0;
+}
+
+.auth-panel .auth-back {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.auth-panel .auth-back:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 860px) {
+  .auth-card {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .auth-plate {
+    gap: var(--space-5);
+    padding-bottom: var(--space-6);
+  }
+
+  .auth-plate-numeral {
+    font-size: 2.25rem;
+  }
+
+  .auth-plate-foot {
+    display: none;
+  }
+}

@@ -82,15 +82,32 @@ function LocalProfile({ setScreen, onStart, showToast }) {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1 className="auth-title">
-          {step === 1 ? 'What should we call you?' : 'What are you here for?'}
-        </h1>
-        <p className="auth-subtitle">
-          {step === 1
-            ? 'A name for this device. No email, no password, no account.'
-            : 'Optional. It only shapes what comes first, and it never leaves this device.'}
-        </p>
+        {/*
+          The question is the first thing on the page and the fields are the
+          second. Splitting them into a plate and a panel is not decoration:
+          it puts the explanation of where the name goes next to the question
+          rather than under the form, which is where it used to sit and where
+          nobody read it before typing.
+        */}
+        <aside className="auth-plate vl-field vl-field--blush">
+          <span className="auth-plate-numeral" aria-hidden="true">
+            {String(step).padStart(2, '0')}
+          </span>
+          <div className="auth-plate-copy">
+            <p className="auth-plate-label">Set up this device</p>
+            <h1 className="auth-title">
+              {step === 1 ? 'What should we call you?' : 'What are you here for?'}
+            </h1>
+            <p className="auth-subtitle">
+              {step === 1
+                ? 'A name for this device. No email, no password, no account.'
+                : 'Optional. It only shapes what comes first, and it never leaves this device.'}
+            </p>
+          </div>
+          <p className="auth-plate-foot">Step {step} of 2</p>
+        </aside>
 
+        <section className="auth-panel">
         <form onSubmit={step === 1 ? handleNameStep : handleSubmit} className="auth-form" noValidate>
           {step === 1 ? (
             <div className="form-group">
@@ -196,6 +213,7 @@ function LocalProfile({ setScreen, onStart, showToast }) {
             ← Back
           </button>
         </div>
+        </section>
       </div>
     </div>
   );
