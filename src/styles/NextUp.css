@@ -35,9 +35,7 @@
   font-family: var(--font-serif);
   font-size: 2.25rem;
   font-weight: 400;
-}
-
-.nu-back {
+}.nu-back {
   min-height: 44px;
   padding: 0 var(--space-4);
   border: 1px solid var(--border-default);
@@ -47,11 +45,12 @@
   font: inherit;
   font-size: 0.9rem;
   cursor: pointer;
+  border-left: 3px solid var(--accent-primary);
 }
-
 .nu-back:hover {
   border-color: var(--accent-primary);
 }
+
 
 .nu-body {
   max-width: 760px;
