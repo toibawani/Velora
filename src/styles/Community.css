@@ -61,6 +61,7 @@
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-standard),
               border-color var(--duration-fast) var(--ease-standard);
+  border-left: 3px solid var(--accent-primary);
 }
 
 .comm-back-btn:hover {
