@@ -127,25 +127,31 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
   return (
     <div data-testid="onboarding-tour" className="onboarding-overlay">
       <div className="onboarding-card">
-        {/* Progress Bar */}
-        <div className="onboarding-progress-track">
-          <div className="onboarding-progress-fill" style={{ width: `${progress}%` }}></div>
+        {/*
+          The plate, the step's copy and the actions are three regions of one
+          title card. The progress line and the counter are grouped with the
+          copy rather than with the plate, because they describe where the
+          reader is in the sequence, not what the step depicts.
+        */}
+        <div className="onboarding-illustration" data-testid="onboarding-illustration">
+          <Illustration size={40} aria-hidden="true" />
         </div>
 
-        {/* Step Counter */}
-        <div className="onboarding-step-counter">
-          Step {stepIdx + 1} of {STEPS.length}
+        <div className="onboarding-head">
+          <div className="onboarding-step-counter">
+            Step {stepIdx + 1} of {STEPS.length}
+          </div>
+          <div className="onboarding-progress-track">
+            <div className="onboarding-progress-fill" style={{ width: `${progress}%` }}></div>
+          </div>
         </div>
 
-        {/* Illustration */}
-        <div className="onboarding-illustration" data-testid="onboarding-illustration"><Illustration size={40} aria-hidden="true" /></div>
-
-        {/* Text */}
-        <div className="onboarding-text-block">
-          <h2 className="onboarding-title">{step.title}</h2>
-          <p className="onboarding-subtitle">{step.subtitle}</p>
-          {step.body && <p className="onboarding-body">{step.body}</p>}
-        </div>
+        <div className="onboarding-content">
+          <div className="onboarding-text-block">
+            <h2 className="onboarding-title">{step.title}</h2>
+            <p className="onboarding-subtitle">{step.subtitle}</p>
+            {step.body && <p className="onboarding-body">{step.body}</p>}
+          </div>
 
         {/* Domain Picker */}
         {step.id === 'domain' && (
@@ -199,23 +205,26 @@ function OnboardingTour({ onComplete, setSelectedSubject }) {
           </div>
         )}
 
-        {/* CTA */}
-        <button
-          className="onboarding-cta-btn"
-          onClick={handleNext}
-          disabled={!canProceed()}
-        >
-          {isLast && <Sparkles size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />}{step.cta}
-        </button>
+        </div>
 
-        {stepIdx > 0 && !isLast && (
+        <div className="onboarding-actions">
           <button
-            className="onboarding-skip-link"
-            onClick={() => { markOnboardingComplete(); onComplete?.(); }}
+            className="onboarding-cta-btn"
+            onClick={handleNext}
+            disabled={!canProceed()}
           >
-            Skip setup
+            {isLast && <Sparkles size={13} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 5 }} />}{step.cta}
           </button>
-        )}
+
+          {stepIdx > 0 && !isLast && (
+            <button
+              className="onboarding-skip-link"
+              onClick={() => { markOnboardingComplete(); onComplete?.(); }}
+            >
+              Skip setup
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
