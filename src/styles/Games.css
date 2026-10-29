@@ -40,6 +40,7 @@
   font-size: 0.8125rem;
   transition: all var(--duration-fast) var(--ease-standard);
   white-space: nowrap;
+  border-left: 3px solid var(--accent-primary);
 }
 
 .back-btn-games:hover {
