@@ -154,6 +154,7 @@ The browser audits need Chrome. `scripts/chrome.js` finds it, or set
 
 ## The rest of the docs
 
+- [docs/DESIGN.md](docs/DESIGN.md): the visual system — pigment fields, arches, type, motion, print
 - [docs/CASE-STUDY.md](docs/CASE-STUDY.md): three real bugs, with hashes and measurements
 - [docs/DECISIONS.md](docs/DECISIONS.md): what I chose, what I rejected, and why
 - [docs/GOOD-FIRST-ISSUES.md](docs/GOOD-FIRST-ISSUES.md): five open issues in projects I use
