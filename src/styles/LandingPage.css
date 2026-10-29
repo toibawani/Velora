@@ -1,603 +1,508 @@
 /* ==========================================================================
-   LandingPage.css — Phase 2+3+4 Rewrite
+   LandingPage.css — the inventory
    --------------------------------------------------------------------------
-   Asymmetric left-anchored hero. No centered column stacks. No uniform grids.
-   Bento pillar layout. Staggered testimonials. Token-governed throughout.
+   Four numbered sections, each with its own ground: paper for the hero, ruled
+   paper for the inventory and the field list, ink for what is missing, clay for
+   the invitation. Numbering the sections is what turns a scroll into a
+   catalogue: a reader always knows which part of the argument they are in.
+
+   Nothing here is boxed. The page is a column of ruled lists and pigment
+   plates, and the only filled rectangles on it are the two calls to action.
    ========================================================================== */
 
-/* ==================== ROOT ==================== */
 .landing-page {
-  min-height: 100vh;
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-
-  /* The glow goes on the background layer rather than on .landing-hero
-     itself: the hero is capped at 1200px, so a gradient painted there ends
-     abruptly at the container edge on a wide screen. Background layers also
-     sit below all content by definition, which a positioned pseudo-element
-     would not - it would paint over the headline it is meant to sit behind.
-     The size pins the glow to the top band so it does not tint the footer. */
-  background-color: var(--bg-primary);
-  background-image: var(--hero-glow);
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: 100% 860px;
-}
-
-/* ==================== NAVBAR ==================== */
-.landing-nav {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.landing-nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: var(--space-4) var(--space-8);
-}
-
-.landing-logo {
-  font-size: 1.1rem;
-  font-weight: 900;
-  letter-spacing: -0.05em;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
   color: var(--text-primary);
 }
 
-.landing-logo.small {
-  font-size: 0.95rem;
-  opacity: 0.7;
-}
+/* ==================== Masthead ==================== */
 
-.landing-nav-links {
-  display: flex;
-  gap: var(--space-1);
-}
-
-@media (max-width: 700px) {
-  .landing-nav-links { display: none; }
-}
-
-.lp-nav-link {
-  background: transparent;
-  border: none;
-  color: var(--text-secondary);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color var(--duration-normal) var(--ease-standard);
-}
-
-.lp-nav-link:hover {
-  color: var(--text-primary);
-}
-
-.landing-nav-cta {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
-}
-
-.lp-login-btn {
-  background: transparent;
-  border: 1px solid var(--border-default);
-  color: var(--text-secondary);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-standard);
-}
-
-.lp-login-btn:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-}
-
-.lp-cta-btn {
-  background: var(--accent-primary);
-  color: var(--text-inverse);
-  border: none;
-  padding: var(--space-2) var(--space-5);
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  transition: background var(--duration-normal) var(--ease-standard);
-}
-
-.lp-cta-btn:hover {
-  background: var(--accent-primary-hover);
-}
-
-/* ==================== HERO — Asymmetric Split ==================== */
-.landing-hero {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--space-16) var(--space-8) var(--space-16);
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: var(--space-16);
-  align-items: start;
-}
-
-@media (max-width: 900px) {
-  .landing-hero {
-    grid-template-columns: 1fr;
-    gap: var(--space-12);
-    padding: var(--space-12) var(--space-6) var(--space-12);
-  }
-}
-
-.hero-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-6);
-  max-width: 560px;
-}
-
-/* Eyebrow */
-.hero-eyebrow {
-  display: flex;
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.01em;
-}
-
-/* Headline */
-.hero-headline {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  color: var(--color-text);
-}
-
-.hero-accent {
-  font-style: normal;
-  color: var(--color-accent);
-}
-
-/* Body */
-.hero-subline {
-  margin: 0;
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  color: var(--color-text-muted);
-  max-width: 52ch;
-}
-
-/* CTAs */
-.hero-cta-row {
-  display: flex;
-  gap: var(--space-4);
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.hero-primary-cta {
-  background: var(--accent-primary);
-  color: var(--text-inverse);
-  border: none;
-  padding: var(--space-3) var(--space-6);
-  border-radius: var(--radius-md);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  transition: background var(--duration-normal) var(--ease-standard);
-}
-
-.hero-primary-cta:hover {
-  background: var(--accent-primary-hover);
-}
-
-.hero-primary-cta.large {
-  padding: var(--space-4) var(--space-8);
-  font-size: 1rem;
-}
-
-.hero-secondary-cta {
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  transition: color var(--duration-normal) var(--ease-standard);
-}
-
-.hero-secondary-cta:hover {
-  color: var(--text-primary);
-}
-
-/* ==================== HERO RIGHT — Stat Stack ==================== */
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding-top: var(--space-8);
-}
-
-.hero-stat-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.hero-stat-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-5) var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
-.hero-stat-card--main {
-  background: var(--bg-elevated);
-  border-color: var(--border-strong);
-}
-
-.hero-stat-number {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--text-primary);
-  line-height: 1;
-}
-
-.hero-stat-label {
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-/* Domain Pills */
-.hero-domains-strip {
-  display: flex;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-}
-
-.hero-domain-pill {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  padding: var(--space-1) var(--space-3);
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* ==================== SHARED SECTION LAYOUT ==================== */
-.landing-section {
-  border-top: 1px solid var(--border-subtle);
-  padding: var(--space-16) 0;
-}
-
-.section-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-8);
-}
-
-@media (max-width: 640px) {
-  .section-inner { padding: 0 var(--space-6); }
-}
-
-/* Left-anchored section header — kill center-align */
-.section-header-asymm {
-  margin-bottom: var(--space-10);
-  max-width: 560px;
-}
-
-.section-label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-3);
-}
-
-.section-heading {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  color: var(--color-text);
-}
-
-.section-intro-copy {
-  margin: var(--space-4) 0 0;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--color-text-muted);
-}
-
-/* ==================== INVENTORY LIST ==================== */
-.inventory-section {
-  background: var(--bg-secondary);
-}
-
-.inventory-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  border-top: 1px solid var(--border-subtle);
-  max-width: 600px;
-}
-
-.inventory-item {
+.lp-masthead {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-default);
 }
 
-.inventory-label {
-  font-family: var(--font-display);
-  font-size: 1.0625rem;
-  font-weight: 600;
+.lp-wordmark {
   color: var(--text-primary);
-}
-
-.inventory-value {
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
-
-.inventory-note {
-  margin-top: var(--space-6);
-  max-width: 62ch;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-
-
-/* ==================== FINAL CTA BLOCK — Left-anchored ==================== */
-.landing-final-cta {
-  border-top: 1px solid var(--border-subtle);
-  padding: var(--space-16) 0;
-}
-
-.final-cta-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-8);
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-12);
-  flex-wrap: wrap;
-}
-
-@media (max-width: 640px) {
-  .final-cta-inner { flex-direction: column; align-items: flex-start; }
-}
-
-.final-cta-text {
-  flex: 1;
-  max-width: 520px;
-}
-
-.final-cta-heading {
-  margin: 0 0 var(--space-3) 0;
   font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
 }
 
-.final-cta-sub {
-  margin: 0;
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  color: var(--color-text-muted);
-}
-
-.final-cta-action {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
-  flex-shrink: 0;
-}
-
-.final-cta-note {
-  margin: 0;
+.lp-wordmark--small {
   font-size: 0.8125rem;
+  letter-spacing: 0.26em;
+}
+
+.lp-masthead-note {
+  flex: 1 1 auto;
   color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
 }
 
-/* ==================== STACK SPREAD SECTION ==================== */
-.stack-spread-section {
-  border-top: 1px solid var(--border-subtle);
-  background: var(--bg-primary);
+/* ==================== Hero ==================== */
+
+.lp-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: end;
+  padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 6vw, 5rem);
 }
 
-/* ==================== FOOTER ==================== */
-.landing-footer {
-  border-top: 1px solid var(--border-subtle);
-  padding: var(--space-6) var(--space-8);
+.lp-hero-title {
+  margin: var(--space-5) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
+  font-weight: 600;
+  letter-spacing: -0.038em;
+  line-height: 0.9;
+  text-wrap: balance;
 }
 
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+.lp-hero-title em {
+  display: inline-block;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.lp-hero-lede {
+  max-width: 46ch;
+  margin-top: var(--space-6);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+  line-height: 1.65;
+}
+
+.lp-hero-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-8);
 }
 
-.footer-tagline {
+.lp-fine-print {
+  max-width: 42ch;
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  color: var(--text-tertiary);
-  font-style: italic;
-}
-
-.footer-links {
-  display: flex;
-  gap: var(--space-1);
-}
-
-.footer-link {
-  background: transparent;
-  border: none;
-  color: var(--text-tertiary);
-  font-size: 0.8125rem;
-  padding: var(--space-1) var(--space-3);
-  cursor: pointer;
-  transition: color var(--duration-normal) var(--ease-standard);
-  border-radius: var(--radius-xs);
-}
-
-.footer-link:hover {
-  color: var(--text-secondary);
-}
-
-/* ==================== PLATE FIELD ==================== */
-/* The hero no longer carries a right-hand column, so let the copy run. */
-.landing-hero {
-  grid-template-columns: 1fr;
-  max-width: 760px;
-}
-
-.hero-plates-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-8) var(--space-16);
-}
-
-.hero-plates-copy {
-  max-width: 34ch;
-  margin-bottom: var(--space-6);
-}
-
-.hero-plates-heading {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-  color: var(--color-text);
-}
-
-@media (max-width: 720px) {
-  .hero-plates-section {
-    padding: 0 var(--space-5) var(--space-12);
-  }
-}
-
-/* 375px landing clarity: the primary CTA is the next step, so it takes the full
-   width and cannot be missed; the headline stays readable on a narrow screen. */
-@media (max-width: 375px) {
-  /* This rule used to zero the vertical padding as well, which put the eyebrow
-     box directly under the sticky nav with no space at all. */
-  .landing-hero { padding: var(--space-8) var(--space-4) var(--space-10); }
-  .hero-headline { font-size: clamp(1.75rem, 11vw, 2.5rem); line-height: 1.2; }
-  .hero-cta-row { flex-direction: column; align-items: stretch; gap: var(--space-3); }
-  .hero-primary-cta { width: 100%; justify-content: center; }
-  .hero-subline { font-size: 0.95rem; line-height: 1.55; }
-}
-
-/* ==================== LOOK-AROUND INVENTORY ==================== */
-/* Added when the marketing page became an inventory. Same paper and type as
-   the rest of the page; lists only, no badges or side stripes. */
-.landing-fine-print {
-  margin: var(--space-4) 0 0;
-  max-width: 46ch;
-  color: var(--text-tertiary);
-  font-size: 0.82rem;
   line-height: 1.55;
 }
 
-.landing-coverage-list {
-  list-style: none;
+/* ---- The plate: one big number on sage ---- */
+
+.lp-hero-plate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  min-height: 22rem;
   margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--border-subtle);
+  padding: clamp(1.5rem, 2.6vw, 2rem);
+  border-radius: 50% 50% var(--radius-xl) var(--radius-xl) / 26% 26% var(--radius-xl) var(--radius-xl);
 }
 
-.landing-coverage-list li {
+.lp-plate-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.lp-plate-number {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 9vw, 7.5rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.8;
+}
+
+.lp-plate-caption,
+.lp-plate-foot {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  opacity: 0.8;
+}
+
+.lp-plate-foot {
+  padding-top: var(--space-3);
+  border-top: 1px solid currentColor;
+  opacity: 0.7;
+}
+
+.lp-plate-meter {
+  height: 3px;
+  margin: var(--space-3) 0;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+}
+
+.lp-plate-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: currentColor;
+}
+
+:root[data-theme='dark'] .lp-plate-meter {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== Section headers ==================== */
+
+.lp-section-head {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
+  gap: var(--space-6);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.lp-section-head > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lp-section-head .vl-heading {
+  max-width: 26ch;
+}
+
+/* ==================== 01 — Inventory ==================== */
+
+.lp-inventory {
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+.lp-inventory-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0;
+  margin: 0;
+}
+
+.lp-inventory-list > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-5) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lp-inventory-list dt {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lp-inventory-list dd {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+}
+
+.lp-inventory-list dd strong {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+/* ==================== 02 — By field ==================== */
+
+.lp-fields {
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+.lp-field-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-field-row {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(4rem, 12rem) 5.5rem;
+  align-items: center;
   gap: var(--space-4);
   padding: var(--space-4) 0;
   border-bottom: 1px solid var(--border-subtle);
 }
 
-.landing-coverage-name {
+.lp-field-name {
+  color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.lp-field-bar {
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: var(--border-subtle);
+  overflow: hidden;
+}
+
+.lp-field-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-primary);
+}
+
+.lp-field-count {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.lp-field-count strong {
   color: var(--text-primary);
+  font-weight: 600;
 }
 
-.landing-coverage-count {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.landing-coverage-note {
-  margin: var(--space-5) 0 0;
+.lp-field-note {
   max-width: 62ch;
+  margin-top: var(--space-5);
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
   line-height: 1.6;
 }
 
-.landing-missing-list {
-  margin: 0;
-  padding-left: 1.1rem;
-  max-width: 70ch;
-  color: var(--text-secondary);
-  line-height: 1.7;
+/* ==================== 03 — Missing ==================== */
+
+.lp-missing {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding: clamp(2rem, 4vw, 3.25rem);
 }
 
-.landing-missing-list li { margin-bottom: var(--space-2); }
+.lp-missing-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lp-missing-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.02;
+}
+
+.lp-missing-title em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Numbered by a counter rather than by a <ol>, because the numbers are set in
+   the display face at a size that would break the list's own marker box. */
+.lp-missing-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: missing;
+}
+
+.lp-missing-list li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid currentColor;
+}
+
+.lp-missing-list li:first-child {
+  border-top: 1px solid currentColor;
+}
+
+.lp-missing-list li span {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  opacity: 0.88;
+}
+
+.lp-missing-list li::before {
+  counter-increment: missing;
+  content: counter(missing, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.62;
+}
+
+/* ==================== 04 — Begin ==================== */
+
+.lp-final {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  flex-wrap: wrap;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding: clamp(2rem, 4vw, 3.25rem);
+}
+
+.lp-final-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 40ch;
+}
+
+.lp-final-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -0.032em;
+  line-height: 0.98;
+}
+
+.lp-final-title em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.lp-final-sub {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* In a clay plate the ink is dark, so the button inverts: paper on ink. */
+.lp-final-cta {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+  min-height: 50px;
+}
+
+.lp-final-cta:hover {
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==================== Footer ==================== */
+
+.lp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-default);
+}
+
+.lp-footer p {
+  flex: 1 1 auto;
+  color: var(--text-tertiary);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.lp-footer-links {
+  display: flex;
+  gap: var(--space-5);
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 900px) {
+  .lp-hero {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .lp-hero-plate {
+    min-height: 16rem;
+    max-width: 26rem;
+  }
+
+  .lp-missing {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lp-field-row {
+    grid-template-columns: 2.5rem minmax(0, 1fr) 4.75rem;
+  }
+
+  .lp-field-bar {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .lp-masthead-note {
+    display: none;
+  }
+
+  .lp-inventory-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lp-hero-actions .vl-btn,
+  .lp-final-cta {
+    width: 100%;
+  }
+
+  .lp-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lp-footer p {
+    text-align: left;
+  }
+}
