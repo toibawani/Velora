@@ -1042,3 +1042,196 @@
     max-width: 18ch;
   }
 }
+
+/* ==========================================================================
+   The daily return — two pigment plates
+   --------------------------------------------------------------------------
+   The question and the resumable lesson were two light cards of different
+   widths in a flex row, which is the shape of a dashboard. They are now two
+   equal plates of pigment: clay for the question, lilac for the place you left
+   off, with the type inside inheriting each plate's own ink.
+   ========================================================================== */
+
+.uh-card-section {
+  padding: 0;
+  margin: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+.uh-return-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.uh-return-date {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.uh-card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-top: 0;
+}
+
+.uh-card {
+  min-width: 0;
+  max-width: none;
+  flex: none;
+  border: 0;
+  border-radius: var(--radius-3xl);
+  box-shadow: none;
+  padding: clamp(1.5rem, 2.4vw, 2rem);
+  gap: var(--space-4);
+  justify-content: space-between;
+}
+
+/* The plate supplies its own ground. Only the old light-theme card edges are
+   removed here, so `.vl-field--clay` and `.vl-field--lilac` can paint. */
+.uh-card--today,
+.uh-card--resume {
+  border: 0;
+}
+
+.uh-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.uh-card-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+}
+
+.uh-card h2 {
+  max-width: 24ch;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.16;
+}
+
+.uh-card-subject {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.uh-card-answer,
+.uh-card-hint {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.uh-card-hint {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.uh-card .uh-card-reveal {
+  margin-top: var(--space-2);
+  min-height: 38px;
+  padding: 0 var(--space-4);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.uh-card .uh-card-reveal:hover {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.uh-card .uh-card-lookup {
+  align-self: flex-start;
+  margin-top: var(--space-1);
+  font-size: 0.8125rem;
+}
+
+.uh-resume-bar {
+  max-width: 100%;
+  height: 3px;
+  margin-top: var(--space-4);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+:root[data-theme='dark'] .uh-resume-bar {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.uh-resume-fill {
+  background: currentColor;
+}
+
+.uh-resume-percent {
+  font-family: var(--font-sans);
+  font-size: 0.71875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+/* The one solid slab in the plate. It was drawing as a bordered outline on a
+   light ground; on pigment the action has to be the darkest object in the
+   block, so it takes the ink role and the label takes the ink's paper. */
+.uh-card .uh-card-resume {
+  align-self: flex-start;
+  min-height: 42px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--field-ink);
+  border-radius: var(--radius-full);
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.uh-card .uh-card-resume:hover {
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.uh-card .uh-card-resume svg {
+  color: inherit;
+}
+
+/* ---- Header at laptop widths ----
+   The greeting, the theme lozenge and the forget control together were wider
+   than the header's last grid column, which is why "Welcome, Toiba" rendered as
+   "Welcome, T…". The greeting is the only one of the three that is decoration,
+   so it is the one that goes. */
+@media (max-width: 1500px) {
+  .uh-user-greeting {
+    display: none;
+  }
+}
+
+.uh-header-actions {
+  gap: var(--space-2);
+}
+
+.uh-brand strong {
+  letter-spacing: 0.2em;
+}

@@ -261,9 +261,18 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
         {/* Daily return hook: one question, the same for everyone today. */}
         {todayQuestion && (
           <section className="uh-card-section" aria-labelledby="today-question-heading">
+            <div className="uh-return-head">
+              <p className="vl-kicker vl-kicker--rule">The daily return</p>
+              <span className="uh-return-date">
+                {new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
+              </span>
+            </div>
             <div className="uh-card-row uh-card-row--return">
-              <article className="uh-card uh-card--today" aria-labelledby="today-question-heading">
-                <div>
+              <article
+                className="uh-card uh-card--today vl-field vl-field--clay"
+                aria-labelledby="today-question-heading"
+              >
+                <div className="uh-card-body">
                   <p className="uh-card-eyebrow">Today's question</p>
                   <h2 id="today-question-heading">{todayQuestion.question}</h2>
                   {answerRevealed ? (
@@ -274,7 +283,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
                   ) : (
                     <button
                       type="button"
-                      className="uh-card-reveal"
+                      className="vl-btn vl-btn--quiet uh-card-reveal"
                       onClick={() => {
                         setAnswerRevealed(true);
                         markTodayQuestionAnswered(true);
@@ -286,16 +295,16 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
                 </div>
                 <button
                   type="button"
-                  className="uh-card-lookup"
+                  className="vl-textlink uh-card-lookup"
                   onClick={() => setScreen('dictionary')}
                 >
-                  Look up in Dictionary <ArrowRight size={14} />
+                  Look up in Dictionary <ArrowRight size={14} aria-hidden="true" />
                 </button>
               </article>
 
               {lastLesson && (
-                <article className="uh-card uh-card--resume">
-                  <div>
+                <article className="uh-card uh-card--resume vl-field vl-field--lilac">
+                  <div className="uh-card-body">
                     <p className="uh-card-eyebrow">Pick up where you left off</p>
                     <h2>{lastLesson.topicTitle}</h2>
                     <p className="uh-card-subject">{lastLesson.subject}</p>
@@ -323,13 +332,13 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
                   </div>
                   <button
                     type="button"
-                    className="uh-card-resume"
+                    className="vl-btn uh-card-resume"
                     onClick={() => {
                       setSelectedSubject(lastLesson.subject);
                       onOpenLesson?.(lastLesson.subject, lastLesson.topicId);
                     }}
                   >
-                    Resume <ArrowRight size={14} />
+                    Resume <ArrowRight size={14} aria-hidden="true" />
                   </button>
                 </article>
               )}
