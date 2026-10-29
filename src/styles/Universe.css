@@ -58,7 +58,7 @@
   font-weight: var(--weight-medium);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
-  box-shadow: none;
+  border-left: 3px solid var(--accent-primary);
 }
 
 .univ-back-btn:hover {
