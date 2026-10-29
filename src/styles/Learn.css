@@ -322,3 +322,189 @@
     grid-template-columns: 1fr;
   }
 }
+/* ==========================================================================
+   Collection pass — the subject page
+   --------------------------------------------------------------------------
+   The page was a toolbar, then an unbroken column of boxed sections at one
+   weight. It now has a masthead that names the subject at display size, section
+   headings that sit above a hairline so the page reads as a syllabus rather
+   than a feed, and modules that are ruled groups with their topics as lines
+   instead of a grid of cells.
+
+   The topic lines matter most: a module is a chapter, and a chapter's contents
+   belong in a list you scan down, not in a field of equal boxes.
+   ========================================================================== */
+
+.learn-header {
+  padding: var(--space-4) clamp(1.25rem, 4vw, 3rem);
+  align-items: center;
+  background: var(--bg-glass-strong);
+}
+
+.learn-back-btn {
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  transform: none;
+}
+
+.learn-back-btn:hover {
+  transform: none;
+  box-shadow: none;
+  background: var(--wash);
+}
+
+.learn-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.learn-main {
+  max-width: 1040px;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 2.5rem) clamp(6rem, 10vw, 8rem);
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+.learn-section {
+  gap: var(--space-5);
+}
+
+.section-title {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-default);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+}
+
+/* ---- Modules ---- */
+
+.modules-list {
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.module-card {
+  padding: var(--space-5) 0 0;
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+}
+
+.module-card:hover {
+  border-color: var(--border-default);
+}
+
+.module-header {
+  align-items: flex-start;
+  margin-bottom: var(--space-4);
+}
+
+.module-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+}
+
+.module-status {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.module-progress {
+  gap: var(--space-2);
+}
+
+.progress-bar {
+  width: 84px;
+  height: 3px;
+  background: var(--border-subtle);
+}
+
+.progress-text {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-tertiary);
+}
+
+/* Topic lines: name on the left, part count on the right, a dotted leader
+   between them — the same index grammar the atlas uses. */
+.module-topics {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.topic-btn {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-2);
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              padding-left var(--duration-fast) var(--ease-standard);
+}
+
+.topic-btn:hover {
+  border-color: var(--border-subtle);
+  background: var(--wash);
+  transform: none;
+  box-shadow: none;
+  padding-left: var(--space-3);
+}
+
+.topic-name {
+  flex: 1 1 auto;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+.topic-btn:hover .topic-name {
+  color: var(--text-primary);
+}
+
+.topic-lessons {
+  flex: none;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* ---- Games / tools inside the subject ---- */
+
+.game-card {
+  border-radius: var(--radius-2xl);
+  background: var(--bg-elevated);
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 720px) {
+  .learn-title {
+    font-size: 1.35rem;
+  }
+
+  .module-header {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
