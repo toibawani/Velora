@@ -230,30 +230,31 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
 
       <main className="uh-main">
         <section className="uh-hero" aria-labelledby="atlas-title">
-          <div className="uh-hero-copy">
-            <p className="uh-eyebrow">A curriculum for the endlessly curious</p>
-            <h1 id="atlas-title">Follow your curiosity to the edge of understanding.</h1>
-            <p className="uh-lede">Six great fields. Hundreds of connected ideas. Begin with a discipline, move through its subfields, and arrive at the concept you need next.</p>
+          <div className="uh-hero-copy vl-settle" style={{ '--i': 0 }}>
+            <p className="vl-kicker vl-kicker--rule">A curriculum for the endlessly curious</p>
+            <h1 id="atlas-title">
+              Follow your curiosity to <em>the edge</em> of understanding.
+            </h1>
+            <p className="uh-lede vl-lede">
+              Six great fields. Hundreds of connected ideas. Begin with a discipline, move
+              through its subfields, and arrive at the concept you need next.
+            </p>
             <div className="uh-hero-actions">
-              <button
-                type="button"
-                className="uh-primary"
-                onClick={scrollToAtlas}
-              >
-                Explore the atlas <ArrowRight size={17} />
+              <button type="button" className="vl-btn uh-primary" onClick={scrollToAtlas}>
+                Explore the atlas <ArrowRight size={17} aria-hidden="true" />
               </button>
               <span>No endless lists. Just a clear next step.</span>
             </div>
           </div>
 
-          <aside className="uh-hero-index" aria-label="Atlas at a glance">
+          <aside className="uh-hero-index vl-field vl-field--butter vl-settle" aria-label="Atlas at a glance" style={{ '--i': 1 }}>
             <p className="uh-index-label">The atlas at a glance</p>
             <dl>
-              <div><dt>Fields</dt><dd>{KNOWLEDGE_STATS.fields}</dd></div>
+              <div><dt>Fields</dt><dd>{String(KNOWLEDGE_STATS.fields).padStart(2, '0')}</dd></div>
               <div><dt>Disciplines</dt><dd>{KNOWLEDGE_STATS.disciplines}</dd></div>
               <div><dt>Topics</dt><dd>{KNOWLEDGE_STATS.topics}</dd></div>
             </dl>
-            <p>Field → discipline → subfield → topic</p>
+            <p className="uh-index-path">Field → discipline → subfield → topic</p>
           </aside>
         </section>
 
@@ -499,9 +500,9 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
             <h2 id="method-title" className="font-serif text-2xl font-light tracking-wide text-[--text-primary]">One idea should open the next.</h2>
           </div>
           <div className="uh-method-grid">
-            <article><span>01</span><h3>Start broad</h3><p>See how the major field connects ideas across centuries and disciplines.</p></article>
-            <article><span>02</span><h3>Drill with intention</h3><p>Move from a discipline into the subfield that answers your current question.</p></article>
-            <article><span>03</span><h3>Keep the thread</h3><p>Every topic has a visible address, so the next concept is never lost in a flat list.</p></article>
+            <article><span className="vl-numeral">01</span><h3>Start broad</h3><p>See how the major field connects ideas across centuries and disciplines.</p></article>
+            <article><span className="vl-numeral">02</span><h3>Drill with intention</h3><p>Move from a discipline into the subfield that answers your current question.</p></article>
+            <article><span className="vl-numeral">03</span><h3>Keep the thread</h3><p>Every topic has a visible address, so the next concept is never lost in a flat list.</p></article>
           </div>
         </section>
       </main>

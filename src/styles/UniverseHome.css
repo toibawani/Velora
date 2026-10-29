@@ -743,3 +743,302 @@
 
 
 
+
+/* ==========================================================================
+   Collection pass — the atlas as a spread
+   --------------------------------------------------------------------------
+   The rules below replace the page's original card-and-panel rhythm. They are
+   appended rather than folded into the blocks above because that whole file is
+   organised by component; this block is organised by composition, and it is
+   easier to read one page's new arrangement in one place than to hunt for nine
+   edited rules.
+
+   What changed in kind: the hero is a statement column against a pigment index
+   panel rather than two cards side by side; the search field is a hairline
+   rule rather than a boxed input; the method section lost its card borders and
+   became three ruled columns. Nothing here adds a shadow.
+   ========================================================================== */
+
+.uh-main {
+  width: min(100% - 2rem, 1180px);
+  padding-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* ---- Hero ---- */
+
+.uh-hero {
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.62fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: end;
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.uh-hero h1 {
+  max-width: 20ch;
+  margin-top: var(--space-5);
+  font-size: clamp(2.5rem, 4.6vw, 3.9rem);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  letter-spacing: -0.032em;
+  line-height: 0.98;
+}
+
+.uh-hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.uh-lede {
+  max-width: 38ch;
+  margin-top: var(--space-5);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+}
+
+.uh-hero-actions {
+  margin-top: var(--space-8);
+}
+
+.universe-home .uh-primary {
+  min-height: 46px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-full);
+  font-size: var(--text-ui);
+}
+
+.universe-home .uh-primary:hover {
+  transform: translateY(-1px);
+}
+
+/* The pigment panel. It is the one warm block on the page, so the eye lands on
+   the numbers before it reads the headline — which is the order a cover wants. */
+.uh-hero-index {
+  padding: clamp(1.25rem, 2.2vw, 1.75rem);
+  border: 0;
+  border-radius: var(--radius-3xl);
+  background: var(--field-butter);
+  color: var(--field-butter-ink);
+}
+
+.uh-hero-index dt,
+.uh-hero-index dd,
+.uh-hero-index .uh-index-label,
+.uh-hero-index .uh-index-path {
+  color: inherit;
+}
+
+.uh-index-label {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  opacity: 0.75;
+}
+
+.uh-hero-index dl {
+  margin: 0;
+}
+
+.uh-hero-index dl div {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid currentColor;
+}
+
+.uh-hero-index dl div:first-child {
+  border-top: 1px solid currentColor;
+}
+
+.uh-hero-index dt {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.uh-hero-index dd {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.uh-hero-index > .uh-index-path {
+  margin-top: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+
+/* ---- Section headers ---- */
+
+.uh-section-heading-row {
+  grid-template-columns: 1.1fr minmax(240px, 0.65fr);
+  gap: var(--space-8);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: var(--space-6);
+}
+
+.uh-section-heading-row h2 {
+  font-size: clamp(1.7rem, 2.8vw, 2.35rem);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.08;
+}
+
+.uh-section-heading-row > p {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* ---- Search as a rule, not a box ---- */
+
+.uh-search-wrap {
+  margin: var(--space-2) 0 var(--space-6);
+  border-bottom: 1px solid var(--border-strong);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.uh-search-wrap:focus-within {
+  border-color: var(--text-primary);
+}
+
+.uh-search-wrap > svg {
+  left: 0;
+}
+
+.uh-search-wrap input {
+  padding: var(--space-4) var(--space-8) var(--space-4) var(--space-8);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  font-weight: 500;
+}
+
+.uh-search-wrap input:focus {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.uh-search-wrap > button {
+  right: 0;
+}
+
+/* ---- Topic preview: the dark plate ---- */
+
+.uh-topic-preview {
+  padding: clamp(1.75rem, 3.2vw, 2.75rem);
+  border-radius: var(--radius-3xl);
+  margin: var(--space-8) 0 clamp(2rem, 4vw, 3rem);
+}
+
+.uh-topic-preview h2 {
+  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+  letter-spacing: -0.038em;
+  line-height: 0.92;
+}
+
+.uh-topic-preview .uh-eyebrow {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.uh-breadcrumbs {
+  margin-bottom: var(--space-4) !important;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.uh-topic-preview > button {
+  border-radius: var(--radius-full);
+  min-height: 46px;
+  padding: 0 var(--space-6);
+  font-family: var(--font-sans);
+  font-weight: 600;
+}
+
+/* ---- Method: three ruled columns ---- */
+
+.uh-method-section {
+  grid-template-columns: minmax(200px, 0.62fr) 1.38fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding-top: clamp(3rem, 7vw, 5rem);
+  border-top: 1px solid var(--border-default);
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+
+.uh-method-section h2 {
+  max-width: 11ch;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+}
+
+.uh-method-grid {
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+.uh-method-grid article {
+  padding: var(--space-4) 0 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-default);
+  border-radius: 0;
+}
+
+.uh-method-grid article > .vl-numeral {
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+
+.uh-method-grid h3 {
+  margin: var(--space-8) 0 var(--space-2);
+  font-size: 1.1875rem;
+}
+
+.uh-method-grid p {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* ---- Footer ---- */
+
+.uh-footer {
+  border-top: 1px solid var(--border-default);
+  padding-top: var(--space-5);
+  margin-top: var(--space-10);
+}
+
+@media (max-width: 900px) {
+  .uh-hero {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .uh-hero-index {
+    max-width: 30rem;
+  }
+
+  .uh-method-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .uh-method-section h2 {
+    max-width: 18ch;
+  }
+}
