@@ -398,3 +398,171 @@
   font-size: 0.85rem;
   line-height: 1.55;
 }
+
+/* ==========================================================================
+   Collection pass — the dialogues as a portrait page
+   --------------------------------------------------------------------------
+   The screen already had a figures strip, a biography and a set of starter
+   questions. The pass gives it the grammar the rest of the app now uses: a
+   masthead set in display type, the figures as a row of outlined portraits
+   whose selected one is a solid ink chip, and the biography and starters as
+   ruled blocks rather than two more cards.
+   ========================================================================== */
+
+.dialogue-navbar {
+  align-items: flex-end;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 4vw, 3rem) var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+  background: transparent;
+}
+
+.dialogue-back-btn {
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+}
+
+.dialogue-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.dialogue-sub {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* ---- The figures ---- */
+
+.dialogue-figures-strip {
+  gap: var(--space-2);
+  padding: var(--space-4) clamp(1.25rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.figure-pill-btn {
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 4px var(--space-4) 4px 4px;
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+
+.figure-pill-btn:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.figure-pill-btn.active {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.figure-pill-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.figure-pill-btn.active .figure-pill-avatar {
+  background: var(--field-ink-text);
+  color: var(--field-ink);
+}
+
+/* ---- The page ---- */
+
+.dialogue-main {
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) clamp(5rem, 9vw, 7rem);
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.dialogue-bio-card {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.dialogue-bio-name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.96;
+}
+
+.dialogue-bio-meta {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.dialogue-bio-text,
+.dialogue-context-text {
+  max-width: 68ch;
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.dialogue-starters-card {
+  padding: var(--space-5) 0 0;
+  border: 0;
+  border-top: 1px solid var(--border-default);
+  border-radius: 0;
+  background: transparent;
+}
+
+.dialogue-starters-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.dialogue-starters-grid {
+  gap: var(--space-2);
+}
+
+.dialogue-starter-chip {
+  min-height: 40px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-2xl);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  text-align: left;
+}
+
+.dialogue-starter-chip:hover {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
