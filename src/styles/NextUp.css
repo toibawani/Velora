@@ -445,3 +445,196 @@
   }
 }
 
+
+/* ==========================================================================
+   Collection pass — next up as a list on paper
+   --------------------------------------------------------------------------
+   The page already worked as a list, so this pass is about material: the header
+   becomes a masthead, the add form becomes one blush card (the only filled
+   object on the page), each item becomes a ruled line with its actions on the
+   right, and the counters are set in the display face because they are the only
+   numbers here.
+   ========================================================================== */
+
+.nextup-page {
+  font-family: var(--font-body);
+}
+
+.nu-header {
+  align-items: flex-end;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 4vw, 3rem) var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.nu-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--text-tertiary);
+}
+
+.nu-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.2vw, 3rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.038em;
+  line-height: 0.94;
+}
+
+.nu-back {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.nu-body {
+  max-width: 820px;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) clamp(5rem, 9vw, 7rem);
+}
+
+.nu-intro,
+.nu-intro-quiet {
+  max-width: 60ch;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* ---- The add form: one blush card ---- */
+
+.nu-form {
+  padding: clamp(1.25rem, 2.4vw, 1.75rem);
+  border: 0;
+  border-radius: var(--radius-3xl);
+  background: var(--field-blush);
+  color: var(--field-blush-ink);
+}
+
+.nu-label {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.nu-textarea {
+  min-height: 4.5rem;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-2xl);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.nu-select-label {
+  color: inherit;
+  opacity: 0.85;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.nu-select {
+  min-height: 34px;
+  padding: 0 var(--space-3);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.nu-count {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.nu-add {
+  min-height: 42px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--field-ink);
+  border-radius: var(--radius-full);
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.nu-add:disabled {
+  opacity: 0.45;
+}
+
+/* ---- Items as ruled lines ---- */
+
+.nu-item {
+  padding: var(--space-4) 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+}
+
+.nu-item-text {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
+.nu-item-meta,
+.nu-topic {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.nu-topic {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  padding: 2px var(--space-2);
+}
+
+.nu-open-lesson,
+.nu-action {
+  min-height: 30px;
+  padding: 0 var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.nu-open-lesson:hover,
+.nu-action:hover {
+  border-color: var(--field-line-strong);
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.nu-edit-input {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: var(--space-2) var(--space-3);
+}
