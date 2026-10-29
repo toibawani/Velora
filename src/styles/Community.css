@@ -419,3 +419,258 @@
 .disc-discard-text {
   font-weight: var(--weight-medium);
 }
+
+/* ==========================================================================
+   Collection pass — the question desk as an index card
+   --------------------------------------------------------------------------
+   The desk was a header, a bordered form card, and a stack of bordered cards
+   underneath it. The form is now the one pigment object on the page — a blush
+   card you write on — and the questions are ruled entries rather than a wall of
+   boxes, so the thing you wrote is the loudest element and the frame around it
+   has gone.
+   ========================================================================== */
+
+.community-nav-header {
+  align-items: flex-end;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 4vw, 3rem) var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+  background: transparent;
+}
+
+.comm-header-left {
+  align-items: flex-start;
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+
+.comm-back-btn {
+  margin-top: var(--space-1);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+}
+
+.comm-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.comm-subtitle {
+  max-width: 52ch;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.comm-device-note {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  padding: 4px var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.community-main-body {
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+/* ---- The card you write on ---- */
+
+.ask-question-box {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 0;
+  border-radius: var(--radius-3xl);
+  background: var(--field-blush);
+  color: var(--field-blush-ink);
+}
+
+.ask-heading {
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.ask-field-label {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.ask-subject-select {
+  border: 1px solid currentColor;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.ask-textarea {
+  min-height: 6.5rem;
+  padding: var(--space-4);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-2xl);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.8vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+.ask-textarea:focus {
+  border-color: var(--field-ink);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+.ask-textarea::placeholder {
+  color: var(--text-tertiary);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.char-count-text {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.ask-submit-btn {
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--field-ink);
+  border-radius: var(--radius-full);
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.ask-submit-btn:disabled {
+  opacity: 0.45;
+}
+
+/* ---- The questions ---- */
+
+.discussion-cards-stack {
+  gap: 0;
+}
+
+.stack-heading {
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-default);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.stack-empty-text {
+  max-width: 56ch;
+  padding-top: var(--space-4);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.discussion-card {
+  padding: var(--space-5) 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+}
+
+.discussion-card:hover {
+  background: transparent;
+  border-color: var(--border-default);
+}
+
+.disc-subject-tag {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  padding: 2px var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.disc-time {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.disc-question {
+  max-width: 40ch;
+  margin: var(--space-3) 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+}
+
+.disc-lesson-btn {
+  border-radius: var(--radius-full);
+  border: 1px solid var(--field-line-strong);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.desk-notes-list {
+  gap: 0;
+  margin-top: var(--space-3);
+  border-left: 2px solid var(--border-default);
+  padding-left: var(--space-4);
+}
+
+.desk-note-item {
+  padding: var(--space-2) 0;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.reply-input {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  padding: 0 var(--space-4);
+  min-height: 40px;
+}
+
+.reply-submit-btn {
+  border-radius: var(--radius-full);
+  background: var(--field-ink);
+  border: 1px solid var(--field-ink);
+  color: var(--field-ink-text);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
