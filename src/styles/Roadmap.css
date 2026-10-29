@@ -195,3 +195,177 @@
     font-size: 1.8rem;
   }
 }
+
+/* ==========================================================================
+   Collection pass — the roadmap as a printed report
+   --------------------------------------------------------------------------
+   The page was already a document, so the work here is typographic: the title
+   becomes a masthead, the totals become figures on a rule, each section opens
+   with an index numeral, and the state badges become stamped labels rather than
+   coloured pills. A report about what is built should not look like a product
+   page about what is coming.
+   ========================================================================== */
+
+.roadmap-page {
+  max-width: 1060px;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
+}
+
+.rm-header {
+  align-items: flex-end;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.rm-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.rm-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4.6vw, 3.5rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.038em;
+  line-height: 0.92;
+}
+
+.rm-back {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.rm-back:hover {
+  background: var(--wash);
+  border-color: var(--text-primary);
+}
+
+.rm-intro {
+  padding: clamp(2rem, 4vw, 3rem) 0 clamp(1.5rem, 3vw, 2rem);
+}
+
+.rm-intro p {
+  max-width: 64ch;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.rm-totals {
+  gap: 0;
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--border-default);
+}
+
+.rm-totals li {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background: transparent;
+}
+
+.rm-totals strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.rm-totals span {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.rm-section {
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--border-default);
+  counter-increment: rm-section;
+}
+
+.roadmap-page {
+  counter-reset: rm-section;
+}
+
+.rm-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+}
+
+.rm-section h2::before {
+  content: counter(rm-section, decimal-leading-zero);
+  color: var(--accent-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.rm-section-summary,
+.rm-item p,
+.rm-footer p {
+  max-width: 68ch;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.rm-list {
+  gap: 0;
+}
+
+.rm-item {
+  padding: var(--space-4) 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+}
+
+.rm-item-head {
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.rm-item h3 {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* A stamp, not a pill: square-ish corners, uppercase, letterspaced. */
+.rm-state {
+  padding: 2px var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.rm-footer {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-default);
+}
