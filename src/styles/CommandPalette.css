@@ -18,3 +18,119 @@
 @keyframes command-palette-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 480px) { .command-palette-backdrop { padding-top: 8vh; } .command-footer { display: none; } }
 @media (prefers-reduced-motion: reduce) { .command-palette { animation: none; } }
+
+/* ==========================================================================
+   Collection pass — the palette
+   --------------------------------------------------------------------------
+   The palette was a correct piece of chrome with a small radius, a flat white
+   body and a sienna inset bar for the active row. It now opens like a card from
+   the same deck: a generous radius, a display-face query line, and the active
+   result as a solid ink row. The footer keys stay, in the small caps the rest
+   of the app uses for metadata.
+   ========================================================================== */
+
+.command-palette-backdrop {
+  background: rgba(24, 16, 9, 0.42);
+  backdrop-filter: blur(6px);
+  padding-top: 14vh;
+}
+
+.command-palette {
+  width: min(100%, 640px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-3xl);
+  background: var(--bg-elevated);
+  box-shadow: 0 30px 80px rgba(24, 16, 9, 0.28);
+  overflow: hidden;
+}
+
+.command-search-row {
+  gap: var(--space-4);
+  min-height: 78px;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+}
+
+.command-search-row input {
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+}
+
+.command-search-row input::placeholder {
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.command-results {
+  padding: var(--space-2);
+  max-height: min(52vh, 26rem);
+  overflow-y: auto;
+}
+
+.command-result {
+  min-height: 58px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-xl);
+  gap: var(--space-3);
+}
+
+.command-result:hover,
+.command-result:focus-visible {
+  background: var(--wash);
+}
+
+.command-result.active {
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  box-shadow: none;
+}
+
+.command-result.active strong,
+.command-result.active small,
+.command-result.active .command-enter,
+.command-result.active .command-result-icon {
+  color: var(--field-ink-text);
+}
+
+.command-result-icon {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.command-result.active .command-result-icon {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.command-result strong {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+.command-result small {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.command-footer {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.command-empty {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+}
