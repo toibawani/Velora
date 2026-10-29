@@ -504,6 +504,74 @@ a.vl-card:hover {
 }
 
 /* ==========================================================================
+   Segmented control
+   --------------------------------------------------------------------------
+   Three states in one outlined lozenge. This control lives in the header of
+   every screen, so it belongs to the shared layer rather than to any one page:
+   it was previously styled in the global stylesheet, and when that stylesheet
+   stopped styling controls the switch collapsed into three raw rectangles that
+   overlapped the header's greeting.
+   ========================================================================== */
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+}
+
+.theme-toggle-segment {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+
+.theme-toggle-segment:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.theme-toggle-segment[aria-pressed='true'] {
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.theme-toggle-segment[aria-pressed='true']:hover {
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+/* The labels are the first thing to go when the header runs out of room. The
+   icons alone still name the state through the accessible label, which was
+   already prefixed with "Theme:" for exactly this reason. */
+@media (max-width: 1240px) {
+  .theme-toggle-segment span {
+    display: none;
+  }
+
+  .theme-toggle-segment {
+    padding: 0 7px;
+  }
+}
+
+/* ==========================================================================
    Motion
    ========================================================================== */
 
