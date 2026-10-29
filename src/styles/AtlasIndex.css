@@ -341,3 +341,88 @@
 @media (min-width: 1400px) {
   .aix-index { column-gap: var(--space-16); }
 }
+
+/* ==========================================================================
+   Collection pass — the thumb index
+   --------------------------------------------------------------------------
+   The field tabs were a left-border rail: two pixels of rule and a tint. On a
+   page built from pigment the index becomes the most chromatic object on the
+   screen, so the tabs are now rounded plates whose selected state is a solid
+   slab of ink. Everything keeps the existing !important resets above, which
+   exist because the global stylesheet used to force a filled background on
+   every button in the app.
+   ========================================================================== */
+
+.aix-tabs {
+  gap: 2px;
+  padding: 0;
+}
+
+.aix-tab {
+  grid-template-columns: 1.9rem minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3) !important;
+  border: 1px solid transparent !important;
+  border-left: 0 !important;
+  border-radius: var(--radius-xl) !important;
+  color: var(--text-secondary) !important;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+
+.aix-tab:hover {
+  background-color: var(--wash) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-primary) !important;
+}
+
+.aix-tab[aria-pressed='true'] {
+  background-color: var(--field-ink) !important;
+  border-color: var(--field-ink) !important;
+  color: var(--field-ink-text) !important;
+}
+
+.aix-tab-number {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.6;
+}
+
+.aix-tab-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+.aix-tab-meta {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  opacity: 0.6;
+}
+
+.aix-tab[aria-pressed='true'] .aix-tab-number,
+.aix-tab[aria-pressed='true'] .aix-tab-meta {
+  color: var(--field-ink-text) !important;
+  opacity: 0.66;
+}
+
+/* Below the breakpoint the rail turns horizontal. The plates keep their shape
+   and scroll sideways rather than collapsing into a wrapped grid, which is how
+   a thumb index behaves in print. */
+@media (max-width: 900px) {
+  .aix-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+  }
+
+  .aix-tab {
+    flex: 0 0 auto;
+    min-width: 8.5rem;
+  }
+}

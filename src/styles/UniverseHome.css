@@ -1235,3 +1235,63 @@
 .uh-brand strong {
   letter-spacing: 0.2em;
 }
+
+/* ---- The atlas sheet ----
+   The index used to sit in a translucent glass panel. On paper it reads better
+   as a sheet: one hairline edge, no fill, with the tab column inset from that
+   edge by its own padding rather than by a nested box. */
+.uh-atlas-grid {
+  grid-template-columns: 236px minmax(0, 1fr);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-3xl);
+}
+
+.uh-atlas-grid .aix-tabs {
+  padding: var(--space-4) var(--space-3);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.uh-field-panel {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.uh-field-header {
+  align-items: start;
+  margin-bottom: var(--space-5);
+}
+
+.uh-field-header h3 {
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.uh-field-header > p {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.uh-index-key {
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.uh-field-header .uh-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .uh-atlas-grid .aix-tabs {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+}
