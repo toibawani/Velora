@@ -335,7 +335,7 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             </h1>
             <p className="games-intro">
               Each one scores the round you played and keeps the result on this device. No
-              leaderboards, no other players, nothing to sign up for.
+              rankings, no other players, nothing to sign up for.
             </p>
           </section>
 

@@ -75,9 +75,14 @@ function SplashScreen({ setScreen }) {
   return (
     <div className="splash">
       <div className="splash-cover">
+        {/*
+          The imprint bar, not a second wordmark. The title is set once, at
+          display size, in the statement column; repeating it here in 15px caps
+          made the cover read as a website header with a logo in it.
+        */}
         <header className="splash-topbar vl-settle" style={{ '--i': 0 }}>
-          <span className="splash-logo">VELORA</span>
-          <span className="splash-edition">First edition · everything on this device</span>
+          <span className="splash-imprint">First edition</span>
+          <span className="splash-edition">No account · no email · no password</span>
         </header>
 
         <div className="splash-grid">

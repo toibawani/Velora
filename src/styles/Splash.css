@@ -37,12 +37,13 @@
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.splash-logo {
-  color: var(--text-primary);
+.splash-imprint {
+  color: var(--text-secondary);
   font-family: var(--font-display);
   font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: 0.32em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .splash-edition {
