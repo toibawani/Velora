@@ -129,3 +129,319 @@
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
+
+/* ==========================================================================
+   Collection pass — the games room
+   --------------------------------------------------------------------------
+   The hub was a 60px toolbar, one line of orientation, two rows of filters and
+   six identical cards. It is now a room: a masthead that names it, a statement,
+   filter chips that read as chips, and six plates each carrying one large soft
+   disc of its own game colour. The colour was already on every card as an icon
+   tint; giving it an area is what makes the grid feel composed rather than
+   tabulated.
+   ========================================================================== */
+
+.games-header-new {
+  height: auto;
+  padding: var(--space-4) clamp(1.25rem, 4vw, 3rem);
+  align-items: center;
+  gap: var(--space-4);
+  background: var(--bg-glass-strong);
+}
+
+.back-btn-games {
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.games-header-new .pill-btn {
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+
+.games-header-new .pill-btn:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+  transform: none;
+}
+
+.games-header-new .pill-btn.active {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.games-count-line {
+  color: var(--text-tertiary) !important;
+  font-family: var(--font-sans);
+  font-size: 0.75rem !important;
+  letter-spacing: 0.02em;
+}
+
+/* ---- The statement ---- */
+
+.games-hero-copy {
+  max-width: 1200px;
+  margin: clamp(2rem, 4vw, 3.25rem) auto var(--space-6);
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.games-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.games-title em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.games-intro {
+  max-width: 52ch;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+/* ---- Filters as chips ---- */
+
+.games-difficulty-filter {
+  max-width: 1200px;
+  margin: 0 auto var(--space-3);
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.games-filter-label {
+  min-width: 4.5rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.games-difficulty-filter .pill-btn {
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.games-difficulty-filter .pill-btn:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+  transform: none;
+}
+
+.games-difficulty-filter .pill-btn.active {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.games-filter-count {
+  margin-left: var(--space-2);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.65;
+}
+
+/* ---- Resume strip ---- */
+
+.games-resume {
+  max-width: 1200px;
+  margin: var(--space-4) auto var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-2xl);
+  background: var(--field-clay);
+  color: var(--field-clay-ink);
+}
+
+.games-resume-text {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+}
+
+.games-resume-score {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.games-resume .pill-btn {
+  border-color: currentColor;
+  background: var(--field-ink);
+  color: var(--field-ink-text);
+  border-radius: var(--radius-full);
+}
+
+/* ---- The six plates ---- */
+
+.games-grid-main {
+  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.game-card-large {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-3xl);
+  background: var(--bg-elevated);
+  box-shadow: none;
+  isolation: isolate;
+}
+
+/* The game's own colour, given an area rather than only an icon. A soft disc
+   behind the top-right corner keeps the card flat while still being chromatic. */
+.game-card-large::before {
+  content: '';
+  position: absolute;
+  top: -84px;
+  right: -72px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--game-color, var(--accent-primary));
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity var(--duration-normal) var(--ease-standard);
+}
+
+.game-card-large:hover::before {
+  opacity: 0.26;
+}
+
+.game-card-large:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.game-card-header {
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.game-icon-large {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.game-card-header h3 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+}
+
+.game-description {
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.game-difficulty,
+.game-length,
+.game-duration {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary) !important;
+}
+
+.game-difficulty {
+  padding: 3px var(--space-2);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+}
+
+.game-best,
+.game-plays {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.game-best-new {
+  border-radius: var(--radius-full);
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+}
+
+.game-card-large .start-session-btn,
+.game-card-large .game-start {
+  border-radius: var(--radius-full);
+}
+
+/* ---- Records / stats ---- */
+
+.games-records,
+.games-stats {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.games-stats h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 900px) {
+  .games-header-new {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .games-grid-main {
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+}

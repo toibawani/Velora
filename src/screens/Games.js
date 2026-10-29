@@ -328,10 +328,16 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             * beside a row of invented statistics. Neither sentence was needed:
             * the games are listed underneath, and what they measure is on each
             * card. What is left is the line that describes the set. */}
-          <p className="games-intro">
-            Six rounds you can finish in a sitting. Each one scores the round you played and keeps
-            the result on this device.
-          </p>
+          <section className="games-hero-copy">
+            <p className="vl-kicker vl-kicker--rule">The games room</p>
+            <h1 className="games-title">
+              Six rounds, <em>one sitting.</em>
+            </h1>
+            <p className="games-intro">
+              Each one scores the round you played and keeps the result on this device. No
+              leaderboards, no other players, nothing to sign up for.
+            </p>
+          </section>
 
       {/* Difficulty filter.
         *
