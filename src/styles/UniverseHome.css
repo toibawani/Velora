@@ -1088,6 +1088,8 @@
   border: 0;
   border-radius: var(--radius-3xl);
   box-shadow: none;
+  /* The plate behind it supplies the ground, so the card must not paint one. */
+  background: transparent;
   padding: clamp(1.5rem, 2.4vw, 2rem);
   gap: var(--space-4);
   justify-content: space-between;
@@ -1098,6 +1100,19 @@
 .uh-card--today,
 .uh-card--resume {
   border: 0;
+}
+
+/* Doubled class on purpose: `.uh-card`'s own reset and `.vl-field--clay` have
+   the same specificity, and this file loads after the shared layer, so a single
+   class here would win and leave the plate paint-less. */
+.uh-card.vl-field--clay {
+  background: var(--field-clay);
+  color: var(--field-clay-ink);
+}
+
+.uh-card.vl-field--lilac {
+  background: var(--field-lilac);
+  color: var(--field-lilac-ink);
 }
 
 .uh-card-body {
@@ -1293,5 +1308,39 @@
   .uh-atlas-grid .aix-tabs {
     border-right: 0;
     border-bottom: 1px solid var(--border-subtle);
+  }
+}
+
+/* The plate is wide, so its contents sit on a baseline: the question on the
+   left, the way into the dictionary at the bottom right. Stacked in a column,
+   a single plate left two thirds of the clay empty. */
+.uh-card--today {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-4) var(--space-6);
+}
+
+.uh-card--today .uh-card-body {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.uh-card--today > .uh-card-lookup {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  margin: 0;
+}
+
+@media (max-width: 780px) {
+  .uh-card--today {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .uh-card--today > .uh-card-lookup {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
   }
 }
