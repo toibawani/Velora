@@ -45,6 +45,8 @@ import './styles/edition.css';
 import './index.css';
 import App from './App';
 import './styles/global-compat.css';
+// Last, so its @media print rules win without a single !important ladder.
+import './styles/print.css';
 
 /**
  * VELORA root: hydrate the app, apply fonts and theme, and provide the

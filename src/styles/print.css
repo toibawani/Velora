@@ -1,0 +1,200 @@
+/* ==========================================================================
+   print.css — the paper edition
+   --------------------------------------------------------------------------
+   Velora is a reference book, and a reference book is allowed to leave the
+   browser. Printing the app as it stands produces something close to a
+   screenshot: the dock prints, the theme switch prints, the toast prints if it
+   happens to be open, and the dark theme prints as a solid black page.
+
+   This file is loaded last and only applies inside @media print. It does three
+   things and nothing else:
+
+   1. Forces the daylight edition. Paper is white and ink is black, whatever the
+      reader had chosen on screen.
+   2. Removes every element that only exists to be pressed.
+   3. Sets the text as a document — serif, 11pt, a 68-character measure, and a
+      page break before each lesson section so a long read is not split through
+      the middle of a paragraph.
+
+   It deliberately does not restyle individual screens. A screen that prints
+   badly is a screen whose reading column is wrong, and that is fixed in the
+   screen's own stylesheet.
+   ========================================================================== */
+
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F4F0E8;
+    --bg-elevated: #FFFFFF;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --text-tertiary: #555555;
+    --border-subtle: #DDD8CF;
+    --border-default: #CCC5B8;
+    --border-strong: #8A8175;
+    --field-cream: #F7F2E9;
+    --field-blush: #F7E4DE;
+    --field-butter: #F6E9C4;
+    --field-sage: #E7EBD8;
+    --field-lilac: #E7E3F4;
+    --field-clay: #F0DDD1;
+    --field-ink: #000000;
+    --field-ink-text: #FFFFFF;
+    --field-blush-ink: #3A1A12;
+    --field-butter-ink: #33250A;
+    --field-sage-ink: #1F2610;
+    --field-lilac-ink: #221A3D;
+    --field-clay-ink: #3A1E10;
+    --field-tint: #BFBFBF;
+  }
+
+  @page {
+    margin: 18mm 16mm;
+  }
+
+  html,
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    line-height: 1.55;
+  }
+
+  /* The grain is a screen texture. On paper it is a dot pattern over the text. */
+  body::before {
+    display: none !important;
+  }
+
+  /* ---- Nothing to press ---- */
+
+  .mobile-bottom-nav,
+  .mobile-nav,
+  .theme-toggle,
+  .toast,
+  .command-palette-backdrop,
+  .keyboard-help,
+  .bottom-nav,
+  .uh-header-actions,
+  .dict-search-kbd,
+  .entry-copy-link,
+  .entry-related,
+  .lesson-share-btn,
+  .lesson-save-btn,
+  .lesson-resume,
+  .lesson-related-game,
+  .onboarding-overlay,
+  .games-header-new,
+  .learn-back-btn,
+  .dict-back-btn,
+  .legal-back {
+    display: none !important;
+  }
+
+  /* ---- Columns ---- */
+
+  .lesson-reader-main,
+  .legal-inner,
+  .entry-explanation,
+  .entry-analogy-box,
+  .lesson-block p,
+  .lesson-story p {
+    width: auto !important;
+    max-width: 68ch !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* ---- Type ---- */
+
+  h1,
+  h2,
+  h3,
+  .lesson-reader-main > h1,
+  .legal-content h1 {
+    color: #000000 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .lesson-reader-main > h1 {
+    font-size: 24pt !important;
+    line-height: 1.1 !important;
+  }
+
+  p,
+  li {
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.55 !important;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* ---- Blocks ---- */
+
+  .lesson-block,
+  .legal-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .lesson-block + .lesson-block {
+    break-before: auto;
+  }
+
+  .lesson-story p::first-letter {
+    font-size: 3em !important;
+    color: #000000 !important;
+  }
+
+  .lesson-callout,
+  .entry-analogy-box,
+  .lp-field,
+  .vl-field {
+    border: 1px solid #CCC5B8 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+
+  /* ---- Links ----
+     A printed link that is only a word is a dead end, so the address is printed
+     after it. Only for prose links; navigation is already hidden above. */
+  .legal-section a[href^='http']::after,
+  .lesson-sources a[href^='http']::after,
+  .entry-source-row a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-family: var(--font-mono);
+    font-size: 8.5pt;
+    color: #555555;
+  }
+
+  /* ---- Sticky things become static ---- */
+
+  .uh-header,
+  .dict-navbar,
+  .learn-header,
+  .journey-navbar,
+  .community-nav-header,
+  .dialogue-navbar,
+  .legal-nav,
+  .lesson-reader-header,
+  .analytics-top-nav,
+  .games-header-new {
+    position: static !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+  }
+
+  /* ---- No animation, no shadows ---- */
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    text-shadow: none !important;
+  }
+}
