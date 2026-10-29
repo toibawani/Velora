@@ -658,3 +658,48 @@ a.vl-card:hover {
 :root[data-theme='dark'] .vl-rule {
   background: var(--border-default);
 }
+
+/* ==========================================================================
+   Touch
+   --------------------------------------------------------------------------
+   A pill drawn at 30px is the right size for a mouse and the wrong size for a
+   thumb. Rather than raise every pill everywhere (which would make the desktop
+   filter rows look like a row of tabs), the floor is raised only where the
+   pointer is coarse. This is a capability query, not a width query: a touch
+   laptop gets the larger targets at 1440px, and a narrow window on a desktop
+   keeps the smaller ones.
+
+   The second rule is the one that matters for reading: on a touch screen a
+   ruler-like line of index entries needs more vertical room between entries,
+   because a finger cannot be as precise as a cursor about which line it landed
+   on.
+   ========================================================================== */
+
+@media (pointer: coarse) {
+  .vl-pill {
+    min-height: 38px;
+    padding: 0 var(--space-4);
+  }
+
+  .vl-btn {
+    min-height: 50px;
+  }
+
+  .aix-entry,
+  .topic-btn,
+  .command-result {
+    min-height: 44px;
+  }
+
+  .theme-toggle-segment {
+    height: 30px;
+  }
+}
+
+/* Focus inside a pigment field: the ring is drawn in the field's ink, because
+   the global ring is the accent, and sienna on peach is a poor contrast pair. */
+.vl-field :focus-visible,
+.vl-field :focus-visible:hover {
+  outline-color: currentColor;
+  box-shadow: 0 0 0 4px var(--field-tint);
+}
