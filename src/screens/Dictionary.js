@@ -282,12 +282,14 @@ function Dictionary({ setScreen, initialTerm = null, onTermOpened }) {
             <ArrowLeft size={16} /> Atlas
           </button>
           <div className="dict-title-col">
+            <p className="vl-kicker vl-kicker--rule">Volume II · A–Z</p>
             <h1 className="dict-title">Curious Dictionary</h1>
             <span className="dict-sub">Clear explanations of fundamental concepts, written for genuine understanding</span>
           </div>
         </div>
         <div className="dict-stat-pill">
-          <span>{CURIOUS_TERMS.length} Concepts Index</span>
+          <span className="dict-stat-number">{CURIOUS_TERMS.length}</span>
+          <span className="dict-stat-label">Concepts Index</span>
           {/* The count that matters more than the size. An absent verified flag
               means nobody has read the entry against its source, so saying it
               here is the honest version of a number that otherwise reads as

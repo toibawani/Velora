@@ -759,3 +759,437 @@
   opacity: 0.65;
   font-variant-numeric: tabular-nums;
 }
+
+/* ==========================================================================
+   Collection pass — the dictionary as a printed lexicon
+   --------------------------------------------------------------------------
+   The screen was a console: a sticky bar, a controls card that held a search
+   field, a select and a row of chips, a jump bar, and then 144 boxes each with
+   its own border, tint and shadow. It is now an index: the masthead states the
+   volume and the counts, the search is a rule you type on, the entries are
+   ruled lines rather than cards, and the one piece of colour per entry is the
+   example, which is the part a reader actually remembers.
+
+   Nothing below changes what the screen does. Every control keeps its label and
+   its role; only its material changes.
+   ========================================================================== */
+
+.dictionary-console {
+  font-family: var(--font-body);
+}
+
+/* The grain is global now (index.css paints it on the body), so the console's
+   own layer would double it. */
+.dictionary-console::before {
+  display: none;
+}
+
+/* ---- Masthead ---- */
+
+.dict-navbar {
+  align-items: flex-start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 3rem) var(--space-5);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.dict-nav-left {
+  align-items: flex-start;
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+
+.dict-back-btn {
+  flex: none;
+  margin-top: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.dict-title-col {
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.dict-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+
+.dict-sub {
+  max-width: 46ch;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* The counts, as two figures on a hairline — not a pill. */
+.dict-stat-pill {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-5);
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: right;
+}
+
+.dict-stat-number {
+  grid-row: 1;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.dict-stat-label {
+  grid-row: 1;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.dict-verified-count {
+  grid-column: 1 / -1;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+/* ---- Controls: a rule you type on, chips for the subjects ---- */
+
+.dict-main-layout {
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
+}
+
+.dict-controls-card {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dict-search-wrap {
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.dict-search-wrap:focus-within {
+  border-color: var(--text-primary);
+}
+
+.dict-search-input {
+  padding: var(--space-4) var(--space-5) var(--space-4) var(--space-6);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+}
+
+.dict-search-input:focus {
+  box-shadow: none;
+}
+
+.dict-order-row {
+  margin-top: var(--space-4);
+}
+
+.dict-order-select {
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.dict-subject-scroll {
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding-bottom: var(--space-2);
+}
+
+.sub-filter-pill {
+  min-height: 34px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+.sub-filter-pill:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.sub-filter-pill.active {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.sub-filter-pill.active .sub-count {
+  color: var(--field-ink-text);
+  opacity: 0.75;
+}
+
+.sub-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.dict-recent {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.dict-recent-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.dict-recent-chips {
+  gap: var(--space-2);
+}
+
+/* ---- Jump bar ---- */
+
+.dict-letter-bar {
+  margin: var(--space-8) 0 var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  align-items: baseline;
+}
+
+.dict-letter-bar-label,
+.dict-result-count {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.alphabet-selector-strip {
+  gap: 2px;
+}
+
+.alphabet-selector-strip button {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.alphabet-selector-strip button:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.letter-count {
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+}
+
+/* ---- Entries: lines in an index ---- */
+
+.dict-entries-stream {
+  gap: 0;
+}
+
+.lexicon-entry-card {
+  padding: var(--space-6) 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  background: transparent;
+  gap: var(--space-4);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.lexicon-entry-card:hover {
+  background: var(--wash);
+  box-shadow: none;
+  border-color: var(--border-subtle);
+}
+
+/* The open entry is the one object on the page with a ground of its own: it is
+   being read, not scanned. */
+.lexicon-entry-card.expanded {
+  margin: var(--space-4) 0;
+  padding: clamp(1.5rem, 2.6vw, 2rem);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-3xl);
+  background: var(--bg-elevated);
+}
+
+.entry-head-row {
+  align-items: baseline;
+}
+
+.entry-title-wrap {
+  gap: var(--space-4);
+}
+
+/* A drop cap instead of a boxed badge: the letter is a printer's mark here,
+   not a status. */
+.entry-letter-badge {
+  width: 2.25rem;
+  height: auto;
+  justify-content: flex-start;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--accent-primary);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.entry-term {
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
+}
+
+.entry-tagline {
+  max-width: 62ch;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.entry-domain-badge {
+  padding: 3px var(--space-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.entry-body-content {
+  margin-top: var(--space-2);
+  gap: var(--space-4);
+}
+
+.entry-explanation {
+  max-width: 68ch;
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+/* The example is the one pigment field on the page, and it is sage because the
+   example is the part that is supposed to be grounded. */
+.entry-analogy-box {
+  max-width: 68ch;
+  padding: var(--space-4) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-2xl);
+  background: var(--field-sage);
+  color: var(--field-sage-ink);
+}
+
+.analogy-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.analogy-text {
+  margin-top: var(--space-2);
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.entry-source-row {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.entry-related {
+  gap: var(--space-2);
+}
+
+.related-chip {
+  min-height: 30px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.related-chip:hover {
+  background: var(--field-ink);
+  border-color: var(--field-ink);
+  color: var(--field-ink-text);
+}
+
+.entry-copy-link {
+  min-height: 34px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--field-line-strong);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .dict-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dict-stat-pill {
+    text-align: left;
+  }
+}
