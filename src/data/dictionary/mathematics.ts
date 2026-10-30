@@ -175,4 +175,80 @@ export const MATH_TERMS: DictionaryTerm[] = [
     source: 'Kolmogorov, "Grundbegriffe der Wahrscheinlichkeitsrechnung" (1933)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Probability',
   },
+
+  // Six more, because mathematics was one of the two thinnest subjects in the
+  // dictionary and the thinness showed: a subject whose entries ran out at
+  // probability could not answer the questions the quiz now asks about sampling
+  // and averages.
+  {
+    id: 'godel-incompleteness',
+    term: 'Gödel’s Incompleteness Theorems',
+    subject: 'mathematics',
+    letter: 'G',
+    tagline: 'A system can be consistent, or complete, and not both.',
+    explanation: 'Gödel showed in 1931 that any consistent formal system strong enough to express arithmetic contains statements that are true but cannot be proved inside it, and cannot prove its own consistency either. This is not a gap waiting for a cleverer set of axioms; it is a property of every such system.',
+    example: 'The sentence Gödel constructs says, in effect, that it cannot be proved in the system. If it could be proved, it would be false and the system would be inconsistent. If the system is consistent, the sentence is true and unprovable.',
+    source: 'Gödel, "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I" (1931)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems',
+  },
+
+  {
+    id: 'monty-hall',
+    term: 'Monty Hall Problem',
+    subject: 'mathematics',
+    letter: 'M',
+    tagline: 'Switching doors wins twice as often, and almost nobody believes it at first.',
+    explanation: 'One prize, three doors. You pick one; the host, who knows where the prize is, opens another door showing nothing, and offers a swap. Switching wins two times in three, because your first pick was wrong two times in three and the host was constrained by that when choosing which door to open.',
+    example: 'The reveal carries information only because the host never opens the prize door and never opens yours. Let a host open a door at random instead and the advantage disappears, which is the detail most retellings leave out - and the reason so many people correctly work out the wrong answer.',
+    source: 'vos Savant, "Ask Marilyn", Parade (9 September 1990)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Monty_Hall_problem',
+  },
+
+  {
+    id: 'zero',
+    term: 'Zero',
+    subject: 'mathematics',
+    letter: 'Z',
+    tagline: 'A number for nothing, which took two thousand years to be accepted.',
+    explanation: 'Zero is a place-value marker and a number and the identity for addition, and those are three different jobs that arrived at different times. Babylonian scribes used a placeholder sign; Brahmagupta wrote arithmetic rules for zero as a number in 628; European accountants resisted it for centuries, partly because a digit that can be inserted into a column makes forgery easier.',
+    example: 'Division by zero is undefined rather than infinite, because multiplication by zero destroys information: 0 x 5 and 0 x 7 are equal, so there is no way back from 0 to the number you started with.',
+    source: 'Brahmagupta, Brāhmasphuṭasiddhānta (628)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/0',
+  },
+
+  {
+    id: 'normal-distribution',
+    term: 'Normal Distribution',
+    subject: 'mathematics',
+    letter: 'N',
+    tagline: 'The bell curve, and the reason it is everywhere.',
+    explanation: 'The normal distribution is the shape that sums and averages of many small independent effects converge on, which is the central limit theorem in practice. It is fixed by two numbers, the mean and the standard deviation, and about 68% of values fall within one standard deviation of the mean.',
+    example: 'Adult heights are close to normal, which is why someone three standard deviations from the mean is a genuine outlier. Income is not normal: it is skewed with a long right tail, so applying bell-curve intuitions to it produces confident nonsense about who is typical.',
+    source: 'Gauss, "Theoria motus corporum coelestium" (1809)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Normal_distribution',
+  },
+
+  {
+    id: 'logarithm',
+    term: 'Logarithm',
+    subject: 'mathematics',
+    letter: 'L',
+    tagline: 'A machine that turns multiplication into addition.',
+    explanation: 'A logarithm answers the question of what power a base must be raised to in order to produce a number. Because multiplying powers adds their exponents, logarithms turn multiplication into addition, which is what made navigation, astronomy and engineering calculable by hand for three centuries.',
+    example: 'Before calculators, a table of logarithms and a slide rule reduced a multiplication to two lookups and an addition, and a voyage could be planned with both on the chart table. Log scales survive wherever a quantity spans orders of magnitude: decibels, the Richter scale and pH are all logarithms.',
+    source: 'Napier, Mirifici Logarithmorum Canonis Descriptio (1614)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Logarithm',
+  },
+
+  {
+    id: 'golden-ratio',
+    term: 'Golden Ratio',
+    subject: 'mathematics',
+    letter: 'G',
+    tagline: 'A proportion that keeps turning up, often where nobody measured it.',
+    explanation: 'The golden ratio divides a line so that the whole is to the longer part as the longer part is to the shorter, about 1.618. It is the limit of the ratios of consecutive Fibonacci numbers, which is why it appears in phyllotaxis and in anything that grows by a fixed multiplicative step.',
+    example: 'Claims that the Parthenon or the Great Pyramid was built to it do not survive measurement, and its appearance in a rectangle drawn to look pleasing is a consequence of choosing it. Its real appearances are in spiral growth and in number theory, not in a catalogue of famous buildings.',
+    source: 'Euclid, Elements, Book VI, Definition 3 (c. 300 BCE)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Golden_ratio',
+  },
 ];

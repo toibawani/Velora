@@ -175,4 +175,79 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     source: 'McCulloch v. Maryland, 17 U.S. 316 (1819)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Popular_sovereignty',
   },
+
+  // Six more, because this and mathematics were the two thinnest subjects, and
+  // a reader who arrives from a lesson on Rousseau or on electoral systems had
+  // nothing to open.
+  {
+    id: 'oligarchy',
+    term: 'Oligarchy',
+    subject: 'political-science',
+    letter: 'O',
+    tagline: 'Rule by the few, whatever the constitution calls itself.',
+    explanation: 'An oligarchy is a polity in which power is held by a small group, whether or not its institutions are labelled democratic. Aristotle treated it as the corrupted form of aristocracy: rule by the rich in their own interest rather than rule by the best in everyone\'s.',
+    example: 'A country can hold regular elections and still be an oligarchy if candidacy, media and finance are closed to everyone outside a small circle. The test is who could plausibly hold power, not whether a vote takes place.',
+    source: 'Aristotle, Politics, Book III (c. 350 BCE)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Oligarchy',
+  },
+
+  {
+    id: 'social-contract',
+    term: 'Social Contract',
+    subject: 'political-science',
+    letter: 'S',
+    tagline: 'Political obligation as an agreement rather than an inheritance.',
+    explanation: 'Contract theory explains why anyone has to obey a state by positing an agreement among the governed. Hobbes used it to argue for a sovereign strong enough to prevent civil war, Locke to argue that a government which breaks its trust can be replaced, and Rousseau to argue that legitimate authority is the general will rather than any individual\'s.',
+    example: 'Rawls reused the device as a test rather than a history: choose the rules you would accept before knowing what position you would occupy under them. That is the veil of ignorance, and it is a contract argument with no claim that any such meeting ever happened.',
+    source: 'Hobbes, Leviathan (1651)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Social_contract',
+  },
+
+  {
+    id: 'technocracy',
+    term: 'Technocracy',
+    subject: 'political-science',
+    letter: 'T',
+    tagline: 'Government by expertise, selected for knowledge rather than for votes.',
+    explanation: 'Technocracy holds that decisions should be made by people with the technical knowledge to make them, and that political competition selects for persuasion rather than competence. The objection is not that expertise is worthless but that technical questions and distributive questions are different, and the second cannot be settled by measurement.',
+    example: 'Central banks are deliberately insulated from elections because monetary policy is thought to need independence from short-term politics. That insulation is a technocratic arrangement sitting inside a democracy, and it is contested every time interest rates rise.',
+    source: 'Veblen, The Engineers and the Price System (1921)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Technocracy',
+  },
+
+  {
+    id: 'proportional-representation',
+    term: 'Proportional Representation',
+    subject: 'political-science',
+    letter: 'P',
+    tagline: 'Seats in proportion to votes, rather than one winner per district.',
+    explanation: 'Under proportional representation, parties receive seats roughly in proportion to their share of the vote, usually from multi-member districts or a national list. It tends to produce more parties and coalition governments, and it makes it much harder for a party with a minority of votes to govern alone.',
+    example: 'A party with 20% of the vote wins about 20% of the seats, where first-past-the-post in single-member districts might give it none at all. The trade is that voters choose a party list rather than a named local representative, and forming a government can take weeks of negotiation.',
+    source: 'Mill, Considerations on Representative Government (1861)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Proportional_representation',
+  },
+
+  {
+    id: 'electoral-college',
+    term: 'Electoral College',
+    subject: 'political-science',
+    letter: 'E',
+    tagline: 'The body that actually elects the American president.',
+    explanation: 'In the United States the president is chosen by electors apportioned to states, not by the national popular vote. Each state gets electors equal to its members of Congress, and most award all of theirs to the state\'s winner, which is how a candidate can win the presidency while losing the popular vote.',
+    example: 'That has happened five times, most recently in 2016, when the winner received about 2.9 million fewer votes than the runner-up. The mechanism also concentrates campaigning on a handful of competitive states rather than on the country as a whole.',
+    source: 'United States Constitution, Article II, Section 1',
+    sourceUrl: 'https://en.wikipedia.org/wiki/United_States_Electoral_College',
+  },
+
+  {
+    id: 'civil-liberties',
+    term: 'Civil Liberties',
+    subject: 'political-science',
+    letter: 'C',
+    tagline: 'The protections a majority cannot simply vote away.',
+    explanation: 'Civil liberties are limits on what the state may do to a person - speech, assembly, religion, a fair trial, freedom from arbitrary detention - as distinct from civil rights, which concern equal treatment between groups. Liberties constrain the state directly; rights are claimed against discrimination.',
+    example: 'The First Amendment protects speech the majority dislikes, which is the only case in which the protection does any work. A guarantee that covered only popular opinions would never need to be written down.',
+    source: 'United States Bill of Rights (1791)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Civil_liberties',
+  },
 ];
