@@ -117,6 +117,17 @@ export const TOTAL_GAMES =
   CLASSIC_GAMES.filter((game) => game.type !== 'simulation').length + BRAIN_GAMES.length;
 
 /**
+ * How much there is to play, counted from the decks rather than written down.
+ *
+ * The hub said how many games there were and nothing about how much was in
+ * them, which is the number that decides whether a game is worth opening. The
+ * sum is made of the same arrays the cards render, so a deck that grows moves
+ * this figure and no one has to remember to edit a sentence.
+ */
+export const TOTAL_PROMPTS =
+  QUIZ_QUESTIONS.length + CHAINS.length + PUZZLES.length + DUEL_PAIRS.length + SCRABBLE_LEVELS.length;
+
+/**
  * GameHub
  *
  * Offers both classic interactive modes and distraction-free Flow State learning
@@ -302,7 +313,8 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
           className="games-count-line"
           style={{ flexBasis: '100%', margin: '10px 0 0', fontSize: '0.82rem', color: 'var(--text-tertiary)' }}
         >
-          {TOTAL_GAMES} games and {TOTAL_SIMULATIONS} simulations, counted from the lists on this screen.
+          {TOTAL_GAMES} games and {TOTAL_SIMULATIONS} simulations, holding {TOTAL_PROMPTS}{' '}
+          questions, chains, terms and puzzles between them. Counted from the lists on this screen.
         </p>
         {hubTab === 'classic' && (
           <div className="flow-mode-switch">
