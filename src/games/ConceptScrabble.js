@@ -143,6 +143,77 @@ const SCRABBLE_LEVELS = [
     hint: 'Starts with P',
     category: 'Philosophy',
   },
+
+  // Ten more, chosen so that the rack can actually spell them and so that no
+  // term is one another game already asks for. The rack is built from the
+  // answer's own letters, which is why every entry here is a single run of
+  // capitals rather than the spaced spelling the term normally takes.
+  {
+    definition: 'A general rise in prices, which is the same thing as a fall in what money can buy',
+    word: 'INFLATION',
+    hint: 'Starts with I',
+    category: 'Economics',
+  },
+  {
+    definition: 'Buying in one market to sell immediately in another at a higher price, which closes the gap between them',
+    word: 'ARBITRAGE',
+    hint: 'Starts with A',
+    category: 'Economics',
+  },
+  {
+    definition: 'How much the quantity people buy responds to a change in the price',
+    word: 'ELASTICITY',
+    hint: 'Starts with E',
+    category: 'Economics',
+  },
+  {
+    definition: 'The right to be brought before a court so that it can decide whether your detention is lawful',
+    word: 'HABEASCORPUS',
+    hint: 'Two words',
+    category: 'Political Science',
+  },
+  {
+    definition: 'Speaking without pause on the floor of a legislature in order to prevent a vote',
+    word: 'FILIBUSTER',
+    hint: 'Starts with F',
+    category: 'Political Science',
+  },
+  {
+    definition: 'The keeping of internal conditions steady while the world outside them changes',
+    word: 'HOMEOSTASIS',
+    hint: 'Starts with H',
+    category: 'Biology',
+  },
+  {
+    definition: 'The survival of the variants best suited to their surroundings, over many generations',
+    word: 'NATURALSELECTION',
+    hint: 'Two words',
+    category: 'Biology',
+  },
+  {
+    definition: 'The division that halves the chromosome number to produce gametes',
+    word: 'MEIOSIS',
+    hint: 'Starts with M',
+    category: 'Biology',
+  },
+  {
+    definition: 'A single indivisible quantum of light, which no wave model can account for',
+    word: 'PHOTON',
+    hint: 'Starts with P',
+    category: 'Physics',
+  },
+  {
+    definition: 'The theory that measurements of time and length depend on how the observer is moving',
+    word: 'RELATIVITY',
+    hint: 'Starts with R',
+    category: 'Physics',
+  },
+  {
+    definition: 'Interest paid on the interest already earned, which is why a small rate compounds into a large sum',
+    word: 'COMPOUNDINTEREST',
+    hint: 'Two words',
+    category: 'Mathematics',
+  },
 ];
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` is not a shuffle: it is
