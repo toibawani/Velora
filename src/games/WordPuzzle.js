@@ -157,6 +157,73 @@ const PUZZLES = [
     word: 'TROLLEY PROBLEM',
     blanks: 2,
   },
+
+  // Economics, statistics, politics, psychology and biology.
+  //
+  // The deck was nineteen sentences, twelve of them physics, chemistry or
+  // space, in an app whose dictionary covers eleven fields. None of these
+  // repeats a Concept Scrabble answer, which the deck's own test pins as a
+  // closed list rather than a habit.
+  {
+    hint: 'Two words',
+    sentence: 'The real cost of a choice is the _____: the value of the best thing you gave up to make it.',
+    word: 'OPPORTUNITY COST',
+    blanks: 2,
+  },
+  {
+    hint: 'One word',
+    sentence: 'A factory that fouls a river nobody it sells to owns is imposing a negative _____.',
+    word: 'EXTERNALITY',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'When the price of a good rises, the quantity firms are willing to sell rises, which is the law of _____.',
+    word: 'SUPPLY',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'A poll of two thousand people drawn at random is a _____, and its mean is an estimate of the whole population.',
+    word: 'SAMPLE',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Two things moving together is a correlation; claiming one produced the other is a claim of _____, which the correlation alone cannot support.',
+    word: 'CAUSATION',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Drawing district boundaries so a minority of votes wins a majority of seats is called _____.',
+    word: 'GERRYMANDERING',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Dividing power between a national government and regional ones, each sovereign in its own sphere, is _____.',
+    word: 'FEDERALISM',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Training a response by pairing a stimulus with a reward or a punishment is called _____.',
+    word: 'CONDITIONING',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'A sugar pill that relieves pain because the patient expects it to is a _____.',
+    word: 'PLACEBO',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Perfume crossing a room and settling into the air with no current to carry it has spread by _____.',
+    word: 'DIFFUSION',
+    blanks: 1,
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;
