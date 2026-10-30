@@ -67,6 +67,57 @@ const DUEL_PAIRS = [
   { definition: 'The felt quality of experience itself, which no complete physical description has yet delivered', word: 'Consciousness' },
   { definition: 'Control over your own actions, disputed for two thousand years over whether it needs the power to have done otherwise', word: 'Free Will' },
   { definition: 'The claim that the state of the world now, with its laws, fixes exactly one future rather than probably one', word: 'Determinism' },
+
+  // Economics, statistics, politics, psychology, biology and physics.
+  //
+  // The duel was the most played of the six games and the second narrowest: it
+  // could serve a whole round without asking about a field the app teaches. Each
+  // term below is one the dictionary already carries, so a card answered wrong
+  // can be looked up rather than only marked.
+  {
+    definition: 'The value of the best thing you gave up in order to do what you did',
+    word: 'Opportunity Cost',
+  },
+  {
+    definition: 'A cost that lands on people who never agreed to it, which is how a market can be efficient and still harmful',
+    word: 'Externality',
+  },
+  {
+    definition: 'Carrying on because of what you have already spent rather than because of what comes next',
+    word: 'Sunk Cost Fallacy',
+  },
+  {
+    definition: 'The result that the mean of many independent samples approaches a bell curve, whatever you started with',
+    word: 'Central Limit Theorem',
+  },
+  {
+    definition: 'Drawing district boundaries so that a minority of votes yields a majority of seats',
+    word: 'Gerrymandering',
+  },
+  {
+    definition: 'A court setting aside a law because it conflicts with the constitution rather than with the judges\' taste',
+    word: 'Judicial Review',
+  },
+  {
+    definition: 'The 1648 settlement that made borders the business of states rather than of any authority above them',
+    word: 'Peace of Westphalia',
+  },
+  {
+    definition: 'Reviewing at widening intervals so that each recall happens once the memory has partly faded',
+    word: 'Spaced Repetition',
+  },
+  {
+    definition: 'Letting the first number you hear drag every later estimate towards it',
+    word: 'Anchoring',
+  },
+  {
+    definition: 'Water crossing a membrane towards the side holding more dissolved solute',
+    word: 'Osmosis',
+  },
+  {
+    definition: 'Light ejecting electrons from a metal only above a threshold frequency, which no wave model can explain',
+    word: 'Photoelectric Effect',
+  },
 ];
 
 const ROUND_SECONDS = 60;
