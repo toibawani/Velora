@@ -212,6 +212,175 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Judging an act only by what it produces is consequentialism. Deontologists judge by the kind of act it is regardless of results, and virtue ethicists ask what habit of character the act builds - they ask about the actor rather than the outcome or the rule.',
   },
+
+  // The five fields the dictionary covers and the quiz did not: economics,
+  // psychology, history, mathematics and politics. The deck was fourteen
+  // questions over six subjects while the app holds a dictionary entry and
+  // lessons for all eleven, so a reader could study a subject for an hour and
+  // never be asked about it. Each question below is grounded in a term that
+  // already exists in src/data/dictionary, so a wrong answer has somewhere to
+  // go: the explanation names the idea rather than paraphrasing it loosely.
+  {
+    question:
+      'A ticket costs £40. You take the evening off a shift that would have paid £60 in order to go. What did the evening cost you?',
+    options: [
+      '£40, the price of the ticket',
+      '£100: the £40 spent and the £60 you did not earn',
+      '£60, the shift you gave up',
+      'Nothing, the ticket was a gift to yourself',
+    ],
+    correct: 1,
+    category: 'Economics',
+    explanation:
+      'Opportunity cost is the value of the best alternative you gave up, not the money that left your account. The ticket was £40; the evening cost £40 plus the £60 shift, which is why a cheap night out can be an expensive decision.',
+  },
+  {
+    question:
+      'One country can produce both wine and cloth more cheaply than its neighbour. Why does the classical argument still recommend that they trade?',
+    options: [
+      'Because the neighbour has raw materials it lacks',
+      'Because the cost gap is smaller in one good than the other, so specialising where each is least bad leaves both better off',
+      'Because trade only works when costs are equal',
+      'Because wine cannot be stored long enough to matter',
+    ],
+    correct: 1,
+    category: 'Economics',
+    explanation:
+      'This is comparative advantage. What matters is the ratio of costs inside each country, not the absolute cost: the slower producer should specialise in whatever it gives up least to make. Absolute advantage would say the efficient country should make everything, and that is the version of the argument that is wrong.',
+  },
+  {
+    question: 'Inflation is 3% and your savings account pays 2%. What has happened to what your money can buy?',
+    options: [
+      'It buys about 3% more',
+      'It buys about 1% less',
+      'It is unchanged, because the balance went up',
+      'It buys about 5% less',
+    ],
+    correct: 1,
+    category: 'Economics',
+    explanation:
+      'The balance grew by 2% while prices grew by 3%, so the real return is about minus 1%. The nominal number in the account is a return on the number, not on what the number can buy, and the gap between the two is the whole point of measuring inflation at all.',
+  },
+  {
+    question: 'Why does spreading the same total study time over several days beat cramming it into one?',
+    options: [
+      'Because repetition matters more than the total time spent',
+      'Because each review lands when the memory has partly faded, and the effort of retrieving it is what strengthens it',
+      'Because shorter sessions are less tiring',
+      'Because spaced material is easier to read',
+    ],
+    correct: 1,
+    category: 'Psychology',
+    explanation:
+      'This is spaced repetition, and the mechanism is the retrieval, not the exposure. Material that is still fresh is easy to recall and teaches the memory little; material that has partly decayed forces a reconstruction, and that reconstruction is what makes the next recall easier.',
+  },
+  {
+    question:
+      'A driver cuts you off and you decide they are a reckless person. What is that inference called?',
+    options: [
+      'A self-serving bias',
+      'The fundamental attribution error: explaining behaviour by character while discounting the situation',
+      'Cognitive dissonance',
+      'Anchoring',
+    ],
+    correct: 1,
+    category: 'Psychology',
+    explanation:
+      'The fundamental attribution error is the habit of reading other people\'s behaviour as character and your own as circumstance - they cut you off because they are reckless, you cut someone off because you were late and the road was confusing. The situation is doing more of the work than the story about character admits.',
+  },
+  {
+    question: 'What did the Peace of Westphalia in 1648 establish that still shapes international politics?',
+    options: [
+      'The United Nations',
+      'The idea that each state has sovereignty over its own territory and internal affairs',
+      'A single European currency',
+      'The abolition of standing armies',
+    ],
+    correct: 1,
+    category: 'History',
+    explanation:
+      'The treaties ended the Thirty Years\' War and are conventionally taken as the start of the state system: borders that other states recognise, and no authority above them entitled to rule inside them. Almost every argument about intervention since has been an argument about whether that settlement should hold.',
+  },
+  {
+    question: 'Which of these is a primary source for studying the Black Death?',
+    options: [
+      'A recent textbook chapter on medieval Europe',
+      'A will written in a plague year by a notary who survived it',
+      'A television documentary about the plague',
+      'An encyclopaedia entry on pandemics',
+    ],
+    correct: 1,
+    category: 'History',
+    explanation:
+      'A primary source comes from the period being studied and was produced by someone inside it. The will is evidence of what one person expected to happen to their property and family; the textbook, documentary and encyclopaedia are all later accounts built out of sources like it, which is why they are secondary.',
+  },
+  {
+    question:
+      'The printing press did more than make books cheaper. What did it change about arguments themselves?',
+    options: [
+      'It made them shorter',
+      'It made them fixed and reproducible, so the same text could be compared, cited and disputed in different cities',
+      'It made them more emotional',
+      'It ended handwriting as a skill',
+    ],
+    correct: 1,
+    category: 'History',
+    explanation:
+      'A copied manuscript drifts with every copyist; a printed page does not. Once a claim had page numbers and identical copies, an argument could be checked by someone who had never met you, and the scholarly apparatus of citation and refutation became possible.',
+  },
+  {
+    question: 'What does the central limit theorem say about the mean of a large number of independent samples?',
+    options: [
+      'That it equals the population mean exactly',
+      'That its distribution approaches a normal curve as the sample size grows, whatever the underlying distribution looks like',
+      'That it is normal for any sample size, however small',
+      'That it only holds when the population is already normal',
+    ],
+    correct: 1,
+    category: 'Mathematics',
+    explanation:
+      'The theorem is about the distribution of the sample mean, not the data. Skewed, lumpy, bounded - it does not matter what the population looks like, the means of large samples cluster into a bell. That is why so much of statistics can use the same machinery without knowing the shape of the underlying thing.',
+  },
+  {
+    question:
+      'A student scores far above the class average, then closer to average on a retest, with no change in teaching. What is the likeliest explanation?',
+    options: [
+      'The retest was easier',
+      'Regression to the mean: an extreme score contains luck, and luck does not repeat',
+      'The student forgot the material',
+      'The first test was invalid',
+    ],
+    correct: 1,
+    category: 'Mathematics',
+    explanation:
+      'An unusually high score is skill plus a good day. The skill persists and the good day does not, so the second score lands nearer the average without anything having gone wrong. It is also why the worst-performing group in any year tends to improve next year whether or not the intervention aimed at them worked.',
+  },
+  {
+    question: 'What is judicial review?',
+    options: [
+      'A court\'s power to strike down a law or official action that conflicts with the constitution',
+      'A parliamentary inspection of judges\' conduct',
+      'The retrial of a criminal case',
+      'A president\'s veto of legislation',
+    ],
+    correct: 0,
+    category: 'Politics',
+    explanation:
+      'Judicial review lets a court check the other branches against the constitution rather than against its own preferences, which is the theory; in practice it is the most contested power in constitutional law, because someone has to decide what the constitution means and that someone is a court.',
+  },
+  {
+    question: 'What makes gerrymandering work?',
+    options: [
+      'Packing and cracking voters so that a minority of votes yields a majority of seats',
+      'Changing the total number of seats between elections',
+      'Lowering the voting age',
+      'Making voting compulsory',
+    ],
+    correct: 0,
+    category: 'Politics',
+    explanation:
+      'Packing puts as many of your opponents as possible into a few districts they win overwhelmingly; cracking splits the rest thinly across districts they narrowly lose. Both waste votes on purpose, and neither changes a single ballot - which is why the map, not the turnout, is often the decisive document.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;

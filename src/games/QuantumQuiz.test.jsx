@@ -85,7 +85,10 @@ describe('Concept Check quiz', () => {
     const subjects = [...new Set(QUIZ_QUESTIONS.map((q) => q.category))];
     // Every subject the description names must actually be in the deck, and
     // the deck must not be narrower than the description claims.
-    const named = card.description.match(/space|physics|biology|chemistry|philosophy|quantum/gi) || [];
+    const named =
+      card.description.match(
+        /space|physics|biology|chemistry|philosophy|quantum|economics|psychology|history|mathematics|politics/gi
+      ) || [];
     subjects.forEach((s) => {
       expect(named.map((n) => n.toLowerCase())).toContain(s.toLowerCase());
     });

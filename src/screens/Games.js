@@ -41,7 +41,8 @@ export const CLASSIC_GAMES = [
     id: 'quiz',
     name: 'Concept Check',
     type: 'quiz',
-    description: 'Fourteen questions across space, quantum, physics, chemistry, biology and philosophy, with the reasoning behind each answer',
+    description:
+      '26 questions across space, quantum, physics, chemistry, biology, philosophy, economics, psychology, history, mathematics and politics, with the reasoning behind each answer',
     icon: Target,
     color: '--text-secondary',
     difficulty: 'Mixed',
