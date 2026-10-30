@@ -32,7 +32,7 @@
   gap: var(--space-6);
   text-align: center;
   animation: card-emerge 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes card-emerge {
