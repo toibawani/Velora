@@ -148,6 +148,11 @@ function DefinitionDuel({ onBack }) {
   // skipped and a card the clock beat are different outcomes and the end screen
   // telling the player only the score loses the one they can act on.
   const [skipped, setSkipped] = useState(0);
+  // Cards that were answered wrongly or passed over, in the order they came up.
+  // The end screen said how many were skipped and how accurate the answers were
+  // and never which cards they were, which is the only part a player can act on:
+  // "3 cards were passed over" sends nobody anywhere, a list of the three does.
+  const [missed, setMissed] = useState([]);
 
   // Cards where the hint was used. A Set rather than a flag, because the hint
   // belongs to the card it was asked for: nulling a boolean on advance would
@@ -246,6 +251,7 @@ function DefinitionDuel({ onBack }) {
     if (!isCorrect) {
       setFeedback(`Not quite. The answer was ${pair.word}.`);
       setCorrect(false);
+      setMissed((prev) => (prev.includes(currentPair) ? prev : [...prev, currentPair]));
       return;
     }
 
@@ -293,6 +299,7 @@ function DefinitionDuel({ onBack }) {
     setScore(0);
     setAttempts(0);
     setSkipped(0);
+    setMissed([]);
     setFinished(false);
     setUserInput('');
     setFeedback('');
@@ -310,6 +317,7 @@ function DefinitionDuel({ onBack }) {
     if (!gameActive) return;
     clearTimeout(advanceRef.current);
     setSkipped((prev) => prev + 1);
+    setMissed((prev) => (prev.includes(currentPair) ? prev : [...prev, currentPair]));
     setFeedback('');
     setCorrect(false);
     setHintText('');
@@ -447,6 +455,32 @@ function DefinitionDuel({ onBack }) {
                   ? 'One card was passed over rather than answered.'
                   : `${skipped} cards were passed over rather than answered.`}
               </p>
+            )}
+
+            {/*
+             * What to do next. A count of mistakes is a verdict; the list is a
+             * reading list, and every card here names the term so it can be
+             * looked up in the dictionary rather than only remembered as a miss.
+             */}
+            {missed.length > 0 && (
+              <div className="quiz-review" data-testid="duel-review">
+                <h3>
+                  {missed.length === 1
+                    ? 'The card that got away'
+                    : `The ${missed.length} cards that got away`}
+                </h3>
+                <ul className="quiz-review-list">
+                  {missed.map((index) => (
+                    <li key={DUEL_PAIRS[index].word} className="quiz-review-item">
+                      <p className="quiz-review-question">{DUEL_PAIRS[index].definition}</p>
+                      <p className="quiz-review-answer">
+                        <span className="quiz-review-label">Answer:</span>{' '}
+                        {DUEL_PAIRS[index].word}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
             <div className="game-over-actions">
               <button className="btn-restart" onClick={handleReplay}>

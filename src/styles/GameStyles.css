@@ -93,6 +93,81 @@
   color: var(--text-secondary);
 }
 
+/*
+ * The end-of-round review, shared by Concept Check and Definition Duel.
+ *
+ * These classes existed in both games and had no rules at all, so the list of
+ * questions you got wrong rendered as a browser-default bulleted list inside a
+ * centred results card: entries ran together, the label and the answer wrapped
+ * as one line, and the explanation sat flush against the next question. The
+ * most useful thing either game says was the least readable thing on screen.
+ */
+.quiz-review {
+  width: 100%;
+  max-width: 640px;
+  margin: var(--space-8) auto 0;
+  text-align: left;
+  border-top: 1px solid var(--border-default);
+  padding-top: var(--space-6);
+}
+
+.quiz-review h3 {
+  font-size: 0.8125rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0 0 var(--space-4);
+}
+
+.quiz-review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.quiz-review-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) var(--space-5);
+}
+
+.quiz-review-question {
+  margin: 0 0 var(--space-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.quiz-review-answer {
+  margin: 0 0 var(--space-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.quiz-review-label {
+  font-size: 0.6875rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-right: var(--space-1);
+}
+
+.quiz-review-explanation {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
 .scrabble-game,
 .quiz-game,
 .duel-game,

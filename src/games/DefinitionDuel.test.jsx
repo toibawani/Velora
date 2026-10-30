@@ -253,6 +253,64 @@ describe('getting unstuck on a card', () => {
   });
 });
 
+describe('the end-of-round review', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    window.localStorage.clear();
+  });
+  afterEach(() => {
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
+  });
+
+  test('lists the cards that were passed over, with the answer', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+
+    DUEL_PAIRS.forEach(() => fireEvent.click(screen.getByRole('button', { name: /skip/i })));
+
+    const review = screen.getByTestId('duel-review');
+    expect(review.textContent).toContain(DUEL_PAIRS[0].definition);
+    expect(review.textContent).toContain(DUEL_PAIRS[0].word);
+    expect(screen.getByText(new RegExp(`the ${DUEL_PAIRS.length} cards that got away`, 'i')))
+      .toBeInTheDocument();
+  });
+
+  test('lists a card answered wrongly, and says what the answer was', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+
+    fireEvent.change(screen.getByLabelText(/type the term being defined/i), {
+      target: { value: 'not the answer' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: /^submit$/i }));
+
+    // Answer wrongly on the first card, then pass over everything left. The
+    // first skip leaves the card that was answered wrong, so the count is the
+    // whole deck rather than the deck minus one.
+    expect(screen.getByText(/not quite/i)).toBeInTheDocument();
+    DUEL_PAIRS.forEach(() =>
+      fireEvent.click(screen.getByRole('button', { name: /skip/i }))
+    );
+
+    const review = screen.getByTestId('duel-review');
+    expect(review.textContent).toContain(DUEL_PAIRS[0].definition);
+    expect(review.textContent).toContain(DUEL_PAIRS[0].word);
+  });
+
+  test('a round with nothing missed has no review to read', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+
+    DUEL_PAIRS.forEach((pair) => {
+      fireEvent.change(screen.getByLabelText(/type the term being defined/i), {
+        target: { value: pair.word },
+      });
+      fireEvent.click(screen.getByRole('button', { name: /^submit$/i }));
+      act(() => jest.advanceTimersByTime(900));
+    });
+
+    expect(screen.queryByTestId('duel-review')).toBeNull();
+  });
+});
+
 describe('duel content breadth', () => {
   test('offers enough terms that one sitting is not the whole game', () => {
     expect(DUEL_PAIRS.length).toBeGreaterThanOrEqual(15);
