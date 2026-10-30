@@ -440,6 +440,69 @@ describe('Concept Check quiz', () => {
     expect(reported).toBeGreaterThanOrEqual(2);
   });
 
+  /*
+   * Reading the missed questions and being asked them again are different
+   * acts. The review listed them; this plays them.
+   */
+  test('the missed questions can be played again as their own round', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    const answer = (index, position) => {
+      const question = QUIZ_QUESTIONS[index];
+      const order = optionOrder(index, question.options.length);
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[position(order, question)]);
+    };
+    const right = (order, question) => order.indexOf(question.correct);
+    const wrong = (order, question) => order.findIndex((original) => original !== question.correct);
+
+    // Question one right, everything else answered wrongly, so the missed set
+    // is the rest of the deck and its size is known.
+    answer(0, right);
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+    for (let i = 1; i < QUIZ_QUESTIONS.length; i += 1) {
+      answer(i, wrong);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+
+    const button = screen.getByRole('button', {
+      name: new RegExp(`practise the ${QUIZ_QUESTIONS.length - 1} you missed`, 'i'),
+    });
+    fireEvent.click(button);
+
+    // A round of exactly the missed questions, starting at the first of them.
+    expect(
+      screen.getByText(new RegExp(`practice 1/${QUIZ_QUESTIONS.length - 1}`, 'i'))
+    ).toBeInTheDocument();
+    expect(screen.getByText(QUIZ_QUESTIONS[1].question)).toBeInTheDocument();
+    expect(screen.getByTestId('quiz-score')).toHaveTextContent('Score: 0');
+  });
+
+  test('a practice round is not booked as a play of the whole deck', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    for (let i = 0; i < QUIZ_QUESTIONS.length; i += 1) {
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+    const before = getGameResult(QUIZ_GAME_ID);
+
+    // Option A is not the answer to every question, so this round has some to
+    // practise. Asserted rather than guarded by an if, because a test that
+    // skips itself when the button is missing passes on the bug it exists for.
+    const practise = screen.getByRole('button', { name: /practise the/i });
+    fireEvent.click(practise);
+
+    const total = Number(/1\/(\d+)/.exec(screen.getByText(/practice 1\//i).textContent)[1]);
+    expect(total).toBeGreaterThan(0);
+
+    for (let i = 0; i < total; i += 1) {
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+
+    expect(getGameResult(QUIZ_GAME_ID)).toEqual(before);
+  });
+
   test('finishing reports how many were right, not a raw score out of ten', () => {
     // The deck was ten questions; the test looped a hardcoded ten and asserted
     // "of 10 correct". Both the loop and the expectation are now derived from

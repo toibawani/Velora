@@ -428,6 +428,13 @@ function QuantumQuiz({ onBack }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  // The questions this round is playing, as positions in the deck. It is a
+  // list rather than a number because the game now has two rounds in it: the
+  // whole deck, and a short one made of the questions just answered wrong.
+  // Everything below that used to read QUIZ_QUESTIONS.length - the progress
+  // bar, the "question 4 of 26" label, the final total - reads this instead, so
+  // a practice round cannot claim to be out of 26 when it holds three.
+  const [deck, setDeck] = useState(() => QUIZ_QUESTIONS.map((_, index) => index));
   // A run of consecutive right answers, and the longest run of the round.
   //
   // The score is cumulative, so it cannot show momentum: getting four right,
@@ -449,8 +456,12 @@ function QuantumQuiz({ onBack }) {
   // plays for one sitting.
   const recordedRef = useRef(false);
 
-  const question = QUIZ_QUESTIONS[currentQuestion];
-  const isLast = currentQuestion === QUIZ_QUESTIONS.length - 1;
+  const question = QUIZ_QUESTIONS[deck[currentQuestion]];
+  const isLast = currentQuestion === deck.length - 1;
+  // A practice round is a subset, so it is not comparable to a full one and is
+  // not recorded. Booking it would either overwrite the best with a score out
+  // of 30 or leave a best that the maximum no longer explains.
+  const isPractice = deck.length !== QUIZ_QUESTIONS.length;
   // Positions in the original options array, so `question.correct` still grades
   // and the displayed order stays separate from the data order.
   const options = useMemo(() => shuffledOptions(currentQuestion), [currentQuestion]);
@@ -465,6 +476,7 @@ function QuantumQuiz({ onBack }) {
    * second round starts halfway through the first one's results.
    */
   const handleReplay = useCallback(() => {
+    setDeck(QUIZ_QUESTIONS.map((_, index) => index));
     setCurrentQuestion(0);
     setScore(0);
     setCorrectCount(0);
@@ -505,8 +517,8 @@ function QuantumQuiz({ onBack }) {
       setGameOver(true);
       // The round is recorded here rather than in an effect on gameOver, so the
       // score that lands is the one this round earned before any of it was
-      // cleared for a replay.
-      if (!recordedRef.current) {
+      // cleared for a replay. A practice round is not recorded at all.
+      if (!recordedRef.current && !isPractice) {
         recordedRef.current = true;
         recordGameResult(QUIZ_GAME_ID, {
           score,
@@ -518,7 +530,29 @@ function QuantumQuiz({ onBack }) {
     setCurrentQuestion((prev) => prev + 1);
     setSelectedAnswer(null);
     setAnswered(false);
-  }, [isLast, score]);
+  }, [isLast, isPractice, score]);
+
+  /**
+   * Play the questions that were answered wrong, and only those.
+   *
+   * The end screen already listed them with their reasoning, which is a page to
+   * read; reading an explanation is not the same as being asked the question
+   * again on your own. This sets the deck to the missed positions and starts
+   * over, so the four that got away become a round of four.
+   */
+  const handlePractiseMissed = useCallback(() => {
+    setDeck(missed);
+    setCurrentQuestion(0);
+    setScore(0);
+    setCorrectCount(0);
+    setSelectedAnswer(null);
+    setAnswered(false);
+    setGameOver(false);
+    setStreak(0);
+    setBestStreak(0);
+    setMissed([]);
+    recordedRef.current = false;
+  }, [missed]);
 
   /*
    * Number keys pick an option and Enter advances.
@@ -559,13 +593,13 @@ function QuantumQuiz({ onBack }) {
   }, [answered, gameOver, handleAnswerClick, handleNext, options]);
 
   if (gameOver) {
-    const total = QUIZ_QUESTIONS.length;
+    const total = deck.length;
     const percentage = Math.round((correctCount / total) * 100);
 
     return (
       <div className="game-screen">
         <div className="game-over-screen">
-          <h2>Quiz complete</h2>
+          <h2>{isPractice ? 'Practice round complete' : 'Quiz complete'}</h2>
           <p className="final-score">
             {correctCount} of {total} correct
           </p>
@@ -621,8 +655,16 @@ function QuantumQuiz({ onBack }) {
           )}
 
           <div className="game-over-actions">
-            <button className="btn-restart" onClick={handleReplay}>
-              Play again
+            {/* The review above is a page to read. Being asked the question
+                again is a different act, and the missed ones are the only part
+                of the deck worth another pass. */}
+            {missed.length > 0 && (
+              <button className="btn-restart" onClick={handlePractiseMissed}>
+                Practise the {missed.length} you missed
+              </button>
+            )}
+            <button className={`btn-restart${missed.length > 0 ? ' secondary' : ''}`} onClick={handleReplay}>
+              {isPractice ? 'Play the whole deck' : 'Play again'}
             </button>
             <button className="btn-restart secondary" onClick={onBack}>
               Back to Games
@@ -640,7 +682,7 @@ function QuantumQuiz({ onBack }) {
           &larr; Back
         </button>
         <h2>Concept Check</h2>
-        <div className="game-score">
+        <div className="game-score" data-testid="quiz-score">
           {streak >= 2 && (
             <span
               className="quiz-streak"
@@ -660,17 +702,17 @@ function QuantumQuiz({ onBack }) {
             className="progress-bar"
             role="progressbar"
             aria-valuemin={1}
-            aria-valuemax={QUIZ_QUESTIONS.length}
+            aria-valuemax={deck.length}
             aria-valuenow={currentQuestion + 1}
-            aria-label="Quiz progress"
+            aria-label={isPractice ? 'Practice progress' : 'Quiz progress'}
           >
             <div
               className="progress-fill"
-              style={{ width: `${((currentQuestion + 1) / QUIZ_QUESTIONS.length) * 100}%` }}
+              style={{ width: `${((currentQuestion + 1) / deck.length) * 100}%` }}
             />
           </div>
           <span className="progress-text">
-            Question {currentQuestion + 1}/{QUIZ_QUESTIONS.length}
+            {isPractice ? 'Practice' : 'Question'} {currentQuestion + 1}/{deck.length}
           </span>
         </div>
 
