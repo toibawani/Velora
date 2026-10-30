@@ -276,6 +276,36 @@ describe('scrabble content breadth', () => {
     expect(new Set(words).size).toBe(words.length);
   });
 
+  /*
+   * A two-word term is spelled as one run of capitals for the rack. Anywhere it
+   * is shown as an answer rather than as tiles it needs the spaced spelling, or
+   * the review tells the player the answer was "BLACKHOLE".
+   */
+  test('a two-word term carries the spaced spelling it is shown by', () => {
+    SCRABBLE_LEVELS.filter((level) => level.hint === 'Two words').forEach((level) => {
+      expect(level.display).toBeDefined();
+      expect(level.display.replace(/\s+/g, '')).toBe(level.word);
+      expect(level.display.split(' ')).toHaveLength(2);
+    });
+    // And a single-word term does not need one inventing for it.
+    SCRABBLE_LEVELS.filter((level) => level.hint !== 'Two words').forEach((level) => {
+      expect(level.display).toBeUndefined();
+    });
+  });
+
+  test('the end screen names the levels that were passed over', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+
+    for (let i = 0; i < SCRABBLE_LEVELS.length; i += 1) {
+      fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
+    }
+
+    const review = screen.getByTestId('scrabble-review');
+    expect(review.textContent).toContain(SCRABBLE_LEVELS[0].definition);
+    expect(review.textContent).toContain(SCRABBLE_LEVELS[0].display || SCRABBLE_LEVELS[0].word);
+    expect(screen.getByText(new RegExp(`the ${SCRABBLE_LEVELS.length} terms`, 'i'))).toBeInTheDocument();
+  });
+
   // The rack is exactly the answer's letters, so a repeated letter needs the
   // first tile that is still unused - taking the first match every time clicks
   // one tile twice and builds a word that was never on the rack.

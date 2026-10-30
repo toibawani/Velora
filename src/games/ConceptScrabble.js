@@ -30,6 +30,11 @@ const SCRABBLE_LEVELS = [
   {
     definition: 'A region of space that nothing can escape once entered',
     word: 'BLACKHOLE',
+    // The rack spells a term as one run of capitals, so a two-word term needs a
+    // spaced spelling wherever it is shown as an answer rather than as tiles.
+    // Without it the review said the answer was "BLACKHOLE", which reads as a
+    // typo rather than as a term.
+    display: 'BLACK HOLE',
     hint: 'Two words',
     category: 'Space',
   },
@@ -42,6 +47,7 @@ const SCRABBLE_LEVELS = [
   {
     definition: 'The boundary beyond which nothing escapes a black hole',
     word: 'EVENTHORIZON',
+    display: 'EVENT HORIZON',
     hint: 'Two words',
     category: 'Space',
   },
@@ -84,6 +90,7 @@ const SCRABBLE_LEVELS = [
   {
     definition: 'The measure of how much heat a body can hold per degree',
     word: 'THERMALCAPACITY',
+    display: 'THERMAL CAPACITY',
     hint: 'Two words',
     category: 'Physics',
   },
@@ -102,12 +109,14 @@ const SCRABBLE_LEVELS = [
   {
     definition: 'The habit of seeking out only the evidence that agrees with you',
     word: 'CONFIRMATIONBIAS',
+    display: 'CONFIRMATION BIAS',
     hint: 'Two words',
     category: 'Psychology',
   },
   {
     definition: 'An agreement between two sides, and the price they settle at',
     word: 'MARKETEQUILIBRIUM',
+    display: 'MARKET EQUILIBRIUM',
     hint: 'Two words',
     category: 'Economics',
   },
@@ -169,6 +178,7 @@ const SCRABBLE_LEVELS = [
   {
     definition: 'The right to be brought before a court so that it can decide whether your detention is lawful',
     word: 'HABEASCORPUS',
+    display: 'HABEAS CORPUS',
     hint: 'Two words',
     category: 'Political Science',
   },
@@ -187,6 +197,7 @@ const SCRABBLE_LEVELS = [
   {
     definition: 'The survival of the variants best suited to their surroundings, over many generations',
     word: 'NATURALSELECTION',
+    display: 'NATURAL SELECTION',
     hint: 'Two words',
     category: 'Biology',
   },
@@ -211,6 +222,7 @@ const SCRABBLE_LEVELS = [
   {
     definition: 'Interest paid on the interest already earned, which is why a small rate compounds into a large sum',
     word: 'COMPOUNDINTEREST',
+    display: 'COMPOUND INTEREST',
     hint: 'Two words',
     category: 'Mathematics',
   },
@@ -237,6 +249,10 @@ function ConceptScrabble({ onBack }) {
   const [score, setScore] = useState(0);
   const [solvedCount, setSolvedCount] = useState(0);
   const [skipped, setSkipped] = useState(0);
+  // Which levels were passed over, so the end screen can name them. "skipped 9"
+  // is a verdict; the nine terms are a reading list, and the definition shown on
+  // the card is the thing worth going back to.
+  const [skippedLevels, setSkippedLevels] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState('');
   const [shake, setShake] = useState(false);
@@ -376,6 +392,7 @@ function ConceptScrabble({ onBack }) {
     setScore(0);
     setSolvedCount(0);
     setSkipped(0);
+    setSkippedLevels([]);
     setGameOver(false);
     setMessage('');
     setShake(false);
@@ -387,8 +404,11 @@ function ConceptScrabble({ onBack }) {
     // and cost a second advance on top of the one already booked.
     if (settled) return;
     setSkipped((prev) => prev + 1);
+    setSkippedLevels((prev) =>
+      prev.includes(currentLevel) ? prev : [...prev, currentLevel]
+    );
     goToNextLevel();
-  }, [goToNextLevel, settled]);
+  }, [currentLevel, goToNextLevel, settled]);
 
   if (gameOver) {
     const total = SCRABBLE_LEVELS.length;
@@ -401,6 +421,29 @@ function ConceptScrabble({ onBack }) {
             You solved {solvedCount} of {total}
             {skipped > 0 ? `, and skipped ${skipped}.` : ', with none skipped.'}
           </p>
+          {skippedLevels.length > 0 && (
+            <div className="quiz-review" data-testid="scrabble-review">
+              <h3>
+                {skippedLevels.length === 1
+                  ? 'The term you passed over'
+                  : `The ${skippedLevels.length} terms you passed over`}
+              </h3>
+              <ul className="quiz-review-list">
+                {skippedLevels.map((index) => (
+                  <li key={SCRABBLE_LEVELS[index].word} className="quiz-review-item">
+                    <p className="quiz-review-question">
+                      {SCRABBLE_LEVELS[index].definition}
+                    </p>
+                    <p className="quiz-review-answer">
+                      <span className="quiz-review-label">Answer:</span>{' '}
+                      {SCRABBLE_LEVELS[index].display || SCRABBLE_LEVELS[index].word}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="game-over-actions">
             <button className="btn-restart" onClick={handleReplay}>
               Play again
