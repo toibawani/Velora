@@ -24,8 +24,10 @@ import '../styles/GameStyles.css';
  * mechanism: electrons shared between atoms is what a covalent bond is, and
  * that is what makes a molecule.
  *
- * Six chains, up from three. One round of three was thin enough that a learner
- * finished the game in under a minute and never saw a non-biological one.
+ * Twelve chains, up from three. One round of three was thin enough that a
+ * learner finished the game in under a minute and never saw a non-biological
+ * one, and the set had no statistics, no psychology and no politics in it at
+ * all while the app teaches all three.
  */
 const CHAINS = [
   {
@@ -94,6 +96,46 @@ const CHAINS = [
       'done often enough stop being decisions and settle into',
       'and doing something without thinking about it any more is what',
       'so virtue is built by doing rather than waited for',
+    ],
+  },
+
+  // Statistics, psychology and politics, because the set could be finished
+  // without meeting a single claim from any of them. Each one is a mechanism
+  // rather than a topic list, the same bar the eight above had to clear.
+  {
+    title: 'Statistics Chain',
+    concepts: ['Sample', 'Sample Mean', 'Sampling Distribution', 'Confidence Interval'],
+    links: [
+      'of observations, averaged, gives one',
+      'repeated over many samples forms a',
+      'whose spread sets the width of a',
+    ],
+  },
+  {
+    title: 'Attention Chain',
+    concepts: ['Attention', 'Working Memory', 'Rehearsal', 'Long-term Memory'],
+    links: [
+      'selects what is allowed into',
+      'holds a handful of items at once and keeps them alive by',
+      'is what moves material into',
+    ],
+  },
+  {
+    title: 'Politics Chain',
+    concepts: ['Grievance', 'Organised Group', 'Collective Action', 'Policy Change'],
+    links: [
+      'shared by enough people with a way to talk becomes an',
+      'can sustain the cost of',
+      'repeatedly applied is what a government responds to with',
+    ],
+  },
+  {
+    title: 'Star Formation Chain',
+    concepts: ['Gas Cloud', 'Gravitational Collapse', 'Protostar', 'Main Sequence Star'],
+    links: [
+      'starts to fall in on itself in a',
+      'heats the centre until it becomes a',
+      'ignites fusion and settles onto the',
     ],
   },
 ];
