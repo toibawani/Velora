@@ -55,7 +55,10 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
     openedAt.current = Date.now();
     setCompleted(false);
 
-    const stored = topic ? getLessonProgress(subject, topic.id) : null;
+    // Read through the id alone rather than the whole topic object: the effect
+    // is keyed on the id, and depending on the object would re-run it every
+    // time the parent re-rendered a new object for the same lesson.
+    const stored = topic?.id ? getLessonProgress(subject, topic.id) : null;
     lastPercent.current = stored;
     lastSavedPercent.current = stored;
     setResumeAt(shouldOfferResume(stored) ? stored : null);
@@ -93,7 +96,7 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
     };
     main.addEventListener('scroll', onScroll, { passive: true });
     return () => main.removeEventListener('scroll', onScroll);
-  }, [subject, topic?.title, completed]);
+  }, [subject, topic?.title, topic?.id, completed]);
   useEffect(() => () => {
     const minutes = Math.max(1, Math.round((Date.now() - openedAt.current) / 60000));
     if (topic?.title) recordStudySession(topic.title, minutes, subject);
