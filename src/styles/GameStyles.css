@@ -44,6 +44,53 @@
   font-weight: 700;
   color: var(--text-primary);
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/*
+ * A run of right answers, shown in the header only once it is worth noticing.
+ * It sits beside the score rather than replacing it, because the score is the
+ * number that gets recorded and the run is the number that describes how the
+ * round felt. Accent-bordered and quiet: it must not compete with the question
+ * underneath it, which is the thing being read.
+ */
+.quiz-streak {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: 2px var(--space-2);
+  white-space: nowrap;
+  animation: quiz-streak-in 0.18s var(--ease-standard);
+}
+
+@keyframes quiz-streak-in {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-streak {
+    animation: none;
+  }
+}
+
+.quiz-streak-summary {
+  margin: var(--space-2) 0 0;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
 }
 
 .scrabble-game,

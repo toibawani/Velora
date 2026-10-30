@@ -428,6 +428,16 @@ function QuantumQuiz({ onBack }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  // A run of consecutive right answers, and the longest run of the round.
+  //
+  // The score is cumulative, so it cannot show momentum: getting four right,
+  // then one wrong, then four right reads the same as getting nine right in a
+  // row, and the difficulty of the second is the whole reason the round is
+  // worth playing. The streak is the closest thing the deck has to a measure
+  // of the player rather than the deck, so it is shown while it is running and
+  // remembered on the results screen after it breaks.
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
   // Which questions were answered wrong, in the order they came up. The
   // explanation was shown for a few seconds mid-round and then thrown away with
   // the question, so the end screen could say "10 of 14" and nothing else -
@@ -462,6 +472,10 @@ function QuantumQuiz({ onBack }) {
     setAnswered(false);
     setGameOver(false);
     setMissed([]);
+    // The streak belongs to the round. Leaving it at the previous value meant a
+    // second round opened with a run already on the board that nobody earned.
+    setStreak(0);
+    setBestStreak(0);
     recordedRef.current = false;
   }, []);
 
@@ -473,13 +487,17 @@ function QuantumQuiz({ onBack }) {
       setSelectedAnswer(index);
       setAnswered(true);
       if (index === question.correct) {
+        const nextStreak = streak + 1;
         setScore((prev) => prev + POINTS_PER_CORRECT);
         setCorrectCount((prev) => prev + 1);
+        setStreak(nextStreak);
+        setBestStreak((best) => (nextStreak > best ? nextStreak : best));
       } else {
+        setStreak(0);
         setMissed((prev) => (prev.includes(currentQuestion) ? prev : [...prev, currentQuestion]));
       }
     },
-    [answered, currentQuestion, question.correct]
+    [answered, currentQuestion, question.correct, streak]
   );
 
   const handleNext = useCallback(() => {
@@ -552,6 +570,16 @@ function QuantumQuiz({ onBack }) {
             {correctCount} of {total} correct
           </p>
           <p className="percentage">{percentage}%</p>
+
+          {/* The longest run of the round. A percentage over a fixed deck can
+              be the same number for a scrappy round and a composed one; the
+              run is the part of the result that says which of those happened. */}
+          <p className="quiz-streak-summary" data-testid="quiz-best-streak">
+            {bestStreak === 1
+              ? 'Longest run: one in a row.'
+              : `Longest run: ${bestStreak} in a row.`}
+          </p>
+
           <div className="performance">
             {percentage === 100 && <p>Every one right.</p>}
             {percentage >= 80 && percentage < 100 && (
@@ -612,7 +640,18 @@ function QuantumQuiz({ onBack }) {
           &larr; Back
         </button>
         <h2>Concept Check</h2>
-        <div className="game-score">Score: {score}</div>
+        <div className="game-score">
+          {streak >= 2 && (
+            <span
+              className="quiz-streak"
+              data-testid="quiz-streak"
+              title={`${streak} right in a row`}
+            >
+              {streak} in a row
+            </span>
+          )}
+          Score: {score}
+        </div>
       </div>
 
       <div className="quiz-game">

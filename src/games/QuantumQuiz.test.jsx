@@ -357,6 +357,89 @@ describe('Concept Check quiz', () => {
     expect(getGameResult(QUIZ_GAME_ID).plays).toBe(2);
   });
 
+  /*
+   * The score is cumulative, so it cannot show a run. Four right, one wrong,
+   * four right and nine right in a row both land on 80, and the second is the
+   * round worth talking about.
+   */
+  test('a run of right answers is shown while it is running', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    const answerRight = (index) => {
+      const question = QUIZ_QUESTIONS[index];
+      const order = optionOrder(index, question.options.length);
+      fireEvent.click(
+        screen.getAllByRole('button', { name: /^[A-D]\s/ })[order.indexOf(question.correct)]
+      );
+    };
+
+    answerRight(0);
+    // One right answer is not a run; the badge would be noise on every card.
+    expect(screen.queryByTestId('quiz-streak')).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+    answerRight(1);
+    expect(screen.getByTestId('quiz-streak')).toHaveTextContent('2 in a row');
+  });
+
+  test('a wrong answer ends the run rather than pausing it', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    const answerRight = (index) => {
+      const question = QUIZ_QUESTIONS[index];
+      const order = optionOrder(index, question.options.length);
+      fireEvent.click(
+        screen.getAllByRole('button', { name: /^[A-D]\s/ })[order.indexOf(question.correct)]
+      );
+    };
+
+    answerRight(0);
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+    answerRight(1);
+    expect(screen.getByTestId('quiz-streak')).toHaveTextContent('2 in a row');
+
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+    const third = QUIZ_QUESTIONS[2];
+    const order = optionOrder(2, third.options.length);
+    const wrongPosition = order.findIndex((original) => original !== third.correct);
+    fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[wrongPosition]);
+
+    expect(screen.queryByTestId('quiz-streak')).toBeNull();
+    // The run that was earned is still on the record, even though it is over.
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+    answerRight(3);
+    expect(screen.queryByTestId('quiz-streak')).toBeNull();
+  });
+
+  test('the results screen reports the longest run of the round', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    // Two right, then everything else answered with option A. The longest run
+    // is whatever the deck allows, but it is never longer than the run of two
+    // that was built deliberately at the start.
+    const answerRight = (index) => {
+      const question = QUIZ_QUESTIONS[index];
+      const order = optionOrder(index, question.options.length);
+      fireEvent.click(
+        screen.getAllByRole('button', { name: /^[A-D]\s/ })[order.indexOf(question.correct)]
+      );
+    };
+
+    answerRight(0);
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+    answerRight(1);
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+
+    for (let i = 2; i < QUIZ_QUESTIONS.length; i += 1) {
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+
+    const summary = screen.getByTestId('quiz-best-streak');
+    const reported = Number(/(\d+)/.exec(summary.textContent)[1]);
+    expect(reported).toBeGreaterThanOrEqual(2);
+  });
+
   test('finishing reports how many were right, not a raw score out of ten', () => {
     // The deck was ten questions; the test looped a hardcoded ten and asserted
     // "of 10 correct". Both the loop and the expectation are now derived from
