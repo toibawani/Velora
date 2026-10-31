@@ -166,6 +166,22 @@ const DUEL_PAIRS = [
     definition: 'Voters pick electors who pick the winner, which is why the popular vote and the result can disagree',
     word: 'Electoral College',
   },
+  {
+    definition: 'The discomfort of holding two beliefs that cannot both be true, which is usually settled by changing the belief that is easier to change',
+    word: 'Cognitive Dissonance',
+  },
+  {
+    definition: 'Knowing too little to see how much you are getting wrong, so the least skilled are the most confident',
+    word: 'Dunning-Kruger Effect',
+  },
+  {
+    definition: 'Explaining a stranger\'s behaviour by their character and your own by the situation you were in',
+    word: 'Fundamental Attribution Error',
+  },
+  {
+    definition: 'The roughly twenty-four hour internal clock that light resets and that a long flight disrupts',
+    word: 'Circadian Rhythm',
+  },
 ];
 
 const ROUND_SECONDS = 60;
