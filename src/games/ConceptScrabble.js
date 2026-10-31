@@ -238,6 +238,18 @@ const SCRABBLE_LEVELS = [
     hint: 'Starts with E',
     category: 'History',
   },
+  {
+    definition: 'Inflation climbing so fast that money stops working as a store of value',
+    word: 'HYPERINFLATION',
+    hint: 'Starts with H',
+    category: 'Economics',
+  },
+  {
+    definition: 'The power you raise ten to in order to get a number, which is what turns multiplication into addition',
+    word: 'LOGARITHM',
+    hint: 'Starts with L',
+    category: 'Mathematics',
+  },
 ];
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` is not a shuffle: it is
