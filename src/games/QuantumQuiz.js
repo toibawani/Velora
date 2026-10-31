@@ -628,6 +628,32 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Duverger\'s law: single-member districts with plurality winners squeeze the field toward two viable parties. It also means a party can win a majority of seats on a minority of votes, and that a party with steady regional support gets more seats per vote than one spread thinly - the same tally producing different parliaments under a proportional rule.',
   },
+  {
+    question: 'Which combination best explains why industrialisation began in Britain rather than elsewhere?',
+    options: [
+      'A single invention, the steam engine, and nothing else',
+      'Cheap coal near the surface and near water transport, unusually high wages that made saving labour worth the capital, and institutions that let investors keep the returns',
+      'A larger population than any other country',
+      'A government plan written in advance',
+    ],
+    correct: 1,
+    category: 'History',
+    explanation:
+      'No single cause carries it. Coal was cheap where it was needed and could be moved by boat; wages were high enough that a machine could pay for itself; and property rights and a financial system made a long bet on a factory plausible. Places with only one of those advantages industrialised later or not at all, which is the comparison that makes the argument.',
+  },
+  {
+    question: 'What is historiography?',
+    options: [
+      'The study of how history has been written, by whom, and with what assumptions',
+      'The dating of old documents by handwriting',
+      'A list of every event in a period',
+      'The study of ancient coins',
+    ],
+    correct: 0,
+    category: 'History',
+    explanation:
+      'Two histories of the same empire can disagree because they ask different questions, not only because one is wrong. Noticing that a nineteenth-century account treated empire as progress, and a later one as extraction, is historiography - and it is why reading the argument around a fact is often more useful than the fact alone.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
