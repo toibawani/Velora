@@ -381,6 +381,45 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Packing puts as many of your opponents as possible into a few districts they win overwhelmingly; cracking splits the rest thinly across districts they narrowly lose. Both waste votes on purpose, and neither changes a single ballot - which is why the map, not the turnout, is often the decisive document.',
   },
+  {
+    question: 'Why does ice float on liquid water?',
+    options: [
+      'Because cold things rise',
+      'Because the hydrogen bonds hold the molecules in an open lattice when it freezes, so the solid takes up more room than the liquid',
+      'Because ice contains trapped air',
+      'Because water expands as it warms',
+    ],
+    correct: 1,
+    category: 'Chemistry',
+    explanation:
+      'Most substances pack more tightly when they freeze. Water does the opposite: each molecule can hydrogen bond to four neighbours, and those bonds lock into a hexagonal cage with empty space inside it. The cage is why ice is about nine per cent less dense than the water it floats in - and why a pond freezes from the top down, which is what lets anything survive underneath.',
+  },
+  {
+    question: 'What is the difference between a covalent bond and an ionic one?',
+    options: [
+      'Covalent bonds share electrons; ionic bonds transfer them and then attract the resulting ions',
+      'Covalent bonds are weaker in every case',
+      'Ionic bonds only form between metals',
+      'Nothing; both are just names for the same attraction',
+    ],
+    correct: 0,
+    category: 'Chemistry',
+    explanation:
+      'A covalent bond is two atoms holding the same pair of electrons between them. In an ionic bond one atom gives electrons away and the two charged ions stick together electrostatically. The distinction is a matter of degree rather than a wall - a bond can be mostly covalent with some ionic character - which is why chemists talk about polarity instead of only two kinds.',
+  },
+  {
+    question: 'A solution has a pH of 3 instead of 5. How much more acidic is it?',
+    options: [
+      'Twice as acidic',
+      'A hundred times, because each unit on the scale is a factor of ten',
+      'Two per cent more acidic',
+      'The same; pH only describes the colour of an indicator',
+    ],
+    correct: 1,
+    category: 'Chemistry',
+    explanation:
+      'pH is a logarithmic scale, so a drop of two units is a hundredfold rise in hydrogen ion concentration. That is why a cola at pH 2.5 and stomach acid at pH 1.5 are not neighbours on any linear reading - the second is ten times stronger, which is also why diluting an acid by a factor of ten moves the pH by only one.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
