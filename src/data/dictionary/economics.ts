@@ -197,4 +197,15 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     source: 'John von Neumann and Oskar Morgenstern, Theory of Games and Economic Behavior (1944)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Zero-sum_game',
   },
+  {
+    id: 'purchasing-power-parity',
+    term: 'Purchasing Power Parity',
+    subject: 'economics',
+    letter: 'P',
+    tagline: 'What a basket of goods costs in two countries, rather than what a bank will swap for it.',
+    explanation: 'PPP converts incomes at the rate that would make an identical basket cost the same in both places, so it answers what a salary can actually buy. Market exchange rates move with capital flows and expectations, which is why a country can look poor per head at market rates and considerably less poor at PPP - the difference is mostly the price of services that cannot be traded.',
+    example: 'The World Bank publishes both figures. India\'s GDP per head is far lower at market rates than at PPP, because a haircut or a meal costs much less in rupees than the dollar equivalent suggests. Comparing two countries at market rates compares their traded sectors more than their living standards.',
+    source: 'Gustav Cassel, "Abnormal Deviations in International Exchanges" (1918)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Purchasing_power_parity',
+  },
 ];
