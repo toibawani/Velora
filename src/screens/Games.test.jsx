@@ -395,6 +395,19 @@ describe('filtering by what has been played', () => {
     expect(screen.getByText(/has been finished/i)).toBeInTheDocument();
     expect(screen.queryAllByTestId('game-card')).toHaveLength(0);
   });
+
+  test('an empty grid offers one click back to the whole set', () => {
+    // Two filters multiply: Medium and Not yet can leave nothing on the screen
+    // with no hint about which of the two rows to undo.
+    CLASSIC_GAMES.forEach((game) => recordGameResult(game.id, { score: 1, max: 2 }));
+    render(<GameHub setScreen={() => {}} />);
+
+    filter('Not yet');
+    fireEvent.click(screen.getByTestId('games-reset-filters'));
+
+    expect(cards()).toHaveLength(CLASSIC_GAMES.length);
+    expect(within(screen.getByRole('group', { name: /by progress/i })).getByRole('button', { name: /^Any/ })).toHaveAttribute('aria-pressed', 'true');
+  });
 });
 
 /*

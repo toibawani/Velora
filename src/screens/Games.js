@@ -522,13 +522,29 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
           );
         })}
         {visibleGames.length === 0 && (
-          <p className="games-grid-empty">
-            {progressFilter === 'unplayed'
-              ? `Every ${difficultyFilter === 'All' ? '' : `${difficultyFilter} `}game on this list has been finished.`
-              : progressFilter === 'played'
-              ? `No ${difficultyFilter === 'All' ? '' : `${difficultyFilter} `}game has been finished yet.`
-              : `No game on this list is marked ${difficultyFilter}.`}
-          </p>
+          <div className="games-grid-empty">
+            <p>
+              {progressFilter === 'unplayed'
+                ? `Every ${difficultyFilter === 'All' ? '' : `${difficultyFilter} `}game on this list has been finished.`
+                : progressFilter === 'played'
+                ? `No ${difficultyFilter === 'All' ? '' : `${difficultyFilter} `}game has been finished yet.`
+                : `No game on this list is marked ${difficultyFilter}.`}
+            </p>
+            {/* Two filters can multiply into an empty grid, and the empty grid
+              * used to be a dead end: the only way back was to remember which of
+              * the two rows was hiding the games. This clears both at once. */}
+            <button
+              type="button"
+              className="pill-btn"
+              data-testid="games-reset-filters"
+              onClick={() => {
+                setDifficultyFilter('All');
+                setProgressFilter('all');
+              }}
+            >
+              Show every game
+            </button>
+          </div>
         )}
       </main>
 
