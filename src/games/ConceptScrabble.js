@@ -250,6 +250,32 @@ const SCRABBLE_LEVELS = [
     hint: 'Starts with L',
     category: 'Mathematics',
   },
+  {
+    definition: 'The decay of unstable nuclei, giving off alpha, beta or gamma radiation',
+    word: 'RADIOACTIVITY',
+    hint: 'Starts with R',
+    category: 'Physics',
+  },
+  {
+    definition: 'The loss of electrons by one substance, which is what rusting and burning have in common',
+    word: 'OXIDATION',
+    hint: 'Starts with O',
+    category: 'Chemistry',
+  },
+  {
+    definition: 'The roughly day-long internal cycle that sets when you sleep and when you are alert',
+    word: 'CIRCADIANRHYTHM',
+    display: 'CIRCADIAN RHYTHM',
+    hint: 'Two words',
+    category: 'Psychology',
+  },
+  {
+    definition: 'Being careless because someone else bears the cost if things go wrong',
+    word: 'MORALHAZARD',
+    display: 'MORAL HAZARD',
+    hint: 'Two words',
+    category: 'Economics',
+  },
 ];
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` is not a shuffle: it is
