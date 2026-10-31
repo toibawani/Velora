@@ -498,6 +498,45 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Mitosis is copying: two daughter cells with the same set, which is what growth and repair need. Meiosis halves the set and shuffles it, so a sperm or egg carries one of each pair rather than both. That halving is the reason fertilisation restores the full number instead of doubling it every generation.',
   },
+  {
+    question: 'What is confirmation bias?',
+    options: [
+      'Preferring evidence that fits what you already believe, and reading ambiguous evidence as fitting it',
+      'Refusing to believe anything without proof',
+      'Copying the opinions of the people around you',
+      'Remembering a fact because you repeated it',
+    ],
+    correct: 0,
+    category: 'Psychology',
+    explanation:
+      'It is not a refusal to look at the other side; it is the quiet asymmetry of looking harder for reasons you are right. That is why a belief can survive years of contrary evidence while feeling well tested - the test was never run on the evidence that would have changed it.',
+  },
+  {
+    question: 'Working memory differs from long-term memory in that it is',
+    options: [
+      'unlimited but slow',
+      'small and short-lived, holding only a few items while you use them',
+      'the same store, just used on different days',
+      'only present in children',
+    ],
+    correct: 1,
+    category: 'Psychology',
+    explanation:
+      'Working memory is the desk, not the filing cabinet: a handful of items kept available for the seconds you are manipulating them. The classic limit is around four chunks, which is why a phone number recited in groups is easier than the same digits in one run - the grouping is what turns eleven items into three.',
+  },
+  {
+    question: 'Two people study for the same total time. One does it in a single block, the other spreads it across a week. Who remembers more a month later?',
+    options: [
+      'The one who blocked it, because momentum carries',
+      'The one who spread it, even though the block felt more productive at the time',
+      'Neither; total time is the only thing that matters',
+      'The one who blocked it, because spacing causes forgetting',
+    ],
+    correct: 1,
+    category: 'Psychology',
+    explanation:
+      'Spacing and retrieval beat re-reading, and the effect shows up most on delayed tests. The catch is that blocked practice feels easier and therefore feels more effective, so the method that works is the one people are least likely to choose on their own.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
