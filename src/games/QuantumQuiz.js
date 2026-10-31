@@ -537,6 +537,45 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Spacing and retrieval beat re-reading, and the effect shows up most on delayed tests. The catch is that blocked practice feels easier and therefore feels more effective, so the method that works is the one people are least likely to choose on their own.',
   },
+  {
+    question: 'You take an unpaid day off to attend a wedding. What is the opportunity cost?',
+    options: [
+      'Nothing, because the ticket was free',
+      'The pay you would have earned, plus whatever else you would have done with the day',
+      'Only the cost of travelling there',
+      'The couple\'s spending on the wedding',
+    ],
+    correct: 1,
+    category: 'Economics',
+    explanation:
+      'Opportunity cost is the value of the best thing you gave up, not the money you spent. A free ticket to a concert on a night you could have worked is not free - which is why "it costs nothing" and "it costs me nothing" are different claims, and why the second is rarely true.',
+  },
+  {
+    question: 'Why do two countries both gain from trade when one is better at making everything?',
+    options: [
+      'Because the better country is secretly worse at something',
+      'Because what matters is comparative advantage: the cost of one good in terms of the other, not the absolute output',
+      'Because trade always raises total production to the maximum',
+      'They do not; the weaker country always loses',
+    ],
+    correct: 1,
+    category: 'Economics',
+    explanation:
+      'Ricardo\'s point is about the ratio, not the level. If the faster country gives up fewer units of cloth to make a unit of wine than the other does, it should specialise in wine even though it is better at cloth too. The other country then makes cloth at the lower relative cost and both end up with more than if each made its own.',
+  },
+  {
+    question: 'What does a rise in the general price level mean for someone whose wages do not change?',
+    options: [
+      'Their real wage has fallen, even though the number on their payslip is the same',
+      'Nothing, because their wage is unchanged',
+      'They are better off, because prices are higher',
+      'Their wage has risen in real terms',
+    ],
+    correct: 0,
+    category: 'Economics',
+    explanation:
+      'Purchasing power is what a wage buys, not what it says. A five per cent raise during eight per cent inflation is a cut in real terms, and the gap between the two numbers is why central banks target inflation rather than only watching employment - the same nominal wage can mean very different things in two years.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
