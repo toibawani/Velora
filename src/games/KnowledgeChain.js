@@ -151,7 +151,7 @@ const CHAINS = [
     title: 'Selection Chain',
     concepts: ['Mutation', 'Variation', 'Selection Pressure', 'Adaptation'],
     links: [
-      'creates',
+      'creates new versions of',
       'means some variants leave more offspring under a',
       'favours the traits that fit, generation after generation, producing an',
     ],
