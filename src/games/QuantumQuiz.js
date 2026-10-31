@@ -654,6 +654,32 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Two histories of the same empire can disagree because they ask different questions, not only because one is wrong. Noticing that a nineteenth-century account treated empire as progress, and a later one as extraction, is historiography - and it is why reading the argument around a fact is often more useful than the fact alone.',
   },
+  {
+    question: 'What is the is-ought gap?',
+    options: [
+      'The claim that no set of purely descriptive facts about how things are can by itself entail a conclusion about how they ought to be',
+      'The difference between a law and a custom',
+      'The gap between what a person says and what they do',
+      'The idea that morality changes between cultures',
+    ],
+    correct: 0,
+    category: 'Philosophy',
+    explanation:
+      'Hume\'s point is about inference, not about whether facts matter to ethics. You can describe a practice in complete detail and still need a further premise to get from that description to a judgement, which is why arguments for a moral conclusion always contain something moral somewhere. Finding that premise is usually the useful part of the disagreement.',
+  },
+  {
+    question: 'What makes a claim falsifiable, in Popper\'s sense?',
+    options: [
+      'That it has already been shown false',
+      'That it rules out some observation, so there is a result that would count against it',
+      'That it is supported by evidence',
+      'That it can be tested in a laboratory',
+    ],
+    correct: 1,
+    category: 'Philosophy',
+    explanation:
+      'A claim that is compatible with every possible result is not a strong one; it is unfalsifiable, and no amount of evidence can count for it either. Popper used this to separate science from pseudo-science, though real theories are rarely abandoned the moment one prediction fails - the useful question is what evidence would, in advance, change your mind.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
