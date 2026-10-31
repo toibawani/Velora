@@ -260,6 +260,18 @@ const PUZZLES = [
     word: 'REFRACTION',
     blanks: 1,
   },
+  {
+    hint: 'One word',
+    sentence: 'Paying a professional to argue your case to a legislator, rather than writing to them yourself, is _____.',
+    word: 'LOBBYING',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'A country run by a small group that holds power through wealth or the army is an _____.',
+    word: 'OLIGARCHY',
+    blanks: 1,
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;
