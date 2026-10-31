@@ -182,6 +182,18 @@ const DUEL_PAIRS = [
     definition: 'The roughly twenty-four hour internal clock that light resets and that a long flight disrupts',
     word: 'Circadian Rhythm',
   },
+  {
+    definition: 'The 1215 charter that put a king under the law, or at least under the barons who wrote it',
+    word: 'Magna Carta',
+  },
+  {
+    definition: 'Japan rebuilding its economy and army in a generation by copying what the industrial powers had done',
+    word: 'Meiji Restoration',
+  },
+  {
+    definition: 'The only successful revolt of enslaved people that founded a state, in 1791',
+    word: 'Haitian Revolution',
+  },
 ];
 
 const ROUND_SECONDS = 60;
