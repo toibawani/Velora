@@ -147,6 +147,15 @@ const CHAINS = [
       'produces the energy that builds',
     ],
   },
+  {
+    title: 'Selection Chain',
+    concepts: ['Mutation', 'Variation', 'Selection Pressure', 'Adaptation'],
+    links: [
+      'creates',
+      'means some variants leave more offspring under a',
+      'favours the traits that fit, generation after generation, producing an',
+    ],
+  },
 ];
 
 /** The id this game is recorded under in the hub's per-game history. */
