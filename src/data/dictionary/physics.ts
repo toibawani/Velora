@@ -277,4 +277,15 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     source: 'Pieter Zeeman, "On the Effect of Magnetism on Radiation" (1896)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Zeeman_effect',
   },
+  {
+    id: 'noethers-theorem',
+    term: 'Noether’s Theorem',
+    subject: 'physics',
+    letter: 'N',
+    tagline: 'Every conservation law is a symmetry that someone bothered to write down.',
+    explanation: 'Noether showed that each continuous symmetry of the physics has a quantity that cannot change. Physics that looks the same tomorrow as today conserves energy; the same a metre to the left conserves momentum; the same at every angle conserves angular momentum. The conservation laws stop being separate rules and become one statement about what the equations do not depend on.',
+    example: 'It explains why a law of physics that held yesterday can be trusted today: energy conservation is not a rule about energy but a statement that the equations do not care what time it is. It is also why the discovery of a new conservation law usually means someone has found a new symmetry.',
+    source: 'Emmy Noether, "Invariante Variationsprobleme" (1918)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Noether%27s_theorem',
+  },
 ];
