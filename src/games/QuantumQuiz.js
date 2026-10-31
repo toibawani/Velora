@@ -680,6 +680,32 @@ const QUIZ_QUESTIONS = [
     explanation:
       'A claim that is compatible with every possible result is not a strong one; it is unfalsifiable, and no amount of evidence can count for it either. Popper used this to separate science from pseudo-science, though real theories are rarely abandoned the moment one prediction fails - the useful question is what evidence would, in advance, change your mind.',
   },
+  {
+    question: 'A horse pulls a cart. The cart pulls back on the horse with an equal force. Why does anything move?',
+    options: [
+      'Because the horse is stronger, so its force is larger',
+      'Because the two forces act on different bodies: the cart feels the horse\'s pull, and the horse feels the cart\'s drag plus the ground\'s push on its hooves',
+      'Because Newton\'s third law does not apply to animals',
+      'Because the cart is heavier than the force',
+    ],
+    correct: 1,
+    category: 'Physics',
+    explanation:
+      'Equal and opposite pairs never cancel, because they are always on two different objects. The horse moves because the forward push from the ground can exceed the backward drag from the cart; the cart moves because the horse\'s pull can exceed the friction on its wheels. Watching one body at a time is what makes the third law stop looking like a paradox.',
+  },
+  {
+    question: 'A fridge moves heat from cold inside to warm outside. Does that break the second law of thermodynamics?',
+    options: [
+      'Yes, because heat never flows from cold to hot',
+      'No: the second law applies to an isolated system, and the fridge is not one - it spends work to move the heat',
+      'Yes, but only while the door is closed',
+      'No, because fridges are too small to follow the law',
+    ],
+    correct: 1,
+    category: 'Physics',
+    explanation:
+      'Heat does not go from cold to hot on its own; with a pump, it can. The work done by the compressor is what pays for the decrease in entropy inside, and the total entropy of the room plus the fridge still rises - if it did not, the fridge would be a perpetual motion machine with a plug.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
