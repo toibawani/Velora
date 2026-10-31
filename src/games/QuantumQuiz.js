@@ -576,6 +576,32 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Purchasing power is what a wage buys, not what it says. A five per cent raise during eight per cent inflation is a cut in real terms, and the gap between the two numbers is why central banks target inflation rather than only watching employment - the same nominal wage can mean very different things in two years.',
   },
+  {
+    question: 'A study reports p = 0.04. What does that number say?',
+    options: [
+      'There is a 4% chance the hypothesis is true',
+      'If there were no real effect, results at least this extreme would appear about 4% of the time',
+      'The effect is 4% large',
+      'The study will replicate 96% of the time',
+    ],
+    correct: 1,
+    category: 'Mathematics',
+    explanation:
+      'The p-value is computed assuming the null hypothesis is true, so it cannot also be the probability that it is true. A small p says the data are unlikely under that assumption; it says nothing about the size of the effect, and with enough data a trivial effect can produce a very small p.',
+  },
+  {
+    question: 'A test for a rare disease is 99% accurate, and 1 in 10,000 people have it. You test positive. Roughly how likely is it that you have the disease?',
+    options: [
+      'About 99%',
+      'About 1%, because false positives from the healthy majority outnumber true positives',
+      'About 50%',
+      'It cannot be estimated without a second test',
+    ],
+    correct: 1,
+    category: 'Mathematics',
+    explanation:
+      'In 10,000 people, about one has the disease and tests positive; about 100 do not have it and still test positive at a 1% error rate. So roughly one true positive against a hundred false ones - around 1%. This is the base rate fallacy, and it is why screening programmes confirm a positive before telling anyone they are ill.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
