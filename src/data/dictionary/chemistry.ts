@@ -186,4 +186,15 @@ export const CHEMISTRY_TERMS: DictionaryTerm[] = [
     source: 'Bragg, "The Structure of Some Crystals as Indicated by Their Diffraction of X-rays" (1913)',
     sourceUrl: 'https://en.wikipedia.org/wiki/X-ray_crystallography',
   },
+  {
+    id: 'le-chateliers-principle',
+    term: 'Le Chatelier’s Principle',
+    subject: 'chemistry',
+    letter: 'L',
+    tagline: 'A system at equilibrium pushes back against whatever you do to it.',
+    explanation: 'Change the concentration, pressure or temperature of a reaction at equilibrium and the balance of forward and reverse rates shifts to partly undo the change. The principle is a statement about the direction of that shift, not its size, and it follows from the rates rather than being a separate law.',
+    example: 'The Haber process makes ammonia from nitrogen and hydrogen, and four gas molecules become two. Raising the pressure therefore favours ammonia, which is one reason the industrial process runs at two hundred atmospheres. Temperature is the trade: higher heat speeds the reaction but shifts the balance the wrong way, so the plant compromises.',
+    source: 'Henry Louis Le Chatelier, "Sur un énoncé général des lois des équilibres chimiques" (1884)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Le_Chatelier%27s_principle',
+  },
 ];
