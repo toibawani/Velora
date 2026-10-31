@@ -251,4 +251,15 @@ export const MATH_TERMS: DictionaryTerm[] = [
     source: 'Euclid, Elements, Book VI, Definition 3 (c. 300 BCE)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Golden_ratio',
   },
+  {
+    id: 'law-of-large-numbers',
+    term: 'Law of Large Numbers',
+    subject: 'mathematics',
+    letter: 'L',
+    tagline: 'Enough independent trials, and the average settles down near the thing it is estimating.',
+    explanation: 'As the number of independent observations grows, the sample average converges on the expected value. It is a statement about averages, not about balance: a run of reds on a roulette wheel makes the proportion of reds drift back towards half by dilution, not by black becoming more likely. Confusing the two is the gambler\'s fallacy.',
+    example: 'A casino can predict its nightly takings to within a fraction of a per cent because it takes hundreds of thousands of bets. The same law lets a polling firm average a thousand respondents and be within a few points, while one respondent tells you almost nothing about the country.',
+    source: 'Jacob Bernoulli, Ars Conjectandi (1713)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Law_of_large_numbers',
+  },
 ];
