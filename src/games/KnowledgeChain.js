@@ -138,6 +138,15 @@ const CHAINS = [
       'ignites fusion and settles onto the',
     ],
   },
+  {
+    title: 'Photosynthesis Chain',
+    concepts: ['Sunlight', 'Chlorophyll', 'Electron Transfer', 'Sugar'],
+    links: [
+      'is captured by',
+      'excites electrons into a chain of',
+      'produces the energy that builds',
+    ],
+  },
 ];
 
 /** The id this game is recorded under in the hub's per-game history. */
