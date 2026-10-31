@@ -250,4 +250,15 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     source: 'United States Bill of Rights (1791)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Civil_liberties',
   },
+  {
+    id: 'single-transferable-vote',
+    term: 'Single Transferable Vote',
+    subject: 'political-science',
+    letter: 'S',
+    tagline: 'Rank the candidates, and surplus votes move to the next preference instead of being wasted.',
+    explanation: 'Voters rank candidates in multi-member districts. Anyone reaching a quota is elected, their surplus transfers at a reduced value, and the lowest candidate is eliminated until the seats are filled. Because a vote can help elect a second-choice candidate after the first is safe, far fewer ballots end up counting for nobody.',
+    example: 'Ireland uses it for the Dáil and Malta for parliament, and Scotland uses a related version for local councils. In a district with four seats and a quota near twenty per cent, a party with fifteen per cent of first preferences can still win a seat, which plurality rules would deny it.',
+    source: 'Thomas Hare, The Machinery of Representation (1857)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Single_transferable_vote',
+  },
 ];
