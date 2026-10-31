@@ -306,6 +306,26 @@
   border-radius: var(--radius-full);
 }
 
+.games-pick-row {
+  max-width: 1200px;
+  margin: var(--space-2) auto 0;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.games-pick-note {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.games-pick:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* An empty grid is not a card, so it takes the whole row and explains itself in
  * one column rather than stretching a sentence across three cells. */
 .games-grid-empty {

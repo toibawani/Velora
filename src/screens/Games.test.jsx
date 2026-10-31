@@ -259,6 +259,41 @@ describe('what each game has actually produced', () => {
     expect(screen.getByTestId('games-resume-when')).toHaveTextContent(/today/i);
   });
 
+  test('the picker prefers the one game with nothing recorded yet', () => {
+    // With five of six finished, the only card that can teach anything new is
+    // the sixth, and it is the one a person choosing by name is least likely to
+    // guess. The pool is that single game, so the pick is not luck.
+    CLASSIC_GAMES.filter((game) => game.id !== 'chain').forEach((game) =>
+      recordGameResult(game.id, { score: 1, max: 2 })
+    );
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(screen.getByTestId('games-pick-note')).toHaveTextContent(/not finished/i);
+    fireEvent.click(screen.getByTestId('games-pick'));
+
+    expect(screen.getByRole('heading', { name: 'Knowledge Chain' })).toBeInTheDocument();
+  });
+
+  test('with every game played, the picker still opens one of them', () => {
+    CLASSIC_GAMES.forEach((game) => recordGameResult(game.id, { score: 1, max: 2 }));
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(screen.getByTestId('games-pick-note')).toHaveTextContent(/games shown/i);
+    fireEvent.click(screen.getByTestId('games-pick'));
+
+    // The hub is replaced by a round, whichever game it drew.
+    expect(screen.queryByTestId('games-pick')).toBeNull();
+    expect(screen.getByRole('heading', { name: new RegExp(CLASSIC_GAMES.map((game) => game.name).join('|')) })).toBeInTheDocument();
+  });
+
+  test('a filter with nothing in it leaves nothing to pick', () => {
+    CLASSIC_GAMES.forEach((game) => recordGameResult(game.id, { score: 1, max: 2 }));
+    render(<GameHub setScreen={() => {}} />);
+    fireEvent.click(within(screen.getByRole('group', { name: /by progress/i })).getByRole('button', { name: /^Not yet/ }));
+
+    expect(screen.getByTestId('games-pick')).toBeDisabled();
+  });
+
   test('the offer follows the newest round, not the first one recorded', () => {
     recordGameResult('quiz', { score: 90, max: 140 });
     recordGameResult('puzzle', { score: 20, max: 100 });

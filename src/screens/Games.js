@@ -406,6 +406,32 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
         ))}
       </div>
 
+      {/* Someone with six cards open, all the same size, and no preference.
+        * It picks from the games the filters are currently showing, so it can
+        * never hand back something the list above has hidden, and it prefers a
+        * game with no record yet - the one there is actually something new in. */}
+      <div className="games-pick-row">
+        <button
+          type="button"
+          className="pill-btn games-pick"
+          data-testid="games-pick"
+          disabled={visibleGames.length === 0}
+          onClick={() => {
+            const unplayed = visibleGames.filter((game) => !gameResults[game.id]);
+            const pool = unplayed.length > 0 ? unplayed : visibleGames;
+            const pick = pool[Math.floor(Math.random() * pool.length)];
+            setSelectedGame(pick.id);
+          }}
+        >
+          Pick one for me
+        </button>
+        <span className="games-pick-note" data-testid="games-pick-note">
+          {visibleGames.some((game) => !gameResults[game.id])
+            ? 'prefers a game you have not finished'
+            : 'from the games shown'}
+        </span>
+      </div>
+
       {/* Pick up where you left off.
         *
         * Six games are a lot to scan when you came back to finish the round you
