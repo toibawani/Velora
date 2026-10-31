@@ -194,6 +194,18 @@ const DUEL_PAIRS = [
     definition: 'The only successful revolt of enslaved people that founded a state, in 1791',
     word: 'Haitian Revolution',
   },
+  {
+    definition: 'Updating a belief by how much the new evidence would have been expected if the belief were false',
+    word: 'Bayes Theorem',
+  },
+  {
+    definition: 'Three doors, one prize, and a host who knows where it is and always opens a losing one - switching wins twice as often',
+    word: 'Monty Hall Problem',
+  },
+  {
+    definition: 'With more pigeons than holes, at least one hole holds two - enough to prove a coincidence must happen',
+    word: 'Pigeonhole Principle',
+  },
 ];
 
 const ROUND_SECONDS = 60;
