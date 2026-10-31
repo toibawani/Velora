@@ -191,4 +191,15 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     source: 'Eisenstein, The Printing Press as an Agent of Change (1979)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Literacy',
   },
+  {
+    id: 'the-silk-road',
+    term: 'The Silk Road',
+    subject: 'history',
+    letter: 'S',
+    tagline: 'A network of routes, not a road, and ideas travelled it as readily as silk.',
+    explanation: 'Goods moved along chains of intermediaries rather than end to end, so few merchants travelled the whole distance. What made the routes important was not only trade: paper, printing, gunpowder, mathematics and religions moved the same way, and so did plague. The name is a nineteenth-century coinage for a system that had no single name and no single owner.',
+    example: 'Buddhism reached China from India along these routes, and the Chinese papermakers\' craft reached Samarkand after the Abbasids took the city in 751. The same traffic carried the plague to Europe in 1347, which is why the network is studied as a vector as much as a market.',
+    source: 'Peter Frankopan, The Silk Roads: A New History of the World (2015)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Silk_Road',
+  },
 ];
