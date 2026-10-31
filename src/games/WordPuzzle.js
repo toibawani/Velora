@@ -236,6 +236,18 @@ const PUZZLES = [
     word: 'EPIGENETICS',
     blanks: 1,
   },
+  {
+    hint: 'One word',
+    sentence: 'Driving a current through a salt solution to split it into its elements is _____.',
+    word: 'ELECTROLYSIS',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Two atoms of the same element with different numbers of neutrons are _____ of each other.',
+    word: 'ISOTOPES',
+    blanks: 1,
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;
