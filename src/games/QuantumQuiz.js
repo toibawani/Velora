@@ -459,6 +459,45 @@ const QUIZ_QUESTIONS = [
     explanation:
       'A particle is described by a wave, and a wave does not stop dead at a wall - it decays through it and can emerge on the other side with some probability. The Sun runs on this: two protons in the core rarely have enough energy to fuse, but they tunnel close enough often enough to keep it burning for billions of years.',
   },
+  {
+    question: 'A population of insects becomes resistant to a pesticide. What happened?',
+    options: [
+      'The pesticide taught the insects to resist it',
+      'A few insects already carried a resistance, survived, and left more offspring than the rest',
+      'The insects chose to become resistant',
+      'The pesticide made the insects stronger over time',
+    ],
+    correct: 1,
+    category: 'Biology',
+    explanation:
+      'Nothing in the pesticide is aimed at the insect\'s future. Variation existed before the spray did; the spray changed which variants left offspring. That is why resistance appears fastest where the dose is heavy and the generations are short, and why the same argument explains antibiotic resistance in a hospital.',
+  },
+  {
+    question: 'What is ATP for?',
+    options: [
+      'It is the genetic material of bacteria',
+      'It carries energy from where it is released to where it is needed, in a form a cell can spend',
+      'It is the membrane around a cell',
+      'It stores oxygen in muscle',
+    ],
+    correct: 1,
+    category: 'Biology',
+    explanation:
+      'Breaking the bond to the third phosphate releases a usable amount of energy, and the cell can reform it later. ATP is not a battery with a long life - a working cell turns over its whole supply many times a day - which is exactly what makes it useful as currency rather than storage.',
+  },
+  {
+    question: 'What is the difference between mitosis and meiosis?',
+    options: [
+      'Mitosis makes two cells with the same chromosomes; meiosis makes four with half of each pair',
+      'Mitosis happens only in plants',
+      'Meiosis is mitosis done twice as fast',
+      'Mitosis produces eggs and sperm',
+    ],
+    correct: 0,
+    category: 'Biology',
+    explanation:
+      'Mitosis is copying: two daughter cells with the same set, which is what growth and repair need. Meiosis halves the set and shuffles it, so a sperm or egg carries one of each pair rather than both. That halving is the reason fertilisation restores the full number instead of doubling it every generation.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
