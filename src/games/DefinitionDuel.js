@@ -118,6 +118,22 @@ const DUEL_PAIRS = [
     definition: 'Light ejecting electrons from a metal only above a threshold frequency, which no wave model can explain',
     word: 'Photoelectric Effect',
   },
+  {
+    definition: 'Chemical marks on DNA that switch genes up or down without changing the sequence itself',
+    word: 'Epigenetics',
+  },
+  {
+    definition: 'DNA is transcribed to RNA, and RNA is translated to protein - the direction information flows in a cell',
+    word: 'Central Dogma',
+  },
+  {
+    definition: 'Survival of the bacteria that happened to carry a defence before the drug arrived',
+    word: 'Antibiotic Resistance',
+  },
+  {
+    definition: 'The junction where one neuron passes a signal to the next, across a gap rather than a wire',
+    word: 'Synapse',
+  },
 ];
 
 const ROUND_SECONDS = 60;
