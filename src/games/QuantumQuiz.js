@@ -706,6 +706,32 @@ const QUIZ_QUESTIONS = [
     explanation:
       'Heat does not go from cold to hot on its own; with a pump, it can. The work done by the compressor is what pays for the decrease in entropy inside, and the total entropy of the room plus the fridge still rises - if it did not, the fridge would be a perpetual motion machine with a plug.',
   },
+  {
+    question: 'Olbers\' paradox asks why the night sky is dark. What is the answer?',
+    options: [
+      'There are not enough stars',
+      'The universe has a finite age, so light from the most distant stars has not had time to arrive, and expansion stretches what does arrive',
+      'Dust blocks all the light from distant stars',
+      'The sky is actually bright, and our eyes adapt to it',
+    ],
+    correct: 1,
+    category: 'Space',
+    explanation:
+      'In an infinite, static, eternal universe every line of sight would end on a star and the sky would be as bright as the surface of one. Dust does not save it: dust heats up and re-radiates. A finite age and an expanding universe do - the darkness is evidence about the history of the universe, not just about where the stars happen to be.',
+  },
+  {
+    question: 'What is the strongest evidence that dark matter exists?',
+    options: [
+      'Someone has detected a dark matter particle in a laboratory',
+      'Galaxies rotate as if they contain far more mass than their visible stars, and gravitational lensing bends light around mass we cannot see',
+      'Space looks black between the stars',
+      'Newton\'s law of gravity has been shown to be wrong',
+    ],
+    correct: 1,
+    category: 'Space',
+    explanation:
+      'The case is gravitational: rotation curves stay flat where they should fall off, clusters hold together, and lensing maps mass that emits nothing. It is possible that gravity behaves differently on galactic scales instead, which is why the phrase is \'dark matter\' rather than \'we found the stuff\' - the evidence is for missing mass, not yet for a particular particle.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
