@@ -186,4 +186,15 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     source: 'Yerkes and Dodson, "The relation of strength of stimulus to rapidity of habit-formation" (1908)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law',
   },
+  {
+    id: 'mere-exposure-effect',
+    term: 'Mere Exposure Effect',
+    subject: 'psychology',
+    letter: 'M',
+    tagline: 'Seeing something again is enough to make you like it more, with nothing else added.',
+    explanation: 'Repeated exposure to a stimulus increases liking for it, even when the exposure is too brief or too fast to be remembered. The effect is strongest for things that started out neutral and does not apply to things that began unpleasant. Familiarity is being read as safety, which is a cheap heuristic that usually works.',
+    example: 'Zajonc showed students unfamiliar characters and symbols, then asked them to rate how pleasant they were; the ones shown more often were rated higher. The same mechanism is part of why a song grows on you, and why a face seen around becomes easier to trust.',
+    source: 'Robert Zajonc, "Attitudinal effects of mere exposure" (1968)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Mere-exposure_effect',
+  },
 ];
