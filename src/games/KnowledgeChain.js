@@ -156,6 +156,15 @@ const CHAINS = [
       'favours the traits that fit, generation after generation, producing an',
     ],
   },
+  {
+    title: 'Inflation Chain',
+    concepts: ['Money Supply', 'Aggregate Demand', 'Price Level', 'Interest Rates'],
+    links: [
+      'growing faster than output raises',
+      'pulls up the',
+      'rising fast enough prompts a central bank to raise',
+    ],
+  },
 ];
 
 /** The id this game is recorded under in the hub's per-game history. */
