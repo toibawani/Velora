@@ -272,6 +272,18 @@ const PUZZLES = [
     word: 'OLIGARCHY',
     blanks: 1,
   },
+  {
+    hint: 'One word',
+    sentence: 'Letting the first figure in a negotiation set the range for every figure after it is _____.',
+    word: 'ANCHORING',
+    blanks: 1,
+  },
+  {
+    hint: 'Two words',
+    sentence: 'A policy that benefits everyone a little and costs a small group a great deal leaves a _____ _____ that no one pays for by choice.',
+    word: 'DEADWEIGHT LOSS',
+    blanks: 2,
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;
