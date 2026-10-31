@@ -200,4 +200,15 @@ export const PHILOSOPHY_TERMS: DictionaryTerm[] = [
     source: 'Chalmers, "Facing Up to the Problem of Consciousness" (1995)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Mind%E2%80%93body_problem',
   },
+  {
+    id: 'ship-of-theseus',
+    term: 'Ship of Theseus',
+    subject: 'philosophy',
+    letter: 'S',
+    tagline: 'Replace every plank one at a time and ask when it stopped being the same ship.',
+    explanation: 'The puzzle is not about ships. It is a test of what identity consists in: the material, the arrangement, the history, or the continuity of use. Each answer survives the original story and fails a variation of it, which is what makes the case useful - it forces a claim about what matters rather than a preference between two labels.',
+    example: 'Plutarch records that Athens kept Theseus\' ship by replacing worn planks over centuries, and asked whether the result was the same ship. Hobbes added the twist: a collector reassembles the discarded planks, so there are now two candidates and only one can be the original.',
+    source: 'Plutarch, Life of Theseus (c. 100 CE)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Ship_of_Theseus',
+  },
 ];
