@@ -248,6 +248,18 @@ const PUZZLES = [
     word: 'ISOTOPES',
     blanks: 1,
   },
+  {
+    hint: 'One word',
+    sentence: 'A body in motion stays in motion unless a force acts on it, which is the law of _____.',
+    word: 'INERTIA',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'A straw looks bent in a glass of water because light changes direction on entering it, which is _____.',
+    word: 'REFRACTION',
+    blanks: 1,
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;
