@@ -242,6 +242,10 @@ function WordPuzzle({ onBack }) {
   // version of this did.
   const [unaided, setUnaided] = useState(0);
   const [revealedCount, setRevealedCount] = useState(0);
+  // Which puzzles were given up on, so the end screen can quote the sentence and
+  // the answer back. "3 were revealed" is a score line; the three sentences are
+  // the part someone can reread.
+  const [missed, setMissed] = useState([]);
   const [message, setMessage] = useState('');
   const [revealed, setRevealed] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -326,6 +330,7 @@ function WordPuzzle({ onBack }) {
     setSolved(0);
     setUnaided(0);
     setRevealedCount(0);
+    setMissed([]);
     setMessage('');
     setRevealed(false);
     setFinished(false);
@@ -364,11 +369,12 @@ function WordPuzzle({ onBack }) {
     setSettled(true);
     setRevealed(true);
     setRevealedCount((prev) => prev + 1);
+    setMissed((prev) => (prev.includes(currentPuzzle) ? prev : [...prev, currentPuzzle]));
     setMessage(`The answer is ${puzzle.word}.`);
     // Revealing used to be a dead end on the last puzzle, and on any puzzle
     // there was no way forward at all short of getting it right.
     advanceRef.current = setTimeout(goToNext, 2600);
-  }, [goToNext, puzzle.word, settled]);
+  }, [currentPuzzle, goToNext, puzzle.word, settled]);
 
   if (finished) {
     const total = PUZZLES.length;
@@ -386,6 +392,27 @@ function WordPuzzle({ onBack }) {
           <p className="game-completed-msg">
             You worked out {unaided} of {total} unaided.
           </p>
+
+          {missed.length > 0 && (
+            <div className="quiz-review" data-testid="puzzle-review">
+              <h3>
+                {missed.length === 1
+                  ? 'The sentence that got away'
+                  : `The ${missed.length} sentences that got away`}
+              </h3>
+              <ul className="quiz-review-list">
+                {missed.map((index) => (
+                  <li key={PUZZLES[index].word} className="quiz-review-item">
+                    <p className="quiz-review-question">{PUZZLES[index].sentence}</p>
+                    <p className="quiz-review-answer">
+                      <span className="quiz-review-label">Answer:</span>{' '}
+                      {PUZZLES[index].word}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="game-over-actions">
             <button className="btn-restart" onClick={handleReplay}>
               Play again

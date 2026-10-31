@@ -275,6 +275,38 @@ describe('playing the deck again', () => {
     expect(screen.getByText('Score: 100')).toBeInTheDocument();
   });
 
+  test('the end screen quotes the sentences that were given up on', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+
+    const reveal = () =>
+      fireEvent.click(screen.getByRole('button', { name: /reveal|show answer/i }));
+
+    // Give up on the first two, then solve the rest, so the review is a known
+    // pair rather than however many the deck happens to hold.
+    reveal();
+    act(() => jest.advanceTimersByTime(2700));
+    reveal();
+    act(() => jest.advanceTimersByTime(2700));
+    PUZZLES.slice(2).forEach((p) => {
+      fill(...p.word.toLowerCase().split(' '));
+      submit();
+      act(() => jest.advanceTimersByTime(1300));
+    });
+    act(() => jest.advanceTimersByTime(1300));
+
+    const review = screen.getByTestId('puzzle-review');
+    expect(review.textContent).toContain(PUZZLES[0].sentence);
+    expect(review.textContent).toContain(PUZZLES[0].word);
+    expect(screen.getByText(/the 2 sentences that got away/i)).toBeInTheDocument();
+  });
+
+  test('a pass with nothing revealed has no review to read', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    finishDeck();
+
+    expect(screen.queryByTestId('puzzle-review')).toBeNull();
+  });
+
   test('a second round does not report the first round result', () => {
     render(<WordPuzzle onBack={() => {}} />);
     finishDeck();
