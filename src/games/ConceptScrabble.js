@@ -226,6 +226,18 @@ const SCRABBLE_LEVELS = [
     hint: 'Two words',
     category: 'Mathematics',
   },
+  {
+    definition: 'The right to vote, won by arguments and by marches rather than given',
+    word: 'SUFFRAGE',
+    hint: 'Starts with S',
+    category: 'Politics',
+  },
+  {
+    definition: 'The European movement that put reason and evidence ahead of inherited authority',
+    word: 'ENLIGHTENMENT',
+    hint: 'Starts with E',
+    category: 'History',
+  },
 ];
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` is not a shuffle: it is
