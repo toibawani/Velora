@@ -209,4 +209,15 @@ export const BIOLOGY_TERMS: DictionaryTerm[] = [
     source: 'Reemtsma et al., "Renal heterotransplantation in man" (1964)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Xenotransplantation',
   },
+  {
+    id: 'crispr',
+    term: 'CRISPR',
+    subject: 'biology',
+    letter: 'C',
+    tagline: 'Bacterial immunity, repurposed as a pair of molecular scissors with an address.',
+    explanation: 'Bacteria keep fragments of viral DNA and use them to recognise the same virus next time. The CRISPR system carries a guide RNA matching that fragment and a nuclease that cuts whatever the guide finds, which is why it can be aimed at one sequence in a whole genome. The editing is done by the cell\'s own repair of the cut, which is also where its mistakes come from.',
+    example: 'In 2012 two papers showed that the system could be programmed with a synthetic guide to cut any chosen site. The first CRISPR-based therapy, for sickle cell disease, was approved in 2023 and works by switching on a fetal form of haemoglobin rather than correcting the mutation itself.',
+    source: 'Jinek et al., "A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity" (2012)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/CRISPR_gene_editing',
+  },
 ];
