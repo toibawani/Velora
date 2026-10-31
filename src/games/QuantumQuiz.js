@@ -420,6 +420,45 @@ const QUIZ_QUESTIONS = [
     explanation:
       'pH is a logarithmic scale, so a drop of two units is a hundredfold rise in hydrogen ion concentration. That is why a cola at pH 2.5 and stomach acid at pH 1.5 are not neighbours on any linear reading - the second is ten times stronger, which is also why diluting an acid by a factor of ten moves the pH by only one.',
   },
+  {
+    question: 'What does it mean for a qubit to be in superposition?',
+    options: [
+      'It holds two stored values at once, like two bits in one box',
+      'Its state is a combination of 0 and 1 with amplitudes, and measuring it returns one of them with a probability set by those amplitudes',
+      'It is broken and returns random answers',
+      'It can only be 0 or 1, just faster',
+    ],
+    correct: 1,
+    category: 'Quantum',
+    explanation:
+      'Superposition is not a hidden second bit. The state is a pair of amplitudes, and the amplitudes can interfere - which is the part that matters, because a quantum algorithm works by arranging for the wrong answers to cancel. Once you measure, you get a single ordinary bit and the amplitudes are gone.',
+  },
+  {
+    question: 'Two particles are entangled. What can you actually do with that?',
+    options: [
+      'Send a message faster than light by measuring one of them',
+      'Compare the results of measurements taken at both ends and find correlations stronger than any local hidden-variable account allows',
+      'Copy the state of one particle onto the other',
+      'Nothing; entanglement is only a mathematical convenience',
+    ],
+    correct: 1,
+    category: 'Quantum',
+    explanation:
+      'Each measurement looks random on its own, so no message can ride on it - the correlations only appear when the two lists of results are brought together and compared, which takes ordinary communication. What is strange is how strong the agreement is: Bell tests rule out the idea that each particle carried a definite answer all along.',
+  },
+  {
+    question: 'What is quantum tunnelling?',
+    options: [
+      'A particle passing through a barrier it does not have the energy to cross classically',
+      'Light bending around a heavy object',
+      'An electron falling into a nucleus',
+      'A particle moving faster than light for a moment',
+    ],
+    correct: 0,
+    category: 'Quantum',
+    explanation:
+      'A particle is described by a wave, and a wave does not stop dead at a wall - it decays through it and can emerge on the other side with some probability. The Sun runs on this: two protons in the core rarely have enough energy to fuse, but they tunnel close enough often enough to keep it burning for billions of years.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
