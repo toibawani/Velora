@@ -150,6 +150,22 @@ const DUEL_PAIRS = [
     definition: 'The region where a compass needle turns, produced by moving charges rather than by a substance',
     word: 'Magnetic Field',
   },
+  {
+    definition: 'Giving each branch its own job so that no one of them can do all of the others\' work at once',
+    word: 'Separation of Powers',
+  },
+  {
+    definition: 'The claim that the same rules bind the government and the governed, and are known in advance',
+    word: 'Rule of Law',
+  },
+  {
+    definition: 'Breaking a law openly and accepting the punishment, to show that the law itself is the problem',
+    word: 'Civil Disobedience',
+  },
+  {
+    definition: 'Voters pick electors who pick the winner, which is why the popular vote and the result can disagree',
+    word: 'Electoral College',
+  },
 ];
 
 const ROUND_SECONDS = 60;
