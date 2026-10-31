@@ -165,6 +165,15 @@ const CHAINS = [
       'rising fast enough prompts a central bank to raise',
     ],
   },
+  {
+    title: 'Printing Chain',
+    concepts: ['Printing Press', 'Cheap Copies', 'Literacy', 'Public Opinion'],
+    links: [
+      'made possible',
+      'affordable enough to spread',
+      'created a reading public that could form a',
+    ],
+  },
 ];
 
 /** The id this game is recorded under in the hub's per-game history. */
