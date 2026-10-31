@@ -293,7 +293,8 @@
   font-size: 0.9375rem;
 }
 
-.games-resume-score {
+.games-resume-score,
+.games-resume-date {
   color: inherit;
   opacity: 0.75;
 }

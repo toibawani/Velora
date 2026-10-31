@@ -250,6 +250,15 @@ describe('what each game has actually produced', () => {
     expect(strip).toHaveTextContent('best 150 of 400');
   });
 
+  test('the offer says the round was today, not just which game it was', () => {
+    // A date beside "last played" makes someone work out whether it was this
+    // morning or a fortnight ago.
+    recordGameResult('duel', { score: 30, max: 60 });
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(screen.getByTestId('games-resume-when')).toHaveTextContent(/today/i);
+  });
+
   test('the offer follows the newest round, not the first one recorded', () => {
     recordGameResult('quiz', { score: 90, max: 140 });
     recordGameResult('puzzle', { score: 20, max: 100 });

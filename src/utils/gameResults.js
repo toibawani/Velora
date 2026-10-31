@@ -161,6 +161,37 @@ export const bestDate = (record) => {
   return typeof stored === 'string' ? stored : null;
 };
 
+/**
+ * When, in words, a round was played: "today", "yesterday", "3 days ago".
+ *
+ * The hub says which game was last played and a date - but a date reads as
+ * history, and "Oct 29" beside "last played" makes someone work out whether
+ * that was this morning or last week. Days rather than hours, because a game
+ * played at 11pm and reopened at 1am is not "2 hours ago" to a person.
+ *
+ * Empty string when there is no usable date, so a caller can leave the clause
+ * out rather than print "last played Invalid Date".
+ */
+export function playedWhen(record, now = new Date()) {
+  const stored = record && record.at;
+  if (typeof stored !== 'string') return '';
+  const then = new Date(stored);
+  if (Number.isNaN(then.getTime())) return '';
+
+  const startOfDay = (date) =>
+    new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+  const days = Math.round((startOfDay(now) - startOfDay(then)) / 86400000);
+
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return `${days} days ago`;
+  if (days < 30) {
+    const weeks = Math.floor(days / 7);
+    return weeks === 1 ? 'last week' : `${weeks} weeks ago`;
+  }
+  return 'over a month ago';
+}
+
 /** Forgets every game's record on this device. */
 export const clearGameResults = () => {
   writeValue(KEYS.GAME_RESULTS, {});

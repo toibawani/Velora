@@ -27,6 +27,7 @@ import {
   getGameResults,
   getLastPlayedGame,
   isLatestBest,
+  playedWhen,
 } from '../utils/gameResults';
 import '../styles/Games.css';
 
@@ -415,6 +416,12 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
         <div className="games-resume" data-testid="games-resume">
           <p className="games-resume-text">
             Last played: <strong>{lastPlayedGame.name}</strong>
+            {playedWhen(lastPlayed) && (
+              <span className="games-resume-date" data-testid="games-resume-when">
+                {' '}
+                &middot; {playedWhen(lastPlayed)}
+              </span>
+            )}
             <span className="games-resume-score">
               {' '}
               &middot; best {formatResult(lastPlayed)}

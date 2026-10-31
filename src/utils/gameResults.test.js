@@ -8,11 +8,40 @@ import {
   isLatestBest,
   bestDate,
   clearGameResults,
+  playedWhen,
 } from './gameResults';
 import { KEYS } from './storage';
 
 beforeEach(() => {
   window.localStorage.clear();
+});
+
+describe('saying when the last round was', () => {
+  // Built in local time on purpose: the label counts calendar days on the
+  // device the round was played on, so a test written in UTC would pass in
+  // London and fail in Auckland.
+  const local = (month, day, hours) => new Date(2026, month, day, hours, 0, 0).toISOString();
+  const at = (month, day, hours) => ({ at: local(month, day, hours) });
+  const now = new Date(2026, 9, 31, 9, 0, 0);
+
+  test('counts whole days rather than hours', () => {
+    // 11pm yesterday is "yesterday", not "ten hours ago".
+    expect(playedWhen(at(9, 30, 23), now)).toBe('yesterday');
+    expect(playedWhen(at(9, 31, 0.5), now)).toBe('today');
+    expect(playedWhen(at(9, 28, 12), now)).toBe('3 days ago');
+  });
+
+  test('switches to weeks once days stop being useful', () => {
+    expect(playedWhen(at(9, 24, 12), now)).toBe('last week');
+    expect(playedWhen(at(9, 15, 12), now)).toBe('2 weeks ago');
+    expect(playedWhen(at(7, 1, 12), now)).toBe('over a month ago');
+  });
+
+  test('a record with no usable date says nothing at all', () => {
+    expect(playedWhen(null, now)).toBe('');
+    expect(playedWhen({}, now)).toBe('');
+    expect(playedWhen({ at: 'not a date' }, now)).toBe('');
+  });
 });
 
 test('a device that has never finished a round reports nothing, not zero', () => {
