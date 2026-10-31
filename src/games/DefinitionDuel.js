@@ -134,6 +134,22 @@ const DUEL_PAIRS = [
     definition: 'The junction where one neuron passes a signal to the next, across a gap rather than a wire',
     word: 'Synapse',
   },
+  {
+    definition: 'Mass times velocity, which a closed system conserves even when everything in it collides',
+    word: 'Momentum',
+  },
+  {
+    definition: 'The speed at which you can leave and never come back, which is why the Moon has none to offer',
+    word: 'Escape Velocity',
+  },
+  {
+    definition: 'Sitting still and falling freely feel the same, so gravity and acceleration cannot be told apart locally',
+    word: 'Equivalence Principle',
+  },
+  {
+    definition: 'The region where a compass needle turns, produced by moving charges rather than by a substance',
+    word: 'Magnetic Field',
+  },
 ];
 
 const ROUND_SECONDS = 60;
