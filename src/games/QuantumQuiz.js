@@ -602,6 +602,32 @@ const QUIZ_QUESTIONS = [
     explanation:
       'In 10,000 people, about one has the disease and tests positive; about 100 do not have it and still test positive at a 1% error rate. So roughly one true positive against a hundred false ones - around 1%. This is the base rate fallacy, and it is why screening programmes confirm a positive before telling anyone they are ill.',
   },
+  {
+    question: 'What is the difference between a head of state and a head of government?',
+    options: [
+      'Nothing; the titles are interchangeable',
+      'The head of state represents the country and its continuity; the head of government runs the executive and answers to the legislature',
+      'A head of state always commands the army',
+      'A head of government is always elected directly',
+    ],
+    correct: 1,
+    category: 'Politics',
+    explanation:
+      'Splitting the two roles lets a country have a ceremonial or unifying figure above the daily argument. Britain, Germany and India all separate them; the United States merges them in one president. The distinction decides who can be voted out over a bad week and who stays as the face of the state.',
+  },
+  {
+    question: 'What does a first-past-the-post system tend to do to the number of parties?',
+    options: [
+      'Increase it, because every party can win somewhere',
+      'Reduce it, because votes for losing candidates in a district win nothing and supporters drift to the two strongest',
+      'Have no effect at all',
+      'Guarantee an exact share of seats for every vote share',
+    ],
+    correct: 1,
+    category: 'Politics',
+    explanation:
+      'Duverger\'s law: single-member districts with plurality winners squeeze the field toward two viable parties. It also means a party can win a majority of seats on a minority of votes, and that a party with steady regional support gets more seats per vote than one spread thinly - the same tally producing different parliaments under a proportional rule.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
