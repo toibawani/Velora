@@ -41,8 +41,9 @@ export const CLASSIC_GAMES = [
     id: 'quiz',
     name: 'Concept Check',
     type: 'quiz',
-    description:
-      '26 questions across space, quantum, physics, chemistry, biology, philosophy, economics, psychology, history, mathematics and politics, with the reasoning behind each answer',
+    // The count is read from the deck. Written out it went stale twice: it said
+    // ten when there were fourteen, and then twenty-six while the deck grew.
+    description: `${QUIZ_QUESTIONS.length} questions across space, quantum, physics, chemistry, biology, philosophy, economics, psychology, history, mathematics and politics, with the reasoning behind each answer`,
     icon: Target,
     color: '--text-secondary',
     difficulty: 'Mixed',
