@@ -224,6 +224,18 @@ const PUZZLES = [
     word: 'DIFFUSION',
     blanks: 1,
   },
+  {
+    hint: 'One word',
+    sentence: 'Water crosses a membrane towards the side with more dissolved solute, which is _____.',
+    word: 'OSMOSIS',
+    blanks: 1,
+  },
+  {
+    hint: 'One word',
+    sentence: 'Chemical marks on DNA that switch genes on or off without changing the sequence are studied in _____.',
+    word: 'EPIGENETICS',
+    blanks: 1,
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;
