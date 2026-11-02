@@ -230,7 +230,7 @@ const SCRABBLE_LEVELS = [
     definition: 'The right to vote, won by arguments and by marches rather than given',
     word: 'SUFFRAGE',
     hint: 'Starts with S',
-    category: 'Politics',
+    category: 'Political Science',
   },
   {
     definition: 'The European movement that put reason and evidence ahead of inherited authority',

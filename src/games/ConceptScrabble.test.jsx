@@ -439,3 +439,37 @@ describe('turning the rack', () => {
     expect(screen.getByTestId('scrabble-shuffle')).toBeEnabled();
   });
 });
+
+describe('the categories the levels are filed under', () => {
+  // The deck wrote one level's category as "Politics" and four others as
+  // "Political Science", so any count by category saw five subjects where the
+  // app teaches one. Read from the deck rather than copied, so a new category
+  // has to be added here deliberately.
+  test('every level is filed under one of the deck\'s ten categories', () => {
+    const categories = [...new Set(SCRABBLE_LEVELS.map((level) => level.category))].sort();
+    expect(categories).toEqual([
+      'Biology',
+      'Chemistry',
+      'Economics',
+      'History',
+      'Mathematics',
+      'Philosophy',
+      'Physics',
+      'Political Science',
+      'Psychology',
+      'Space',
+    ]);
+  });
+
+  test('no category is only a shorter spelling of another', () => {
+    const categories = [...new Set(SCRABBLE_LEVELS.map((level) => level.category))];
+    categories.forEach((a) => {
+      categories
+        .filter((b) => b !== a)
+        .forEach((b) => {
+          expect(b.toLowerCase().startsWith(a.toLowerCase())).toBe(false);
+          expect(a.toLowerCase().startsWith(b.toLowerCase())).toBe(false);
+        });
+    });
+  });
+});
