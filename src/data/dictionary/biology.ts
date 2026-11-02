@@ -220,4 +220,27 @@ export const BIOLOGY_TERMS: DictionaryTerm[] = [
     source: 'Jinek et al., "A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity" (2012)',
     sourceUrl: 'https://en.wikipedia.org/wiki/CRISPR_gene_editing',
   },
+
+{
+    id: 'photosynthesis',
+    term: 'Photosynthesis',
+    subject: 'biology',
+    letter: 'P',
+    tagline: 'Light from a star becomes the chemical energy everything else eats.',
+    explanation: 'Chloroplasts capture photons with chlorophyll, use that energy to split water, and store it in the bonds of sugar while releasing oxygen as a by-product. Almost every food chain on the planet starts with this conversion, and the oxygen in the atmosphere is the other half of it.',
+    example: 'A single mature tree can fix tens of kilograms of carbon a year into wood and leaves. The mass of a tree comes mostly from carbon dioxide in the air, not from the soil it stands in.',
+    source: 'Jan Ingenhousz, Experiments Upon Vegetables (1779)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Photosynthesis',
+  },
+{
+    id: 'symbiosis',
+    term: 'Symbiosis',
+    subject: 'biology',
+    letter: 'S',
+    tagline: 'Two species living so close that each is part of the other’s environment.',
+    explanation: 'Symbiosis covers relationships from mutual benefit to outright parasitism, so the word describes the living arrangement, not the fairness of it. Many are obligate: the partners cannot survive alone, because each has lost the machinery the other supplies.',
+    example: 'Lichens are a fungus and an alga growing as one organism, and neither can live in that habitat without the other. Reef-building corals depend on algae living inside their cells, which is why coral bleaches when the algae leave.',
+    source: 'Albert Bernhard Frank, "Über die biologischen Verhältnisse des Thallus einiger Krustenflechten" (1877)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Symbiosis',
+  },
 ];
