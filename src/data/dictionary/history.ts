@@ -202,4 +202,27 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     source: 'Peter Frankopan, The Silk Roads: A New History of the World (2015)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Silk_Road',
   },
+
+{
+    id: 'the-reformation',
+    term: 'The Reformation',
+    subject: 'history',
+    letter: 'R',
+    tagline: 'The split in western Christianity that also rewrote politics and literacy.',
+    explanation: 'From 1517, arguments about indulgences and authority broke the western church into rival institutions, and the printing press carried them faster than any authority could suppress. Because the conflict was about who could interpret scripture, it produced mass literacy, national churches and a century of war.',
+    example: 'Luther’s ninety-five theses were a scholarly complaint in Latin. Printed and translated, they became a movement within two years; by 1648 the settlement at Westphalia had to treat Catholic and Protestant states as legally equal.',
+    source: 'Martin Luther, Ninety-five Theses (1517)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Reformation',
+  },
+{
+    id: 'the-cold-war',
+    term: 'The Cold War',
+    subject: 'history',
+    letter: 'C',
+    tagline: 'Four decades of rivalry fought through proxies, because direct war was unthinkable.',
+    explanation: 'After 1945 the United States and the Soviet Union competed for influence without fighting each other, because both held nuclear weapons. The competition ran through alliances, aid, espionage, space programmes and wars in other countries, and it ended with the Soviet system collapsing rather than with a battlefield defeat.',
+    example: 'The Cuban missile crisis of 1962 put nuclear weapons in range of both capitals and ended in a withdrawal and a secret concession. The Berlin Wall fell in 1989, and the Soviet Union dissolved two years later.',
+    source: 'John Lewis Gaddis, The Cold War: A New History (2005)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Cold_War',
+  },
 ];
