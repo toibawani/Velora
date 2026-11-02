@@ -210,6 +210,26 @@ const DUEL_PAIRS = [
     definition: 'With more pigeons than holes, at least one hole holds two - enough to prove a coincidence must happen',
     word: 'Pigeonhole Principle',
   },
+  {
+    definition: 'A loop in which what a process produces suppresses the process itself, which is how a thermostat and a body both hold a set point',
+    word: 'Negative Feedback',
+  },
+  {
+    definition: 'The time it takes for half of a radioactive sample to decay, whatever the amount you started with',
+    word: 'Half-Life',
+  },
+  {
+    definition: 'The default claim that there is no effect, which an experiment is built to rule out',
+    word: 'Null Hypothesis',
+  },
+  {
+    definition: 'The requirement that the state follow established legal steps before taking someone’s liberty or property',
+    word: 'Due Process',
+  },
+  {
+    definition: 'Making more of a good with the same resources than anyone else can, without any trade-off being involved',
+    word: 'Absolute Advantage',
+  },
 ];
 
 const ROUND_SECONDS = 60;
