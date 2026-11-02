@@ -197,4 +197,27 @@ export const CHEMISTRY_TERMS: DictionaryTerm[] = [
     source: 'Henry Louis Le Chatelier, "Sur un énoncé général des lois des équilibres chimiques" (1884)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Le_Chatelier%27s_principle',
   },
+
+{
+    id: 'mole',
+    term: 'Mole',
+    subject: 'chemistry',
+    letter: 'M',
+    tagline: 'A counting unit for particles, chosen so grams and atomic masses line up.',
+    explanation: 'A mole is 6.022 x 10^23 particles, which is Avogadro’s number. It exists because atoms are too small to count individually but react in fixed ratios, so chemistry needs a bridge between the number of particles and a mass you can weigh. One mole of a substance weighs its formula mass in grams.',
+    example: 'Twelve grams of carbon is one mole of carbon atoms, and eighteen grams of water is one mole of water molecules. Mix them in the right reaction and the equation tells you how many moles of each product you get, without counting a single molecule.',
+    source: 'Amedeo Avogadro, Journal de Physique (1811)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Mole_(unit)',
+  },
+{
+    id: 'enthalpy',
+    term: 'Enthalpy',
+    subject: 'chemistry',
+    letter: 'E',
+    tagline: 'The heat a reaction gives out or takes in at constant pressure.',
+    explanation: 'Enthalpy combines a system’s internal energy with the work it does pushing against the surrounding pressure. At constant pressure, which is how most reactions in a lab or a cell happen, the change in enthalpy is exactly the heat exchanged. A negative change means the reaction released heat; a positive one means it absorbed heat from its surroundings.',
+    example: 'Burning methane has an enthalpy change of about -890 kilojoules per mole: the products hold less energy than the reactants, and the difference leaves as heat. Dissolving ammonium nitrate in water has a positive change, which is why a cold pack gets cold.',
+    source: 'Josiah Willard Gibbs, Transactions of the Connecticut Academy (1873)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Enthalpy',
+  },
 ];
