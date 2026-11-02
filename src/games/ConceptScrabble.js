@@ -315,6 +315,19 @@ function ConceptScrabble({ onBack }) {
   // same hole from the other direction - skipping after solving cost the player
   // the level they had just earned.
   const [settled, setSettled] = useState(false);
+  /**
+   * How many places the rack has been turned.
+   *
+   * The letters were shuffled once per level and then frozen, so a rack that
+   * read as nonsense in one arrangement stayed in exactly that arrangement.
+   * Moving letters around is how an anagram gets solved - the eye finds a
+   * familiar pair once it is next to itself - so a player stuck could only do
+   * it by mentally rearranging eleven tiles. Turning the rack is the physical
+   * version of that, and it is deterministic rather than a second shuffle, so
+   * pressing it repeatedly walks through the arrangements instead of possibly
+   * landing on the one you were already looking at.
+   */
+  const [rackOffset, setRackOffset] = useState(0);
   const advanceRef = useRef(null);
   const shakeRef = useRef(null);
   // Reported once per pass through the rack. The last word's 100 points are
@@ -344,8 +357,10 @@ function ConceptScrabble({ onBack }) {
   // jumped onto different letters as you went.
   const rack = useMemo(() => {
     const tiles = level.word.split('').map((letter, i) => ({ id: `${i}-${letter}`, letter }));
-    return shuffle(tiles);
-  }, [level]);
+    const shuffled = shuffle(tiles);
+    const turn = rackOffset % shuffled.length;
+    return [...shuffled.slice(turn), ...shuffled.slice(0, turn)];
+  }, [level, rackOffset]);
 
   useEffect(
     () => () => {
@@ -405,6 +420,7 @@ function ConceptScrabble({ onBack }) {
     setSelectedLetters([]);
     setMessage('');
     setSettled(false);
+    setRackOffset(0);
   }, [isLastLevel]);
 
   const handleSubmit = useCallback(() => {
@@ -447,6 +463,7 @@ function ConceptScrabble({ onBack }) {
     setMessage('');
     setShake(false);
     setSettled(false);
+    setRackOffset(0);
   }, []);
 
   const handleSkip = useCallback(() => {
@@ -604,6 +621,18 @@ function ConceptScrabble({ onBack }) {
             disabled={selectedLetters.length === 0 || settled}
           >
             Clear board
+          </button>
+          {/* Only useful while the board is empty: turning the rack with
+            * letters already on it moves the tiles that are left, which reads
+            * as the game taking a letter back. */}
+          <button
+            type="button"
+            className="btn-clear"
+            data-testid="scrabble-shuffle"
+            onClick={() => setRackOffset((offset) => offset + 1)}
+            disabled={selectedLetters.length > 0 || settled}
+          >
+            Turn the rack
           </button>
           <button className="btn-skip" onClick={handleSkip} disabled={settled}>
             Skip level
