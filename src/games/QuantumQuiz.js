@@ -842,6 +842,118 @@ const QUIZ_QUESTIONS = [
     explanation:
       'It is a matter of degree. A large difference pulls an electron across almost completely, which is ionic; a small one shares it, which is covalent; in between sit polar bonds, which the same scale explains without a separate rule. The metal and non-metal shortcut is a rule of thumb for the ends of that scale.',
   },
+
+  // Mathematics, which had four questions in a deck with no maths in the
+  // dictionary once and nine entries now.
+  {
+    question: 'How does a proof by contradiction work?',
+    options: [
+      'It checks the claim against a long list of examples',
+      'It assumes the claim is false and shows that the assumption leads to something impossible',
+      'It shows the claim holds for every case one at a time',
+      'It appeals to the authority of whoever stated the claim',
+    ],
+    correct: 1,
+    category: 'Mathematics',
+    explanation:
+      'The impossibility is the point: if denying the claim makes the arithmetic break, the denial is what has to go. Euclid\'s proof that there are infinitely many primes is the standard example - assume a largest one, multiply the list and add one, and you have a prime that is not on the list.',
+  },
+  {
+    question: 'What is a logarithm, in plain terms?',
+    options: [
+      'The exponent you raise a base to in order to get the number',
+      'The number of digits in a number',
+      'A number divided by its base',
+      'The sum of a number\'s factors',
+    ],
+    correct: 0,
+    category: 'Mathematics',
+    explanation:
+      'Log base ten of a thousand is three, because ten cubed is a thousand. This is why log scales compress: each unit is a multiplication, not an addition, which is what makes them the right scale for earthquakes, sound and compound growth.',
+  },
+  {
+    question: 'House prices in a town are reported as an average. Why is the median often the better summary?',
+    options: [
+      'Because the median always equals the mean in large samples',
+      'Because a few very expensive houses pull the mean up, while the median is the middle price and moves less',
+      'Because the median uses every value and the mean does not',
+      'Because averages are not defined for prices',
+    ],
+    correct: 1,
+    category: 'Mathematics',
+    explanation:
+      'Both use all the data. The difference is what a single extreme value can do: the median is the price where half the houses are cheaper and half dearer, so one mansion cannot move it far. When a distribution is skewed, the mean stops describing a typical case.',
+  },
+  {
+    question: 'What does it mean for two events to be independent?',
+    options: [
+      'They cannot happen at the same time',
+      'The chance of both is the chance of one times the chance of the other',
+      'They have the same probability',
+      'One causes the other',
+    ],
+    correct: 1,
+    category: 'Mathematics',
+    explanation:
+      'Knowing one happened tells you nothing about the other, and the multiplication rule is what that means numerically. Two coin flips are independent; drawing two cards without replacing the first is not, because the deck changed.',
+  },
+
+  // Politics, which had four.
+  {
+    // Not head of state against head of government: the deck already asks
+    // that one, and a category round is small enough that a repeat would be a
+    // visible hole rather than a harmless spare.
+    question: 'What is the difference between a referendum and an election?',
+    options: [
+      'There is none; both are votes',
+      'A referendum decides one question put to the voters, while an election chooses who will decide many',
+      'A referendum is binding and an election is not',
+      'Only a referendum can be held nationally',
+    ],
+    correct: 1,
+    category: 'Politics',
+    explanation:
+      'Both count votes the same way; what differs is what the vote is for. An election hands over the power to decide a whole term of questions, which is why the result is a government rather than an answer. A referendum settles the one wording on the paper - and in most countries it is the legislature, not the voters, that decides whether it binds.',
+  },
+  {
+    question: 'What makes redrawing district boundaries gerrymandering rather than ordinary districting?',
+    options: [
+      'Boundaries are redrawn at all',
+      'The lines are drawn to give one party or group an advantage rather than to reflect a population',
+      'The districts have different numbers of people',
+      'A court approves the new map',
+    ],
+    correct: 1,
+    category: 'Politics',
+    explanation:
+      'Districts have to be redrawn as populations move. The test is the purpose and the effect: packing opponents into a few districts or splitting them across many converts a minority of votes into a majority of seats, and the map can do it while every district technically holds one person, one vote.',
+  },
+  {
+    question: 'What is a coalition government?',
+    options: [
+      'A government with no opposition party',
+      'Two or more parties agreeing to govern together because neither has a majority alone',
+      'A system where every law needs unanimous approval',
+      'A temporary military administration',
+    ],
+    correct: 1,
+    category: 'Politics',
+    explanation:
+      'It is the ordinary outcome in proportional systems, where a majority is rarely won outright. The coalition agreement sets out what the parties will legislate, and the compromise is the price of the majority. In two-party systems it is rare for the same structural reason.',
+  },
+  {
+    question: 'What does judicial review allow a court to do?',
+    options: [
+      'Rewrite legislation it disagrees with',
+      'Declare an act of government invalid because it exceeds the constitution or the law',
+      'Appoint the members of the legislature',
+      'Call a new election',
+    ],
+    correct: 1,
+    category: 'Politics',
+    explanation:
+      'The court voids an act; it does not draft a replacement. The power is not universal - some constitutions put certain laws beyond review - but where it exists it is what makes a written constitution binding rather than advisory.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
