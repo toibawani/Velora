@@ -307,9 +307,9 @@ const SCRABBLE_LEVELS = [
     category: 'Psychology',
   },
   {
-    definition: 'A treatment with no active ingredient that works because the patient expects it to',
-    word: 'PLACEBO',
-    hint: 'Starts with P',
+    definition: 'The neurotransmitter whose reuptake the most common antidepressant drugs block',
+    word: 'SEROTONIN',
+    hint: 'Starts with S',
     category: 'Psychology',
   },
   {
