@@ -212,6 +212,34 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
   );
 
   /**
+   * Number keys open a game.
+   *
+   * The grid is reachable from the keyboard and the cards are real buttons, but
+   * getting to the fourth one still means four Tab presses past the filters and
+   * the picker. A hub with six games listed in a fixed order can afford to say
+   * which is which, and the number prints beside each card.
+   *
+   * Ignored while a field has focus, so typing a number into a search or a
+   * select does not leave the hub underneath.
+   */
+  useEffect(() => {
+    if (hubTab !== 'classic' || selectedGame) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      const tag = event.target && event.target.tagName;
+      if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+      const position = Number(event.key) - 1;
+      if (!Number.isInteger(position) || position < 0 || position >= visibleGames.length) return;
+      event.preventDefault();
+      setSelectedGame(visibleGames[position].id);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [hubTab, selectedGame, visibleGames]);
+
+  /**
    * Arrow keys move between cards, Home and End to the ends of the row.
    *
    * The cards became real buttons so they could be reached with Tab, but six of
@@ -429,6 +457,7 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
           {visibleGames.some((game) => !gameResults[game.id])
             ? 'prefers a game you have not finished'
             : 'from the games shown'}
+          {' '}&middot; press 1&ndash;{Math.min(visibleGames.length, 9)} to open one
         </span>
       </div>
 
@@ -491,6 +520,8 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
               style={{ '--game-color': game.color, textAlign: 'left' }}
             >
               <div className="game-card-header">
+                {/* The number is the shortcut the hub listens for. */}
+                <span className="game-card-number" aria-hidden="true">{index + 1}</span>
                 <span className="game-icon-large" style={{ display: 'flex', alignItems: 'center' }}>
                   <GameIcon size={24} strokeWidth={1.5} color={game.color} data-testid="game-icon" />
                 </span>

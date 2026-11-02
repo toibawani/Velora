@@ -484,3 +484,12 @@
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   }
 }
+
+/* The card's number, which is also the key that opens it. */
+.game-card-number {
+  color: var(--text-tertiary);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  margin-right: var(--space-2);
+}
