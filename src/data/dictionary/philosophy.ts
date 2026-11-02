@@ -234,4 +234,16 @@ export const PHILOSOPHY_TERMS: DictionaryTerm[] = [
     source: 'William of Ockham, Summa Logicae (c. 1323)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Occam%27s_razor',
   },
+
+{
+    id: 'dialectic',
+    term: 'Dialectic',
+    subject: 'philosophy',
+    letter: 'D',
+    tagline: 'Arguing by contradiction until the position improves.',
+    explanation: 'In Plato the dialectic is question and answer used to expose a definition as inadequate; in Hegel it is the movement from a claim, through the contradiction it generates, to a position that keeps what survived. Both treat an objection as material rather than as a defeat, which is what separates the method from debate scoring.',
+    example: 'Socrates asks what courage is, takes the answer apart with a case it cannot handle, and asks again. The dialogue ends without a definition, which is the point: the contradiction is the progress.',
+    source: 'Plato, Republic (c. 375 BCE)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Dialectic',
+  },
 ];
