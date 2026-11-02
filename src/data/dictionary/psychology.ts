@@ -197,4 +197,27 @@ export const PSYCHOLOGY_TERMS: DictionaryTerm[] = [
     source: 'Robert Zajonc, "Attitudinal effects of mere exposure" (1968)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Mere-exposure_effect',
   },
+
+{
+    id: 'attachment-theory',
+    term: 'Attachment Theory',
+    subject: 'psychology',
+    letter: 'A',
+    tagline: 'Early caregiving sets a pattern for how safe other people feel.',
+    explanation: 'Bowlby argued that an infant’s need for a reliable caregiver is not a side effect of being fed but a system of its own, and that its early calibration becomes a working model of relationships. Ainsworth’s strange-situation experiments sorted those patterns into secure, anxious and avoidant, and the vocabulary has been used and overused ever since.',
+    example: 'A toddler who explores a new room while checking that the caregiver is still there, and is comforted quickly after a brief separation, is showing the secure pattern. The same behaviour in a different culture needs care to read, because how distress is shown is itself learned.',
+    source: 'John Bowlby, Attachment and Loss, Volume 1 (1969)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Attachment_theory',
+  },
+{
+    id: 'heuristic',
+    term: 'Heuristic',
+    subject: 'psychology',
+    letter: 'H',
+    tagline: 'A fast rule of thumb that is usually right and sometimes confidently wrong.',
+    explanation: 'Heuristics trade accuracy for speed. Availability - judging likelihood by how easily examples come to mind - is why a rare crash feels more likely after seeing one reported. They are not failures of thinking: without them, every decision would cost more attention than it is worth, and the same shortcut that misfires in one setting works in ninety others.',
+    example: 'A shopper who assumes the middle-priced option is the sensible one is using a heuristic, and it is right often enough to survive. The same shortcut fails when a seller puts a deliberately expensive option beside the intended one.',
+    source: 'Amos Tversky and Daniel Kahneman, "Judgment under Uncertainty" (1974)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Heuristic',
+  },
 ];
