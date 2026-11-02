@@ -516,9 +516,14 @@ describe('playing one subject', () => {
     expect(screen.getByLabelText('Word 1')).toHaveValue('');
   });
 
-  // A six sentence round scored 600 of 600 used to be recorded as 600 of 4700,
-  // which read as a failed round in the hub's best-score line.
-  test('a one subject round is recorded out of that deck, not out of all of them', () => {
+  /*
+   * The record holds one best against one maximum, so a six sentence round
+   * cannot be stored beside a forty-seven sentence one: 600 of 600 would either
+   * never beat the whole-deck best or would replace it and leave the card
+   * reading "best 600 of 4700". The round is scored on its own end screen and
+   * says so there instead.
+   */
+  test('a one subject round is scored but not stored as a best', () => {
     render(<WordPuzzle onBack={() => {}} />);
     fireEvent.change(screen.getByLabelText(/subject/i), { target: { value: 'history' } });
 
@@ -529,10 +534,9 @@ describe('playing one subject', () => {
     });
 
     expect(screen.getByRole('heading', { name: /finished/i })).toBeInTheDocument();
-    expect(getGameResult(WORD_PUZZLE_GAME_ID)).toMatchObject({
-      best: history.length * 100,
-      max: history.length * 100,
-    });
+    expect(screen.getByText(`${history.length * 100} points`)).toBeInTheDocument();
+    expect(screen.getByTestId('puzzle-not-stored')).toBeInTheDocument();
+    expect(getGameResult(WORD_PUZZLE_GAME_ID)).toBeNull();
   });
 
   test('the end of a subject round can widen back to the whole deck', () => {

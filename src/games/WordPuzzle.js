@@ -403,6 +403,15 @@ function WordPuzzle({ onBack }) {
       ),
     [subjectFilter]
   );
+  /*
+   * A single subject is a practice deck. It is scored on screen, but it is not
+   * stored as a best: the record holds one best per game against one maximum,
+   * so a clean six sentence round out of six hundred would either never beat a
+   * whole deck best of forty-seven hundred, or would replace it and leave the
+   * card claiming a best of 600 out of 4700. Both read as a failure at
+   * arithmetic rather than as what happened.
+   */
+  const isNarrowed = subjectFilter !== 'all';
   const [currentPuzzle, setCurrentPuzzle] = useState(0);
   const [userAnswers, setUserAnswers] = useState(() => Array(PUZZLES[0].blanks).fill(''));
   const [score, setScore] = useState(0);
@@ -447,15 +456,12 @@ function WordPuzzle({ onBack }) {
     }
     if (recordedRef.current) return;
     recordedRef.current = true;
+    if (isNarrowed) return;
     recordGameResult(WORD_PUZZLE_GAME_ID, {
       score,
-      // The most this round could have paid, not the most the whole deck
-      // could. A six puzzle history round scored out of six hundred, and a
-      // figure out of forty-seven hundred would have made a clean round read
-      // as twelve per cent.
-      max: deck.length * POINTS_PER_PUZZLE,
+      max: PUZZLES.length * POINTS_PER_PUZZLE,
     });
-  }, [deck.length, finished, score]);
+  }, [finished, isNarrowed, score]);
 
   /*
    * The first box is focused when the puzzle appears.
@@ -603,6 +609,12 @@ function WordPuzzle({ onBack }) {
           <p className="game-completed-msg">
             You worked out {unaided} of {total} unaided.
           </p>
+          {isNarrowed && (
+            <p className="game-completed-msg" data-testid="puzzle-not-stored">
+              A single subject round is scored here but not stored as a best, because it is
+              not comparable to the whole deck. Play all subjects to set a record.
+            </p>
+          )}
 
           {missed.length > 0 && (
             <div className="quiz-review" data-testid="puzzle-review">
