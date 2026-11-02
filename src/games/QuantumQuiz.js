@@ -732,6 +732,116 @@ const QUIZ_QUESTIONS = [
     explanation:
       'The case is gravitational: rotation curves stay flat where they should fall off, clusters hold together, and lensing maps mass that emits nothing. It is possible that gravity behaves differently on galactic scales instead, which is why the phrase is \'dark matter\' rather than \'we found the stuff\' - the evidence is for missing mass, not yet for a particular particle.',
   },
+
+  // Quantum mechanics, which named the game and had four questions in it: a
+  // deck called Concept Check now, but the subject it was named for was the
+  // thinnest category in it.
+  {
+    question: 'What does a quantum measurement actually give you?',
+    options: [
+      'The value that was already there, hidden until someone looked',
+      'One outcome from the allowed set, with probabilities set by the state before the measurement',
+      'Every possible outcome at once, which is what a superposition is',
+      'A number that depends only on how careful the apparatus is',
+    ],
+    correct: 1,
+    category: 'Quantum',
+    explanation:
+      'A measurement returns one result. What the theory predicts is the probability of each, from the amplitudes squared. The \'hidden value\' reading is what Bell tests ruled out: the correlations between separated measurements are stronger than any account in which each particle already carried its answer.',
+  },
+  {
+    question: 'What does the uncertainty principle forbid?',
+    options: [
+      'Measuring anything at all precisely',
+      'Knowing both a position and a momentum to arbitrary precision in the same state',
+      'Any experiment on a single particle',
+      'Preparing two identical particles',
+    ],
+    correct: 1,
+    category: 'Quantum',
+    explanation:
+      'It is a statement about the spread in a state, not about clumsy instruments - which is why it survived every improvement in measurement. A narrow position spread forces a wide momentum spread. The usual \'the photon kicks the electron\' story is a special case of the same relation, not its cause.',
+  },
+  {
+    question: 'Two particles are entangled. What does that let you do?',
+    options: [
+      'Send a message faster than light by measuring one of them',
+      'Nothing faster than light: each local result looks random, and only comparing the two records shows the correlation',
+      'Copy an unknown quantum state perfectly',
+      'Change the other particle by choosing what to measure',
+    ],
+    correct: 1,
+    category: 'Quantum',
+    explanation:
+      'The correlation is real and stronger than any classical shared-cause account allows, but each measurement on its own is random. You need the other record, sent at or below the speed of light, to see it. That is also why entanglement cannot be used to signal, and why cloning an unknown state would break the theory rather than extend it.',
+  },
+  {
+    question: 'Electrons are fired one at a time through two slits. What appears on the screen?',
+    options: [
+      'Two bright bands, one behind each slit',
+      'A single blurred spot',
+      'Single dots, arriving one at a time, that build up an interference pattern',
+      'Nothing, because a single electron cannot pass two slits',
+    ],
+    correct: 2,
+    category: 'Quantum',
+    explanation:
+      'Each electron lands as one dot, so nothing is smeared out at the moment of arrival. The pattern is in where the dots fall: it has bright and dark bands, which means each electron behaved as if both paths mattered. This is the experiment that makes \'wave or particle\' the wrong question.',
+  },
+
+  // Chemistry, which had four questions.
+  {
+    question: 'Why does a reaction settle at equilibrium rather than stopping?',
+    options: [
+      'The reactants have run out',
+      'The forward and reverse reactions are running at the same rate, so the amounts stop changing while both continue',
+      'The catalyst has been used up',
+      'The temperature has dropped to zero',
+    ],
+    correct: 1,
+    category: 'Chemistry',
+    explanation:
+      'Equilibrium is busy, not still. Both directions keep going and the concentrations stop changing because the rates match. This is why a catalyst changes how fast equilibrium is reached and not where it sits: it speeds both directions equally.',
+  },
+  {
+    question: 'Why does ice float on water?',
+    options: [
+      'Cold water is heavier, so it sinks below the ice',
+      'The hydrogen bonds in ice hold the molecules in an open lattice, which takes more space than the liquid',
+      'Ice contains trapped air from freezing',
+      'Water expands when it melts, like most substances',
+    ],
+    correct: 1,
+    category: 'Chemistry',
+    explanation:
+      'Most solids are denser than their liquids; water is the famous exception because each molecule in ice is hydrogen bonded to four neighbours in a rigid open arrangement. Air helps a real pond freeze at the top, but it is not why ice is less dense - clear ice floats too.',
+  },
+  {
+    question: 'What does the pH scale measure?',
+    options: [
+      'The number of acid molecules in a litre',
+      'The concentration of hydrogen ions, on a negative logarithmic scale',
+      'How strongly a solution conducts electricity',
+      'The temperature at which a solution boils',
+    ],
+    correct: 1,
+    category: 'Chemistry',
+    explanation:
+      'Each step of one is a tenfold change in hydrogen ion concentration, which is why pH 3 is a hundred times more acidic than pH 5 and not twice. A \'weak\' acid is one that only partly dissociates, which is a different thing from a dilute one.',
+  },
+  {
+    question: 'What decides whether a bond is ionic or covalent?',
+    options: [
+      'Whether the atoms are metal or not, without exception',
+      'How unequally the two atoms share the electrons, which follows their electronegativity difference',
+      'The temperature of the reaction',
+      'How many atoms are involved in total',
+    ],
+    correct: 1,
+    category: 'Chemistry',
+    explanation:
+      'It is a matter of degree. A large difference pulls an electron across almost completely, which is ionic; a small one shares it, which is covalent; in between sit polar bonds, which the same scale explains without a separate rule. The metal and non-metal shortcut is a rule of thumb for the ends of that scale.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
