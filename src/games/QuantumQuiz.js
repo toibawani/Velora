@@ -1032,6 +1032,58 @@ const QUIZ_QUESTIONS = [
     explanation:
       'The wall was the most visible border of a system, not the system itself. Once travel restrictions loosened, the satellite states moved within months, and the Soviet Union dissolved two years later. The European Union came later still, in 1993.',
   },
+  {
+    question: 'What makes an enzyme specific to one reaction?',
+    options: [
+      'It is used up by the reaction it catalyses',
+      'Its active site has a shape that only certain molecules fit, and the fit is what lowers the barrier',
+      'It raises the temperature of the solution',
+      'It is the only protein in the cell',
+    ],
+    correct: 1,
+    category: 'Biology',
+    explanation:
+      'Shape is the whole mechanism: the substrate fits the active site, the transition state is stabilised, and a molecule that does not fit is not catalysed. Heating the solution would speed everything up indiscriminately, and would eventually unfold the enzyme.',
+  },
+  {
+    question: 'A cell is placed in pure water. What happens, and why?',
+    options: [
+      'Nothing, because pure water is neutral',
+      'Water moves in, because the cell has more dissolved solute and osmosis runs towards the higher concentration',
+      'Water moves out, because the cell is smaller',
+      'The cell dissolves immediately',
+    ],
+    correct: 1,
+    category: 'Biology',
+    explanation:
+      'Osmosis is water crossing a membrane towards the side with more solute. A red blood cell in pure water takes on so much that it bursts; the same cell in very salty water shrivels, because the flow reverses.',
+  },
+  {
+    question: 'What is the fundamental attribution error?',
+    options: [
+      'Explaining other people’s behaviour by their character while explaining your own by the situation',
+      'Believing you are less biased than you are',
+      'Remembering the first and last items in a list best',
+      'Agreeing with a group to avoid standing out',
+    ],
+    correct: 0,
+    category: 'Psychology',
+    explanation:
+      'The error is asymmetric: his lateness is who he is, your lateness was the traffic. It is one of the most replicated findings in social psychology, though the size of the effect varies with culture and with how much you know the person.',
+  },
+  {
+    question: 'Classical conditioning and operant conditioning both train a response. What separates them?',
+    options: [
+      'Classical pairs a stimulus with a reward; operant pairs two stimuli',
+      'Classical pairs a neutral stimulus with a reflex; operant shapes behaviour by what follows it',
+      'Classical only works on animals and operant only on people',
+      'There is no difference; the terms are interchangeable',
+    ],
+    correct: 1,
+    category: 'Psychology',
+    explanation:
+      'Pavlov’s dog learned that a bell predicted food, which is a pairing of stimuli. Skinner’s rats learned that pressing a lever produced food, which is behaviour changed by its consequence. The first is about what predicts something; the second is about what pays for something.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
