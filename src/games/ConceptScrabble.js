@@ -318,6 +318,30 @@ const SCRABBLE_LEVELS = [
     hint: 'Starts with D',
     category: 'Philosophy',
   },
+  {
+    definition: 'The apparent shift of a nearby star against the background as the Earth moves around the Sun',
+    word: 'PARALLAX',
+    hint: 'Starts with P',
+    category: 'Space',
+  },
+  {
+    definition: 'The attraction between masses, which is the weakest force and the one that shapes galaxies',
+    word: 'GRAVITY',
+    hint: 'Starts with G',
+    category: 'Physics',
+  },
+  {
+    definition: 'The sequence in which each number is the sum of the two before it',
+    word: 'FIBONACCI',
+    hint: 'Starts with F',
+    category: 'Mathematics',
+  },
+  {
+    definition: 'A number between zero and one saying how often an outcome would appear if the process ran forever',
+    word: 'PROBABILITY',
+    hint: 'Starts with P',
+    category: 'Mathematics',
+  },
 ];
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` is not a shuffle: it is
