@@ -179,8 +179,12 @@ const DUEL_PAIRS = [
     word: 'Fundamental Attribution Error',
   },
   {
-    definition: 'The roughly twenty-four hour internal clock that light resets and that a long flight disrupts',
-    word: 'Circadian Rhythm',
+    // Not the circadian rhythm, which Concept Scrabble already spells: the
+    // rule between the two decks is that a term is quizzed once, not once per
+    // game, and a test enforces it. This is the mechanism that clock leaves
+    // behind, which the other deck does not cover.
+    definition: 'The brain rewiring its own connections with use, which is why a practised skill stops costing attention',
+    word: 'Neuroplasticity',
   },
   {
     definition: 'The 1215 charter that put a king under the law, or at least under the barons who wrote it',
@@ -222,6 +226,19 @@ const normalise = (text) =>
 DefinitionDuel.propTypes = { onBack: PropTypes.func };
 
 function DefinitionDuel({ onBack }) {
+  /*
+   * The cards this round is playing, as positions in the source.
+   *
+   * It was a position in the whole deck, and the whole deck was the only round
+   * there could be: a player who missed six cards got a list of six terms to
+   * look up and no way to be asked them again. A practice round is the missed
+   * cards, in the order they came up, and it is untimed - the clock was what
+   * stopped the first pass, and running it again under the same clock would be
+   * the same test rather than a second attempt at the ones that got away.
+   */
+  const [deck, setDeck] = useState(() => DUEL_PAIRS.map((_, index) => index));
+  const [roundKind, setRoundKind] = useState('deck');
+  const isPractice = roundKind === 'practice';
   const [currentPair, setCurrentPair] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
   const [score, setScore] = useState(0);
@@ -279,6 +296,9 @@ function DefinitionDuel({ onBack }) {
 
   useEffect(() => {
     if (!gameActive) return undefined;
+    // A practice round has no clock: the cards are the ones the clock already
+    // beat, and putting them back under it would test the same minute twice.
+    if (isPractice) return undefined;
 
     const tick = () => {
       const left = timeRemaining();
@@ -305,7 +325,7 @@ function DefinitionDuel({ onBack }) {
       clearInterval(tickRef.current);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [endGame, gameActive, timeRemaining]);
+  }, [endGame, gameActive, isPractice, timeRemaining]);
 
   useEffect(
     () => () => {
@@ -322,16 +342,19 @@ function DefinitionDuel({ onBack }) {
     }
     if (recordedRef.current) return;
     recordedRef.current = true;
+    // A practice round is not a play of the deck: it is a handful of cards the
+    // deck already scored, and booking it would count one sitting twice.
+    if (isPractice) return;
     recordGameResult(DEFINITION_DUEL_GAME_ID, {
       score,
       max: DUEL_PAIRS.length * POINTS_PER_CORRECT,
     });
-  }, [gameActive, score]);
+  }, [gameActive, isPractice, score]);
 
   const handleSubmit = useCallback(() => {
     if (!gameActive || !userInput.trim()) return;
 
-    const pair = DUEL_PAIRS[currentPair];
+    const pair = DUEL_PAIRS[deck[currentPair]];
     const isCorrect = normalise(userInput) === normalise(pair.word);
 
     setAttempts((prev) => prev + 1);
@@ -352,7 +375,7 @@ function DefinitionDuel({ onBack }) {
     setUserInput('');
     setHintText('');
 
-    const isLast = currentPair === DUEL_PAIRS.length - 1;
+    const isLast = currentPair >= deck.length - 1;
     if (isLast) {
       // Finishing every card is not the same as running out of time, and
       // saying "Time's Up!" after a perfect round was a lie.
@@ -366,7 +389,7 @@ function DefinitionDuel({ onBack }) {
       setCorrect(false);
       setHintText('');
     }, 800);
-  }, [currentPair, endGame, gameActive, userInput]);
+  }, [currentPair, deck, endGame, gameActive, userInput]);
 
   /**
    * Start a fresh round without leaving the game.
@@ -382,6 +405,8 @@ function DefinitionDuel({ onBack }) {
     clearInterval(tickRef.current);
     clearTimeout(advanceRef.current);
     hintedRef.current = new Set();
+    setDeck(DUEL_PAIRS.map((_, index) => index));
+    setRoundKind('deck');
     setCurrentPair(0);
     setTimeLeft(ROUND_SECONDS);
     setScore(0);
@@ -405,18 +430,46 @@ function DefinitionDuel({ onBack }) {
     if (!gameActive) return;
     clearTimeout(advanceRef.current);
     setSkipped((prev) => prev + 1);
-    setMissed((prev) => (prev.includes(currentPair) ? prev : [...prev, currentPair]));
+    setMissed((prev) => (prev.includes(deck[currentPair]) ? prev : [...prev, deck[currentPair]]));
     setFeedback('');
     setCorrect(false);
     setHintText('');
     setUserInput('');
 
-    if (currentPair === DUEL_PAIRS.length - 1) {
+    if (currentPair >= deck.length - 1) {
       endGame(false);
       return;
     }
     setCurrentPair((prev) => prev + 1);
-  }, [currentPair, endGame, gameActive]);
+  }, [currentPair, deck, endGame, gameActive]);
+
+  /*
+   * The missed cards as their own round, untimed and in the order they came up.
+   * Offered only after a full pass, so a practice round cannot produce another
+   * one from a card that was missed twice - the second round exists to be
+   * finished, not to cascade.
+   */
+  const handlePractiseMissed = useCallback(() => {
+    if (missed.length === 0) return;
+    settledRef.current = false;
+    clearInterval(tickRef.current);
+    clearTimeout(advanceRef.current);
+    hintedRef.current = new Set();
+    setDeck(missed);
+    setRoundKind('practice');
+    setCurrentPair(0);
+    setScore(0);
+    setAttempts(0);
+    setSkipped(0);
+    setMissed([]);
+    setFinished(false);
+    setUserInput('');
+    setFeedback('');
+    setCorrect(false);
+    setHintText('');
+    setTimeLeft(ROUND_SECONDS);
+    setGameActive(true);
+  }, [missed]);
 
   /**
    * A second letter is most of a one-word answer, so the hint gives the shape
@@ -425,16 +478,16 @@ function DefinitionDuel({ onBack }) {
    */
   const handleHint = useCallback(() => {
     if (!gameActive) return;
-    const { word } = DUEL_PAIRS[currentPair];
-    hintedRef.current.add(currentPair);
+    const { word } = DUEL_PAIRS[deck[currentPair]];
+    hintedRef.current.add(deck[currentPair]);
     const parts = word.split(' ');
     setHintText(
       `${parts.length > 1 ? `${parts.length} words. ` : ''}Starts with ${word[0].toUpperCase()}.`
     );
-  }, [currentPair, gameActive]);
+  }, [currentPair, deck, gameActive]);
 
-  const pair = DUEL_PAIRS[currentPair];
-  const maxScore = DUEL_PAIRS.length * POINTS_PER_CORRECT;
+  const pair = DUEL_PAIRS[deck[currentPair]];
+  const maxScore = deck.length * POINTS_PER_CORRECT;
   const accuracy = attempts > 0 ? Math.round((score / (attempts * POINTS_PER_CORRECT)) * 100) : 0;
 
   return (
@@ -448,6 +501,11 @@ function DefinitionDuel({ onBack }) {
       </div>
 
       <div className="duel-game">
+        {isPractice ? (
+          <p className="duel-practice-flag" data-testid="duel-practice-flag">
+            Practice round: no clock, just these {deck.length}.
+          </p>
+        ) : (
         <div className={`timer ${timeLeft < 10 ? 'danger' : ''}`}>
           <div className="timer-circle">
             <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -467,6 +525,7 @@ function DefinitionDuel({ onBack }) {
             </span>
           </div>
         </div>
+        )}
 
         {gameActive ? (
           <>
@@ -520,12 +579,14 @@ function DefinitionDuel({ onBack }) {
             )}
 
             <p className="duel-progress">
-              {currentPair + 1}/{DUEL_PAIRS.length}
+              {currentPair + 1}/{deck.length}
             </p>
           </>
         ) : (
           <div className="game-over-screen">
-            <h2>{finished ? 'All cards done' : "Time's up"}</h2>
+            <h2>
+              {isPractice ? 'Practice complete' : finished ? 'All cards done' : "Time's up"}
+            </h2>
             <p className="final-score">
               {score}/{maxScore} points
             </p>
@@ -535,7 +596,9 @@ function DefinitionDuel({ onBack }) {
                 : 'No answers attempted'}
             </p>
             <p className="accuracy">
-              {finished ? `You got through all ${DUEL_PAIRS.length} definitions.` : `You reached card ${currentPair + 1} of ${DUEL_PAIRS.length}.`}
+              {finished
+                ? `You got through all ${deck.length} definitions.`
+                : `You reached card ${currentPair + 1} of ${deck.length}.`}
             </p>
             {skipped > 0 && (
               <p className="accuracy">
@@ -571,7 +634,22 @@ function DefinitionDuel({ onBack }) {
               </div>
             )}
             <div className="game-over-actions">
-              <button className="btn-restart" onClick={handleReplay}>
+              {/* The list above is a reading list. Being asked the cards again
+                * is a different act, and the ones that got away are the only
+                * ones worth another pass. */}
+              {!isPractice && missed.length > 0 && (
+                <button
+                  className="btn-restart"
+                  data-testid="duel-practise-missed"
+                  onClick={handlePractiseMissed}
+                >
+                  Run the {missed.length === 1 ? 'card' : `${missed.length} cards`} you missed
+                </button>
+              )}
+              <button
+                className={`btn-restart${!isPractice && missed.length > 0 ? ' secondary' : ''}`}
+                onClick={handleReplay}
+              >
                 Play again
               </button>
               <button className="btn-restart secondary" onClick={onBack}>

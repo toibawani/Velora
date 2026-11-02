@@ -980,3 +980,11 @@
   font-weight: 600;
   margin: 0;
 }
+
+.duel-practice-flag {
+  margin: 0 0 var(--space-4);
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
