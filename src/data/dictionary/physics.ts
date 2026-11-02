@@ -288,4 +288,27 @@ export const PHYSICS_TERMS: DictionaryTerm[] = [
     source: 'Emmy Noether, "Invariante Variationsprobleme" (1918)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Noether%27s_theorem',
   },
+
+{
+    id: 'conservation-of-energy',
+    term: 'Conservation of Energy',
+    subject: 'physics',
+    letter: 'C',
+    tagline: 'Energy is never made or destroyed, only moved and changed in form.',
+    explanation: 'The total energy of an isolated system stays constant. What changes is the form: a pendulum trades height for speed and back, and a battery trades chemical energy for current and heat. Every accounting of a physical process counts the same total before and after, which is why a perpetual motion machine is not an engineering problem but a contradiction.',
+    example: 'A roller coaster car at the top of a 40 metre lift has about 400 joules per kilogram of potential energy. At the bottom, friction and air resistance have taken some of it as heat, so the car is slightly slower than the ideal calculation - and the missing energy is measurable as a temperature rise in the track and the air.',
+    source: 'Julius von Mayer, Annalen der Chemie und Pharmacie (1842)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Conservation_of_energy',
+  },
+{
+    id: 'frame-of-reference',
+    term: 'Frame of Reference',
+    subject: 'physics',
+    letter: 'F',
+    tagline: 'Motion is only ever measured against something else.',
+    explanation: 'A frame of reference is the coordinate system an observer measures from. Speed and position depend on the frame; acceleration and the laws of physics do not, for observers in frames that move at constant velocity relative to each other. This is why a passenger can walk down a cruising train as if it were still, and why the same collision looks different from the platform and from the train.',
+    example: 'A ball dropped inside a train moving at a steady 200 kilometres per hour falls straight down relative to the carriage, but traces a parabola relative to the platform. Neither description is wrong; they are the same event in two frames.',
+    source: 'Galileo Galilei, Dialogue Concerning the Two Chief World Systems (1632)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Frame_of_reference',
+  },
 ];
