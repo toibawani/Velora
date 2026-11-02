@@ -534,4 +534,31 @@ describe('playing one subject', () => {
       max: history.length * 100,
     });
   });
+
+  test('the end of a subject round can widen back to the whole deck', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    fireEvent.change(screen.getByLabelText(/subject/i), { target: { value: 'history' } });
+    history.forEach((puzzle) => {
+      fill(...puzzle.word.split(' '));
+      submit();
+      act(() => jest.advanceTimersByTime(1300));
+    });
+
+    fireEvent.click(screen.getByTestId('puzzle-play-all'));
+
+    expect(screen.getByText(PUZZLES[0].sentence)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+    expect(screen.getByText(`Puzzle 1/${PUZZLES.length}`)).toBeInTheDocument();
+  });
+
+  test('a whole-deck round has no widening button to press', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    PUZZLES.forEach((puzzle) => {
+      fill(...puzzle.word.split(' '));
+      submit();
+      act(() => jest.advanceTimersByTime(1300));
+    });
+
+    expect(screen.queryByTestId('puzzle-play-all')).toBeNull();
+  });
 });

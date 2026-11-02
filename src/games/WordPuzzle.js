@@ -628,6 +628,18 @@ function WordPuzzle({ onBack }) {
             <button className="btn-restart" onClick={handleReplay}>
               Play again
             </button>
+            {/* A subject round ends on a screen with no deck switch on it, so
+              * someone who picked History and finished all six had to go back
+              * to the hub to reach the other forty-one sentences. */}
+            {subjectFilter !== 'all' && (
+              <button
+                className="btn-restart secondary"
+                data-testid="puzzle-play-all"
+                onClick={() => handleSubjectChange('all')}
+              >
+                Play the whole deck
+              </button>
+            )}
             <button className="btn-restart secondary" onClick={onBack}>
               Back to Games
             </button>
