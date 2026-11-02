@@ -276,6 +276,48 @@ const SCRABBLE_LEVELS = [
     hint: 'Two words',
     category: 'Economics',
   },
+  {
+    definition: 'A protein that speeds up a reaction in a living cell without being consumed',
+    word: 'ENZYME',
+    hint: 'Starts with E',
+    category: 'Chemistry',
+  },
+  {
+    definition: 'The outer electrons that decide how an atom bonds and what it will react with',
+    word: 'VALENCE',
+    hint: 'Starts with V',
+    category: 'Chemistry',
+  },
+  {
+    definition: 'The system of land, service and obligation that organised medieval Europe',
+    word: 'FEUDALISM',
+    hint: 'Starts with F',
+    category: 'History',
+  },
+  {
+    definition: 'The sixteenth-century break that split western Christianity into rival churches',
+    word: 'REFORMATION',
+    hint: 'Starts with R',
+    category: 'History',
+  },
+  {
+    definition: 'The almond-shaped structure that flags a threat before you can name it',
+    word: 'AMYGDALA',
+    hint: 'Starts with A',
+    category: 'Psychology',
+  },
+  {
+    definition: 'A treatment with no active ingredient that works because the patient expects it to',
+    word: 'PLACEBO',
+    hint: 'Starts with P',
+    category: 'Psychology',
+  },
+  {
+    definition: 'An argument carried on by contradiction, the method Hegel gave its modern shape',
+    word: 'DIALECTIC',
+    hint: 'Starts with D',
+    category: 'Philosophy',
+  },
 ];
 
 /** Fisher-Yates. `sort(() => Math.random() - 0.5)` is not a shuffle: it is
