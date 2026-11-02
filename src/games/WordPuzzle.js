@@ -667,7 +667,10 @@ function WordPuzzle({ onBack }) {
         <button className="game-back-btn" onClick={onBack}>
           &larr; Back
         </button>
-        <h2>Word Puzzle</h2>
+        {/* The hub calls this Concept Puzzle. The screen said Word Puzzle, so
+          * the game someone opened from the card had a different name, and a
+          * test that looked for either had to know both. */}
+        <h2>Concept Puzzle</h2>
         <div className="game-score">Score: {score}</div>
       </div>
 
