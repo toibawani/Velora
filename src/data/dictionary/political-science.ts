@@ -261,4 +261,27 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     source: 'Thomas Hare, The Machinery of Representation (1857)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Single_transferable_vote',
   },
+
+{
+    id: 'referendum',
+    term: 'Referendum',
+    subject: 'political-science',
+    letter: 'R',
+    tagline: 'A vote on one question, with no representative in between.',
+    explanation: 'A referendum puts a single proposal to the electorate, so the campaign is about the wording on the paper rather than about who should govern. It can be advisory or binding, and in most systems the legislature decides which questions get asked - which is why the choice of wording is itself a political act.',
+    example: 'The United Kingdom’s 2016 referendum asked whether to leave the European Union, a question with no second option and no threshold. Ireland’s referendums on constitutional change require a majority of voters, and a rejected proposal cannot be enacted by parliament alone.',
+    source: 'David Butler and Austin Ranney, Referendums Around the World (1994)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Referendum',
+  },
+{
+    id: 'coalition-government',
+    term: 'Coalition Government',
+    subject: 'political-science',
+    letter: 'C',
+    tagline: 'Parties that lost alone but can govern together.',
+    explanation: 'In proportional systems a single party rarely wins a majority, so two or more agree on a programme and share ministries. The agreement is a contract: it names what will be legislated and what each party gets, and a partner that walks out can bring the government down. Coalitions are the normal case in most European democracies, not an emergency arrangement.',
+    example: 'Germany’s federal elections usually produce a coalition, and the parties publish a detailed agreement before the chancellor is elected. Belgium went 541 days without a formed government in 2010-2011 while coalition talks continued.',
+    source: 'Wolfgang C. Müller and Kaare Strøm, Coalition Governments in Western Europe (2000)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Coalition_government',
+  },
 ];
