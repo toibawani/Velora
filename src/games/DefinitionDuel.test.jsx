@@ -374,3 +374,56 @@ describe('duel content breadth', () => {
     expect(spaceCount).toBeLessThanOrEqual(2);
   });
 });
+
+describe('running the missed cards again', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    window.localStorage.clear();
+  });
+  afterEach(() => {
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
+  });
+
+  const skipEveryCard = () =>
+    DUEL_PAIRS.forEach(() => fireEvent.click(screen.getByRole('button', { name: /skip/i })));
+
+  test('the end screen offers the missed cards as their own round', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    skipEveryCard();
+
+    fireEvent.click(screen.getByTestId('duel-practise-missed'));
+
+    expect(screen.getByTestId('duel-practice-flag')).toBeInTheDocument();
+    // The clock is what stopped the first pass. Running the same cards under
+    // the same minute would be the same test rather than a second attempt.
+    expect(screen.queryByRole('timer')).toBeNull();
+    expect(screen.getByText(DUEL_PAIRS[0].definition)).toBeInTheDocument();
+    expect(screen.getByText(`1/${DUEL_PAIRS.length}`)).toBeInTheDocument();
+  });
+
+  test('a practice round ends on its own cards and is not a second play', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    skipEveryCard();
+    const firstRound = getGameResult(DEFINITION_DUEL_GAME_ID);
+
+    fireEvent.click(screen.getByTestId('duel-practise-missed'));
+    DUEL_PAIRS.forEach((pair, index) => {
+      answer(pair.word);
+      if (index < DUEL_PAIRS.length - 1) act(() => jest.advanceTimersByTime(900));
+    });
+
+    expect(screen.getByRole('heading', { name: /practice complete/i })).toBeInTheDocument();
+    expect(getGameResult(DEFINITION_DUEL_GAME_ID)).toMatchObject({ plays: firstRound.plays });
+  });
+
+  test('a round with nothing missed has nothing to run again', () => {
+    render(<DefinitionDuel onBack={() => {}} />);
+    DUEL_PAIRS.forEach((pair, index) => {
+      answer(pair.word);
+      if (index < DUEL_PAIRS.length - 1) act(() => jest.advanceTimersByTime(900));
+    });
+
+    expect(screen.queryByTestId('duel-practise-missed')).toBeNull();
+  });
+});
