@@ -262,4 +262,27 @@ export const MATH_TERMS: DictionaryTerm[] = [
     source: 'Jacob Bernoulli, Ars Conjectandi (1713)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Law_of_large_numbers',
   },
+
+{
+    id: 'asymptote',
+    term: 'Asymptote',
+    subject: 'mathematics',
+    letter: 'A',
+    tagline: 'A line a curve closes in on without ever reaching.',
+    explanation: 'An asymptote is a boundary the function approaches as an input grows, shrinks or hits a singular point. It is not a line the curve touches later: the distance can keep halving forever and never be zero, which is the difference between getting arbitrarily close and arriving.',
+    example: 'The curve y = 1/x approaches both axes as x grows or shrinks, and crosses neither. That is why a model built on 1/x can predict a cost falling towards zero without ever allowing it to be zero.',
+    source: 'Apollonius of Perga, Conics (c. 200 BCE)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Asymptote',
+  },
+{
+    id: 'standard-deviation',
+    term: 'Standard Deviation',
+    subject: 'mathematics',
+    letter: 'S',
+    tagline: 'How far a typical value sits from the average, in the data’s own units.',
+    explanation: 'It is the square root of the variance, which brings the spread back to the units of the thing measured rather than its square. Two classes can have the same average mark and very different standard deviations: one where everyone is close to it, one where half are far above and half far below.',
+    example: 'Adult heights have a standard deviation of about 7 centimetres, so roughly two thirds of people fall within 7 centimetres of the mean. Income has a much larger spread relative to its mean, which is why an average salary says little about a typical salary.',
+    source: 'Karl Pearson, "Contributions to the Mathematical Theory of Evolution" (1894)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Standard_deviation',
+  },
 ];
