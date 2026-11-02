@@ -473,3 +473,69 @@ describe('the categories the levels are filed under', () => {
     });
   });
 });
+
+describe('playing one category', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    window.localStorage.clear();
+  });
+  afterEach(() => {
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
+  });
+
+  const inCategory = (category) => SCRABBLE_LEVELS.filter((level) => level.category === category);
+
+  test('choosing a category narrows the rack and says how much is in it', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+
+    fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Chemistry' } });
+
+    expect(screen.getByTestId('scrabble-deck-count').textContent).toContain(
+      String(inCategory('Chemistry').length)
+    );
+    expect(screen.getByText(inCategory('Chemistry')[0].definition)).toBeInTheDocument();
+    expect(screen.getByText(`Level 1/${inCategory('Chemistry').length}`)).toBeInTheDocument();
+  });
+
+  test('changing category starts a new round rather than carrying the score', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    buildWord(SCRABBLE_LEVELS[0].word);
+    fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+    expect(screen.getByText(`Score: ${POINTS_PER_WORD}`)).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'History' } });
+
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  test('a single category round is scored but not stored as a best', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Chemistry' } });
+
+    inCategory('Chemistry').forEach((level) => {
+      buildWord(level.word);
+      fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+      act(() => jest.advanceTimersByTime(1300));
+    });
+
+    expect(screen.getByRole('heading', { name: /finished/i })).toBeInTheDocument();
+    expect(screen.getByTestId('scrabble-not-stored')).toBeInTheDocument();
+    expect(getGameResult(SCRABBLE_GAME_ID)).toBeNull();
+  });
+
+  test('a category round can widen back to the whole rack', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    fireEvent.change(screen.getByLabelText(/category/i), { target: { value: 'Chemistry' } });
+    inCategory('Chemistry').forEach((level) => {
+      buildWord(level.word);
+      fireEvent.click(screen.getByRole('button', { name: /submit word/i }));
+      act(() => jest.advanceTimersByTime(1300));
+    });
+
+    fireEvent.click(screen.getByTestId('scrabble-play-all'));
+
+    expect(screen.getByText(SCRABBLE_LEVELS[0].definition)).toBeInTheDocument();
+    expect(screen.getByText(`Level 1/${SCRABBLE_LEVELS.length}`)).toBeInTheDocument();
+  });
+});
