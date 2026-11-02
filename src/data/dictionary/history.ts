@@ -225,4 +225,16 @@ export const HISTORY_TERMS: DictionaryTerm[] = [
     source: 'John Lewis Gaddis, The Cold War: A New History (2005)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Cold_War',
   },
+
+{
+    id: 'the-renaissance',
+    term: 'The Renaissance',
+    subject: 'history',
+    letter: 'R',
+    tagline: 'The recovery of classical learning that turned into a new way of looking.',
+    explanation: 'From the fourteenth century, Italian cities recovered Greek and Roman texts and began to read them as models rather than as authorities. The result was not a sudden rebirth of everything - much medieval work continued - but a shift in what an educated person was expected to know, and in the idea that the present could be improved by studying the past.',
+    example: 'Brunelleschi measured Roman ruins to work out the geometry of the dome he built in Florence, which no one had managed since antiquity. Vesalius dissected bodies and corrected Galen, whose anatomy had been received for fourteen centuries.',
+    source: 'Jacob Burckhardt, The Civilization of the Renaissance in Italy (1860)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Renaissance',
+  },
 ];
