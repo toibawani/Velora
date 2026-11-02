@@ -154,15 +154,15 @@ export const PHILOSOPHY_TERMS: DictionaryTerm[] = [
   },
 
 {
-    id: 'occams-razor',
-    term: "Occam's Razor",
+    id: 'qualia',
+    term: 'Qualia',
     subject: 'philosophy',
-    letter: 'O',
-    tagline: 'Do not multiply explanations beyond need.',
-    explanation: 'When several explanations fit the same evidence, the one positing the fewest unsupported assumptions is usually the one to test first. It is a rule for where to start looking, not proof that the simplest explanation is true.',
-    example: 'Disease was eliminated as the cause of the cattle plague in the 1990s because it fit none of the evidence, even though it was a perfectly simple candidate. Simplicity narrowed the search; it did not settle it.',
-    source: 'William of Ockham, Quodlibetal Questions, Qu. 12 (early 14th century)',
-    sourceUrl: 'https://en.wikipedia.org/wiki/Occam%27s_razor',
+    letter: 'Q',
+    tagline: 'The felt character of an experience, as opposed to the facts about it.',
+    explanation: 'Qualia are what an experience is like from the inside: the redness of red, the sting of a cold hand. Physical descriptions can fix every fact about a state and still leave out how it feels, which is the gap the term exists to name. Whether that gap is a real fact about the world or a trick of how we describe it is the dispute.',
+    example: 'Someone who has never seen colour can learn every physical fact about red light - wavelengths, cone responses, the wiring of the visual system - and still not know what red looks like. That is the knowledge argument, and qualia are its subject.',
+    source: 'Clarence Irving Lewis, Mind and the World Order (1929)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Qualia',
   },
 
 {
@@ -210,5 +210,28 @@ export const PHILOSOPHY_TERMS: DictionaryTerm[] = [
     example: 'Plutarch records that Athens kept Theseus\' ship by replacing worn planks over centuries, and asked whether the result was the same ship. Hobbes added the twist: a collector reassembles the discarded planks, so there are now two candidates and only one can be the original.',
     source: 'Plutarch, Life of Theseus (c. 100 CE)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Ship_of_Theseus',
+  },
+
+{
+    id: 'dualism',
+    term: 'Dualism',
+    subject: 'philosophy',
+    letter: 'D',
+    tagline: 'The claim that mind and body are two kinds of thing, not one.',
+    explanation: 'Substance dualism holds that mental states are states of a non-physical substance, which is why the mind can survive the body. The standing problem is interaction: if the mind is not physical, how does a decision move a hand? Property dualism gives up the second substance and keeps the claim that experience is not reducible to physical description.',
+    example: 'Descartes argued he could doubt the existence of his body but not of his thinking, and concluded the two must be different things. Modern dualists usually defend the harder question - why any physical process feels like anything at all - rather than a separate soul.',
+    source: 'René Descartes, Meditations on First Philosophy (1641)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Mind%E2%80%93body_dualism',
+  },
+{
+    id: 'occams-razor',
+    term: 'Occam\'s Razor',
+    subject: 'philosophy',
+    letter: 'O',
+    tagline: 'Do not multiply explanations beyond what the evidence needs.',
+    explanation: 'When two accounts fit the same evidence, the one that posits fewer independent entities is preferred - not because simpler is truer, but because every extra part is another thing that could be wrong. It is a rule about which theory to test first, not a proof that the simpler one wins.',
+    example: 'A patient with a fever, a rash and a headache is more likely to have one illness that causes all three than three unrelated conditions arriving together. The razor cuts the three-illness story, and a test then decides whether the one-illness story survives.',
+    source: 'William of Ockham, Summa Logicae (c. 1323)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Occam%27s_razor',
   },
 ];
