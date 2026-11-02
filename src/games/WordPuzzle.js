@@ -445,6 +445,48 @@ const PUZZLES = [
     blanks: 1,
     subject: 'political-science',
   },
+  {
+    hint: 'One word',
+    sentence: 'The distance between two neighbouring crests of a wave is its _____.',
+    word: 'WAVELENGTH',
+    blanks: 1,
+    subject: 'physics',
+  },
+  {
+    hint: 'One word',
+    sentence: 'The height of a wave, which is what its loudness or brightness follows, is its _____.',
+    word: 'AMPLITUDE',
+    blanks: 1,
+    subject: 'physics',
+  },
+  {
+    hint: 'One word',
+    sentence: 'A solid that comes out of a solution when two clear liquids are mixed is a _____.',
+    word: 'PRECIPITATE',
+    blanks: 1,
+    subject: 'chemistry',
+  },
+  {
+    hint: 'One word',
+    sentence: 'The green pigment that captures light in a leaf is _____.',
+    word: 'CHLOROPHYLL',
+    blanks: 1,
+    subject: 'biology',
+  },
+  {
+    hint: 'One word',
+    sentence: 'An agreement to stop fighting, which is not the same as a peace treaty, is an _____.',
+    word: 'ARMISTICE',
+    blanks: 1,
+    subject: 'history',
+  },
+  {
+    hint: 'One word',
+    sentence: 'How far a set of values spreads around its mean, squared, is the _____.',
+    word: 'VARIANCE',
+    blanks: 1,
+    subject: 'mathematics',
+  },
 ];
 
 const POINTS_PER_PUZZLE = 100;
