@@ -174,6 +174,46 @@ const CHAINS = [
       'created a reading public that could form a',
     ],
   },
+
+  // Four more subjects, each with a mechanism rather than a topic list: what a
+  // reaction has to climb, what a railway did to freight, what stress does to
+  // sleep, and what a model owes the data.
+  {
+    title: 'Reaction Chain',
+    concepts: ['Reactants', 'Activation Energy', 'Transition State', 'Products'],
+    links: [
+      'must climb an energy barrier called',
+      'to reach the unstable arrangement known as the',
+      'which then falls apart into',
+    ],
+  },
+  {
+    title: 'Railway Chain',
+    concepts: ['Railway', 'Cheap Freight', 'National Market', 'Factory Scale'],
+    links: [
+      'cut the cost of moving goods, producing',
+      'cheap enough to sell a product hundreds of miles away, which turns local trade into a',
+      'large enough to justify machinery that only pays off at',
+    ],
+  },
+  {
+    title: 'Stress Chain',
+    concepts: ['Threat', 'Cortisol', 'Heightened Alertness', 'Sleep Loss'],
+    links: [
+      'triggers the release of',
+      'which keeps the body in a state of',
+      'and a body that will not stand down at night is what produces',
+    ],
+  },
+  {
+    title: 'Model Chain',
+    concepts: ['Assumption', 'Model', 'Prediction', 'Evidence'],
+    links: [
+      'simplifies the world into a',
+      'which licenses a specific',
+      'that can only count against the model if it was stated before the',
+    ],
+  },
 ];
 
 /** The id this game is recorded under in the hub's per-game history. */
