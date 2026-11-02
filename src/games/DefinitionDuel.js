@@ -230,6 +230,22 @@ const DUEL_PAIRS = [
     definition: 'Making more of a good with the same resources than anyone else can, without any trade-off being involved',
     word: 'Absolute Advantage',
   },
+  {
+    definition: 'Yeast converting sugar without oxygen, which is how bread rises and beer exists',
+    word: 'Fermentation',
+  },
+  {
+    definition: 'A state where nobody can be made better off without making someone else worse off',
+    word: 'Pareto Efficiency',
+  },
+  {
+    definition: 'Rising prices at the same time as stagnant output, which the simple trade-off does not predict',
+    word: 'Stagflation',
+  },
+  {
+    definition: 'A legislature with two chambers that must both pass the same bill',
+    word: 'Bicameralism',
+  },
 ];
 
 const ROUND_SECONDS = 60;
