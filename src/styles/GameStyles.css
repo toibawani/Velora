@@ -792,7 +792,8 @@
 /* Choosing a deck. A row rather than a settings panel because the choice is
  * the first thing this screen asks: all forty-seven sentences, or the ones
  * from the subject just studied. */
-.puzzle-deck-row {
+.puzzle-deck-row,
+.quiz-deck-row {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -800,18 +801,21 @@
   margin-bottom: var(--space-5);
 }
 
-.puzzle-deck-label {
+.puzzle-deck-label,
+.quiz-deck-label {
   color: var(--text-tertiary);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.puzzle-deck-select {
+.puzzle-deck-select,
+.quiz-deck-select {
   max-width: 100%;
 }
 
-.puzzle-deck-count {
+.puzzle-deck-count,
+.quiz-deck-count {
   color: var(--text-tertiary);
   font-size: 0.8125rem;
 }

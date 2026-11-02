@@ -520,3 +520,76 @@ describe('Concept Check quiz', () => {
     expect(screen.getByRole('heading', { name: /quiz complete/i })).toBeInTheDocument();
   });
 });
+
+describe('choosing a category', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
+  // Every category the switch offers, taken from the deck the questions carry
+  // rather than a list repeated here, so a new category shows up in the test
+  // the same way it shows up in the switch.
+  const categories = Array.from(new Set(QUIZ_QUESTIONS.map((q) => q.category)));
+  const categoryDeck = (category) => QUIZ_QUESTIONS.filter((q) => q.category === category);
+
+  const answerRound = (questions) => {
+    questions.forEach((question) => {
+      const option = screen
+        .getAllByTestId('option-text')
+        .find((node) => node.textContent === question.options[question.correct])
+        .closest('button');
+      fireEvent.click(option);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    });
+  };
+
+  test('picking a category starts a round of exactly that category', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    const category = categories[0];
+
+    fireEvent.change(screen.getByLabelText(/category/i), { target: { value: category } });
+
+    expect(screen.getByTestId('quiz-deck-count').textContent).toContain(
+      String(categoryDeck(category).length)
+    );
+    expect(screen.getByText(categoryDeck(category)[0].question)).toBeInTheDocument();
+    expect(screen.getByText(`Question 1/${categoryDeck(category).length}`)).toBeInTheDocument();
+  });
+
+  // The record holds one best against one maximum, so a four question round
+  // cannot sit beside a fifty-three question one: 40 of 40 would either never
+  // beat the whole deck best or would replace it and leave the card reading
+  // "best 40 of 530".
+  test('a category round is scored but not stored as a best', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    const category = categories[0];
+    fireEvent.change(screen.getByLabelText(/category/i), { target: { value: category } });
+
+    answerRound(categoryDeck(category));
+
+    expect(
+      screen.getByRole('heading', { name: new RegExp(`${category} round complete`, 'i') })
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('quiz-not-stored')).toBeInTheDocument();
+    expect(getGameResult(QUIZ_GAME_ID)).toBeNull();
+  });
+
+  test('a category round can widen back to the whole deck', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+    const category = categories[0];
+    fireEvent.change(screen.getByLabelText(/category/i), { target: { value: category } });
+    answerRound(categoryDeck(category));
+
+    fireEvent.click(screen.getByTestId('quiz-play-all'));
+
+    expect(screen.getByText(QUIZ_QUESTIONS[0].question)).toBeInTheDocument();
+    expect(screen.getByText(`Question 1/${QUIZ_QUESTIONS.length}`)).toBeInTheDocument();
+    expect(getGameResult(QUIZ_GAME_ID)).toBeNull();
+  });
+
+  test('every category in the switch has questions behind it', () => {
+    categories.forEach((category) => {
+      expect(categoryDeck(category).length).toBeGreaterThanOrEqual(3);
+    });
+  });
+});

@@ -737,6 +737,19 @@ const QUIZ_QUESTIONS = [
 const POINTS_PER_CORRECT = 10;
 
 /**
+ * Every category the deck files a question under, in the order they first
+ * appear, with the whole-deck option first. Read off the deck so a category
+ * added to a question shows up in the switch without anyone remembering it.
+ */
+export const QUIZ_CATEGORIES = [
+  'All',
+  ...QUIZ_QUESTIONS.reduce((seen, question) => {
+    if (!seen.includes(question.category)) seen.push(question.category);
+    return seen;
+  }, []),
+];
+
+/**
  * Where each option is drawn on screen.
  *
  * The options were rendered in the order they are written in the data, and the
@@ -786,6 +799,18 @@ function QuantumQuiz({ onBack }) {
   // bar, the "question 4 of 26" label, the final total - reads this instead, so
   // a practice round cannot claim to be out of 26 when it holds three.
   const [deck, setDeck] = useState(() => QUIZ_QUESTIONS.map((_, index) => index));
+  /*
+   * What kind of round is being played, and which category it came from.
+   *
+   * The deck holds fifty-three questions across eleven categories, and the only
+   * way to reach a category was to play through every other one first. A deck
+   * is now one of three things - the whole set, one category, or the questions
+   * just answered wrong - and the kind says which, because "is this deck the
+   * whole deck" stopped being a question a length can answer once a category
+   * happened to hold every question.
+   */
+  const [roundKind, setRoundKind] = useState('deck');
+  const [categoryFilter, setCategoryFilter] = useState('All');
   // A run of consecutive right answers, and the longest run of the round.
   //
   // The score is cumulative, so it cannot show momentum: getting four right,
@@ -807,15 +832,28 @@ function QuantumQuiz({ onBack }) {
   // plays for one sitting.
   const recordedRef = useRef(false);
 
-  const question = QUIZ_QUESTIONS[deck[currentQuestion]];
+  /*
+   * The position in the deck is not the position in the source.
+   *
+   * These were the same number until a deck could be a subset, and the options
+   * were read from the source rather than from the deck: a practice round of
+   * three missed questions drew "What is gravitational lensing?" above four
+   * answers about photosynthesis. Both the text and the options have to be
+   * built from the same question index.
+   */
+  const questionIndex = deck[currentQuestion];
+  const question = QUIZ_QUESTIONS[questionIndex];
   const isLast = currentQuestion === deck.length - 1;
   // A practice round is a subset, so it is not comparable to a full one and is
   // not recorded. Booking it would either overwrite the best with a score out
   // of 30 or leave a best that the maximum no longer explains.
-  const isPractice = deck.length !== QUIZ_QUESTIONS.length;
+  const isPractice = roundKind === 'practice';
+  // Neither a practice round nor a single category is comparable to the whole
+  // deck's best, so neither is stored. See the note on the end screen.
+  const isNarrowed = roundKind !== 'deck';
   // Positions in the original options array, so `question.correct` still grades
   // and the displayed order stays separate from the data order.
-  const options = useMemo(() => shuffledOptions(currentQuestion), [currentQuestion]);
+  const options = useMemo(() => shuffledOptions(questionIndex), [questionIndex]);
 
   /**
    * Back to the first question with nothing carried over.
@@ -826,8 +864,14 @@ function QuantumQuiz({ onBack }) {
    * count, the missed list, the selected answer and the answered flag - or a
    * second round starts halfway through the first one's results.
    */
-  const handleReplay = useCallback(() => {
-    setDeck(QUIZ_QUESTIONS.map((_, index) => index));
+  const startRound = useCallback((category) => {
+    setDeck(
+      QUIZ_QUESTIONS.map((_, index) => index).filter(
+        (index) => category === 'All' || QUIZ_QUESTIONS[index].category === category
+      )
+    );
+    setCategoryFilter(category);
+    setRoundKind(category === 'All' ? 'deck' : 'category');
     setCurrentQuestion(0);
     setScore(0);
     setCorrectCount(0);
@@ -841,6 +885,16 @@ function QuantumQuiz({ onBack }) {
     setBestStreak(0);
     recordedRef.current = false;
   }, []);
+
+  /*
+   * Play again means the round that just finished, except after a practice
+   * round: that one is a handful of questions already answered wrong, so
+   * repeating it would be a memory test of the last two minutes rather than a
+   * round of the deck. The button says "Play the whole deck" there.
+   */
+  const handleReplay = useCallback(() => {
+    startRound(roundKind === 'practice' ? 'All' : categoryFilter);
+  }, [categoryFilter, roundKind, startRound]);
 
   const handleAnswerClick = useCallback(
     (index) => {
@@ -869,7 +923,7 @@ function QuantumQuiz({ onBack }) {
       // The round is recorded here rather than in an effect on gameOver, so the
       // score that lands is the one this round earned before any of it was
       // cleared for a replay. A practice round is not recorded at all.
-      if (!recordedRef.current && !isPractice) {
+      if (!recordedRef.current && !isNarrowed) {
         recordedRef.current = true;
         recordGameResult(QUIZ_GAME_ID, {
           score,
@@ -881,7 +935,7 @@ function QuantumQuiz({ onBack }) {
     setCurrentQuestion((prev) => prev + 1);
     setSelectedAnswer(null);
     setAnswered(false);
-  }, [isLast, isPractice, score]);
+  }, [isLast, isNarrowed, score]);
 
   /**
    * Play the questions that were answered wrong, and only those.
@@ -893,6 +947,7 @@ function QuantumQuiz({ onBack }) {
    */
   const handlePractiseMissed = useCallback(() => {
     setDeck(missed);
+    setRoundKind('practice');
     setCurrentQuestion(0);
     setScore(0);
     setCorrectCount(0);
@@ -950,7 +1005,13 @@ function QuantumQuiz({ onBack }) {
     return (
       <div className="game-screen">
         <div className="game-over-screen">
-          <h2>{isPractice ? 'Practice round complete' : 'Quiz complete'}</h2>
+          <h2>
+            {isPractice
+              ? 'Practice round complete'
+              : roundKind === 'category'
+              ? `${categoryFilter} round complete`
+              : 'Quiz complete'}
+          </h2>
           <p className="final-score">
             {correctCount} of {total} correct
           </p>
@@ -964,6 +1025,13 @@ function QuantumQuiz({ onBack }) {
               ? 'Longest run: one in a row.'
               : `Longest run: ${bestStreak} in a row.`}
           </p>
+
+          {isNarrowed && (
+            <p className="game-completed-msg" data-testid="quiz-not-stored">
+              {isPractice ? 'A practice round' : 'A single category'} is scored here but not
+              stored as a best, because it is not comparable to the whole deck.
+            </p>
+          )}
 
           <div className="performance">
             {percentage === 100 && <p>Every one right.</p>}
@@ -1017,6 +1085,15 @@ function QuantumQuiz({ onBack }) {
             <button className={`btn-restart${missed.length > 0 ? ' secondary' : ''}`} onClick={handleReplay}>
               {isPractice ? 'Play the whole deck' : 'Play again'}
             </button>
+            {roundKind === 'category' && (
+              <button
+                className="btn-restart secondary"
+                data-testid="quiz-play-all"
+                onClick={() => startRound('All')}
+              >
+                Play all categories
+              </button>
+            )}
             <button className="btn-restart secondary" onClick={onBack}>
               Back to Games
             </button>
@@ -1048,6 +1125,31 @@ function QuantumQuiz({ onBack }) {
       </div>
 
       <div className="quiz-game">
+        {/* The category switch. Fifty-three questions across eleven categories
+          * is a long sitting with no way in except the front, and someone who
+          * has just read a lesson on one subject has every reason to start
+          * there. */}
+        <div className="quiz-deck-row">
+          <label className="quiz-deck-label" htmlFor="quiz-category">
+            Category
+          </label>
+          <select
+            id="quiz-category"
+            className="quiz-deck-select"
+            value={categoryFilter}
+            onChange={(event) => startRound(event.target.value)}
+          >
+            {QUIZ_CATEGORIES.map((category) => (
+              <option key={category} value={category}>
+                {category === 'All' ? 'All categories' : category}
+              </option>
+            ))}
+          </select>
+          <span className="quiz-deck-count" data-testid="quiz-deck-count">
+            {deck.length} {deck.length === 1 ? 'question' : 'questions'}
+          </span>
+        </div>
+
         <div className="game-progress">
           <div
             className="progress-bar"
