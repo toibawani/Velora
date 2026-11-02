@@ -294,6 +294,24 @@ const POINTS_PER_WORD = 100;
 ConceptScrabble.propTypes = { onBack: PropTypes.func };
 
 function ConceptScrabble({ onBack }) {
+  /*
+   * Which category the rack is drawn from.
+   *
+   * Thirty-six levels in one sitting, and no way in except the front, so a
+   * reader who has just finished an economics lesson had to spell their way
+   * through ten space and biology terms to reach it. 'All' is the deck as
+   * written, so the default is unchanged.
+   */
+  const [categoryFilter, setCategoryFilter] = useState('All');
+  const deck = useMemo(
+    () =>
+      SCRABBLE_LEVELS.map((entry, index) => index).filter(
+        (index) => categoryFilter === 'All' || SCRABBLE_LEVELS[index].category === categoryFilter
+      ),
+    [categoryFilter]
+  );
+  // A single category is a practice deck - see the note on the end screen.
+  const isNarrowed = categoryFilter !== 'All';
   const [currentLevel, setCurrentLevel] = useState(0);
   const [selectedLetters, setSelectedLetters] = useState([]);
   const [score, setScore] = useState(0);
@@ -342,14 +360,18 @@ function ConceptScrabble({ onBack }) {
     }
     if (recordedRef.current) return;
     recordedRef.current = true;
+    // A single category is not comparable to the whole rack, so it is scored on
+    // its own end screen and not stored as a best.
+    if (isNarrowed) return;
     recordGameResult(SCRABBLE_GAME_ID, {
       score,
       max: SCRABBLE_LEVELS.length * POINTS_PER_WORD,
     });
-  }, [gameOver, score]);
+  }, [gameOver, isNarrowed, score]);
 
-  const level = SCRABBLE_LEVELS[currentLevel];
-  const isLastLevel = currentLevel === SCRABBLE_LEVELS.length - 1;
+  const levelIndex = deck[currentLevel];
+  const level = SCRABBLE_LEVELS[levelIndex];
+  const isLastLevel = currentLevel >= deck.length - 1;
 
   // Memoised on the level, and only the level. Recomputing this on every
   // render reshuffled the rack every time you clicked a tile, and because a
@@ -450,9 +472,18 @@ function ConceptScrabble({ onBack }) {
    * advance both have to go, or a replay inherits the last level's booked move
    * and jumps a level on its own.
    */
-  const handleReplay = useCallback(() => {
+  /**
+   * Switch decks and start over in the new one.
+   *
+   * Every counter is cleared: a round of four chemistry terms cannot inherit
+   * the score of six biology ones. The filter is applied here rather than in an
+   * effect, so the first level of the new rack is ready on the same render the
+   * reader asked for it.
+   */
+  const handleCategoryChange = useCallback((next) => {
     clearTimeout(advanceRef.current);
     clearTimeout(shakeRef.current);
+    setCategoryFilter(next);
     setCurrentLevel(0);
     setSelectedLetters([]);
     setScore(0);
@@ -466,19 +497,25 @@ function ConceptScrabble({ onBack }) {
     setRackOffset(0);
   }, []);
 
+  // Play again means the rack that just finished, not the whole set.
+  const handleReplay = useCallback(
+    () => handleCategoryChange(categoryFilter),
+    [categoryFilter, handleCategoryChange]
+  );
+
   const handleSkip = useCallback(() => {
     // Skipping a level already solved would throw away the level just earned
     // and cost a second advance on top of the one already booked.
     if (settled) return;
     setSkipped((prev) => prev + 1);
     setSkippedLevels((prev) =>
-      prev.includes(currentLevel) ? prev : [...prev, currentLevel]
+      prev.includes(levelIndex) ? prev : [...prev, levelIndex]
     );
     goToNextLevel();
-  }, [currentLevel, goToNextLevel, settled]);
+  }, [goToNextLevel, levelIndex, settled]);
 
   if (gameOver) {
-    const total = SCRABBLE_LEVELS.length;
+    const total = deck.length;
     return (
       <div className="game-screen">
         <div className="game-over-screen">
@@ -488,6 +525,12 @@ function ConceptScrabble({ onBack }) {
             You solved {solvedCount} of {total}
             {skipped > 0 ? `, and skipped ${skipped}.` : ', with none skipped.'}
           </p>
+          {isNarrowed && (
+            <p className="game-completed-msg" data-testid="scrabble-not-stored">
+              A single category is scored here but not stored as a best, because it is not
+              comparable to the whole rack.
+            </p>
+          )}
           {skippedLevels.length > 0 && (
             <div className="quiz-review" data-testid="scrabble-review">
               <h3>
@@ -515,6 +558,15 @@ function ConceptScrabble({ onBack }) {
             <button className="btn-restart" onClick={handleReplay}>
               Play again
             </button>
+            {isNarrowed && (
+              <button
+                className="btn-restart secondary"
+                data-testid="scrabble-play-all"
+                onClick={() => handleCategoryChange('All')}
+              >
+                Play the whole rack
+              </button>
+            )}
             <button className="btn-restart secondary" onClick={onBack}>
               Back to Games
             </button>
@@ -535,22 +587,47 @@ function ConceptScrabble({ onBack }) {
       </div>
 
       <div className="scrabble-game">
+        {/* The category switch. Thirty-six levels with no way in except the
+          * front meant a reader who had just studied economics spelled their way
+          * through ten other terms to reach it. */}
+        <div className="scrabble-deck-row">
+          <label className="scrabble-deck-label" htmlFor="scrabble-category">
+            Category
+          </label>
+          <select
+            id="scrabble-category"
+            className="scrabble-deck-select"
+            value={categoryFilter}
+            onChange={(event) => handleCategoryChange(event.target.value)}
+          >
+            <option value="All">All categories</option>
+            {[...new Set(SCRABBLE_LEVELS.map((entry) => entry.category))].map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <span className="scrabble-deck-count" data-testid="scrabble-deck-count">
+            {deck.length} {deck.length === 1 ? 'term' : 'terms'}
+          </span>
+        </div>
+
         <div className="game-progress">
           <div
             className="progress-bar"
             role="progressbar"
             aria-valuemin={1}
-            aria-valuemax={SCRABBLE_LEVELS.length}
+            aria-valuemax={deck.length}
             aria-valuenow={currentLevel + 1}
             aria-label="Level progress"
           >
             <div
               className="progress-fill"
-              style={{ width: `${((currentLevel + 1) / SCRABBLE_LEVELS.length) * 100}%` }}
+              style={{ width: `${((currentLevel + 1) / deck.length) * 100}%` }}
             />
           </div>
           <span className="progress-text">
-            Level {currentLevel + 1}/{SCRABBLE_LEVELS.length}
+            Level {currentLevel + 1}/{deck.length}
           </span>
         </div>
 

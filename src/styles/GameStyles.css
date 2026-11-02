@@ -988,3 +988,27 @@
   letter-spacing: 0.04em;
   text-align: center;
 }
+
+.scrabble-deck-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.scrabble-deck-label {
+  color: var(--text-tertiary);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scrabble-deck-select {
+  max-width: 100%;
+}
+
+.scrabble-deck-count {
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+}
