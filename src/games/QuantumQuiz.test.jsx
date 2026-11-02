@@ -593,3 +593,43 @@ describe('choosing a category', () => {
     });
   });
 });
+
+describe('a deck that is not the whole deck', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
+  /*
+   * The options were built from the position in the deck rather than from the
+   * position in the source, and the two are the same number only while the deck
+   * is every question in order. In a practice round of three missed questions
+   * the screen said "What is gravitational lensing?" above the four answers to
+   * the event horizon question, so the only way to answer was to ignore the
+   * question and remember the answer from earlier.
+   */
+  test('a practice round draws the options of the question it is asking', () => {
+    render(<QuantumQuiz onBack={() => {}} />);
+
+    // Always take the first option on screen, which is not the answer to every
+    // question, so there is something to practise.
+    for (let i = 0; i < QUIZ_QUESTIONS.length; i += 1) {
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+    fireEvent.click(screen.getByRole('button', { name: /practise the/i }));
+
+    const total = Number(/1\/(\d+)/.exec(screen.getByText(/practice 1\//i).textContent)[1]);
+    for (let i = 0; i < total; i += 1) {
+      const heading = screen.getByRole('heading', { level: 3 }).textContent;
+      const source = QUIZ_QUESTIONS.find((q) => q.question === heading);
+      // Every option on screen has to be one of this question's options, and
+      // all of them have to be there: a mix of two questions is the failure.
+      expect(source).toBeDefined();
+      expect(screen.getAllByTestId('option-text').map((node) => node.textContent).sort()).toEqual(
+        [...source.options].sort()
+      );
+      fireEvent.click(screen.getAllByRole('button', { name: /^[A-D]\s/ })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));
+    }
+  });
+});
