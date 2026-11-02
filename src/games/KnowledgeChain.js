@@ -230,6 +230,10 @@ function KnowledgeChain({ onBack }) {
   const [message, setMessage] = useState('');
   const [solved, setSolved] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
+  // Chains the player asked to see rather than order. Kept so the end screen
+  // can quote the order and the links they would have had to reason their way
+  // to - the part worth rereading, and the only part a score cannot say.
+  const [missed, setMissed] = useState([]);
   const advanceRef = useRef(null);
 
   const chain = CHAINS[currentChain];
@@ -304,6 +308,39 @@ function KnowledgeChain({ onBack }) {
     setHintsUsed((prev) => prev + 1);
   }, [solved]);
 
+  /**
+   * Give up on this chain and see it.
+   *
+   * A chain you cannot order was a dead end: the only controls were undo,
+   * hint and check, so the set could not be finished at all without solving
+   * every one of the twelve. This shows the chain, banks nothing for it, and
+   * keeps it for the end screen - where the order and the links are the thing
+   * worth rereading, and where a player who gave up can find it again.
+   */
+  const handleGiveUp = useCallback(() => {
+    if (solved) return;
+
+    setSolved(true);
+    setMessage('Here it is. This chain scores nothing, and it is on the end screen.');
+    setMissed((prev) => (prev.includes(currentChain) ? prev : [...prev, currentChain]));
+
+    if (isLastChain) {
+      recordGameResult(KNOWLEDGE_CHAIN_GAME_ID, {
+        score,
+        max: CHAINS.length * POINTS_PER_CHAIN,
+      });
+      return;
+    }
+
+    advanceRef.current = setTimeout(() => {
+      setCurrentChain((prev) => prev + 1);
+      setSelectedConcepts([]);
+      setSolved(false);
+      setMessage('');
+      setHintsUsed(0);
+    }, 2600);
+  }, [currentChain, isLastChain, score, solved]);
+
   const handleReset = useCallback(() => {
     clearTimeout(advanceRef.current);
     setSelectedConcepts([]);
@@ -328,6 +365,7 @@ function KnowledgeChain({ onBack }) {
     setMessage('');
     setSolved(false);
     setHintsUsed(0);
+    setMissed([]);
   }, []);
 
   return (
@@ -420,6 +458,14 @@ function KnowledgeChain({ onBack }) {
           >
             Check Chain
           </button>
+          <button
+            className="btn-undo"
+            data-testid="chain-give-up"
+            onClick={handleGiveUp}
+            disabled={solved}
+          >
+            Show me the chain
+          </button>
           <button className="btn-undo" onClick={handleReset}>
             Start Over
           </button>
@@ -431,6 +477,27 @@ function KnowledgeChain({ onBack }) {
         {isLastChain && solved && (
           <>
             <p className="chain-progress">All chains done. Final score {score}.</p>
+            {missed.length > 0 && (
+              <div className="quiz-review" data-testid="chain-review">
+                <h3>
+                  {missed.length === 1
+                    ? 'The chain you asked to see'
+                    : `The ${missed.length} chains you asked to see`}
+                </h3>
+                <ul className="quiz-review-list">
+                  {missed.map((index) => (
+                    <li key={CHAINS[index].title} className="quiz-review-item">
+                      <p className="quiz-review-question">{CHAINS[index].title}</p>
+                      {CHAINS[index].links.map((link, i) => (
+                        <p key={link + i} className="quiz-review-explanation">
+                          {CHAINS[index].concepts[i]} {link} {CHAINS[index].concepts[i + 1]}
+                        </p>
+                      ))}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className="game-over-actions">
               <button className="btn-restart" onClick={handleReplay}>
                 Play again
