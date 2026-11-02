@@ -767,6 +767,55 @@
   line-height: 1.5;
 }
 
+/* The hint used to inherit the sentence's orange, so "One word" was styled as
+ * if it were part of the clue and read as loudly as the sentence itself. */
+.puzzle-sentence p.hint-text {
+  margin-top: var(--space-3);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: var(--weight-regular);
+}
+
+.puzzle-subject-tag {
+  display: inline-block;
+  margin-right: var(--space-2);
+  padding: 1px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  color: var(--text-tertiary);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+
+/* Choosing a deck. A row rather than a settings panel because the choice is
+ * the first thing this screen asks: all forty-seven sentences, or the ones
+ * from the subject just studied. */
+.puzzle-deck-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+.puzzle-deck-label {
+  color: var(--text-tertiary);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.puzzle-deck-select {
+  max-width: 100%;
+}
+
+.puzzle-deck-count {
+  color: var(--text-tertiary);
+  font-size: 0.8125rem;
+}
+
 .puzzle-inputs {
   display: flex;
   flex-direction: column;

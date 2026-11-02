@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { recordGameResult } from '../utils/gameResults';
+import { DICTIONARY_SUBJECTS } from '../data/dictionary/subjects';
 import '../styles/GameStyles.css';
 
 /** The id this game is filed under, in stored results and in the hub's list. */
@@ -24,30 +25,35 @@ const PUZZLES = [
     sentence: 'A massive star that collapses can leave a _____ behind.',
     word: 'BLACK HOLE',
     blanks: 2,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'Plants use _____ to turn sunlight into sugar.',
     word: 'PHOTOSYNTHESIS',
     blanks: 1,
+    subject: 'biology',
   },
   {
     hint: 'One word',
     sentence: 'A substance that speeds up a reaction without being used up is a _____.',
     word: 'CATALYST',
     blanks: 1,
+    subject: 'chemistry',
   },
   {
     hint: 'Two words',
     sentence: 'Nothing that crosses the _____ of a black hole ever comes back out.',
     word: 'EVENT HORIZON',
     blanks: 2,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'In an isolated system, _____ tends to increase over time.',
     word: 'ENTROPY',
     blanks: 1,
+    subject: 'physics',
   },
   {
     // The hint said "Two words" for a one-word answer. The sentence already
@@ -57,60 +63,70 @@ const PUZZLES = [
     sentence: 'Gravity bends light, and the result is called gravitational _____.',
     word: 'LENSING',
     blanks: 1,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'The energy an object has because it is moving is called _____ energy.',
     word: 'KINETIC',
     blanks: 1,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'The chemical bond in which one atom takes electrons away from another is _____ bonding.',
     word: 'IONIC',
     blanks: 1,
+    subject: 'chemistry',
   },
   {
     hint: 'One word',
     sentence: 'The splitting of one heavy nucleus into lighter ones, releasing energy, is called nuclear _____.',
     word: 'FISSION',
     blanks: 1,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'The change of a gas into liquid happens when it is _____.',
     word: 'CONDENSED',
     blanks: 1,
+    subject: 'chemistry',
   },
   {
     hint: 'One word',
     sentence: 'The outward push of a fluid on a surface is called _____ pressure.',
     word: 'BLOOD',
     blanks: 1,
+    subject: 'biology',
   },
   {
     hint: 'One word',
     sentence: 'The transfer of heat through a solid, metal or empty space with no movement of the substance itself, is _____ conduction.',
     word: 'THERMAL',
     blanks: 1,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'In statistics, a chance result you would still expect to see fairly often is called _____.',
     word: 'FLUKE',
     blanks: 1,
+    subject: 'mathematics',
   },
   {
     hint: 'One word',
     sentence: 'Everyone who takes the same wrong medicine gets sick, but the fever spreading person to person is a _____.',
     word: 'CONTAGION',
     blanks: 1,
+    subject: 'biology',
   },
   {
     hint: 'One word',
     sentence: 'A claim with no evidence and no interest in whether it is true is a _____.',
     word: 'FABRICATION',
     blanks: 1,
+    subject: 'philosophy',
   },
 
   // Philosophy.
@@ -126,36 +142,42 @@ const PUZZLES = [
     sentence: 'Kant held that some acts are right in themselves and would be right however everyone chose them, which is the _____ imperative.',
     word: 'CATEGORICAL IMPERATIVE',
     blanks: 2,
+    subject: 'philosophy',
   },
   {
     hint: 'Three words',
     sentence: 'Rawls said to choose the principles of justice before knowing what position you would end up in, behind the _____ of ignorance.',
     word: 'VEIL OF IGNORANCE',
     blanks: 3,
+    subject: 'philosophy',
   },
   {
     hint: 'Two words',
     sentence: 'In philosophy, judging a person by the character they have built over a whole life rather than by any single act is the _____ approach.',
     word: 'VIRTUE ETHICS',
     blanks: 2,
+    subject: 'philosophy',
   },
   {
     hint: 'One word',
     sentence: 'The branch of philosophy that asks what knowledge is, and how anyone could ever get any, is _____.',
     word: 'EPISTEMOLOGY',
     blanks: 1,
+    subject: 'philosophy',
   },
   {
     hint: 'One word',
     sentence: 'In philosophy, holding that a belief is true when it works well in practice rather than because it matches reality is called _____.',
     word: 'PRAGMATISM',
     blanks: 1,
+    subject: 'philosophy',
   },
   {
     hint: 'Two words',
     sentence: 'Philippa Foot built the _____ in 1967 to show that an argument against killing could not stay as tidy as it claimed.',
     word: 'TROLLEY PROBLEM',
     blanks: 2,
+    subject: 'philosophy',
   },
 
   // Economics, statistics, politics, psychology and biology.
@@ -169,120 +191,189 @@ const PUZZLES = [
     sentence: 'The real cost of a choice is the _____: the value of the best thing you gave up to make it.',
     word: 'OPPORTUNITY COST',
     blanks: 2,
+    subject: 'economics',
   },
   {
     hint: 'One word',
     sentence: 'A factory that fouls a river nobody it sells to owns is imposing a negative _____.',
     word: 'EXTERNALITY',
     blanks: 1,
+    subject: 'economics',
   },
   {
     hint: 'One word',
     sentence: 'When the price of a good rises, the quantity firms are willing to sell rises, which is the law of _____.',
     word: 'SUPPLY',
     blanks: 1,
+    subject: 'economics',
   },
   {
     hint: 'One word',
     sentence: 'A poll of two thousand people drawn at random is a _____, and its mean is an estimate of the whole population.',
     word: 'SAMPLE',
     blanks: 1,
+    subject: 'mathematics',
   },
   {
     hint: 'One word',
     sentence: 'Two things moving together is a correlation; claiming one produced the other is a claim of _____, which the correlation alone cannot support.',
     word: 'CAUSATION',
     blanks: 1,
+    subject: 'mathematics',
   },
   {
     hint: 'One word',
     sentence: 'Drawing district boundaries so a minority of votes wins a majority of seats is called _____.',
     word: 'GERRYMANDERING',
     blanks: 1,
+    subject: 'political-science',
   },
   {
     hint: 'One word',
     sentence: 'Dividing power between a national government and regional ones, each sovereign in its own sphere, is _____.',
     word: 'FEDERALISM',
     blanks: 1,
+    subject: 'political-science',
   },
   {
     hint: 'One word',
     sentence: 'Training a response by pairing a stimulus with a reward or a punishment is called _____.',
     word: 'CONDITIONING',
     blanks: 1,
+    subject: 'psychology',
   },
   {
     hint: 'One word',
     sentence: 'A sugar pill that relieves pain because the patient expects it to is a _____.',
     word: 'PLACEBO',
     blanks: 1,
+    subject: 'psychology',
   },
   {
     hint: 'One word',
     sentence: 'Perfume crossing a room and settling into the air with no current to carry it has spread by _____.',
     word: 'DIFFUSION',
     blanks: 1,
+    subject: 'biology',
   },
   {
     hint: 'One word',
     sentence: 'Water crosses a membrane towards the side with more dissolved solute, which is _____.',
     word: 'OSMOSIS',
     blanks: 1,
+    subject: 'biology',
   },
   {
     hint: 'One word',
     sentence: 'Chemical marks on DNA that switch genes on or off without changing the sequence are studied in _____.',
     word: 'EPIGENETICS',
     blanks: 1,
+    subject: 'biology',
   },
   {
     hint: 'One word',
     sentence: 'Driving a current through a salt solution to split it into its elements is _____.',
     word: 'ELECTROLYSIS',
     blanks: 1,
+    subject: 'chemistry',
   },
   {
     hint: 'One word',
     sentence: 'Two atoms of the same element with different numbers of neutrons are _____ of each other.',
     word: 'ISOTOPES',
     blanks: 1,
+    subject: 'chemistry',
   },
   {
     hint: 'One word',
     sentence: 'A body in motion stays in motion unless a force acts on it, which is the law of _____.',
     word: 'INERTIA',
     blanks: 1,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'A straw looks bent in a glass of water because light changes direction on entering it, which is _____.',
     word: 'REFRACTION',
     blanks: 1,
+    subject: 'physics',
   },
   {
     hint: 'One word',
     sentence: 'Paying a professional to argue your case to a legislator, rather than writing to them yourself, is _____.',
     word: 'LOBBYING',
     blanks: 1,
+    subject: 'political-science',
   },
   {
     hint: 'One word',
     sentence: 'A country run by a small group that holds power through wealth or the army is an _____.',
     word: 'OLIGARCHY',
     blanks: 1,
+    subject: 'political-science',
   },
   {
     hint: 'One word',
     sentence: 'Letting the first figure in a negotiation set the range for every figure after it is _____.',
     word: 'ANCHORING',
     blanks: 1,
+    subject: 'psychology',
   },
   {
     hint: 'Two words',
     sentence: 'A policy that benefits everyone a little and costs a small group a great deal leaves a _____ _____ that no one pays for by choice.',
     word: 'DEADWEIGHT LOSS',
     blanks: 2,
+    subject: 'economics',
+  },
+
+  // History.
+  //
+  // The one subject of the nine with nothing in this deck, and the one the
+  // dictionary holds sixteen entries for. Each of these is a date-and-thing the
+  // dictionary already covers, phrased so the sentence is worth reading even
+  // once the blank is filled.
+  {
+    hint: 'Two words',
+    sentence: 'The charter King John sealed in 1215, which first put a written limit on an English king, is _____.',
+    word: 'MAGNA CARTA',
+    blanks: 2,
+    subject: 'history',
+  },
+  {
+    hint: 'One word',
+    sentence: 'The 1648 settlement that ended the Thirty Years War and made the sovereign state the unit of Europe is the Peace of _____.',
+    word: 'WESTPHALIA',
+    blanks: 1,
+    subject: 'history',
+  },
+  {
+    hint: 'One word',
+    sentence: 'The move from farm work to factory work in eighteenth-century Britain is called the Industrial _____.',
+    word: 'REVOLUTION',
+    blanks: 1,
+    subject: 'history',
+  },
+  {
+    hint: 'One word',
+    sentence: 'The declaration the United Nations adopted in 1948 to name what every person is owed simply by being one is the Universal Declaration of Human _____.',
+    word: 'RIGHTS',
+    blanks: 1,
+    subject: 'history',
+  },
+  {
+    hint: 'One word',
+    sentence: 'The recovery of classical learning and art in fourteenth-century Italy is called the _____.',
+    word: 'RENAISSANCE',
+    blanks: 1,
+    subject: 'history',
+  },
+  {
+    hint: 'One word',
+    sentence: 'The withdrawal of empire from Asia and Africa after 1945, and the states it left behind, is called _____.',
+    word: 'DECOLONISATION',
+    blanks: 1,
+    subject: 'history',
   },
 ];
 
@@ -293,6 +384,25 @@ const normalise = (text) => text.trim().toUpperCase().replace(/\s+/g, ' ');
 WordPuzzle.propTypes = { onBack: PropTypes.func };
 
 function WordPuzzle({ onBack }) {
+  /*
+   * Which subject's sentences are in play.
+   *
+   * The deck is forty-seven sentences in one sitting, and a reader who has just
+   * finished a history lesson has no way to drill the six history sentences
+   * without sitting through the other forty-one. 'all' is the deck as written,
+   * so the default is unchanged; anything else narrows it to one subject.
+   */
+  const [subjectFilter, setSubjectFilter] = useState('all');
+  // The puzzle indexes this round will visit, in deck order. Indexes rather
+  // than puzzles so the review list and the anchors still point at the entry
+  // the deck actually holds.
+  const deck = useMemo(
+    () =>
+      PUZZLES.map((entry, index) => index).filter(
+        (index) => subjectFilter === 'all' || PUZZLES[index].subject === subjectFilter
+      ),
+    [subjectFilter]
+  );
   const [currentPuzzle, setCurrentPuzzle] = useState(0);
   const [userAnswers, setUserAnswers] = useState(() => Array(PUZZLES[0].blanks).fill(''));
   const [score, setScore] = useState(0);
@@ -339,9 +449,13 @@ function WordPuzzle({ onBack }) {
     recordedRef.current = true;
     recordGameResult(WORD_PUZZLE_GAME_ID, {
       score,
-      max: PUZZLES.length * POINTS_PER_PUZZLE,
+      // The most this round could have paid, not the most the whole deck
+      // could. A six puzzle history round scored out of six hundred, and a
+      // figure out of forty-seven hundred would have made a clean round read
+      // as twelve per cent.
+      max: deck.length * POINTS_PER_PUZZLE,
     });
-  }, [finished, score]);
+  }, [deck.length, finished, score]);
 
   /*
    * The first box is focused when the puzzle appears.
@@ -356,8 +470,10 @@ function WordPuzzle({ onBack }) {
     firstInputRef.current?.focus();
   }, [currentPuzzle]);
 
-  const puzzle = PUZZLES[currentPuzzle];
-  const isLast = currentPuzzle === PUZZLES.length - 1;
+  const puzzle = PUZZLES[deck[currentPuzzle]];
+  const isLast = currentPuzzle >= deck.length - 1;
+  const subjectName =
+    (DICTIONARY_SUBJECTS.find((subject) => subject.id === puzzle.subject) || {}).name || '';
 
   useEffect(() => () => clearTimeout(advanceRef.current), []);
 
@@ -367,7 +483,7 @@ function WordPuzzle({ onBack }) {
       return;
     }
     setCurrentPuzzle((prev) => prev + 1);
-    setUserAnswers(() => Array(PUZZLES[currentPuzzle + 1].blanks).fill(''));
+    setUserAnswers(() => Array(PUZZLES[deck[currentPuzzle + 1]].blanks).fill(''));
     setMessage('');
     setRevealed(false);
     setSettled(false);
@@ -385,7 +501,7 @@ function WordPuzzle({ onBack }) {
   const handleReplay = useCallback(() => {
     clearTimeout(advanceRef.current);
     setCurrentPuzzle(0);
-    setUserAnswers(Array(PUZZLES[0].blanks).fill(''));
+    setUserAnswers(Array(PUZZLES[deck[0]].blanks).fill(''));
     setScore(0);
     setSolved(0);
     setUnaided(0);
@@ -395,7 +511,38 @@ function WordPuzzle({ onBack }) {
     setRevealed(false);
     setFinished(false);
     setSettled(false);
-  }, []);
+  }, [deck]);
+
+  /**
+   * Switch decks and start over in the new one.
+   *
+   * Every counter is cleared, for the same reason replay clears them: the
+   * counters describe a round, and a round of six history sentences cannot
+   * inherit eight solved physics ones. The filter is applied here rather than
+   * in an effect so the first sentence of the new deck is ready on the same
+   * render the reader asked for it.
+   */
+  const handleSubjectChange = useCallback(
+    (next) => {
+      clearTimeout(advanceRef.current);
+      const nextDeck = PUZZLES.map((entry, index) => index).filter(
+        (index) => next === 'all' || PUZZLES[index].subject === next
+      );
+      setSubjectFilter(next);
+      setCurrentPuzzle(0);
+      setUserAnswers(Array(PUZZLES[nextDeck[0]].blanks).fill(''));
+      setScore(0);
+      setSolved(0);
+      setUnaided(0);
+      setRevealedCount(0);
+      setMissed([]);
+      setMessage('');
+      setRevealed(false);
+      setFinished(false);
+      setSettled(false);
+    },
+    []
+  );
 
   const handleInputChange = useCallback((index, value) => {
     setUserAnswers((prev) => {
@@ -429,20 +576,24 @@ function WordPuzzle({ onBack }) {
     setSettled(true);
     setRevealed(true);
     setRevealedCount((prev) => prev + 1);
-    setMissed((prev) => (prev.includes(currentPuzzle) ? prev : [...prev, currentPuzzle]));
+    setMissed((prev) => (prev.includes(deck[currentPuzzle]) ? prev : [...prev, deck[currentPuzzle]]));
     setMessage(`The answer is ${puzzle.word}.`);
     // Revealing used to be a dead end on the last puzzle, and on any puzzle
     // there was no way forward at all short of getting it right.
     advanceRef.current = setTimeout(goToNext, 2600);
-  }, [currentPuzzle, goToNext, puzzle.word, settled]);
+  }, [currentPuzzle, deck, goToNext, puzzle.word, settled]);
 
   if (finished) {
-    const total = PUZZLES.length;
+    const total = deck.length;
     return (
       <div className="game-screen">
         <div className="game-over-screen">
           <h2>Finished</h2>
           <p className="final-score">{score} points</p>
+          <p className="game-completed-msg">
+            {subjectFilter === 'all' ? 'Every subject' : subjectName} · {total}{' '}
+            {total === 1 ? 'sentence' : 'sentences'}
+          </p>
           <p className="game-completed-msg">
             {solved} of {total} correct
             {revealedCount > 0
@@ -497,28 +648,58 @@ function WordPuzzle({ onBack }) {
       </div>
 
       <div className="puzzle-game">
+        {/* The deck switch. It sits above the progress bar rather than inside
+          * a settings panel because it is the first thing to decide: forty-seven
+          * sentences or the six from the subject just studied. */}
+        <div className="puzzle-deck-row">
+          <label className="puzzle-deck-label" htmlFor="puzzle-subject">
+            Subject
+          </label>
+          <select
+            id="puzzle-subject"
+            className="puzzle-deck-select"
+            value={subjectFilter}
+            onChange={(event) => handleSubjectChange(event.target.value)}
+          >
+            {DICTIONARY_SUBJECTS.filter(
+              (subject) =>
+                subject.id === 'all' || PUZZLES.some((entry) => entry.subject === subject.id)
+            ).map((subject) => (
+              <option key={subject.id} value={subject.id}>
+                {subject.name}
+              </option>
+            ))}
+          </select>
+          <span className="puzzle-deck-count" data-testid="puzzle-deck-count">
+            {deck.length} {deck.length === 1 ? 'sentence' : 'sentences'}
+          </span>
+        </div>
+
         <div className="game-progress">
           <div
             className="progress-bar"
             role="progressbar"
             aria-valuemin={1}
-            aria-valuemax={PUZZLES.length}
+            aria-valuemax={deck.length}
             aria-valuenow={currentPuzzle + 1}
             aria-label="Puzzle progress"
           >
             <div
               className="progress-fill"
-              style={{ width: `${((currentPuzzle + 1) / PUZZLES.length) * 100}%` }}
+              style={{ width: `${((currentPuzzle + 1) / deck.length) * 100}%` }}
             />
           </div>
           <span className="progress-text">
-            Puzzle {currentPuzzle + 1}/{PUZZLES.length}
+            Puzzle {currentPuzzle + 1}/{deck.length}
           </span>
         </div>
 
         <div className="puzzle-sentence">
           <p>{puzzle.sentence}</p>
-          <p className="hint-text">{puzzle.hint}</p>
+          <p className="hint-text">
+            {subjectName && <span className="puzzle-subject-tag">{subjectName}</span>}
+            {puzzle.hint}
+          </p>
         </div>
 
         <div className="puzzle-inputs">
