@@ -418,3 +418,77 @@ describe('chain content quality', () => {
     expect(CHAINS.length).toBeGreaterThanOrEqual(6);
   });
 });
+
+describe('a chain you cannot order', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => {
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
+  });
+
+  const giveUp = () =>
+    fireEvent.click(screen.getByTestId('chain-give-up'));
+
+  test('can be shown, and the set moves on', () => {
+    render(<KnowledgeChain onBack={() => {}} />);
+
+    giveUp();
+
+    // The links are the point, and they only appeared on a chain that was
+    // solved, so giving up shows them too.
+    expect(screen.getByText(new RegExp(`${CHAINS[0].links[0]}`))).toBeInTheDocument();
+    act(() => jest.advanceTimersByTime(2700));
+    expect(screen.getByText(CHAINS[1].title)).toBeInTheDocument();
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+  });
+
+  test('gives up the points for that chain, not the ones already earned', () => {
+    localStorage.clear();
+    render(<KnowledgeChain onBack={() => {}} />);
+
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+    act(() => jest.advanceTimersByTime(2700));
+    expect(screen.getByText(`Score: ${POINTS_PER_CHAIN}`)).toBeInTheDocument();
+
+    giveUp();
+    act(() => jest.advanceTimersByTime(2700));
+    expect(screen.getByText(`Score: ${POINTS_PER_CHAIN}`)).toBeInTheDocument();
+  });
+
+  test('the end screen quotes the chains that were shown instead of solved', () => {
+    localStorage.clear();
+    render(<KnowledgeChain onBack={() => {}} />);
+
+    CHAINS.forEach((chain, index) => {
+      giveUp();
+      if (index < CHAINS.length - 1) act(() => jest.advanceTimersByTime(2700));
+    });
+
+    expect(screen.getByText(new RegExp(`All chains done`))).toBeInTheDocument();
+    const review = screen.getByTestId('chain-review');
+    CHAINS.forEach((chain) => {
+      expect(review.textContent).toContain(chain.title);
+    });
+    // One record for the round, earned nothing, because every chain was shown
+    // rather than ordered.
+    expect(getGameResults()[KNOWLEDGE_CHAIN_GAME_ID]).toMatchObject({ plays: 1, best: 0 });
+  });
+
+  test('a chain that was solved is not in the review', () => {
+    localStorage.clear();
+    render(<KnowledgeChain onBack={() => {}} />);
+
+    pick(...CHAINS[0].concepts);
+    fireEvent.click(screen.getByRole('button', { name: /check chain/i }));
+    act(() => jest.advanceTimersByTime(2700));
+    CHAINS.slice(1).forEach((chain, index) => {
+      giveUp();
+      if (index < CHAINS.length - 2) act(() => jest.advanceTimersByTime(2700));
+    });
+
+    const review = screen.getByTestId('chain-review');
+    expect(review.textContent).not.toContain(CHAINS[0].title);
+    expect(getGameResults()[KNOWLEDGE_CHAIN_GAME_ID]).toMatchObject({ best: POINTS_PER_CHAIN });
+  });
+});
