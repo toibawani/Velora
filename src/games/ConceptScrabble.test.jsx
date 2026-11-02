@@ -392,3 +392,50 @@ describe('scrabble content breadth', () => {
     expect(new Set(elsewhere).size).toBe(elsewhere.length);
   });
 });
+
+describe('turning the rack', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    window.localStorage.clear();
+  });
+  afterEach(() => {
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
+  });
+
+  const rackText = () =>
+    screen
+      .getAllByRole('button', { name: /^Letter [A-Z]$/ })
+      .map((tile) => tile.textContent.trim())
+      .join('');
+
+  test('changes the arrangement without changing the letters', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    const before = rackText();
+
+    fireEvent.click(screen.getByTestId('scrabble-shuffle'));
+
+    const after = rackText();
+    expect(after).not.toBe(before);
+    expect([...after].sort()).toEqual([...before].sort());
+  });
+
+  test('is not offered once letters are on the board', () => {
+    // Turning the rack with letters already picked moves the tiles that are
+    // left, which reads as the game taking a letter back rather than helping.
+    render(<ConceptScrabble onBack={() => {}} />);
+    fireEvent.click(screen.getAllByRole('button', { name: /^Letter [A-Z]$/ })[0]);
+
+    expect(screen.getByTestId('scrabble-shuffle')).toBeDisabled();
+  });
+
+  test('the next level\'s rack can be turned again', () => {
+    render(<ConceptScrabble onBack={() => {}} />);
+    fireEvent.click(screen.getByTestId('scrabble-shuffle'));
+    fireEvent.click(screen.getByRole('button', { name: /skip level/i }));
+
+    // Skipping clears the board, so the rack is turnable on the next level
+    // rather than still blocked by letters that are no longer there.
+    expect(screen.getByTestId('scrabble-shuffle')).toBeEnabled();
+  });
+});
