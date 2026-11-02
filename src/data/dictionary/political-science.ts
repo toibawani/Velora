@@ -284,4 +284,16 @@ export const POLITICAL_TERMS: DictionaryTerm[] = [
     source: 'Wolfgang C. Müller and Kaare Strøm, Coalition Governments in Western Europe (2000)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Coalition_government',
   },
+
+{
+    id: 'autocracy',
+    term: 'Autocracy',
+    subject: 'political-science',
+    letter: 'A',
+    tagline: 'One person holds the power, and nothing in the system can remove them.',
+    explanation: 'An autocracy concentrates decision-making in a single ruler who is not accountable to an electorate or a legislature that can dismiss them. It is a spectrum rather than a single form: a monarchy bound by custom, a party state with a leader at the top, and a personalist dictatorship all sit on it, and the difference between them is how much the ruler can change the rules.',
+    example: 'The Roman office of dictator was an autocracy with a term limit - six months, and the expectation of giving it up. A modern personalist regime typically removes the term limit, which is the step that turns a strong executive into an autocracy.',
+    source: 'Aristotle, Politics (c. 335 BCE)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Autocracy',
+  },
 ];
