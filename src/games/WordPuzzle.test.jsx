@@ -440,4 +440,98 @@ describe('puzzle data integrity', () => {
     const words = PUZZLES.map((p) => p.word);
     expect(new Set(words).size).toBe(words.length);
   });
+
+  /*
+   * Every sentence is filed under a subject, and the subjects are the nine the
+   * dictionary uses. A typo would not throw - the filter would simply offer a
+   * value nothing matches, and the deck would empty in silence - so the union
+   * is pinned here instead.
+   */
+  test('every sentence is filed under one of the nine subjects', () => {
+    const subjects = new Set(['physics', 'chemistry', 'biology', 'philosophy', 'history',
+      'political-science', 'mathematics', 'psychology', 'economics']);
+    PUZZLES.forEach((puzzle) => {
+      expect(subjects.has(puzzle.subject)).toBe(true);
+    });
+  });
+
+  // History was the one subject with no sentence at all, in a deck that already
+  // claimed to span the dictionary. A subject filter that offers History and
+  // then plays nothing is worse than no filter.
+  test('every subject the filter offers has something behind it', () => {
+    const counts = {};
+    PUZZLES.forEach((puzzle) => {
+      counts[puzzle.subject] = (counts[puzzle.subject] || 0) + 1;
+    });
+    Object.keys(counts).forEach((subject) => {
+      expect(counts[subject]).toBeGreaterThanOrEqual(3);
+    });
+    expect(Object.keys(counts).sort()).toHaveLength(9);
+  });
+});
+
+describe('playing one subject', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+    window.localStorage.clear();
+  });
+  afterEach(() => jest.useRealTimers());
+
+  const history = PUZZLES.filter((puzzle) => puzzle.subject === 'history');
+
+  test('choosing a subject narrows the deck and says how much is in it', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+
+    fireEvent.change(screen.getByLabelText(/subject/i), { target: { value: 'history' } });
+
+    expect(screen.getByText(history[0].sentence)).toBeInTheDocument();
+    expect(screen.getByTestId('puzzle-deck-count').textContent).toContain(String(history.length));
+    expect(screen.getByText(`Puzzle 1/${history.length}`)).toBeInTheDocument();
+  });
+
+  test('the round only walks the chosen subject', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    fireEvent.change(screen.getByLabelText(/subject/i), { target: { value: 'history' } });
+
+    // The sentence after the first history one must be the second history one,
+    // not whatever follows it in the full deck.
+    fill(...history[0].word.split(' '));
+    submit();
+    act(() => jest.advanceTimersByTime(1300));
+
+    expect(screen.getByText(history[1].sentence)).toBeInTheDocument();
+  });
+
+  test('changing subject starts a new round rather than carrying the score', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    fill(...PUZZLES[0].word.split(' '));
+    submit();
+    expect(screen.getByText('Score: 100')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText(/subject/i), { target: { value: 'economics' } });
+
+    expect(screen.getByText('Score: 0')).toBeInTheDocument();
+    // The boxes are cleared, so the first economics sentence can be answered
+    // without deleting the previous round's word first.
+    expect(screen.getByLabelText('Word 1')).toHaveValue('');
+  });
+
+  // A six sentence round scored 600 of 600 used to be recorded as 600 of 4700,
+  // which read as a failed round in the hub's best-score line.
+  test('a one subject round is recorded out of that deck, not out of all of them', () => {
+    render(<WordPuzzle onBack={() => {}} />);
+    fireEvent.change(screen.getByLabelText(/subject/i), { target: { value: 'history' } });
+
+    history.forEach((puzzle) => {
+      fill(...puzzle.word.split(' '));
+      submit();
+      act(() => jest.advanceTimersByTime(1300));
+    });
+
+    expect(screen.getByRole('heading', { name: /finished/i })).toBeInTheDocument();
+    expect(getGameResult(WORD_PUZZLE_GAME_ID)).toMatchObject({
+      best: history.length * 100,
+      max: history.length * 100,
+    });
+  });
 });
