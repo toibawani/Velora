@@ -954,6 +954,84 @@ const QUIZ_QUESTIONS = [
     explanation:
       'The court voids an act; it does not draft a replacement. The power is not universal - some constitutions put certain laws beyond review - but where it exists it is what makes a written constitution binding rather than advisory.',
   },
+  {
+    question: 'Why do we always see the same face of the Moon?',
+    options: [
+      'The Moon does not rotate at all',
+      'It rotates exactly once per orbit, so the same side stays turned towards us',
+      'The far side is permanently in shadow',
+      'Earth’s gravity stops the Moon from turning',
+    ],
+    correct: 1,
+    category: 'Space',
+    explanation:
+      'Tidal locking: Earth’s gravity raised a bulge in the young Moon, and friction slowed its spin until one rotation matched one orbit. The far side is not dark - it gets the same sunlight - it simply never faces us.',
+  },
+  {
+    question: 'What is a light-year a measure of?',
+    options: [
+      'Time',
+      'Distance',
+      'Brightness',
+      'Mass',
+    ],
+    correct: 1,
+    category: 'Space',
+    explanation:
+      'It is the distance light travels in a year, about 9.5 trillion kilometres. The name is the trap: it sounds like a duration, and the number is only useful because light has a fixed speed.',
+  },
+  {
+    question: 'A car crashes into a wall. Which statement about the forces is true?',
+    options: [
+      'The wall pushes back less, because it does not move',
+      'The wall pushes on the car with the same size force the car pushes on the wall',
+      'There is no force on the wall, because it is stationary',
+      'The forces cancel, so neither object feels anything',
+    ],
+    correct: 1,
+    category: 'Physics',
+    explanation:
+      'The third law pairs forces on two different objects, so they never cancel on either one. The car crumples because the force on the car is large and the car is light; the wall barely deforms because the same force acts on something much heavier and more rigid.',
+  },
+  {
+    question: 'Why does a spinning ice skater speed up when she pulls her arms in?',
+    options: [
+      'She pushes against the air',
+      'Angular momentum is conserved, so a smaller radius means a larger angular speed',
+      'Her mass decreases as her arms move',
+      'Friction with the ice increases',
+    ],
+    correct: 1,
+    category: 'Physics',
+    explanation:
+      'With no external torque, the product of moment of inertia and angular speed stays constant. Pulling the arms in reduces the moment of inertia, so the rotation rate must rise - the same reason a collapsing star can spin hundreds of times a second.',
+  },
+  {
+    question: 'What made the printing press a change in politics and not only in publishing?',
+    options: [
+      'It made books expensive and rare',
+      'Cheap copies let arguments circulate faster than any authority could suppress them, which is what carried the Reformation',
+      'It was invented by a government',
+      'It replaced handwriting entirely within a decade',
+    ],
+    correct: 1,
+    category: 'History',
+    explanation:
+      'The press did not create new arguments; it removed the cost of copying them. Luther’s theses were a Latin scholarly complaint until they were printed and translated, and within two years they were a movement that no single authority could recall.',
+  },
+  {
+    question: 'Why did the Berlin Wall falling in 1989 matter beyond Germany?',
+    options: [
+      'It ended the Second World War',
+      'It marked the collapse of the Soviet bloc and the end of the Cold War division of Europe',
+      'It created the European Union the same year',
+      'It was the first wall ever built in a city',
+    ],
+    correct: 1,
+    category: 'History',
+    explanation:
+      'The wall was the most visible border of a system, not the system itself. Once travel restrictions loosened, the satellite states moved within months, and the Soviet Union dissolved two years later. The European Union came later still, in 1993.',
+  },
 ];
 
 const POINTS_PER_CORRECT = 10;
