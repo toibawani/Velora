@@ -565,3 +565,32 @@ describe('Game hub keyboard access', () => {
     });
   });
 });
+
+describe('opening a game from the keyboard', () => {
+  test('a number key opens the game in that position', () => {
+    render(<GameHub setScreen={() => {}} />);
+    fireEvent.keyDown(window, { key: '1' });
+    expect(screen.getByRole('heading', { name: 'Concept Check' })).toBeInTheDocument();
+  });
+
+  test('the number follows the filtered list, not the source order', () => {
+    render(<GameHub setScreen={() => {}} />);
+    fireEvent.click(screen.getAllByRole('button', { name: /^Easy/ })[0]);
+
+    // Whatever is first after the Easy filter is what 1 opens.
+    fireEvent.keyDown(window, { key: '1' });
+    const firstEasy = CLASSIC_GAMES.find((game) => game.difficulty === 'Easy');
+    expect(screen.getByRole('heading', { name: firstEasy.name })).toBeInTheDocument();
+  });
+
+  test('a number typed into a field is left to the field', () => {
+    render(<GameHub setScreen={() => {}} />);
+    const field = document.createElement('input');
+    document.body.appendChild(field);
+    field.focus();
+
+    fireEvent.keyDown(field, { key: '1' });
+    expect(screen.getByTestId('games-pick')).toBeInTheDocument();
+    field.remove();
+  });
+});
