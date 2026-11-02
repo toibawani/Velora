@@ -208,4 +208,27 @@ export const ECONOMICS_TERMS: DictionaryTerm[] = [
     source: 'Gustav Cassel, "Abnormal Deviations in International Exchanges" (1918)',
     sourceUrl: 'https://en.wikipedia.org/wiki/Purchasing_power_parity',
   },
+
+{
+    id: 'monopoly',
+    term: 'Monopoly',
+    subject: 'economics',
+    letter: 'M',
+    tagline: 'One seller, no substitute, and a price the market cannot argue with.',
+    explanation: 'A monopoly exists where one firm supplies a good with no close substitute and barriers stop others entering. With no rival to undercut it, the firm can restrict output and charge more than a competitive market would, which is why competition law treats market power as something to be watched rather than a prize.',
+    example: 'A company holding the only patent on a medicine can price it far above the cost of manufacture during the patent term. Natural monopolies - railways, water networks - are usually regulated on price instead, because duplicating the pipes is worse for everyone than controlling the operator.',
+    source: 'Alfred Marshall, Principles of Economics (1890)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Monopoly',
+  },
+{
+    id: 'public-good',
+    term: 'Public Good',
+    subject: 'economics',
+    letter: 'P',
+    tagline: 'Something everyone can use without using it up, and no one can be excluded from.',
+    explanation: 'A public good is non-rival, so one person’s use does not reduce what is left, and non-excludable, so nobody can be kept out. Those two properties break the ordinary market: each person has an incentive to let others pay, and if enough do, the good is not provided even though everyone would be better off with it. That is the free-rider problem, and it is the standard argument for public funding.',
+    example: 'A lighthouse warns every ship in sight of it and cannot dim for the ones that did not pay. National defence and clean air behave the same way, which is why they are funded by taxation rather than sold by the unit.',
+    source: 'Paul Samuelson, "The Pure Theory of Public Expenditure" (1954)',
+    sourceUrl: 'https://en.wikipedia.org/wiki/Public_good_(economics)',
+  },
 ];
