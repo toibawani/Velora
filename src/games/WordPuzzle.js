@@ -605,7 +605,11 @@ function WordPuzzle({ onBack }) {
     setMessage('');
     setRevealed(false);
     setSettled(false);
-  }, [currentPuzzle, isLast]);
+    // deck is read two lines above (the next puzzle's blank count). It is a
+    // useMemo over subjectFilter, so it is stable within a round, but leaving it
+    // out of the list meant a stale deck could be indexed after a subject
+    // change, and it was the warning that failed the CI build.
+  }, [currentPuzzle, deck, isLast]);
 
   /**
    * Start again from puzzle one.
