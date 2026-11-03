@@ -39,6 +39,20 @@ describe('shareLinks', () => {
     expect(parseShareHash(undefined)).toBeNull();
   });
 
+  test('does not throw on a link with a broken percent escape', () => {
+    // decodeURIComponent throws a URIError on a truncated escape, and this
+    // parser runs during startup, so one hand-edited link used to blank the
+    // whole app. A part that cannot be decoded is kept as typed and misses the
+    // registry lookup instead.
+    expect(() => parseShareHash('#/lesson/physics/100%')).not.toThrow();
+    expect(() => parseShareHash('#/term/%E0%A4%A')).not.toThrow();
+    expect(parseShareHash('#/lesson/physics/100%')).toEqual({
+      kind: 'lesson',
+      subject: 'physics',
+      topicId: '100%',
+    });
+  });
+
   test('tolerates a missing leading slash', () => {
     expect(parseShareHash('#lesson/physics/black-holes')).toEqual({
       kind: 'lesson',

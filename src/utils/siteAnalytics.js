@@ -1,4 +1,4 @@
-import { KEYS } from './storage';
+import { KEYS, FAILURE, readValue, writeValue } from './storage';
 
 /**
  * VELORA utility module
@@ -81,33 +81,19 @@ const sendBeacon = (url) => {
   return false;
 };
 
-const readJson = (key, fallback) => {
-  try {
-    if (typeof window === 'undefined' || !window.localStorage) return fallback;
-    const raw = window.localStorage.getItem(key);
-    if (raw === null || raw === undefined) return fallback;
-    const parsed = JSON.parse(raw);
-    return parsed;
-  } catch {
-    return fallback;
-  }
-};
-
-const writeJson = (key, value) => {
-  try {
-    if (typeof window === 'undefined' || !window.localStorage) return false;
-    window.localStorage.setItem(key, JSON.stringify(value));
-    return true;
-  } catch {
-    return false;
-  }
-};
+/*
+ * The opt-in flag and the return counter used to be read and written as raw
+ * JSON here, outside the registry. That meant a refused write was reported as
+ * success (the switch looked on and nothing was stored) and neither payload
+ * carried a version for a future migration. Both go through storage.js now.
+ */
 
 /** Returns true only when the visitor has explicitly opted in to external analytics. */
-export const isOptedIn = () => readJson(KEYS.ANALYTICS_OPTIN, false) === true;
+export const isOptedIn = () => readValue(KEYS.ANALYTICS_OPTIN, false) === true;
 
 /** Opts the visitor in or out of external analytics. Returns whether the write landed. */
-export const setOptedIn = (enabled) => writeJson(KEYS.ANALYTICS_OPTIN, Boolean(enabled));
+export const setOptedIn = (enabled) =>
+  writeValue(KEYS.ANALYTICS_OPTIN, Boolean(enabled)) === FAILURE.NONE;
 
 /** Track an aggregate event. No-op when not opted in or when no endpoint is configured. */
 export const trackEvent = (eventName, data = {}) => {
@@ -151,7 +137,7 @@ export const trackGameCompleted = (game) =>
  */
 export const recordReturnVisit = () => {
   const now = Date.now();
-  const stored = readJson(KEYS.RETURN_VISITS, null);
+  const stored = readValue(KEYS.RETURN_VISITS, null);
   const sevenDays = 7 * 24 * 60 * 60 * 1000;
   let firstSeen = now;
   let lastSeen = now;
@@ -174,7 +160,7 @@ export const recordReturnVisit = () => {
   }
 
   const payload = { firstSeen, lastSeen: now, returnCount };
-  writeJson(KEYS.RETURN_VISITS, payload);
+  writeValue(KEYS.RETURN_VISITS, payload);
 
   // Only report a return when one actually happened; a first visit is not a
   // return visit and produces no beacon at all.

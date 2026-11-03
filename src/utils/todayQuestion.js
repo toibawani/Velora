@@ -1,4 +1,4 @@
-import { KEYS } from './storage';
+import { KEYS, FAILURE, readValue, writeValue } from './storage';
 
 /**
  * VELORA utility module
@@ -111,30 +111,28 @@ export const todayQuestionId = () => {
   return q ? q.id : null;
 };
 
-/** Mark today's question as answered (or unanswered). Returns whether the write landed. */
+/**
+ * Mark today's question as answered (or unanswered). Returns whether the write
+ * landed.
+ *
+ * Through the registry rather than raw setItem: a quota failure used to be
+ * swallowed here, so the button said "answered" and nothing had been stored,
+ * and the record had no version for a future migration to move forward.
+ */
 export const markTodayQuestionAnswered = (answered) => {
-  try {
-    if (typeof window === 'undefined' || !window.localStorage) return false;
-    const now = new Date().toISOString().slice(0, 10);
-    window.localStorage.setItem(key, JSON.stringify({ date: now, questionId: todayQuestionId(), answered: Boolean(answered) }));
-    return true;
-  } catch {
-    return false;
-  }
+  const now = new Date().toISOString().slice(0, 10);
+  return (
+    writeValue(key, { date: now, questionId: todayQuestionId(), answered: Boolean(answered) }) ===
+    FAILURE.NONE
+  );
 };
 
 /** Returns whether today's question has already been answered this visit. */
 export const isTodayQuestionAnswered = () => {
-  try {
-    if (typeof window === 'undefined' || !window.localStorage) return false;
-    const now = new Date().toISOString().slice(0, 10);
-    const raw = window.localStorage.getItem(key);
-    if (!raw) return false;
-    const parsed = JSON.parse(raw);
-    return parsed.date === now && parsed.questionId === todayQuestionId() && parsed.answered === true;
-  } catch {
-    return false;
-  }
+  const parsed = readValue(key, null);
+  if (!parsed || typeof parsed !== 'object') return false;
+  const now = new Date().toISOString().slice(0, 10);
+  return parsed.date === now && parsed.questionId === todayQuestionId() && parsed.answered === true;
 };
 
 const todayQuestion = {

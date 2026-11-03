@@ -108,6 +108,14 @@ describe('security and RLS enforcement module', () => {
       expect(retrieved.title).toBe('Relative motion notes');
     });
 
+    test('writes through the versioned registry instead of raw localStorage', () => {
+      secureUserStorage.setItem('notes', { title: 'Relative motion notes' }, 'user-42');
+      const raw = JSON.parse(localStorage.getItem('notes_user-42'));
+      expect(raw.v).toBe(1);
+      expect(raw.data.userId).toBe('user-42');
+      expect(raw.data.data.title).toBe('Relative motion notes');
+    });
+
     test('refuses access to another user’s scoped key', () => {
       secureUserStorage.setItem('notes', { title: 'Private notes' }, 'user-42');
 

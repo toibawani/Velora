@@ -48,12 +48,29 @@ function shareOrigin() {
  *   #/term/event-horizon          -> { kind: 'term', termId }
  * Anything else is treated as "no share link" and the app opens normally.
  */
+/**
+ * decodeURIComponent, but a broken escape does not throw.
+ *
+ * A hand-edited or truncated link ("#/lesson/physics/100%") made
+ * decodeURIComponent throw a URIError out of this parser, which runs during
+ * startup, so the whole app failed to open. A part that cannot be decoded is
+ * not a valid destination; keeping it as typed lets the lookup miss and the
+ * reader see "not written yet" instead of a blank page.
+ */
+const safeDecode = (part) => {
+  try {
+    return decodeURIComponent(part);
+  } catch {
+    return part;
+  }
+};
+
 export const parseShareHash = (hash) => {
   if (typeof hash !== 'string') return null;
   const clean = hash.replace(/^#\/?/, '');
   if (clean === '') return null;
 
-  const parts = clean.split('/').map(decodeURIComponent);
+  const parts = clean.split('/').map(safeDecode);
 
   if (parts[0] === 'lesson' && parts[1] && parts[2]) {
     return { kind: 'lesson', subject: parts[1], topicId: parts[2] };

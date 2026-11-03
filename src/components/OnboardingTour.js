@@ -19,12 +19,14 @@ import { KEYS, writeValue } from '../utils/storage';
 
 const ONBOARDING_KEY = KEYS.ONBOARDING_DONE;
 
+/*
+ * Through the registry, so the flag carries a version and a refused write is
+ * reported rather than assumed. The raw write used to store the bare string
+ * '1' while the read went through readValue, which worked only because a bare
+ * primitive passes through the migration path unchanged.
+ */
 const markOnboardingComplete = () => {
-  try {
-    localStorage.setItem(ONBOARDING_KEY, '1');
-  } catch {
-    // Onboarding should still complete when storage is unavailable.
-  }
+  writeValue(ONBOARDING_KEY, true);
 };
 
 const STEPS = [

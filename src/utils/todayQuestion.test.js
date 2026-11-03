@@ -58,6 +58,14 @@ describe('todayQuestion', () => {
     expect(isTodayQuestionAnswered()).toBe(false);
   });
 
+  test('writes through the versioned registry, not a bare value', () => {
+    markTodayQuestionAnswered(true);
+    const stored = JSON.parse(localStorage.getItem('velora_today_question'));
+    expect(stored.v).toBe(1);
+    expect(stored.data.answered).toBe(true);
+    expect(stored.data.questionId).toBe(todayQuestionId());
+  });
+
   test('does not treat yesterday\u2019s answer as today\u2019s', () => {
     markTodayQuestionAnswered(true);
     expect(isTodayQuestionAnswered()).toBe(true);

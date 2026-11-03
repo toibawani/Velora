@@ -9,6 +9,7 @@
  */
 
 import { sanitizeText, sanitizeObject } from './sanitize';
+import { FAILURE, readValue, removeValue, writeValue } from './storage';
 
 export const SecurityErrorCode = {
   UNAUTHORIZED: 'SEC_UNAUTHORIZED',
@@ -168,22 +169,22 @@ export const validatePayload = (schema, data) => {
 
 /**
  * Storage adapter enforcing RLS scoping on all local operations.
+ *
+ * It reads and writes through storage.js rather than touching localStorage
+ * directly, so these records get the same version envelope, the same migration
+ * path and the same honest quota reporting as every other key. The key names
+ * are unchanged, so records written by the previous build still read back: a
+ * bare { userId, data, updatedAt } object comes through readValue as itself.
  */
 export const secureUserStorage = {
   getItem: (key, authUid, targetUserId = authUid) => {
     enforceRLS(authUid, targetUserId, 'read');
-    try {
-      const raw = localStorage.getItem(`${key}_${targetUserId}`);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (parsed && parsed.userId && parsed.userId !== authUid) {
-        throw new SecurityError(SecurityErrorCode.FORBIDDEN, 'Stored record user_id mismatch');
-      }
-      return parsed?.data ?? parsed;
-    } catch (e) {
-      if (e instanceof SecurityError) throw e;
-      return null;
+    const parsed = readValue(`${key}_${targetUserId}`, null);
+    if (!parsed || typeof parsed !== 'object') return null;
+    if (parsed.userId && parsed.userId !== authUid) {
+      throw new SecurityError(SecurityErrorCode.FORBIDDEN, 'Stored record user_id mismatch');
     }
+    return parsed.data ?? parsed;
   },
 
   setItem: (key, data, authUid, targetUserId = authUid) => {
@@ -193,21 +194,11 @@ export const secureUserStorage = {
       data: sanitizeObject(data),
       updatedAt: new Date().toISOString(),
     };
-    try {
-      localStorage.setItem(`${key}_${authUid}`, JSON.stringify(record));
-      return true;
-    } catch {
-      return false;
-    }
+    return writeValue(`${key}_${authUid}`, record) === FAILURE.NONE;
   },
 
   removeItem: (key, authUid, targetUserId = authUid) => {
     enforceRLS(authUid, targetUserId, 'delete');
-    try {
-      localStorage.removeItem(`${key}_${authUid}`);
-      return true;
-    } catch {
-      return false;
-    }
+    return removeValue(`${key}_${authUid}`);
   },
 };

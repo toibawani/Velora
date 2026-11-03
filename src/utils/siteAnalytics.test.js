@@ -93,6 +93,22 @@ describe('siteAnalytics respects the opt-in promise', () => {
     });
   });
 
+  test('no tracker sends anything with the opt-in off, even when an endpoint is configured', () => {
+    // The privacy screen promises this sentence by sentence. Each tracker is
+    // called here so removing the gate from any one of them fails the suite.
+    installBeaconSpy();
+    setGoatCounterCode('velora-test');
+    setOptedIn(false);
+    trackEvent('page_view', { path: '/learn', title: 'Learn' });
+    trackPageView('/learn/physics', 'Black Holes');
+    trackTopicOpened('Reality', 'philosophy');
+    trackLessonCompleted('The event horizon', 'physics');
+    trackGameCompleted('Concept Check');
+    recordReturnVisit();
+    expect(captured).toEqual([]);
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+
   test('sends nothing when no GoatCounter code is configured', () => {
     installBeaconSpy();
     setOptedIn(true);
@@ -116,7 +132,8 @@ describe('recordReturnVisit', () => {
     const count = recordReturnVisit();
     expect(count).toBe(1);
     const stored = JSON.parse(localStorage.getItem('velora_return_visits'));
-    expect(stored.returnCount).toBe(1);
+    expect(stored.v).toBe(1);
+    expect(stored.data.returnCount).toBe(1);
     // The beacon carries an aggregate count, not an identity.
     expect(captured.some((url) => url.includes('e=return_visit'))).toBe(true);
     expect(captured.some((url) => url.includes('returnCount=1'))).toBe(true);
