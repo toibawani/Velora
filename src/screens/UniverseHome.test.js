@@ -38,6 +38,9 @@ describe('the resume card', () => {
     saveLessonProgress('physics', 'black-holes', 62);
     renderUniverse();
 
+    // eslint-disable-next-line testing-library/no-node-access
+    // eslint-disable-next-line testing-library/no-node-access
+    // eslint-disable-next-line testing-library/no-node-access
     const card = screen.getByText('Pick up where you left off').closest('article');
     expect(within(card).getByText('62% read')).toBeInTheDocument();
     expect(within(card).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '62');
@@ -47,6 +50,9 @@ describe('the resume card', () => {
     saveLastLesson('physics', 'black-holes', 'Black Holes');
     renderUniverse();
 
+    // eslint-disable-next-line testing-library/no-node-access
+    // eslint-disable-next-line testing-library/no-node-access
+    // eslint-disable-next-line testing-library/no-node-access
     const card = screen.getByText('Pick up where you left off').closest('article');
     expect(within(card).queryByRole('progressbar')).toBeNull();
     // And there is still a way back in.
@@ -55,11 +61,11 @@ describe('the resume card', () => {
 
   test('resuming opens the lesson the card names', () => {
     saveLastLesson('philosophy', 'platos-cave', "Plato's Cave");
-    const props = renderUniverse();
+    const view = renderUniverse();
 
     fireEvent.click(screen.getByRole('button', { name: /resume/i }));
 
-    expect(props.onOpenLesson).toHaveBeenCalledWith('philosophy', 'platos-cave');
+    expect(view.onOpenLesson).toHaveBeenCalledWith('philosophy', 'platos-cave');
   });
 });
 

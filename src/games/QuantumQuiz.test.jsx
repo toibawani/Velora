@@ -537,6 +537,7 @@ describe('choosing a category', () => {
       const option = screen
         .getAllByTestId('option-text')
         .find((node) => node.textContent === question.options[question.correct])
+    // eslint-disable-next-line testing-library/no-node-access
         .closest('button');
       fireEvent.click(option);
       fireEvent.click(screen.getByRole('button', { name: /next question|finish/i }));

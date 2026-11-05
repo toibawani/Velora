@@ -246,7 +246,7 @@ test('refuses a file that is not a backup, before writing anything', async () =>
 
   chooseFile(JSON.stringify({ hello: 'world' }));
 
-  await waitFor(() => expect(screen.getByText(/not a VELORA backup/i)).toBeInTheDocument());
+  await screen.findByText(/not a VELORA backup/i);
   expect(chosenBackup()).not.toBeInTheDocument();
   expect(screen.queryByRole('button', { name: /restore this file/i })).not.toBeInTheDocument();
   expect(JSON.parse(window.localStorage.getItem(KEYS.QUESTION_DESK)).data).toEqual([
@@ -257,7 +257,7 @@ test('refuses a file that is not a backup, before writing anything', async () =>
 test('says why a file could not be read rather than failing silently', async () => {
   open();
   chooseFile('this is not json');
-  await waitFor(() => expect(screen.getByText(/not JSON/i)).toBeInTheDocument());
+  await screen.findByText(/not JSON/i);
 });
 
 test('replace mode asks twice, because it deletes what the file does not contain', async () => {

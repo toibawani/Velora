@@ -572,6 +572,7 @@ describe('recently opened entries', () => {
     // An open entry is the only one showing its related row.
     expect(screen.getAllByTestId('related-term').length).toBeGreaterThan(0);
     expect(
+      // eslint-disable-next-line testing-library/no-node-access
       screen.getByRole('heading', { level: 2, name: 'Momentum' }).closest('.lexicon-entry-card'),
     ).toHaveClass('expanded');
   });
