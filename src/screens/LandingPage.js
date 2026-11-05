@@ -33,12 +33,19 @@ function LandingPage({ setScreen }) {
       discipline.modules.flatMap((moduleItem) => moduleItem.topics)
     );
     const coverage = fieldCoverageByDiscipline(field);
+    const status =
+      field.id === 'science'
+        ? 'flagship'
+        : field.written === 0
+        ? 'outline'
+        : 'growing';
     return {
       id: field.id,
       label: field.label,
       total: topics.length,
       written: coverage.written,
       unwritten: coverage.unwritten + coverage.unmapped,
+      status,
     };
   });
   const written = fields.reduce((sum, field) => sum + field.written, 0);
@@ -151,6 +158,7 @@ function LandingPage({ setScreen }) {
               <li key={field.id} className="lp-field-row">
                 <span className="vl-numeral">{String(index + 1).padStart(2, '0')}</span>
                 <span className="lp-field-name">{field.label}</span>
+              <span className="lp-field-status">{field.status}</span>
                 <span className="lp-field-bar" aria-hidden="true">
                   <span style={{ width: `${share}%` }} />
                 </span>

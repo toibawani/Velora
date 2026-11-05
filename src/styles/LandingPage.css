@@ -282,6 +282,14 @@
   background: var(--accent-primary);
 }
 
+.lp-field-status {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--text-tertiary);
+}
+
 .lp-field-count {
   color: var(--text-tertiary);
   font-family: var(--font-sans);

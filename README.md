@@ -3,6 +3,9 @@
 **A reference book for curious people. 116 of its 572 topics have a lesson or a
 deep read behind them. The other 456 say so.**
 
+Flagship subject: Black holes, eight levels and sixty-one entries from the big
+picture to the frontier. Other subjects are growing; their counts are below.
+
 ## If you have 60 seconds
 
 1. Open **[toibawani.github.io/Velora](https://toibawani.github.io/Velora/)**.
