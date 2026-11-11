@@ -94,6 +94,12 @@ describe('content security policy', () => {
   });
 });
 
+describe('permissions policy', () => {
+  test('disables powerful browser features the app never uses', () => {
+    expect(html).toMatch(/<meta\s+http-equiv="Permissions-Policy"[^>]*>/i);
+  });
+});
+
 describe('referrer policy', () => {
   test('sends no referrer to the sites a lesson cites', () => {
     expect(html).toMatch(/<meta\s+name="referrer"\s+content="no-referrer"\s*\/?>/i);
