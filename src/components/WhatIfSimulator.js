@@ -20,7 +20,7 @@ function WhatIfSimulator({ topic }) {
       topic: 'Physics',
       difficulty: 'Medium',
       explanation: `If gravity doubled, everything would weigh twice as much. Your body couldn't support the extra weight, and you'd collapse like a pancake. Plants couldn't grow tall. Atoms in stars would compress faster, making stellar evolution much quicker. The Moon would crash into Earth. The entire solar system would collapse.`,
-
+      visuals: ['https://via.placeholder.com/300x200?text=Doubled+Gravity'],
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ function WhatIfSimulator({ topic }) {
       topic: 'History',
       difficulty: 'Hard',
       explanation: `If Rome never fell, European history would be completely different. The Dark Ages might never happen. Technology and learning would advance continuously. The Mediterranean would remain a unified economic zone. Christianity might develop differently. The world might have industrialized centuries earlier. Political borders would be unrecognizable.`,
-
+      visuals: ['https://via.placeholder.com/300x200?text=Modern+Rome'],
     },
     {
       id: 3,
@@ -36,7 +36,7 @@ function WhatIfSimulator({ topic }) {
       topic: 'Biology',
       difficulty: 'Medium',
       explanation: `Plants would consume CO₂ from the atmosphere 10x faster. Climate change would reverse rapidly. Plants would need less sunlight and could grow in darker environments. Crops would need much less water. The entire food chain would shift - herbivores would have abundant food. Oxygen levels would spike. It would be a game-changer for civilization.`,
-
+      visuals: ['https://via.placeholder.com/300x200?text=Super+Plants'],
     },
     {
       id: 4,
@@ -44,7 +44,7 @@ function WhatIfSimulator({ topic }) {
       topic: 'Physics',
       difficulty: 'Hard',
       explanation: `If light traveled at, say, 1 meter per second instead of 299,792,458 m/s, the universe would be completely different. Time dilation effects would be visible to the naked eye. Relativity would affect everyday objects. GPS and electronics wouldn't work. Communication would be impossible. We'd perceive time differently. The very fabric of reality would change.`,
-
+      visuals: ['https://via.placeholder.com/300x200?text=Slow+Light'],
     },
   ];
 
@@ -99,16 +99,19 @@ function WhatIfSimulator({ topic }) {
             {!simulationRunning && (
               <>
                 <div className="simulation-visuals">
-              <div
-                className="visual-box"
-                style={{
-                  background: 'var(--bg-secondary)',
-                  border: '1px solid var(--border-default)',
-                }}
-              >
-                <p>Scenario Visualization</p>
-              </div>
-            </div>
+                  {selectedScenario.visuals.map((visual, idx) => (
+                    <div
+                      key={idx}
+                      className="visual-box"
+                      style={{
+                        background: 'var(--bg-secondary)',
+                        border: '1px solid var(--border-default)',
+                      }}
+                    >
+                      <p>Scenario Visualization</p>
+                    </div>
+                  ))}
+                </div>
 
                 <div className="simulation-explanation">
                   <h3>What Happens?</h3>
