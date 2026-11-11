@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    # Dependency upgrades land as pull requests so CI (lint, tsc, jest,
+    # build, contrast and the real-Chrome audits) verifies them before
+    # anything is merged. No auto-merge: a person reviews each one.
