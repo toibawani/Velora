@@ -63,7 +63,17 @@ const sendBeacon = (url) => {
   }
   try {
     if (typeof fetch !== 'undefined') {
-      fetch(url, { keepalive: true, method: 'GET' });
+      const controller = new AbortController();
+      // A beacon that never settles must not hold the page open forever.
+      setTimeout(() => controller.abort(), 5000);
+      const promise = fetch(url, {
+        keepalive: true,
+        method: 'GET',
+        signal: controller.signal,
+      });
+      if (promise && typeof promise.catch === 'function') {
+        promise.catch(() => {});
+      }
       return true;
     }
   } catch {
