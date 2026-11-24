@@ -19,7 +19,11 @@
                                     neither can be hashed
         img-src, connect-src        only this origin, plus the optional
                                     GoatCounter host when analytics is switched
-                                    on (it is off by default and unconfigured)
+                                    on (it is off by default and unconfigured),
+                                    and the one Supabase project that holds the
+                                    optional account. Nothing else can be
+                                    reached from this page, including any other
+                                    Supabase project.
         base-uri 'self'             an injected <base> cannot retarget links
         form-action 'none'          no form can navigate anywhere
         object-src 'none'           no plugin or Java applet surface
@@ -30,7 +34,7 @@
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.goatcounter.com; font-src 'self'; connect-src 'self' https://*.goatcounter.com; media-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; frame-src 'none'"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.goatcounter.com; font-src 'self'; connect-src 'self' https://*.goatcounter.com https://wxiqtqvofdmxfrbbjsju.supabase.co; media-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; frame-src 'none'"
     />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
