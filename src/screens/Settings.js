@@ -22,6 +22,7 @@ import {
   setOnboardingPreference,
 } from '../utils/onboardingPreferences';
 import { isOptedIn, setOptedIn } from '../utils/siteAnalytics';
+import AccountSection from '../components/AccountSection';
 import '../styles/Settings.css';
 
 /**
@@ -314,6 +315,8 @@ function Settings({ user, setScreen, onForgetProfile }) {
             Remove the name from this device
           </button>
         </section>
+
+        <AccountSection />
 
         <section className="st-section" aria-labelledby="st-storage">
           <h2 id="st-storage">What is stored</h2>

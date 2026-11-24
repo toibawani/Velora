@@ -556,3 +556,31 @@
   border-color: var(--danger-line);
   color: var(--color-error);
 }
+
+/* The account section: one field and one button, plus the state after each press.
+   The input is 44px tall because this is the one place in Settings where a
+   thumb has to hit a text field, and the audit's touch-target rule applies. */
+.st-account-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.st-account-input {
+  min-height: 44px;
+  flex: 1 1 16rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.st-account-input:focus-visible {
+  outline: 2px solid var(--color-focus, currentColor);
+  outline-offset: 2px;
+}
