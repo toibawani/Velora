@@ -69,12 +69,12 @@
      is rather than picking a number and inheriting whatever came with it. The
      display steps are deliberately large: this is a reading product and the
      headline is allowed to dominate the viewport. */
-  --text-display: clamp(2.75rem, 6.4vw, 5.25rem);  /* hero, one per screen */
+  --text-display: clamp(3.5rem, 8vw, 7rem);        /* hero; 56px floor at 375, 112px at 1440 */
   --text-title:   clamp(2rem, 4.2vw, 3.25rem);    /* screen titles */
   --text-heading: clamp(1.5rem, 2.6vw, 2rem);      /* section heads */
   --text-subhead: clamp(1.25rem, 1.8vw, 1.4375rem);
   --text-lead:    clamp(1.125rem, 1.4vw, 1.3125rem);
-  --text-body:    1.0625rem;                      /* 17px, long-form default */
+  --text-body:    1.125rem;                       /* 18px, long-form default */
   --text-ui:      0.9375rem;                      /* 15px, chrome and labels */
   --text-small:   0.8125rem;
   --text-micro:   0.75rem;                         /* status tags; 12px floor */
@@ -83,18 +83,18 @@
      The one number the long-form screens depend on. 68ch is the range where the
      eye reliably finds the next line; several screens already hardcoded 68ch
      and this makes it one place. */
-  --measure: 68ch;
+  --measure: 62ch;
   --measure-narrow: 46ch;   /* ledes and single-sentence blocks */
   --measure-wide: 76ch;     /* two-column reference text */
 
   /* ---- Surfaces (warm paper baseline) ---- */
-  --bg-primary: #F7F2E9;   /* page ground */
-  --bg-secondary: #F1EAE0; /* recessed bands, rails */
-  --bg-tertiary: #EAE1D1;  /* pressed / stronger wash */
-  --bg-elevated: #FFFDF9;  /* raised cards */
-  --bg-hover: #EFE7DA;
-  --bg-active: #E2D6C4;
-  --bg-overlay: rgba(36, 27, 19, 0.45); /* scrims behind drawers & modals */
+  --bg-primary: #F3EDE1;   /* page ground: paper */
+  --bg-secondary: #EAE0CD; /* recessed bands, rails */
+  --bg-tertiary: #E0D2B9;  /* pressed / stronger wash */
+  --bg-elevated: #FBF6EC;  /* raised cards, a shade lighter than paper */
+  --bg-hover: #E9DECB;
+  --bg-active: #DCCDB2;
+  --bg-overlay: rgba(25, 16, 9, 0.5); /* scrims behind drawers & modals */
 
   /* ---- Atmosphere ----
      A flat colour field reads like a screenshot. The cream surfaces are meant
@@ -123,34 +123,37 @@
     radial-gradient(44rem 30rem at 86% 4%, rgba(168, 110, 40, 0.11), transparent 58%);
 
   /* ---- Text ---- */
-  --text-primary: #241B13;   /* 13.7:1 on page */
-  --text-secondary: #5C4A38; /* 5.8:1 on page */
-  --text-tertiary: #7A6653;  /* 4.7:1 on page, small labels only */
-  --text-inverse: #FFF9F1;
+  --text-primary: #191009;   /* ink, 16.1:1 on paper */
+  --text-secondary: #4E3F31; /* ink soft, 8.7:1 on paper */
+  --text-tertiary: #6F5F4D;  /* ink mute, 5.3:1 on paper */
+  --text-inverse: #FFF7EA;
 
   /* ---- Borders (espresso at low alpha over paper) ---- */
-  --border-subtle: rgba(50, 30, 20, 0.1);
-  --border-default: rgba(50, 30, 20, 0.14);
-  --border-strong: rgba(50, 30, 20, 0.24);
+  --border-subtle: rgba(25, 16, 9, 0.1);
+  --border-default: rgba(25, 16, 9, 0.16);
+  --border-strong: rgba(25, 16, 9, 0.28);
 
   /* ---- Brand accent (sienna). Solid, zero gradients. ---- */
-  --accent-primary: #A34A22;        /* 5.5:1 on page, 5.9:1 with paper text on it */
-  --accent-primary-hover: #853A18;
-  --accent-contrast: #FFF9F1;       /* text drawn ON the accent */
-  --accent-soft: rgba(163, 74, 34, 0.08);   /* selected tints */
-  --accent-line: rgba(163, 74, 34, 0.4);    /* hover borders */
-  --accent-shadow: rgba(163, 74, 34, 0.2);  /* lift shadows under accent buttons */
-  --ring: #A34A22;                  /* focus-visible outline color */
+  --accent-primary: #B1431A;        /* ember, 4.88:1 on paper */
+  --accent-primary-hover: #8C3213;
+  --accent-contrast: #FDF7EC;       /* paper text drawn ON ember, 4.88:1 */
+  --accent-soft: rgba(177, 67, 26, 0.08);   /* selected tints */
+  --accent-line: rgba(177, 67, 26, 0.4);    /* hover borders */
+  --accent-shadow: rgba(177, 67, 26, 0.22); /* lift shadows under accent buttons */
+  --ring: #B1431A;                  /* focus-visible outline color */
 
   /* ---- Derived roles used by feature CSS ---- */
-  --bg-glass: rgba(255, 253, 249, 0.72);        /* blurred sticky bars */
-  --bg-glass-strong: rgba(247, 242, 233, 0.86);
-  --wash: rgba(50, 30, 20, 0.06);               /* quiet background tints */
-  --shadow-color: rgba(50, 30, 20, 0.1);        /* raw color for custom shadows */
-  --ambient-warm: rgba(196, 122, 74, 0.18);     /* page-corner glows */
-  --ambient-light: rgba(232, 196, 154, 0.45);
-  --inverse-surface: #241B13;                   /* espresso bands (dark hero) */
-  --inverse-text: #FFF9F1;                      /* text on those bands */
+  /* Sticky bars used to be translucent and blurred. There is no glass in a
+     printed book: a bar is a strip of the same paper, and it hides what scrolls
+     under it rather than smearing it. These are solid roles now. */
+  --bg-glass: #FBF6EC;
+  --bg-glass-strong: #F5EDDF;
+  --wash: rgba(25, 16, 9, 0.06);               /* quiet background tints */
+  --shadow-color: rgba(25, 16, 9, 0.1);        /* raw color for custom shadows */
+  --ambient-warm: rgba(177, 67, 26, 0.14);     /* page-corner glows */
+  --ambient-light: rgba(231, 214, 180, 0.5);
+  --inverse-surface: #5E2318;                   /* oxblood bands */
+  --inverse-text: #F7F0E4;                      /* 10.4:1 on oxblood */
   --success-line: rgba(47, 107, 65, 0.3);        /* tinted hairline borders */
   --warning-line: rgba(138, 90, 16, 0.3);
   --danger-line: rgba(180, 50, 42, 0.28);
@@ -161,22 +164,22 @@
   --accent-blue-hover: var(--accent-primary-hover);
 
   /* ---- Functional semantic colors (warm-tuned, AA on paper/card) ---- */
-  --color-success: #2F6B41;
-  --color-success-hover: #3E7D51;
-  --color-success-soft: #E6F0E9;
-  --color-warning: #8A5A10;
-  --color-warning-soft: #F7E7C6;
-  --color-error: #B4322A;
-  --color-error-hover: #932723;
-  --color-error-soft: #FBECEA;
-  --color-info: #1F6F8C;
+  --color-success: #2B6239;
+  --color-success-hover: #357A46;
+  --color-success-soft: #E3EEE6;
+  --color-warning: #7E5109;
+  --color-warning-soft: #F3E3C0;
+  --color-error: #A82E24;
+  --color-error-hover: #8C241C;
+  --color-error-soft: #F8E8E4;
+  --color-info: #14565F;
   --accent-green: var(--color-success);
   --accent-green-hover: var(--color-success-hover);
   --accent-orange: var(--color-warning);
   --accent-red: var(--color-error);
   --accent-red-hover: var(--color-error-hover);
-  --accent-teal: #146E70;
-  --accent-gold: #8A6524;
+  --accent-teal: #14565F;
+  --accent-gold: #8A5A12;
 
   /* ---- Subject identity (nine dictionary subjects, no purple) ---- */
   --subject-physics: #2E4BA0;
@@ -202,7 +205,24 @@
      and it has to dim in the dark theme the same way the others do. Defining it
      once here is cheaper than hardcoding a dotted border in two themes across
      every index line. */
-  --index-leader: rgba(50, 30, 20, 0.34);
+  --index-leader: rgba(25, 16, 9, 0.34);
+
+  /* ---- Printed Index structure ----
+     The one visual idea from the audit. A page has a margin rail, a hairline
+     thread that runs down it, section bands, and a folio. These are structural
+     roles, not decoration: every screen draws the same rail, the same thread and
+     the same folio, which is what makes thirteen screens read as one book. */
+  --rail-width: 72px;
+  --thread: #B1431A;                 /* ember hairline, the only moving line */
+  --thread-width: 1px;
+  --section-rule: rgba(25, 16, 9, 0.16);
+  --band-ochre: #E7D6B4;
+  --band-ochre-ink: #4E3F31;         /* 7.06:1 on the ochre band */
+  --band-ink: #191009;
+  --band-ink-text: #F4ECDF;
+  --band-oxblood: #5E2318;
+  --band-oxblood-text: #F7F0E4;
+  --folio-ink: #6F5F4D;
 
   /* Standard 8px spatial grid */
   --space-1: 4px;
@@ -277,17 +297,17 @@
 /* Explicit theme selection wins over the operating system preference. */
 :root[data-theme='dark'] {
   /* Legacy generic roles */
-  --color-bg: #171009;
-  --color-text: #F2E9DD;
-  --color-text-muted: #B8A48D;
-  --color-border: rgba(242, 233, 221, 0.14);
+  --color-bg: #14100B;
+  --color-text: #F4ECDF;
+  --color-text-muted: #C6B5A2;
+  --color-border: rgba(244, 236, 223, 0.14);
 
-  --bg-primary: #171009;
-  --bg-secondary: #1F1610;
-  --bg-tertiary: #2A1E15;
-  --bg-elevated: #261C12;
-  --bg-hover: #2F2318;
-  --bg-active: #38291D;
+  --bg-primary: #14100B;
+  --bg-secondary: #1E1710;
+  --bg-tertiary: #2A2118;
+  --bg-elevated: #241C14;
+  --bg-hover: #2E2318;
+  --bg-active: #372A1C;
   --bg-overlay: rgba(0, 0, 0, 0.62);
 
   /* Dark theme atmosphere. The grain needs to be a touch stronger than in the
@@ -300,35 +320,47 @@
     radial-gradient(56rem 36rem at 14% -12%, rgba(224, 140, 84, 0.13), transparent 60%),
     radial-gradient(42rem 28rem at 86% 4%, rgba(170, 132, 74, 0.16), transparent 56%);
 
-  --text-primary: #F2E9DD;   /* 15.6:1 on page */
-  --text-secondary: #C4B09B; /* 8.6:1 on page */
-  --text-tertiary: #A08B78;  /* 5.4:1 on page */
-  --text-inverse: #171009;
+  --text-primary: #F4ECDF;   /* 16.2:1 on night */
+  --text-secondary: #C6B5A2; /* 9.5:1 on night */
+  --text-tertiary: #A08B78;  /* 5.8:1 on night */
+  --text-inverse: #14100B;
 
-  --border-subtle: rgba(242, 233, 221, 0.12);
-  --border-default: rgba(242, 233, 221, 0.18);
-  --border-strong: rgba(242, 233, 221, 0.3);
+  --border-subtle: rgba(244, 236, 223, 0.12);
+  --border-default: rgba(244, 236, 223, 0.2);
+  --border-strong: rgba(244, 236, 223, 0.32);
 
-  --accent-primary: #E0975F;         /* 6.1:1 on page */
-  --accent-primary-hover: #E8A979;
-  --accent-contrast: #171009;        /* dark ink on the lifted accent */
-  --accent-soft: rgba(224, 151, 95, 0.14);
-  --accent-line: rgba(224, 151, 95, 0.5);
+  --accent-primary: #F08A4B;         /* 7.6:1 on night */
+  --accent-primary-hover: #F5A06A;
+  --accent-contrast: #14100B;        /* dark ink on the lifted ember */
+  --accent-soft: rgba(240, 138, 75, 0.14);
+  --accent-line: rgba(240, 138, 75, 0.5);
   --accent-shadow: rgba(0, 0, 0, 0.5);
-  --ring: #E8A979;
+  --ring: #F5A06A;
 
-  --bg-glass: rgba(36, 26, 18, 0.78);
-  --bg-glass-strong: rgba(23, 16, 9, 0.88);
-  --wash: rgba(242, 233, 221, 0.05);
+  --bg-glass: #241C14;
+  --bg-glass-strong: #1B140E;
+  --wash: rgba(244, 236, 223, 0.05);
   --shadow-color: rgba(0, 0, 0, 0.5);
-  --ambient-warm: rgba(224, 151, 95, 0.12);
-  --ambient-light: rgba(224, 151, 95, 0.06);
-  --inverse-surface: #120C07;
+  --ambient-warm: rgba(240, 138, 75, 0.12);
+  --ambient-light: rgba(240, 138, 75, 0.06);
+  --inverse-surface: #0B0805;
 
   /* The leader rule has to lighten with everything else, or the index reads as
      a row of broken dotted lines on the dark ground. */
-  --index-leader: rgba(242, 233, 221, 0.38);
-  --inverse-text: #F2E9DD;
+  --index-leader: rgba(244, 236, 223, 0.38);
+
+  --rail-width: 56px;
+  --thread: #F08A4B;
+  --thread-width: 1px;
+  --section-rule: rgba(244, 236, 223, 0.18);
+  --band-ochre: #2A2118;
+  --band-ochre-ink: #C6B5A2;
+  --band-ink: #0B0805;
+  --band-ink-text: #F4ECDF;
+  --band-oxblood: #3A150E;
+  --band-oxblood-text: #F4ECDF;
+  --folio-ink: #A08B78;
+  --inverse-text: #F4ECDF;
   --success-line: rgba(140, 199, 158, 0.4);
   --warning-line: rgba(232, 178, 92, 0.4);
   --danger-line: rgba(240, 161, 154, 0.4);
@@ -341,8 +373,8 @@
   --color-error: #F0A19A;
   --color-error-hover: #F5B8B2;
   --color-error-soft: rgba(240, 161, 154, 0.14);
-  --color-info: #7FB8DC;
-  --accent-teal: #6FD0BE;
+  --color-info: #8FCFD2;
+  --accent-teal: #8FCFD2;
   --accent-gold: #D8A94E;
 
   --subject-physics: #8FA8E8;
@@ -393,61 +425,61 @@
    The values are the :root defaults, restated here so the specificity of
    this selector beats a previously applied dark block. */
 :root[data-theme='light'] {
-  --color-bg: #F7F2E9;
-  --color-text: #241B13;
-  --color-text-muted: #5C4A38;
-  --color-border: rgba(50, 30, 20, 0.14);
+  --color-bg: #F3EDE1;
+  --color-text: #191009;
+  --color-text-muted: #4E3F31;
+  --color-border: rgba(25, 16, 9, 0.16);
 
-  --bg-primary: #F7F2E9;
-  --bg-secondary: #F1EAE0;
-  --bg-tertiary: #EAE1D1;
-  --bg-elevated: #FFFDF9;
-  --bg-hover: #EFE7DA;
-  --bg-active: #E2D6C4;
-  --bg-overlay: rgba(36, 27, 19, 0.45);
+  --bg-primary: #F3EDE1;
+  --bg-secondary: #EAE0CD;
+  --bg-tertiary: #E0D2B9;
+  --bg-elevated: #FBF6EC;
+  --bg-hover: #E9DECB;
+  --bg-active: #DCCDB2;
+  --bg-overlay: rgba(25, 16, 9, 0.5);
 
-  --text-primary: #241B13;
-  --text-secondary: #5C4A38;
-  --text-tertiary: #7A6653;
-  --text-inverse: #FFF9F1;
+  --text-primary: #191009;
+  --text-secondary: #4E3F31;
+  --text-tertiary: #6F5F4D;
+  --text-inverse: #FFF7EA;
 
-  --border-subtle: rgba(50, 30, 20, 0.1);
-  --border-default: rgba(50, 30, 20, 0.14);
-  --border-strong: rgba(50, 30, 20, 0.24);
+  --border-subtle: rgba(25, 16, 9, 0.1);
+  --border-default: rgba(25, 16, 9, 0.16);
+  --border-strong: rgba(25, 16, 9, 0.28);
 
-  --accent-primary: #A34A22;
-  --accent-primary-hover: #853A18;
-  --accent-contrast: #FFF9F1;
-  --accent-soft: rgba(163, 74, 34, 0.08);
-  --accent-line: rgba(163, 74, 34, 0.4);
-  --accent-shadow: rgba(163, 74, 34, 0.2);
-  --ring: #A34A22;
+  --accent-primary: #B1431A;
+  --accent-primary-hover: #8C3213;
+  --accent-contrast: #FDF7EC;
+  --accent-soft: rgba(177, 67, 26, 0.08);
+  --accent-line: rgba(177, 67, 26, 0.4);
+  --accent-shadow: rgba(177, 67, 26, 0.22);
+  --ring: #B1431A;
 
-  --bg-glass: rgba(255, 253, 249, 0.72);
-  --bg-glass-strong: rgba(247, 242, 233, 0.86);
-  --wash: rgba(50, 30, 20, 0.06);
-  --shadow-color: rgba(50, 30, 20, 0.1);
-  --ambient-warm: rgba(196, 122, 74, 0.18);
-  --ambient-light: rgba(232, 196, 154, 0.45);
-  --inverse-surface: #241B13;
-  --inverse-text: #FFF9F1;
+  --bg-glass: #FBF6EC;
+  --bg-glass-strong: #F5EDDF;
+  --wash: rgba(25, 16, 9, 0.06);
+  --shadow-color: rgba(25, 16, 9, 0.1);
+  --ambient-warm: rgba(177, 67, 26, 0.14);
+  --ambient-light: rgba(231, 214, 180, 0.5);
+  --inverse-surface: #5E2318;
+  --inverse-text: #F7F0E4;
 
-  --index-leader: rgba(50, 30, 20, 0.34);
+  --index-leader: rgba(25, 16, 9, 0.34);
   --success-line: rgba(47, 107, 65, 0.3);
   --warning-line: rgba(138, 90, 16, 0.3);
   --danger-line: rgba(180, 50, 42, 0.28);
 
-  --color-success: #2F6B41;
-  --color-success-hover: #3E7D51;
-  --color-success-soft: #E6F0E9;
-  --color-warning: #8A5A10;
-  --color-warning-soft: #F7E7C6;
-  --color-error: #B4322A;
-  --color-error-hover: #932723;
-  --color-error-soft: #FBECEA;
-  --color-info: #1F6F8C;
-  --accent-teal: #146E70;
-  --accent-gold: #8A6524;
+  --color-success: #2B6239;
+  --color-success-hover: #357A46;
+  --color-success-soft: #E3EEE6;
+  --color-warning: #7E5109;
+  --color-warning-soft: #F3E3C0;
+  --color-error: #A82E24;
+  --color-error-hover: #8C241C;
+  --color-error-soft: #F8E8E4;
+  --color-info: #14565F;
+  --accent-teal: #14565F;
+  --accent-gold: #8A5A12;
 
   --subject-physics: #2E4BA0;
   --subject-chemistry: #5F6B2E;
