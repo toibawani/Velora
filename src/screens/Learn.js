@@ -390,7 +390,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
 
       <main className="learn-main">
         {/* Mastery Path */}
-        <MasteryPath selectedSubject={selectedSubject || 'physics'} />
+        <MasteryPath subject={subject} selectedSubject={selectedSubject || 'physics'} />
 
             {/* Interactive Physics Simulations (for Physics) */}
             {(selectedSubject === 'physics' || !selectedSubject) && (
