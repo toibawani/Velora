@@ -16,7 +16,7 @@ import {
   shouldOfferResume,
 } from '../utils/resumePath';
 import { recordStudySession } from '../utils/analyticsStorage';
-import { recordProgressEvent } from '../backend/sync';
+import { recordProgressEvent, topicIdFor } from '../backend/sync';
 import { parseInlineTerms } from './GlossaryTerm';
 
 /**
@@ -239,7 +239,11 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
           <section className="lesson-list-card"><div className="lesson-card-heading"><BriefcaseBusiness size={17} /><h2>Why it matters</h2></div><p>{parseInlineTerms(topic.career)}</p></section>
         </div>
         <section className="lesson-section-card"><div className="lesson-card-heading"><Compass size={17} /><h2>Map the idea</h2></div><ConceptMap subject={subject} /></section>
-        <section className="lesson-section-card"><div className="lesson-card-heading"><Users size={17} /><h2>Compare explanations</h2></div><PeerExplanations topic={topic.title} onNotify={showToast} /></section>
+        <section className="lesson-section-card"><div className="lesson-card-heading"><Users size={17} /><h2>Compare explanations</h2></div><PeerExplanations
+              topic={topic.title}
+              topicId={topicIdFor(subject, topic.id)}
+              onNotify={showToast}
+            /></section>
         <section className="lesson-section-card"><div className="lesson-card-heading"><CalendarClock size={17} /><h2>Return to this later</h2></div><SmartReviewPlanner selectedSubject={subject} onNotify={showToast} /></section>
         {relatedGame && onOpenGame && (
           <section className="lesson-section-card lesson-related-game">

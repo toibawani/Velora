@@ -187,3 +187,79 @@
     justify-content: center;
   }
 }
+/* The reviewed list, the review action and the report form.
+
+   These sit below the private board and are deliberately quieter: the reviewed
+   list is a reference, not a feed, so it gets rules and text rather than cards
+   with controls on them. */
+.explanation-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.submit-btn--review {
+  border-color: var(--field-line-strong);
+}
+
+.explanations-note {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.explanations-note--quiet {
+  opacity: 0.75;
+}
+
+.approved-explanations {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-strong);
+}
+
+.explanations-title--small {
+  font-size: 1.0625rem;
+}
+
+.approved-list {
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.approved-row {
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--border-strong);
+}
+
+.report-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.report-input {
+  min-height: 44px;
+  flex: 1 1 14rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.report-input:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
