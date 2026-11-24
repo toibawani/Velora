@@ -66,7 +66,8 @@
   margin: var(--space-5) 0 0;
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-size: var(--text-display);
+  overflow-wrap: anywhere;
   font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
   font-weight: 600;
   letter-spacing: -0.038em;
@@ -488,6 +489,13 @@
 }
 
 @media (max-width: 620px) {
+  /* The floating menu button is fixed to the top right on a phone, so the last
+     item in the masthead has to stop short of it. Without this, "Back to the
+     cover" ran underneath the button's border. */
+  .lp-masthead {
+    padding-right: 3.5rem;
+  }
+
   .lp-masthead-note {
     display: none;
   }

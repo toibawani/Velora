@@ -18,7 +18,10 @@ const http = require('http');
 
 const puppeteer = require('puppeteer-core');
 
-const WIDTHS = [1440, 375];
+// CI keeps the two widths the product is designed against. LAYOUT_WIDTHS lets a
+// developer add a width (320 is the narrowest phone the brief names) without
+// changing what the pipeline runs on every push.
+const WIDTHS = (process.env.LAYOUT_WIDTHS || '1440,375').split(',').map(Number);
 const PORT = Number(process.env.PORT || 4173);
 
 // Chrome discovery lives in scripts/chrome.js. It used to be a copy of this
