@@ -71,10 +71,11 @@ I am not pretending otherwise; the app has to keep working when the project is
 paused, which is why every backend call is optional and failure is a state the
 UI shows rather than an error page.
 
-**Still missing, and I would rather write it down:** the schema and the policies
-are applied to the project, but the SQL is not in this repository yet. Until it
-is, the database is the one copy of its own definition, which is how a schema
-drifts from the code that uses it. That is the next thing I fix.
+**Where the schema lives now:** `supabase/migrations/20261123_001_init.sql` holds
+the four tables, their constraints, the policies and the submission limit, and
+`supabase/tests/rls.sql` asserts the policies from two fake users. For a while
+the database was the only copy of its own definition, which is how a schema
+drifts from the code using it. It is not the only copy now.
 
 ---
 
