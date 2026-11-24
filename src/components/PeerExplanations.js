@@ -309,7 +309,11 @@ function PeerExplanations({ topic, topicId, onNotify }) {
       {backendEnabled && (
         <section className="approved-explanations" aria-labelledby="approved-title">
           <h3 id="approved-title" className="explanations-title explanations-title--small">
-            Reviewed explanations
+            {/* The only number on this screen, and it is counted from the rows
+                that actually arrived. Nothing is estimated or stored. */}
+            {approvedState === 'ready' && approved.length > 0
+              ? `Reviewed explanations (${approved.length})`
+              : 'Reviewed explanations'}
           </h3>
 
           {approvedState === 'loading' && (
