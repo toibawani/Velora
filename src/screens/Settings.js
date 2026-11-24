@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
-import { Check, Download, HardDrive, Monitor, Moon, Sun, Upload, User } from 'lucide-react';
+import { Check, Download, Monitor, Moon, Sun, Upload } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { FAILURE, describeStorage, describeStoredKey, storageUsage } from '../utils/storage';
 import { formatBytes } from '../utils/format';
@@ -307,8 +307,7 @@ function Settings({ user, setScreen, onForgetProfile }) {
         <section className="st-section" aria-labelledby="st-profile">
           <h2 id="st-profile">Name on this device</h2>
           <p className="st-section-note">
-            <User size={14} aria-hidden="true" /> {user?.name || 'No name set'}. A name typed into
-            this browser. It is not the account, it is not checked against anything, and removing it
+            {user?.name || 'No name set'}. A name typed into this browser. It is not the account, it is not checked against anything, and removing it
             does not sign you out. It is only used to greet you.
           </p>
           <button type="button" className="st-danger" onClick={onForgetProfile}>
@@ -321,8 +320,7 @@ function Settings({ user, setScreen, onForgetProfile }) {
         <section className="st-section" aria-labelledby="st-storage">
           <h2 id="st-storage">What is stored</h2>
           <p className="st-section-note">
-            <HardDrive size={14} aria-hidden="true" /> Everything here is in this browser: your
-            name, these three answers, your questions and notes, your study time and the games you
+            Everything here is in this browser: your name, these three answers, your questions and notes, your study time and the games you
             have played. Clearing your browser data deletes all of it. If you sign in, the only thing
             that also exists elsewhere is progress, as a topic and a day; notes, questions and study
             minutes are never uploaded.
@@ -354,8 +352,7 @@ function Settings({ user, setScreen, onForgetProfile }) {
         <section className="st-section" aria-labelledby="st-data">
           <h2 id="st-data">Take your data with you</h2>
           <p className="st-section-note">
-            <Download size={14} aria-hidden="true" /> Because the local copy is the original, a new
-            laptop or a cleared cache takes all of it. An account keeps a copy of progress only, not
+            Because the local copy is the original, a new laptop or a cleared cache takes all of it. An account keeps a copy of progress only, not
             of your notes or questions. Export writes one JSON file you keep yourself: your name,
             your questions, your saved lessons, your games and these settings. It is built in the page
             and handed to your downloads folder, so nothing is uploaded to do it.
@@ -442,8 +439,7 @@ function Settings({ user, setScreen, onForgetProfile }) {
         <section className="st-section" aria-labelledby="st-analytics">
           <h2 id="st-analytics">External analytics</h2>
           <p className="st-section-note">
-            <Monitor size={14} aria-hidden="true" /> VELORA can send anonymous usage numbers to an
-            analytics service (page views, which Atlas topics open, which lesson titles start or
+            VELORA can send anonymous usage numbers to an analytics service (page views, which Atlas topics open, which lesson titles start or
             finish, game completions, the theme you chose and how often people come back within
             seven days). It cannot tell who you are: there are no cookies, no fingerprinting, no
             email, no name, no identifier, and no text you type. Nothing is sent at all unless you

@@ -69,7 +69,11 @@
      is rather than picking a number and inheriting whatever came with it. The
      display steps are deliberately large: this is a reading product and the
      headline is allowed to dominate the viewport. */
-  --text-display: clamp(3.5rem, 8vw, 7rem);        /* hero; 56px floor at 375, 112px at 1440 */
+  /* The hero used to run to 112px at 1440, which pushed the one fact the hero
+     exists to show (the count, and the button under it) below the fold on a
+     laptop. 88px is still a display size and still dominates the page; it just
+     leaves room for the rest of the page to be on the same screen. */
+  --text-display: clamp(3rem, 6vw, 5.5rem);        /* hero; 48px floor at 375, 88px at 1440 */
   --text-title:   clamp(2rem, 4.2vw, 3.25rem);    /* screen titles */
   --text-heading: clamp(1.5rem, 2.6vw, 2rem);      /* section heads */
   --text-subhead: clamp(1.25rem, 1.8vw, 1.4375rem);
@@ -109,7 +113,10 @@
      Keep the alpha low. Past roughly 0.06 the grain stops being a surface and
      becomes an object on the page that then has to be contrast-checked. */
   --texture-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-  --texture-paper-alpha: 0.05;
+  /* Grain is the one texture kept. It is paper, not lighting: it sits at the
+     threshold of noticing and is the reason a flat field does not read as a
+     web page background. */
+  --texture-paper-alpha: 0.03;
 
   /* The hero is the one surface allowed to be lit rather than merely
      coloured. Two off-axis warm glows, low opacity, so the eye arrives at the
@@ -118,9 +125,12 @@
      because a glow is not a theme role - it is this lighting, on this panel,
      and the dark theme needs its own cooler ember rather than a brighter
      version of the same one. */
-  --hero-glow:
-    radial-gradient(58rem 38rem at 14% -12%, rgba(172, 82, 34, 0.17), transparent 62%),
-    radial-gradient(44rem 30rem at 86% 4%, rgba(168, 110, 40, 0.11), transparent 58%);
+  /* There is no glow. The hero used two off-axis radial gradients to "light"
+     the page, which is the single most recognisable generated-interface move
+     there is: a soft originless wash that means nothing and that no print
+     edition could reproduce. The page is a flat sheet now, and the only thing
+     leading the eye to the title is the rule above it and the space around it. */
+  --hero-glow: none;
 
   /* ---- Text ---- */
   --text-primary: #191009;   /* ink, 16.1:1 on paper */
@@ -251,13 +261,21 @@
      steps were used for ordinary panels the whole product looked like a set of
      oversized cards. Anything above 16px is now reserved for the single
      full-width sheet the atlas is drawn on. */
-  --radius-xs: 3px;   /* badges, tight chips */
-  --radius-sm: 6px;   /* buttons, inputs. Was 5px; snapped to the 3/6/8 family */
-  --radius-md: 8px;   /* cards */
-  --radius-lg: 10px;  /* large cards, dropdowns */
-  --radius-xl: 12px;  /* feature panels */
-  --radius-2xl: 14px; /* hero cards, search results */
-  --radius-3xl: 18px; /* the atlas container and other page-scale surfaces */
+  /* ---- Corners ----
+     One decision, applied to all seven names: corners are nearly square. 2px on
+     small things, 3px on controls, 4px on the largest panels, and the "full"
+     name that 116 selectors use for pills resolves to 3px as well, so chips
+     become ruled labels rather than capsules. A reference book is set in
+     rectangles; the pill was the tell that a component library had been here.
+     Circular marks that genuinely need a circle write 50% or 999px themselves
+     and are untouched. */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
+  --radius-3xl: 4px;
   /* NOW CORRECT. This used to resolve to 8px - identical to --radius-lg - so
      every one of roughly thirty selectors that asked for a pill by name drew a
      slightly rounded rectangle instead. The file previously documented the bug
@@ -266,21 +284,30 @@
      wrote 999px as a literal, so the controls that genuinely wanted a pill were
      unaffected and are unchanged. The visible effect is on the selectors that
      were relying on the broken value. */
-  --radius-full: 999px;
+  --radius-full: 3px;
 
   /* ---- Elevation (warm-tinted, 3-tier) ---- */
   --shadow-none: none;
-  --shadow-xs: 0 1px 3px rgba(50, 30, 20, 0.06);
-  --shadow-sm: 0 2px 8px rgba(50, 30, 20, 0.07);
-  --shadow-md: 0 4px 12px rgba(50, 30, 20, 0.11);
-  --shadow-lg: 0 8px 24px rgba(50, 30, 20, 0.14);
-  --shadow-hover: 0 4px 12px rgba(50, 30, 20, 0.11);
+  /* ---- Elevation is a rule, not a shadow ----
+     A printed page has no drop shadow. Every place that used a blurred box to
+     lift a surface now gets a square inner rule: the same separation, drawn
+     with a line, at no blur radius. The tier names are kept so the call sites
+     keep working; they map to hairline strengths rather than to heights. This
+     is the change that does most of the visual work, because it removes the
+     floating-card reading from every screen at once. */
+  --shadow-xs: inset 0 0 0 1px var(--border-subtle);
+  --shadow-sm: inset 0 0 0 1px var(--border-subtle);
+  --shadow-md: inset 0 0 0 1px var(--border-default);
+  --shadow-lg: inset 0 0 0 1px var(--border-strong);
+  --shadow-hover: inset 0 0 0 1px var(--border-strong);
 
   /* ---- Transitions ---- */
+  /* Motion is a state change, not an arrival. Colours cross-fade in 90ms so a
+     hover does not blink; nothing enters, slides, springs or settles. */
   --ease-standard: ease-out;
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);  /* expressive entrance */
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 90ms;
+  --duration-normal: 120ms;
 
   /* ---- Layer depth ---- */
   --z-dropdown: 100;
@@ -310,15 +337,11 @@
   --bg-active: #372A1C;
   --bg-overlay: rgba(0, 0, 0, 0.62);
 
-  /* Dark theme atmosphere. The grain needs to be a touch stronger than in the
-     light theme - black noise over a near-black ground is invisible, so the
-     tile is doing its work at the highlights - and the hero glow is a dimmer,
-     tighter ember. The same 17% sienna that reads as warm daylight on cream
-     reads as a smear on espresso. */
-  --texture-paper-alpha: 0.07;
-  --hero-glow:
-    radial-gradient(56rem 36rem at 14% -12%, rgba(224, 140, 84, 0.13), transparent 60%),
-    radial-gradient(42rem 28rem at 86% 4%, rgba(170, 132, 74, 0.16), transparent 56%);
+  /* Dark theme: same sheet, night ink. Grain is a touch stronger because black
+     noise over a near-black ground needs the highlights, and there is no glow
+     here either. */
+  --texture-paper-alpha: 0.045;
+  --hero-glow: none;
 
   --text-primary: #F4ECDF;   /* 16.2:1 on night */
   --text-secondary: #C6B5A2; /* 9.5:1 on night */
@@ -387,11 +410,11 @@
   --subject-psychology: #E08AA8;
   --subject-economics: #A89AE8;
 
-  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.35);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-xs: inset 0 0 0 1px var(--border-subtle);
+  --shadow-sm: inset 0 0 0 1px var(--border-subtle);
+  --shadow-md: inset 0 0 0 1px var(--border-default);
+  --shadow-lg: inset 0 0 0 1px var(--border-strong);
+  --shadow-hover: inset 0 0 0 1px var(--border-strong);
 }
 
 /* ==========================================================================
@@ -491,9 +514,16 @@
   --subject-psychology: #A34A6B;
   --subject-economics: #4A3FA8;
 
-  --shadow-xs: 0 1px 3px rgba(50, 30, 20, 0.06);
-  --shadow-sm: 0 2px 8px rgba(50, 30, 20, 0.07);
-  --shadow-md: 0 4px 12px rgba(50, 30, 20, 0.11);
-  --shadow-lg: 0 8px 24px rgba(50, 30, 20, 0.14);
-  --shadow-hover: 0 4px 12px rgba(50, 30, 20, 0.11);
+  /* ---- Elevation is a rule, not a shadow ----
+     A printed page has no drop shadow. Every place that used a blurred box to
+     lift a surface now gets a square inner rule: the same separation, drawn
+     with a line, at no blur radius. The tier names are kept so the call sites
+     keep working; they map to hairline strengths rather than to heights. This
+     is the change that does most of the visual work, because it removes the
+     floating-card reading from every screen at once. */
+  --shadow-xs: inset 0 0 0 1px var(--border-subtle);
+  --shadow-sm: inset 0 0 0 1px var(--border-subtle);
+  --shadow-md: inset 0 0 0 1px var(--border-default);
+  --shadow-lg: inset 0 0 0 1px var(--border-strong);
+  --shadow-hover: inset 0 0 0 1px var(--border-strong);
 }

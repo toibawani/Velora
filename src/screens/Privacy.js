@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Shield, EyeOff } from 'lucide-react';
 import { isOptedIn } from '../utils/siteAnalytics';
 import '../styles/Legal.css';
 
@@ -36,8 +35,7 @@ function Privacy({ setScreen }) {
           <section className="legal-section">
             <h2>What stays here</h2>
             <p>
-              <EyeOff size={14} aria-hidden="true" /> Your name, your notes, your
-              saved lessons, your questions, your review schedule, your game
+              Your name, your notes, your saved lessons, your questions, your review schedule, your game
               results and the minutes recorded against each topic are stored in
               this browser&apos;s localStorage. They are not uploaded, signed in
               or signed out. Clearing site data deletes them, and the only copy
@@ -81,8 +79,7 @@ function Privacy({ setScreen }) {
           <section className="legal-section">
             <h2>The one thing that can leave without an account</h2>
             <p>
-              <Shield size={14} aria-hidden="true" /> External analytics is a
-              single opt-in switch in Settings. It is off by default. A beacon is
+              External analytics is a single opt-in switch in Settings. It is off by default. A beacon is
               only sent when that switch is on <strong>and</strong> whoever
               deployed this build has configured a GoatCounter address. In this
               deployment the address is blank, so switching it on currently sends

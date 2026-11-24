@@ -1,0 +1,485 @@
+/* ==========================================================================
+   book.css — the sheet everything is printed on
+   --------------------------------------------------------------------------
+   Loaded last, after the theme tokens and after every screen's own CSS. It is
+   not a component library and it does not add features: it is the one pass that
+   makes twenty-eight screens look like they were set by the same hand.
+
+   What it does, in order: one control shape, one focus ring, one hover answer,
+   one corner, hairline separation instead of shadow, and headings that carry no
+   italic accent words. Everything else is left to the screen, because a screen
+   with nothing of its own is a template.
+
+   Where a component already declares a value this has to beat, `!important`
+   appears and is deliberate. That is the cost of a normalisation layer applied
+   over 22,000 lines of existing page CSS without rewriting all of them; each
+   use is listed in the section it belongs to.
+   ========================================================================== */
+
+:root {
+  /* One interaction answer, used by every control on every screen. */
+  --control-radius: var(--radius-sm);
+  --control-height: 44px;
+  --control-border: 1px solid var(--border-strong);
+  --control-focus: 2px solid var(--ring);
+}
+
+/* ==========================================================================
+   0. One coloured thing per page
+   --------------------------------------------------------------------------
+   The five pigment fields (blush, butter, sage, lilac, clay) were blocks of
+   pastel carrying type. Six coloured panels on one cover is not restraint, and
+   a pastel block behind a headline is the tell of a generated layout: it exists
+   to make an empty area look designed. They are paper now, separated by a
+   hairline, and the only colour left on any page is the accent, used for the
+   one action and for the one drawn mark.
+
+   Ink and oxblood bands stay: they are dark ground, not decoration, and type on
+   them is the strongest contrast in the system.
+   ========================================================================== */
+
+.vl-field--blush,
+.vl-field--butter,
+.vl-field--sage,
+.vl-field--lilac,
+.vl-field--clay {
+  background: var(--bg-elevated) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-default);
+}
+
+/* The cover drawing is the product's one hand-made mark. Drawn in the accent it
+   is the accent: one illustration, one colour, on a page of type. */
+.splash-plate-art {
+  color: var(--accent-primary);
+}
+
+/* On paper, the caption rule is a hairline rather than full-strength ink. */
+.splash-plate-caption {
+  border-top-color: var(--border-default);
+  color: var(--text-tertiary);
+}
+
+/* The contents card sits at the top of its column rather than stretching to
+   the height of the plate beside it. A box the same height as its neighbour,
+   half empty, is a box that was sized by the grid instead of by its contents. */
+.splash-index {
+  align-self: start;
+}
+
+/* Small caps do not lean. The imprint is a printed mark, not emphasis. */
+.splash-imprint,
+.splash-edition,
+.book-folio {
+  font-style: normal;
+}
+
+/* ==========================================================================
+   1. Type
+   ========================================================================== */
+
+/* Headings are Fraunces, upright, and never italic. The italic-accent-word
+   headline ("Look inside / *before you start.*") is the most copied generated
+   hero of the last three years, and it says nothing the words do not already
+   say. Where the markup carries <em> inside a title, it now sets in the same
+   face and weight as the rest of the line. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.vl-heading,
+.vl-display {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-synthesis: none;
+}
+
+h1 em,
+h1 i,
+h2 em,
+h2 i,
+h3 em,
+h3 i,
+h4 em,
+h4 i,
+h1.lp-hero-title em,
+h2.lp-missing-title em,
+h1.splash-wordmark em,
+h1.uh-hero-title em,
+.uh-hero h1 em {
+  font-style: normal;
+  font-weight: inherit;
+  color: inherit;
+}
+
+/* Body copy is the reading face. Chrome is the sans. This is stated once here
+   because it was the single most common drift: a screen setting a paragraph in
+   the nav face at 18px and calling it body text. */
+p,
+li,
+blockquote,
+dd {
+  text-wrap: pretty;
+}
+
+/* A measured column for prose. The value already exists as a token; this makes
+   sure a screen cannot stretch a paragraph to 1440px by forgetting it. */
+.prose,
+.lesson-body,
+.entry-body {
+  max-width: var(--measure);
+}
+
+/* Running heads and kickers: a printed label, not a pill. Small caps in the
+   sans, muted, with letter-spacing doing the work. No background, no border, no
+   radius, so it cannot read as a badge above a headline. */
+.vl-kicker,
+.vl-kicker--rule,
+.st-eyebrow,
+.lp-plate-label,
+.splash-imprint,
+.comm-device-note {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Double class on purpose. The trailing rule after a kicker is declared in
+   edition.css as `.vl-kicker--rule::after`, the same specificity as a single
+   class here, so this selector has to be heavier than the rule it removes
+   rather than depend on which stylesheet loaded later. */
+.vl-kicker.vl-kicker--rule::before,
+.vl-kicker.vl-kicker--rule::after {
+  content: none;
+  background: none;
+}
+
+/* ==========================================================================
+   2. Focus
+   --------------------------------------------------------------------------
+   Visible on keyboard, invisible on mouse, on one ring for the whole app. The
+   ring is ember: the same colour as the one accent, so focus reads as part of
+   the design rather than as a browser default.
+   ========================================================================== */
+
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: var(--control-focus);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   3. One control, one answer
+   --------------------------------------------------------------------------
+   Every button is at least 44px tall (the touch target the Stage 1 audit
+   measured as missing on 159 controls), squared off, and answers the pointer
+   with a fill change. Nothing lifts, nothing fades, nothing grows. The press
+   moves down a pixel, which is the only movement the product has.
+
+   `!important` count: the fills and borders below. Each overrides a component
+   rule that set a radius, shadow or colour of its own.
+   ========================================================================== */
+
+button,
+[role='button'],
+.vl-btn,
+.vl-textlink {
+  min-height: var(--control-height);
+  border-radius: var(--control-radius);
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+/* No hover lift anywhere. A control that rises off the page is a card. */
+button:hover:not(:disabled),
+[role='button']:hover,
+.vl-btn:hover,
+.vl-card:hover,
+.st-choice:hover {
+  transform: none;
+}
+
+button:active:not(:disabled),
+.vl-btn:active {
+  transform: translateY(1px);
+}
+
+button:disabled,
+button[aria-disabled='true'] {
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Opacity is not an answer to a pointer. Where a control used to dim on hover
+   it now stays at full strength and changes its fill in the rules below. */
+button:hover:not(:disabled),
+[role='button']:hover,
+a[class*='btn']:hover {
+  opacity: 1;
+}
+
+/* ---- Primary: the one action per screen ---- */
+.st-primary,
+.submit-btn,
+.ask-submit-btn,
+.reply-submit-btn,
+.reader-next-btn,
+.disc-lesson-btn,
+.flow-primary-btn,
+.bg-btn-primary,
+.auth-submit,
+.st-danger,
+.flow-action-btn.primary {
+  min-height: var(--control-height);
+  padding: 0 var(--space-5);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--control-radius);
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.st-primary:hover:not(:disabled),
+.submit-btn:hover:not(:disabled),
+.ask-submit-btn:hover:not(:disabled),
+.reply-submit-btn:hover:not(:disabled),
+.reader-next-btn:hover:not(:disabled),
+.disc-lesson-btn:hover:not(:disabled),
+.flow-primary-btn:hover:not(:disabled),
+.bg-btn-primary:hover:not(:disabled),
+.auth-submit:hover:not(:disabled),
+.st-danger:hover:not(:disabled),
+.flow-action-btn.primary:hover:not(:disabled) {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+  color: var(--accent-contrast);
+}
+
+/* The one dangerous action (removing the local name) is not the accent. It is
+   an outline in the error colour, so "primary" on this page still means the
+   thing you came to do. */
+.st-danger {
+  background: transparent;
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.st-danger:hover:not(:disabled) {
+  background: var(--color-error);
+  border-color: var(--color-error);
+  color: var(--accent-contrast);
+}
+
+/* ---- Secondary: a ruled control ---- */
+.st-back,
+.st-choice,
+.btn-restart,
+.btn-restart.secondary,
+.sim-btn-ghost,
+.flow-secondary-btn,
+.flow-back-btn,
+.game-back-btn,
+.learn-back-btn,
+.toolbar-btn,
+.pill-btn,
+.disc-discard-btn,
+.st-clear,
+.btn-undo,
+.btn-clear {
+  min-height: var(--control-height);
+  padding: 0 var(--space-4);
+  border: var(--control-border);
+  border-radius: var(--control-radius);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.st-back:hover:not(:disabled),
+.st-choice:hover:not(:disabled),
+.btn-restart:hover:not(:disabled),
+.sim-btn-ghost:hover:not(:disabled),
+.flow-secondary-btn:hover:not(:disabled),
+.flow-back-btn:hover:not(:disabled),
+.game-back-btn:hover:not(:disabled),
+.learn-back-btn:hover:not(:disabled),
+.toolbar-btn:hover:not(:disabled),
+.pill-btn:hover:not(:disabled),
+.disc-discard-btn:hover:not(:disabled),
+.st-clear:hover:not(:disabled),
+.btn-undo:hover:not(:disabled),
+.btn-clear:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+/* A chosen option is the accent, because the choice is the action on the page. */
+.st-choice.selected,
+.st-choice[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* A text control: no box at all. */
+.vl-textlink,
+.st-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.vl-textlink:hover,
+.st-link:hover {
+  color: var(--accent-primary-hover);
+  text-decoration-thickness: 2px;
+}
+
+/* ---- Fields ---- */
+input[type='text'],
+input[type='email'],
+input[type='search'],
+input[type='number'],
+textarea,
+select {
+  border-radius: var(--control-radius);
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   4. Separation: a rule, not a shadow
+   --------------------------------------------------------------------------
+   The elevation tokens are inner rules now, so most surfaces already lost their
+   blur. These catch the handful of literal shadows left in page CSS and the two
+   coloured stripes that were being used as a status marker.
+   ========================================================================== */
+
+.vl-card,
+.lp-hero-plate,
+.lp-missing,
+.st-section,
+.uh-panel,
+.discussion-card,
+.explanation-card,
+.bg-peer-card,
+.approved-row {
+  border-radius: var(--radius-md);
+  box-shadow: none;
+}
+
+.discussion-card,
+.explanation-card,
+.bg-peer-card,
+.approved-row {
+  border: 1px solid var(--border-subtle);
+}
+
+/* A coloured bar down the side of a card is a status colour doing layout's job.
+   These were error states drawn as a stripe; the text inside already says what
+   is wrong, and the border is a border now. */
+.command-result.active,
+.smart-review-flagged,
+.smart-revision-flagged {
+  box-shadow: none;
+  border-left: 1px solid var(--border-strong);
+}
+
+/* ==========================================================================
+   5. Motion
+   --------------------------------------------------------------------------
+   Any keyframe that only moves something into view is off. State changes keep
+   their 90ms colour transition; nothing else animates. Rules that remain are
+   indeterminate progress, which is information, and the caret in a text field.
+   ========================================================================== */
+
+.vl-settle,
+.vl-drift,
+[class*='fade-in'],
+[class*='slide-up'],
+[class*='animate-in'] {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   6. The page furniture
+   --------------------------------------------------------------------------
+   A running head and a rule: the two things a printed page has that a web page
+   usually does not. Screens that already draw their own masthead are left
+   alone; these classes are the shared version.
+   ========================================================================== */
+
+.book-rule {
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--border-default);
+}
+
+.book-rule--ink {
+  border-top-color: var(--text-primary);
+}
+
+.book-folio {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* Numerals in the margin, the way an index numbers its entries. */
+.book-numeral {
+  display: inline-block;
+  min-width: 2.5ch;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}

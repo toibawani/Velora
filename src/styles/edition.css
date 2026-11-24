@@ -380,9 +380,11 @@
   color: var(--field-cream);
 }
 
-/* The button: a solid slab with a full radius, not a nudged rectangle. Ink on
-   paper by default; on a field it inverts so the action is always the darkest
-   thing in the block. */
+/* The button: a ruled slab, squared off on purpose. Ink on paper by default;
+   on a field it inverts so the action is always the darkest thing in the block.
+   The hover changes the fill, not the height: a button that lifts off the page
+   is a card wearing a hat, and the press moves it down by a pixel so the click
+   has a physical answer without any bounce. */
 .vl-btn {
   display: inline-flex;
   align-items: center;
@@ -390,10 +392,14 @@
   gap: var(--space-2);
   min-height: 46px;
   padding: 0 var(--space-6);
-  border: 1px solid var(--field-ink);
-  border-radius: var(--radius-full);
-  background: var(--field-ink);
-  color: var(--field-ink-text);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  /* The one accent, not the ink field. On a page whose only colour is ember, a
+     primary action drawn in field ink reads as another piece of text; the
+     accent is the single thing on the screen that is allowed to be a different
+     colour, and it is reserved for the action you are meant to take. */
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
   font-family: var(--font-sans);
   font-size: var(--text-ui);
   font-weight: 600;
@@ -401,18 +407,25 @@
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard),
-              box-shadow var(--duration-fast) var(--ease-standard);
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
 }
 
 .vl-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+  color: var(--accent-contrast);
 }
 
 .vl-btn:active {
-  transform: translateY(0);
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+  transform: translateY(1px);
+}
+
+.vl-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
 }
 
 .vl-btn--quiet {
@@ -575,34 +588,20 @@ a.vl-card:hover {
    Motion
    ========================================================================== */
 
-/* The entrance: a spread settling. Stagger with --i on the element; the cap at
-   6 keeps a long list from taking a second and a half to appear. */
-@keyframes vl-settle {
-  from {
-    opacity: 0;
-    transform: translateY(var(--enter-distance));
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* There is no entrance. Every spread used a staggered fade-and-rise, which made
+   arriving at a page feel like waiting for it: the first line was invisible for
+   55ms per index and the whole screen moved while you tried to read it. A book
+   does not animate itself open. The class is kept as a no-op so the markup that
+   carries it does not need touching, and so nothing here is `!important` dead
+   weight that a later edit would have to fight. */
 .vl-settle {
-  animation: vl-settle var(--enter-duration) var(--enter-ease) both;
-  animation-delay: calc(min(var(--i, 0), 6) * 55ms);
+  animation: none;
 }
 
-/* A slow drift for purely decorative shapes. Two keyframes, no easing tricks:
-   at this amplitude anything faster reads as a loading indicator. */
-@keyframes vl-drift {
-  from { transform: translate3d(0, 0, 0) rotate(0deg); }
-  50%  { transform: translate3d(0, -10px, 0) rotate(1.5deg); }
-  to   { transform: translate3d(0, 0, 0) rotate(0deg); }
-}
-
+/* No decorative drift either. A shape that moves on its own is a thing to watch
+   instead of a thing to read. */
 .vl-drift {
-  animation: vl-drift 14s ease-in-out infinite;
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

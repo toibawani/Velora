@@ -255,7 +255,7 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
           <div className="uh-hero-copy vl-settle" style={{ '--i': 0 }}>
             <p className="vl-kicker vl-kicker--rule">A curriculum for the endlessly curious</p>
             <h1 id="atlas-title">
-              Follow your curiosity to <em>the edge</em> of understanding.
+              Follow your curiosity to the edge of understanding.
             </h1>
             <p className="uh-lede vl-lede">
               Six great fields. Hundreds of connected ideas. Begin with a discipline, move

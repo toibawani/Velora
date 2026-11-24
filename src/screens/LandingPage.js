@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ArrowRight } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
 import { fieldCoverageByDiscipline } from '../data/atlasResolution';
 import { CURIOUS_TERMS } from '../data/dictionary';
@@ -65,11 +64,10 @@ function LandingPage({ setScreen }) {
 
       <section className="lp-hero" aria-labelledby="lp-hero-title">
         <div className="lp-hero-copy vl-settle" style={{ '--i': 0 }}>
-          <p className="vl-kicker vl-kicker--rule">A look around, before you start</p>
           <h1 id="lp-hero-title" className="lp-hero-title">
             Look inside
             <br />
-            <em>before you start.</em>
+            before you start.
           </h1>
           <p className="lp-hero-lede">
             Velora is a reference book for curious people. Every topic is listed from day one.
@@ -78,7 +76,7 @@ function LandingPage({ setScreen }) {
           </p>
           <div className="lp-hero-actions">
             <button type="button" className="vl-btn" onClick={() => setScreen('profile')}>
-              Set up this device <ArrowRight size={16} aria-hidden="true" />
+              Set up this device
             </button>
           </div>
           <p className="lp-fine-print">
@@ -181,7 +179,7 @@ function LandingPage({ setScreen }) {
         <div className="lp-missing-head">
           <span className="vl-kicker vl-kicker--rule">03 / What is not here</span>
           <h2 id="missing-title" className="lp-missing-title">
-            The missing pieces are <em>part of the design.</em>
+            The missing pieces are part of the design.
           </h2>
         </div>
         <ul className="lp-missing-list">
@@ -211,7 +209,7 @@ function LandingPage({ setScreen }) {
         <div className="lp-final-text">
           <span className="vl-kicker vl-kicker--rule">04 / Begin</span>
           <h2 id="lp-final-title" className="lp-final-title">
-            Start with a topic, <em>not a tour.</em>
+            Start with a topic, not a tour.
           </h2>
           <p className="lp-final-sub">
             The atlas opens on a written lesson, and the index tells you which topics have one.
@@ -219,7 +217,7 @@ function LandingPage({ setScreen }) {
           </p>
         </div>
         <button type="button" className="vl-btn lp-final-cta" onClick={() => setScreen('profile')}>
-          Set up this device <ArrowRight size={16} aria-hidden="true" />
+          Set up this device
         </button>
       </section>
 

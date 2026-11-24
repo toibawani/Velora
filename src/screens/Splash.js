@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArrowRight, BookOpen } from 'lucide-react';
 import { CURIOUS_TERMS } from '../data/dictionary';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
 import { fieldCoverageByDiscipline } from '../data/atlasResolution';
@@ -98,13 +97,13 @@ function SplashScreen({ setScreen }) {
           display size, in the statement column; repeating it here in 15px caps
           made the cover read as a website header with a logo in it.
         */}
-        <header className="splash-topbar vl-settle" style={{ '--i': 0 }}>
+        <header className="splash-topbar">
           <span className="splash-imprint">First edition</span>
           <span className="splash-edition">No account needed · no email · no password</span>
         </header>
 
         <div className="splash-grid">
-          <figure className="splash-plate vl-field vl-field--blush vl-settle" style={{ '--i': 1 }}>
+          <figure className="splash-plate vl-field vl-field--blush">
             <CoverPlate />
             <figcaption className="splash-plate-caption">
               <span>Fig. 1</span>
@@ -112,7 +111,7 @@ function SplashScreen({ setScreen }) {
             </figcaption>
           </figure>
 
-          <section className="splash-statement vl-settle" style={{ '--i': 2 }}>
+          <section className="splash-statement">
             <p className="vl-kicker vl-kicker--rule">A reference book for curious people</p>
 
             <h1 className="splash-wordmark">VELORA</h1>
@@ -125,7 +124,6 @@ function SplashScreen({ setScreen }) {
             <div className="splash-actions">
               <button type="button" className="vl-btn splash-start" onClick={() => setScreen('profile')}>
                 Start learning
-                <ArrowRight size={16} aria-hidden="true" />
               </button>
               <button type="button" className="vl-btn vl-btn--quiet" onClick={() => setScreen('landing')}>
                 Look around first
@@ -138,10 +136,8 @@ function SplashScreen({ setScreen }) {
             </p>
           </section>
 
-          <aside className="splash-index vl-field vl-field--butter vl-settle" aria-label="What is inside" style={{ '--i': 3 }}>
-            <p className="splash-index-label">
-              <BookOpen size={13} aria-hidden="true" /> Inside
-            </p>
+          <aside className="splash-index vl-field vl-field--butter" aria-label="What is inside">
+            <p className="splash-index-label">Inside</p>
             <dl className="splash-index-list">
               <div>
                 <dt>Fields</dt>

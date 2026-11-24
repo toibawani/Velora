@@ -59,6 +59,11 @@ import './styles/FlowStateGame.css';
 import './styles/PhysicsSimulations.css';
 import './styles/RelativityLab.css';
 import './styles/ShareAchievementModal.css';
+// Last, on purpose. book.css is the one normalisation pass over every screen:
+// one control shape, one focus ring, one corner, rules instead of shadows. The
+// comment above is exactly why: this list is the cascade order, so the pass that
+// has to win goes at the end of it rather than next to the tokens.
+import './styles/book.css';
 import { ThemeProvider } from './context/ThemeContext';
 import reportWebVitals from './reportWebVitals';
 
