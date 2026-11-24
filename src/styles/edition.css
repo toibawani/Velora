@@ -649,7 +649,7 @@ a.vl-card:hover {
 :root[data-theme='dark'] .vl-btn,
 :root[data-theme='dark'] .mobile-bottom-nav,
 :root[data-theme='dark'] .toast {
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-lg);
 }
 
 /* A hairline rule on a dark ground needs a touch more alpha than the role

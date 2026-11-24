@@ -115,9 +115,12 @@
   padding: var(--space-3) var(--space-5);
   max-width: min(24rem, calc(100vw - 2rem));
   border: 1px solid var(--field-ink);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   background: var(--field-ink);
-  box-shadow: 0 18px 44px rgba(24, 16, 9, 0.3);
+  /* A filled ink bar separates itself. The 44px blur behind it was the only
+     heavy drop shadow left in the app, and it landed on every screen because
+     the sign-in toast is the first thing a reader sees. */
+  box-shadow: none;
   color: var(--field-ink-text);
 }
 

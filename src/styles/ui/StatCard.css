@@ -109,7 +109,7 @@
 }
 
 .velora-stat-card {
-  animation: stat-card-enter 180ms var(--ease-standard) both;
+  animation: none;
 }
 
 /* ---- Loading skeleton ----------------------------------------------------

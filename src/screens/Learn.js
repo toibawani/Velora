@@ -397,7 +397,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
               <section className="learn-section">
                 <div
                   className="card p-6 border border-border rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm mb-6"
-                  style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '18px', border: '1px solid var(--border-default)' }}
+                  style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-default)' }}
                 >
                   <div>
                     <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-secondary)', display: 'block', marginBottom: '4px' }}>
@@ -413,7 +413,7 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
                   <button
                     type="button"
                     onClick={() => setCurrentView('physics-sims')}
-                    style={{ whiteSpace: 'nowrap', backgroundColor: 'var(--text-secondary)', color: 'var(--bg-primary)', borderRadius: '999px', padding: '10px 20px', fontWeight: 600, border: 'none', cursor: 'pointer' }}
+                    style={{ whiteSpace: 'nowrap', backgroundColor: 'var(--text-secondary)', color: 'var(--bg-primary)', borderRadius: 'var(--radius-sm)', minHeight: '44px', padding: '10px 20px', fontWeight: 600, border: 'none', cursor: 'pointer' }}
                   >
                     Open Physics Lab →
                   </button>

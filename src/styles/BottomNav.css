@@ -115,10 +115,12 @@
   transform: translateX(-50%);
   width: min(calc(100% - 24px), 30rem);
   padding: 6px;
-  border: 0;
-  border-radius: var(--radius-full);
+  /* A rule, not a blur: same depth language as every card on the page, and it
+     survives on a dark ground where a soft shadow reads as a smudge. */
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   background: var(--field-ink);
-  box-shadow: 0 14px 34px rgba(24, 16, 9, 0.28);
+  box-shadow: none;
   z-index: 900;
 }
 

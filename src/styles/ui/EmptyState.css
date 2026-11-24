@@ -74,7 +74,7 @@
 }
 
 .velora-empty-state {
-  animation: empty-state-enter 200ms var(--ease-standard) both;
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -67,10 +67,12 @@
   color: var(--text-secondary);
 }
 
+/* A quiet sentence under the heading, not a quoted aside. The 2px rule down
+   its left side was the last coloured side stripe left in the app, and it
+   marked nothing: the sentence is already smaller and muted. */
 .nu-intro-quiet {
   font-size: 0.88rem;
-  padding-left: var(--space-3);
-  border-left: 2px solid var(--border-subtle);
+  color: var(--text-tertiary);
 }
 
 .nu-form {
