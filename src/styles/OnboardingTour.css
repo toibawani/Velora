@@ -9,8 +9,6 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,8 +248,6 @@
 
 .onboarding-overlay {
   background: rgba(24, 16, 9, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   font-family: var(--font-body);
 }
 

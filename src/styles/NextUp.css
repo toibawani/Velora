@@ -45,7 +45,7 @@
   font: inherit;
   font-size: 0.9rem;
   cursor: pointer;
-  border-left: 3px solid var(--accent-primary);
+
 }
 .nu-back:hover {
   border-color: var(--accent-primary);

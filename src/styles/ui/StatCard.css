@@ -123,14 +123,9 @@
 .skeleton-bar {
   display: block;
   border-radius: var(--radius-xs);
-  background: linear-gradient(
-    90deg,
-    var(--bg-tertiary) 0%,
-    var(--bg-active) 45%,
-    var(--bg-tertiary) 90%
-  );
-  background-size: 220% 100%;
-  animation: skeleton-sweep 1.4s ease-in-out infinite;
+  /* A flat block, not a shimmer: this product has no gradients, and a loading
+     bar that sweeps is decoration dressed as a measurement. */
+  background: var(--bg-tertiary);
 }
 
 @keyframes skeleton-sweep {

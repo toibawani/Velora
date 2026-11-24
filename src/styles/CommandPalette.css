@@ -31,7 +31,6 @@
 
 .command-palette-backdrop {
   background: rgba(24, 16, 9, 0.42);
-  backdrop-filter: blur(6px);
   padding-top: 14vh;
 }
 

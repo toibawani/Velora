@@ -63,7 +63,7 @@
   color: var(--text-secondary);
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-left: 3px solid var(--accent-primary);
+
   border-radius: var(--radius-sm);
   padding: 2px var(--space-2);
   white-space: nowrap;
@@ -132,7 +132,7 @@
 .quiz-review-item {
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
-  border-left: 3px solid var(--accent-primary);
+
   border-radius: var(--radius-sm);
   padding: var(--space-4) var(--space-5);
 }
