@@ -77,7 +77,10 @@ describe('editorial knowledge atlas', () => {
       expect(screen.getByRole('button', { name: new RegExp(`^${field},`) })).toBeInTheDocument();
     });
     expect(screen.getByText('Field → discipline → subfield → topic')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Motion' })).toBeInTheDocument();
+    // The atlas opens on the flagship topic now (Black Holes), not on whatever
+    // topic happens to sit first in the curriculum file. This used to assert
+    // 'Motion' because the default was Science's first entry.
+    expect(screen.getByRole('heading', { name: 'Black Holes' })).toBeInTheDocument();
   });
 
   test('searches across fields and reveals the selected hierarchy', () => {

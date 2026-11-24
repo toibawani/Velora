@@ -326,7 +326,7 @@ function NewtonSecondLawSim() {
       <div className="sim-explanation-box">
         <Info size={18} className="sim-info-icon" />
         <p>
-          <strong>What to notice:</strong> Notice what happens when you double the mass: the force arrow stays the exact same length, but the ball acts heavy and stubborn—its speed barely inches upward. To get that 40 kg mass moving as briskly as the 4 kg one, you have to push ten times harder. The equation <em>F = ma</em> isn't abstract math; it's simply a description of inertia in action.
+          <strong>What to notice:</strong> Notice what happens when you double the mass: the force arrow stays the exact same length, but the ball acts heavy and stubborn, its speed barely inches upward. To get that 40 kg mass moving as briskly as the 4 kg one, you have to push ten times harder. The equation <em>F = ma</em> isn't abstract math; it's simply a description of inertia in action.
         </p>
       </div>
     </div>
@@ -1013,7 +1013,7 @@ function WaveInterferenceSim() {
       <div className="sim-explanation-box">
         <Info size={18} className="sim-info-icon" />
         <p>
-          <strong>What to notice:</strong> Look at the still, gray avenues fanning outward between the bright ripples. In those calm corridors, a crest from the top source arrives at the exact same instant as a trough from the bottom source—two physical disturbances adding together to make absolute silence. Move the slits closer together and watch those calm alleys widen out.
+          <strong>What to notice:</strong> Look at the still, gray avenues fanning outward between the bright ripples. In those calm corridors, a crest from the top source arrives at the exact same instant as a trough from the bottom source, two physical disturbances adding together to make absolute silence. Move the slits closer together and watch those calm alleys widen out.
         </p>
       </div>
     </div>
@@ -1242,7 +1242,7 @@ function OrbitalMechanicsSim() {
       <div className="sim-explanation-box">
         <Info size={18} className="sim-info-icon" />
         <p>
-          <strong>What to notice:</strong> An orbit isn't floating in zero gravity—the satellite is falling toward Earth every single second. But it's hurtling sideways so fast that the curved surface of the Earth drops away underneath it at the exact same rate. Hit '+ Prograde Burn' and notice how speeding up here doesn't make you higher now; it makes you swing higher on the opposite side of the planet half an orbit later.
+          <strong>What to notice:</strong> An orbit isn't floating in zero gravity: the satellite is falling toward Earth every single second. But it's hurtling sideways so fast that the curved surface of the Earth drops away underneath it at the exact same rate. Hit '+ Prograde Burn' and notice how speeding up here doesn't make you higher now; it makes you swing higher on the opposite side of the planet half an orbit later.
         </p>
       </div>
     </div>

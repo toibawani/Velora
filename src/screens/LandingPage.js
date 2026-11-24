@@ -105,7 +105,7 @@ function LandingPage({ setScreen }) {
       <section className="lp-inventory" aria-labelledby="inventory-title">
         <div className="lp-section-head">
           <div>
-            <span className="vl-kicker vl-kicker--rule">01 — The whole inventory</span>
+            <span className="vl-kicker vl-kicker--rule">01 / The whole inventory</span>
             <h2 id="inventory-title" className="vl-heading">
               Here is exactly what is written, and what is not.
             </h2>
@@ -144,7 +144,7 @@ function LandingPage({ setScreen }) {
       <section className="lp-fields" aria-labelledby="coverage-title">
         <div className="lp-section-head">
           <div>
-            <span className="vl-kicker vl-kicker--rule">02 — By field</span>
+            <span className="vl-kicker vl-kicker--rule">02 / By field</span>
             <h2 id="coverage-title" className="vl-heading">
               Three fields are written. Three are an outline.
             </h2>
@@ -179,7 +179,7 @@ function LandingPage({ setScreen }) {
 
       <section className="lp-missing vl-field vl-field--ink" aria-labelledby="missing-title">
         <div className="lp-missing-head">
-          <span className="vl-kicker vl-kicker--rule">03 — What is not here</span>
+          <span className="vl-kicker vl-kicker--rule">03 / What is not here</span>
           <h2 id="missing-title" className="lp-missing-title">
             The missing pieces are <em>part of the design.</em>
           </h2>
@@ -209,7 +209,7 @@ function LandingPage({ setScreen }) {
 
       <section className="lp-final vl-field vl-field--clay" aria-labelledby="lp-final-title">
         <div className="lp-final-text">
-          <span className="vl-kicker vl-kicker--rule">04 — Begin</span>
+          <span className="vl-kicker vl-kicker--rule">04 / Begin</span>
           <h2 id="lp-final-title" className="lp-final-title">
             Start with a topic, <em>not a tour.</em>
           </h2>

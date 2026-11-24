@@ -136,7 +136,7 @@ export const CURATED_RABBIT_HOLES = {
       title: 'Sisyphus and Existential Energy',
       discipline: 'Philosophy',
       explanation:
-        'Albert Camus took the myth of Sisyphus—an eternal expenditure of mechanical work with zero net potential energy gain—as the supreme metaphor for the human condition. The moral triumph lies not in reaching thermodynamic equilibrium, but in the deliberate consciousness with which the stone is rolled upward.',
+        'Albert Camus took the myth of Sisyphus, an eternal expenditure of mechanical work with zero net potential energy gain, as the supreme metaphor for the human condition. The moral triumph lies not in reaching thermodynamic equilibrium, but in the deliberate consciousness with which the stone is rolled upward.',
       actionType: 'dialogue',
       targetFigure: 'socrates',
     },

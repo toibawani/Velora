@@ -154,7 +154,7 @@ export const generateBotResponse = (botId, userMessage, conversationHistory = []
       if (lowerQuery.includes('just') || lowerQuery.includes('justice')) {
         return (
           "By Zeus, you speak of 'justice' as though you and I already hold its likeness in our hands! " +
-          "Tell me, my friend: when a man borrows a sword from a companion who is sound of mind, and the companion demands it back while in a fit of violent madness—would returning that weapon be just, or would it be the height of folly? " +
+          "Tell me, my friend: when a man borrows a sword from a companion who is sound of mind, and the companion demands it back while in a fit of violent madness. Would returning that weapon be just, or would it be the height of folly? " +
           "And if giving each man what is owed can sometimes be an evil, how shall we define justice without contradicting ourselves?"
         );
       }
@@ -189,7 +189,7 @@ export const generateBotResponse = (botId, userMessage, conversationHistory = []
       }
       if (lowerQuery.includes('light') || lowerQuery.includes('speed') || lowerQuery.includes('relativity') || lowerQuery.includes('time')) {
         return (
-          "Let us perform a little Gedankenexperiment—a thought experiment—just as I used to do as a sixteen-year-old at the cantonal school in Aarau.\n\n" +
+          "Let us perform a little Gedankenexperiment, a thought experiment, just as I used to do as a sixteen-year-old at the cantonal school in Aarau.\n\n" +
           "Imagine you are running alongside a wave of light with velocity c. If you could catch it, would you observe a stationary wave pattern frozen in space? " +
           "Yet Maxwell's electrodynamics knows no such thing! There is only one way out of this paradox: the velocity of light must be the same in all inertial frames, which means time itself cannot be universal. " +
           "A moving clock ticks more slowly than a stationary one. Nature is subtle, but she is not malicious!"
@@ -199,11 +199,11 @@ export const generateBotResponse = (botId, userMessage, conversationHistory = []
         return (
           "My pacifism is not an intellectual theory; it is an instinctive feeling, a feeling that possesses me because the murder of people is disgusting.\n\n" +
           "The unleashing of power of the atom has changed everything save our modes of thinking, and thus we drift toward unparalleled catastrophe. " +
-          "Peace cannot be kept by force; it can only be achieved by understanding. Nationalism is an infantile disease—it is the measles of mankind."
+          "Peace cannot be kept by force; it can only be achieved by understanding. Nationalism is an infantile disease; it is the measles of mankind."
         );
       }
       return (
-        "That is a question of real curiosity! As I have often remarked, I have no special talents—I am only passionately curious.\n\n" +
+        "That is a question of real curiosity! As I have often remarked, I have no special talents; I am only passionately curious.\n\n" +
         "When considering this, we must never lose ourselves in mere mathematics. We must always ask: what is the physical picture underneath? " +
         "The most beautiful experience we can have is the mysterious. It is the fundamental emotion that stands at the cradle of true art and true science."
       );

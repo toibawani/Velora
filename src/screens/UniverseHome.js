@@ -28,20 +28,42 @@ function makeSelection(field, discipline, parentModule, topic) {
   return { field, discipline, module: parentModule, topic };
 }
 
+const FLAGSHIP_TOPIC = 'Black Holes';
+
+function initialSelection() {
+  for (const field of KNOWLEDGE_FIELDS) {
+    for (const discipline of field.disciplines) {
+      for (const moduleItem of discipline.modules) {
+        if (moduleItem.topics.includes(FLAGSHIP_TOPIC)) {
+          return {
+            field,
+            discipline,
+            module: moduleItem,
+            topic: FLAGSHIP_TOPIC,
+          };
+        }
+      }
+    }
+  }
+  const field = KNOWLEDGE_FIELDS[0];
+  const discipline = field.disciplines[0];
+  const moduleItem = discipline.modules[0];
+  return { field, discipline, module: moduleItem, topic: moduleItem.topics[0] };
+}
+
+const INITIAL = initialSelection();
+
 function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpenLesson, onOpenDeepRead, onForgetProfile, showToast }) {
-  const initialField = KNOWLEDGE_FIELDS[0];
-  const initialDiscipline = initialField.disciplines[0];
-  const initialModule = initialDiscipline.modules[0];
-  const [activeFieldId, setActiveFieldId] = useState(initialField.id);
-  const [activeDisciplineId, setActiveDisciplineId] = useState(initialDiscipline.id);
-  const [activeModuleName, setActiveModuleName] = useState(initialModule.name);
-  const [selectedTopic, setSelectedTopic] = useState(initialModule.topics[0]);
+  const [activeFieldId, setActiveFieldId] = useState(INITIAL.field.id);
+  const [activeDisciplineId, setActiveDisciplineId] = useState(INITIAL.discipline.id);
+  const [activeModuleName, setActiveModuleName] = useState(INITIAL.module.name);
+  const [selectedTopic, setSelectedTopic] = useState(INITIAL.topic);
   const [query, setQuery] = useState('');
   const todayQuestion = getTodayQuestion();
   const [answerRevealed, setAnswerRevealed] = useState(isTodayQuestionAnswered());
   const lastLesson = getLastLesson();
 
-  const activeField = KNOWLEDGE_FIELDS.find((field) => field.id === activeFieldId) || initialField;
+  const activeField = KNOWLEDGE_FIELDS.find((field) => field.id === activeFieldId) || KNOWLEDGE_FIELDS[0];
   const activeDiscipline = activeField.disciplines.find((discipline) => discipline.id === activeDisciplineId) || activeField.disciplines[0];
   const activeModule = activeDiscipline.modules.find((item) => item.name === activeModuleName) || activeDiscipline.modules[0];
   const selection = makeSelection(activeField, activeDiscipline, activeModule, selectedTopic);

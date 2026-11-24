@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ArrowRight, BookOpen } from 'lucide-react';
-import { CURRICULUM } from '../data/curriculum';
 import { CURIOUS_TERMS } from '../data/dictionary';
+import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
+import { fieldCoverageByDiscipline } from '../data/atlasResolution';
 
 import '../styles/Splash.css';
 
@@ -20,12 +21,29 @@ import '../styles/Splash.css';
  */
 SplashScreen.propTypes = { setScreen: PropTypes.func };
 
-const curriculumCounts = () => {
-  const fields = Object.values(CURRICULUM);
-  const modules = fields.flatMap((field) => field.modules || []);
-  const topics = modules.flatMap((module) => module.topics || []);
-  return { fields: fields.length, disciplines: modules.length, topics: topics.length };
-};
+/**
+ * The cover's counts come from the same records the atlas uses.
+ *
+ * The previous version counted CURRICULUM, which holds five fields, and printed
+ * "05 Fields" on the cover while the inventory one click away said six fields
+ * across 572 topics. Two screens disagreeing about the shape of the product in
+ * the first ten seconds is the exact failure this stage exists to remove, so the
+ * field and discipline counts are the atlas's, and the topics count is labelled
+ * "Atlas topics" to say which number it is.
+ */
+const coverCounts = () => ({
+  fields: KNOWLEDGE_FIELDS.length,
+  disciplines: KNOWLEDGE_STATS.disciplines,
+  topics: KNOWLEDGE_STATS.topics,
+  // Written lessons, counted the same way the inventory counts them. The
+  // curriculum's topic total (121) is larger than the number of topics with
+  // something actually written behind them (116), and only the second number
+  // is a "written lesson".
+  written: KNOWLEDGE_FIELDS.reduce(
+    (sum, field) => sum + fieldCoverageByDiscipline(field).written,
+    0
+  ),
+});
 
 /**
  * The plate: nested arches, a disc, a pair of crossed lines and a horizon.
@@ -70,7 +88,7 @@ function CoverPlate() {
 }
 
 function SplashScreen({ setScreen }) {
-  const counts = curriculumCounts();
+  const counts = coverCounts();
 
   return (
     <div className="splash">
@@ -133,8 +151,12 @@ function SplashScreen({ setScreen }) {
                 <dd>{counts.disciplines}</dd>
               </div>
               <div>
-                <dt>Lesson topics</dt>
+                <dt>Atlas topics</dt>
                 <dd>{counts.topics}</dd>
+              </div>
+              <div>
+                <dt>Written lessons</dt>
+                <dd>{counts.written}</dd>
               </div>
               <div>
                 <dt>Dictionary entries</dt>
@@ -142,7 +164,7 @@ function SplashScreen({ setScreen }) {
               </div>
             </dl>
             <p className="splash-index-note">
-              Counted from the curriculum and the dictionary themselves, not written by hand.
+              Counted from the atlas and the dictionary themselves, not written by hand.
             </p>
           </aside>
         </div>

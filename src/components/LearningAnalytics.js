@@ -55,7 +55,7 @@ function LearningAnalytics({ selectedSubject }) {
           </span>
           <span className="stat-label">Time in {label}</span>
           <span className="stat-value">
-            {hasActivity ? `${snapshot.hours} ${snapshot.hours === 1 ? 'hour' : 'hours'}` : '—'}
+            {hasActivity ? `${snapshot.hours} ${snapshot.hours === 1 ? 'hour' : 'hours'}` : 'no data'}
           </span>
         </div>
 
@@ -65,7 +65,7 @@ function LearningAnalytics({ selectedSubject }) {
           </span>
           <span className="stat-label">Topics read</span>
           <span className="stat-value">
-            {snapshot.topics > 0 ? snapshot.topics : '—'}
+            {snapshot.topics > 0 ? snapshot.topics : 'no data'}
           </span>
         </div>
 
@@ -75,7 +75,7 @@ function LearningAnalytics({ selectedSubject }) {
           </span>
           <span className="stat-label">Most time spent on</span>
           <span className="stat-value" title={snapshot.longest ? snapshot.longest.topic : undefined}>
-            {snapshot.longest ? `${snapshot.longest.topic} (${snapshot.longest.hours}h)` : '—'}
+            {snapshot.longest ? `${snapshot.longest.topic} (${snapshot.longest.hours}h)` : 'no data'}
           </span>
         </div>
       </div>

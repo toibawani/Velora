@@ -130,7 +130,7 @@ const CONNECT_PUZZLES = [
       'Once a path is chosen, the arrangement it produces tends to reproduce itself'
     ],
     correctIdx: 3,
-    insight: 'Each one describes a system that was shaped by an earlier choice and then kept the shape. The physical world does not care what you decided yesterday, which is why the Second Law is the odd one out here in spirit — but even it is a statement about irreversibility, the closest of these to path dependence as a physical fact.',
+    insight: 'Each one describes a system that was shaped by an earlier choice and then kept the shape. The physical world does not care what you decided yesterday, which is why the Second Law is the odd one out here in spirit, but even it is a statement about irreversibility, the closest of these to path dependence as a physical fact.',
     hardTerm: 'Path Dependence',
   },
   {
@@ -644,7 +644,7 @@ const EXPLAIN_PROMPTS = [
       },
       {
         body:
-          'Two hours on your phone was not free. The question is only whether you gave up something better — the couch, a friend, an hour of sleep — by spending it the way you did. Economics is mostly the discipline of asking that question out loud.',
+          'Two hours on your phone was not free. The question is only whether you gave up something better (the couch, a friend, an hour of sleep) by spending it the way you did. Economics is mostly the discipline of asking that question out loud.',
         by: 'VELORA',
         source: null,
       }
@@ -665,7 +665,7 @@ const EXPLAIN_PROMPTS = [
       },
       {
         body:
-          'The surprise is the speed. Electricity travels fast, but nerves are slow — around a metre per second, which is roughly walking pace. Most of the time is spent waiting for chemical signals to jump between cells, and that is why your reaction time is longer than the distance you think it should take.',
+          'The surprise is the speed. Electricity travels fast, but nerves are slow, around a metre per second, which is roughly walking pace. Most of the time is spent waiting for chemical signals to jump between cells, and that is why your reaction time is longer than the distance you think it should take.',
         by: 'VELORA',
         source: null,
       }
@@ -686,7 +686,7 @@ const EXPLAIN_PROMPTS = [
       },
       {
         body:
-          'Printing did not create disagreement — people had always disagreed. It made the disagreement countable. Once you could print the same page and hand it to someone who had never heard the case, "trust me, I was there" stopped working as an argument.',
+          'Printing did not create disagreement. People had always disagreed. It made the disagreement countable. Once you could print the same page and hand it to someone who had never heard the case, "trust me, I was there" stopped working as an argument.',
         by: 'VELORA',
         source: null,
       }

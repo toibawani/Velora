@@ -27,7 +27,7 @@ const QUESTIONS = [
     subject: 'physics',
     termId: 'event-horizon',
     question: "What is the event horizon of a black hole?",
-    answer: 'The boundary beyond which no future path leads back outside — not a solid surface, but the point where every path points inward.',
+    answer: 'The boundary beyond which no future path leads back outside, not a solid surface, but the point where every path points inward.',
     hint: "It's about where light can and cannot escape.",
   },
   {
@@ -35,7 +35,7 @@ const QUESTIONS = [
     subject: 'physics',
     termId: 'entropy',
     question: "What does entropy measure?",
-    answer: 'The dispersal of energy and the number of ways a system can be arranged — the reason heat flows hot to cold, never the reverse on its own.',
+    answer: 'The dispersal of energy and the number of ways a system can be arranged, the reason heat flows hot to cold, never the reverse on its own.',
     hint: 'Think disorder, but more precisely about energy spreading out.',
   },
   {
@@ -43,7 +43,7 @@ const QUESTIONS = [
     subject: 'philosophy',
     termId: 'platos-cave',
     question: "In Plato's cave, what do the prisoners mistake for reality?",
-    answer: 'The shadows cast on the cave wall — they take appearances for the things themselves, not realising they are seeing a projection.',
+    answer: 'The shadows cast on the cave wall: they take appearances for the things themselves, not realising they are seeing a projection.',
     hint: 'The prisoners are chained and facing a wall.',
   },
   {
@@ -83,7 +83,7 @@ const QUESTIONS = [
     subject: 'psychology',
     termId: 'cognitive-bias',
     question: "What is a cognitive bias?",
-    answer: 'A systematic pattern of deviation from rationality in judgment — the mind taking shortcuts that lead to predictable errors.',
+    answer: 'A systematic pattern of deviation from rationality in judgment, the mind taking shortcuts that lead to predictable errors.',
     hint: "A systematic pattern, not a one-off mistake.",
   },
 ];
