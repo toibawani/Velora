@@ -17,6 +17,7 @@ import Toast from './components/Toast';
 import { KEYS, readValue } from './utils/storage';
 import { trackPageView, recordReturnVisit } from './utils/siteAnalytics';
 import { currentShareDestination } from './utils/shareLinks';
+import { initSync } from './backend/sync';
 
 // Lazy-loaded heavy module bundles for ultra-fast initial paint & code-splitting
 const UniverseHome = lazy(() => import('./screens/UniverseHome'));
@@ -108,6 +109,14 @@ function App() {
     // tabIndex -1 so the container can take focus without becoming a tab stop.
     main.focus({ preventScroll: true });
   }, [screen]);
+
+  // Watch for a signed-in session and reconcile progress when one appears.
+  // With no backend configured this is a no-op that returns a no-op cleanup, so
+  // the default build has no network path at all.
+  useEffect(() => {
+    const stop = initSync();
+    return stop;
+  }, []);
 
   // Record a page view whenever the route changes. Splash, landing and profile
   // are gates, not content, so they are not counted as views.

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { backendEnabled } from '../backend/supabaseClient';
 import { getSessionUser, onAuthChange, sendMagicLink, signOut } from '../backend/api';
+import SyncStatus from './SyncStatus';
 
 /**
  * The optional account, in Settings.
@@ -130,6 +131,7 @@ function AccountSection() {
           >
             {busy ? 'Signing out' : 'Sign out'}
           </button>
+          <SyncStatus />
         </>
       )}
 

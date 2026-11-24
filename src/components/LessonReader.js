@@ -16,6 +16,7 @@ import {
   shouldOfferResume,
 } from '../utils/resumePath';
 import { recordStudySession } from '../utils/analyticsStorage';
+import { recordProgressEvent } from '../backend/sync';
 import { parseInlineTerms } from './GlossaryTerm';
 
 /**
@@ -93,6 +94,9 @@ function LessonReader({ topic, subject, onBack, showToast, onOpenDialogue, onOpe
       if (!scrolledToEnd) return;
       setCompleted(true);
       trackLessonCompleted(topic.title, subject);
+      // Local first, and always: this is the copy that exists even with no
+      // account, no network and no analytics opt-in.
+      recordProgressEvent({ subject, topicId: topic.id });
     };
     main.addEventListener('scroll', onScroll, { passive: true });
     return () => main.removeEventListener('scroll', onScroll);

@@ -49,6 +49,10 @@ export const KEYS = {
   // answered it. Stored as { date, questionId, answered }. One question per
   // calendar day, picked deterministically so everyone sees the same one.
   TODAY_QUESTION: 'velora_today_question',
+  // Dated progress, as { topic_id, kind, day }. This is the local original; the
+  // account holds a copy. Kept apart from the usage log because the usage log is
+  // pruned after thirty days and progress must not be.
+  PROGRESS_EVENTS: 'velora_progress_events',
   // Pick up where you left off: the last lesson opened, so the atlas can offer
   // a one-tap resume. Stored as { subject, topicId, topicTitle, openedAt }.
   LAST_LESSON: 'velora_last_lesson',
@@ -109,6 +113,7 @@ const KEY_LABELS = {
   [KEYS.ANALYTICS_OPTIN]: 'Analytics opt-in',
   [KEYS.RETURN_VISITS]: 'Return visits',
   [KEYS.TODAY_QUESTION]: 'Today’s question',
+  [KEYS.PROGRESS_EVENTS]: 'Progress',
   [KEYS.LAST_LESSON]: 'Last lesson opened',
   [KEYS.GAME_RESULTS]: 'Game results',
   [KEYS.RECENT_TERMS]: 'Recently opened terms',

@@ -584,3 +584,29 @@
   outline: 2px solid var(--color-focus, currentColor);
   outline-offset: 2px;
 }
+
+/* Sync status: one sentence, and a Retry only when a retry is the useful thing
+   to offer. The layout keeps the button beside the sentence on a phone without
+   letting either one be squeezed below a 44px target. */
+.st-sync {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.st-sync-line {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.st-sync-quiet {
+  opacity: 0.8;
+}
+
+.st-sync .st-choice {
+  min-height: 44px;
+}
