@@ -21,6 +21,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Public by design, and empty when the secrets are unset: the build
+          # then produces the signed-out app with no network path at all.
+          REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}
+          REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
