@@ -7,7 +7,9 @@ import { isValidName, normalizeName, saveProfile } from '../utils/localProfile';
 /**
  * LocalProfile — the one way in.
  *
- * There is no server, so this is not Sign in and it is not Create account. It
+ * This is not Sign in and it is not Create account, and it must not look like
+ * either. Signing in is optional, lives in Settings and needs an email; this
+ * screen asks for a name and nothing else. It
  * asks for a name to greet you by, and says plainly where that name goes: this
  * device, this browser, nowhere else. The email, phone, username and password
  * fields it replaces were collected, never verified, never sent, and never read
@@ -100,8 +102,8 @@ function LocalProfile({ setScreen, onStart, showToast }) {
             </h1>
             <p className="auth-subtitle">
               {step === 1
-                ? 'A name for this device. No email, no password, no account.'
-                : 'Optional. It only shapes what comes first, and it never leaves this device.'}
+                ? 'A name for this device. No email and no password.'
+                : 'Optional. It only shapes what comes first, and it is stored in this browser.'}
             </p>
           </div>
           <p className="auth-plate-foot">Step {step} of 2</p>
@@ -204,8 +206,8 @@ function LocalProfile({ setScreen, onStart, showToast }) {
 
         <p className="auth-local-note">
           <HardDrive size={14} aria-hidden="true" />
-          VELORA has no server. Your name, questions, notes and progress are stored in this browser
-          and are never transmitted anywhere.
+          Your name, questions, notes and progress are stored in this browser. They are not sent
+          anywhere unless you sign in from Settings and choose to sync your progress.
         </p>
 
         <div className="auth-footer">

@@ -5,8 +5,9 @@
 /**
  * The local profile.
  *
- * This app has no backend. It cannot verify an email, cannot store a password
- * safely, and cannot tell one person from another. The version it used to ship
+ * This is not an account. It cannot verify an email, cannot store a password,
+ * and is not checked against anything, which is why the account in Settings is
+ * a separate thing with its own sign-in. The version it used to ship
  * asked for a phone number and a username it never read, then offered a "Log
  * out" for a session that had never existed. That is a trust problem, not a
  * polish item, so the identity model is now honest about what it is: a chosen

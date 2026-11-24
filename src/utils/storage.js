@@ -39,8 +39,8 @@ export const KEYS = {
   PREFERENCE_PREFIX: 'velora_pref_',
   // Explanation boards are keyed per term, e.g. velora_explanations_momentum.
   EXPLANATION_BOARD_PREFIX: 'velora_explanations_',
-  // Analytics opt-in. VELORA's promise is that nothing leaves your browser, so
-  // external (cross-device, aggregate) analytics is opt-in and defaults off.
+  // Analytics opt-in. Nothing leaves this browser for a third party without
+  // this flag, so external (aggregate) analytics is opt-in and defaults off.
   ANALYTICS_OPTIN: 'velora_analytics_optin',
   // Return-visit counter for the 7-day aggregate measure. Stored as
   // { firstSeen, lastSeen, returnCount }; never sent as an identity.

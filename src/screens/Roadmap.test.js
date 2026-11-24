@@ -27,7 +27,11 @@ test('says collaboration was removed and why, rather than dropping it', () => {
     .getAllByTestId('roadmap-item')
     .find((item) => within(item).queryByRole('heading', { name: 'Collaboration' }));
   expect(within(row).getByText('Removed')).toBeInTheDocument();
-  expect(within(row).getByText(/needs a backend/i)).toBeInTheDocument();
+  // The row used to say collaboration "needs a backend", which is no longer the
+  // reason it is absent: there is a backend, and there is still no forum. The
+  // test now pins the claim that is actually true.
+  expect(within(row).getByText(/still not here/i)).toBeInTheDocument();
+  expect(within(row).getByText(/shared board/i)).toBeInTheDocument();
 });
 
 test('marks each row with a state rather than leaving it to be guessed', () => {
@@ -54,11 +58,15 @@ test('states the gap between atlas topics and written lessons', () => {
   expect(within(row).getByText(new RegExp(`${lessonTopicCount} lessons in the curriculum`))).toBeInTheDocument();
 });
 
-test('promises no backend, in the intro where it belongs', () => {
+test('says exactly what syncs, in the intro where it belongs', () => {
   open();
-  // getAllByText because the intro and the Collaboration row both say "no
-  // server"; both are correct and neither should be pinned to one location.
-  expect(screen.getAllByText(/no server/i).length).toBeGreaterThan(0);
+  // The intro used to promise "no server". Progress syncs now, so the sentence
+  // has to name what is copied and what is not, and both halves have to be on
+  // the page rather than one of them implied.
+  expect(screen.getAllByText(/progress is copied between your devices/i).length).toBeGreaterThan(
+    0,
+  );
+  expect(screen.getAllByText(/study minutes are not/i).length).toBeGreaterThan(0);
   // And no delivery promise anywhere on the page.
   expect(screen.queryByText(/coming soon/i)).not.toBeInTheDocument();
 });

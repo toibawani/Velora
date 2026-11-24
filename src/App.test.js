@@ -36,13 +36,16 @@ const settle = async () => {
   });
 };
 
-test('offers a single honest way in, with no account language', () => {
+test('offers a single honest way in, with no account control', () => {
   renderApp();
   expect(screen.getByText(/VELORA/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /start learning/i })).toBeInTheDocument();
-  // The buttons this replaces promised a server that does not exist.
-  expect(screen.queryByText(/sign in/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(/create account/i)).not.toBeInTheDocument();
+  // Two things are being held here at once. The cover may not offer an account:
+  // signing in lives in Settings and nowhere near the way in. It also may not
+  // go back to promising that nothing can ever leave, because the foot of the
+  // cover now names the condition. Both are asserted so neither can drift.
+  expect(screen.queryByRole('button', { name: /sign in|create account|log in/i })).not.toBeInTheDocument();
+  expect(screen.getByText(/unless you sign in/i)).toBeInTheDocument();
 });
 
 test('a stored name skips the welcome screen and the name form', async () => {

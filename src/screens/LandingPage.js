@@ -74,7 +74,7 @@ function LandingPage({ setScreen }) {
           <p className="lp-hero-lede">
             Velora is a reference book for curious people. Every topic is listed from day one.
             The ones with nothing written behind them say so, in the index, rather than opening
-            a half-finished page. There is no server, no account and nothing to install.
+            a half-finished page. There is nothing to install and no account to create.
           </p>
           <div className="lp-hero-actions">
             <button type="button" className="vl-btn" onClick={() => setScreen('profile')}>
@@ -82,8 +82,8 @@ function LandingPage({ setScreen }) {
             </button>
           </div>
           <p className="lp-fine-print">
-            Setting up asks for a display name and stores it in this browser. There is no email,
-            no password and no account behind it.
+            Setting up asks for a display name and stores it in this browser. There is no email
+            and no password. An account is optional and lives in Settings, not here.
           </p>
         </div>
 
@@ -186,12 +186,12 @@ function LandingPage({ setScreen }) {
         </div>
         <ul className="lp-missing-list">
           <li>
-            <span>No accounts, no email, no password. A display name is stored in this
+            <span>No account needed, no email, no password. A display name is stored in this
             browser.</span>
           </li>
           <li>
-            <span>No backend. Progress lives in localStorage and is lost if you clear site
-            data.</span>
+            <span>Progress lives in this browser and is lost if you clear site data. An
+            optional account in Settings copies it to another device.</span>
           </li>
           <li>
             <span>No comments, likes or rankings. There are no other users to show you.</span>

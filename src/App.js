@@ -244,8 +244,9 @@ function App() {
     if (!alreadyOnboarded) setShowOnboarding(true);
   };
 
-  // Removes the stored name from this device. It is not a sign out: there is no
-  // session to end and no server to tell. The label on the control says so.
+  // Removes the stored name from this device. It is not a sign out: the name is
+  // not the account, and an account has its own control in Settings. The label
+  // on the button says so.
   const handleForgetProfile = () => {
     clearProfile();
     setUser(null);

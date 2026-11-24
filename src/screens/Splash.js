@@ -100,7 +100,7 @@ function SplashScreen({ setScreen }) {
         */}
         <header className="splash-topbar vl-settle" style={{ '--i': 0 }}>
           <span className="splash-imprint">First edition</span>
-          <span className="splash-edition">No account · no email · no password</span>
+          <span className="splash-edition">No account needed · no email · no password</span>
         </header>
 
         <div className="splash-grid">
@@ -133,7 +133,8 @@ function SplashScreen({ setScreen }) {
             </div>
 
             <p className="splash-footer">
-              No account, no email, no password. Everything stays in this browser.
+              No account needed, no email, no password. Everything you write stays in this
+              browser unless you sign in.
             </p>
           </section>
 

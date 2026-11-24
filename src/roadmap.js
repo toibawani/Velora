@@ -112,7 +112,7 @@ export const ROADMAP = [
         name: 'Settings',
         state: 'live',
         detail:
-          'A settings screen: the theme, and the answers given during setup, which were write-once until it existed. There are no reminder switches, because nothing here can send a reminder without a server to send it from.',
+          'A settings screen: the theme, and the answers given during setup, which were write-once until it existed. There are no reminder switches, because nothing here has a scheduled job or a notification permission to send one with.',
       },
       {
         name: 'Next up',
@@ -175,13 +175,13 @@ export const ROADMAP = [
         name: 'Collaboration',
         state: 'removed',
         detail:
-          'Removed. There was a forum with handles, vote counts, room member counts and verified-mentor badges, all typed out by hand: the app has no server, so none of it existed, and the answers on those threads were marked correct by the same hand that wrote them. This needs a backend that can hold two people at once. It is not something that can be added to an app that stores everything in one browser, and it is listed here so its absence is a decision you can see rather than a gap you have to guess about.',
+          'Removed, and only partly replaced. There was a forum with handles, vote counts, room member counts and verified-mentor badges, all typed out by hand, so none of it existed, and the answers on those threads were marked correct by the same hand that wrote them. What exists now is one shared board per topic: no handles, no votes, no member count, and nothing appears until it has been reviewed. A forum with people replying to each other is still not here, and it is listed so its absence is a decision you can see rather than a gap you have to guess about.',
       },
       {
         name: 'Accounts and sign-in',
-        state: 'removed',
+        state: 'partial',
         detail:
-          'Removed. The old form collected an email address, a phone number, a username and a password, verified none of them and sent none of them anywhere. What exists now is a name stored in one browser, and the control that removes it says what it does instead of calling itself a sign out.',
+          'Partly back, and differently. The old form collected an email address, a phone number, a username and a password, verified none of them and sent none of them anywhere. Signing in now is a link emailed to an address you type, it is optional, it lives in Settings, and no password is ever collected or stored. The display name is still just a name in one browser.',
       },
       {
         name: 'Leaderboards, streaks and milestones',
@@ -193,13 +193,13 @@ export const ROADMAP = [
         name: 'Explanations you write',
         state: 'partial',
         detail:
-          'Fixed, with a limit. The board where you explain a concept in your own words is real, and what you write is stored in this browser. It used to ship three explanations typed out in advance, with vote counts of 24, 12, 31, 42 and similar, which no person produced. Those rows and the vote controls were deleted; it now starts empty and says that nobody else can read what you write, because there is no server to share it through. Reading someone else still needs a backend.',
+          'Partial. The board where you explain a concept in your own words is real. It used to ship three explanations typed out in advance, with vote counts of 24, 12, 31, 42 and similar, which no person produced; those rows and the vote controls were deleted. It starts empty. Signed out, what you write stays in this browser. Signed in, you can submit it for review, and it becomes readable by other people only after I approve it. There are no votes and no counters.',
       },
       {
         name: 'Sharing and sync',
-        state: 'notstarted',
+        state: 'partial',
         detail:
-          'Not started, and deliberately not stubbed out. Everything here lives in one browser. There is no account to sync to and no second device to sync from, so nothing in this app claims to do it.',
+          'Partly started. Progress moves between devices when you sign in from Settings: topic, kind and day, nothing more. Notes, questions, study minutes, review schedules and game results do not sync, because they never leave the browser. Two devices are only reconciled while both are online, and a failed push is shown as failed rather than as synced.',
       },
       {
         name: 'Lessons for the remaining fields',

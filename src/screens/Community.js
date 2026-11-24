@@ -22,10 +22,10 @@ import '../styles/Community.css';
  * "Scholar_409", "RelativityTutor" and "DialecticMind", carrying 242, 187, 134
  * and 311 votes, stamped "Verified Mentor" and "3h ago", filed into four rooms
  * with 1,240 to 3,420 members and live counters reading "38 active now". None of
- * it existed. Velora has no server, no accounts and no way to know that another
- * person is using it, so every name, vote, badge, member count and "active now"
- * number on that screen was typed out by hand, and the answers on those threads
- * were marked expert-verified by the same hand.
+ * it existed. There is no forum, no member list and no way to show who is using
+ * the app, so every name, vote, badge, member count and "active now" number on
+ * that screen was typed out by hand, and the answers on those threads were
+ * marked expert-verified by the same hand.
  *
  * What is left is the only conversation this app can honestly host: the one with
  * yourself. Write a question down, keep it, add notes to it as you go, and link

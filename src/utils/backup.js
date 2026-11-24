@@ -5,11 +5,11 @@
  * Reading and writing everything this browser holds about a learner, as one
  * file they can keep.
  *
- * The app promises that nothing leaves the device. That promise has a cost: a
+ * Most of what the app holds never leaves the device, and that has a cost: a
  * cleared browser, a new laptop or a different profile takes every saved
- * lesson, question, note and round with it, and there is no account to sign
- * back into. "Your data is only here" is honest, but without an export it is
- * also final.
+ * lesson, question, note and round with it. An optional account copies progress
+ * and nothing else, so notes and questions are still only here. Without an
+ * export, losing this browser is final for them.
  *
  * What is exported is the payload of each key, not the stored envelope. The
  * envelope carries a version number for this build; a payload is the thing that

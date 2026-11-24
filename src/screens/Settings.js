@@ -297,9 +297,9 @@ function Settings({ user, setScreen, onForgetProfile }) {
         <section className="st-section" aria-labelledby="st-reminders">
           <h2 id="st-reminders">Reminders</h2>
           <p className="st-section-note">
-            There are none, and there is no switch to turn off. VELORA has no server, no background
-            process and no notification permission, so it cannot reach you once this tab is closed.
-            A toggle here would be a control wired to nothing.
+            There are none, and there is no switch to turn off. VELORA sends no notifications: there
+            is no service worker, no notification permission and no scheduled job, so it cannot reach
+            you once this tab is closed. A toggle here would be a control wired to nothing.
           </p>
         </section>
 
@@ -307,8 +307,8 @@ function Settings({ user, setScreen, onForgetProfile }) {
           <h2 id="st-profile">Name on this device</h2>
           <p className="st-section-note">
             <User size={14} aria-hidden="true" /> {user?.name || 'No name set'}. A name typed into
-            this browser. It is not an account, there is no password, and removing it is not a sign
-            out: there is no session to end and no server to tell.
+            this browser. It is not the account, it is not checked against anything, and removing it
+            does not sign you out. It is only used to greet you.
           </p>
           <button type="button" className="st-danger" onClick={onForgetProfile}>
             Remove the name from this device
@@ -320,8 +320,9 @@ function Settings({ user, setScreen, onForgetProfile }) {
           <p className="st-section-note">
             <HardDrive size={14} aria-hidden="true" /> Everything here is in this browser: your
             name, these three answers, your questions and notes, your study time and the games you
-            have played. None of it is transmitted anywhere, and clearing your browser data deletes
-            all of it. There is no second copy, because there is nowhere for one to be.
+            have played. Clearing your browser data deletes all of it. If you sign in, the only thing
+            that also exists elsewhere is progress, as a topic and a day; notes, questions and study
+            minutes are never uploaded.
           </p>
 
           {usage.available && usage.keys.length > 0 && (
@@ -350,11 +351,11 @@ function Settings({ user, setScreen, onForgetProfile }) {
         <section className="st-section" aria-labelledby="st-data">
           <h2 id="st-data">Take your data with you</h2>
           <p className="st-section-note">
-            <Download size={14} aria-hidden="true" /> Because everything lives in this browser and
-            there is no account, a new laptop or a cleared cache takes all of it. Export writes one
-            JSON file you keep yourself: your name, your questions, your saved lessons, your games
-            and these settings. It is built in the page and handed to your downloads folder, so
-            nothing is uploaded to do it.
+            <Download size={14} aria-hidden="true" /> Because the local copy is the original, a new
+            laptop or a cleared cache takes all of it. An account keeps a copy of progress only, not
+            of your notes or questions. Export writes one JSON file you keep yourself: your name,
+            your questions, your saved lessons, your games and these settings. It is built in the page
+            and handed to your downloads folder, so nothing is uploaded to do it.
           </p>
           <button type="button" className="st-primary" onClick={exportData}>
             <Download size={14} aria-hidden="true" /> Export everything as JSON

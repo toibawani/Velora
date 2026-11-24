@@ -10,9 +10,9 @@ import '../styles/PeerExplanations.css';
  * An explanation board that only ever holds what this browser wrote.
  *
  * It used to ship three explanations with vote counts of 24, 12, 31 and 42,
- * attributed to nobody. There is no server and no second reader, so every one
- * of those numbers was invented, and the board opened on a conversation that
- * had not happened. It now starts empty and says where what you write goes.
+ * attributed to nobody. No one had said any of it and no one had voted, so every
+ * number was invented and the board opened on a conversation that had not
+ * happened. It now starts empty and says where what you write goes.
  */
 const storageKey = (topic) => EXPLANATION_BOARD(topic.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
 
@@ -76,7 +76,7 @@ function PeerExplanations({ topic, onNotify }) {
     setExplanations((current) => [explanation, ...current]);
     setNewExplanation('');
     setInputError('');
-    if (onNotify) onNotify('Saved on this device. There is no server, so nobody else can read it.', 'success');
+    if (onNotify) onNotify('Saved on this device. Nobody else can read it.', 'success');
   };
 
   const getTimeAgo = (timestamp) => {
@@ -102,9 +102,8 @@ function PeerExplanations({ topic, onNotify }) {
       <div className="explanations-header">
         <h2 className="explanations-title">Your explanations</h2>
         <p className="explanations-subtitle">
-          This board is stored in this browser. Nobody else can see it, because
-          there is no server and no other people here. It is a place to work out
-          how you would say a thing, not a feed.
+          This board is stored in this browser. Nobody else can see it. It is a
+          place to work out how you would say a thing, not a feed.
         </p>
       </div>
 
