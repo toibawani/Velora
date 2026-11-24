@@ -255,3 +255,60 @@ truth and prints it.
 There is more. More subjects still unwritten. More levels to write. More games
 to make into actual products instead of content audits. This is a living
 document and it will change as the app changes.
+
+---
+
+## Row Level Security policies
+
+**Where they live:** `supabase/migrations/20261123_001_init.sql` holds the four
+tables (`profiles`, `progress_events`, `explanations`, `reports`), their
+constraints, the RLS policies, and the submission rate limit.
+
+**Why RLS:** the Supabase anon key is public by design — it is baked into the
+bundle at build time. A static site cannot keep a secret, so the browser holds a
+key that can only do what the database lets an anonymous or signed-in role do.
+Every table has RLS enabled and a policy that ties a row to `auth.uid()`.
+
+**What each policy does:**
+
+- `profiles` — select/insert/update only your own row (`id = auth.uid()`).
+- `progress_events` — select and insert only your own rows (`user_id = auth.uid()`).
+- `explanations` — anyone (anon or authenticated) reads rows where
+  `status = 'approved'`; authenticated users also read their own rows. Inserts
+  are allowed only for your own user_id with `status = 'pending'`. No update or
+  delete policy exists, so users can never change a submission's status.
+- `reports` — insert as yourself; read only your own reports.
+
+**What RLS does not do:** it does not make the app tamper-proof. A person can
+write any progress they like for themselves — that is their own record, the same
+freedom they had in localStorage. What RLS stops is writing or reading someone
+else's data.
+
+**Verification:** `supabase/tests/rls.sql` asserts the policies from two fake
+users. I confirmed from a terminal that the public key receives
+`permission denied for table progress_events` (SQLSTATE 42501) when it tries to
+read `progress_events`.
+
+---
+
+## Moderated community explanations flow
+
+**The flow:** `pending` → `approved` (or `rejected`).
+
+1. A signed-in user submits an explanation for a topic. The insert is written
+   with `status = 'pending'` and `user_id = auth.uid()`. The database rate
+   limits to 5 explanations per user per hour.
+2. The submission is invisible to everyone except the author until a reviewer
+   approves it. The `explanations_read` policy returns only rows where
+   `status = 'approved'` (plus the author's own rows).
+3. No client-side code can change `status`. There is no update or delete policy
+   on `explanations`, and `UPDATE`/`DELETE` are revoked from `anon` and
+   `authenticated`. Only a reviewer with direct database access can flip a row
+   to `approved` or `rejected`.
+4. The UI tells the submitter in plain words: "Pending review. It is queued,
+   and nobody else can see it until it has been read and approved." It never
+   says a submission is published when it is not.
+
+**Why moderated:** explanations are user-generated text. Without review, a
+spam or harmful submission would appear under a topic immediately. The pending
+state means nothing unreviewed reaches another reader.

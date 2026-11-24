@@ -80,6 +80,9 @@ function LandingPage({ setScreen }) {
             </button>
           </div>
           <p className="lp-fine-print">
+            Sign in to sync across devices. Not required.
+          </p>
+          <p className="lp-fine-print">
             Setting up asks for a display name and stores it in this browser. There is no email
             and no password. An account is optional and lives in Settings, not here.
           </p>
