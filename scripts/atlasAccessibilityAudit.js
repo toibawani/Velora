@@ -89,7 +89,9 @@ const signIn = async (page, port) => {
     });
     await wait(900);
   }
-  await page.waitForSelector('.aix-entry', { timeout: 20000 });
+  // Home is the daily card now. The field tabs are the first index-shaped
+  // control on it, and the search field below them is what this audit reads.
+  await page.waitForSelector('.rh-field', { timeout: 20000 });
   await wait(600);
 };
 
@@ -120,7 +122,7 @@ const signIn = async (page, port) => {
       const style = label ? getComputedStyle(label) : null;
       // The accent in either theme. An index line still wearing it is a pill.
       const accent = /rgb\(\s*(140,\s*74,\s*47|217,\s*142,\s*99)/i;
-      const controls = [...document.querySelectorAll('.aix-entry, .aix-tab')];
+      const controls = [...document.querySelectorAll('.shelf-topic, .rh-field')];
       const filled = controls.filter((c) => accent.test(getComputedStyle(c).backgroundColor));
       return {
         label: {
@@ -139,6 +141,27 @@ const signIn = async (page, port) => {
         },
       };
     });
+
+    // The topic rows live inside a field, not on Today, so open one before
+    // reading the same two properties there. The point of the check is that
+    // every index line is text rather than a filled control, and it has to
+    // cover the rows as well as the field tabs.
+    await page.evaluate(() => {
+      const tab = [...document.querySelectorAll('.rh-field')]
+        .find((b) => /^Science,/.test(b.getAttribute('aria-label') || ''));
+      if (tab) tab.click();
+    });
+    await page.waitForSelector('.shelf-topic', { timeout: 20000 });
+    const fieldIndex = await page.evaluate(() => {
+      const accent = /rgb\(\s*(140,\s*74,\s*47|217,\s*142,\s*99)/i;
+      const controls = [...document.querySelectorAll('.shelf-topic')];
+      return {
+        controls: controls.length,
+        filledWithAccent: controls.filter((c) => accent.test(getComputedStyle(c).backgroundColor)).length,
+      };
+    });
+    report.index.controls += fieldIndex.controls;
+    report.index.filledWithAccent += fieldIndex.filledWithAccent;
 
     console.log(`\n${width}px`);
     console.log(`  search label: ${JSON.stringify(report.label)}`);

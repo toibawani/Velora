@@ -1,9 +1,17 @@
 /**
- * PART 1 audit: what actually happens when you tap a topic in the Atlas.
+ * Walk every field and discipline in the real built app in real Chrome, tap one
+ * topic per discipline, and record whether content actually opened.
  *
- * Walks every field -> discipline in the real built app in real Chrome, taps
- * one topic per discipline, and records what the DOM did. The point is to find
- * out whether a dead topic is one bug or many, so it reports per discipline.
+ * The audit exists to answer "is a dead topic one bug or many", so it reports
+ * per discipline rather than per field. It also exits non-zero when a written
+ * topic opened nothing, which is the difference between an audit that ran and
+ * one that proved something.
+ *
+ * The DOM it drives changed when home became two screens: fields are `.rh-field`
+ * tabs, a field page has `.shelf-discipline` buttons, and its topics are
+ * `.shelf-topic` rows (buttons when written, spans when not). There is no
+ * preview panel any more, so the probe checks the thing that matters - whether
+ * the click opened content - rather than whether a panel updated above it.
  *
  * Usage: node scripts/atlasTapAudit.js
  */
@@ -13,13 +21,6 @@ const http = require('http');
 const puppeteer = require('puppeteer-core');
 
 const ROOT = path.join(__dirname, '..', 'build');
-// Chrome discovery lives in scripts/chrome.js.
-//
-// This list named only the macOS bundle and /usr/bin/chromium. On a GitHub
-// Actions ubuntu runner Chrome is at /usr/bin/google-chrome, so these four
-// scripts would all have exited with "No Chrome found" - which is why none of
-// them was in CI, and why nobody could tell the difference between an audit
-// that found nothing and one that never ran.
 const { findChrome } = require('./chrome');
 const { stripBase } = require('./auditServe');
 const CHROME = findChrome();
@@ -46,14 +47,10 @@ const serve = (root) =>
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// The onboarding preference key is the same one layoutCheck.js seeds. Setting it
-// is not faking a session: there is no session. It only skips the interest
-// question, which is not what this audit is measuring.
 const SEED = { velora_onboarding_done: 'true' };
 
 const signIn = async (page, port) => {
-  // Navigate before touching localStorage: the initial about:blank document has
-  // an opaque origin and throws SecurityError on any storage access.
+  // Navigate before touching localStorage: about:blank has an opaque origin.
   await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
   await page.evaluate((seed) => {
     localStorage.clear();
@@ -62,7 +59,6 @@ const signIn = async (page, port) => {
   await page.reload({ waitUntil: 'networkidle0' });
   await page.waitForSelector('button', { timeout: 20000 });
 
-  // Walk splash -> landing -> profile by clicking whatever the screen offers.
   const deadline = Date.now() + 20000;
   while (Date.now() < deadline) {
     if (await page.$('#profile-name')) break;
@@ -87,8 +83,8 @@ const signIn = async (page, port) => {
     });
     await wait(800);
   }
-  await page.waitForFunction(() => document.querySelectorAll('nav').length > 0, { timeout: 20000 });
-  await wait(1000);
+  await page.waitForSelector('.rh-field', { timeout: 20000 });
+  await wait(800);
 };
 
 (async () => {
@@ -99,27 +95,10 @@ const signIn = async (page, port) => {
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 1000 });
 
-  // page.evaluate, but survivable.
-  //
-  // Every probe below runs against the main frame, and the main frame is not
-  // always there: clicking a call to action leaves the atlas, and the click that
-  // comes back races the navigation it triggered. Evaluating into the frame you
-  // had a moment ago throws "Attempted to use detached Frame" - a statement about
-  // timing, not about the atlas - and it took the whole audit down with an exit
-  // code 1 on a run that had already probed dozens of disciplines correctly.
-  // The retry is the honest response: wait for a live document, then evaluate.
+  // page.evaluate, but survivable. A click that navigates swaps the frame
+  // underfoot, and evaluating into the frame you held a moment ago throws
+  // "Attempted to use detached Frame" - a statement about timing, not the atlas.
   const evaluate = async (fn, arg) => {
-    // A navigation swaps the frame underfoot, so a waitFor* started on the
-    // previous document throws rather than timing out. Re-enter through the
-    // currently attached frame instead of reusing the handle that died.
-    const liveFrame = async () => {
-      for (const frame of page.frames()) {
-        if (frame === page.mainFrame() || frame.parentFrame() === null) {
-          try { await frame.evaluate(() => true); return frame; } catch { /* keep looking */ }
-        }
-      }
-      return page.mainFrame();
-    };
     const deadline = Date.now() + 20000;
     for (;;) {
       try {
@@ -128,21 +107,20 @@ const signIn = async (page, port) => {
         const transient = /detached frame|execution context|Target closed|Cannot find context|Session closed/i.test(e.message);
         if (!transient || Date.now() > deadline) throw e;
         await wait(250);
-        // Give the next page.evaluate a live document: do not just sleep, make
-        // sure the current main frame answers before the retry evaluates into
-        // it, so a slow navigation does not burn all twenty seconds on misses.
         try {
-          const frame = await liveFrame();
-          await frame.waitForFunction(() => document.readyState === 'complete' || document.readyState === 'interactive', { timeout: 5000 }).catch(() => {});
+          await page.waitForFunction(
+            () => document.readyState === 'complete' || document.readyState === 'interactive',
+            { timeout: 5000 }
+          );
         } catch { /* the retry below is the real attempt */ }
       }
     }
   };
 
-  // The atlas is ready when its field tabs are on screen. Returning to it is a
+  // Home is ready when its field tabs are on screen. Returning to it is a
   // click, and a click is not a navigation guarantee.
   const waitForAtlas = async () => {
-    await page.waitForFunction(() => document.querySelectorAll('.aix-tab').length > 0, { timeout: 20000 });
+    await page.waitForFunction(() => document.querySelectorAll('.rh-field').length > 0, { timeout: 20000 });
   };
 
   const consoleErrors = [];
@@ -150,237 +128,106 @@ const signIn = async (page, port) => {
   page.on('pageerror', (e) => consoleErrors.push(`pageerror: ${e.message}`));
 
   await signIn(page, port);
-  const state = await evaluate(() => ({
-    headings: [...document.querySelectorAll('h1,h2')].map((e) => e.textContent.trim()).slice(0, 5),
-    atlas: Boolean(document.querySelector('#knowledge-atlas')),
-    keys: Object.keys(localStorage).filter((k) => /profile|onboard/i.test(k)).map((k) => `${k}=${localStorage.getItem(k)}`),
-  }));
-  console.log('after signIn:', JSON.stringify(state, null, 1));
-  await evaluate(() => {
-    const btn = [...document.querySelectorAll('button')].find((b) => /atlas|universe/i.test(b.textContent || ''));
-    btn && btn.click();
-  });
-  await waitForAtlas();
 
-  const onAtlas = await evaluate(() => Boolean(document.querySelector('#knowledge-atlas')));
-  if (!onAtlas) {
-    const where = await evaluate(() => ({
-      headings: [...document.querySelectorAll('h1,h2')].map((e) => e.textContent.trim()).slice(0, 5),
-      buttons: [...document.querySelectorAll('button')].map((e) => e.textContent.trim()).filter(Boolean).slice(0, 16),
-      dialog: document.querySelector('[role="dialog"]')?.innerText.replace(/\s+/g, ' ').slice(0, 200) || null,
-    }));
-    console.log('NOT ON ATLAS:', JSON.stringify(where, null, 1));
-  }
-  console.log(`reached atlas: ${onAtlas}`);
-
-  // The field tabs, which is what replaced .uh-field-button.
-  const fields = await evaluate(() =>
-    [...document.querySelectorAll('.aix-tab')].map((b) => ({
-      label: b.querySelector('.aix-tab-name')?.textContent.trim() || b.textContent.trim(),
-      aria: b.getAttribute('aria-label'),
+  const fieldNames = await evaluate(() =>
+    [...document.querySelectorAll('.rh-field')].map((b) => ({
+      label: b.querySelector('.rh-field-name')?.textContent.trim() || b.getAttribute('aria-label') || '',
     }))
   );
+  console.log(`reached atlas: true (${fieldNames.length} fields)`);
+
+  const openField = async (name) => {
+    // A lesson leaves home; the Atlas item in the bottom bar brings it back.
+    await evaluate(() => {
+      const nav = [...document.querySelectorAll('.mobile-bottom-nav button, .mobile-nav-item')]
+        .find((b) => /^(Atlas|Home)$/.test(b.textContent.trim()));
+      if (nav) nav.click();
+    });
+    await wait(500);
+    await evaluate((label) => {
+      const tab = [...document.querySelectorAll('.rh-field')]
+        .find((b) => b.querySelector('.rh-field-name')?.textContent.trim() === label);
+      if (tab) tab.click();
+    }, name);
+    await page.waitForFunction(() => document.querySelectorAll('.shelf-discipline').length > 0, { timeout: 15000 });
+    await wait(250);
+  };
 
   const rows = [];
-  for (const field of fields) {
-    await evaluate((name) => {
-      const tab = [...document.querySelectorAll('.aix-tab')]
-        .find((b) => (b.querySelector('.aix-tab-name')?.textContent.trim() || b.textContent.trim()) === name);
-      tab && tab.click();
-    }, field.label);
-    await wait(300);
+  for (const field of fieldNames) {
+    await openField(field.label);
 
-    // The atlas was redesigned and this script was never updated with it.
-    //
-    // It looked for .uh-field-button, .uh-discipline-card, .uh-module-trigger and
-    // .uh-topic-grid. None of those exist any more: fields are .aix-tab buttons,
-    // disciplines are .aix-group sections, and topics are .aix-entry rows with no
-    // grid and no separate module control. So `fields` came back empty, the loop
-    // never ran, the table printed with no rows, and the script exited 0. It had
-    // been reporting a clean pass over an atlas it never touched, and it is not
-    // in CI, so nothing ever contradicted it.
-    const structure = await evaluate(() => {
-      const groups = [...document.querySelectorAll('.aix-group')];
-      return {
-        disciplineCount: groups.length,
-        disciplineNames: groups.map((g) => g.querySelector('.aix-group-title')?.textContent.trim() || '?'),
-        topicCount: document.querySelectorAll('.aix-entry').length,
-      };
-    });
+    const disciplineNames = await evaluate(() =>
+      [...document.querySelectorAll('.shelf-discipline')].map((b) => ({
+        name: b.querySelector('span')?.textContent.trim() || '?',
+      }))
+    );
 
-    // Probe one topic per discipline, which is what the header claims.
-    //
-    // It probes the first *written* topic in each discipline, not the first
-    // topic. The first topic in most groups is "not written yet" - that is what
-    // the marker is for - and an unwritten topic has no call to action to
-    // press, so probing it says nothing about whether the atlas works.
-    const openField = async () => {
-      await waitForAtlas();
-      await evaluate((name) => {
-        const tab = [...document.querySelectorAll('.aix-tab')]
-          .find((b) => (b.querySelector('.aix-tab-name')?.textContent.trim() || b.textContent.trim()) === name);
-        tab && tab.click();
-      }, field.label);
-      await wait(320);
-    };
-
-    for (let d = 0; d < structure.disciplineCount; d++) {
-      // Re-select the field every time.
-      //
-      // Opening a lesson navigates away from the atlas, and coming back lands on
-      // the *first* field, not the one being probed. Without this, group index
-      // 6 of a later field silently indexed into the first field's groups: the
-      // table said "Philosophy / Philosophical Traditions -> Atomic Structure",
-      // which is a Science topic. Two real disciplines were then reported as
-      // having no topics at all, because the probe was looking in the wrong
-      // field entirely.
-      await openField();
-
-      const picked = await evaluate((idx) => {
-        const g = document.querySelectorAll('.aix-group')[idx];
-        if (!g) return null;
-        const entries = [...g.querySelectorAll('.aix-entry')];
-        const target = entries.find((e) => !/unwritten/.test(e.className)) || entries[0];
-        if (!target) return null;
-        // The entry's own text is the topic plus its status marker, so read the
-        // topic out of the span rather than the whole button.
-        const topic = target.querySelector('.aix-entry-text')?.textContent.trim();
-        target.click();
-        return { topic, written: !/unwritten/.test(target.className) };
+    for (let d = 0; d < disciplineNames.length; d += 1) {
+      // Opening a lesson navigates away and coming back lands on Today, not on
+      // the field being probed, so the field is re-selected every time.
+      await openField(field.label);
+      await evaluate((index) => {
+        const button = document.querySelectorAll('.shelf-discipline')[index];
+        if (button) button.click();
       }, d);
+      await wait(300);
+
+      const picked = await evaluate(() => {
+        const topics = [...document.querySelectorAll('.shelf-topic')];
+        const written = topics.filter((t) => t.tagName === 'BUTTON');
+        const target = written[0] || topics[0];
+        if (!target) return null;
+        const topic = target.querySelector('.shelf-topic-name')?.textContent.trim();
+        const isWritten = target.tagName === 'BUTTON';
+        if (isWritten) target.click();
+        return { topic, written: isWritten };
+      });
+
       if (!picked) {
-        rows.push({ field: field.label, discipline: structure.disciplineNames[d], verdict: 'discipline has no topics' });
+        rows.push({ field: field.label, discipline: disciplineNames[d].name, verdict: 'discipline has no topics' });
         continue;
       }
       await wait(300);
 
-      const probe = await evaluate((topic) => {
-        // Every topic must be addressable: selecting it should name it in the
-        // preview panel, whether it has a lesson behind it or not.
-        const preview = document.querySelector('.uh-topic-preview')?.innerText || '';
-        const heading = document.querySelector('.uh-topic-preview h2')?.textContent?.trim();
-        return {
-          selected: document.querySelector('.aix-entry[aria-current="true"]') ? true : false,
-          // Compare against the h2 rather than the whole panel text: the panel
-          // also prints the status sentence, so a substring test on its innerText
-          // can be satisfied or broken by wording that has nothing to do with
-          // which topic is selected.
-          previewUpdated: heading === topic,
-          previewHeading: heading,
-          previewText: preview.replace(/\s+/g, ' ').slice(0, 90),
-        };
-      }, picked.topic);
-
-      // Press the call to action on a written topic and see what opens.
-      //
-      // The click is the one deliberate exception to the retrying evaluate:
-      // it navigates away from the atlas (frame swap), so clicking and then
-      // polling for 15s in ONE evaluate call means a navigation that outruns
-      // the poll's first query kills the whole probe with a detached frame.
-      // Instead: click in one call, let the app land, then poll a live
-      // document in the next.
       let opened = 'skipped (topic is not written)';
       if (picked.written) {
-        const label = await evaluate(() => {
-          const btn = document.querySelector('.uh-topic-preview button');
-          if (!btn) return null;
-          const text = btn.textContent.trim();
-          btn.click();
-          return text;
-        });
-        if (!label) {
-          opened = 'NO CALL TO ACTION RENDERED';
-        } else {
-          opened = await evaluate(async (args) => {
-          const { label, SELECTOR } = args;
-
-          // Waited on, rather than slept for.
-          //
-          // This used to wait a fixed 900ms and then check. The deep reads are
-          // behind a lazy boundary, so on a loaded runner - three Chrome jobs at
-          // once is exactly when CI runs this - the reader had not mounted yet,
-          // and a topic with perfectly good content was reported as "CTA opened
-          // nothing". It passed locally and failed on the runner, which is the
-          // signature of a timing assumption rather than a broken reader.
-          //
-          // The lesson reader and the deep reads render different markup, so the
-          // wait polls for whichever is actually on its way, and gives up with
-          // the label rather than a bare boolean.
+        opened = await evaluate(async () => {
+          const SELECTOR = '.lesson-reader, .bhm-pager, .deep-read-container, .lr-reader, [data-testid="lesson"]';
           const deadline = Date.now() + 15000;
           while (Date.now() < deadline) {
-            if (document.querySelector(SELECTOR)) {
-              return `${label} -> content opened`;
-            }
+            if (document.querySelector(SELECTOR)) return 'topic -> content opened';
             await new Promise((r) => setTimeout(r, 100));
           }
-          return `${label} -> NOTHING OPENED (waited 15s for ${SELECTOR})`;
-        }, { label, SELECTOR: '.lesson-reader, .bhm-pager, .deep-read-container, .lr-reader, [data-testid="lesson"]' });
-        }
-        await evaluate(() => {
-          const b = [...document.querySelectorAll('button')].find((x) => /atlas|home/i.test(x.textContent || ''));
-          b && b.click();
+          return `topic -> NOTHING OPENED (waited 15s for ${SELECTOR})`;
         });
-        // Wait for the atlas, not for the clock. This used to be a flat 700ms
-        // sleep, so on a loaded runner the next probe could run against the
-        // lesson reader that had not finished unmounting.
-        await waitForAtlas();
       }
 
-      rows.push({ field: field.label, discipline: structure.disciplineNames[d], topic: picked.topic, ...probe, opened });
+      rows.push({
+        field: field.label,
+        discipline: disciplineNames[d].name,
+        topic: picked.topic,
+        previewUpdated: true,
+        opened,
+      });
     }
   }
 
   console.log('\nfield / discipline'.padEnd(42), 'topic'.padEnd(24), 'result');
   console.log('-'.repeat(120));
   rows.forEach((r) => {
-    // The verdict used to be derived from `modalOpen`, a field this script no
-    // longer sets, so every working row read "preview only, no content" - the
-    // same words a genuinely broken row would produce. The outcome is now the
-    // thing that actually opened, so a dead call to action is distinguishable
-    // from a topic that simply has nothing behind it.
     const verdict = r.verdict
-      || (!r.previewUpdated ? 'selecting the topic did not update the preview'
-      : r.opened.startsWith('skipped') ? 'listed, nothing written (expected)'
-      : r.opened.includes('NOTHING OPENED') ? 'PREVIEW SHOWN BUT CTA OPENED NOTHING'
-      : r.opened.includes('NO CALL TO ACTION') ? 'written topic has no call to action'
-      : 'preview + content opened');
+      || (r.opened.startsWith('skipped') ? 'listed, nothing written (expected)'
+      : r.opened.includes('NOTHING OPENED') ? 'WRITTEN TOPIC OPENED NOTHING'
+      : 'content opened');
     console.log(`${(r.field + ' / ' + r.discipline).padEnd(42)} ${(r.topic || '-').padEnd(24)} ${verdict}`);
   });
 
-  /*
-   * This script reports and never blocks, and that is the defect.
-   *
-   * It walks every field and discipline - the only audit here that does - and
-   * then prints its findings and exits 0 whatever it found. A topic that renders
-   * nothing, a discipline with no topic grid, a whole field of dead buttons:
-   * all of it is printed, none of it fails anything. It is not in CI and not in
-   * package.json, so nobody was ever shown the output either.
-   *
-   * Two checks are asserted, because both are the difference between "the
-   * audit ran" and "the audit proved anything":
-   *
-   *  1. It reached the atlas at all. If sign-in or navigation fails, `rows` is
-   *     empty, the table is blank, and the script still exits 0.
-   *  2. Every discipline produced a live topic. `no reaction` and `no topic
-   *     grid rendered` are dead topics - the exact thing the header says the
-   *     script exists to find out about - and they used to be a row in a table
-   *     rather than an exit code.
-   *
-   * Console errors are a failure too: a screen that throws is broken whether or
-   * not its text happens to render.
-   */
   const dead = rows.filter((r) =>
     r.verdict
     || !r.previewUpdated
     || r.opened.includes('NOTHING OPENED')
-    || r.opened.includes('NO CALL TO ACTION')
   );
-  if (!onAtlas) {
-    console.error('\nnever reached the atlas; nothing was probed');
-    await browser.close();
-    server.close();
-    process.exit(1);
-  }
   if (!rows.length) {
     console.error('\nno fields or disciplines were found on the atlas; nothing was probed');
     await browser.close();

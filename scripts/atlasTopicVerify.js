@@ -133,7 +133,7 @@ const selectTopicViaSearch = async (page, query, topic) => {
   await wait(500);
 
   const clicked = await page.evaluate((t) => {
-    const target = [...document.querySelectorAll('.uh-search-results button')]
+    const target = [...document.querySelectorAll('.rh-search-results button')]
       .find((b) => b.querySelector('span')?.textContent.trim() === t);
     if (!target) return false;
     target.click();
@@ -152,17 +152,21 @@ const selectTopicViaSearch = async (page, query, topic) => {
   return clicked;
 };
 
-/** Press the preview call to action and report what is actually on screen. */
-const pressCtaAndReport = (page) =>
+/**
+ * Report what is on screen after the search result was clicked.
+ *
+ * There used to be a second step here: select a topic, then press the preview
+ * panel's call to action. The field page opens a written topic on the first
+ * click, so the selection itself is the thing under test now. The verdicts
+ * below are unchanged - a lesson must open, a deep read must show its levels,
+ * and an unwritten topic must stay put and say so.
+ */
+const reportAfterSelection = (page) =>
   page.evaluate(async () => {
-    const btn = document.querySelector('.uh-topic-preview button');
-    if (!btn) return { label: null, note: 'no call to action rendered' };
-    const label = btn.textContent.trim();
-    btn.click();
     await new Promise((r) => setTimeout(r, 900));
     const body = document.body.innerText;
     return {
-      label,
+      label: 'search result',
       heading: document.querySelector('h1')?.textContent?.trim() || null,
       // The lesson reader renders the topic title as its own h1 and its
       // sections with lesson-* classes.
@@ -171,7 +175,7 @@ const pressCtaAndReport = (page) =>
       // class rather than the text, because the text is capitalised
       // differently depending on where in the component it lands.
       levelRailOpen: Boolean(document.querySelector('.bhm-pager, .bhm-level-rail')),
-      stillOnAtlas: Boolean(document.querySelector('#knowledge-atlas')),
+      stillOnAtlas: Boolean(document.querySelector('.rh-fields')),
       // The whole body, not a slice: the "not written yet" notice sits far
       // below the fold in the markup, so a 200-character sample never reached
       // it and every unwritten case looked like a failure.
@@ -245,12 +249,12 @@ const CASES = [
       const why = await page.evaluate(() => ({
         hasInput: Boolean(document.querySelector('#curriculum-search')),
         headings: [...document.querySelectorAll('h1,h2')].map((e) => e.textContent.trim()).slice(0, 3),
-        results: [...document.querySelectorAll('.uh-search-results button')].map((b) => b.innerText.replace(/\n/g, ' | ')).slice(0, 3),
+        results: [...document.querySelectorAll('.rh-search-results button')].map((b) => b.innerText.replace(/\n/g, ' | ')).slice(0, 3),
       }));
       console.log(`${testCase.name.padEnd(40)} NOT FOUND ${JSON.stringify(why)}`);
       failures += 1; continue;
     }
-    const r = await pressCtaAndReport(page);
+    const r = await reportAfterSelection(page);
     let outcome; let ok = false;
     if (testCase.expect === 'lesson') {
       ok = r.lessonOpen === true;
