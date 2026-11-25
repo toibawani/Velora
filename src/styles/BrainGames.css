@@ -657,3 +657,19 @@
   color: var(--accent-primary);
   text-decoration: underline;
 }
+
+/* Three room names, two of them long. On a phone the rail scrolls them out of
+   sight, so the active mode was clipped at the right edge; they wrap instead. */
+@media (max-width: 560px) {
+  .bg-tab-rail {
+    flex-wrap: wrap;
+    overflow: visible;
+    gap: 0 var(--space-4);
+    padding-top: var(--space-1);
+  }
+
+  .bg-tab-pill {
+    min-height: 40px;
+    font-size: 0.68rem;
+  }
+}

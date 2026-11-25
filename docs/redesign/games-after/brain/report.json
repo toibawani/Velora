@@ -1,0 +1,280 @@
+[
+  {
+    "game": "Connect the Concept",
+    "theme": "light",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-1440-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-1440-light-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "after": {
+        "progress": "Connect the Concept",
+        "feedback": "Almost! The Stoicism link is what trips most people up. All five describe the one-way arrow of time. In physics and chem",
+        "body": "← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Three ways to test an idea. Connect five terms, check an intuition, or explain a concept back in your own words. One sitting each, scored on this device. CONNECT THE CONCEPT CO"
+      }
+    }
+  },
+  {
+    "game": "Counterintuitive",
+    "theme": "light",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-1440-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-1440-light-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "after": {
+        "progress": "Counterintuitive (True/Myth)",
+        "feedback": "Intuition confirmed! Medieval window glass was blown into a cylinder and spun flat, the crown glass technique, which lef",
+        "body": "← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Three ways to test an idea. Connect five terms, check an intuition, or explain a concept back in your own words. One sitting each, scored on this device. CONNECT THE CONCEPT CO"
+      }
+    }
+  },
+  {
+    "game": "Explain It Back",
+    "theme": "light",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-1440-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-1440-light-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "after": {
+        "progress": "Explain It Back (30s Sprint)",
+        "feedback": "YOUR DISTILLATION (20 words) \"momentum is how hard something is to stop and a heavy thing moving slowly still has a lot ",
+        "body": "← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Three ways to test an idea. Connect five terms, check an intuition, or explain a concept back in your own words. One sitting each, scored on this device. CONNECT THE CONCEPT CO"
+      }
+    }
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "consoleErrors": []
+  },
+  {
+    "game": "Connect the Concept",
+    "theme": "light",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-375-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-375-light-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "after": {
+        "progress": "Connect the Concept",
+        "feedback": "Almost! The Stoicism link is what trips most people up. All five describe the one-way arrow of time. In physics and chem",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Thr"
+      }
+    }
+  },
+  {
+    "game": "Counterintuitive",
+    "theme": "light",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-375-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-375-light-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "after": {
+        "progress": "Counterintuitive (True/Myth)",
+        "feedback": "Intuition confirmed! Medieval window glass was blown into a cylinder and spun flat, the crown glass technique, which lef",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Thr"
+      }
+    }
+  },
+  {
+    "game": "Explain It Back",
+    "theme": "light",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-375-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-375-light-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "after": {
+        "progress": "Explain It Back (30s Sprint)",
+        "feedback": "YOUR DISTILLATION (20 words) \"momentum is how hard something is to stop and a heavy thing moving slowly still has a lot ",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Thr"
+      }
+    }
+  },
+  {
+    "theme": "light",
+    "width": 375,
+    "consoleErrors": []
+  },
+  {
+    "game": "Connect the Concept",
+    "theme": "dark",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-1440-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-1440-dark-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "after": {
+        "progress": "Connect the Concept",
+        "feedback": "Almost! The Stoicism link is what trips most people up. All five describe the one-way arrow of time. In physics and chem",
+        "body": "← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Three ways to test an idea. Connect five terms, check an intuition, or explain a concept back in your own words. One sitting each, scored on this device. CONNECT THE CONCEPT CO"
+      }
+    }
+  },
+  {
+    "game": "Counterintuitive",
+    "theme": "dark",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-1440-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-1440-dark-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "after": {
+        "progress": "Counterintuitive (True/Myth)",
+        "feedback": "Intuition confirmed! Medieval window glass was blown into a cylinder and spun flat, the crown glass technique, which lef",
+        "body": "← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Three ways to test an idea. Connect five terms, check an intuition, or explain a concept back in your own words. One sitting each, scored on this device. CONNECT THE CONCEPT CO"
+      }
+    }
+  },
+  {
+    "game": "Explain It Back",
+    "theme": "dark",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-1440-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-1440-dark-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "after": {
+        "progress": "Explain It Back (30s Sprint)",
+        "feedback": "YOUR DISTILLATION (20 words) \"momentum is how hard something is to stop and a heavy thing moving slowly still has a lot ",
+        "body": "← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Three ways to test an idea. Connect five terms, check an intuition, or explain a concept back in your own words. One sitting each, scored on this device. CONNECT THE CONCEPT CO"
+      }
+    }
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "consoleErrors": []
+  },
+  {
+    "game": "Connect the Concept",
+    "theme": "dark",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-375-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/connect-the-concept-375-dark-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "after": {
+        "progress": "Connect the Concept",
+        "feedback": "Almost! The Stoicism link is what trips most people up. All five describe the one-way arrow of time. In physics and chem",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Thr"
+      }
+    }
+  },
+  {
+    "game": "Counterintuitive",
+    "theme": "dark",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-375-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/counterintuitive-375-dark-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "after": {
+        "progress": "Counterintuitive (True/Myth)",
+        "feedback": "Intuition confirmed! Medieval window glass was blown into a cylinder and spun flat, the crown glass technique, which lef",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Thr"
+      }
+    }
+  },
+  {
+    "game": "Explain It Back",
+    "theme": "dark",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-375-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/brain/explain-it-back-375-dark-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "after": {
+        "progress": "Explain It Back (30s Sprint)",
+        "feedback": "YOUR DISTILLATION (20 words) \"momentum is how hard something is to stop and a heavy thing moving slowly still has a lot ",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Return to Universe BRAIN GAMES PHYSICS SIMULATIONS CONCEPT PUZZLES THE BRAIN ROOM Thr"
+      }
+    }
+  },
+  {
+    "theme": "dark",
+    "width": 375,
+    "consoleErrors": []
+  }
+]
