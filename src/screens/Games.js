@@ -279,7 +279,12 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
     const activeGameConfig = CLASSIC_GAMES.find(g => g.id === selectedGame) || CLASSIC_GAMES[0];
 
     if (activeGameConfig.type === 'simulation') {
-      return <RelativityLab onBack={() => setSelectedGame(null)} />;
+      return (
+        <RelativityLab
+          onBack={() => setSelectedGame(null)}
+          backLabel="Back to the games room"
+        />
+      );
     }
 
     if (useFlowMode) {
@@ -300,7 +305,9 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
       duel: <DefinitionDuel onBack={() => setSelectedGame(null)} />,
       chain: <KnowledgeChain onBack={() => setSelectedGame(null)} />,
       puzzle: <WordPuzzle onBack={() => setSelectedGame(null)} />,
-      relativity: <RelativityLab onBack={() => setSelectedGame(null)} />,
+      relativity: (
+        <RelativityLab onBack={() => setSelectedGame(null)} backLabel="Back to the games room" />
+      ),
     };
 
     return gameMap[selectedGame] || <FlowStateGame gameName={activeGameConfig.name} onBack={() => setSelectedGame(null)} />;

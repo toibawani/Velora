@@ -114,4 +114,31 @@ describe('Relativity Lab', () => {
     expect(raf).toHaveBeenCalled();
     raf.mockRestore();
   });
+
+  // The screen used to print `$M$`, `$r_s$`, `$10^{-6} M_\odot$` and
+  // `$\gamma_g$` at readers: copy written for a renderer this app does not have.
+  test('never prints raw LaTeX at the reader', () => {
+    render(<RelativityLab onBack={() => {}} />);
+
+    expect(document.body.textContent).not.toMatch(/\$|\\[a-zA-Z]/);
+    expect(screen.queryByText(/\$M\$/)).not.toBeInTheDocument();
+  });
+
+  test('every slider has an accessible name', () => {
+    render(<RelativityLab onBack={() => {}} />);
+
+    const sliders = screen.getAllByRole('slider');
+    expect(sliders).toHaveLength(3);
+    ['mass', 'horizon', 'duration'].forEach((name, index) => {
+      expect(sliders[index]).toHaveAccessibleName(new RegExp(name, 'i'));
+    });
+  });
+
+  test('the readout names each quantity and its symbol in plain text', () => {
+    render(<RelativityLab onBack={() => {}} />);
+
+    expect(screen.getByText(/event horizon radius/i)).toBeInTheDocument();
+    expect(screen.getByText('rₛ')).toBeInTheDocument();
+    expect(screen.getByText('distant time per local hour')).toBeInTheDocument();
+  });
 });

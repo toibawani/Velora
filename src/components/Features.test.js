@@ -7,10 +7,10 @@ import BlackHolesElite from './BlackHolesElite';
 describe('Velora Scientific & Sensory Features', () => {
   test('renders RelativityLab with calculations and preset benchmarks', () => {
     render(<RelativityLab onBack={() => {}} />);
-    expect(screen.getByText(/General Relativity & Spacetime Laboratory/i)).toBeInTheDocument();
-    expect(screen.getByText(/Schwarzschild Radius/i)).toBeInTheDocument();
+    expect(screen.getByText(/one second here, measured from far away/i)).toBeInTheDocument();
+    expect(screen.getByText(/Schwarzschild radius/i)).toBeInTheDocument();
     expect(screen.getByText(/Sagittarius A\*/i)).toBeInTheDocument();
-    expect(screen.getByText(/Gravitational Time Dilation/i)).toBeInTheDocument();
+    expect(screen.getByText(/Gravitational time dilation/i)).toBeInTheDocument();
   });
 
   test('renders SensoryRooms with Web Audio soundscape channels and breathing pacer', () => {
