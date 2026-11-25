@@ -102,15 +102,15 @@ const signIn = async (page, port) => {
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
   await signIn(page, port);
 
-  // Reach the black hole masterclass through the Atlas, the new path.
+  // Reach the black hole masterclass through the Atlas, the new path. A
+  // search result opens the deep read on its own now: the preview panel and
+  // its second button were removed with the one-page index.
   await page.type('#curriculum-search', 'Black Holes', { delay: 15 });
   await new Promise(r => setTimeout(r, 600));
   await page.evaluate(() => {
-    [...document.querySelectorAll('.uh-search-results button')][0]?.click();
+    [...document.querySelectorAll('.rh-search-results button')][0]?.click();
   });
-  await new Promise(r => setTimeout(r, 500));
-  await page.evaluate(() => document.querySelector('.uh-topic-preview button')?.click());
-  await new Promise(r => setTimeout(r, 900));
+  await new Promise(r => setTimeout(r, 1400));
   console.log('viewport 375px');
   console.log('reached masterclass:', await page.evaluate(() => Boolean(document.querySelector('.bhm-pager'))));
 
