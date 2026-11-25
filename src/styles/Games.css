@@ -15,18 +15,33 @@
 }
 
 /* ==================== HUB HEADER ==================== */
+/* One bar, three areas: back, rooms, mode. It used to be a 60px flex row
+   holding the back button, three heavy pills and a 269-item count sentence as
+   a third flex item, so the row wrapped out of its own header and the third
+   room sat underneath the first two. */
 .games-header-new {
-  background: var(--bg-primary);
-  padding: 0 var(--space-8);
-  height: 60px;
-  border-bottom: 1px solid var(--border-default);
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas: 'back rooms mode';
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
+  gap: var(--space-5);
+  height: auto;
+  padding: var(--space-3) clamp(1.25rem, 4vw, 3rem);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  gap: var(--space-4);
+}
+
+.back-btn-games {
+  grid-area: back;
+  min-height: 44px;
+}
+
+.games-flow-toggle {
+  grid-area: mode;
+  justify-self: end;
 }
 
 .back-btn-games {
@@ -142,12 +157,65 @@
    tabulated.
    ========================================================================== */
 
-.games-header-new {
-  height: auto;
-  padding: var(--space-4) clamp(1.25rem, 4vw, 3rem);
+/* Rooms are a row of words with a rule under the active one, not pills. */
+.games-hub-tabs {
+  grid-area: rooms;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-5);
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.games-hub-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.games-hub-tab {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-4);
-  background: var(--bg-glass-strong);
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) 0;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 0;
+  border-radius: 0;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.games-hub-tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: transparent;
+}
+
+.games-hub-tab:hover {
+  color: var(--text-primary);
+}
+
+.games-hub-tab.is-active {
+  color: var(--text-primary);
+}
+
+.games-hub-tab.is-active::after {
+  background: var(--accent-primary);
+}
+
+.games-hub-tab svg {
+  flex-shrink: 0;
 }
 
 .back-btn-games {
@@ -157,36 +225,14 @@
   font-size: 0.8125rem;
 }
 
-.games-header-new .pill-btn {
-  border: 1px solid var(--field-line-strong);
-  border-radius: var(--radius-full);
-  background: transparent;
-  color: var(--text-secondary);
+/* The count sentence belongs to the statement, not to the sticky bar. */
+.games-hero-meta {
+  margin: var(--space-4) 0 0;
+  color: var(--text-tertiary);
   font-family: var(--font-sans);
-  font-weight: 500;
-  letter-spacing: 0;
-  transition: background-color var(--duration-fast) var(--ease-standard),
-              color var(--duration-fast) var(--ease-standard),
-              border-color var(--duration-fast) var(--ease-standard);
-}
-
-.games-header-new .pill-btn:hover {
-  background: var(--wash);
-  color: var(--text-primary);
-  transform: none;
-}
-
-.games-header-new .pill-btn.active {
-  background: var(--field-ink);
-  border-color: var(--field-ink);
-  color: var(--field-ink-text);
-}
-
-.games-count-line {
-  color: var(--text-tertiary) !important;
-  font-family: var(--font-sans);
-  font-size: 0.75rem !important;
+  font-size: 0.75rem;
   letter-spacing: 0.02em;
+  line-height: 1.5;
 }
 
 /* ---- The statement ---- */
@@ -226,7 +272,12 @@
 
 /* ---- Filters as chips ---- */
 
+/* The gap and align-items here did nothing because this was never a flex
+   container: the label and the first chip were laid out as inline content and
+   collided. */
 .games-difficulty-filter {
+  display: flex;
+  flex-wrap: wrap;
   max-width: 1200px;
   margin: 0 auto var(--space-3);
   padding: 0 clamp(1.25rem, 4vw, 3rem);
@@ -235,7 +286,9 @@
 }
 
 .games-filter-label {
-  min-width: 4.5rem;
+  display: inline-flex;
+  align-items: center;
+  min-width: 5.75rem;
   color: var(--text-tertiary);
   font-family: var(--font-sans);
   font-size: 0.6875rem;
@@ -363,6 +416,30 @@
   background: var(--bg-elevated);
   box-shadow: none;
   isolation: isolate;
+  text-align: left;
+}
+
+/* The action sits on the card's floor, on its own hairline, so six cards of
+   different text lengths still start their sessions on one line. */
+.play-btn-large {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.game-card-large:hover .play-btn-large {
+  color: var(--accent-primary);
 }
 
 /* The game's own colour, given an area rather than only an icon. A soft disc
@@ -406,6 +483,9 @@
   border-radius: var(--radius-full);
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
+  /* Lucide strokes with currentColor when it is given no colour, so the ink
+     belongs here rather than as a token name in an attribute. */
+  color: var(--text-primary);
 }
 
 .game-card-header h3 {
@@ -492,4 +572,54 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
   margin-right: var(--space-2);
+}
+
+/* Two rows on a phone: the way out and the mode on top, the rooms beneath.
+   The tabs keep their own scroll, so all three are reachable at 320. */
+@media (max-width: 860px) {
+  .games-header-new {
+    grid-template-areas: 'back mode' 'rooms rooms';
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-2) var(--space-4);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .games-hub-tabs {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-1);
+  }
+}
+
+@media (max-width: 520px) {
+  .games-header-new {
+    gap: var(--space-1) var(--space-3);
+  }
+
+  /* Three room names at this width cannot share one line without the third
+     one being clipped, so they take two. */
+  .games-hub-tabs {
+    flex-wrap: wrap;
+    overflow: visible;
+    row-gap: 0;
+  }
+
+  .games-hub-tab {
+    min-height: 36px;
+    font-size: 0.7rem;
+    gap: var(--space-1);
+  }
+
+  .games-hub-tab svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* The phone header is three rows by necessity, so it stops being sticky:
+   a third of the viewport should not follow the reader down the list. */
+@media (max-width: 860px) {
+  .games-header-new {
+    position: static;
+  }
 }

@@ -8,6 +8,46 @@ import { SCRABBLE_LEVELS } from '../games/ConceptScrabble';
 import { CHAINS } from '../games/KnowledgeChain';
 import { recordGameResult } from '../utils/gameResults';
 
+describe('the games room chrome', () => {
+  test('names the three rooms once each, with one current room', () => {
+    render(<GameHub setScreen={() => {}} />);
+
+    const nav = screen.getByRole('navigation', { name: /games rooms/i });
+    const rooms = within(nav).getAllByRole('button');
+    expect(rooms.map((room) => room.textContent.trim())).toEqual([
+      'Brain games',
+      'Physics simulations',
+      'Concept puzzles',
+    ]);
+    expect(rooms.filter((room) => room.getAttribute('aria-current') === 'page')).toHaveLength(1);
+  });
+
+  // `color="--text-secondary"` is a token name, not a colour, so every card
+  // icon rendered with an invalid stroke and nothing was drawn.
+  test('every card icon inherits ink instead of a token name in an attribute', () => {
+    render(<GameHub setScreen={() => {}} />);
+
+    const icons = screen.getAllByTestId('game-icon');
+    expect(icons.length).toBe(6);
+    icons.forEach((icon) => expect(icon).not.toHaveAttribute('color'));
+  });
+
+  test('the count sentence lives in the statement, not the sticky bar', () => {
+    render(<GameHub setScreen={() => {}} />);
+
+    expect(screen.getByRole('banner')).not.toHaveTextContent(/holding/i);
+    expect(screen.getByText(/questions, chains, terms and puzzles/i)).toBeInTheDocument();
+  });
+
+  test('the brain room does not add a second way out of the same screen', () => {
+    render(<GameHub setScreen={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: /brain games/i }));
+
+    expect(screen.queryByRole('button', { name: /^← back$/i })).not.toBeInTheDocument();
+    expect(screen.getByText(/three ways to test an idea/i)).toBeInTheDocument();
+  });
+});
+
 describe('Game hub listings', () => {
   test('every game is described in plain words, without inflated names', () => {
     render(<GameHub setScreen={() => {}} />);

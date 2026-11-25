@@ -2,20 +2,22 @@
 
 .brain-games-page {
   width: 100%;
-  max-width: 980px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-6) var(--space-4) var(--space-16);
+  padding: 0 0 var(--space-16);
   color: var(--text-primary);
 }
 
-.bg-hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-8);
-  gap: var(--space-6);
+/* Same statement rhythm as the concept-puzzle room, so the two tabs read as
+   rooms in one building rather than two separate products. */
+.bg-room-head {
+  margin: clamp(2rem, 4vw, 3.25rem) auto var(--space-6);
+  padding: 0 clamp(1.25rem, 4vw, 3rem) var(--space-6);
   border-bottom: 1px solid var(--border-default);
-  padding-bottom: var(--space-6);
+}
+
+.bg-room-head h2 {
+  max-width: 20ch;
 }
 
 .bg-kicker {
@@ -45,29 +47,14 @@
   margin: 0;
 }
 
-.bg-back-btn {
-  background: transparent !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-strong) !important;
-  padding: var(--space-2) var(--space-4) !important;
-  border-radius: var(--radius-full) !important;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.bg-back-btn:hover {
-  background: var(--accent-soft) !important;
-}
-
-/* Tab Rail */
+/* Tab Rail: words with a rule under the active one, not three filled pills. */
 .bg-tab-rail {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-5);
   overflow-x: auto;
-  padding-bottom: var(--space-2);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border-subtle);
   scrollbar-width: none;
 }
 
@@ -76,31 +63,52 @@
 }
 
 .bg-tab-pill {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: var(--bg-surface) !important;
+  min-height: 44px;
+  padding: var(--space-2) 0 !important;
+  background: transparent !important;
   color: var(--text-secondary) !important;
-  border: 1px solid var(--border-default) !important;
-  border-radius: var(--radius-full) !important;
-  padding: var(--space-2) var(--space-5) !important;
-  font-size: 0.88rem;
-  font-weight: 550;
-  cursor: pointer;
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.bg-tab-pill::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: transparent;
 }
 
 .bg-tab-pill:hover {
-  border-color: var(--accent-line) !important;
   color: var(--text-primary) !important;
 }
 
 .bg-tab-pill.active {
-  background: var(--accent-primary) !important;
-  color: var(--accent-contrast) !important;
-  border-color: var(--accent-primary) !important;
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  border-color: transparent !important;
   box-shadow: none !important;
+}
+
+.bg-tab-pill.active::after {
+  background: var(--accent-primary);
+}
+
+.bg-active-game-area {
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
 }
 
 /* Game Card */

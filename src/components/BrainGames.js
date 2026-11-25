@@ -992,29 +992,24 @@ export const BRAIN_GAMES = [
   { id: 'explain', label: 'Explain It Back (30s Sprint)', icon: Lightbulb },
 ];
 
-export default function BrainGames({ onBack }) {
+export default function BrainGames() {
   const [activeTab, setActiveTab] = useState('connect');
 
   const tabs = BRAIN_GAMES;
 
   return (
     <div className="brain-games-page">
-      <div className="bg-hero">
-        <div className="bg-hero-copy">
-          <span className="bg-kicker">BRAIN GAMES</span>
-          <h2>Mental workouts built around genuine ideas.</h2>
-          <p>
-            No superficial word scrambles or artificial dopamine loops. These are short,
-            satisfying sessions that challenge how you connect concepts, check counterintuitive facts,
-            and explain what you understand.
-          </p>
-        </div>
-        {onBack && (
-          <button type="button" className="bg-back-btn" onClick={onBack}>
-            ← Back
-          </button>
-        )}
-      </div>
+      {/* The room already has a header in the bar above. A second hero with its
+          own back button put two ways out of the same screen on top of each
+          other. */}
+      <header className="bg-room-head">
+        <p className="bg-kicker">The brain room</p>
+        <h2>Three ways to test an idea.</h2>
+        <p>
+          Connect five terms, check an intuition, or explain a concept back in
+          your own words. One sitting each, scored on this device.
+        </p>
+      </header>
 
       <div className="bg-tab-rail" role="tablist" aria-label="Mental games">
         {tabs.map((tab) => {

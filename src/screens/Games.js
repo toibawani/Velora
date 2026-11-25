@@ -46,7 +46,6 @@ export const CLASSIC_GAMES = [
     // ten when there were fourteen, and then twenty-six while the deck grew.
     description: `${QUIZ_QUESTIONS.length} questions across space, quantum, physics, chemistry, biology, philosophy, economics, psychology, history, mathematics and politics, with the reasoning behind each answer`,
     icon: Target,
-    color: '--text-secondary',
     difficulty: 'Mixed',
     itemCount: QUIZ_QUESTIONS.length,
     itemUnit: 'questions',
@@ -57,7 +56,6 @@ export const CLASSIC_GAMES = [
     type: 'scrabble',
     description: 'Build scientific terms from a rack of letters',
     icon: Type,
-    color: '--text-secondary',
     difficulty: 'Easy',
     itemCount: SCRABBLE_LEVELS.length,
     itemUnit: 'terms',
@@ -68,7 +66,6 @@ export const CLASSIC_GAMES = [
     type: 'chain',
     description: 'Put four concepts in the order where each one causes the next',
     icon: Link2,
-    color: '--text-secondary',
     difficulty: 'Medium',
     itemCount: CHAINS.length,
     itemUnit: 'chains',
@@ -79,7 +76,6 @@ export const CLASSIC_GAMES = [
     type: 'duel',
     description: 'Type the term a definition describes, against a 60 second clock',
     icon: FileText,
-    color: '--text-secondary',
     difficulty: 'Medium',
     fixedLength: '60 seconds',
     itemCount: DUEL_PAIRS.length,
@@ -91,7 +87,6 @@ export const CLASSIC_GAMES = [
     type: 'puzzle',
     description: 'Fill in the missing term in a definition',
     icon: Puzzle,
-    color: '--text-tertiary',
     difficulty: 'Easy',
     itemCount: PUZZLES.length,
     itemUnit: 'puzzles',
@@ -102,7 +97,6 @@ export const CLASSIC_GAMES = [
     type: 'simulation',
     description: 'Play with time dilation, length contraction and event horizons',
     icon: Orbit,
-    color: '--text-secondary',
     difficulty: 'Advanced',
   },
 ];
@@ -333,54 +327,48 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
         <button className="back-btn-games" onClick={() => setScreen('universe')}>
           ← Return to Universe
         </button>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <button
-            type="button"
-            className={`pill-btn ${hubTab === 'brain' ? 'active' : ''}`}
-            onClick={() => { setHubTab('brain'); setSelectedGame(null); }}
-            style={{ padding: '6px 16px', fontSize: '0.85rem' }}
-          >
-            <Brain size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> Brain Games
-          </button>
-          <button
-            type="button"
-            className={`pill-btn ${hubTab === 'sims' ? 'active' : ''}`}
-            onClick={() => { setHubTab('sims'); setSelectedGame(null); }}
-            style={{ padding: '6px 16px', fontSize: '0.85rem' }}
-          >
-            <Zap size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> Physics Simulations
-          </button>
-          <button
-            type="button"
-            className={`pill-btn ${hubTab === 'classic' ? 'active' : ''}`}
-            onClick={() => { setHubTab('classic'); setSelectedGame(null); }}
-            style={{ padding: '6px 16px', fontSize: '0.85rem' }}
-          >
-            <Puzzle size={14} aria-hidden="true" style={{ verticalAlign: '-2px', marginRight: 6 }} /> Concept Puzzles
-          </button>
-        </div>
-        <p
-          className="games-count-line"
-          style={{ flexBasis: '100%', margin: '10px 0 0', fontSize: '0.82rem', color: 'var(--text-tertiary)' }}
-        >
-          {TOTAL_GAMES} games and {TOTAL_SIMULATIONS} simulations, holding {TOTAL_PROMPTS}{' '}
-          questions, chains, terms and puzzles between them. Counted from the lists on this screen.
-        </p>
+
+        {/* Rooms, named. These were three pills in a 60px bar with a count
+            sentence as a third flex item, so the row wrapped out of its own
+            header and the third room sat under the first two. */}
+        <nav className="games-hub-tabs" aria-label="Games rooms">
+          {[
+            { id: 'brain', label: 'Brain games', icon: Brain },
+            { id: 'sims', label: 'Physics simulations', icon: Zap },
+            { id: 'classic', label: 'Concept puzzles', icon: Puzzle },
+          ].map((room) => {
+            const RoomIcon = room.icon;
+            return (
+              <button
+                key={room.id}
+                type="button"
+                className={`games-hub-tab ${hubTab === room.id ? 'is-active' : ''}`}
+                aria-current={hubTab === room.id ? 'page' : undefined}
+                onClick={() => {
+                  setHubTab(room.id);
+                  setSelectedGame(null);
+                }}
+              >
+                <RoomIcon size={14} aria-hidden="true" />
+                <span>{room.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+
         {hubTab === 'classic' && (
-          <div className="flow-mode-switch">
-            <label className="mode-switch-label">
-              <input
-                type="checkbox"
-                checked={useFlowMode}
-                onChange={(e) => setUseFlowMode(e.target.checked)}
-              />
-              <span className="mode-text">Flow State Mode</span>
-            </label>
-          </div>
+          <label className="mode-switch-label games-flow-toggle">
+            <input
+              type="checkbox"
+              checked={useFlowMode}
+              onChange={(e) => setUseFlowMode(e.target.checked)}
+            />
+            <span className="mode-text">Flow State Mode</span>
+          </label>
         )}
       </header>
 
-      {hubTab === 'brain' && <BrainGames onBack={() => setScreen('universe')} />}
+      {hubTab === 'brain' && <BrainGames />}
 
       {hubTab === 'classic' && (
         <>
@@ -398,6 +386,11 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
             <p className="games-intro">
               Each one scores the round you played and keeps the result on this device. No
               rankings, no other players, nothing to sign up for.
+            </p>
+            <p className="games-hero-meta">
+              {TOTAL_GAMES} games and {TOTAL_SIMULATIONS} simulations, holding{' '}
+              {TOTAL_PROMPTS} questions, chains, terms and puzzles between them.
+              Counted from the lists on this screen.
             </p>
           </section>
 
@@ -536,13 +529,15 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
               data-testid="game-card"
               aria-label={game.name}
               onClick={() => setSelectedGame(game.id)}
-              style={{ '--game-color': game.color, textAlign: 'left' }}
             >
               <div className="game-card-header">
                 {/* The number is the shortcut the hub listens for. */}
                 <span className="game-card-number" aria-hidden="true">{index + 1}</span>
-                <span className="game-icon-large" style={{ display: 'flex', alignItems: 'center' }}>
-                  <GameIcon size={24} strokeWidth={1.5} color={game.color} data-testid="game-icon" />
+                <span className="game-icon-large">
+                  {/* No color prop: `--text-secondary` is a token name, not a
+                      colour, so passing it as an attribute left every icon
+                      without a stroke. The wrapper sets the ink now. */}
+                  <GameIcon size={24} strokeWidth={1.5} data-testid="game-icon" aria-hidden="true" />
                 </span>
                 <h3>{game.name}</h3>
               </div>
@@ -597,9 +592,9 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
                 )}
               </div>
 
-              <span className="play-btn-large" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+              <span className="play-btn-large">
                 <span>Start session</span>
-                <ArrowRight size={14} strokeWidth={1.5} />
+                <ArrowRight size={14} strokeWidth={1.5} aria-hidden="true" />
               </span>
             </button>
           );
