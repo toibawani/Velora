@@ -121,11 +121,13 @@ describe('the daily rabbit hole', () => {
     renderUniverse();
     const daily = getDailyRabbitHole();
     expect(screen.getByRole('img', { name: /./ })).toBeInTheDocument();
-    if (daily.diagram === 'cave' || daily.diagram === 'entropy') {
-      expect(screen.getByRole('button', { name: /Stir the box/i })).toBeInTheDocument();
-    } else {
-      expect(screen.getByRole('slider')).toBeInTheDocument();
-    }
+    // The control differs by diagram: a slider where a quantity is continuous,
+    // a stir button where the box is shuffled. Both are read by role so the
+    // assertion does not depend on a class name.
+    const control = daily.diagram === 'cave' || daily.diagram === 'entropy'
+      ? screen.getByRole('button', { name: /Stir the box/i })
+      : screen.getByRole('slider');
+    expect(control).toBeInTheDocument();
   });
 });
 
@@ -231,7 +233,7 @@ describe('the resume card', () => {
     saveLessonProgress('physics', 'black-holes', 62);
     renderUniverse();
 
-    const card = screen.getByText('Pick up where you left off').closest('section');
+    const card = screen.getByRole('region', { name: 'Black Holes' });
     expect(within(card).getByText('62% read')).toBeInTheDocument();
     expect(within(card).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '62');
   });
@@ -240,7 +242,7 @@ describe('the resume card', () => {
     saveLastLesson('physics', 'black-holes', 'Black Holes');
     renderUniverse();
 
-    const card = screen.getByText('Pick up where you left off').closest('section');
+    const card = screen.getByRole('region', { name: 'Black Holes' });
     expect(within(card).queryByRole('progressbar')).toBeNull();
     expect(within(card).getByRole('button', { name: /resume/i })).toBeInTheDocument();
   });
