@@ -18,7 +18,18 @@ import { createClient } from '@supabase/supabase-js';
 const url = process.env.REACT_APP_SUPABASE_URL;
 const key = process.env.REACT_APP_SUPABASE_ANON_KEY;
 
-export const backendEnabled = Boolean(url && key);
+/** True only when both values are present and the URL is a valid http/https URL. */
+const isValidUrl = (value) => {
+  if (!value || typeof value !== 'string') return false;
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
+export const backendEnabled = Boolean(url && key && isValidUrl(url));
 
 export const supabase = backendEnabled
   ? createClient(url, key, {
