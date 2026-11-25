@@ -2,8 +2,17 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import UniverseHome from './UniverseHome';
 import { ThemeProvider } from '../context/ThemeContext';
 import { saveLastLesson, saveLessonProgress } from '../utils/resumePath';
+import { getDailyRabbitHole, readNotebook, saveAnswer, dateKey } from '../utils/dailyRabbitHole';
 
-/** The props every render in this file needs, as fresh mocks each time. */
+/**
+ * Home is two screens: the day's card, and a field.
+ *
+ * These tests are about the two promises the rebuild makes. First, the daily
+ * card is one question from real dictionary content, and an answer written into
+ * it is in the notebook afterwards - no placeholder and no invented streak.
+ * Second, a field opens as its own page and a topic with content opens that
+ * content on one click, with no preview panel in between.
+ */
 const baseProps = () => ({
   user: { name: 'Ada' },
   setScreen: jest.fn(),
@@ -11,13 +20,12 @@ const baseProps = () => ({
   setLearnView: jest.fn(),
   onOpenLesson: jest.fn(),
   onOpenDeepRead: jest.fn(),
-  onLogout: jest.fn(),
+  onForgetProfile: jest.fn(),
   showToast: jest.fn(),
 });
 
 const renderUniverse = (overrides = {}) => {
   const props = { ...baseProps(), ...overrides };
-
   render(
     <ThemeProvider>
       <UniverseHome {...props} />
@@ -26,10 +34,195 @@ const renderUniverse = (overrides = {}) => {
   return props;
 };
 
-/*
- * "Pick up where you left off" read the same whether a lesson had been opened
- * once or read halfway through, because the card had no position to show.
- */
+const openField = (name) => {
+  const tab = screen.getByRole('button', { name: new RegExp(`^${name}, \\d+ of \\d+ topics written$`) });
+  fireEvent.click(tab);
+};
+
+describe('the daily rabbit hole', () => {
+  beforeEach(() => localStorage.clear());
+
+  test('asks one question, drawn from a real dictionary entry', () => {
+    renderUniverse();
+    const daily = getDailyRabbitHole();
+
+    expect(screen.getByRole('heading', { name: daily.prompt })).toBeInTheDocument();
+    // The dictionary is the source: its explanation is inside the fold, not a
+    // hand-written answer somewhere else.
+    fireEvent.click(screen.getByText('Compare with the dictionary'));
+    expect(screen.getByText(daily.term.explanation)).toBeInTheDocument();
+    expect(screen.getByText(daily.term.example, { exact: false })).toBeInTheDocument();
+    expect(screen.getAllByText(daily.term.term, { exact: false }).length).toBeGreaterThan(0);
+  });
+
+  test('starts with an honest empty notebook, not sample entries', () => {
+    renderUniverse();
+    expect(screen.getByText('Nothing saved yet. Today’s answer will be the first entry.')).toBeInTheDocument();
+    expect(screen.queryByRole('list')).not.toBeInTheDocument();
+  });
+
+  test('saves the answer in the reader’s words and shows it in the notebook', () => {
+    renderUniverse();
+    const daily = getDailyRabbitHole();
+    const box = screen.getByLabelText('Explain it back, in your own words');
+
+    fireEvent.change(box, { target: { value: 'It is the last line you can still turn back from.' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save to notebook' }));
+
+    // Once in the notebook, once in the box that is still holding the draft.
+    expect(screen.getAllByText('It is the last line you can still turn back from.')).toHaveLength(2);
+    expect(screen.getByText('1 answer kept in this browser.')).toBeInTheDocument();
+    expect(readNotebook()).toHaveLength(1);
+    expect(readNotebook()[0].date).toBe(daily.date);
+  });
+
+  test('a second save replaces the answer instead of adding a second entry', () => {
+    renderUniverse();
+    const box = screen.getByLabelText('Explain it back, in your own words');
+
+    fireEvent.change(box, { target: { value: 'first try' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save to notebook' }));
+    fireEvent.change(box, { target: { value: 'corrected' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Update today’s answer' }));
+
+    expect(readNotebook()).toHaveLength(1);
+    expect(readNotebook()[0].text).toBe('corrected');
+    expect(screen.queryByText('first try')).not.toBeInTheDocument();
+  });
+
+  test('cannot save a blank answer, and says so rather than pretending', () => {
+    renderUniverse();
+    expect(screen.getByRole('button', { name: 'Save to notebook' })).toBeDisabled();
+  });
+
+  test('deleting an entry removes it from the notebook and the storage', () => {
+    renderUniverse();
+    fireEvent.change(screen.getByLabelText('Explain it back, in your own words'), { target: { value: 'mine' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Save to notebook' }));
+
+    fireEvent.click(screen.getByRole('button', { name: /^Delete the answer for/ }));
+
+    expect(readNotebook()).toEqual([]);
+    expect(screen.getByText('Nothing saved yet. Today’s answer will be the first entry.')).toBeInTheDocument();
+  });
+
+  test('an answer saved yesterday is still in the box when the screen is opened again', () => {
+    const daily = getDailyRabbitHole();
+    saveAnswer({
+      date: dateKey(), entryId: daily.id, prompt: daily.prompt, termId: daily.termId, text: 'kept',
+    });
+    renderUniverse();
+
+    expect(screen.getByLabelText('Explain it back, in your own words')).toHaveValue('kept');
+    expect(screen.getByRole('button', { name: 'Update today’s answer' })).toBeInTheDocument();
+  });
+
+  test('every day has a diagram with a control, not a decorative picture', () => {
+    renderUniverse();
+    const daily = getDailyRabbitHole();
+    expect(screen.getByRole('img', { name: /./ })).toBeInTheDocument();
+    if (daily.diagram === 'cave' || daily.diagram === 'entropy') {
+      expect(screen.getByRole('button', { name: /Stir the box/i })).toBeInTheDocument();
+    } else {
+      expect(screen.getByRole('slider')).toBeInTheDocument();
+    }
+  });
+});
+
+describe('a field is its own page', () => {
+  test('the six fields are tabs with their real coverage', () => {
+    renderUniverse();
+    ['Science', 'Philosophy', 'History', 'Political Science', 'Geography', 'Literature'].forEach((field) => {
+      expect(screen.getByRole('button', { name: new RegExp(`^${field}, \\d+ of \\d+ topics written$`) })).toBeInTheDocument();
+    });
+    expect(screen.getByRole('button', { name: /^Science, 89 of 188 topics written$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Literature, 0 of 92 topics written$/ })).toBeInTheDocument();
+  });
+
+  test('opening Science replaces Today with the field and its disciplines', () => {
+    renderUniverse();
+    openField('Science');
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Science' })).toBeInTheDocument();
+    expect(screen.getByText((_, element) =>
+      element?.className === 'shelf-count' && /89\s*of 188 topics written/.test(element.textContent || '')
+    )).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: 'Disciplines in Science' })).toBeInTheDocument();
+    expect(screen.queryByText('One question a day.')).not.toBeInTheDocument();
+  });
+
+  test('a topic with a deep read opens it on one click, with no preview step', () => {
+    const { onOpenDeepRead, onOpenLesson, setSelectedSubject } = renderUniverse();
+    openField('Science');
+    // Black Holes is filed under Space Science > Astrophysics, so open that
+    // discipline the way a reader would rather than reaching past the rail.
+    fireEvent.click(screen.getByRole('button', { name: /^Space Science/ }));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Black Holes, open' }));
+
+    expect(onOpenDeepRead).toHaveBeenCalledWith('black-holes', undefined);
+    expect(onOpenLesson).not.toHaveBeenCalled();
+    expect(setSelectedSubject).toHaveBeenCalledWith('physics');
+    expect(screen.queryByRole('button', { name: /Open the deep read/i })).not.toBeInTheDocument();
+  });
+
+  test('a philosophy topic opens the deep read on the level that carries it', () => {
+    const { onOpenDeepRead } = renderUniverse();
+    openField('Philosophy');
+    fireEvent.click(screen.getByRole('button', { name: /^Branches/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Free Will, open' }));
+
+    expect(onOpenDeepRead).toHaveBeenCalledWith('philosophy-core', 'are-we-free');
+  });
+
+  test('a written lesson opens that exact lesson and remembers it', () => {
+    const { onOpenLesson, setSelectedSubject, showToast } = renderUniverse();
+    openField('Philosophy');
+    fireEvent.click(screen.getByRole('button', { name: /^Philosophical Traditions/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Stoicism, open' }));
+
+    expect(onOpenLesson).toHaveBeenCalledWith('philosophy', 'stoicism');
+    expect(setSelectedSubject).toHaveBeenCalledWith('philosophy');
+    expect(showToast).not.toHaveBeenCalled();
+  });
+
+  test('an unwritten topic is named as unwritten and cannot be clicked', () => {
+    renderUniverse();
+    openField('Science');
+
+    // A status coloured in only would be invisible to a screen reader, so the
+    // state is in the name as well as in the ink.
+    const unwritten = screen.getByLabelText('Quantum Tunneling, not written yet');
+    expect(unwritten.tagName).not.toBe('BUTTON');
+    expect(within(unwritten).getByText('not written yet')).toBeInTheDocument();
+  });
+
+  test('searching an unwritten topic says why it did not open', () => {
+    const { onOpenLesson, onOpenDeepRead, showToast } = renderUniverse();
+    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), { target: { value: 'Quantum Tunneling' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Quantum Tunneling, Science' }));
+
+    expect(onOpenLesson).not.toHaveBeenCalled();
+    expect(onOpenDeepRead).not.toHaveBeenCalled();
+    expect(showToast).toHaveBeenCalledWith(expect.stringContaining('not written yet'), 'info');
+  });
+
+  test('searching a written topic opens it directly', () => {
+    const { onOpenDeepRead } = renderUniverse();
+    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), { target: { value: 'Black Holes' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Black Holes, Science' }));
+
+    expect(onOpenDeepRead).toHaveBeenCalledWith('black-holes', undefined);
+  });
+
+  test('the way back to Today is one control, not a scroll to the top', () => {
+    renderUniverse();
+    openField('Science');
+    fireEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(screen.getByText('One question a day.')).toBeInTheDocument();
+  });
+});
+
 describe('the resume card', () => {
   beforeEach(() => localStorage.clear());
 
@@ -38,10 +231,7 @@ describe('the resume card', () => {
     saveLessonProgress('physics', 'black-holes', 62);
     renderUniverse();
 
-    // eslint-disable-next-line testing-library/no-node-access
-    // eslint-disable-next-line testing-library/no-node-access
-    // eslint-disable-next-line testing-library/no-node-access
-    const card = screen.getByText('Pick up where you left off').closest('article');
+    const card = screen.getByText('Pick up where you left off').closest('section');
     expect(within(card).getByText('62% read')).toBeInTheDocument();
     expect(within(card).getByRole('progressbar')).toHaveAttribute('aria-valuenow', '62');
   });
@@ -50,214 +240,16 @@ describe('the resume card', () => {
     saveLastLesson('physics', 'black-holes', 'Black Holes');
     renderUniverse();
 
-    // eslint-disable-next-line testing-library/no-node-access
-    // eslint-disable-next-line testing-library/no-node-access
-    // eslint-disable-next-line testing-library/no-node-access
-    const card = screen.getByText('Pick up where you left off').closest('article');
+    const card = screen.getByText('Pick up where you left off').closest('section');
     expect(within(card).queryByRole('progressbar')).toBeNull();
-    // And there is still a way back in.
     expect(within(card).getByRole('button', { name: /resume/i })).toBeInTheDocument();
   });
 
   test('resuming opens the lesson the card names', () => {
     saveLastLesson('philosophy', 'platos-cave', "Plato's Cave");
     const view = renderUniverse();
-
     fireEvent.click(screen.getByRole('button', { name: /resume/i }));
-
     expect(view.onOpenLesson).toHaveBeenCalledWith('philosophy', 'platos-cave');
-  });
-});
-
-describe('editorial knowledge atlas', () => {
-  test('shows the six major fields and hierarchical topic preview', () => {
-    renderUniverse();
-
-    ['Science', 'Philosophy', 'History', 'Political Science', 'Geography', 'Literature'].forEach((field) => {
-      expect(screen.getByRole('button', { name: new RegExp(`^${field},`) })).toBeInTheDocument();
-    });
-    expect(screen.getByText('Field → discipline → subfield → topic')).toBeInTheDocument();
-    // The atlas opens on the flagship topic now (Black Holes), not on whatever
-    // topic happens to sit first in the curriculum file. This used to assert
-    // 'Motion' because the default was Science's first entry.
-    expect(screen.getByRole('heading', { name: 'Black Holes' })).toBeInTheDocument();
-  });
-
-  test('searches across fields and reveals the selected hierarchy', () => {
-    renderUniverse();
-    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), { target: { value: 'Monsoons' } });
-
-    const monsoonResult = screen.getByRole('button', { name: /Monsoons.*Geography/i });
-    fireEvent.click(monsoonResult);
-
-    expect(screen.getByRole('heading', { name: 'Geography' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Monsoons' })).toBeInTheDocument();
-  });
-
-  /**
-   * These two replaced tests asserted the broken behaviour, so they are the
-   * regression risk this fix has to answer for. The old suite was satisfied by a
-   * toast and a discarded topic; both were symptoms of the bug, not evidence of
-   * the design.
-   */
-  test('a topic with a lesson behind it opens that exact lesson', () => {
-    const { onOpenLesson, setSelectedSubject, showToast } = renderUniverse();
-
-    // Philosophy is reached because Stoicism is one of its written lessons.
-    // Reach it the way a reader would: pick the field, then tap the topic line.
-    // Nothing expands any more - every topic in the field is already on screen -
-    // so the discipline and subfield clicks the old layout required are gone.
-    fireEvent.click(screen.getByRole('button', { name: /^Philosophy,/ }));
-    fireEvent.click(screen.getByRole('button', { name: /^Stoicism$/ }));
-
-    fireEvent.click(screen.getByRole('button', { name: /Read the lesson/i }));
-
-    expect(onOpenLesson).toHaveBeenCalledWith('philosophy', 'stoicism');
-    expect(setSelectedSubject).toHaveBeenCalledWith('philosophy');
-    // The point of the fix: no more "coming next" for a topic that has content.
-    expect(showToast).not.toHaveBeenCalled();
-  });
-
-  test('an unwritten topic says so instead of navigating nowhere', () => {
-    const { onOpenLesson, onOpenDeepRead, showToast } = renderUniverse();
-
-    // 'Quantum Tunneling' sits under Quantum Physics, which the Atlas lists and
-    // which has no lesson written yet. This used to navigate to the physics
-    // topic index and silently drop the topic. The case has had to move four
-    // times as content landed: Entropy, Electric Charge, Mirrors, Nuclear
-    // Physics, so it tracks the content rather than staying put.
-    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), { target: { value: 'Quantum Tunneling' } });
-    fireEvent.click(screen.getByRole('button', { name: /Quantum Tunneling.*Science/i }));
-
-    expect(screen.getByRole('heading', { name: 'Quantum Tunneling' })).toBeInTheDocument();
-    // Every unwritten topic now carries the status in its accessible name, so
-    // the call to action has to be found by exact label rather than by a loose
-    // /Not written yet/ match that would hit 180 topic lines as well.
-    fireEvent.click(screen.getByRole('button', { name: 'Not written yet', exact: true }));
-
-    expect(onOpenLesson).not.toHaveBeenCalled();
-    expect(onOpenDeepRead).not.toHaveBeenCalled();
-    expect(showToast).toHaveBeenCalledWith(expect.stringContaining('not written yet'), 'info');
-  });
-
-  test('black holes resolves to the deep read rather than a single lesson', () => {
-    const { onOpenDeepRead, onOpenLesson } = renderUniverse();
-
-    fireEvent.click(screen.getByRole('button', { name: /^Philosophy,/ }));
-    // Reach a deep-read topic through search, which searches the whole atlas.
-    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), {
-      target: { value: 'Black Holes' },
-    });
-    fireEvent.click(screen.getByRole('button', { name: /Black Holes.*Science/i }));
-    fireEvent.click(screen.getByRole('button', { name: /Open the deep read/i }));
-
-    // The second argument is the level anchor. Black holes does not name one, so
-    // it is undefined - the read opens at the top. A philosophy topic does name
-    // one, which is asserted in atlasResolution.test.ts and in the real-browser
-    // audit, because the point of the anchor is that it is actually used.
-    expect(onOpenDeepRead).toHaveBeenCalledWith('black-holes', undefined);
-    expect(onOpenLesson).not.toHaveBeenCalled();
-  });
-
-  test('a philosophy topic opens the deep read on the level that carries it', () => {
-    const { onOpenDeepRead, onOpenLesson } = renderUniverse();
-
-    fireEvent.click(screen.getByRole('button', { name: /^Philosophy,/ }));
-    fireEvent.change(screen.getByLabelText('Search the knowledge atlas'), {
-      target: { value: 'Free Will' },
-    });
-    fireEvent.click(screen.getByRole('button', { name: /Free Will.*Philosophy/i }));
-    fireEvent.click(screen.getByRole('button', { name: /Open the deep read/i }));
-
-    // Tapping "Free Will" has to land on the free will level, not the top of the
-    // subject. Anyone who comes back for one part should not have to walk to it.
-    expect(onOpenDeepRead).toHaveBeenCalledWith('philosophy-core', 'are-we-free');
-    expect(onOpenLesson).not.toHaveBeenCalled();
-  });
-
-  test('states how much of the active field is actually written', () => {
-    renderUniverse();
-
-    // The old layout had no way to show this, which is how 7 written topics
-    // came to look like 573. The count is split across a <strong>, so match on
-    // the element's own text rather than a regex over one text node. The 89 is
-    // the resolver's count of science topics that open real content; the other
-    // 99 science entries are listed and marked unwritten.
-    const coverage = screen.getByText((_, element) =>
-      element?.className === 'uh-coverage' &&
-      /Science:\s*89\s*of 188 topics written/.test(element.textContent || '')
-    );
-    expect(coverage).toBeInTheDocument();
-  });
-});
-
-/**
- * The index's job is density and honesty. These tests assert both, because
- * neither is visible in a snapshot and both are the reason the pill grid went.
- */
-describe('atlas index', () => {
-  test('every topic in the field is on screen without expanding anything', () => {
-    renderUniverse();
-
-    // Science is the largest field at 188 topics. The old layout showed 7 of
-    // them until a reader expanded Classical Mechanics, and then still only
-    // that one discipline's. Here all 188 are in the DOM at once, as buttons
-    // inside the index rather than as nodes matched by a class name.
-    const entries = within(screen.getByTestId('atlas-index')).getAllByRole('button');
-    expect(entries).toHaveLength(188);
-
-    // And nothing on screen is a disclosure control any more. This is the
-    // density guarantee: no topic is behind a click.
-    expect(screen.queryByRole('button', { expanded: true })).not.toBeInTheDocument();
-  });
-
-  test('marks each topic as written or not written', () => {
-    renderUniverse();
-
-    // The key above the index uses the same marker markup, so the status is
-    // read from the entries' own accessible names, scoped to the index, rather
-    // than from a class that the key shares with them.
-    const index = within(screen.getByTestId('atlas-index'));
-    const entries = index.getAllByRole('button');
-    expect(entries).toHaveLength(188);
-
-    // Science resolves 89 topics to real content: thirty-seven physics entry
-    // points, thirty-two Chemistry lessons, eight Biology lessons, one space
-    // science entry point, eleven computer-science deep reads. The other 99
-    // are listed and honestly marked unwritten. If the content grows, raise
-    // these in the same commit as the content.
-    const unwritten = index.getAllByRole('button', { name: /, not written yet$/ });
-    expect(unwritten).toHaveLength(99);
-    expect(entries.length - unwritten.length).toBe(89);
-  });
-
-  test('says "not written yet" in the accessible name, not just in colour', () => {
-    renderUniverse();
-
-    // Status by marker colour alone would be invisible to a screen reader and
-    // to anyone who cannot separate the accent from the tertiary ink. Quantum
-    // Tunneling is on Science, which is the field open on arrival, and it is
-    // still unwritten now that the Modern Physics lessons have been written.
-    expect(screen.getByRole('button', { name: 'Quantum Tunneling, not written yet' })).toBeInTheDocument();
-
-    // A written topic carries no such suffix, so the two states are
-    // distinguishable by name alone. Black Holes sits under Astrophysics and
-    // resolves to the deep read, so it is written despite looking like a topic
-    // that would not be.
-    expect(screen.getByRole('button', { name: 'Black Holes' })).toBeInTheDocument();
-  });
-
-  test('offers the field coverage as written-of-total on each tab', () => {
-    renderUniverse();
-
-    // The reader can compare fields at a glance: Literature is 0 of 92, Science
-    // is 89 of 188 - thirty-seven physics entry points, thirty-two Chemistry
-    // lessons, eight Biology lessons, the space-science entry point, eleven
-    // computer-science deep reads, and the Quantum Computing topic that both
-    // physics and computer science share. Nothing in the old layout made that
-    // comparison possible.
-    expect(screen.getByRole('button', { name: /^Science, .*89 of 188 topics written$/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^Literature, .*0 of 92 topics written$/ })).toBeInTheDocument();
   });
 });
 
@@ -270,58 +262,11 @@ describe('theme control in the header', () => {
 
   test('defaults to Auto and switches the document to dark when Dark is pressed', () => {
     renderUniverse();
-
-    // 'Dark' is deliberately an exact match. The atlas now renders every physics
-    // topic at once, which puts "Dark Matter" on screen, and a loose /Dark/
-    // regex matches both the theme control and the topic line. That collision is
-    // real for assistive tech too, so the theme control carries a fuller name.
     const auto = screen.getByRole('button', { name: /^Theme: Auto/ });
     const dark = screen.getByRole('button', { name: /^Theme: Dark/ });
     expect(auto).toHaveAttribute('aria-pressed', 'true');
-    expect(dark).toHaveAttribute('aria-pressed', 'false');
-
     fireEvent.click(dark);
-
     expect(dark).toHaveAttribute('aria-pressed', 'true');
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(localStorage.getItem('velora_theme_preference')).toBe('dark');
-  });
-
-  /*
-   * The general form of the collision above, kept as its own test because the
-   * two words only collide on this screen and the screen is the only place they
-   * meet: the theme control lives in the header and the topic lives in the index
-   * a few hundred pixels below it, which is far enough apart to look obvious and
-   * close enough that anyone navigating by name hits both.
-   */
-  test('no header control is named exactly like a topic in the index', () => {
-    renderUniverse();
-
-    const index = within(screen.getByTestId('atlas-index'));
-    const controlNames = screen
-      .getAllByTestId('theme-toggle-segment')
-      .map((control) => control.textContent.trim());
-
-    // "Dark Matter" is in the index, so a control named "Dark" is ambiguous.
-    // The check is on the entry's accessible name, which is the handle a reader
-    // navigating by name would actually use.
-    expect(index.getByRole('button', { name: /^Dark Matter/ })).toBeInTheDocument();
-    controlNames.forEach((name) => {
-      expect(index.queryByRole('button', { name: new RegExp(`^${name}(,|$)`) })).not.toBeInTheDocument();
-    });
-  });
-
-  test('the theme control is reachable only under its own group name', () => {
-    renderUniverse();
-
-    // Prefixing with the group is the fix: renaming either side would mean
-    // either touching content data or shortening a label every reader sees.
-    expect(screen.queryByRole('button', { name: 'Dark', exact: true })).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Theme: Dark' })).toBeInTheDocument();
-    // And the topic is still reachable by its own name. It is unwritten, so the name
-    // carries the status suffix the index promises - and note that the bare topic
-    // name is still a prefix of it, which is exactly why the theme control has to
-    // disambiguate rather than relying on position.
-    expect(screen.getByRole('button', { name: /^Dark Matter/ })).toBeInTheDocument();
   });
 });

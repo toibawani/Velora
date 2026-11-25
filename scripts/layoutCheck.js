@@ -239,7 +239,10 @@ const openLesson = async (page, lesson) => {
   if (!onAtlas) return false;
   await new Promise((r) => setTimeout(r, 800));
   const clicked = await page.evaluate(() => {
-    const resume = document.querySelector('.uh-card-resume');
+    // The atlas is two views now: Today leads with the day's card, and the
+    // resume control sits in its own quiet section. The check still opens the
+    // lesson through the app's own control rather than by calling React.
+    const resume = document.querySelector('.rh-resume button');
     if (!resume) return false;
     resume.click();
     return true;

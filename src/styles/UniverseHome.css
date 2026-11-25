@@ -1359,3 +1359,955 @@
 @media (max-width: 768px) {
   .uh-section-heading-row { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   The Daily Rabbit Hole and the field shelf
+   --------------------------------------------------------------------------
+   This block replaces the home page's structure, not its palette. The page is
+   still paper and ink with one ember accent, hairline rules and near-square
+   corners; what changed is what is on it and in what order.
+
+   Two layouts live here because "Today" and a field are two screens that share
+   one URL. Today leads with a single card. A field replaces the page with a
+   discipline rail and a topic index, so a tap on a topic opens the content
+   rather than moving a preview panel the reader then has to find.
+   ========================================================================== */
+
+.rh-main,
+.shelf-main {
+  width: min(100% - 2rem, 1120px);
+  padding-top: clamp(2rem, 4vw, 3.25rem);
+}
+
+/* ---- Today: the dateline and the one statement ---- */
+
+.rh-dateline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-6);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--text-primary);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rh-title {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.rh-title em {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.rh-intro {
+  max-width: 54ch;
+  margin: var(--space-5) 0 0;
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+}
+
+/* ---- The day card: one focus, ruled rather than boxed ---- */
+
+.rh-day {
+  margin: clamp(2.25rem, 5vw, 3.75rem) 0 0;
+  padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  border-top: 1px solid var(--border-default);
+}
+
+.rh-day-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.rh-day-tag {
+  color: var(--accent-primary);
+}
+
+.rh-day h2 {
+  max-width: 26ch;
+  margin: var(--space-5) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.8vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+
+.rh-lead {
+  max-width: 52ch;
+  margin: var(--space-3) 0 0;
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.rh-day-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: start;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.rh-day-figure { grid-column: 2; grid-row: 1; }
+.rh-write { grid-column: 1; grid-row: 1; }
+
+/* ---- The diagram ---- */
+
+.rh-diagram { display: grid; gap: var(--space-4); }
+
+.rh-figure {
+  margin: 0;
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+}
+
+.rh-figure-svg { display: block; width: 100%; height: auto; }
+
+.rh-grid-line,
+.rh-orbit-guide {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 0.8;
+}
+
+.rh-orbit-guide { stroke-dasharray: 3 5; }
+.rh-horizon { fill: var(--text-primary); }
+.rh-horizon-ring { fill: none; stroke: var(--accent-primary); stroke-width: 1.2; }
+.rh-mass { fill: var(--text-primary); }
+.rh-probe-path { fill: none; stroke: var(--accent-primary); stroke-width: 1.6; }
+.rh-box { fill: none; stroke: var(--border-strong); stroke-width: 1; }
+.rh-box-split { stroke: var(--border-default); stroke-width: 1; stroke-dasharray: 4 4; }
+.rh-particle { fill: var(--text-secondary); }
+.rh-axis { stroke: var(--border-default); stroke-width: 1; }
+.rh-wave-bar { stroke: var(--text-primary); stroke-width: 2.2; }
+.rh-cave-wall { stroke: var(--text-primary); stroke-width: 2; }
+.rh-fire { fill: var(--accent-primary); }
+.rh-object { fill: none; stroke: var(--text-secondary); stroke-width: 1.5; }
+.rh-shadow { fill: none; stroke: var(--text-tertiary); stroke-width: 2; stroke-dasharray: 3 3; }
+
+.rh-figure-label {
+  fill: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.rh-controls { display: grid; gap: var(--space-2); }
+
+.rh-controls label,
+.rh-write label {
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rh-controls input[type='range'] {
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  accent-color: var(--accent-primary);
+  background: transparent;
+}
+
+.rh-readout {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+.rh-readout strong { color: var(--text-primary); }
+
+.rh-shake {
+  justify-self: start;
+  min-height: 44px;
+}
+
+.rh-notice {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.rh-notice strong {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ---- Writing it back ---- */
+
+.rh-write { display: grid; gap: var(--space-3); align-content: start; }
+
+.rh-write textarea {
+  width: 100%;
+  min-height: 168px;
+  padding: var(--space-4);
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.rh-write textarea::placeholder { color: var(--text-tertiary); }
+.rh-write textarea:focus { border-color: var(--accent-primary); outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+
+.rh-write-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.rh-save {
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  background: var(--accent-primary);
+  color: var(--accent-contrast);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.rh-save:hover:not(:disabled) { background: var(--accent-primary-hover); border-color: var(--accent-primary-hover); }
+.rh-save:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.rh-save-note {
+  min-height: 1.2em;
+  margin: 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Text links keep a 44px hit area without drawing a box. */
+.rh-textlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 4px;
+}
+
+.rh-textlink:hover { text-decoration-color: var(--accent-primary); }
+
+/* ---- The dictionary answer, folded away until asked for ---- */
+
+.rh-compare {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.rh-compare summary {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.rh-compare summary::marker { color: var(--accent-primary); }
+.rh-compare[open] { padding-bottom: var(--space-5); }
+
+.rh-compare p {
+  max-width: var(--measure);
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.rh-compare .rh-term { margin-top: var(--space-4); color: var(--text-primary); }
+.rh-compare .rh-term strong { font-family: var(--font-display); font-size: 1.25rem; }
+.rh-compare .rh-example { font-style: italic; }
+
+.rh-day-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rh-day-foot .vl-btn { min-height: 44px; }
+
+/* ---- The notebook ---- */
+
+.rh-notebook {
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--text-primary);
+}
+
+.rh-notebook-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+}
+
+.rh-notebook-head h2,
+.rh-shelf-head h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.rh-notebook-head p,
+.rh-shelf-head > p {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.rh-empty {
+  max-width: 62ch;
+  margin: var(--space-5) 0 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.rh-entries {
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rh-entry {
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.rh-entry-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.rh-entry-head time {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rh-entry-remove {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-tertiary);
+}
+
+.rh-entry-remove:hover { color: var(--text-primary); }
+
+.rh-entry-question {
+  max-width: 52ch;
+  margin: var(--space-2) 0 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.rh-entry-answer {
+  max-width: 62ch;
+  margin: var(--space-2) 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+/* ---- The resume card, kept as one quiet line ---- */
+
+.rh-resume {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.rh-eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--accent-primary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rh-resume h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.rh-resume-subject {
+  margin: var(--space-1) 0 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rh-resume-bar {
+  width: min(240px, 100%);
+  height: 3px;
+  margin-top: var(--space-3);
+  background: var(--bg-tertiary);
+  overflow: hidden;
+}
+
+.rh-resume-fill { display: block; height: 100%; background: var(--text-primary); }
+.rh-resume-percent {
+  margin: var(--space-1) 0 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---- The shelf: six fields as tabs ---- */
+
+.rh-shelf {
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--text-primary);
+}
+
+.rh-shelf-head { display: grid; gap: var(--space-2); }
+.rh-shelf-head > p { max-width: 56ch; }
+
+.rh-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: var(--space-6) 0 var(--space-5);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.rh-search > svg { color: var(--text-tertiary); flex: none; }
+
+.rh-search input {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-2);
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+}
+
+.rh-search input::placeholder { color: var(--text-tertiary); font-family: var(--font-sans); font-size: 0.95rem; }
+
+.rh-search-clear {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-tertiary);
+  flex: none;
+}
+
+.rh-search-results {
+  position: absolute;
+  inset: calc(100% + 0.25rem) 0 auto;
+  z-index: 60;
+  padding: var(--space-2);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+}
+
+.rh-search-results > p {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rh-search-results button {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  justify-content: space-between;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+.rh-search-results button:hover { background: var(--bg-primary); }
+.rh-search-results button span { font-family: var(--font-reading); font-size: 1rem; }
+.rh-search-results button small { color: var(--text-tertiary); font-family: var(--font-sans); font-size: 0.75rem; }
+
+.rh-fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--border-default);
+  border-left: 1px solid var(--border-default);
+}
+
+.rh-field {
+  display: grid;
+  /* The shared button rule centres its content; in a grid that centres the
+     tracks themselves, which collapsed every tab to the middle of its cell. */
+  justify-content: stretch;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-1) var(--space-3);
+  align-items: baseline;
+  min-height: 84px;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+  border-radius: 0;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.rh-field:hover { background: var(--bg-elevated); }
+
+.rh-field[aria-pressed='true'] {
+  background: var(--bg-elevated);
+  box-shadow: inset 0 -2px 0 var(--accent-primary);
+}
+
+.rh-field-number {
+  grid-row: span 2;
+  color: var(--accent-primary);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.rh-field-name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.rh-field-meta {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.rh-totals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-6) 0 0;
+}
+
+.rh-totals div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.rh-totals dt {
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rh-totals dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- A field page ---- */
+
+.shelf-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+
+.shelf-back:hover { color: var(--text-primary); }
+
+.shelf-hero {
+  margin: var(--space-4) 0 clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.shelf-hero h1 {
+  max-width: 14ch;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7.5vw, 6rem);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+.shelf-description {
+  max-width: 56ch;
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.shelf-count {
+  margin: var(--space-3) 0 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.shelf-count strong { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+
+.shelf-split {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--text-primary);
+}
+
+.shelf-disciplines {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 84px;
+  align-self: start;
+}
+
+.shelf-discipline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.shelf-discipline:hover { color: var(--text-primary); }
+
+.shelf-discipline[aria-current='true'] {
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--text-primary);
+}
+
+.shelf-discipline-count {
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.shelf-topics-head { margin-bottom: var(--space-6); }
+
+.shelf-topics-head h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.shelf-topics-head p {
+  max-width: 52ch;
+  margin: var(--space-2) 0 0;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.shelf-module { margin-top: var(--space-6); }
+
+.shelf-module h3 {
+  margin: 0 0 var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.shelf-module ul { margin: 0; padding: 0; list-style: none; }
+
+.shelf-topic {
+  display: grid;
+  /* A fixed name column is what makes the leader rules line up down the page.
+     With an `auto` column each row sized itself to its own title and the dotted
+     run started at a different x on every line. */
+  grid-template-columns: minmax(0, 17rem) minmax(24px, 1fr) auto;
+  justify-content: stretch;
+  align-items: baseline;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.shelf-topic .shelf-topic-name {
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.shelf-leader {
+  align-self: center;
+  border-bottom: 1px dotted var(--index-leader);
+  transform: translateY(-2px);
+}
+
+.shelf-topic-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.shelf-topic:hover .shelf-topic-name { color: var(--accent-primary); }
+.shelf-topic:hover .shelf-topic-status { color: var(--accent-primary); }
+
+.shelf-topic.is-unwritten { cursor: default; }
+.shelf-topic.is-unwritten .shelf-topic-name { color: var(--text-tertiary); }
+.shelf-topic.is-unwritten .shelf-topic-status { font-size: 0.68rem; letter-spacing: 0.06em; text-transform: none; }
+
+.rh-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-default);
+}
+
+.rh-footer span {
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.rh-footer p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 900px) {
+  .rh-day-grid { grid-template-columns: minmax(0, 1fr); }
+  .rh-day-figure,
+  .rh-write { grid-column: 1; grid-row: auto; }
+  .rh-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .shelf-split { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+  .shelf-disciplines {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .shelf-discipline {
+    flex: none;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border-subtle);
+  }
+  .shelf-discipline[aria-current='true'] { box-shadow: none; border-color: var(--text-primary); }
+}
+
+@media (max-width: 560px) {
+  .rh-title { font-size: clamp(2.1rem, 9vw, 2.75rem); }
+  .rh-day h2 { font-size: clamp(1.5rem, 6.4vw, 2rem); }
+  .rh-day-head { flex-direction: column; gap: var(--space-1); }
+  .rh-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rh-field { min-height: 76px; padding: var(--space-3); }
+  .rh-totals { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+  .rh-write-row { align-items: stretch; flex-direction: column; }
+  .rh-save { width: 100%; }
+  .shelf-topic { grid-template-columns: minmax(0, 52%) minmax(16px, 1fr) auto; }
+  .shelf-topic .shelf-topic-name { font-size: 1rem; }
+  .rh-textlink { justify-content: flex-start; }
+}
+
+/* ---- Specificity repair ----
+   `.universe-home button` sets `display: inline-flex` and `justify-content:
+   center` for every button on the page. That rule is one class plus one element
+   (0,1,1), so it beat the single-class rules above and quietly turned the topic
+   rows and the field tabs back into centred flex boxes: the leader rule had no
+   column to fill and the names bunched in the middle. These four selectors are
+   qualified so the layouts they describe actually apply. */
+.universe-home .shelf-topic {
+  display: grid;
+  width: 100%;
+  justify-content: stretch;
+}
+
+.universe-home .rh-field {
+  display: grid;
+  justify-content: stretch;
+}
+
+.universe-home .shelf-discipline {
+  display: flex;
+}
+
+.universe-home .shelf-back {
+  display: inline-flex;
+}

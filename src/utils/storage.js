@@ -49,6 +49,10 @@ export const KEYS = {
   // answered it. Stored as { date, questionId, answered }. One question per
   // calendar day, picked deterministically so everyone sees the same one.
   TODAY_QUESTION: 'velora_today_question',
+  // The Daily Rabbit Hole notebook: one answer per calendar day, written in the
+  // reader's own words. Stored as an array of
+  // { date, entryId, prompt, termId, text, savedAt }, newest last.
+  RABBIT_HOLE_NOTEBOOK: 'velora_rabbit_hole_notebook',
   // Dated progress, as { topic_id, kind, day }. This is the local original; the
   // account holds a copy. Kept apart from the usage log because the usage log is
   // pruned after thirty days and progress must not be.
@@ -113,6 +117,7 @@ const KEY_LABELS = {
   [KEYS.ANALYTICS_OPTIN]: 'Analytics opt-in',
   [KEYS.RETURN_VISITS]: 'Return visits',
   [KEYS.TODAY_QUESTION]: 'Today’s question',
+  [KEYS.RABBIT_HOLE_NOTEBOOK]: 'Rabbit hole notebook',
   [KEYS.PROGRESS_EVENTS]: 'Progress',
   [KEYS.LAST_LESSON]: 'Last lesson opened',
   [KEYS.GAME_RESULTS]: 'Game results',

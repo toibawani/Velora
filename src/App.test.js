@@ -53,9 +53,10 @@ test('a stored name skips the welcome screen and the name form', async () => {
   writeValue(KEYS.ONBOARDING_DONE, true);
   renderApp();
   // The atlas is lazily imported, so this waits for it rather than asserting
-  // on the first paint.
+  // on the first paint. The heading is the daily card's now: home leads with
+  // one question instead of an invitation to browse 573 topics.
   expect(
-    await screen.findByRole('heading', { name: /follow your curiosity/i }, { timeout: 10000 })
+    await screen.findByRole('heading', { name: /one question a day/i }, { timeout: 10000 })
   ).toBeInTheDocument();
   expect(screen.queryByLabelText('Display name')).not.toBeInTheDocument();
 });

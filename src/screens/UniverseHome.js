@@ -1,227 +1,325 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  ArrowRight,
-  LogOut,
-  Search,
-  X,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, LogOut, Search, X } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
-import { resolveAtlasTopic, fieldCoverageByDiscipline } from '../data/atlasResolution';
-import AtlasIndex from '../components/AtlasIndex';
+import { resolveAtlasTopic } from '../data/atlasResolution';
 import { PRIMARY_SCREENS } from '../navigation';
 import { trackEvent } from '../utils/analytics';
 import { trackTopicOpened } from '../utils/siteAnalytics';
-import { getTodayQuestion, isTodayQuestionAnswered, markTodayQuestionAnswered } from '../utils/todayQuestion';
 import { getLastLesson, saveLastLesson } from '../utils/resumePath';
+import {
+  getDailyRabbitHole,
+  readNotebook,
+  saveAnswer,
+  removeAnswer,
+  notebookMarkdown,
+  NOTEBOOK_FILENAME,
+} from '../utils/dailyRabbitHole';
+import DailyDiagram from '../components/DailyDiagram';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
 
 /**
- * No per-field icons any more.
+ * Home is two screens, not one long page.
  *
- * The index deliberately carries hierarchy in type alone - number, letterspaced
- * caps, body text - and a row of six lucide glyphs beside the field names put a
- * shape back into the level that was supposed to be readable as a number. The
- * icons were only ever used by the old field rail, which the index replaced.
+ * THE PROBLEM THIS REPLACES
+ * -------------------------
+ * The old home put a hero, the daily question, a resume card, a search box, a
+ * topic preview plate and all 188 Science topics on one scroll. A reader who
+ * wanted black holes arrived in the middle of an alphabetical index, and after
+ * tapping a topic the panel they had to act on was several screens above them.
+ * That is a page that contains everything and leads with nothing.
+ *
+ * WHAT IT IS NOW
+ * --------------
+ * "Today" is one card: the day's question, a diagram that makes it concrete,
+ * the reader's own explanation, and the notebook of past answers. Below it, the
+ * six fields as tabs.
+ *
+ * Opening a field replaces the page with that field: its disciplines down the
+ * left, the chosen discipline's topics down the right, and a topic that has
+ * content opens it on the spot. No preview panel, no scrolling back up, no
+ * second button that says what the first one already said.
  */
-function makeSelection(field, discipline, parentModule, topic) {
-  return { field, discipline, module: parentModule, topic };
-}
 
-const FLAGSHIP_TOPIC = 'Black Holes';
+const SUBJECT_BY_FIELD = { philosophy: 'philosophy', history: 'history', science: 'physics' };
 
-function initialSelection() {
-  for (const field of KNOWLEDGE_FIELDS) {
-    for (const discipline of field.disciplines) {
-      for (const moduleItem of discipline.modules) {
-        if (moduleItem.topics.includes(FLAGSHIP_TOPIC)) {
-          return {
-            field,
-            discipline,
-            module: moduleItem,
-            topic: FLAGSHIP_TOPIC,
-          };
-        }
-      }
-    }
-  }
-  const field = KNOWLEDGE_FIELDS[0];
-  const discipline = field.disciplines[0];
-  const moduleItem = discipline.modules[0];
-  return { field, discipline, module: moduleItem, topic: moduleItem.topics[0] };
-}
+const formatDate = (date) =>
+  new Date(date).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' });
 
-const INITIAL = initialSelection();
+/** Everything a field contains, counted once. */
+const fieldTotals = (field) => {
+  let total = 0;
+  let written = 0;
+  field.disciplines.forEach((discipline) => {
+    discipline.modules.forEach((moduleItem) => {
+      moduleItem.topics.forEach((topic) => {
+        total += 1;
+        const kind = resolveAtlasTopic({
+          fieldId: field.id,
+          disciplineId: discipline.id,
+          moduleName: moduleItem.name,
+          topic,
+        }).kind;
+        if (kind === 'lesson' || kind === 'deep-read') written += 1;
+      });
+    });
+  });
+  return { total, written };
+};
 
-function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpenLesson, onOpenDeepRead, onForgetProfile, showToast }) {
-  const [activeFieldId, setActiveFieldId] = useState(INITIAL.field.id);
-  const [activeDisciplineId, setActiveDisciplineId] = useState(INITIAL.discipline.id);
-  const [activeModuleName, setActiveModuleName] = useState(INITIAL.module.name);
-  const [selectedTopic, setSelectedTopic] = useState(INITIAL.topic);
+function UniverseHome({
+  user,
+  setScreen,
+  setSelectedSubject,
+  onOpenLesson,
+  onOpenDeepRead,
+  onForgetProfile,
+  showToast,
+}) {
+  const [view, setView] = useState('today');
+  const [activeFieldId, setActiveFieldId] = useState(KNOWLEDGE_FIELDS[0].id);
+  const [activeDisciplineId, setActiveDisciplineId] = useState(KNOWLEDGE_FIELDS[0].disciplines[0].id);
   const [query, setQuery] = useState('');
-  const todayQuestion = getTodayQuestion();
-  const [answerRevealed, setAnswerRevealed] = useState(isTodayQuestionAnswered());
+  const [notebook, setNotebook] = useState(() => readNotebook());
+
+  const daily = useMemo(() => getDailyRabbitHole(), []);
+  // Read from the notebook already in state rather than going back to storage,
+  // so saving an edit updates the label and the list in the same render.
+  const savedToday = useMemo(
+    () => notebook.find((item) => item.date === daily?.date) || null,
+    [notebook, daily]
+  );
+  const [draft, setDraft] = useState(() => savedToday?.text || '');
+  const [saveNote, setSaveNote] = useState('');
   const lastLesson = getLastLesson();
 
-  const activeField = KNOWLEDGE_FIELDS.find((field) => field.id === activeFieldId) || KNOWLEDGE_FIELDS[0];
-  const activeDiscipline = activeField.disciplines.find((discipline) => discipline.id === activeDisciplineId) || activeField.disciplines[0];
-  const activeModule = activeDiscipline.modules.find((item) => item.name === activeModuleName) || activeDiscipline.modules[0];
-  const selection = makeSelection(activeField, activeDiscipline, activeModule, selectedTopic);
-
-  const searchResults = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    if (normalizedQuery.length < 2) return [];
-
-    return KNOWLEDGE_FIELDS.flatMap((field) => {
-      const fieldMatches = [field.label, field.eyebrow, field.description]
-        .join(' ')
-        .toLowerCase()
-        .includes(normalizedQuery);
-
-      return field.disciplines.flatMap((discipline) => {
-        const disciplineMatches = [discipline.name, discipline.description]
-          .join(' ')
-          .toLowerCase()
-          .includes(normalizedQuery);
-
-        return discipline.modules.flatMap((parentModule) => {
-          const moduleMatches = parentModule.name.toLowerCase().includes(normalizedQuery);
-          return parentModule.topics
-            .filter((topic) => fieldMatches || disciplineMatches || moduleMatches || topic.toLowerCase().includes(normalizedQuery))
-            .map((topic) => ({
-              ...makeSelection(field, discipline, parentModule, topic),
-              relevance: topic.toLowerCase().startsWith(normalizedQuery) ? 0
-                : topic.toLowerCase().includes(normalizedQuery) ? 1
-                  : parentModule.name.toLowerCase().includes(normalizedQuery) ? 2
-                    : discipline.name.toLowerCase().includes(normalizedQuery) ? 3
-                      : 4,
-            }));
-        });
-      });
-    }).sort((first, second) => first.relevance - second.relevance);
-  }, [query]);
-
   useEffect(() => {
-    trackEvent('screen_view', { screen: 'universe', design: 'editorial-atlas' });
+    trackEvent('screen_view', { screen: 'universe', design: 'daily-rabbit-hole' });
   }, []);
 
-  const selectField = (field) => {
-    // Land on the first discipline's first topic. The index shows everything at
-    // once, so there is nothing to expand and no reason to preserve a previous
-    // field's expansion state.
-    const discipline = field.disciplines[0];
-    const parentModule = discipline.modules[0];
-    setActiveFieldId(field.id);
-    setActiveDisciplineId(discipline.id);
-    setActiveModuleName(parentModule.name);
-    setSelectedTopic(parentModule.topics[0]);
-    setQuery('');
-    trackEvent('curriculum_field_selected', { fieldId: field.id });
-  };
+  const activeField = KNOWLEDGE_FIELDS.find((field) => field.id === activeFieldId) || KNOWLEDGE_FIELDS[0];
+  const activeDiscipline =
+    activeField.disciplines.find((discipline) => discipline.id === activeDisciplineId) ||
+    activeField.disciplines[0];
 
-  const selectSearchResult = (result) => {
-    setActiveFieldId(result.field.id);
-    setActiveDisciplineId(result.discipline.id);
-    setActiveModuleName(result.module.name);
-    setSelectedTopic(result.topic);
-    setQuery('');
-  };
+  const totals = useMemo(() => fieldTotals(activeField), [activeField]);
 
-  /**
-   * What the currently selected topic actually resolves to.
-   *
-   * Recomputed from the selection rather than stored, so the preview can never
-   * disagree with what the button will do. That disagreement was the original
-   * bug: the preview said one thing and the button navigated to another.
-   */
-  const resolution = useMemo(
-    () => resolveAtlasTopic({
-      fieldId: selection.field.id,
-      disciplineId: selection.discipline.id,
-      moduleName: selection.module.name,
-      topic: selection.topic,
-    }),
-    [selection.field.id, selection.discipline.id, selection.module.name, selection.topic]
-  );
+  const searchResults = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (normalized.length < 2) return [];
+    return KNOWLEDGE_FIELDS.flatMap((field) =>
+      field.disciplines.flatMap((discipline) =>
+        discipline.modules.flatMap((moduleItem) =>
+          moduleItem.topics
+            .filter((topic) => topic.toLowerCase().includes(normalized))
+            .map((topic) => ({ field, discipline, module: moduleItem, topic }))
+        )
+      )
+    ).slice(0, 8);
+  }, [query]);
 
-  /**
-   * How much of the active field is actually written.
-   *
-   * Shown in the atlas so a reader can tell the difference between "this app
-   * has 573 topics" and "this app has 7 written topics", which the old layout
-   * made impossible to see.
-   */
-  const coverage = useMemo(() => fieldCoverageByDiscipline(activeField), [activeField]);
+  /** Open whatever a topic actually resolves to. There is no preview step. */
+  const openResolution = (resolution, fieldLabel, coverage) => {
+    trackTopicOpened(resolution.title, resolution.subject || fieldLabel);
 
-  // What the reader is being offered, in words, derived from the same resolver
-  // the button uses. Previously this string was hardcoded per branch and drifted
-  // from what the click actually did.
-  const outcomeLabel = {
-    lesson: 'Read the lesson',
-    'deep-read': 'Open the deep read',
-    unwritten: 'Not written yet',
-    'unmapped-field': 'Not written yet',
-  }[resolution.kind];
-
-  const openLearningPath = () => {
-    trackEvent('atlas_topic_opened', {
-      fieldId: activeField.id,
-      disciplineId: activeDiscipline.id,
-      topic: selectedTopic,
-      outcome: resolution.kind,
-    });
-
-    // The same opening, sent as aggregate-only usage data — but only when the
-    // visitor has opted in to external analytics in Settings.
-    trackTopicOpened(selectedTopic, resolution.subject || activeField.id);
-
-    // Real lesson content. Hand the subject and topic id to the screen that can
-    // actually resolve and render it.
     if (resolution.kind === 'lesson') {
       setSelectedSubject(resolution.subject);
-      // Remember it so the atlas can offer "pick up where you left off".
       saveLastLesson(resolution.subject, resolution.topicId, resolution.title);
       onOpenLesson?.(resolution.subject, resolution.topicId);
       return;
     }
-
-    // Deep multi-level content. Four exist today: black holes, philosophy,
-    // history and computer science. The anchor is passed straight through, so
-    // a topic that names a level opens on that level.
     if (resolution.kind === 'deep-read') {
-      const SUBJECT_BY_FIELD = { philosophy: 'philosophy', history: 'history', science: 'physics' };
       setSelectedSubject(SUBJECT_BY_FIELD[resolution.fieldId] || 'physics');
       onOpenDeepRead?.(resolution.readId, resolution.levelId);
       return;
     }
-
-    // Nothing behind it yet. Say so, in the topic's own name, rather than
-    // sending the reader somewhere that will not contain the thing they asked
-    // for.
     showToast?.(
-      `${resolution.title} is listed in the atlas but not written yet. ${coverage.written} of ${coverage.written + coverage.unwritten + coverage.unmapped} topics in ${activeField.label} have content today.`,
+      `${resolution.title} is listed in the atlas but not written yet. ${coverage.written} of ${coverage.total} topics in ${fieldLabel} have content today.`,
       'info'
     );
   };
 
-  const scrollToAtlas = () => {
-    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    document.getElementById('knowledge-atlas')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+  const openTopic = (field, discipline, moduleItem, topic) => {
+    const resolution = resolveAtlasTopic({
+      fieldId: field.id,
+      disciplineId: discipline.id,
+      moduleName: moduleItem.name,
+      topic,
+    });
+    openResolution(resolution, field.label, fieldTotals(field));
+    trackEvent('atlas_topic_opened', {
+      fieldId: field.id,
+      disciplineId: discipline.id,
+      topic,
+      outcome: resolution.kind,
+    });
   };
 
-  const visibleDisciplines = query.trim().length >= 2
-    ? activeField.disciplines.filter((discipline) =>
-        [discipline.name, discipline.description, ...discipline.modules.flatMap((item) => [item.name, ...item.topics])]
-          .join(' ')
-          .toLowerCase()
-          .includes(query.trim().toLowerCase())
-      )
-    : activeField.disciplines;
+  const openField = (field) => {
+    setActiveFieldId(field.id);
+    setActiveDisciplineId(field.disciplines[0].id);
+    setView('subject');
+    trackEvent('curriculum_field_selected', { fieldId: field.id });
+    window.scrollTo?.({ top: 0, behavior: 'auto' });
+  };
+
+  const readTheFullIdea = () => {
+    if (!daily?.read) return;
+    if (daily.read.kind === 'lesson') {
+      setSelectedSubject(daily.read.subject);
+      onOpenLesson?.(daily.read.subject, daily.read.topicId);
+      return;
+    }
+    setSelectedSubject(SUBJECT_BY_FIELD[daily.term.subject] || 'physics');
+    onOpenDeepRead?.(daily.read.readId);
+  };
+
+  const handleSave = () => {
+    const result = saveAnswer({
+      date: daily.date,
+      entryId: daily.id,
+      prompt: daily.prompt,
+      termId: daily.termId,
+      text: draft,
+    });
+    if (result === 'none') {
+      setNotebook(readNotebook());
+      setSaveNote(`Saved for ${formatDate(daily.date)}.`);
+      showToast?.('Saved to your notebook.', 'success');
+    } else {
+      setSaveNote('This browser refused the write, so nothing was saved.');
+      showToast?.('This browser refused to store the answer.', 'info');
+    }
+  };
+
+  const handleDelete = (date) => {
+    setNotebook(readNotebook().filter((item) => item.date !== date));
+    removeAnswer(date);
+    if (date === daily.date) setDraft('');
+    showToast?.('Removed from your notebook.', 'info');
+  };
+
+  const exportNotebook = () => {
+    try {
+      const blob = new Blob([notebookMarkdown(notebook)], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = NOTEBOOK_FILENAME;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast?.('Notebook exported as Markdown.', 'success');
+    } catch {
+      showToast?.('This browser would not download the file.', 'info');
+    }
+  };
+
+  const searchBox = (
+    <div className="rh-search">
+      <Search size={18} aria-hidden="true" />
+      <label className="sr-only" htmlFor="curriculum-search">Search the knowledge atlas</label>
+      <input
+        id="curriculum-search"
+        type="search"
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+        placeholder="Search entanglement, monsoons, virtue ethics…"
+        autoComplete="off"
+      />
+      {query && (
+        <button type="button" className="rh-search-clear" onClick={() => setQuery('')} aria-label="Clear curriculum search">
+          <X size={16} />
+        </button>
+      )}
+      {query.trim().length >= 2 && (
+        <div className="rh-search-results" role="region" aria-label="Curriculum search results">
+          <p>
+            {searchResults.length
+              ? `${searchResults.length} matches across the atlas`
+              : 'No matching ideas yet'}
+          </p>
+          {searchResults.map((result) => (
+            <button
+              type="button"
+              key={`${result.field.id}-${result.discipline.id}-${result.module.name}-${result.topic}`}
+              aria-label={`${result.topic}, ${result.field.label}`}
+              onClick={() => {
+                openTopic(result.field, result.discipline, result.module, result.topic);
+                setQuery('');
+              }}
+            >
+              <span>{result.topic}</span>
+              <small>{result.field.label} / {result.discipline.name}</small>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const fieldTabs = (current, onOpen, label) => (
+    <nav className="rh-fields" aria-label={label}>
+      {KNOWLEDGE_FIELDS.map((field, index) => {
+        const { written, total } = fieldTotals(field);
+        return (
+          <button
+            type="button"
+            key={field.id}
+            className="rh-field"
+            aria-pressed={current === field.id}
+            aria-label={`${field.label}, ${written} of ${total} topics written`}
+            onClick={() => onOpen(field)}
+          >
+            <span className="rh-field-number">{String(index + 1).padStart(2, '0')}</span>
+            <span className="rh-field-name">{field.label}</span>
+            <span className="rh-field-meta">{written}/{total}</span>
+          </button>
+        );
+      })}
+    </nav>
+  );
+
+  const resumeCard = lastLesson && (
+    <section className="rh-resume" aria-labelledby="rh-resume-title">
+      <div>
+        <p className="rh-eyebrow">Pick up where you left off</p>
+        <h2 id="rh-resume-title">{lastLesson.topicTitle}</h2>
+        <p className="rh-resume-subject">{lastLesson.subject}</p>
+        {Number.isFinite(lastLesson.percent) && (
+          <>
+            <div
+              className="rh-resume-bar"
+              role="progressbar"
+              aria-label={`${lastLesson.topicTitle} read`}
+              aria-valuenow={lastLesson.percent}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
+              <span className="rh-resume-fill" style={{ width: `${lastLesson.percent}%` }} />
+            </div>
+            <p className="rh-resume-percent">{lastLesson.percent}% read</p>
+          </>
+        )}
+      </div>
+      <button
+        type="button"
+        className="vl-btn vl-btn--quiet"
+        onClick={() => {
+          setSelectedSubject(lastLesson.subject);
+          onOpenLesson?.(lastLesson.subject, lastLesson.topicId);
+        }}
+      >
+        Resume <ArrowRight size={15} aria-hidden="true" />
+      </button>
+    </section>
+  );
 
   return (
-    <div className="universe-home bg-[--bg-tertiary] min-h-screen text-[--text-primary]">
-      <header className="uh-header uh-header--paper border-b border-[--text-primary]/10">
-        <button className="uh-brand" type="button" onClick={() => setScreen('universe')} aria-label="VELORA home">
+    <div className="universe-home">
+      <header className="uh-header">
+        <button className="uh-brand" type="button" onClick={() => setView('today')} aria-label="VELORA home">
           <span className="uh-brand-mark">V</span>
           <span><strong>VELORA</strong><small>The knowledge atlas</small></span>
         </button>
@@ -246,302 +344,262 @@ function UniverseHome({ user, setScreen, setSelectedSubject, setLearnView, onOpe
         <div className="uh-header-actions">
           <span className="uh-user-greeting">Welcome, {user?.name || 'scholar'}</span>
           <ThemeToggle />
-          <button type="button" className="uh-icon-button" onClick={onForgetProfile} aria-label="Forget this device profile" title="Removes the name stored in this browser. It is not a sign out."><LogOut size={17} /></button>
+          <button
+            type="button"
+            className="uh-icon-button"
+            onClick={onForgetProfile}
+            aria-label="Forget this device profile"
+            title="Removes the name stored in this browser. It is not a sign out."
+          >
+            <LogOut size={17} />
+          </button>
         </div>
       </header>
 
-      <main className="uh-main">
-        <section className="uh-hero" aria-labelledby="atlas-title">
-          <div className="uh-hero-copy vl-settle" style={{ '--i': 0 }}>
-            <p className="vl-kicker vl-kicker--rule">A curriculum for the endlessly curious</p>
-            <h1 id="atlas-title">
-              Follow your curiosity to the edge of understanding.
-            </h1>
-            <p className="uh-lede vl-lede">
-              Six great fields. Hundreds of connected ideas. Begin with a discipline, move
-              through its subfields, and arrive at the concept you need next.
-            </p>
-            <div className="uh-hero-actions">
-              <button type="button" className="vl-btn uh-primary" onClick={scrollToAtlas}>
-                Explore the atlas <ArrowRight size={17} aria-hidden="true" />
-              </button>
-              <span>No endless lists. Just a clear next step.</span>
-            </div>
-          </div>
+      {view === 'today' ? (
+        <main className="uh-main rh-main">
+          <p className="rh-dateline">
+            The Daily Rabbit Hole
+            <span aria-hidden="true"> · </span>
+            <time dateTime={daily?.date}>{daily ? formatDate(daily.date) : ''}</time>
+          </p>
 
-          <aside className="uh-hero-index vl-field vl-field--butter vl-settle" aria-label="Atlas at a glance" style={{ '--i': 1 }}>
-            <p className="uh-index-label">The atlas at a glance</p>
-            <dl>
+          <h1 className="rh-title">
+            One question a day.
+            <em>Answer it in your own words.</em>
+          </h1>
+          <p className="rh-intro">
+            The question stays the same until midnight, then changes. Nothing is scored,
+            nothing is counted, and what you write stays in this browser until you export it.
+          </p>
+
+          {daily && (
+            <article className="rh-day" aria-labelledby="rh-question">
+              <div className="rh-day-head">
+                <span>{daily.term.subject} · Curious Dictionary</span>
+                <span className="rh-day-tag">{daily.term.term}</span>
+              </div>
+
+              <h2 id="rh-question">{daily.prompt}</h2>
+              <p className="rh-lead">{daily.lead}</p>
+
+              <div className="rh-day-grid">
+                <div className="rh-day-figure">
+                  <DailyDiagram kind={daily.diagram} />
+                  <p className="rh-notice">
+                    <strong>What to notice.</strong> {daily.notice}
+                  </p>
+                </div>
+
+                <div className="rh-write">
+                <label htmlFor="rh-answer">Explain it back, in your own words</label>
+                <textarea
+                  id="rh-answer"
+                  rows={4}
+                  value={draft}
+                  onChange={(event) => {
+                    setDraft(event.target.value);
+                    setSaveNote('');
+                  }}
+                  placeholder="Start anywhere. One sentence is enough."
+                />
+                <div className="rh-write-row">
+                  <button
+                    type="button"
+                    className="vl-btn rh-save"
+                    onClick={handleSave}
+                    disabled={!draft.trim()}
+                  >
+                    {savedToday ? 'Update today’s answer' : 'Save to notebook'}
+                  </button>
+                  <button type="button" className="vl-textlink" onClick={exportNotebook}>
+                    Export notebook as Markdown
+                  </button>
+                </div>
+                  <p className="rh-save-note" role="status">
+                    {saveNote || (savedToday ? 'An answer for today is already in your notebook.' : '')}
+                  </p>
+                </div>
+              </div>
+
+              <details className="rh-compare">
+                <summary>Compare with the dictionary</summary>
+                <p className="rh-term">
+                  <strong>{daily.term.term}</strong> {daily.term.tagline}
+                </p>
+                <p>{daily.term.explanation}</p>
+                <p className="rh-example">Example. {daily.term.example}</p>
+              </details>
+
+              <div className="rh-day-foot">
+                {daily.read && (
+                  <button type="button" className="vl-btn vl-btn--quiet" onClick={readTheFullIdea}>
+                    Read the full idea <ArrowRight size={15} aria-hidden="true" />
+                  </button>
+                )}
+                <span>{daily.term.term} · {daily.term.subject}</span>
+              </div>
+            </article>
+          )}
+
+          <section className="rh-notebook" aria-labelledby="rh-notebook-title">
+            <div className="rh-notebook-head">
+              <h2 id="rh-notebook-title">Your notebook</h2>
+              <p>
+                {notebook.length === 0
+                  ? 'Nothing saved yet. Today’s answer will be the first entry.'
+                  : `${notebook.length} ${notebook.length === 1 ? 'answer' : 'answers'} kept in this browser.`}
+              </p>
+            </div>
+
+            {notebook.length === 0 ? (
+              <p className="rh-empty">
+                The notebook is a local file, not an account. It is here until you clear this
+                browser’s storage, and the export above is the copy that survives that.
+              </p>
+            ) : (
+              <ol className="rh-entries">
+                {notebook.map((entry) => (
+                  <li key={entry.date} className="rh-entry">
+                    <div className="rh-entry-head">
+                      <time dateTime={entry.date}>{formatDate(entry.date)}</time>
+                      <button
+                        type="button"
+                        className="rh-entry-remove"
+                        onClick={() => handleDelete(entry.date)}
+                        aria-label={`Delete the answer for ${formatDate(entry.date)}`}
+                      >
+                        <X size={15} />
+                      </button>
+                    </div>
+                    <p className="rh-entry-question">{entry.prompt}</p>
+                    <p className="rh-entry-answer">{entry.text}</p>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </section>
+
+          {resumeCard}
+
+          <section className="rh-shelf" aria-labelledby="rh-shelf-title">
+            <div className="rh-shelf-head">
+              <p className="rh-eyebrow">The atlas</p>
+              <h2 id="rh-shelf-title">Every field is a shelf.</h2>
+              <p>
+                Open one and it replaces this page: its disciplines on the left, their topics on
+                the right, and anything written opens on the spot.
+              </p>
+            </div>
+
+            {searchBox}
+            {fieldTabs(null, openField, 'Knowledge fields')}
+
+            <dl className="rh-totals">
               <div><dt>Fields</dt><dd>{String(KNOWLEDGE_STATS.fields).padStart(2, '0')}</dd></div>
               <div><dt>Disciplines</dt><dd>{KNOWLEDGE_STATS.disciplines}</dd></div>
-              <div><dt>Topics</dt><dd>{KNOWLEDGE_STATS.topics}</dd></div>
+              <div><dt>Topics listed</dt><dd>{KNOWLEDGE_STATS.topics}</dd></div>
             </dl>
-            <p className="uh-index-path">Field → discipline → subfield → topic</p>
-          </aside>
-        </section>
-
-        {/* Daily return hook: one question, the same for everyone today. */}
-        {todayQuestion && (
-          <section className="uh-card-section" aria-labelledby="today-question-heading">
-            <div className="uh-return-head">
-              <p className="vl-kicker vl-kicker--rule">The daily return</p>
-              <span className="uh-return-date">
-                {new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
-              </span>
-            </div>
-            <div className="uh-card-row uh-card-row--return">
-              <article
-                className="uh-card uh-card--today vl-field vl-field--clay"
-                aria-labelledby="today-question-heading"
-              >
-                <div className="uh-card-body">
-                  <p className="uh-card-eyebrow">Today's question</p>
-                  <h2 id="today-question-heading">{todayQuestion.question}</h2>
-                  {answerRevealed ? (
-                    <>
-                      <p className="uh-card-answer">{todayQuestion.answer}</p>
-                      <p className="uh-card-hint">Hint: {todayQuestion.hint}</p>
-                    </>
-                  ) : (
-                    <button
-                      type="button"
-                      className="vl-btn vl-btn--quiet uh-card-reveal"
-                      onClick={() => {
-                        setAnswerRevealed(true);
-                        markTodayQuestionAnswered(true);
-                      }}
-                    >
-                      Show answer
-                    </button>
-                  )}
-                </div>
-                <button
-                  type="button"
-                  className="vl-textlink uh-card-lookup"
-                  onClick={() => setScreen('dictionary')}
-                >
-                  Look up in Dictionary <ArrowRight size={14} aria-hidden="true" />
-                </button>
-              </article>
-
-              {lastLesson && (
-                <article className="uh-card uh-card--resume vl-field vl-field--lilac">
-                  <div className="uh-card-body">
-                    <p className="uh-card-eyebrow">Pick up where you left off</p>
-                    <h2>{lastLesson.topicTitle}</h2>
-                    <p className="uh-card-subject">{lastLesson.subject}</p>
-                    {/* How much of the lesson is left. "Pick up where you left
-                      * off" without a position reads the same for a lesson
-                      * opened once and one read halfway through. */}
-                    {Number.isFinite(lastLesson.percent) && (
-                      <>
-                        <div
-                          className="uh-resume-bar"
-                          role="progressbar"
-                          aria-label={`${lastLesson.topicTitle} read`}
-                          aria-valuenow={lastLesson.percent}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        >
-                          <span
-                            className="uh-resume-fill"
-                            style={{ width: `${lastLesson.percent}%` }}
-                          />
-                        </div>
-                        <p className="uh-resume-percent">{lastLesson.percent}% read</p>
-                      </>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    className="vl-btn uh-card-resume"
-                    onClick={() => {
-                      setSelectedSubject(lastLesson.subject);
-                      onOpenLesson?.(lastLesson.subject, lastLesson.topicId);
-                    }}
-                  >
-                    Resume <ArrowRight size={14} aria-hidden="true" />
-                  </button>
-                </article>
-              )}
-            </div>
           </section>
-        )}
 
-        <section id="knowledge-atlas" className="uh-atlas-section" aria-labelledby="atlas-heading">
-          <div className="uh-section-heading-row">
-            <div>
-              <p className="uh-eyebrow">The knowledge hierarchy</p>
-              <h2 id="atlas-heading" className="font-serif text-2xl font-light tracking-wide text-[--text-primary]">Explore the fields of human thought</h2>
-            </div>
-            <p>Choose a field, open a discipline, select a subfield, then choose a topic to preview its place in the whole.</p>
-          </div>
-
-          <div className="uh-search-wrap">
-            <Search size={19} aria-hidden="true" />
-            <label className="sr-only" htmlFor="curriculum-search">Search the knowledge atlas</label>
-            <input
-              id="curriculum-search"
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search entanglement, monsoons, virtue ethics…"
-              autoComplete="off"
-            />
-            {query && <button type="button" onClick={() => setQuery('')} aria-label="Clear curriculum search"><X size={17} /></button>}
-            {query.trim().length >= 2 && (
-              <div className="uh-search-results" role="region" aria-label="Curriculum search results">
-                <p>{searchResults.length ? `${searchResults.length} matches across the atlas` : 'No matching ideas yet'}</p>
-                {searchResults.slice(0, 8).map((result) => (
-                  <button
-                    type="button"
-                    key={`${result.field.id}-${result.discipline.id}-${result.module.name}-${result.topic}`}
-                    onClick={() => selectSearchResult(result)}
-                  >
-                    <span>{result.topic}</span>
-                    <small>{result.field.label} / {result.discipline.name} / {result.module.name}</small>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-        <section className="uh-topic-preview" aria-live="polite" aria-label="Selected curriculum topic">
-          <div>
-            <p className="uh-eyebrow">Selected thread</p>
-            <p className="uh-breadcrumbs">{selection.field.label} <span>/</span> {selection.discipline.name} <span>/</span> {selection.module.name}</p>
-            <h2>{selection.topic}</h2>
-            {/*
-              The description used to be one fixed sentence for all 573 topics:
-              "This topic sits inside a clear sequence...". It read as though
-              the app knew something about the topic and it was filler. Now each
-              branch states what is actually true, including when the honest
-              answer is that nothing is written here yet.
-            */}
-            {resolution.kind === 'lesson' && (
-              <p>A written lesson, {resolution.title === selection.topic ? 'ready to read' : `titled ${resolution.title}`}. Opening it goes straight to the lesson rather than to a list it is somewhere inside.</p>
-            )}
-            {resolution.kind === 'deep-read' && (
-              <p>Deep multi-level material, not a single lesson. {resolution.title} runs as a sequence of levels you can read in order or dip into.</p>
-            )}
-            {resolution.kind === 'unwritten' && (
-              <p><strong>Not written yet.</strong> This topic is a real part of {selection.module.name}, and it is listed so the shape of the field is visible, but there is no lesson behind it. It is marked rather than filled with a placeholder.</p>
-            )}
-            {resolution.kind === 'unmapped-field' && (
-              <p><strong>Not written yet.</strong> {selection.field.label} has no curriculum behind it in this build. The topics are listed; the lessons are not written.</p>
-            )}
-          </div>
-          {/*
-            Coverage, so the atlas states its own honesty instead of implying
-            that every topic is one click from content. This is the number the
-            old layout had no way of showing.
-          */}
-          <p className="uh-coverage">
-            {activeField.label}: <strong>{coverage.written}</strong> of {coverage.written + coverage.unwritten + coverage.unmapped} topics written
-          </p>
-          <button
-            type="button"
-            className="uh-primary"
-            onClick={openLearningPath}
-          >
-            {outcomeLabel} <ArrowRight size={17} />
+          <footer className="rh-footer">
+            <span>VELORA</span>
+            <p>Learning is exploration, not memorization.</p>
+          </footer>
+        </main>
+      ) : (
+        <main className="uh-main shelf-main">
+          <button type="button" className="shelf-back" onClick={() => setView('today')}>
+            <ArrowLeft size={16} aria-hidden="true" /> Today
           </button>
-        </section>
 
+          <header className="shelf-hero">
+            <p className="rh-eyebrow">The atlas · {activeField.eyebrow}</p>
+            <h1>{activeField.label}</h1>
+            <p className="shelf-description">{activeField.description}</p>
+            <p className="shelf-count">
+              <strong>{totals.written}</strong> of {totals.total} topics written
+            </p>
+          </header>
 
-          {/*
-            The subject rail and the discipline panel, replaced by an index.
+          {fieldTabs(activeField.id, openField, 'Knowledge fields')}
 
-            The old layout was a column of subject cards that each expanded into
-            a grid of pill buttons. Both halves are gone: the rail is now a
-            thumb-index of fields, and the panel is a two-column index of
-            disciplines and topics with nothing collapsed. A reader can see all
-            55 physics topics without expanding a single section, which is the
-            thing the pill grid could not do.
-          */}
-          <div className="uh-atlas-grid uh-atlas-indexed">
-            <nav className="aix-tabs" aria-label="Knowledge fields">
-              {KNOWLEDGE_FIELDS.map((field, index) => {
-                const isActive = field.id === activeField.id;
-                const topics = field.disciplines.reduce(
-                  (total, discipline) => total + discipline.modules.reduce((sum, item) => sum + item.topics.length, 0),
-                  0
-                );
-                const written = field.disciplines.reduce(
-                  (total, discipline) => total + discipline.modules.reduce(
-                    (sum, item) => sum + item.topics.filter((topic) => {
-                      const kind = resolveAtlasTopic({ fieldId: field.id, disciplineId: discipline.id, moduleName: item.name, topic }).kind;
-                      return kind === 'lesson' || kind === 'deep-read';
-                    }).length,
-                    0
-                  ),
-                  0
-                );
+          <div className="shelf-split">
+            <nav className="shelf-disciplines" aria-label={`Disciplines in ${activeField.label}`}>
+              {activeField.disciplines.map((discipline) => {
+                const count = discipline.modules.reduce((sum, item) => sum + item.topics.length, 0);
+                const isActive = discipline.id === activeDiscipline.id;
                 return (
                   <button
                     type="button"
-                    key={field.id}
-                    className="aix-tab"
-                    onClick={() => selectField(field)}
-                    aria-pressed={isActive}
-                    aria-label={`${field.label}, ${field.disciplines.length} disciplines, ${written} of ${topics} topics written`}
+                    key={discipline.id}
+                    className="shelf-discipline"
+                    aria-current={isActive ? 'true' : undefined}
+                    onClick={() => setActiveDisciplineId(discipline.id)}
                   >
-                    <span className="aix-tab-number">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="aix-tab-name">{field.label}</span>
-                    <span className="aix-tab-meta">{written}/{topics} written</span>
+                    <span>{discipline.name}</span>
+                    <span className="shelf-discipline-count">{count}</span>
                   </button>
                 );
               })}
             </nav>
 
-            <div className="uh-field-panel">
-              <header className="uh-field-header">
-                <div>
-                  <p className="uh-eyebrow">{activeField.eyebrow}</p>
-                  <h3>{activeField.label}</h3>
-                </div>
-                <p>{activeField.description}</p>
+            <div className="shelf-topics">
+              <header className="shelf-topics-head">
+                <h2>{activeDiscipline.name}</h2>
+                <p>{activeDiscipline.description}</p>
               </header>
 
-              <p className="uh-index-key">
-                <span className="uh-key-item"><span className="aix-marker written"><span className="aix-marker-dot" />has content</span></span>
-                <span className="uh-key-item"><span className="aix-marker unwritten"><span className="aix-marker-dot" />listed, not written yet</span></span>
-              </p>
-
-              <AtlasIndex
-                field={activeField}
-                disciplines={visibleDisciplines}
-                selected={selection}
-                onSelect={({ field, discipline, moduleName, topic }) => {
-                  setActiveFieldId(field.id);
-                  setActiveDisciplineId(discipline.id);
-                  setActiveModuleName(moduleName);
-                  setSelectedTopic(topic);
-                  trackEvent('curriculum_topic_previewed', { fieldId: field.id, disciplineId: discipline.id, topic });
-                }}
-              />
+              {activeDiscipline.modules.map((moduleItem) => (
+                <section key={moduleItem.name} className="shelf-module" aria-labelledby={`mod-${moduleItem.name}`}>
+                  <h3 id={`mod-${moduleItem.name}`}>{moduleItem.name}</h3>
+                  <ul>
+                    {moduleItem.topics.map((topic) => {
+                      const resolution = resolveAtlasTopic({
+                        fieldId: activeField.id,
+                        disciplineId: activeDiscipline.id,
+                        moduleName: moduleItem.name,
+                        topic,
+                      });
+                      const written = resolution.kind === 'lesson' || resolution.kind === 'deep-read';
+                      return (
+                        <li key={topic}>
+                          {written ? (
+                            <button
+                              type="button"
+                              className="shelf-topic"
+                              aria-label={`${topic}, open`}
+                              onClick={() => openTopic(activeField, activeDiscipline, moduleItem, topic)}
+                            >
+                              <span className="shelf-topic-name">{topic}</span>
+                              <span className="shelf-leader" aria-hidden="true" />
+                              <span className="shelf-topic-status">
+                                {resolution.kind === 'deep-read' ? 'deep read' : 'read'}
+                                <ArrowRight size={14} aria-hidden="true" />
+                              </span>
+                            </button>
+                          ) : (
+                            <span className="shelf-topic is-unwritten" aria-label={`${topic}, not written yet`}>
+                              <span className="shelf-topic-name">{topic}</span>
+                              <span className="shelf-leader" aria-hidden="true" />
+                              <span className="shelf-topic-status">not written yet</span>
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              ))}
             </div>
           </div>
-        </section>
 
-
-        <section className="uh-method-section" aria-labelledby="method-title">
-          <div>
-            <p className="uh-eyebrow">A knowledge system that compounds</p>
-            <h2 id="method-title" className="font-serif text-2xl font-light tracking-wide text-[--text-primary]">One idea should open the next.</h2>
-          </div>
-          <div className="uh-method-grid">
-            <article><span className="vl-numeral">01</span><h3>Start broad</h3><p>See how the major field connects ideas across centuries and disciplines.</p></article>
-            <article><span className="vl-numeral">02</span><h3>Drill with intention</h3><p>Move from a discipline into the subfield that answers your current question.</p></article>
-            <article><span className="vl-numeral">03</span><h3>Keep the thread</h3><p>Every topic has a visible address, so the next concept is never lost in a flat list.</p></article>
-          </div>
-        </section>
-      </main>
-
-      <footer className="uh-footer">
-        <span>VELORA</span>
-        <p>Learning is exploration, not memorization.</p>
-      </footer>
+          <footer className="rh-footer">
+            <span>VELORA</span>
+            <p>{totals.written} of {totals.total} topics in {activeField.label} have content today.</p>
+          </footer>
+        </main>
+      )}
     </div>
   );
 }
