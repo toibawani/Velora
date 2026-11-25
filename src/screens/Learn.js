@@ -350,18 +350,16 @@ function Learn({ setScreen, selectedSubject, setSelectedSubject, initialView = '
   }
 
   // View: Interactive Physics Simulations Laboratory
+  //
+  // The lab draws its own masthead. This used to wrap it in the curriculum
+  // header as well, which put two titles and two back buttons on the screen and
+  // repeated the stacking defect the games entry point had.
   if (currentView === 'physics-sims') {
     return (
-      <div className="learn-container">
-        <header className="learn-header">
-          <button className="learn-back-btn" onClick={handleBack}>
-            ← Back to Curriculum
-          </button>
-          <h1 className="learn-title">Interactive Physics Laboratory</h1>
-          <div style={{ width: '60px' }}></div>
-        </header>
-        <PhysicsSimulations onBack={handleBack} />
-      </div>
+      <PhysicsSimulations
+        onBack={handleBack}
+        backLabel="Back to the curriculum"
+      />
     );
   }
 
