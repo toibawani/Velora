@@ -1,358 +1,784 @@
-/* PhysicsSimulations.css — Editorial Interactive Physics Suite */
+/* ==========================================================================
+   PhysicsSimulations.css — the laboratory screen
 
-.physics-sims-container {
+   One masthead, a numbered index of experiments, one experiment in the panel.
+   Figures are paper with ink lines and one ember accent; the only filled
+   control is the action that starts something.
+   ========================================================================== */
+
+.physics-lab {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: var(--space-6) var(--space-4) var(--space-16);
+  padding: var(--space-6) var(--space-5) var(--space-16);
   color: var(--text-primary);
+  font-family: var(--font-sans);
 }
 
-.sims-header {
+.physics-lab *,
+.physics-lab *::before,
+.physics-lab *::after {
+  box-sizing: border-box;
+}
+
+.physics-lab button {
+  font: inherit;
+}
+
+/* ---- Masthead ---- */
+
+.lab-masthead {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--space-8);
   gap: var(--space-6);
-  border-bottom: 1px solid var(--border-default);
   padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-default);
 }
 
-.sims-kicker {
-  display: inline-block;
+.lab-masthead-copy {
+  max-width: 62ch;
+}
+
+.lab-kicker {
+  margin: 0 0 var(--space-3);
+  color: var(--accent-primary);
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-primary);
-  margin-bottom: var(--space-2);
 }
 
-.sims-header h2 {
-  font-family: var(--font-display, "Fraunces", Georgia, serif);
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--text-primary);
-  margin: 0 0 var(--space-2);
-}
-
-.sims-header p {
-  font-size: 1.05rem;
-  line-height: 1.55;
-  color: var(--text-secondary);
-  max-width: 720px;
+.lab-title {
   margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.25rem);
+  font-weight: 420;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  max-width: 18ch;
 }
 
-.sims-back-btn {
-  background: transparent !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-strong) !important;
-  padding: var(--space-2) var(--space-4) !important;
-  border-radius: var(--radius-full) !important;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
+.lab-intro {
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 54ch;
 }
 
-.sims-back-btn:hover {
-  background: var(--accent-soft) !important;
-}
-
-/* Tab rail */
-.sims-tab-rail {
-  display: flex;
-  gap: var(--space-2);
-  overflow-x: auto;
-  padding-bottom: var(--space-2);
-  margin-bottom: var(--space-8);
-  scrollbar-width: none;
-}
-
-.sims-tab-rail::-webkit-scrollbar {
-  display: none;
-}
-
-.sim-tab-btn {
+.physics-lab .lab-back {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  background: var(--bg-elevated) !important;
-  color: var(--text-secondary) !important;
-  border: 1px solid var(--border-default) !important;
-  border-radius: var(--radius-full) !important;
-  padding: var(--space-2) var(--space-5) !important;
-  font-size: 0.88rem;
-  font-weight: 550;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
 }
 
-.sim-tab-btn:hover {
-  border-color: var(--accent-line) !important;
-  color: var(--text-primary) !important;
+.physics-lab .lab-back:hover {
+  background: var(--wash);
 }
 
-.sim-tab-btn.active {
-  background: var(--accent-primary) !important;
-  color: var(--bg-primary) !important;
-  border-color: var(--accent-primary) !important;
-  box-shadow: none !important;
+/* ---- Layout: index beside the experiment ---- */
+
+.lab-layout {
+  display: grid;
+  grid-template-columns: 238px minmax(0, 1fr);
+  gap: clamp(var(--space-6), 4vw, var(--space-10));
+  align-items: start;
+  margin-top: var(--space-8);
 }
 
-/* Sim card container */
-.sim-card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
-  padding: var(--space-8);
-  box-shadow: 0 8px 24px var(--shadow-color);
+.lab-index {
+  position: sticky;
+  top: var(--space-6);
+  border-top: 1px solid var(--border-default);
 }
 
-.sim-header-row {
+.lab-index-label {
+  margin: 0;
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lab-index-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.physics-lab .lab-index-item {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 64px;
+  padding: var(--space-3);
+  text-align: left;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-left: 2px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.physics-lab .lab-index-item:hover {
+  background: var(--wash);
+  color: var(--text-primary);
+}
+
+.physics-lab .lab-index-item.is-active {
+  border-left-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.lab-index-number {
+  padding-top: 2px;
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.lab-index-item.is-active .lab-index-number {
+  color: var(--accent-primary);
+}
+
+.lab-index-copy {
+  display: block;
+  min-width: 0;
+}
+
+.lab-index-name {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-index-meta {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.lab-panel {
+  min-width: 0;
+}
+
+.lab-panel:focus {
+  outline: none;
+}
+
+/* ---- One experiment ---- */
+
+.exp {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.exp-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--space-5);
-  gap: var(--space-4);
+  gap: var(--space-6);
   flex-wrap: wrap;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-default);
 }
 
-.sim-tag {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.exp-head-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.exp-kicker {
+  margin: 0 0 var(--space-2);
   color: var(--accent-primary);
-  display: block;
-  margin-bottom: var(--space-1);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.sim-title {
-  font-family: var(--font-display, "Fraunces", Georgia, serif);
-  font-size: 1.35rem;
-  font-weight: 500;
-  color: var(--text-primary);
+.exp-kicker-sep {
+  margin: 0 var(--space-2);
+  color: var(--text-tertiary);
+}
+
+.exp-title {
   margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.6rem);
+  font-weight: 420;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
 }
 
-.sim-controls-top {
+.exp-question {
+  margin: var(--space-2) 0 0;
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  max-width: 46ch;
+}
+
+.exp-actions {
   display: flex;
-  align-items: center;
-  gap: var(--space-2);
   flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
 }
 
-.sim-btn {
+.physics-lab .exp-action {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4) !important;
-  border-radius: var(--radius-full) !important;
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.sim-btn-play {
-  background: var(--accent-primary) !important;
-  color: var(--bg-primary) !important;
-}
-
-.sim-btn-play:hover {
-  background: var(--accent-primary-hover) !important;
-}
-
-.sim-btn-pause {
-  background: var(--accent-gold) !important;
-  color: var(--bg-primary) !important;
-}
-
-.sim-btn-ghost {
-  background: transparent !important;
-  color: var(--text-secondary) !important;
-  border: 1px solid var(--border-default) !important;
-}
-
-.sim-btn-ghost:hover {
-  background: var(--wash) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Interactive Stage */
-.sim-interactive-stage {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-  margin-bottom: var(--space-6);
-  overflow: hidden;
-}
-
-.sim-svg {
-  width: 100%;
-  height: auto;
-  max-height: 230px;
-  display: block;
-}
-
-/* Canvas stage */
-.sim-canvas-wrap {
-  position: relative;
-  width: 100%;
-  display: flex;
   justify-content: center;
-  background: var(--bg-elevated);
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: none;
 }
 
-.sim-canvas {
+.physics-lab .exp-action:hover {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+}
+
+.physics-lab .exp-action--quiet {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.physics-lab .exp-action--quiet:hover {
+  background: var(--wash);
+  border-color: var(--text-secondary);
+}
+
+.physics-lab .exp-action:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---- Figure ---- */
+
+.exp-figure {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+}
+
+.exp-svg {
+  display: block;
   width: 100%;
   max-width: 600px;
-  height: 200px;
-  image-rendering: pixelated;
-  border-radius: var(--radius-md);
+  height: auto;
+  margin: 0 auto;
 }
 
-.sim-overlay-labels {
-  position: absolute;
-  top: 8px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  justify-content: space-between;
-  pointer-events: none;
+.exp-canvas {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin: 0 auto;
+  background: var(--bg-elevated);
 }
 
-.sim-overlay-badge {
-  background: var(--bg-glass-strong);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
-  font-size: 0.72rem;
+.exp-strip {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.exp-caption {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  max-width: 66ch;
+}
+
+/* Figure marks. These are tokens, so the drawing follows the theme instead of
+   being a fixed cream-and-brown picture on whatever background it lands. */
+.fig-axis,
+.fig-tick {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+.fig-tick--accent {
+  stroke: var(--accent-primary);
+  stroke-width: 2;
+}
+
+.fig-ghost {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 0.9;
+  stroke-dasharray: 3 4;
+}
+
+.fig-ghost-stroke {
+  fill: none;
+  stroke: var(--text-tertiary);
+  stroke-width: 0.9;
+  stroke-dasharray: 4 4;
+  opacity: 0.7;
+}
+
+.fig-previous {
+  opacity: 0.6;
+}
+
+.fig-solid {
+  fill: var(--text-primary);
+}
+
+.fig-wheel {
+  fill: var(--bg-elevated);
+  stroke: var(--text-primary);
+  stroke-width: 1.4;
+}
+
+.fig-label {
+  fill: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.fig-label--accent {
+  fill: var(--accent-primary);
   font-weight: 600;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
 }
 
-/* Telemetry Strip */
-.sim-telemetry-strip {
+.fig-label--inverse {
+  fill: var(--bg-elevated);
+  font-weight: 600;
+}
+
+.fig-vector {
+  stroke: var(--accent-primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.fig-vector-head {
+  fill: var(--accent-primary);
+}
+
+.fig-vector--quiet {
+  stroke: var(--text-secondary);
+  stroke-width: 2;
+}
+
+.fig-vector-head--quiet {
+  fill: var(--text-secondary);
+}
+
+.fig-arc {
+  fill: none;
+  stroke: var(--accent-primary);
+  stroke-width: 2;
+}
+
+.fig-ball {
+  fill: var(--accent-primary);
+  stroke: var(--bg-elevated);
+  stroke-width: 1.5;
+}
+
+.fig-barrel {
+  stroke: var(--text-primary);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.fig-feather {
+  fill: var(--accent-primary);
+  opacity: 0.9;
+}
+
+.fig-feather-rib {
+  stroke: var(--bg-elevated);
+  stroke-width: 1;
+}
+
+.fig-world {
+  fill: var(--accent-primary);
+}
+
+.fig-satellite {
+  fill: var(--text-primary);
+  stroke: var(--bg-elevated);
+  stroke-width: 1.4;
+}
+
+.fig-orbit {
+  fill: none;
+  stroke: var(--accent-primary);
+  stroke-width: 1.4;
+  opacity: 0.85;
+}
+
+.fig-profile {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-width: 1.3;
+}
+
+.fig-peak {
+  fill: var(--accent-primary);
+}
+
+/* ---- Parameters ---- */
+
+.exp-params {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: var(--space-3);
-  margin-top: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+  gap: var(--space-5);
   padding-top: var(--space-4);
   border-top: 1px solid var(--border-subtle);
 }
 
-.sim-telemetry-item {
+.exp-param {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-}
-
-.telemetry-label {
-  font-size: 0.72rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.telemetry-val {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.telemetry-val.highlight {
-  color: var(--accent-primary);
-}
-
-/* The textbook prediction shown under a measured value, so the two can be
-   compared rather than the simulation standing in for the maths. */
-.telemetry-sub {
-  display: block;
-  margin-top: var(--space-1);
-  font-family: var(--font-body, system-ui, sans-serif);
-  font-size: 0.72rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--text-secondary);
-}
-
-/* Parameters & Sliders */
-.sim-params-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--space-5);
-  margin-bottom: var(--space-6);
-  padding: var(--space-5);
-  background: var(--wash);
-  border-radius: var(--radius-lg);
-}
-
-.sim-slider-group {
-  display: flex;
-  flex-direction: column;
+  justify-content: flex-start;
   gap: var(--space-2);
+  min-width: 0;
 }
 
-.sim-slider-label-row {
+.exp-param-head {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.sim-slider-label-row strong {
-  color: var(--text-primary);
-}
-
-.sim-range {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 6px;
-  border-radius: var(--radius-xs);
-  background: var(--wash);
-  outline: none;
-  cursor: pointer;
-}
-
-.sim-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent-primary);
-  cursor: pointer;
-  border: 2px solid var(--bg-elevated);
-  box-shadow: 0 2px 6px var(--shadow-color);
-}
-
-.sim-range::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent-primary);
-  cursor: pointer;
-  border: 2px solid var(--bg-elevated);
-  box-shadow: 0 2px 6px var(--shadow-color);
-}
-
-.sim-btn-pill-row {
-  display: flex;
+  align-items: baseline;
   gap: var(--space-2);
+}
+
+.exp-param label,
+.exp-param-label {
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.exp-param-value {
+  color: var(--text-primary);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.exp-range {
+  width: 100%;
+  height: 32px;
+  margin: 0;
+  accent-color: var(--accent-primary);
+  background: transparent;
+  cursor: pointer;
+}
+
+.exp-segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.physics-lab .exp-segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.physics-lab .exp-segment:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.physics-lab .exp-segment.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+/* ---- Readout ---- */
+
+.exp-readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(124px, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.exp-readout-item {
+  min-width: 0;
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.exp-readout-item:last-child {
+  border-right: 0;
+}
+
+.exp-readout dt {
+  margin: 0 0 var(--space-2);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.exp-readout dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-mono, monospace);
+  font-size: 1.02rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+.exp-readout-value {
+  display: block;
+}
+
+.exp-readout-note {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+/* ---- Note, status ---- */
+
+.exp-note {
+  margin: 0;
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--accent-primary);
+  color: var(--text-secondary);
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.exp-note-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--accent-primary);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.exp-motion-note,
+.exp-status {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.exp-motion-note-slot:empty {
+  display: none;
+}
+
+/* ---- Narrow screens: the index becomes a rail, the figure goes full bleed ---- */
+
+@media (max-width: 900px) {
+  .lab-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+
+  .lab-index {
+    position: static;
+    border-top: 0;
+    border-bottom: 1px solid var(--border-default);
+  }
+
+  .lab-index-label {
+    padding-left: 0;
+  }
+
+  .lab-index-list {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .lab-index-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lab-index-list li {
+    flex: 0 0 auto;
+  }
+
+  .physics-lab .lab-index-item {
+    grid-template-columns: 24px auto;
+    min-height: 56px;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 2px solid transparent;
+    border-left: 0;
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  .physics-lab .lab-index-item.is-active {
+    border-left: 0;
+    border-bottom-color: var(--accent-primary);
+  }
+
+  .lab-index-name {
+    white-space: nowrap;
+  }
+
+  .lab-index-meta {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .physics-lab {
+    padding: 0 0 var(--space-16);
+  }
+
+  .lab-masthead,
+  .lab-layout {
+    padding-inline: var(--space-4);
+  }
+
+  .lab-masthead {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding-top: var(--space-4);
+  }
+
+  .lab-title {
+    font-size: clamp(1.9rem, 9vw, 2.4rem);
+  }
+
+  .lab-intro {
+    font-size: 1rem;
+  }
+
+  .lab-index-list {
+    margin-inline: calc(-1 * var(--space-4));
+    padding-inline: var(--space-4);
+  }
+
+  .exp-head {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .exp-actions {
+    width: 100%;
+  }
+
+  .physics-lab .exp-action {
+    flex: 1 1 auto;
+  }
+
+  /* The figure meets the screen edges, which buys the labels about 20% more
+     space than they get inside the page padding. */
+  .exp-figure {
+    margin-inline: calc(-1 * var(--space-4));
+    padding: var(--space-3) var(--space-2);
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .exp-readout {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .exp-readout-item:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .exp-readout-item {
+    padding-right: var(--space-3);
+  }
+
+  .exp-note {
+    padding-left: var(--space-4);
+  }
 }
 
 /* The filter and tab chips used across the games and simulations screens.
-   A selected chip used to be a solid sienna block, which made eight filters
-   look like eight primary buttons at once. Selection is a tint and a border;
-   the only filled control on the screen stays the one that starts something. */
+   Selection is a tint and a border; the only filled control on a screen stays
+   the one that starts something. */
 .pill-btn {
   display: inline-flex;
   align-items: center;
@@ -378,70 +804,4 @@
   color: var(--accent-primary);
   border-color: var(--accent-line);
   font-weight: 600;
-}
-
-.sim-toggle-group {
-  display: flex;
-  align-items: center;
-}
-
-.sim-checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: 0.85rem;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-/* Explanation Box */
-.sim-explanation-box {
-  display: flex;
-  gap: var(--space-4);
-  align-items: flex-start;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  padding: var(--space-4) var(--space-5);
-  border-radius: var(--radius-md);
-}
-
-.sim-info-icon {
-  flex-shrink: 0;
-  color: var(--accent-primary);
-  margin-top: var(--space-1);
-}
-
-.sim-explanation-box p {
-  margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.55;
-  color: var(--text-secondary);
-}
-
-.sim-explanation-box strong {
-  color: var(--text-primary);
-}
-
-@media (max-width: 640px) {
-  .sim-card {
-    padding: var(--space-5) var(--space-4);
-  }
-  .sim-header-row {
-    flex-direction: column;
-  }
-  .sim-telemetry-strip {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Shown when a simulation is deliberately stopped rather than running. */
-.sim-motion-note {
-  margin: 0 0 var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
 }

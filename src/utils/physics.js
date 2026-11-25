@@ -21,9 +21,22 @@ export const predictedAirborneTime = (height, terminalVelocity = 3.2) => {
   return height / terminalVelocity;
 };
 
-/** Friction opposing a force, capped so it can never exceed it. */
-export const frictionFor = (force, frictionEnabled, coefficient = 0.18) =>
-  frictionEnabled ? Math.min(force, force * coefficient) : 0;
+/**
+ * Kinetic friction on a level track, in newtons.
+ *
+ *     f = μ m g
+ *
+ * Capped at the driving force, because friction cannot hold something back
+ * harder than it is being pushed. This used to take a share of the force
+ * itself, `min(F, μF)`, while the screen drew an arrow at `μmg` - so the
+ * picture and the motion disagreed by a factor of m·g.
+ */
+export const frictionFor = (mass, force, frictionEnabled, coefficient = 0.18, g = G) => {
+  if (!frictionEnabled) return 0;
+  if (!Number.isFinite(mass) || mass <= 0) return 0;
+  if (!Number.isFinite(force) || force <= 0) return 0;
+  return Math.min(force, coefficient * mass * g);
+};
 
 /** Net acceleration once friction is taken off the driving force. */
 export const netAcceleration = (force, mass, frictionForce = 0) => {

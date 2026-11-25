@@ -39,9 +39,14 @@ describe('free fall and terminal velocity', () => {
 });
 
 describe("Newton's second law", () => {
-  test('friction can never exceed the force driving it', () => {
-    expect(frictionFor(100, true)).toBeLessThanOrEqual(100);
-    expect(frictionFor(100, false)).toBe(0);
+  test('friction is μmg, and can never exceed the force driving it', () => {
+    // 0.18 x 10 kg x 9.8 m/s^2 = 17.64 N
+    expect(frictionFor(10, 100, true)).toBeCloseTo(17.64, 6);
+    expect(frictionFor(0, 100, true)).toBe(0);
+    // A push smaller than the friction limit moves nothing, so friction takes
+    // the whole push rather than reversing the cart.
+    expect(frictionFor(10, 5, true)).toBe(5);
+    expect(frictionFor(10, 100, false)).toBe(0);
   });
 
   test('subtracts friction from the applied force', () => {

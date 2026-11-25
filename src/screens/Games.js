@@ -306,6 +306,19 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
     return gameMap[selectedGame] || <FlowStateGame gameName={activeGameConfig.name} onBack={() => setSelectedGame(null)} />;
   }
 
+  // The laboratory is a screen of its own, not a tab inside the games header.
+  // Two headers stacked at 375 pushed the experiment below the fold and cut
+  // the index rail off mid-word, so the lab now draws its own masthead and the
+  // games chrome steps out of the way.
+  if (hubTab === 'sims') {
+    return (
+      <PhysicsSimulations
+        onBack={() => setHubTab('classic')}
+        backLabel="Back to the games room"
+      />
+    );
+  }
+
   return (
     <div className="games-hub-new">
       {/* Header */}
@@ -361,7 +374,6 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
       </header>
 
       {hubTab === 'brain' && <BrainGames onBack={() => setScreen('universe')} />}
-      {hubTab === 'sims' && <PhysicsSimulations onBack={() => setScreen('universe')} />}
 
       {hubTab === 'classic' && (
         <>
