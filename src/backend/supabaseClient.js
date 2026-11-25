@@ -1,42 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
 
-/**
- * The only place a Supabase client is created.
- *
- * The two values are the project URL and the publishable ("anon") key. Both are
- * public by design and both are baked into the bundle at build time by Create
- * React App, which is why they are read from REACT_APP_* and not from a secret
- * store. The key can read what Row Level Security allows an anonymous visitor to
- * read and nothing else; see docs/SECURITY.md for what that means and what it
- * does not.
- *
- * When either value is missing the app is exactly what it was before accounts
- * existed: no client, no network calls, everything in localStorage. That is not
- * a degraded mode, it is the default build, and every caller checks
- * `backendEnabled` before offering an account control.
- */
-const url = process.env.REACT_APP_SUPABASE_URL;
-const key = process.env.REACT_APP_SUPABASE_ANON_KEY;
+const url = (process.env.REACT_APP_SUPABASE_URL || '').trim();
+const key = (process.env.REACT_APP_SUPABASE_ANON_KEY || '').trim();
 
-/** True only when both values are present and the URL is a valid http/https URL. */
-const isValidUrl = (value) => {
-  if (!value || typeof value !== 'string') return false;
+function build() {
+  if (!url || !key) return null;
   try {
-    const parsed = new URL(value);
-    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-  } catch {
-    return false;
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null;
+    return createClient(url, key, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    });
+  } catch (e) {
+    return null;
   }
-};
+}
 
-export const backendEnabled = Boolean(url && key && isValidUrl(url));
-
-export const supabase = backendEnabled
-  ? createClient(url, key, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-      },
-    })
-  : null;
+export const supabase = build();
+export const backendEnabled = supabase !== null;
