@@ -363,7 +363,12 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
               checked={useFlowMode}
               onChange={(e) => setUseFlowMode(e.target.checked)}
             />
-            <span className="mode-text">Flow State Mode</span>
+            <span className="mode-text">
+              <span className="mode-long">Flow State Mode</span>
+              <span className="mode-short" aria-hidden="true">
+                Flow
+              </span>
+            </span>
           </label>
         )}
       </header>

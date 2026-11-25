@@ -1012,3 +1012,126 @@
   color: var(--text-tertiary);
   font-size: 0.8125rem;
 }
+
+/* --------------------------------------------------------------------------
+   A phone header is two rows: the way out and the score, then the game's
+   name. Three columns at 375 forced "Concept Check" to wrap inside the same
+   line as a back button whose label wrapped too, and pushed the score to the
+   very edge of the card.
+   -------------------------------------------------------------------------- */
+@media (max-width: 620px) {
+  .game-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      'back score'
+      'title title';
+    row-gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    align-items: center;
+  }
+
+  .game-back-btn {
+    grid-area: back;
+    padding: var(--space-1) var(--space-3);
+    white-space: nowrap;
+  }
+
+  .game-header h2 {
+    grid-area: title;
+    margin: 0;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .game-score {
+    grid-area: score;
+    justify-self: end;
+    font-size: 0.875rem;
+    gap: var(--space-2);
+  }
+
+  .game-actions,
+  .chain-actions,
+  .puzzle-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .game-actions > button,
+  .chain-actions > button,
+  .puzzle-actions > button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .duel-input-group {
+    flex-wrap: wrap;
+  }
+
+  .duel-input-group input {
+    flex: 1 1 100%;
+  }
+
+  .duel-input-group .btn-duel-submit {
+    flex: 1 1 100%;
+  }
+
+  /* The fixed bottom bar is 68px tall and would otherwise sit on the last row
+     of controls. */
+  .game-screen {
+    padding-bottom: 5.5rem;
+  }
+}
+
+/* The word builder is a field of ember, so its text has to be the ember
+   contrast, not a paragraph colour inherited from a global rule. */
+.word-builder {
+  color: var(--accent-contrast);
+}
+
+.word-builder .placeholder {
+  color: inherit;
+  opacity: 1;
+}
+
+/* Hint and Skip had no rules at all: they rendered as the browser's grey
+   default button beside a styled Submit, at 30px tall. */
+.btn-duel-hint,
+.btn-duel-skip {
+  flex: 0 0 auto;
+  min-width: 72px;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard);
+}
+
+.btn-duel-hint:hover:not(:disabled),
+.btn-duel-skip:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.btn-duel-hint:disabled,
+.btn-duel-skip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 620px) {
+  .duel-input-group .btn-duel-hint,
+  .duel-input-group .btn-duel-skip {
+    flex: 1 1 40%;
+  }
+}

@@ -623,3 +623,26 @@
     position: static;
   }
 }
+
+/* The global menu button is fixed in the top-right corner below 768px and was
+   landing on the flow toggle. Reserve its width, and on the narrowest screens
+   keep only the toggle itself so the row still fits. */
+@media (max-width: 768px) {
+  .games-header-new {
+    padding-right: calc(var(--space-4) + 48px + var(--space-3));
+  }
+}
+
+.games-flow-toggle .mode-short {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .games-flow-toggle .mode-long {
+    display: none;
+  }
+
+  .games-flow-toggle .mode-short {
+    display: inline;
+  }
+}

@@ -1,0 +1,336 @@
+[
+  {
+    "game": "Concept Scrabble",
+    "theme": "light",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-1440-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-1440-light-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "before": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physics Philosophy Mathematics Psychology Economics History Political Science 47 terms Level 1/47 A region of space that nothing can escape once entered Space · Two words B L B L "
+      },
+      "after": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physics Philosophy Mathematics Psychology Economics History Political Science 47 terms Level 1/47 A region of space that nothing can escape once entered Space · Two words B L B L "
+      }
+    }
+  },
+  {
+    "game": "Knowledge Chain",
+    "theme": "light",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-1440-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-1440-light-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "before": {
+        "score": "Score: 0",
+        "body": "← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes each one cause the next. DNA → Cells → Proteins → Genes DNA Cells Proteins Genes ← Undo Hint Check Chain Show me the chain Start Over Chain 1/20"
+      },
+      "after": {
+        "score": "Score: 0",
+        "body": "← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes each one cause the next. DNA → Cells → Proteins → Genes DNA Cells Proteins Genes Not quite: that is the right four concepts in the wrong order. ← Undo Hint Check Chain Show me"
+      },
+      "progress": "Chain 1/20"
+    }
+  },
+  {
+    "game": "Concept Puzzle",
+    "theme": "light",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-1440-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-1440-light-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "before": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosophy History Political Science Mathematics Psychology Economics 63 sentences Puzzle 1/63 A massive star that collapses can leave a _____ behind. PHYSICSTwo words Submit answer "
+      },
+      "after": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosophy History Political Science Mathematics Psychology Economics 63 sentences Puzzle 1/63 A massive star that collapses can leave a _____ behind. PHYSICSTwo words Not that. Read"
+      }
+    }
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "consoleErrors": []
+  },
+  {
+    "game": "Concept Scrabble",
+    "theme": "light",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-375-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-375-light-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "before": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physic"
+      },
+      "after": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physic"
+      }
+    }
+  },
+  {
+    "game": "Knowledge Chain",
+    "theme": "light",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-375-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-375-light-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "before": {
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes ea"
+      },
+      "after": {
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes ea"
+      },
+      "progress": "Chain 1/20"
+    }
+  },
+  {
+    "game": "Concept Puzzle",
+    "theme": "light",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-375-light-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-375-light-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "before": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosoph"
+      },
+      "after": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosoph"
+      }
+    }
+  },
+  {
+    "theme": "light",
+    "width": 375,
+    "consoleErrors": []
+  },
+  {
+    "game": "Concept Scrabble",
+    "theme": "dark",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-1440-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-1440-dark-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "before": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physics Philosophy Mathematics Psychology Economics History Political Science 47 terms Level 1/47 A region of space that nothing can escape once entered Space · Two words H E H E "
+      },
+      "after": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physics Philosophy Mathematics Psychology Economics History Political Science 47 terms Level 1/47 A region of space that nothing can escape once entered Space · Two words H E H E "
+      }
+    }
+  },
+  {
+    "game": "Knowledge Chain",
+    "theme": "dark",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-1440-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-1440-dark-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "before": {
+        "score": "Score: 0",
+        "body": "← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes each one cause the next. DNA → Cells → Proteins → Genes DNA Cells Proteins Genes ← Undo Hint Check Chain Show me the chain Start Over Chain 1/20"
+      },
+      "after": {
+        "score": "Score: 0",
+        "body": "← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes each one cause the next. DNA → Cells → Proteins → Genes DNA Cells Proteins Genes Not quite: that is the right four concepts in the wrong order. ← Undo Hint Check Chain Show me"
+      },
+      "progress": "Chain 1/20"
+    }
+  },
+  {
+    "game": "Concept Puzzle",
+    "theme": "dark",
+    "width": 1440,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-1440-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-1440-dark-after.png",
+    "layout": {
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "offenders": []
+    },
+    "probe": {
+      "before": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosophy History Political Science Mathematics Psychology Economics 63 sentences Puzzle 1/63 A massive star that collapses can leave a _____ behind. PHYSICSTwo words Submit answer "
+      },
+      "after": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosophy History Political Science Mathematics Psychology Economics 63 sentences Puzzle 1/63 A massive star that collapses can leave a _____ behind. PHYSICSTwo words Not that. Read"
+      }
+    }
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "consoleErrors": []
+  },
+  {
+    "game": "Concept Scrabble",
+    "theme": "dark",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-375-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-scrabble-375-dark-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "before": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physic"
+      },
+      "after": {
+        "progress": "Level 1/47",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Scrabble Score: 0 CATEGORY All categories Space Biology Chemistry Physic"
+      }
+    }
+  },
+  {
+    "game": "Knowledge Chain",
+    "theme": "dark",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-375-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/knowledge-chain-375-dark-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "before": {
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes ea"
+      },
+      "after": {
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Knowledge Chain Score: 0 Biology Chain Put these four in the order that makes ea"
+      },
+      "progress": "Chain 1/20"
+    }
+  },
+  {
+    "game": "Concept Puzzle",
+    "theme": "dark",
+    "width": 375,
+    "start": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-375-dark-start.png",
+    "end": "/Users/apple/velora/docs/redesign/games-after/classic/concept-puzzle-375-dark-after.png",
+    "layout": {
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "offenders": [
+        "div.mobile-nav-header",
+        "h3.",
+        "button.",
+        "svg.[object"
+      ]
+    },
+    "probe": {
+      "before": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosoph"
+      },
+      "after": {
+        "progress": "Puzzle 1/63",
+        "score": "Score: 0",
+        "body": "VELORA Home Learn Curious Dictionary Flow Games Analytics Journey Next up Roadmap Settings Question desk Intellectual Dialogues Privacy Terms of Service Forget this profile ← Back Concept Puzzle Score: 0 SUBJECT All Subjects Physics Biology Chemistry Philosoph"
+      }
+    }
+  },
+  {
+    "theme": "dark",
+    "width": 375,
+    "consoleErrors": []
+  }
+]
