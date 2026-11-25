@@ -9,8 +9,6 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +30,7 @@
   gap: var(--space-6);
   text-align: center;
   animation: card-emerge 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lg);
 }
 
 @keyframes card-emerge {
@@ -250,8 +248,6 @@
 
 .onboarding-overlay {
   background: rgba(24, 16, 9, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   font-family: var(--font-body);
 }
 
@@ -271,7 +267,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-3xl);
   background: var(--bg-elevated);
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-lg);
   text-align: left;
 }
 

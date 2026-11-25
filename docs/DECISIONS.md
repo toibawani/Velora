@@ -5,6 +5,80 @@ Short entries. Written in my voice. No buzzwords.
 
 ---
 
+## I reversed my decision on a backend, and here is the honest version
+
+**What I said before:** that I had rejected a Supabase backend with Row Level
+Security, deleted it, and that an account would teach the wrong lesson. That
+entry is still below. I am not going to quietly edit it, because the reason I
+said it was real and a decision log that rewrites itself is not a log.
+
+**What changed:** two things I could not build with localStorage.
+
+Shared explanations. The "explain it back" box already exists, and what people
+write into it is stored per browser. That means a good explanation of entropy
+written on one iPad is invisible to everyone else, forever. I wanted a reader to
+see how another person put the same idea, and there is no way to do that without
+a place where more than one browser can write.
+
+Cross-device progress. A learner who reads four lessons on a school machine and
+opens the site at home starts at zero. "No account" made that permanent. It is a
+worse trade than I thought when I wrote the entry below: the thing I was
+protecting was the five-second start, not the absence of a server.
+
+**What stays:**
+
+- No account is required, and none is offered on the way in. The cover, the
+  atlas, every lesson, every game and every simulation work signed out, exactly
+  as they did before. There is no wall, no trial and no nag.
+- Local first. Progress is written to this browser first and read from it first.
+  The server is a copy, not the original. Clearing site data still costs you your
+  local copy, and the export in Settings is still the way to keep one.
+- The account is optional and lives in Settings, not in the way.
+- Nothing about a signed-out visitor is sent anywhere. Not a page view, not a
+  topic, not a timestamp.
+
+**What is sent, and when:**
+
+Only after someone signs in with an emailed link, and only these:
+
+- progress events, as `{ topic, kind, day }`: that a topic's lesson was read, and
+  on which calendar day. No minutes, no scores, no answers.
+- the explanation they choose to submit, with the topic it belongs to, so I can
+  review it. Submitting is a separate, deliberate action with its own button.
+- the email address they typed to receive the link. It is the login. There is no
+  other use for it and no newsletter.
+
+Nothing else. Notes, questions, game results, review schedules and the dashboard
+on the Learn screen stay in the browser and are never uploaded. The Privacy page
+lists the same thing in the same words.
+
+**Why Row Level Security:** because the key in the bundle is public and has to be.
+A static site cannot keep a secret, so the browser holds a key that can only do
+what the database lets an anonymous or signed-in role do. Every table has RLS
+enabled and a policy that ties a row to `auth.uid()`. A signed-in person can read
+their own progress and no one else's, can insert their own explanation, and can
+read only explanations marked approved. The public key on its own gets nothing:
+I confirmed that from a terminal by asking for `progress_events` with it and
+receiving `permission denied for table progress_events` (SQLSTATE 42501).
+
+What RLS does not do is make the app tamper-proof. A person can still write any
+progress they like for themselves. That is their own record and it is the same
+freedom they had in localStorage. What it stops is writing someone else's.
+
+**What I got wrong about the old entry:** "A database costs money, needs
+maintenance." It does, and this one is on a free tier that will pause when idle.
+I am not pretending otherwise; the app has to keep working when the project is
+paused, which is why every backend call is optional and failure is a state the
+UI shows rather than an error page.
+
+**Where the schema lives now:** `supabase/migrations/20261123_001_init.sql` holds
+the four tables, their constraints, the policies and the submission limit, and
+`supabase/tests/rls.sql` asserts the policies from two fake users. For a while
+the database was the only copy of its own definition, which is how a schema
+drifts from the code using it. It is not the only copy now.
+
+---
+
 ## No backend and localStorage behind one versioned registry
 
 **What I chose:** The whole app runs in the browser. Content comes from files
@@ -181,3 +255,60 @@ truth and prints it.
 There is more. More subjects still unwritten. More levels to write. More games
 to make into actual products instead of content audits. This is a living
 document and it will change as the app changes.
+
+---
+
+## Row Level Security policies
+
+**Where they live:** `supabase/migrations/20261123_001_init.sql` holds the four
+tables (`profiles`, `progress_events`, `explanations`, `reports`), their
+constraints, the RLS policies, and the submission rate limit.
+
+**Why RLS:** the Supabase anon key is public by design — it is baked into the
+bundle at build time. A static site cannot keep a secret, so the browser holds a
+key that can only do what the database lets an anonymous or signed-in role do.
+Every table has RLS enabled and a policy that ties a row to `auth.uid()`.
+
+**What each policy does:**
+
+- `profiles` — select/insert/update only your own row (`id = auth.uid()`).
+- `progress_events` — select and insert only your own rows (`user_id = auth.uid()`).
+- `explanations` — anyone (anon or authenticated) reads rows where
+  `status = 'approved'`; authenticated users also read their own rows. Inserts
+  are allowed only for your own user_id with `status = 'pending'`. No update or
+  delete policy exists, so users can never change a submission's status.
+- `reports` — insert as yourself; read only your own reports.
+
+**What RLS does not do:** it does not make the app tamper-proof. A person can
+write any progress they like for themselves — that is their own record, the same
+freedom they had in localStorage. What RLS stops is writing or reading someone
+else's data.
+
+**Verification:** `supabase/tests/rls.sql` asserts the policies from two fake
+users. I confirmed from a terminal that the public key receives
+`permission denied for table progress_events` (SQLSTATE 42501) when it tries to
+read `progress_events`.
+
+---
+
+## Moderated community explanations flow
+
+**The flow:** `pending` → `approved` (or `rejected`).
+
+1. A signed-in user submits an explanation for a topic. The insert is written
+   with `status = 'pending'` and `user_id = auth.uid()`. The database rate
+   limits to 5 explanations per user per hour.
+2. The submission is invisible to everyone except the author until a reviewer
+   approves it. The `explanations_read` policy returns only rows where
+   `status = 'approved'` (plus the author's own rows).
+3. No client-side code can change `status`. There is no update or delete policy
+   on `explanations`, and `UPDATE`/`DELETE` are revoked from `anon` and
+   `authenticated`. Only a reviewer with direct database access can flip a row
+   to `approved` or `rejected`.
+4. The UI tells the submitter in plain words: "Pending review. It is queued,
+   and nobody else can see it until it has been read and approved." It never
+   says a submission is published when it is not.
+
+**Why moderated:** explanations are user-generated text. Without review, a
+spam or harmful submission would appear under a topic immediately. The pending
+state means nothing unreviewed reaches another reader.

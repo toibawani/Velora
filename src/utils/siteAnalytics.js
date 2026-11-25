@@ -6,11 +6,13 @@ import { KEYS, FAILURE, readValue, writeValue } from './storage';
  *
  * Privacy-respecting, cookieless, aggregate-only site analytics.
  *
- * The promise of VELORA is "nothing leaves your browser." Sending even an
- * anonymised page view to a third party breaks that promise for the visitor
- * who has not agreed to it, so every beacon in this module is gated on an
+ * Nothing leaves this browser for a third party unless the visitor asks for it.
+ * Sending even an anonymised page view to someone who has not agreed to it is
+ * not a trade this app makes, so every beacon in this module is gated on an
  * explicit opt-in, and the opt-in defaults to off. When it is off, nothing is
- * sent, nothing is read from the network, and this module is a no-op.
+ * sent, nothing is read from the network, and this module is a no-op. This is
+ * separate from the optional account, which sends progress only after signing
+ * in and never sends any of these events.
  *
  * What is sent (only when opted in):
  *   - page views (path and title, no personal data)
@@ -31,8 +33,7 @@ import { KEYS, FAILURE, readValue, writeValue } from './storage';
 /*
  * The operator plugs their GoatCounter subdomain here (the part before
  * .goatcounter.com) to actually send beacons. Left blank, nothing is sent
- * anywhere — which is the safe default for a no-account, no-backend app that
- * promises nothing leaves your browser.
+ * anywhere, which is the safe default and the state of this build.
  */
 let GOATCOUNTER_CODE = '';
 

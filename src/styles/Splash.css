@@ -115,7 +115,8 @@
   margin: 0;
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(3.25rem, 7.4vw, 6.5rem);
+  font-size: var(--text-display);
+  overflow-wrap: anywhere;
   font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
   font-weight: 600;
   letter-spacing: -0.035em;

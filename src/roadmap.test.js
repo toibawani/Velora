@@ -106,7 +106,9 @@ test('collaboration is listed as removed, with the reason', () => {
   const item = ROADMAP.flatMap((section) => section.items).find((entry) => entry.name === 'Collaboration');
   expect(item).toBeDefined();
   expect(item.state).toBe('removed');
-  expect(item.detail).toMatch(/backend/i);
+  // The reason changed when the backend arrived: what is missing is a forum of
+  // people replying to each other, not a database.
+  expect(item.detail).toMatch(/still not here/i);
 });
 
 test('nothing in the page promises a date or a delivery', () => {
@@ -137,18 +139,14 @@ test('nothing in the page uses the hype vocabulary this build rejects', () => {
   });
 });
 
-test('the page never implies a backend that does not exist', () => {
-  // Everything is localStorage. "Synced", "across your devices", "your
-  // account" and "saved to the cloud" all describe a server this app lacks.
-  //
-  // This matches whole claims rather than the bare words, because the page has
-  // to be allowed to say "there is no account to sync to" in order to say that
-  // there is no account. Catching the noun alone would force that sentence to
-  // be deleted, which would leave the reader with less information, not more.
-  expect(allText).not.toMatch(/(is|are|has been|have been)\s+synced|syncing across|across (your )?devices|saved to the cloud|on our servers?|your account|sign(ed)? in to sync/i);
-  // "Accounts and sign-in" is the name of a removed feature, so the phrase is
-  // allowed in that one place and nowhere else.
-  expect(allText.replace(/Accounts and sign-in/g, '')).not.toMatch(/sign(ed)? in|log ?in|create an account/i);
+test('the page never promises more sync than exists', () => {
+  // Progress syncs now, so the old blanket ban on the word is wrong. What must
+  // stay banned is every claim the app cannot keep: that everything is synced,
+  // that notes are, that there is a cloud copy, or that a second device gets
+  // anything except topic and day.
+  expect(allText).not.toMatch(/saved to the cloud|on our servers?|your account|syncs? everything|notes (are )?sync|everything is synced/i);
+  // And the limit has to be said out loud, not merely left out.
+  expect(allText).toMatch(/study minutes[\s\S]{0,80}do not sync/i);
 });
 
 test('every item carries a state the screen knows how to render', () => {

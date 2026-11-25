@@ -283,7 +283,14 @@ describe('what each game has actually produced', () => {
 
     // The hub is replaced by a round, whichever game it drew.
     expect(screen.queryByTestId('games-pick')).toBeNull();
-    expect(screen.getByRole('heading', { name: new RegExp(CLASSIC_GAMES.map((game) => game.name).join('|')) })).toBeInTheDocument();
+    // The picker draws at random, and one of the six draws a screen whose own
+    // heading is longer than its catalogue name: Relativity Lab opens as
+    // "General Relativity & Spacetime Laboratory". Matching the catalogue name
+    // exactly made this test fail on that one draw and pass on the other five,
+    // which is why CI went red once and then green on the same code. "Relativity"
+    // is the part both names share, so it is the part this asserts.
+    const names = CLASSIC_GAMES.map((game) => game.name.replace('Relativity Lab', 'Relativity'));
+    expect(screen.getByRole('heading', { name: new RegExp(names.join('|')) })).toBeInTheDocument();
   });
 
   test('a filter with nothing in it leaves nothing to pick', () => {

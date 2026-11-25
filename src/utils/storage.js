@@ -39,8 +39,8 @@ export const KEYS = {
   PREFERENCE_PREFIX: 'velora_pref_',
   // Explanation boards are keyed per term, e.g. velora_explanations_momentum.
   EXPLANATION_BOARD_PREFIX: 'velora_explanations_',
-  // Analytics opt-in. VELORA's promise is that nothing leaves your browser, so
-  // external (cross-device, aggregate) analytics is opt-in and defaults off.
+  // Analytics opt-in. Nothing leaves this browser for a third party without
+  // this flag, so external (aggregate) analytics is opt-in and defaults off.
   ANALYTICS_OPTIN: 'velora_analytics_optin',
   // Return-visit counter for the 7-day aggregate measure. Stored as
   // { firstSeen, lastSeen, returnCount }; never sent as an identity.
@@ -49,6 +49,10 @@ export const KEYS = {
   // answered it. Stored as { date, questionId, answered }. One question per
   // calendar day, picked deterministically so everyone sees the same one.
   TODAY_QUESTION: 'velora_today_question',
+  // Dated progress, as { topic_id, kind, day }. This is the local original; the
+  // account holds a copy. Kept apart from the usage log because the usage log is
+  // pruned after thirty days and progress must not be.
+  PROGRESS_EVENTS: 'velora_progress_events',
   // Pick up where you left off: the last lesson opened, so the atlas can offer
   // a one-tap resume. Stored as { subject, topicId, topicTitle, openedAt }.
   LAST_LESSON: 'velora_last_lesson',
@@ -109,6 +113,7 @@ const KEY_LABELS = {
   [KEYS.ANALYTICS_OPTIN]: 'Analytics opt-in',
   [KEYS.RETURN_VISITS]: 'Return visits',
   [KEYS.TODAY_QUESTION]: 'Today’s question',
+  [KEYS.PROGRESS_EVENTS]: 'Progress',
   [KEYS.LAST_LESSON]: 'Last lesson opened',
   [KEYS.GAME_RESULTS]: 'Game results',
   [KEYS.RECENT_TERMS]: 'Recently opened terms',

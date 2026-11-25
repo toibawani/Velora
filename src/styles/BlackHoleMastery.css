@@ -45,22 +45,15 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  background: linear-gradient(
-    to bottom,
-    rgba(246, 239, 228, 0.82),
-    rgba(246, 239, 228, 0.94) 40%,
-    rgba(246, 239, 228, 0.97)
-  );
+  /* One flat scrim over the canvas. A vertical gradient here was invisible as a
+     gradient and only made the top of the reading surface lighter than the
+     bottom, so the text sat on two slightly different papers. */
+  background: rgba(243, 237, 225, 0.95);
   padding-bottom: var(--space-16);
 }
 
 :root[data-theme='dark'] .bhm-shell {
-  background: linear-gradient(
-    to bottom,
-    rgba(23, 16, 9, 0.86),
-    rgba(23, 16, 9, 0.95) 40%,
-    rgba(23, 16, 9, 0.98)
-  );
+  background: rgba(20, 16, 11, 0.96);
 }
 
 /* ---- Header ---------------------------------------------------------- */

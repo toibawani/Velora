@@ -100,7 +100,7 @@
   background: var(--accent-primary) !important;
   color: var(--accent-contrast) !important;
   border-color: var(--accent-primary) !important;
-  box-shadow: 0 4px 12px var(--accent-shadow) !important;
+  box-shadow: none !important;
 }
 
 /* Game Card */

@@ -45,7 +45,7 @@
   font: inherit;
   font-size: 0.9rem;
   cursor: pointer;
-  border-left: 3px solid var(--accent-primary);
+
 }
 .st-back:hover {
   border-color: var(--accent-primary);
@@ -555,4 +555,58 @@
 .st-section .st-danger-btn {
   border-color: var(--danger-line);
   color: var(--color-error);
+}
+
+/* The account section: one field and one button, plus the state after each press.
+   The input is 44px tall because this is the one place in Settings where a
+   thumb has to hit a text field, and the audit's touch-target rule applies. */
+.st-account-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.st-account-input {
+  min-height: 44px;
+  flex: 1 1 16rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.st-account-input:focus-visible {
+  outline: 2px solid var(--color-focus, currentColor);
+  outline-offset: 2px;
+}
+
+/* Sync status: one sentence, and a Retry only when a retry is the useful thing
+   to offer. The layout keeps the button beside the sentence on a phone without
+   letting either one be squeezed below a 44px target. */
+.st-sync {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.st-sync-line {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.st-sync-quiet {
+  opacity: 0.8;
+}
+
+.st-sync .st-choice {
+  min-height: 44px;
 }

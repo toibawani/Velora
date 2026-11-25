@@ -48,10 +48,15 @@ describe('local profile screen', () => {
     expect((await axe(container)).violations).toEqual([]);
   });
 
-  test('states plainly that nothing is transmitted', () => {
+  test('states what is stored here and when it can leave', () => {
     render(<LocalProfile setScreen={jest.fn()} onStart={jest.fn()} showToast={jest.fn()} />);
-    expect(screen.getByText(/no email, no password, no account/i)).toBeInTheDocument();
-    expect(screen.getByText(/never transmitted anywhere/i)).toBeInTheDocument();
+    // The screen asks for a name and never for an email or a password. It cannot
+    // say "no account" any more: an account exists, it is just somewhere else.
+    expect(screen.getByText(/no email and no password/i)).toBeInTheDocument();
+    expect(screen.queryByText(/no account/i)).not.toBeInTheDocument();
+    // The old sentence was "never transmitted anywhere", which stopped being
+    // true when sync arrived. The claim now names the condition.
+    expect(screen.getByText(/unless you sign in from Settings/i)).toBeInTheDocument();
   });
 
   test('waits for blur before correcting a too-short name', () => {

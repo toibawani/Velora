@@ -150,7 +150,7 @@ test('has no reminder switches, and says why', () => {
 test('names the profile as a local name, not an account', () => {
   open();
   const section = screen.getByRole('region', { name: /name on this device/i });
-  expect(within(section).getByText(/not an account/i)).toBeInTheDocument();
+  expect(within(section).getByText(/not the account/i)).toBeInTheDocument();
   expect(within(section).getByText(/Ada/)).toBeInTheDocument();
 });
 

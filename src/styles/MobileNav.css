@@ -44,7 +44,6 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: var(--z-modal-backdrop);
-  backdrop-filter: blur(2px);
   transition: opacity var(--duration-normal) var(--ease-standard);
 }
 

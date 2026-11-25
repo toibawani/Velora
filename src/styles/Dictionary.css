@@ -43,7 +43,7 @@
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  border-left: 4px solid var(--accent-primary);
+
 }
 
 @media (max-width: 768px) {
@@ -537,7 +537,7 @@
 .related-chip {
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   color: var(--text-secondary);
   cursor: pointer;
   font-family: inherit;
@@ -710,7 +710,9 @@
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px var(--shadow-color);
+  /* Sticky, so it does need to read as layered. A rule says that without a
+     blurred smear under a rail of 8px letters. */
+  box-shadow: none;
 }
 
 .dict-letter-bar-label,

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Shield, EyeOff } from 'lucide-react';
 import { isOptedIn } from '../utils/siteAnalytics';
 import '../styles/Legal.css';
 
@@ -8,10 +7,11 @@ import '../styles/Legal.css';
  * Privacy screen.
  *
  * Every sentence here is checked against what the code does. The stored data
- * is localStorage. The only outbound request is the GoatCounter beacon in
+ * is localStorage. The only outbound requests are the GoatCounter beacon in
  * utils/siteAnalytics.js, which needs both an explicit opt-in and a configured
- * endpoint. This deployment has no endpoint configured, so even the opt-in
- * currently sends nothing.
+ * endpoint, and the progress and explanation calls in src/backend/api.js, which
+ * cannot run until someone signs in on purpose. This deployment configures no
+ * analytics endpoint, so the beacon cannot fire even when switched on.
  */
 
 Privacy.propTypes = { setScreen: PropTypes.shape({ "setScreen": PropTypes.func }) };
@@ -35,20 +35,51 @@ function Privacy({ setScreen }) {
           <section className="legal-section">
             <h2>What stays here</h2>
             <p>
-              <EyeOff size={14} aria-hidden="true" /> VELORA has no accounts and
-              no backend. Your name, your notes, your saved lessons, your
-              questions and the minutes recorded against each topic are stored in
-              this browser&apos;s localStorage. They are not sent to a server,
-              because there is no server to send them to. Clearing site data
-              deletes them, and there is no second copy to recover.
+              Your name, your notes, your saved lessons, your questions, your review schedule, your game
+              results and the minutes recorded against each topic are stored in
+              this browser&apos;s localStorage. They are not uploaded, signed in
+              or signed out. Clearing site data deletes them, and the only copy
+              is the one in Settings, which you make yourself.
             </p>
           </section>
 
           <section className="legal-section">
-            <h2>The one thing that can leave</h2>
+            <h2>What is sent, and only after you sign in</h2>
             <p>
-              <Shield size={14} aria-hidden="true" /> External analytics is a
-              single opt-in switch in Settings. It is off by default. A beacon is
+              An account is optional and lives in Settings. Nothing below happens
+              until you ask for a sign-in link and open it. Every lesson, game,
+              simulation and dictionary entry works without an account.
+            </p>
+            <p>Once you are signed in, three things can leave this browser:</p>
+            <ul>
+              <li>
+                progress events, as a topic, a kind and a calendar day: that a
+                topic&apos;s lesson was read, and on which day. No minutes, no
+                scores, no answers, no notes.
+              </li>
+              <li>
+                an explanation you write into the explain-it-back box and then
+                submit. It carries the topic it belongs to, so I can review it
+                before anyone else can read it. Submitting is its own button.
+              </li>
+              <li>
+                the email address you typed to receive the sign-in link. It is
+                the login. It is not used for anything else and there is no
+                newsletter.
+              </li>
+            </ul>
+            <p>
+              Everything else stays in the browser: notes, questions, study
+              minutes, review schedules, game results and the analytics on the
+              Learn screen. Signing out stops the sending immediately; the local
+              copy is untouched.
+            </p>
+          </section>
+
+          <section className="legal-section">
+            <h2>The one thing that can leave without an account</h2>
+            <p>
+              External analytics is a single opt-in switch in Settings. It is off by default. A beacon is
               only sent when that switch is on <strong>and</strong> whoever
               deployed this build has configured a GoatCounter address. In this
               deployment the address is blank, so switching it on currently sends
@@ -66,9 +97,9 @@ function Privacy({ setScreen }) {
             <p>
               There are no cookies, no fingerprinting, no advertising identifier
               and no name attached to any of it. The numbers are aggregated by
-              GoatCounter, not by VELORA. Nothing you type is sent: notes,
-              questions and explanations stay in this browser, and no event
-              carries their text.
+              GoatCounter, not by VELORA. Notes and questions are never sent: they
+              stay in this browser. An explanation is sent only when you press
+              submit on one, and only while signed in.
             </p>
           </section>
 

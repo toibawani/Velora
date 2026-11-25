@@ -63,11 +63,11 @@
   color: var(--text-secondary);
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
-  border-left: 3px solid var(--accent-primary);
+
   border-radius: var(--radius-sm);
   padding: 2px var(--space-2);
   white-space: nowrap;
-  animation: quiz-streak-in 0.18s var(--ease-standard);
+  animation: none;
 }
 
 @keyframes quiz-streak-in {
@@ -132,7 +132,7 @@
 .quiz-review-item {
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
-  border-left: 3px solid var(--accent-primary);
+
   border-radius: var(--radius-sm);
   padding: var(--space-4) var(--space-5);
 }
@@ -781,7 +781,7 @@
   margin-right: var(--space-2);
   padding: 1px 8px;
   border: 1px solid var(--border-default);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   color: var(--text-tertiary);
   font-size: 0.72rem;
   letter-spacing: 0.06em;

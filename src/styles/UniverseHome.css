@@ -215,7 +215,11 @@
   margin: 0;
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.4vw, 2.85rem);
+  /* One display step for every hero in the book. The atlas used to cap its own
+     headline at 45px, so the screen a reader starts on had a smaller title than
+     the cover and read as a section of it rather than its own page. */
+  font-size: var(--text-display);
+  overflow-wrap: anywhere;
   font-weight: 550;
   letter-spacing: -0.022em;
   line-height: 1.12;
@@ -265,7 +269,10 @@
 .uh-atlas-section { scroll-margin-top: var(--space-16); }
 .uh-section-heading-row {
   display: grid;
-  grid-template-columns: 1.15fr minmax(240px, 0.7fr);
+  /* minmax(0, ...) rather than a 240px floor: at 320px the fixed floor kept the
+     row in two columns and pushed the right-hand paragraph past the edge. A
+     grid track that cannot shrink below its content is not responsive. */
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.7fr);
   gap: var(--space-10);
   align-items: end;
   padding: 0 0 var(--space-6);
@@ -279,7 +286,7 @@
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
-.uh-section-heading-row > p { margin: 0 0 var(--space-1); color: var(--text-secondary); font-size: 1.02rem; line-height: 1.6; }
+.uh-section-heading-row > p { margin: 0 0 var(--space-1); color: var(--text-secondary); font-size: 1.02rem; line-height: 1.6; overflow-wrap: anywhere; }
 
 .uh-search-wrap { position: relative; margin: var(--space-2) 0 var(--space-5); display: flex; align-items: center; }
 .uh-search-wrap > svg { position: absolute; left: 1.15rem; z-index: 2; color: var(--text-tertiary); pointer-events: none; }
@@ -505,9 +512,10 @@
   .uh-header-actions .theme-toggle { display: none; }
   .uh-main { width: min(100% - 1.4rem, 1180px); padding-top: var(--space-8); }
   .uh-hero { padding-bottom: var(--space-10); }
-  /* 14vw at 375px gave a 52px headline that filled most of the first
-     screen before a reader saw the index. */
-  .uh-hero h1 { font-size: clamp(2.4rem, 11vw, 3.6rem); }
+  /* The hero keeps the display token's 56px floor on a phone: at 18px body
+     type that is 3.1x, which is the ratio the brief asks for. It wraps rather
+     than shrinking. */
+  .uh-hero h1 { max-width: none; }
   .uh-section-heading-row { grid-template-columns: 1fr; gap: var(--space-3); }
   .uh-atlas-grid { display: block; min-height: 0; border-radius: var(--radius-2xl); }
   /* The thumb-index goes horizontal on a phone. The rail-specific rules that
@@ -776,7 +784,8 @@
 .uh-hero h1 {
   max-width: 20ch;
   margin-top: var(--space-5);
-  font-size: clamp(2.5rem, 4.6vw, 3.9rem);
+  font-size: var(--text-display);
+  overflow-wrap: anywhere;
   font-weight: 600;
   font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 96;
   letter-spacing: -0.032em;
@@ -873,7 +882,7 @@
 /* ---- Section headers ---- */
 
 .uh-section-heading-row {
-  grid-template-columns: 1.1fr minmax(240px, 0.65fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.65fr);
   gap: var(--space-8);
   padding-bottom: var(--space-5);
   border-bottom: 1px solid var(--border-default);
@@ -1339,4 +1348,14 @@
     grid-row: 2;
     justify-self: start;
   }
+}
+
+/* ---- Phone override that has to stay last ----
+   The Collection pass above re-declares .uh-section-heading-row with two
+   columns, and because it comes after the 768px block it beat that block's
+   single-column rule at every width. At 320px the row then kept a 240px second
+   track and pushed its paragraph 51px past the edge. Restated here, at the end
+   of the file, so the phone rule actually wins the cascade. */
+@media (max-width: 768px) {
+  .uh-section-heading-row { grid-template-columns: 1fr; }
 }

@@ -28,8 +28,9 @@ import '../styles/NextUp.css';
  *
  * It is not a todo app and does not pretend to be one. There are no due dates,
  * because a due date on something stored in one browser cannot fire once the
- * tab is closed, and there is no reminder, because there is no service worker
- * and no server to send one from. A list that looked like a todo app and could
+ * tab is closed, and there is no reminder, because there is no service worker,
+ * no notification permission and no scheduled job. A list that looked like a
+ * todo app and could
  * not do any of the things a todo app does would be worse than a list that says
  * what it is.
  *

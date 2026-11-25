@@ -25,7 +25,7 @@
   width: 100%;
   padding: var(--space-8);
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lg);
   animation: modal-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

@@ -56,6 +56,11 @@ jobs:
       - run: npx tsc --noEmit
       - run: CI=true npx react-scripts test --watchAll=false --coverage
       - run: npm run build
+        env:
+          # Public by design, and empty when the secrets are unset: the build
+          # then produces the signed-out app with no network path at all.
+          REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}
+          REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
       # Token contrast is a pure-node gate, so it belongs with the no-browser
       # checks. It reads the real values out of design-tokens.css, composites
       # translucent roles over the ground they sit on, and fails on anything
@@ -79,6 +84,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Public by design, and empty when the secrets are unset: the build
+          # then produces the signed-out app with no network path at all.
+          REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}
+          REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
       # Every audit below drives real Chrome. If the runner image ever stops
       # shipping it, fail here with a clear message naming where it looked,
       # rather than four jobs later with "No Chrome found".
@@ -118,6 +128,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Public by design, and empty when the secrets are unset: the build
+          # then produces the signed-out app with no network path at all.
+          REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}
+          REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
       # Same reason as the layout job: this one is about the browser, not the app.
       - name: locate a browser
         run: node scripts/chrome.js

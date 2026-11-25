@@ -23,8 +23,10 @@ Three things that are not the usual demo:
 - **Unwritten topics are visible.** The index marks every topic as written or
   "not written yet". Three of the six fields have no curriculum yet and the
   atlas says so instead of opening a placeholder page.
-- **There is no backend.** All content is in this repository and all state is in
-  localStorage. Nothing is sent anywhere, and there is no account to create.
+- **No account is required.** All content is in this repository and all state
+  is in localStorage. An optional account, in Settings, copies progress to
+  another device and submits explanations for review. Nothing is sent anywhere
+  until you choose that.
 - **The checks are proven to fail.** Each gate was broken on purpose and watched
   going red before it was trusted. See [the case study](docs/CASE-STUDY.md) for
   three of them, with commit hashes.
@@ -105,7 +107,8 @@ verification, and the screen no longer presents it as if it were.
   topics are listed so the gap is visible, not hidden.
 - Science, Philosophy and History are partly written. The index shows the exact
   count per field.
-- No backend and no accounts. Clearing site data removes your progress.
+- No account is needed. Clearing site data removes this browser's progress; an
+  optional account keeps a copy.
 - The games play and report; they are content audits, not finished products.
 
 ---
@@ -125,8 +128,10 @@ mismatch looks like a broken repository rather than a version difference. If
 `npm ci` fails on a lockfile error, run `npm --version` first; the answer is
 usually there.
 
-There are no environment variables. The app reads its content from files in this
-repository.
+The app reads its content from files in this repository and needs no
+configuration to run. Two optional variables, `REACT_APP_SUPABASE_URL` and
+`REACT_APP_SUPABASE_ANON_KEY`, switch the optional account on. Without them the
+build is the signed-out app and makes no network calls at all.
 
 To run what CI runs:
 

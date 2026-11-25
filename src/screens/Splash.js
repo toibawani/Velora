@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArrowRight, BookOpen } from 'lucide-react';
-import { CURRICULUM } from '../data/curriculum';
 import { CURIOUS_TERMS } from '../data/dictionary';
+import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
+import { fieldCoverageByDiscipline } from '../data/atlasResolution';
 
 import '../styles/Splash.css';
 
@@ -20,12 +20,29 @@ import '../styles/Splash.css';
  */
 SplashScreen.propTypes = { setScreen: PropTypes.func };
 
-const curriculumCounts = () => {
-  const fields = Object.values(CURRICULUM);
-  const modules = fields.flatMap((field) => field.modules || []);
-  const topics = modules.flatMap((module) => module.topics || []);
-  return { fields: fields.length, disciplines: modules.length, topics: topics.length };
-};
+/**
+ * The cover's counts come from the same records the atlas uses.
+ *
+ * The previous version counted CURRICULUM, which holds five fields, and printed
+ * "05 Fields" on the cover while the inventory one click away said six fields
+ * across 572 topics. Two screens disagreeing about the shape of the product in
+ * the first ten seconds is the exact failure this stage exists to remove, so the
+ * field and discipline counts are the atlas's, and the topics count is labelled
+ * "Atlas topics" to say which number it is.
+ */
+const coverCounts = () => ({
+  fields: KNOWLEDGE_FIELDS.length,
+  disciplines: KNOWLEDGE_STATS.disciplines,
+  topics: KNOWLEDGE_STATS.topics,
+  // Written lessons, counted the same way the inventory counts them. The
+  // curriculum's topic total (121) is larger than the number of topics with
+  // something actually written behind them (116), and only the second number
+  // is a "written lesson".
+  written: KNOWLEDGE_FIELDS.reduce(
+    (sum, field) => sum + fieldCoverageByDiscipline(field).written,
+    0
+  ),
+});
 
 /**
  * The plate: nested arches, a disc, a pair of crossed lines and a horizon.
@@ -70,7 +87,7 @@ function CoverPlate() {
 }
 
 function SplashScreen({ setScreen }) {
-  const counts = curriculumCounts();
+  const counts = coverCounts();
 
   return (
     <div className="splash">
@@ -80,13 +97,13 @@ function SplashScreen({ setScreen }) {
           display size, in the statement column; repeating it here in 15px caps
           made the cover read as a website header with a logo in it.
         */}
-        <header className="splash-topbar vl-settle" style={{ '--i': 0 }}>
+        <header className="splash-topbar">
           <span className="splash-imprint">First edition</span>
-          <span className="splash-edition">No account · no email · no password</span>
+          <span className="splash-edition">No account needed · no email · no password</span>
         </header>
 
         <div className="splash-grid">
-          <figure className="splash-plate vl-field vl-field--blush vl-settle" style={{ '--i': 1 }}>
+          <figure className="splash-plate vl-field vl-field--blush">
             <CoverPlate />
             <figcaption className="splash-plate-caption">
               <span>Fig. 1</span>
@@ -94,7 +111,7 @@ function SplashScreen({ setScreen }) {
             </figcaption>
           </figure>
 
-          <section className="splash-statement vl-settle" style={{ '--i': 2 }}>
+          <section className="splash-statement">
             <p className="vl-kicker vl-kicker--rule">A reference book for curious people</p>
 
             <h1 className="splash-wordmark">VELORA</h1>
@@ -107,7 +124,6 @@ function SplashScreen({ setScreen }) {
             <div className="splash-actions">
               <button type="button" className="vl-btn splash-start" onClick={() => setScreen('profile')}>
                 Start learning
-                <ArrowRight size={16} aria-hidden="true" />
               </button>
               <button type="button" className="vl-btn vl-btn--quiet" onClick={() => setScreen('landing')}>
                 Look around first
@@ -115,14 +131,13 @@ function SplashScreen({ setScreen }) {
             </div>
 
             <p className="splash-footer">
-              No account, no email, no password. Everything stays in this browser.
+              No account needed, no email, no password. Everything you write stays in this
+              browser unless you sign in.
             </p>
           </section>
 
-          <aside className="splash-index vl-field vl-field--butter vl-settle" aria-label="What is inside" style={{ '--i': 3 }}>
-            <p className="splash-index-label">
-              <BookOpen size={13} aria-hidden="true" /> Inside
-            </p>
+          <aside className="splash-index vl-field vl-field--butter" aria-label="What is inside">
+            <p className="splash-index-label">Inside</p>
             <dl className="splash-index-list">
               <div>
                 <dt>Fields</dt>
@@ -133,8 +148,12 @@ function SplashScreen({ setScreen }) {
                 <dd>{counts.disciplines}</dd>
               </div>
               <div>
-                <dt>Lesson topics</dt>
+                <dt>Atlas topics</dt>
                 <dd>{counts.topics}</dd>
+              </div>
+              <div>
+                <dt>Written lessons</dt>
+                <dd>{counts.written}</dd>
               </div>
               <div>
                 <dt>Dictionary entries</dt>
@@ -142,7 +161,7 @@ function SplashScreen({ setScreen }) {
               </div>
             </dl>
             <p className="splash-index-note">
-              Counted from the curriculum and the dictionary themselves, not written by hand.
+              Counted from the atlas and the dictionary themselves, not written by hand.
             </p>
           </aside>
         </div>

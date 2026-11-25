@@ -129,10 +129,10 @@ function ShadowLearning({ topic, onBack, onNotify }) {
 
       <div className="shadow-note">
         <p>
-          <strong>There is no community here.</strong> VELORA has no server, so
-          these notes are not shared and nobody can reply to them. They are a
-          record of how you explained something today, which is useful the next
-          time you try.
+          <strong>There is no comment thread here.</strong> These notes stay in
+          this browser: they are not posted, nobody can reply to them, and nobody
+          else can read them. They are a record of how you explained something
+          today, which is useful the next time you try.
         </p>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ArrowRight } from 'lucide-react';
 import { KNOWLEDGE_FIELDS, KNOWLEDGE_STATS } from '../data/knowledgeFields';
 import { fieldCoverageByDiscipline } from '../data/atlasResolution';
 import { CURIOUS_TERMS } from '../data/dictionary';
@@ -65,25 +64,27 @@ function LandingPage({ setScreen }) {
 
       <section className="lp-hero" aria-labelledby="lp-hero-title">
         <div className="lp-hero-copy vl-settle" style={{ '--i': 0 }}>
-          <p className="vl-kicker vl-kicker--rule">A look around, before you start</p>
           <h1 id="lp-hero-title" className="lp-hero-title">
             Look inside
             <br />
-            <em>before you start.</em>
+            before you start.
           </h1>
           <p className="lp-hero-lede">
             Velora is a reference book for curious people. Every topic is listed from day one.
             The ones with nothing written behind them say so, in the index, rather than opening
-            a half-finished page. There is no server, no account and nothing to install.
+            a half-finished page. There is nothing to install and no account to create.
           </p>
           <div className="lp-hero-actions">
             <button type="button" className="vl-btn" onClick={() => setScreen('profile')}>
-              Set up this device <ArrowRight size={16} aria-hidden="true" />
+              Set up this device
             </button>
           </div>
           <p className="lp-fine-print">
-            Setting up asks for a display name and stores it in this browser. There is no email,
-            no password and no account behind it.
+            Sign in to sync across devices. Not required.
+          </p>
+          <p className="lp-fine-print">
+            Setting up asks for a display name and stores it in this browser. There is no email
+            and no password. An account is optional and lives in Settings, not here.
           </p>
         </div>
 
@@ -105,7 +106,7 @@ function LandingPage({ setScreen }) {
       <section className="lp-inventory" aria-labelledby="inventory-title">
         <div className="lp-section-head">
           <div>
-            <span className="vl-kicker vl-kicker--rule">01 — The whole inventory</span>
+            <span className="vl-kicker vl-kicker--rule">01 / The whole inventory</span>
             <h2 id="inventory-title" className="vl-heading">
               Here is exactly what is written, and what is not.
             </h2>
@@ -144,7 +145,7 @@ function LandingPage({ setScreen }) {
       <section className="lp-fields" aria-labelledby="coverage-title">
         <div className="lp-section-head">
           <div>
-            <span className="vl-kicker vl-kicker--rule">02 — By field</span>
+            <span className="vl-kicker vl-kicker--rule">02 / By field</span>
             <h2 id="coverage-title" className="vl-heading">
               Three fields are written. Three are an outline.
             </h2>
@@ -179,19 +180,19 @@ function LandingPage({ setScreen }) {
 
       <section className="lp-missing vl-field vl-field--ink" aria-labelledby="missing-title">
         <div className="lp-missing-head">
-          <span className="vl-kicker vl-kicker--rule">03 — What is not here</span>
+          <span className="vl-kicker vl-kicker--rule">03 / What is not here</span>
           <h2 id="missing-title" className="lp-missing-title">
-            The missing pieces are <em>part of the design.</em>
+            The missing pieces are part of the design.
           </h2>
         </div>
         <ul className="lp-missing-list">
           <li>
-            <span>No accounts, no email, no password. A display name is stored in this
+            <span>No account needed, no email, no password. A display name is stored in this
             browser.</span>
           </li>
           <li>
-            <span>No backend. Progress lives in localStorage and is lost if you clear site
-            data.</span>
+            <span>Progress lives in this browser and is lost if you clear site data. An
+            optional account in Settings copies it to another device.</span>
           </li>
           <li>
             <span>No comments, likes or rankings. There are no other users to show you.</span>
@@ -209,9 +210,9 @@ function LandingPage({ setScreen }) {
 
       <section className="lp-final vl-field vl-field--clay" aria-labelledby="lp-final-title">
         <div className="lp-final-text">
-          <span className="vl-kicker vl-kicker--rule">04 — Begin</span>
+          <span className="vl-kicker vl-kicker--rule">04 / Begin</span>
           <h2 id="lp-final-title" className="lp-final-title">
-            Start with a topic, <em>not a tour.</em>
+            Start with a topic, not a tour.
           </h2>
           <p className="lp-final-sub">
             The atlas opens on a written lesson, and the index tells you which topics have one.
@@ -219,7 +220,7 @@ function LandingPage({ setScreen }) {
           </p>
         </div>
         <button type="button" className="vl-btn lp-final-cta" onClick={() => setScreen('profile')}>
-          Set up this device <ArrowRight size={16} aria-hidden="true" />
+          Set up this device
         </button>
       </section>
 

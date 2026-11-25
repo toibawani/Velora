@@ -196,17 +196,17 @@
 .btn-primary {
   background: var(--accent-primary);
   color: var(--text-inverse);
-  box-shadow: 0 8px 20px var(--accent-shadow);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
   background: var(--accent-primary-hover);
-  box-shadow: 0 10px 24px var(--accent-shadow);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
 .btn-primary:active {
-  box-shadow: 0 4px 10px var(--accent-shadow);
+  box-shadow: var(--shadow-sm);
   transform: translateY(1px) scale(0.99);
 }
 

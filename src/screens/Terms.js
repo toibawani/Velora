@@ -5,10 +5,9 @@ import '../styles/Legal.css';
 /**
  * Terms screen.
  *
- * Short on purpose. There is no account, no payment, no service level and no
- * company behind this, so most of a standard terms document would describe
- * obligations that do not exist here. Each section below names something the
- * code actually does.
+ * Short on purpose. There is no payment, no service level and no company behind
+ * this, so most of a standard terms document would describe obligations that do
+ * not exist here. Each section below names something the code actually does.
  */
 
 TermsScreen.propTypes = { setScreen: PropTypes.shape({ "setScreen": PropTypes.func }) };
@@ -40,19 +39,41 @@ function TermsScreen({ setScreen }) {
           </section>
 
           <section className="legal-section">
-            <h2>No account, no server</h2>
+            <h2>No account needed</h2>
             <p>
-              There is no sign-up, no email address and no password. Everything
-              you write is stored in this browser&apos;s localStorage. Clearing
-              site data deletes it, switching browsers leaves it behind, and no
-              one, including the author, can recover it.
+              Every lesson, game and simulation works without an account, and
+              nothing is asked for on the way in beyond a display name that stays
+              in this browser. An account is optional and lives in Settings. You
+              sign in with a link sent to an email address, and that address is
+              used for the link and nothing else. Signing in copies progress
+              between your devices; it does not upload your notes, questions or
+              study minutes.
+            </p>
+            <p>
+              Signed out, everything you write is stored in this
+              browser&apos;s localStorage. Clearing site data deletes it,
+              switching browsers leaves it behind, and no one, including the
+              author, can recover it.
+            </p>
+          </section>
+
+          <section className="legal-section">
+            <h2>Explanations you submit</h2>
+            <p>
+              If you submit an explanation, it is reviewed before it can appear
+              to anyone else. I may publish it, edit nothing in it but reject it,
+              or remove it later. Do not submit anything you would not want read
+              by a stranger, and do not include personal details. Anyone can
+              report a published explanation, and reports are reviewed the same
+              way. Submitting is rate limited so one account cannot fill the
+              queue.
             </p>
           </section>
 
           <section className="legal-section">
             <h2>Optional analytics</h2>
             <p>
-              One outbound request is possible: the anonymous usage beacon
+              A second outbound path is possible: the anonymous usage beacon
               described on the Privacy page. It is off unless you switch it on,
               and it also needs an endpoint configured by whoever deployed this
               build. In this deployment no endpoint is configured, so nothing is

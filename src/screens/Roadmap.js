@@ -11,8 +11,8 @@ import '../styles/Roadmap.css';
  * without anyone noticing: a count gets typed once, a subject is added, and the
  * page keeps saying the old number with no check anywhere.
  *
- * The voice is the point. This app has no server, so it cannot promise that
- * anything will be built, and a page that said "coming soon" next to a list of
+ * The voice is the point. The app cannot promise that anything will be built,
+ * and a page that said "coming soon" next to a list of
  * dates would be making claims nobody here can keep. Each row says what exists
  * and, where something is missing, what the missing part is.
  */
@@ -41,10 +41,11 @@ function Roadmap({ setScreen }) {
 
       <div className="rm-intro">
         <p>
-          This app has no server. Everything you write, and everything it measures, is stored in this
-          browser and nowhere else. So the useful thing a roadmap can do here is describe what is
-          actually present, and be specific about what is missing. There are no dates on this page
-          because there is no schedule behind them.
+          Everything you write, and everything it measures, is stored in this browser and nowhere
+          else. If you sign in from Settings, progress is copied between your devices; your notes,
+          questions and study minutes are not. So the useful thing a roadmap can do here is describe
+          what is actually present, and be specific about what is missing. There are no dates on this
+          page because there is no schedule behind them.
         </p>
         <ul className="rm-totals">
           {ROADMAP_TOTALS.map((total) => (

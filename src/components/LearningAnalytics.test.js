@@ -44,5 +44,5 @@ test('says so when the subject is untouched', () => {
   render(<LearningAnalytics selectedSubject="history" />);
 
   expect(screen.getByText(/Nothing has been read in History yet/)).toBeInTheDocument();
-  expect(screen.getAllByText('—')).toHaveLength(3);
+  expect(screen.getAllByText('no data')).toHaveLength(3);
 });

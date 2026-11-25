@@ -58,7 +58,7 @@ function SketchbookCard({ term = 'capillary-action' }) {
         { id: 'accretion-disk', label: 'Relativistic Accretion Ring', description: 'Superheated plasma swirling at near-light speeds emitting intense X-rays.' }
       ],
       artEquivalent:
-        'Like an invisible waterfall plunging faster than a salmon can swim upstream—no matter how vigorously you paddle, downstream is the only surviving vector.',
+        'Like an invisible waterfall plunging faster than a salmon can swim upstream, no matter how vigorously you paddle, downstream is the only surviving vector.',
       everydayConnection:
         'Event horizons establish the boundary conditions for cosmic cosmic ray acceleration and inform modern optical GPS satellite relativistic timing corrections across Earth’s geoid.',
       challenge: {
@@ -83,7 +83,7 @@ function SketchbookCard({ term = 'capillary-action' }) {
         { id: 'dissipation', label: 'Thermal Dissipation', description: 'Concentrated useful work dissipating into dispersed, disordered heat energy.' }
       ],
       artEquivalent:
-        'Like a drop of indigo ink dispersing in warm water—while molecular physics permits the ink to re-assemble into a single droplet, the statistical odds against it are virtually infinite.',
+        'Like a drop of indigo ink dispersing in warm water, while molecular physics permits the ink to re-assemble into a single droplet, the statistical odds against it are virtually infinite.',
       everydayConnection:
         'Entropy explains why your coffee always cools to room temperature, why eggs break but never spontaneously un-break, and why computer processors require cooling fans to exhaust computational heat.',
       challenge: {

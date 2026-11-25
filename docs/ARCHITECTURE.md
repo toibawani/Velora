@@ -6,11 +6,14 @@ or from `node scripts/by-the-numbers.js` on 26 October 2026.
 
 ## One paragraph
 
-VELORA is a client-only React application built with Create React App. It has no
-server, no accounts and no database. Content is TypeScript and JavaScript in
-`src/data/`; state is localStorage, behind one registry; the build is a folder of
-static files. A learner can open it on a school iPad, read, close the tab, and
-come back without anything having been sent anywhere.
+VELORA is a React application built with Create React App that renders entirely
+in the browser. Content is TypeScript and JavaScript in `src/data/`; state is
+localStorage, behind one registry; the build is a folder of static files. A
+learner can open it on a school iPad, read, close the tab, and come back without
+anything having been sent anywhere or any account being made. An optional
+account, reached from Settings, adds a Supabase project as a copy of progress
+and a reviewed explanation board; every call in `src/backend/` is skipped when
+that account is not configured or not signed in.
 
 ## Screens and routing
 
@@ -143,8 +146,10 @@ base path so the audits can serve `build/` at the root.
 
 ## Known limits
 
-- No server means no sync, no recovery and no real account. This is a deliberate
-  choice, documented in `docs/DECISIONS.md`, not an unfinished backend.
+- Sync covers progress only: a topic, a kind and a day. Notes, questions, study
+  minutes and game results have no server copy, so losing the browser loses them.
+  A failed or offline push is shown as such; nothing claims to be synced until the
+  last push succeeded.
 - localStorage is per browser and per origin. Private browsing can refuse writes;
   the storage module reports that rather than pretending a save worked.
 - 456 of 572 Atlas topics have nothing to read yet and say so. The count is

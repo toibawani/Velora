@@ -59,14 +59,16 @@
   grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: end;
-  padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 6vw, 5rem);
+  /* Shorter than it was: the hero has one job, and the job is the button. */
+  padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .lp-hero-title {
   margin: var(--space-5) 0 0;
   color: var(--text-primary);
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 6vw, 5rem);
+  font-size: var(--text-display);
+  overflow-wrap: anywhere;
   font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
   font-weight: 600;
   letter-spacing: -0.038em;
@@ -488,6 +490,13 @@
 }
 
 @media (max-width: 620px) {
+  /* The floating menu button is fixed to the top right on a phone, so the last
+     item in the masthead has to stop short of it. Without this, "Back to the
+     cover" ran underneath the button's border. */
+  .lp-masthead {
+    padding-right: 3.5rem;
+  }
+
   .lp-masthead-note {
     display: none;
   }

@@ -100,7 +100,7 @@
   background: var(--accent-primary) !important;
   color: var(--bg-primary) !important;
   border-color: var(--accent-primary) !important;
-  box-shadow: 0 4px 12px var(--accent-shadow) !important;
+  box-shadow: none !important;
 }
 
 /* Sim card container */
@@ -231,7 +231,6 @@
 
 .sim-overlay-badge {
   background: var(--bg-glass-strong);
-  backdrop-filter: blur(4px);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   font-size: 0.72rem;

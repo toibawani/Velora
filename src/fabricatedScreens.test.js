@@ -90,3 +90,22 @@ test('no screen prints a hand-written number where a measurement belongs', () =>
  * specific claim has been removed, the screen's own tests say so - see
  * Games.test.jsx, which asserts the old figures are absent by value.
  */
+
+/*
+ * The Explain It Back game printed "N marked as clear" beside every saved
+ * explanation, read from a `votes` field nothing in the app can increment. Zero
+ * is still a claim: it says nobody found this clear, when in fact nobody was
+ * asked. The tally and the field that fed it are gone, and this keeps them gone.
+ */
+test('no card counts a vote that nobody can cast', () => {
+  const dirs = ['screens', 'components'];
+  dirs.forEach((dir) => {
+    fs.readdirSync(path.join(__dirname, dir))
+      .filter((f) => f.endsWith('.js') && !f.endsWith('.test.js'))
+      .forEach((f) => {
+        const source = code(read(dir, f));
+        expect(source).not.toMatch(/marked as clear/);
+        expect(source).not.toMatch(/votes\s*:\s*item\.votes/);
+      });
+  });
+});

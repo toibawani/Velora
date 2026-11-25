@@ -97,7 +97,7 @@
 }
 
 .revision-item.is-due {
-  box-shadow: inset 3px 0 0 var(--color-error);
+  box-shadow: inset 0 0 0 1px var(--color-error);
 }
 
 .revision-count {
@@ -185,7 +185,7 @@
 }
 
 .revision-item {
-  animation: revision-row-enter 180ms var(--ease-standard) both;
+  animation: none;
   transition: border-color var(--duration-normal) var(--ease-standard),
               transform var(--duration-fast) var(--ease-standard);
 }

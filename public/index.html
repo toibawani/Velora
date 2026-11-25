@@ -19,7 +19,11 @@
                                     neither can be hashed
         img-src, connect-src        only this origin, plus the optional
                                     GoatCounter host when analytics is switched
-                                    on (it is off by default and unconfigured)
+                                    on (it is off by default and unconfigured),
+                                    and the one Supabase project that holds the
+                                    optional account. Nothing else can be
+                                    reached from this page, including any other
+                                    Supabase project.
         base-uri 'self'             an injected <base> cannot retarget links
         form-action 'none'          no form can navigate anywhere
         object-src 'none'           no plugin or Java applet surface
@@ -30,7 +34,7 @@
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.goatcounter.com; font-src 'self'; connect-src 'self' https://*.goatcounter.com; media-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; frame-src 'none'"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.goatcounter.com; font-src 'self'; connect-src 'self' https://*.goatcounter.com https://wxiqtqvofdmxfrbbjsju.supabase.co wss://wxiqtqvofdmxfrbbjsju.supabase.co; media-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; frame-src 'none'"
     />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,7 +47,7 @@
     <script src="%PUBLIC_URL%/theme-init.js"></script>
     <meta
       name="description"
-      content="VELORA is a no-account reference book. Every topic is listed from day one, the ones with a lesson are marked written, and the rest say not written yet. Everything is stored in your browser."
+      content="VELORA is a reference book that needs no account. Every topic is listed from day one, the ones with a lesson are marked written, and the rest say not written yet. Everything is stored in your browser unless you sign in."
     />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="no-referrer" />
@@ -68,7 +72,7 @@
     <meta property="og:title" content="VELORA: a reference book for curious people" />
     <meta
       property="og:description"
-      content="A no-account reference book. Every topic is listed from day one; the ones with nothing written behind them say so instead of opening a placeholder page. No server, no sign-up, nothing sent anywhere unless you switch analytics on."
+      content="A reference book that needs no account. Every topic is listed from day one; the ones with nothing written behind them say so instead of opening a placeholder page. Nothing is sent anywhere unless you switch analytics on or sign in."
     />
     <meta property="og:url" content="https://toibawani.github.io/Velora" />
     <meta property="og:image" content="https://toibawani.github.io/Velora/logo512.png" />
@@ -78,7 +82,7 @@
     <meta name="twitter:title" content="VELORA: a reference book for curious people" />
     <meta
       name="twitter:description"
-      content="A no-account reference book. Every topic is listed from day one; the ones with nothing written behind them say so instead of opening a placeholder page."
+      content="A reference book that needs no account. Every topic is listed from day one; the ones with nothing written behind them say so instead of opening a placeholder page."
     />
     <meta name="twitter:image" content="https://toibawani.github.io/Velora/logo512.png" />
   </head>

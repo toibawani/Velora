@@ -224,14 +224,17 @@
    de-emphasis rather than a contrast failure. */
 .aix-entry.unwritten .aix-entry-text { color: var(--text-tertiary); }
 
-/* The selected line. Accent bar plus the page tint, not a filled pill. The
-   !important flags are needed for the same reason as the reset above: the
-   global button rule is !important and would otherwise win. */
+/* The selected line. Tint, accent text and a hairline ring, not a filled pill
+   and not a 2px accent stripe down one side: a coloured edge is the same
+   decoration as a coloured top border on a card, and the tint already says
+   which line you are on. The !important flags are needed for the same reason as
+   the reset above: the global button rule is !important and would otherwise
+   win. */
 .aix-entry.current {
   background-color: var(--accent-soft) !important;
   color: var(--accent-primary) !important;
   font-weight: var(--weight-medium) !important;
-  box-shadow: inset 2px 0 0 var(--accent-primary) !important;
+  box-shadow: inset 0 0 0 1px var(--accent-primary) !important;
 }
 .aix-entry.current .aix-entry-text { color: var(--accent-primary); }
 

@@ -121,9 +121,9 @@
 }
 
 .lesson-row-item.completed .lesson-check-indicator {
-  background: rgba(0, 186, 124, 0.1);
-  border-color: rgba(0, 186, 124, 0.4);
-  color: var(--accent-green);
+  background: var(--color-success-soft);
+  border-color: var(--success-line);
+  color: var(--color-success);
 }
 
 .lesson-info {
@@ -144,38 +144,20 @@
   color: var(--text-tertiary);
 }
 
-.lesson-action-btn {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: var(--weight-semibold);
-  cursor: pointer;
-  transition: opacity var(--duration-fast) var(--ease-standard),
-              background-color var(--duration-fast) var(--ease-standard),
-              border-color var(--duration-fast) var(--ease-standard),
-              color var(--duration-fast) var(--ease-standard);
+/* The old Review / Start Module pill was a button with no handler on two of
+   five rows. This is a status word, set the way an index marks a page: plain
+   text, no border, no cursor. */
+.lesson-status {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
 }
 
-.lesson-action-btn.start {
-  background: var(--accent-primary);
-  color: var(--text-inverse);
-  border: none;
-}
-
-.lesson-action-btn.start:hover {
-  opacity: 0.9;
-}
-
-.lesson-action-btn.review {
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-}
-
-.lesson-action-btn.review:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
+.lesson-status.is-read {
+  color: var(--color-success);
 }
 /* ==========================================================================
    Collection pass — the mastery path

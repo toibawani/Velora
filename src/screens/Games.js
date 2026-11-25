@@ -374,7 +374,7 @@ function GameHub({ setScreen, initialTab = 'classic', initialGame = null, onGame
           <section className="games-hero-copy">
             <p className="vl-kicker vl-kicker--rule">The games room</p>
             <h1 className="games-title">
-              Six rounds, <em>one sitting.</em>
+              Six rounds, one sitting.
             </h1>
             <p className="games-intro">
               Each one scores the round you played and keeps the result on this device. No

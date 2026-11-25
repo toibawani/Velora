@@ -62,10 +62,21 @@ describe('content security policy', () => {
     expect(sources('frame-src')).toEqual(["'none'"]);
   });
 
-  test('permits outbound requests to this origin and the optional analytics host only', () => {
+  test('permits outbound requests to this origin, the analytics host and one Supabase project', () => {
+    // connect-src is the list of servers this page can talk to, so it is worth
+    // pinning exactly rather than checking for a substring. One project, by
+    // full origin: a wildcard for *.supabase.co would let any project on the
+    // platform receive a signed-in person's token if a URL were ever changed.
     expect(sources('connect-src').sort()).toEqual(
-      ["'self'", 'https://*.goatcounter.com'].sort(),
+      [
+        "'self'",
+        'https://*.goatcounter.com',
+        'https://wxiqtqvofdmxfrbbjsju.supabase.co',
+        'wss://wxiqtqvofdmxfrbbjsju.supabase.co',
+      ].sort(),
     );
+    expect(sources('connect-src')).not.toContain('https://*.supabase.co');
+    expect(sources('connect-src')).not.toContain('wss://*.supabase.co');
     expect(sources('img-src').sort()).toEqual(
       ["'self'", 'data:', 'https://*.goatcounter.com'].sort(),
     );
