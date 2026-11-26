@@ -5,6 +5,7 @@ import { MINDS, MIND_BY_ID } from '../data/minds';
 import { DEBATES, MODES, composeReply, getDebate } from '../data/mindsEngine';
 import { getBotConversation, saveBotConversation, clearBotConversation } from '../utils/botStorage';
 import { getProfile } from '../utils/localProfile';
+import GlossaryText from '../components/GlossaryText';
 import '../styles/VeloraMinds.css';
 
 /**
@@ -280,7 +281,9 @@ function Conversation({ mind, mode, setMode }) {
               )}
             </header>
             {message.text.split('\n\n').map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
+              <p key={i}>
+                <GlossaryText text={paragraph} />
+              </p>
             ))}
             {message.sender === 'bot' && (
               <footer className="vm-message-foot">
@@ -362,7 +365,9 @@ function Figure({ mind, onBack, onDebate }) {
           <p className="vm-figure-meta">
             {mind.dates} <span aria-hidden="true">·</span> {mind.discipline}
           </p>
-          <p className="vm-thesis">{mind.thesis}</p>
+          <p className="vm-thesis">
+            <GlossaryText text={mind.thesis} limit={2} />
+          </p>
           <div className="vm-theme-tags">
             {mind.themes.map((theme) => (
               <span key={theme}>{theme}</span>
@@ -375,19 +380,27 @@ function Figure({ mind, onBack, onDebate }) {
         <aside className="vm-profile">
           <section>
             <h2>Formation</h2>
-            <p>{mind.profile.formation}</p>
+            <p>
+              <GlossaryText text={mind.profile.formation} limit={2} />
+            </p>
           </section>
           <section>
             <h2>Method</h2>
-            <p>{mind.profile.method}</p>
+            <p>
+              <GlossaryText text={mind.profile.method} limit={2} />
+            </p>
           </section>
           <section>
             <h2>How the thought developed</h2>
-            <p>{mind.profile.development}</p>
+            <p>
+              <GlossaryText text={mind.profile.development} limit={2} />
+            </p>
           </section>
           <section>
             <h2>Limits and contradictions</h2>
-            <p>{mind.profile.limits}</p>
+            <p>
+              <GlossaryText text={mind.profile.limits} limit={2} />
+            </p>
           </section>
           <section>
             <h2>Works</h2>
@@ -407,7 +420,9 @@ function Figure({ mind, onBack, onDebate }) {
               {mind.positions.map((position) => (
                 <li key={position.id}>
                   <strong>{position.title}</strong>
-                  <p>{position.claim}</p>
+                  <p>
+                    <GlossaryText text={position.claim} limit={1} />
+                  </p>
                   <a href={position.citation.url} target="_blank" rel="noreferrer noopener">
                     {position.citation.label}
                   </a>
@@ -471,8 +486,12 @@ function Debate({ debateId, onBack, onOpenMind }) {
         </div>
       </header>
       <h3>{entry.position.title}</h3>
-      <p className="vm-side-claim">{entry.position.claim}</p>
-      <p>{entry.position.argument}</p>
+      <p className="vm-side-claim">
+        <GlossaryText text={entry.position.claim} limit={1} />
+      </p>
+      <p>
+        <GlossaryText text={entry.position.argument} limit={2} />
+      </p>
       <p className="vm-side-tension">
         <strong>Where it strains:</strong> {entry.position.tension}
       </p>
@@ -507,8 +526,12 @@ function Debate({ debateId, onBack, onOpenMind }) {
 
       <section className="vm-fault" aria-labelledby="vm-fault-heading">
         <h2 id="vm-fault-heading">The fault line</h2>
-        <p>{debate.faultLine}</p>
-        <p className="vm-why">{debate.why}</p>
+        <p>
+          <GlossaryText text={debate.faultLine} limit={2} />
+        </p>
+        <p className="vm-why">
+          <GlossaryText text={debate.why} limit={2} />
+        </p>
       </section>
 
       <footer className="vm-debate-foot">

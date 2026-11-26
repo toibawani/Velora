@@ -618,10 +618,337 @@ export const TIME_CRYSTAL_DOSSIER = {
   related: ['unruh-effect', 'quantum-zeno', 'godel-incompleteness'],
 };
 
+export const ARROW_OF_TIME_DOSSIER = {
+  id: 'arrow-of-time',
+  title: 'The Arrow of Time',
+  standfirst:
+    'Every fundamental law of physics works just as well backwards. Yet cups break and never un-break. The arrow of time is not in the equations; it is in the condition the universe started from.',
+  field: 'Physics',
+  lenses: ['Time', 'Reality'],
+  status: 'Established thermodynamics, contested origin',
+  difficulty: 'Intermediate',
+  minutes: 19,
+  opening:
+    'Play a film of two billiard balls colliding and run it backwards. Nothing looks wrong. Play a film of a glass falling off a table and shattering, and the reversed version is obviously impossible. The microscopic laws governing every molecule in both films are time-symmetric: replace t with −t and they still hold. So the asymmetry cannot come from the laws. It has to come from the state the universe was in.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'The laws do not have a favourite direction',
+      body: [
+        'Newton’s second law, Maxwell’s equations, Schrödinger’s equation and Einstein’s field equations all admit reversed solutions. If a trajectory is allowed, so is the same trajectory traversed in the opposite order with momenta reversed. This is not a loophole in the mathematics; it is a structural feature of the equations. A universe governed only by them would have no built-in past or future.',
+        'What breaks the symmetry is a boundary condition. The early universe was extraordinarily uniform, with matter and radiation at almost identical temperature across regions that had never been in causal contact. That is a very special, very low-entropy starting point. Given that start, entropy has overwhelmingly more room to increase than to decrease, and the direction of increase is what we experience as time passing.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of the problem',
+      items: [
+        {
+          term: 'Entropy',
+          definition:
+            'A count of how many microscopic arrangements produce the same macroscopic appearance. A shuffled deck has higher entropy than a sorted one because vastly more shuffles look shuffled.',
+        },
+        {
+          term: 'Past hypothesis',
+          definition:
+            'The assumption, stated by Albert and others, that the universe began in a specific low-entropy macrostate. It is an initial condition, not a law, and it is what makes the second law possible.',
+        },
+        {
+          term: 'Recurrence',
+          definition:
+            'Poincaré’s theorem that a bounded, isolated system will eventually return arbitrarily close to its initial state. Given enough time, a gas in a box retraces its history — but the time required is astronomical.',
+        },
+        {
+          term: 'Time-symmetric',
+          definition:
+            'A law is time-symmetric if replacing t by −t gives another valid solution. Almost all fundamental laws have this property; the second law does not.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'Boltzmann’s entropy, and why the logarithm is there',
+      equation: 'S = k_B ln W',
+      symbols: [
+        { symbol: 'S', meaning: 'Entropy of the macrostate', unit: 'J/K' },
+        { symbol: 'k_B', meaning: 'Boltzmann constant, 1.381 × 10⁻²³', unit: 'J/K' },
+        { symbol: 'W', meaning: 'Number of microscopic arrangements that look the same macroscopically', unit: 'dimensionless' },
+        { symbol: 'ln', meaning: 'Natural logarithm, which turns multiplication of independent arrangements into addition of entropies' },
+      ],
+      body: [
+        'The logarithm is not decoration. If two systems are independent, the number of joint arrangements is the product W₁W₂, while entropy should add: S = S₁ + S₂. The only function that turns a product into a sum is a logarithm. Boltzmann’s formula is the unique way to make entropy extensive, and that is why it takes the form it does.',
+        'The formula also explains why entropy increases without any force pushing it. There are simply more ways for a system to be spread out than concentrated. A gas occupies the whole box not because molecules prefer the edges but because the number of arrangements with molecules in one half is smaller than the number with them everywhere. The second law is a statement about counting, which is why it admits rare exceptions.',
+      ],
+      assumptions: [
+        'The system is isolated, so no energy or matter crosses its boundary.',
+        'All accessible microstates are equally probable — the microcanonical assumption.',
+        'The system is large enough that fluctuations away from the most probable macrostate are negligible.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'Several arrows, and what sets each one',
+      columns: ['Arrow', 'What it describes', 'What would have to be true to reverse it'],
+      rows: [
+        ['Thermodynamic', 'Entropy increases toward the future', 'A low-entropy future boundary condition, not a change in the laws'],
+        ['Radiation', 'Waves spread outward from sources', 'Ingoing waves converging on a source, which is a valid solution but not what we see'],
+        ['Memory', 'We remember the past and not the future', 'A physical record-forming process that runs in the opposite direction'],
+        ['Cosmological', 'The universe expands from a hot dense state', 'A contracting phase; expansion is not itself a thermodynamic arrow'],
+      ],
+      note:
+        'The striking fact is that these arrows all point the same way. Nothing in the laws requires memory, radiation and entropy to agree; they do because they all inherit the direction set by the early universe.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'The oldest confusion in the subject',
+      claim: '"Entropy is disorder, and the second law says disorder always increases."',
+      correction:
+        '“Disorder” is a metaphor that fails as soon as it is tested. A crystal is ordered but can have higher entropy than a liquid at a different temperature; gravity makes a uniform gas collapse into a star, and the star has lower entropy than the cloud it formed from. Entropy counts accessible arrangements consistent with what you can measure, not how tidy something looks. The second law is also statistical: it says entropy is overwhelmingly likely to increase, not that it can never decrease. For a handful of molecules, fluctuations are routine.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why the past hypothesis is not a fudge',
+      body: [
+        'It can sound as though the arrow of time has been explained by assuming it. In one sense that is right: the past hypothesis is an input, not a derivation. But it is a very specific and testable input. It predicts that the cosmic microwave background should be almost perfectly uniform, that primordial perturbations should be nearly scale-invariant, and that the early universe should contain no large-scale structure. All three hold, to remarkable precision.',
+        'The open problem is why that condition held. Inflation offers an explanation — a period of exponential expansion would stretch away almost any initial inhomogeneity and leave precisely the spectrum we observe. But inflation itself needs a low-entropy starting point and a mechanism to end, so the question is pushed back rather than closed. Competing proposals, including Carroll and Chen’s spontaneous inflation and Penrose’s Weyl curvature hypothesis, remain speculative. No experiment currently distinguishes them.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If the laws are time-symmetric, what kind of fact is “the universe started in a low-entropy state”?',
+        'Does the existence of memory require an arrow, or could a time-symmetric system contain records of both directions?',
+        'Poincaré recurrence says entropy will eventually decrease. Is that a refutation of the second law or a reminder that it is statistical?',
+        'Why is the early universe’s low entropy so extreme? The number of possible states is vast, and the observed one looks chosen.',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'L. Boltzmann, Lectures on Gas Theory (1896); the entropy formula and the statistical interpretation', url: 'https://en.wikipedia.org/wiki/Ludwig_Boltzmann' },
+    { label: 'J. L. Lebowitz, "Boltzmann’s entropy and time’s arrow", Physics Today 46, 32 (1993)', url: 'https://doi.org/10.1063/1.881363' },
+    { label: 'S. M. Carroll and C. Chen, "Spontaneous inflation and the origin of the arrow of time" (2004)', url: 'https://arxiv.org/abs/hep-th/0410270' },
+    { label: 'D. Z. Albert, Time and Chance (Harvard University Press, 2000)', url: 'https://www.hup.harvard.edu/books/9780674010321' },
+  ],
+  related: ['unruh-effect', 'landauer-principle', 'time-crystals'],
+};
+
+export const FALSE_VACUUM_DOSSIER = {
+  id: 'false-vacuum',
+  title: 'The False Vacuum',
+  standfirst:
+    'The Higgs field may not be sitting at the bottom of its energy curve. If it is not, a quantum tunnelling event could one day rewrite the laws of particle physics at nearly the speed of light. The calculation says the odds are astronomically small — and that the answer depends on physics we have not yet measured.',
+  field: 'Physics',
+  lenses: ['Reality', 'Infinity'],
+  status: 'Hypothesis consistent with current data',
+  difficulty: 'Advanced',
+  minutes: 21,
+  opening:
+    'A ball in a valley is stable. A ball in a shallow dip on the side of a mountain is metastable: it will sit there for a very long time, but it is not at the bottom. The Higgs field, which gives elementary particles their mass, may be in the second situation. Its current value is a local minimum of the potential, not necessarily the global one. If a sufficiently large region tunnelled to the true minimum, the difference in the laws would propagate outward as a bubble of new vacuum.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'What “vacuum” means when a field is everywhere',
+      body: [
+        'In quantum field theory the vacuum is the state of lowest energy, and the energy of a field configuration is given by its potential. The Higgs potential is shaped like a Mexican hat: the symmetric point at zero field is unstable, and the field settles somewhere on the circular valley of minima. The value it settles at is about 246 GeV, and the mass of the Higgs boson, 125 GeV, is a measure of the curvature of the valley at that point.',
+        'The question is whether the valley we are in is the lowest one. Quantum corrections from the top quark, the W and Z bosons and the Higgs itself tilt the potential. The top quark, being heavy, pushes the potential down at large field values; the Higgs mass pulls it up. With the measured values, the calculation lands near the boundary between stable and metastable. The current best fit is that the vacuum is metastable, but only at a few standard deviations, and the result is sensitive to the top quark mass.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The ideas the argument needs',
+      items: [
+        {
+          term: 'False vacuum',
+          definition:
+            'A local minimum of the energy that is not the global minimum. It is stable against small disturbances but can decay by tunnelling.',
+        },
+        {
+          term: 'Metastability',
+          definition:
+            'The condition of being long-lived but not permanently stable. A metastable vacuum has a finite lifetime, even if that lifetime exceeds the age of the universe by many orders of magnitude.',
+        },
+        {
+          term: 'Bounce solution',
+          definition:
+            'The field configuration that dominates the tunnelling calculation. It is a solution of the Euclidean equations of motion that interpolates between the false and true vacua.',
+        },
+        {
+          term: 'Eternal inflation',
+          definition:
+            'A regime in which some regions of space keep inflating forever while others stop. If it occurred, a decaying vacuum could be continually recreated elsewhere, changing what “the end of the universe” means.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The decay rate, and the exponential that controls it',
+      equation: 'Γ/V = A e^{−B/ħ}',
+      symbols: [
+        { symbol: 'Γ/V', meaning: 'Tunnelling rate per unit volume, with units of inverse time per cubic metre' },
+        { symbol: 'A', meaning: 'A pre-factor from quantum fluctuations around the bounce solution, with units that make the rate dimensionally correct' },
+        { symbol: 'B', meaning: 'The Euclidean action of the bounce, a number with units of action that measures how much the field has to climb before it can fall' },
+        { symbol: 'ħ', meaning: 'Reduced Planck constant; the smallness of ħ is why the exponential is so punishing' },
+      ],
+      body: [
+        'The structure is the same as every tunnelling problem: a barrier height divided by ħ, exponentiated. Here the barrier is not a physical wall but the energy cost of a bubble of true vacuum forming inside the false one. The bubble must be large enough that the energy saved in its volume exceeds the energy cost of its surface, and the critical size is set by the shape of the potential.',
+        'For the Standard Model the bounce action is enormous. Published calculations give a lifetime many orders of magnitude longer than the age of the universe, with the exact exponent depending on the top quark mass at the few-sigma level. That is not a reassurance that the vacuum is stable; it is a statement that the decay is slow compared with everything we can observe.',
+      ],
+      assumptions: [
+        'The Standard Model is valid up to the Planck scale, with no new particles or interactions changing the potential in between.',
+        'The calculation uses the measured Higgs and top quark masses and their experimental uncertainties; a different top mass can move the result across the stability boundary.',
+        'Gravity is neglected in the tunnelling calculation, which is a good approximation while the bubble is much smaller than the Planck length scale.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'What the measurements say',
+      columns: ['Quantity', 'Measured value', 'Role in the calculation'],
+      rows: [
+        ['Higgs boson mass', '125.25 ± 0.17 GeV', 'Sets the curvature of the potential at the electroweak minimum'],
+        ['Top quark mass', '172.69 ± 0.30 GeV', 'The largest driver of the instability at high field values'],
+        ['Strong coupling', 'α_s(m_Z) ≈ 0.1179', 'Enters the running of the quartic coupling'],
+        ['Resulting status', 'Metastable at ~2–3σ', 'Not a discovery; a fit whose significance depends on the inputs'],
+      ],
+      note:
+        'The word “metastable” here is a statement about a calculation, not an observation. No experiment has seen a vacuum decay, and the confidence depends on assuming no new physics between the electroweak scale and the Planck scale.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'Two ways to overread the result',
+      claim: '"If the vacuum is metastable, a decay could happen at any moment and destroy the universe."',
+      correction:
+        'A finite lifetime is not a scheduled event. The expected lifetime from the Standard Model calculation is vastly longer than the age of the universe — the kind of number where writing out the zeros would take a page. More importantly, the decay would produce a bubble expanding at nearly the speed of light, and we would have no warning. But the rate is so small that the probability of a decay occurring in the observable universe during its entire history is negligible. The interesting question is not “will it happen tomorrow” but “why is the vacuum perched where it is”.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'And a second',
+      claim: '"Vacuum decay has been observed in an experiment."',
+      correction:
+        'It has not. What has been observed is the Higgs boson and the top quark, and what has been calculated is the shape of the potential they imply. Analogue experiments in cold atoms and superconducting circuits have simulated tunnelling between wells, which tests the mathematics of the model, not the vacuum of the real universe. The distinction matters because the claim “the vacuum is metastable” is a extrapolation over eighteen orders of magnitude in energy.',
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If the vacuum is metastable, is that a problem for the universe or only for our description of it?',
+        'Does eternal inflation make vacuum decay inevitable somewhere, and if so, does “somewhere” include here?',
+        'How would the existence of new particles at intermediate energies change the lifetime calculation?',
+        'Why does the Higgs mass sit so close to the boundary between stability and instability?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'S. Coleman, "Fate of the false vacuum: semiclassical theory", Physical Review D 15, 2929 (1977)', url: 'https://doi.org/10.1103/PhysRevD.15.2929' },
+    { label: 'G. Degrassi et al., "Higgs mass and vacuum stability in the Standard Model at NNLO", JHEP 08, 098 (2012)', url: 'https://arxiv.org/abs/1205.6497' },
+    { label: 'A. Andreassen, W. Frost, M. D. Schwartz, "Scale invariant instantons and the complete lifetime of the Standard Model", Physical Review D 97, 056006 (2018)', url: 'https://arxiv.org/abs/1707.08124' },
+    { label: 'Particle Data Group, Review of Particle Physics (2024), Higgs boson listings', url: 'https://pdg.lbl.gov/' },
+  ],
+  related: ['unruh-effect', 'time-crystals', 'godel-incompleteness'],
+};
+
+export const SPIN_ICE_DOSSIER = {
+  id: 'spin-ice',
+  title: 'Spin Ice and Its Monopoles',
+  standfirst:
+    'In a class of magnetic crystals the atoms refuse to agree on a direction, and the resulting disorder is frozen in. The excitations of this frozen state behave like magnetic monopoles — particles with only one pole — even though no fundamental monopole has ever been found.',
+  field: 'Physics',
+  lenses: ['Matter'],
+  status: 'Established material; monopoles are emergent quasiparticles',
+  difficulty: 'Advanced',
+  minutes: 18,
+  opening:
+    'Water ice has a strange rule named after Linus Pauling: each oxygen sits at the centre of a tetrahedron, and exactly two of the four hydrogen bonds around it point toward it. The protons are disordered, but the disorder is constrained. In 1997 a class of magnetic crystals was found to obey the same rule with magnetic moments instead of protons. The material is called spin ice, and its frozen disorder turns out to host excitations that carry a net magnetic charge.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'Frustration: when every arrangement is a compromise',
+      body: [
+        'Put three magnetic moments on the corners of a triangle and ask each pair to point opposite ways. No arrangement satisfies all three. This is frustration: the interactions cannot all be minimised at once, so the system has many nearly degenerate ground states instead of one. In a pyrochlore lattice — corner-sharing tetrahedra — the geometry produces the same effect in three dimensions.',
+        'The result is not a conventional magnet with a single ordered direction. It is a state with extensive entropy at low temperature: the number of arrangements remains macroscopic even as T approaches zero. Pauling estimated the residual entropy of water ice in 1935, and the same counting argument applies to spin ice, where it has been measured in heat-capacity experiments.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of a frustrated magnet',
+      items: [
+        {
+          term: 'Frustration',
+          definition:
+            'A situation in which competing interactions cannot all be satisfied simultaneously. It produces many low-energy arrangements rather than a single ordered ground state.',
+        },
+        {
+          term: 'Spin ice',
+          definition:
+            'A magnetic material whose moments obey the same “two in, two out” rule as protons in water ice, leaving a disordered but frozen magnetic state.',
+        },
+        {
+          term: 'Quasiparticle',
+          definition:
+            'A collective excitation that behaves like a particle. It is not fundamental; it is a pattern in a many-body system that can be tracked, scattered and counted.',
+        },
+        {
+          term: 'Magnetic monopole',
+          definition:
+            'A particle with a single magnetic pole. No fundamental monopole has been observed; in spin ice, pairs of excitations behave as effective monopoles with opposite charge.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'A defect that acts like a charge',
+      body: [
+        'Start with a perfectly obeying “two in, two out” tetrahedron. Flip one moment, and two adjacent tetrahedra now have three in and one out, or one in and three out. Those two tetrahedra are defects in the ice rule, and they are created together. The key observation, made by Castelnovo, Moessner and Sondhi in 2008, is that these defects behave exactly like a pair of opposite magnetic charges: they attract, they can be separated, and in a magnetic field they drift apart.',
+        'They are not fundamental particles. They are emergent quasiparticles, made of many coordinated atomic moments. But the mathematics that describes them is the mathematics of monopoles, including a Coulomb interaction and a magnetic “current” when they move. Neutron scattering experiments in 2009 saw the signature: pinch-point patterns in reciprocal space, which are the fingerprint of a Coulomb phase with deconfined monopoles.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'Where the effect has been seen',
+      columns: ['Material', 'Lattice', 'What was observed'],
+      rows: [
+        ['Ho₂Ti₂O₇', 'Pyrochlore', 'Neutron pinch-point scattering consistent with a Coulomb phase'],
+        ['Dy₂Ti₂O₇', 'Pyrochlore', 'Dirac strings and monopole excitations in neutron data'],
+        ['Artificial spin ice', 'Nanomagnets on a lattice', 'Direct imaging of monopole-like defects and their dynamics'],
+        ['Water ice', 'Hexagonal', 'The original Pauling residual entropy; no magnetic monopoles'],
+      ],
+      note:
+        'The artificial systems are lithographically fabricated arrays of nanomagnets. They allow direct imaging of the defects, which natural crystals do not, but their energy scales and dynamics are different from the real material.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'What “monopole” does and does not mean here',
+      claim: '"Magnetic monopoles have been discovered in spin ice."',
+      correction:
+        'What has been discovered is a material whose collective excitations carry magnetic charge. The underlying constituents are ordinary magnetic dipoles, and Maxwell’s equation ∇·B = 0 still holds at the microscopic level. The quasiparticles are real in the sense that they can be measured, but they are not the fundamental monopoles that grand unified theories predict. Conflating the two is like saying that a phonon is a new fundamental particle because it behaves like one.',
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If a quasiparticle can carry a magnetic charge, is the distinction between fundamental and emergent particles a matter of degree or of kind?',
+        'Why does the ice rule produce a Coulomb phase rather than a conventional ordered state?',
+        'Could artificial spin ice be used to build logic devices that move monopoles instead of electrons?',
+        'What would a genuine fundamental monopole look like, and how would it differ from the spin-ice excitation?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'L. Pauling, "The structure and entropy of ice and of other crystals with some randomness of atomic arrangement", JACS 57, 2680 (1935)', url: 'https://doi.org/10.1021/ja01315a102' },
+    { label: 'M. J. Harris et al., "A new pyrochlore magnet with a spin-ice ground state", Physical Review Letters 79, 2554 (1997)', url: 'https://doi.org/10.1103/PhysRevLett.79.2554' },
+    { label: 'C. Castelnovo, R. Moessner, S. L. Sondhi, "Magnetic monopoles in spin ice", Nature 451, 42 (2008)', url: 'https://doi.org/10.1038/nature06433' },
+    { label: 'D. J. P. Morris et al., "Dirac strings and magnetic monopoles in the spin ice Dy₂Ti₂O₇", Science 326, 411 (2009)', url: 'https://doi.org/10.1126/science.1178868' },
+  ],
+  related: ['time-crystals', 'casimir-effect', 'mycorrhizal-networks'],
+};
+
 export const PHYSICS_DOSSIERS = [
   UNRUH_DOSSIER,
   CASIMIR_DOSSIER,
   ZENO_DOSSIER,
   LANDAUER_DOSSIER,
   TIME_CRYSTAL_DOSSIER,
+  ARROW_OF_TIME_DOSSIER,
+  FALSE_VACUUM_DOSSIER,
+  SPIN_ICE_DOSSIER,
 ];

@@ -68,16 +68,14 @@
 }
 
 .gt-popover {
-  position: absolute;
+  /* Fixed, with coordinates measured from the control in GlossaryTerm. The
+     containing block used to be an inline span, which made the panel inherit
+     the width of one line fragment: on a phone it was clipped off the left of
+     the screen. The inline style supplies left, top and width. */
+  position: fixed;
   z-index: 40;
-  top: calc(100% + 0.4rem);
-  left: 0;
-  /* A width, not a max-width. The containing block is an inline span, and an
-     absolutely positioned child of an inline box resolves its shrink-to-fit
-     width against the little space left on that line: with max-width alone the
-     panel collapsed to about fifty pixels and wrapped every second word.
-     The width is capped against the viewport so it cannot run off a phone. */
-  width: min(22rem, 78vw);
+  max-height: 60vh;
+  overflow-y: auto;
   display: block;
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--border-default);
@@ -111,18 +109,3 @@
   color: var(--text-tertiary);
 }
 
-/* On a narrow screen a left-anchored panel runs off the right edge on a term
-   near the end of a line. Right-aligning below 560px keeps it on screen; the
-   alternative, a full-width panel below the paragraph, was tried and it moved
-   the text the reader was looking at. */
-@media (max-width: 560px) {
-  .gt-popover {
-    width: min(20rem, 88vw);
-  }
-
-  .gt-root:last-of-type .gt-popover,
-  .gt-popover {
-    right: 0;
-    left: auto;
-  }
-}

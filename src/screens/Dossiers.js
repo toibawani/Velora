@@ -9,41 +9,15 @@ import {
   getRelatedDossiers,
   searchDossiers,
 } from '../data/dossiers';
+import GlossaryText from '../components/GlossaryText';
+import DossierArt, { motifFor } from '../components/DossierArt';
 import '../styles/Dossiers.css';
-
-/**
- * A very small inline formatter. The dossiers are written in plain sentences
- * with **emphasis** for a phrase that carries the argument and *italics* for a
- * title or a foreign term. Rendering those two cases is enough; anything more
- * elaborate belongs in a section kind.
- */
-function RichText({ text }) {
-  const nodes = [];
-  const pattern = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
-  let last = 0;
-  let match = pattern.exec(text);
-  let key = 0;
-  while (match) {
-    if (match.index > last) nodes.push(text.slice(last, match.index));
-    const token = match[0];
-    if (token.startsWith('**')) {
-      nodes.push(<strong key={`b-${key}`}>{token.slice(2, -2)}</strong>);
-    } else {
-      nodes.push(<em key={`i-${key}`}>{token.slice(1, -1)}</em>);
-    }
-    key += 1;
-    last = match.index + token.length;
-    match = pattern.exec(text);
-  }
-  if (last < text.length) nodes.push(text.slice(last));
-  return nodes;
-}
 
 function Section({ section, index }) {
   const Heading = index === 0 ? 'h2' : 'h2';
   const body = (section.body || []).map((paragraph, i) => (
     <p key={`p-${i}`}>
-      <RichText text={paragraph} />
+      <GlossaryText text={paragraph} />
     </p>
   ));
 
@@ -59,7 +33,7 @@ function Section({ section, index }) {
             <div key={symbol.symbol}>
               <dt>{symbol.symbol}</dt>
               <dd>
-                {symbol.meaning}
+                <GlossaryText text={symbol.meaning} limit={1} />
                 {symbol.unit ? <span className="ds-unit"> · {symbol.unit}</span> : null}
               </dd>
             </div>
@@ -71,7 +45,9 @@ function Section({ section, index }) {
             <h3>What the equation assumes</h3>
             <ul>
               {section.assumptions.map((assumption) => (
-                <li key={assumption}>{assumption}</li>
+                <li key={assumption}>
+                  <GlossaryText text={assumption} limit={1} />
+                </li>
               ))}
             </ul>
           </div>
@@ -88,7 +64,9 @@ function Section({ section, index }) {
           {section.items.map((item) => (
             <div key={item.term}>
               <dt>{item.term}</dt>
-              <dd>{item.definition}</dd>
+              <dd>
+                <GlossaryText text={item.definition} limit={2} />
+              </dd>
             </div>
           ))}
         </dl>
@@ -108,7 +86,9 @@ function Section({ section, index }) {
               </span>
               <div>
                 <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <p>
+                  <GlossaryText text={item.text} limit={2} />
+                </p>
               </div>
             </li>
           ))}
@@ -138,10 +118,12 @@ function Section({ section, index }) {
                   {row.map((cell, i) =>
                     i === 0 ? (
                       <th key={`${cell}-${i}`} scope="row">
-                        {cell}
+                        <GlossaryText text={cell} limit={1} />
                       </th>
                     ) : (
-                      <td key={`${cell}-${i}`}>{cell}</td>
+                      <td key={`${cell}-${i}`}>
+                        <GlossaryText text={cell} limit={1} />
+                      </td>
                     )
                   )}
                 </tr>
@@ -149,7 +131,11 @@ function Section({ section, index }) {
             </tbody>
           </table>
         </div>
-        {section.note ? <p className="ds-table-note">{section.note}</p> : null}
+        {section.note ? (
+          <p className="ds-table-note">
+            <GlossaryText text={section.note} limit={1} />
+          </p>
+        ) : null}
       </section>
     );
   }
@@ -159,9 +145,11 @@ function Section({ section, index }) {
       <section className="ds-section ds-section--correction" aria-labelledby={`ds-h-${index}`}>
         <p className="ds-correction-label">Correction</p>
         <Heading id={`ds-h-${index}`}>{section.heading}</Heading>
-        <blockquote className="ds-claim">{section.claim}</blockquote>
+        <blockquote className="ds-claim">
+          <GlossaryText text={section.claim} limit={1} />
+        </blockquote>
         <p>
-          <RichText text={section.correction} />
+          <GlossaryText text={section.correction} limit={2} />
         </p>
       </section>
     );
@@ -173,7 +161,9 @@ function Section({ section, index }) {
         <Heading id={`ds-h-${index}`}>{section.heading}</Heading>
         <ul>
           {section.items.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item}>
+              <GlossaryText text={item} limit={1} />
+            </li>
           ))}
         </ul>
       </section>
@@ -287,7 +277,9 @@ function DossierReader({ dossier, onBack, onOpen, readIds }) {
             <h1 ref={headingRef} tabIndex={-1}>
               {dossier.title}
             </h1>
-            <p className="ds-standfirst">{dossier.standfirst}</p>
+            <p className="ds-standfirst">
+              <GlossaryText text={dossier.standfirst} limit={2} />
+            </p>
             <dl className="ds-facts">
               <div>
                 <dt>Status</dt>
@@ -304,7 +296,11 @@ function DossierReader({ dossier, onBack, onOpen, readIds }) {
             </dl>
           </header>
 
-          <p className="ds-opening">{dossier.opening}</p>
+          <DossierArt motif={motifFor(dossier.id)} seed={dossier.id} label={`${dossier.field} / plate`} />
+
+          <p className="ds-opening">
+            <GlossaryText text={dossier.opening} limit={3} />
+          </p>
 
           {dossier.sections.map((section, i) => (
             <Section key={section.heading} section={section} index={i} />
@@ -510,7 +506,7 @@ function Dossiers({ setScreen }) {
           <p>
             <strong>Every term is defined where it first matters.</strong> A dossier does not assume you
             already know what a Bogoliubov transformation is, or what a non-measurable set is. It tells you,
-            then uses it.
+            then uses it. Any word with a dotted underline opens its definition without leaving the page.
           </p>
           <p>
             <strong>Every equation is unpacked.</strong> What each symbol means, its units, what the

@@ -210,4 +210,469 @@ export const GODEL_DOSSIER = {
   related: ['banach-tarski', 'landauer-principle'],
 };
 
-export const MATHEMATICS_DOSSIERS = [BANACH_TARSKI_DOSSIER, GODEL_DOSSIER];
+export const P_ADIC_DOSSIER = {
+  id: 'p-adic-numbers',
+  title: 'The p-adic Numbers',
+  standfirst:
+    'There is a way of measuring distance in which 81 is closer to 1 than 2 is, and in which every triangle is isosceles. It is not a game: p-adic numbers are how number theorists study divisibility, and they appear in string theory and in the geometry of hierarchical data.',
+  field: 'Mathematics',
+  lenses: ['Infinity', 'Logic'],
+  status: 'Established mathematics',
+  difficulty: 'Advanced',
+  minutes: 20,
+  opening:
+    'The rational numbers can be completed in more than one way. Complete them with the ordinary absolute value and you get the real numbers, the line you drew in school. Complete them with a distance that counts how divisible a number is by a prime p, and you get the p-adic numbers — a world where 1 + p + p² + p³ + … converges, where pⁿ tends to zero, and where every point inside a disc is its centre.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'Distance is a choice, not a fact',
+      body: [
+        'A distance function on the rationals has to satisfy three properties: it is zero only at zero, it is symmetric, and it obeys the triangle inequality. The usual absolute value does. So does a family of alternatives indexed by primes. For a prime p, write any nonzero rational x as p^k · a/b with a and b not divisible by p. The p-adic absolute value is |x|_p = p^{−k}. A number divisible by a high power of p is small, because it is close to zero in the only sense that matters for divisibility.',
+        'Ostrowski’s theorem says these are essentially the only options: every absolute value on the rationals is equivalent either to the usual one or to a p-adic one. The real numbers are not the unique completion of the rationals. They are one completion among infinitely many, and the others are just as natural once you stop assuming that “size” means distance along a line.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The ideas that make the definition work',
+      items: [
+        {
+          term: 'p-adic absolute value',
+          definition:
+            'A way of measuring size in which divisibility by a high power of a prime p makes a number small. It is defined by writing x as p^k times a fraction with no factor p, and setting |x|_p = p^{−k}.',
+        },
+        {
+          term: 'Ultrametric',
+          definition:
+            'A distance satisfying d(x,z) ≤ max(d(x,y), d(y,z)), stronger than the usual triangle inequality. In an ultrametric space every triangle is isosceles and every point of a ball is its centre.',
+        },
+        {
+          term: 'Ostrowski’s theorem',
+          definition:
+            'The theorem that the usual absolute value and the p-adic absolute values are the only essentially different ways to measure size on the rational numbers.',
+        },
+        {
+          term: 'Completion',
+          definition:
+            'Filling in the limits of sequences that ought to converge but have no limit in the original space. The rationals completed at the usual absolute value give the reals; completed at a p-adic one they give the p-adic numbers.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The definition, unpacked',
+      equation: '|x|_p = p^{−v_p(x)},  v_p(p^k a/b) = k',
+      symbols: [
+        { symbol: 'p', meaning: 'A prime number: 2, 3, 5, 7, …' },
+        { symbol: 'x', meaning: 'A nonzero rational number' },
+        { symbol: 'v_p(x)', meaning: 'The exponent of p in the prime factorisation of x, called the p-adic valuation' },
+        { symbol: '|x|_p', meaning: 'The p-adic absolute value, a real number that measures divisibility rather than magnitude' },
+      ],
+      body: [
+        'The definition is doing something deliberately strange: it inverts the exponent. If x is divisible by p once, v_p(x) = 1 and |x|_p = 1/p, which is small. If x is divisible by p a hundred times, |x|_p = p^{−100}, which is tiny. Being highly divisible is the p-adic analogue of being close to zero, because a number that is divisible by p is exactly a number that is zero modulo p.',
+        'Two consequences follow immediately. First, p^n → 0 as n → ∞, so the series 1 + p + p² + … converges to 1/(1 − p) in the p-adic sense even though it diverges in the real sense. Second, the triangle inequality strengthens to the ultrametric inequality: if two numbers are both close to a third, they are close to each other, because the highest power of p dividing their difference is at least the minimum of the two exponents. This is why p-adic geometry looks like a tree rather than a line.',
+      ],
+      assumptions: [
+        'The prime p is fixed; different primes give genuinely different completions.',
+        'x is nonzero. The value |0|_p is defined separately as 0.',
+        'The rational x is written in lowest terms, so the exponent of p is well defined.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'Two completions of the same numbers',
+      columns: ['Property', 'Real numbers', 'p-adic numbers'],
+      rows: [
+        ['Distance', 'Usual absolute value', 'p-adic absolute value'],
+        ['Triangle inequality', 'd(x,z) ≤ d(x,y) + d(y,z)', 'd(x,z) ≤ max(d(x,y), d(y,z))'],
+        ['Geometry of balls', 'Balls can overlap without nesting', 'Any two balls are nested or disjoint'],
+        ['Convergence of pⁿ', 'Diverges to infinity', 'Converges to 0'],
+        ['Natural setting for', 'Analysis, physics, continuity', 'Number theory, divisibility, modular arithmetic'],
+      ],
+      note:
+        'The two completions are not competitors. A rational number has a real size and, for every prime, a p-adic size, and the product formula relates them: the product of all these absolute values, over all primes and the usual one, equals 1.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'Not just another base',
+      claim: '"p-adic numbers are just numbers written in base p."',
+      correction:
+        'Base-p notation is a way of writing ordinary integers; p-adic numbers are a different completion of the rationals, with a different topology. In base p, 0.999… equals 1 because the tail is a real limit. In the 2-adics, the series 1 + 2 + 4 + 8 + … converges to −1, which is a statement about a different metric, not about decimal notation. The p-adic integers do have expansions in powers of p, but they extend infinitely to the left, not to the right, and the algebra of those expansions is not the algebra of base-p decimals.',
+    },
+    {
+      kind: 'prose',
+      heading: 'What they are for',
+      body: [
+        'The first use is local-to-global reasoning. A problem about integers can often be solved by solving it modulo every prime and then gluing the solutions together. The p-adic numbers are the natural home for “modulo p^n for all n”, and tools such as Hensel’s lemma let you lift a solution modulo p to a solution in the p-adics, then to the integers under the right conditions.',
+        'The second is geometry. The Berkovich and rigid analytic spaces built from p-adic numbers are the setting for a large part of modern arithmetic geometry, including the proof of the local Langlands correspondence for GL(n). The third is physics: p-adic numbers appear in some approaches to string theory and in models of hierarchical or tree-like data, where the ultrametric distance is a better fit than a line. None of this makes the reals wrong. It makes “the” continuum a choice.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If every rational number has a real size and a p-adic size for every prime, which one is “the” size of the number?',
+        'What does a continuous function look like on a space where every triangle is isosceles?',
+        'Why should the primes, which are defined by divisibility, also define completions of the rationals?',
+        'Are there completions of other number fields that behave like the p-adics, and what do they classify?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'A. Ostrowski, "Über einige Lösungen der Funktionalgleichung φ(x)·φ(y) = φ(xy)", Acta Mathematica 41, 271 (1918)', url: 'https://doi.org/10.1007/BF02422947' },
+    { label: 'N. Koblitz, p-adic Numbers, p-adic Analysis, and Zeta-Functions (Springer, 1984)', url: 'https://doi.org/10.1007/978-1-4612-1112-9' },
+    { label: 'J.-P. Serre, A Course in Arithmetic (Springer, 1973), chapter on p-adic fields', url: 'https://doi.org/10.1007/978-1-4684-9884-4' },
+  ],
+  related: ['continuum-hypothesis', 'banach-tarski', 'godel-incompleteness'],
+};
+
+export const MONTY_HALL_DOSSIER = {
+  id: 'monty-hall',
+  title: 'The Monty Hall Problem',
+  standfirst:
+    'Switching doors doubles your chance of winning a car. The puzzle is not really about probability; it is about what the host is allowed to do, and about how a missing sentence in the rules changes the answer completely.',
+  field: 'Mathematics',
+  lenses: ['Logic', 'Mind & Machine'],
+  status: 'Established probability; the dispute is about assumptions',
+  difficulty: 'Intermediate',
+  minutes: 14,
+  opening:
+    'You pick one of three doors. The host, who knows where the car is, opens a different door to reveal a goat. He offers you the chance to switch. Most people say it makes no difference: two doors remain, so the odds are fifty-fifty. They are wrong under the rules as stated — and the reason they are wrong is not that probability is counterintuitive. It is that the host’s behaviour carries information, and the usual telling of the puzzle does not spell that behaviour out.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'The host is part of the experiment',
+      body: [
+        'The standard rules are: the car is placed uniformly at random; you pick a door; the host knows where the car is; the host always opens a door you did not pick, never the car, and always offers the switch. Under those rules, your first pick is right with probability 1/3 and wrong with probability 2/3. If it is wrong, the host has exactly one door he can open, and the remaining unopened door must be the car. So switching wins exactly when your first pick was wrong: probability 2/3.',
+        'The crucial sentence is that the host always opens a goat door. If he sometimes opens the car door, or if he chooses which goat door to open in a way that depends on where the car is, the answer changes. This is why the puzzle produces so many confident wrong answers: people solve a different problem from the one stated, usually one in which the host opens a door at random.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The probability ideas involved',
+      items: [
+        {
+          term: 'Conditional probability',
+          definition:
+            'The probability of an event given that another event has occurred. It is written P(A|B) and is not the same as P(A and B).',
+        },
+        {
+          term: 'Prior',
+          definition:
+            'The probability assigned before the new evidence. In Monty Hall the prior on your first choice being correct is 1/3.',
+        },
+        {
+          term: 'Posterior',
+          definition:
+            'The probability after the evidence is taken into account. It is obtained from the prior and the likelihood by Bayes’ theorem.',
+        },
+        {
+          term: 'Bayes’ theorem',
+          definition:
+            'A rule for updating probabilities: the posterior is proportional to the likelihood times the prior. It is the formal statement of learning from evidence.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The calculation, with the host’s rule made explicit',
+      equation: 'P(switch wins) = P(first pick wrong) = 2/3',
+      symbols: [
+        { symbol: 'P(switch wins)', meaning: 'The probability of winning the car after switching doors' },
+        { symbol: 'P(first pick wrong)', meaning: 'The prior probability that the initial choice was not the car, which is 2/3' },
+        { symbol: '1/3', meaning: 'The probability that the first choice was the car, since one door of three is chosen uniformly' },
+      ],
+      body: [
+        'A conditional-probability derivation makes the same point more slowly. Let C₁ be “the car is behind your first door” and C₂, C₃ the other two. Before the host acts, P(C₁) = P(C₂) = P(C₃) = 1/3. The host opens door 3 and reveals a goat. If the car is behind door 1, the host could have opened either 2 or 3; if the car is behind door 2, the host was forced to open door 3. The evidence “host opened door 3” is therefore twice as likely under C₂ as under C₁. Bayes’ theorem multiplies the priors by those likelihoods and renormalises, leaving P(C₁|evidence) = 1/3 and P(C₂|evidence) = 2/3.',
+        'The arithmetic is not the hard part. The hard part is noticing that the likelihoods depend on a rule the host is following. If the host opens a door at random and happens to reveal a goat, the posterior is 1/2 and switching does not help. The same three doors, two different protocols, two different answers.',
+      ],
+      assumptions: [
+        'The car is placed uniformly at random and the host knows where it is.',
+        'The host always opens a door that the contestant did not pick and that does not hide the car, and always offers the switch.',
+        'When the contestant’s first pick is correct, the host chooses between the two goat doors by some rule; the standard answer does not depend on which, as long as it is not informative about the car.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The same puzzle under different host rules',
+      columns: ['Host rule', 'Probability switching wins', 'Why'],
+      rows: [
+        ['Always opens a goat door, always offers switch', '2/3', 'Switching wins exactly when the first pick was wrong'],
+        ['Opens a random unopened door; happens to show a goat', '1/2', 'The reveal is evidence about the car’s location, not a forced move'],
+        ['Always opens the lowest-numbered available goat door', '2/3', 'The rule is deterministic but still not informative about the car'],
+        ['Offers the switch only when the contestant is wrong', '0', 'The offer itself reveals the answer'],
+      ],
+      note:
+        'The last two rows are the important ones. A rule can be deterministic and still uninformative, or informative without being random. What matters is whether the host’s action depends on where the car is.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'Why “two doors, so fifty-fifty” feels right',
+      claim: '"After one door is opened, there are two doors left, so each has a 1/2 chance."',
+      correction:
+        'The two remaining doors are not symmetric, because the host’s choice treated them differently. Your original door was protected from being opened; the other door was not. The probabilities of the two unopened doors must still sum to 1, but the 1/3 attached to your door does not move just because a different door was opened. The error is treating “two possibilities” as “two equally likely possibilities”, which is only true when nothing distinguishes them. Here the history of how the doors survived distinguishes them.',
+    },
+    {
+      kind: 'prose',
+      heading: 'What the puzzle is actually teaching',
+      body: [
+        'Monty Hall is a clean example of a general fact: probabilities are relative to a protocol. The same physical setup, with the same doors and the same car, gives different answers depending on how the host decides what to reveal. This is not a quirk of game shows. It is the structure of every statistical inference: the likelihood of the data depends on the sampling rule, and a rule that was never stated cannot be inferred from the data alone.',
+        'It is also a lesson in why intuition fails without a model. The “fifty-fifty” answer is correct for a different problem, and the people who give it are not bad at probability; they are answering the question they were asked, which omitted the host’s rule. Once the rule is explicit, the arithmetic is elementary. The difficulty was never the calculation.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If you do not know the host’s rule, what should you do when offered the switch?',
+        'Does the answer change if there are four doors and the host opens two?',
+        'What is the minimum extra sentence the puzzle needs to be unambiguous?',
+        'Why do so many people find the correct answer offensive rather than merely surprising?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'M. vos Savant, "Ask Marilyn", Parade (9 September 1990); the column that started the public dispute', url: 'https://en.wikipedia.org/wiki/Monty_Hall_problem' },
+    { label: 'L. Gillman, "The car and the goats", American Mathematical Monthly 99, 3 (1992)', url: 'https://doi.org/10.1080/00029890.1992.11995827' },
+    { label: 'J. Rosenhouse, The Monty Hall Problem: The Remarkable Story of Math’s Most Contentious Brain Teaser (Oxford, 2009)', url: 'https://global.oup.com/academic/product/the-monty-hall-problem-9780195367898' },
+  ],
+  related: ['godel-incompleteness', 'banach-tarski', 'predictive-processing'],
+};
+
+export const CONTINUUM_DOSSIER = {
+  id: 'continuum-hypothesis',
+  title: 'The Continuum Hypothesis',
+  standfirst:
+    'Cantor proved that some infinities are larger than others, then asked whether there is anything between the countable infinity and the continuum. The question is not open. It is independent: the standard axioms cannot answer it either way.',
+  field: 'Mathematics',
+  lenses: ['Infinity', 'Logic'],
+  status: 'Proved independent of ZFC',
+  difficulty: 'Advanced',
+  minutes: 22,
+  opening:
+    'The natural numbers can be listed: 1, 2, 3, and so on. The real numbers cannot be listed, as Cantor showed in 1874. That gives at least two sizes of infinity. Is there a third size in between? Cantor spent years trying to prove there was not, and the question he left behind turned out to be one of the deepest results in twentieth-century logic — not because it was answered, but because it was shown that the usual axioms cannot answer it.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'Two infinities, and a gap that may or may not be empty',
+      body: [
+        'Two sets have the same cardinality if their elements can be paired one-to-one. By that definition the integers and the rationals are the same size: you can arrange the fractions in a grid and walk a diagonal path through it, pairing each with a natural number. The reals are different. Cantor’s diagonal argument shows that any list of real numbers misses at least one, so no pairing exists. The set of reals is strictly larger than the set of naturals.',
+        'The continuum hypothesis (CH) says there is no set whose cardinality lies strictly between the two. Cantor believed it and could not prove it. Hilbert put it first on his famous list of problems in 1900. It was not resolved in the way anyone expected.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The set theory the question lives in',
+      items: [
+        {
+          term: 'Cardinality',
+          definition:
+            'A measure of the size of a set defined by one-to-one pairing. Two sets have the same cardinality if their elements can be matched without leftovers.',
+        },
+        {
+          term: 'Aleph-null',
+          definition:
+            'The cardinality of the natural numbers, written ℵ₀. It is the smallest infinite cardinal, and the integers, rationals and algebraic numbers all have it.',
+        },
+        {
+          term: 'Continuum hypothesis',
+          definition:
+            'The claim that the cardinality of the reals is the next infinite cardinal after ℵ₀, so there is no set strictly between them in size.',
+        },
+        {
+          term: 'Forcing',
+          definition:
+            'A technique invented by Paul Cohen for building new models of set theory by adding sets. It is how CH was shown to be independent.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The equation that states the question',
+      equation: '2^{ℵ₀} = ℵ₁',
+      symbols: [
+        { symbol: '2^{ℵ₀}', meaning: 'The cardinality of the set of all subsets of the naturals, which equals the cardinality of the reals' },
+        { symbol: 'ℵ₀', meaning: 'The cardinality of the natural numbers' },
+        { symbol: 'ℵ₁', meaning: 'The next infinite cardinal after ℵ₀, by definition the smallest cardinal larger than it' },
+      ],
+      body: [
+        'Cantor’s theorem says the power set of any set is strictly larger than the set, so 2^{ℵ₀} > ℵ₀. The question is whether it is the very next cardinal. Writing the reals as an infinite binary expansion gives the upper bound: there are at most 2^{ℵ₀} real numbers. The lower bound is the diagonal argument. Everything else is the gap.',
+        'CH is not a statement about a particular construction of the reals. It is a statement about the universe of sets, and different universes satisfy it and its negation. That is what independence means: there are models of ZFC in which CH holds and models in which it fails, and the axioms cannot prefer one.',
+      ],
+      assumptions: [
+        'The ambient axioms are ZFC: Zermelo–Fraenkel set theory with the axiom of choice.',
+        '“Cardinality” is defined by bijection, not by any notion of measure or dimension.',
+        'The reals are the usual complete ordered field, constructed as Dedekind cuts or Cauchy sequences.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'How the two answers are both possible',
+      columns: ['Result', 'Year', 'What it shows'],
+      rows: [
+        ['Gödel’s constructible universe L', '1938', 'If ZFC is consistent, so is ZFC + CH; CH cannot be refuted'],
+        ['Cohen’s forcing', '1963', 'If ZFC is consistent, so is ZFC + ¬CH; CH cannot be proved'],
+        ['Independence', '1963–64', 'CH is undecidable from the standard axioms'],
+        ['Large cardinal axioms', 'Later', 'Some extensions decide CH, but none is forced by current evidence'],
+      ],
+      note:
+        'Independence is not the same as having no answer. It means the axioms do not determine one. A stronger axiom system might, and some mathematicians argue for axioms that settle CH on grounds of naturalness or usefulness.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'What independence does not mean',
+      claim: '"Mathematicians do not know whether the continuum hypothesis is true."',
+      correction:
+        'They know exactly what its status is: it is independent of ZFC. That is a proved theorem, not an open problem. What remains open is which axioms to adopt, and whether there are good reasons to prefer a universe in which CH holds or one in which it fails. Saying “we do not know” conflates two different things: not knowing a truth value, and knowing that the standard rules do not assign one. The second is a much stronger and stranger result.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why the answer may be a choice of universe',
+      body: [
+        'Set theorists increasingly speak of a multiverse of universes of sets, each satisfying ZFC and differing in statements like CH. This is not a retreat from rigour; it is a description of what the independence results actually deliver. The question “which universe is the real one” may be malformed, in the same way that “is the parallel postulate true” is malformed until you specify which geometry you mean.',
+        'There are programmes that try to settle the question anyway. Gödel hoped for new axioms with intrinsic necessity. Woodin has proposed axioms based on the structure of the universe of sets that would decide CH, and the debate over whether they are justified is live. What is not live is the idea that a clever proof within ZFC will settle it. That possibility was closed in 1963.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'Is “the set of all sets” a legitimate object, and does the answer change what CH means?',
+        'If two universes of sets both satisfy every axiom we can justify, is one of them more real?',
+        'What would count as evidence for a new axiom that decides CH?',
+        'Why does the diagonal argument work for the reals but not for the rationals?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'G. Cantor, "Über eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen", Journal für die reine und angewandte Mathematik 77 (1874)', url: 'https://doi.org/10.1515/crll.1874.77.258' },
+    { label: 'K. Gödel, "The consistency of the axiom of choice and of the generalized continuum-hypothesis", PNAS 24, 556 (1938)', url: 'https://doi.org/10.1073/pnas.24.12.556' },
+    { label: 'P. J. Cohen, "The independence of the continuum hypothesis", PNAS 50, 1143 (1963)', url: 'https://doi.org/10.1073/pnas.50.6.1143' },
+    { label: 'J. Koellner, "The continuum hypothesis", Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/continuum-hypothesis/' },
+  ],
+  related: ['godel-incompleteness', 'banach-tarski', 'p-adic-numbers'],
+};
+
+export const TURING_DOSSIER = {
+  id: 'turing-halting',
+  title: 'The Halting Problem',
+  standfirst:
+    'Turing showed that no algorithm can decide, for every program, whether it will eventually stop. The proof is short, the consequence is permanent, and it is routinely misreported as a statement about what computers cannot do yet.',
+  field: 'Mathematics',
+  lenses: ['Logic', 'Mind & Machine'],
+  status: 'Established theorem',
+  difficulty: 'Intermediate',
+  minutes: 17,
+  opening:
+    'In 1928 Hilbert asked whether there was a mechanical procedure that could decide the truth of any mathematical statement. In 1936 Turing answered no, by inventing a machine precise enough to make “mechanical procedure” a mathematical object. The halting problem was the wedge: a single well-defined question about programs that no program can answer for all inputs.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'The question, made precise',
+      body: [
+        'A Turing machine has a finite set of states, a tape divided into cells, and a head that reads and writes symbols and moves left or right. The rules are finite, so the whole machine can be described by a finite string. A program is just such a string. The halting problem asks: given a program P and an input x, does P eventually halt on x, or does it run forever?',
+        'The question is not whether we can tell for some programs. We can: a program with no loops halts, a program that loops forever on a blank tape does not. The theorem is about a single algorithm that answers correctly for every pair (P, x). Turing proved that no such algorithm exists.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The ideas in the proof',
+      items: [
+        {
+          term: 'Turing machine',
+          definition:
+            'An abstract computer with a tape, a head and finitely many rules. It captures what any mechanical procedure can compute, which is what makes the halting result apply to real computers.',
+        },
+        {
+          term: 'Decidable',
+          definition:
+            'A problem is decidable if some algorithm gives a correct yes-or-no answer on every input and always stops. Decidability is about existence, not about difficulty.',
+        },
+        {
+          term: 'Undecidable',
+          definition:
+            'No algorithm can answer the problem correctly on every input. Undecidability is a proved property of the problem, not a gap in current knowledge.',
+        },
+        {
+          term: 'Church–Turing thesis',
+          definition:
+            'The claim that every effectively calculable function can be computed by a Turing machine. It is a thesis about the meaning of “computable”, not a theorem with a proof.',
+        },
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'The diagonal argument, step by step',
+      items: [
+        {
+          title: 'Assume a decider exists',
+          text: 'Suppose there is a program H that takes a program P and input x, and prints “halts” or “loops” correctly, always stopping.',
+        },
+        {
+          title: 'Build a contradictory program',
+          text: 'Construct a new program D that takes a program P as input, runs H on (P, P), and then does the opposite: if H says P halts on itself, D loops forever; if H says P loops, D halts.',
+        },
+        {
+          title: 'Apply D to itself',
+          text: 'Run D on its own code. If H says D halts on D, D loops. If H says D loops on D, D halts. Either way, H’s answer is wrong.',
+        },
+        {
+          title: 'Conclude the assumption is false',
+          text: 'The only assumption was that H exists. It cannot. The contradiction is not a bug in D; it is the proof.',
+        },
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'What is and is not decidable',
+      columns: ['Problem', 'Status', 'What that means in practice'],
+      rows: [
+        ['Does P halt on x?', 'Undecidable', 'No general tool can answer this for every program'],
+        ['Does P halt on x within 10⁶ steps?', 'Decidable', 'Simulate it for a million steps and stop'],
+        ['Does P ever print “hello”?', 'Undecidable', 'Reduces to halting: run until it prints or halts'],
+        ['Is this arithmetic statement true?', 'Undecidable', 'By Gödel and Turing; no complete effective procedure'],
+      ],
+      note:
+        'The decidable version is not a loophole. Bounding the running time turns an infinite question into a finite simulation, which is exactly why practical static analysis uses timeouts and approximations rather than exact answers.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'What the theorem does not say',
+      claim: '"We cannot solve the halting problem yet; a more powerful computer or a smarter AI will eventually do it."',
+      correction:
+        'The result is not about speed, memory or intelligence. It says that no program, running on any machine with finite rules, can decide halting for all programs. A faster computer answers more cases per second, not more kinds of case. The proof makes no assumption about the hardware except that it can simulate a Turing machine, which every general-purpose computer can. Adding time or parallelism does not escape it.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why it matters beyond the theorem',
+      body: [
+        'Rice’s theorem generalises the result: every non-trivial property of a program’s behaviour is undecidable. “Does this function ever return null”, “is this program equivalent to that one”, “will this code ever deadlock” — none has a general decision procedure. This is why software verification is hard in a way that no amount of engineering effort can remove. It can succeed for particular programs with particular structure, but it cannot be automated in general.',
+        'The theorem also shapes what we mean by computation. The Church–Turing thesis says that every reasonable model of computation agrees with Turing machines, which is why undecidability is not an artefact of a particular formalism. And the halting problem is the canonical complete problem for the class of undecidable sets: many other problems are undecidable precisely because solving them would solve halting.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If a program cannot decide halting in general, what exactly do practical termination checkers do?',
+        'Does the existence of undecidable problems tell us anything about the limits of human reasoning?',
+        'Why does Rice’s theorem make “perfect” static analysis impossible rather than merely difficult?',
+        'Is the Church–Turing thesis a claim about physics, about mathematics, or about language?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'A. M. Turing, "On computable numbers, with an application to the Entscheidungsproblem", Proc. London Math. Soc. 42, 230 (1936)', url: 'https://doi.org/10.1112/plms/s2-42.1.230' },
+    { label: 'H. G. Rice, "Classes of recursively enumerable sets and their decision problems", Transactions of the AMS 74, 358 (1953)', url: 'https://doi.org/10.1090/S0002-9947-1953-0053041-6' },
+    { label: 'M. Davis, The Undecidable (Raven Press, 1965); the original papers with commentary', url: 'https://archive.org/details/undecidablebasic0000davi' },
+  ],
+  related: ['godel-incompleteness', 'continuum-hypothesis', 'landauer-principle'],
+};
+
+export const MATHEMATICS_DOSSIERS = [
+  BANACH_TARSKI_DOSSIER,
+  GODEL_DOSSIER,
+  P_ADIC_DOSSIER,
+  MONTY_HALL_DOSSIER,
+  CONTINUUM_DOSSIER,
+  TURING_DOSSIER,
+];

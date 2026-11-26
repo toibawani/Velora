@@ -185,4 +185,226 @@ export const MYCORRHIZAL_DOSSIER = {
   related: ['slime-mould', 'landauer-principle'],
 };
 
-export const LIFE_DOSSIERS = [SLIME_MOULD_DOSSIER, MYCORRHIZAL_DOSSIER];
+export const HORIZONTAL_TRANSFER_DOSSIER = {
+  id: 'horizontal-gene-transfer',
+  title: 'Horizontal Gene Transfer',
+  standfirst:
+    'Bacteria pass genes sideways, not only down. The result is that the tree of life is partly a web, antibiotic resistance travels between species, and the genome of a single organism can be a record of things that happened to its ancestors’ neighbours.',
+  field: 'Biology',
+  lenses: ['Life'],
+  status: 'Established mechanism; extent in eukaryotes debated',
+  difficulty: 'Intermediate',
+  minutes: 18,
+  opening:
+    'In animals and plants, genes move from parent to offspring. That is the picture most people carry: a branching tree, with each species inheriting its genome from its ancestor. Bacteria break the picture. They can take up DNA from the environment, receive it through a physical connection from another cell, or have it delivered by a virus. Genes can jump between species that are not closely related at all, which is why a single genome can contain DNA from several branches of the tree.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'Three routes, one consequence',
+      body: [
+        'The classical mechanisms are transformation, transduction and conjugation. Transformation is the uptake of free DNA from the environment, which competent bacteria do actively. Transduction is transfer by bacteriophages, viruses that accidentally package a fragment of host DNA and inject it into the next cell they infect. Conjugation is the direct transfer of DNA through a pilus connecting two cells, often carrying a plasmid.',
+        'The consequence is the same in all three cases: a gene can appear in a lineage that did not inherit it from its parent. If the gene is useful — antibiotic resistance, a new metabolic pathway, a toxin — selection can fix it quickly. This is why resistance to a drug can spread between species in a hospital, and why the history of a single gene need not match the history of the organism that carries it.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of sideways inheritance',
+      items: [
+        {
+          term: 'Horizontal gene transfer',
+          definition:
+            'The movement of genetic material between organisms by a route other than parent-to-offspring inheritance. It is common in bacteria and documented in many eukaryotes.',
+        },
+        {
+          term: 'Plasmid',
+          definition:
+            'A small, usually circular piece of DNA that replicates independently of the main chromosome. Plasmids often carry genes for antibiotic resistance and are readily transferred by conjugation.',
+        },
+        {
+          term: 'Conjugation',
+          definition:
+            'The transfer of DNA from one bacterium to another through a direct physical connection. It is one of the principal mechanisms of horizontal transfer in bacteria.',
+        },
+        {
+          term: 'Endosymbiosis',
+          definition:
+            'The incorporation of one organism inside another, as when mitochondria and chloroplasts became permanent organelles. It is horizontal transfer at the largest scale.',
+        },
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The mechanisms and what they move',
+      columns: ['Mechanism', 'How it works', 'Typical cargo'],
+      rows: [
+        ['Transformation', 'A cell takes up free DNA from its surroundings', 'Fragments of chromosomal DNA, plasmids'],
+        ['Transduction', 'A bacteriophage packages host DNA by mistake', 'Short chromosomal fragments, viral genes'],
+        ['Conjugation', 'DNA passes through a pilus into another cell', 'Plasmids, integrative conjugative elements'],
+        ['Gene transfer agents', 'Virus-like particles carry random host DNA', 'Short random fragments of the genome'],
+      ],
+      note:
+        'The mechanisms differ in how much DNA they move and how selective they are, but all of them break the assumption that inheritance is strictly vertical.',
+    },
+    {
+      kind: 'prose',
+      heading: 'How common is it, really?',
+      body: [
+        'In bacteria it is frequent enough to matter clinically. Resistance genes such as the extended-spectrum beta-lactamases move between species on plasmids, and whole resistance cassettes can spread through a bacterial community in a patient. In eukaryotes the picture is patchier. There are well-documented cases — the acquisition of genes from bacteria by some insects, the transfer of genes between parasitic plants and their hosts, and the movement of transposable elements between animal species — but the rate is generally much lower than in bacteria.',
+        'The methodological difficulty is distinguishing true horizontal transfer from incomplete lineage sorting or contamination. A gene that looks misplaced in a phylogenetic tree can be the result of a gene duplication followed by loss, or of a tree built from too little data. The strongest claims rest on multiple independent lines of evidence: anomalous phylogenetic placement, a plausible mechanism, and a dated event that fits the geological record.',
+      ],
+    },
+    {
+      kind: 'misconception',
+      heading: 'The tree is not wrong; it is incomplete',
+      claim: '"Horizontal gene transfer disproves the tree of life."',
+      correction:
+        'It complicates the tree rather than refuting it. Most genes in most organisms still follow a branching pattern, and the tree remains the best summary of vertical descent. What horizontal transfer shows is that a single tree cannot represent every gene’s history. For bacteria, the debate is whether to speak of a “tree of cells” plus a separate network of genes, or a “web of life” in which the trunk is a community rather than an individual. Either way, the evidence for common descent is not weakened; the picture of what descends is.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why it matters clinically',
+      body: [
+        'Antibiotic resistance is the clearest practical consequence. A resistance gene that arises in one species can be transferred to another, so treating one infection can select for resistance in the patient’s whole microbial community. This is one reason antibiotic stewardship is framed at the level of populations and hospitals, not only individual prescriptions.',
+        'The same machinery is a tool. Horizontal transfer is how researchers introduce genes into bacteria, and how some gene therapies and engineered microbiomes are designed. It is also a risk: a gene engineered into a laboratory strain could, in principle, move into an environmental bacterium. Understanding the mechanisms is what makes that risk estimable rather than rhetorical.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If a gene’s history and its host’s history disagree, which one is the history of the organism?',
+        'How would you prove that a gene moved horizontally rather than being inherited from an unsampled ancestor?',
+        'Does horizontal transfer make bacterial species boundaries arbitrary, or merely porous?',
+        'What would a tree of life look like if it were drawn to include every gene rather than every organism?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'H. Ochman, J. G. Lawrence, E. A. Groisman, "Lateral gene transfer and the nature of bacterial innovation", Nature 405, 299 (2000)', url: 'https://doi.org/10.1038/35012500' },
+    { label: 'W. F. Doolittle, "Lateral genomics", Trends in Cell Biology 9, M5 (1999)', url: 'https://doi.org/10.1016/S0962-8924(99)01670-0' },
+    { label: 'J. P. Gogarten and J. P. Townsend, "Horizontal gene transfer, genome innovation and evolution", Nature Reviews Microbiology 3, 679 (2005)', url: 'https://doi.org/10.1038/nrmicro1204' },
+    { label: 'S. Soucy, J. Huang, J. P. Gogarten, "Horizontal gene transfer: building the web of life", Nature Reviews Genetics 16, 472 (2015)', url: 'https://doi.org/10.1038/nrg3962' },
+  ],
+  related: ['mycorrhizal-networks', 'slime-mould', 'landauer-principle'],
+};
+
+export const PREDICTIVE_PROCESSING_DOSSIER = {
+  id: 'predictive-processing',
+  title: 'Predictive Processing',
+  standfirst:
+    'The brain may not build perception from the senses upward. On the predictive-processing account it guesses what is out there and uses the senses to correct the guess. The idea is elegant, influential, and harder to test than its popularity suggests.',
+  field: 'Neuroscience',
+  lenses: ['Mind & Machine'],
+  status: 'Influential framework; mechanisms and scope contested',
+  difficulty: 'Intermediate',
+  minutes: 19,
+  opening:
+    'Look at a familiar room. You do not experience a flood of pixels that your brain assembles into objects; you experience the room as already meaningful. Predictive processing takes that everyday fact seriously. It proposes that the brain is constantly generating a model of the causes of its sensory input, and that perception is the process of correcting that model when the input disagrees.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'From Helmholtz to the free-energy principle',
+      body: [
+        'The core idea is old. Helmholtz argued in the nineteenth century that perception is unconscious inference: the brain infers the external causes of sensory signals, and because the inference is underdetermined, it must use prior knowledge. Predictive processing formalises this with a hierarchical generative model. Each level predicts the activity of the level below; the mismatch is the prediction error, and it is passed upward to revise the model.',
+        'Karl Friston’s free-energy principle extends the idea beyond perception. It proposes that all self-organising systems minimise a quantity called variational free energy, which bounds surprise. Perception minimises it by changing the model; action minimises it by changing the world. This is a ambitious unification, and it is also where the empirical difficulties begin.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The terms the theory is built from',
+      items: [
+        {
+          term: 'Generative model',
+          definition:
+            'An internal model that produces expectations about sensory input from hypothesised causes. In predictive processing the brain is treated as such a model.',
+        },
+        {
+          term: 'Prediction error',
+          definition:
+            'The difference between the input a level expected and the input it received. It is the signal that drives learning and perceptual revision.',
+        },
+        {
+          term: 'Precision',
+          definition:
+            'The estimated reliability of a prediction or a sensory signal. Precision weighting decides how much a given error is allowed to change the model.',
+        },
+        {
+          term: 'Active inference',
+          definition:
+            'The proposal that action is the brain changing the world to match its predictions, rather than only changing predictions to match the world.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'What “minimising free energy” is minimising',
+      equation: 'F = E_q[ln q(s) − ln p(o, s)]',
+      symbols: [
+        { symbol: 'F', meaning: 'Variational free energy, a quantity the theory says the system minimises' },
+        { symbol: 'q(s)', meaning: 'The system’s internal estimate of the probability of hidden states s' },
+        { symbol: 'p(o, s)', meaning: 'The generative model’s joint probability of observations o and hidden states s' },
+        { symbol: 'E_q', meaning: 'Expectation taken under the internal estimate q' },
+      ],
+      body: [
+        'Free energy is an upper bound on surprise: minimising it minimises the surprise of observations, at least approximately. The formula is the standard variational expression from machine learning, not a new piece of mathematics. What is new is the claim that a biological system implements it.',
+        'The bracket has two parts. The first is the entropy of the internal estimate; the second is how well that estimate predicts the observations. Minimising F trades off a simple, low-entropy model against accuracy. This is the same trade-off as in variational autoencoders, and it is why the framework connects so easily to machine learning.',
+      ],
+      assumptions: [
+        'The system can be described as having an internal probability distribution over hidden states.',
+        'The relevant quantity is variational free energy, not some other objective the brain might be optimising.',
+        'The approximation is close enough that minimising the bound is a good description of what the brain does.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'What the framework predicts, and what the evidence shows',
+      columns: ['Prediction', 'Evidence', 'Status'],
+      rows: [
+        ['Faster processing of expected stimuli', 'Robust repetition-suppression effects', 'Consistent, but not unique to the theory'],
+        ['Illusions as prior-dominated inference', 'Many illusions fit Bayesian models', 'Consistent; alternative explanations exist'],
+        ['Precision modulates attention', 'Attention effects resemble precision weighting', 'Plausible, still debated'],
+        ['Action reduces prediction error', 'Motor cortex shows predictive signals', 'Consistent, mechanism unclear'],
+      ],
+      note:
+        'The evidence is largely consistent with the framework rather than decisive for it. A theory that can accommodate almost any result needs predictions that would count against it.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'Two overstatements',
+      claim: '"Perception is just a hallucination controlled by the senses, so we never really see the world."',
+      correction:
+        'The slogan captures something real — perception is model-driven — but it overstates the case. Prediction errors are not optional; they constrain the model, and in normal perception they do so reliably. The theory does not say the world is unknowable or that any hallucination is as good as another. It says that what we experience is a constructed model, continuously corrected by input. That is a claim about mechanism, not about whether the model tracks reality.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'And a second',
+      claim: '"Predictive processing has been confirmed by neuroscience."',
+      correction:
+        'It has not. The framework is influential and generates testable predictions, but its central claims are difficult to falsify: free-energy minimisation can be fitted to many behaviours after the fact. Critics, including some sympathetic ones, have argued that the theory needs to specify which generative model a brain uses and which predictions it makes, or it risks becoming unfalsifiable. The honest description is that it is a productive research programme with substantial support and unresolved questions, not an established mechanism.',
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If the brain minimises free energy, why does it ever seek out surprise — art, novelty, exploration?',
+        'What experiment would distinguish predictive processing from a simpler feedforward account?',
+        'Is “precision” a single quantity, or does it stand for several different mechanisms?',
+        'Does the framework explain consciousness, or only perception and action?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'H. von Helmholtz, Handbuch der physiologischen Optik (1867); unconscious inference in perception', url: 'https://archive.org/details/handbuchderphysi00helm' },
+    { label: 'K. Friston, "The free-energy principle: a unified brain theory?", Nature Reviews Neuroscience 11, 127 (2010)', url: 'https://doi.org/10.1038/nrn2787' },
+    { label: 'A. Clark, Surfing Uncertainty: Prediction, Action, and the Embodied Mind (Oxford, 2016)', url: 'https://global.oup.com/academic/product/surfing-uncertainty-9780190217013' },
+    { label: 'M. Litwin and J. Miłkowski, "Unification by fiat: arrested development of predictive processing", Cognitive Science 44, e12867 (2020)', url: 'https://doi.org/10.1111/cogs.12867' },
+  ],
+  related: ['slime-mould', 'godel-incompleteness', 'monty-hall'],
+};
+
+export const LIFE_DOSSIERS = [
+  SLIME_MOULD_DOSSIER,
+  MYCORRHIZAL_DOSSIER,
+  HORIZONTAL_TRANSFER_DOSSIER,
+  PREDICTIVE_PROCESSING_DOSSIER,
+];

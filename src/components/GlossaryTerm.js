@@ -2,7 +2,7 @@
  * GlossaryTerm - inline glossary term with tap-to-reveal definition.
  * Terms are looked up from subject glossary data (blackholes, philosophy, history).
  */
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import { lookupTerm as lookupPhysicsTerm } from '../data/blackholes/glossary';
 import { lookupTerm as lookupPhilosophyTerm } from '../data/philosophy/glossary';
@@ -47,9 +47,10 @@ export const lookupTerm = (term) =>
  * button at all. A missing entry should degrade to normal reading, not to a
  * dead control the reader can click and get nothing from.
  */
-export function GlossaryTerm({ term, children, definition }) {
+export function GlossaryTerm({ term, children, definition, compact = false, hint }) {
   const entry = lookupTerm(term);
   const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState(null);
   const buttonRef = useRef(null);
   const popoverRef = useRef(null);
   const panelId = useId();
@@ -61,6 +62,44 @@ export function GlossaryTerm({ term, children, definition }) {
   const label = children || entry?.term || term;
 
   const close = useCallback(() => setOpen(false), []);
+
+  /**
+   * Placing the panel against the viewport, not against the word.
+   *
+   * The word is an inline span, so an absolutely positioned panel inherits the
+   * width of whichever line fragment the word happens to sit on. On a phone a
+   * term near the start of a line put a 320px panel at a negative x and half of
+   * every line was cut off. Fixed coordinates, clamped to the viewport, are the
+   * only placement that survives a wrapped inline element.
+   */
+  useLayoutEffect(() => {
+    if (!open) {
+      setPosition(null);
+      return undefined;
+    }
+    const rect = buttonRef.current?.getBoundingClientRect();
+    if (!rect) return undefined;
+
+    const width = Math.min(352, window.innerWidth - 24);
+    const left = Math.min(Math.max(12, rect.left), window.innerWidth - width - 12);
+    const below = window.innerHeight - rect.bottom;
+    const top = below > 260 ? rect.bottom + 8 : Math.max(12, rect.top - 232);
+
+    setPosition({ left, top, width });
+    return undefined;
+  }, [open]);
+
+  // A fixed panel would otherwise stay where it was when the page scrolls.
+  useEffect(() => {
+    if (!open) return undefined;
+    const dismiss = () => close();
+    window.addEventListener('scroll', dismiss, true);
+    window.addEventListener('resize', dismiss);
+    return () => {
+      window.removeEventListener('scroll', dismiss, true);
+      window.removeEventListener('resize', dismiss);
+    };
+  }, [open, close]);
 
   // Escape closes, and focus returns to the control that opened it, so a
   // keyboard reader is not dropped at the top of the document.
@@ -102,7 +141,7 @@ export function GlossaryTerm({ term, children, definition }) {
       <button
         type="button"
         ref={buttonRef}
-        className={`gt-trigger ${open ? 'gt-trigger-open' : ''}`}
+        className={`gt-trigger ${compact ? 'gt-trigger-compact' : ''} ${open ? 'gt-trigger-open' : ''}`}
         aria-expanded={open}
         aria-controls={panelId}
         aria-label={openLabel}
@@ -111,14 +150,15 @@ export function GlossaryTerm({ term, children, definition }) {
         <span className="gt-dotted" aria-hidden="true">
           {label}
         </span>
-        <BookOpen className="gt-icon" size={12} aria-hidden="true" focusable="false" />
+        {!compact && <BookOpen className="gt-icon" size={12} aria-hidden="true" focusable="false" />}
       </button>
 
-      {open && (
+      {open && position && (
         <span
           id={panelId}
           ref={popoverRef}
           className="gt-popover"
+          style={{ left: position.left, top: position.top, width: position.width }}
           role="note"
           // Not a dialog: it does not take focus and does not trap it. The
           // button keeps focus so a keyboard reader can carry straight on.
@@ -131,6 +171,7 @@ export function GlossaryTerm({ term, children, definition }) {
               Builds on <strong>{chained.term}</strong>, which has its own definition.
             </span>
           )}
+          {!chained && hint && <span className="gt-popover-see">{hint}</span>}
         </span>
       )}
     </span>
