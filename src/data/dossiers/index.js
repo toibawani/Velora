@@ -1,6 +1,10 @@
 import { PHYSICS_DOSSIERS } from './physicsDossiers';
 import { MATHEMATICS_DOSSIERS } from './mathematicsDossiers';
 import { LIFE_DOSSIERS } from './lifeDossiers';
+import { CHEMISTRY_DOSSIERS } from './chemistryDossiers';
+import { COSMOLOGY_DOSSIERS } from './cosmologyDossiers';
+import { HISTORY_DOSSIERS } from './historyDossiers';
+import { PHILOSOPHY_DOSSIERS } from './philosophyDossiers';
 
 /**
  * The dossier library.
@@ -10,7 +14,15 @@ import { LIFE_DOSSIERS } from './lifeDossiers';
  * or two lenses, and the lens page is a reading path rather than a category
  * label.
  */
-export const DOSSIERS = [...PHYSICS_DOSSIERS, ...MATHEMATICS_DOSSIERS, ...LIFE_DOSSIERS];
+export const DOSSIERS = [
+  ...PHYSICS_DOSSIERS,
+  ...MATHEMATICS_DOSSIERS,
+  ...LIFE_DOSSIERS,
+  ...CHEMISTRY_DOSSIERS,
+  ...COSMOLOGY_DOSSIERS,
+  ...HISTORY_DOSSIERS,
+  ...PHILOSOPHY_DOSSIERS,
+];
 
 export const LENSES = [
   {
@@ -47,6 +59,16 @@ export const LENSES = [
     id: 'matter',
     label: 'Matter',
     note: 'Forces, phases, and the strange behaviour of ordinary stuff.',
+  },
+  {
+    id: 'origins',
+    label: 'Origins',
+    note: 'Where the universe, the planet and the human record came from.',
+  },
+  {
+    id: 'meaning',
+    label: 'Meaning',
+    note: 'Persons, knowledge and value: what we owe each other and ourselves.',
   },
 ];
 

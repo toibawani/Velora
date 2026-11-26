@@ -14,9 +14,19 @@
  * Three links per paragraph is a deliberate cap. A paragraph with nine dotted
  * words reads as a form to fill in, not as prose.
  */
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import { GlossaryTerm } from './GlossaryTerm';
-import { buildGlossaryPattern, lookupDossierTerm } from '../data/dossiers/glossary';
+import { buildGlossaryPattern, lookupDossierTerm, termAllowedInField } from '../data/dossiers/glossary';
+
+/**
+ * The dossier's field, so an ambiguous word links only where its technical
+ * sense applies. Set once around the article instead of at every paragraph.
+ */
+export const GlossaryFieldContext = createContext(null);
+
+export function GlossaryFieldProvider({ field, children }) {
+  return <GlossaryFieldContext.Provider value={field}>{children}</GlossaryFieldContext.Provider>;
+}
 
 /**
  * The glossary's own matcher, built once at module load. The alternation is
@@ -33,7 +43,7 @@ const emphasisPattern = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
  * `used` is shared across the whole paragraph, so a word linked in the opening
  * sentence is not linked again two lines later.
  */
-function linkPlain(text, budget, used, keyPrefix) {
+function linkPlain(text, budget, used, keyPrefix, field) {
   const nodes = [];
   let last = 0;
   let key = 0;
@@ -43,7 +53,8 @@ function linkPlain(text, budget, used, keyPrefix) {
   while (match) {
     const word = match[0];
     const entry = lookupDossierTerm(word);
-    const canLink = entry && !used.has(entry.term) && budget.remaining > 0;
+    const canLink =
+      entry && !used.has(entry.term) && budget.remaining > 0 && termAllowedInField(entry, field);
 
     if (!canLink) {
       match = TERM_PATTERN.exec(text);
@@ -78,6 +89,7 @@ function linkPlain(text, budget, used, keyPrefix) {
  * reach the term matcher.
  */
 export function GlossaryText({ text, limit = 3 }) {
+  const field = useContext(GlossaryFieldContext);
   if (typeof text !== 'string' || text.length === 0) return null;
 
   const budget = { remaining: limit };
@@ -90,10 +102,16 @@ export function GlossaryText({ text, limit = 3 }) {
 
   while (match) {
     if (match.index > last) {
-      nodes.push(...linkPlain(text.slice(last, match.index), budget, used, `t-${key}`));
+      nodes.push(...linkPlain(text.slice(last, match.index), budget, used, `t-${key}`, field));
     }
     const token = match[0];
-    const inner = linkPlain(token.slice(token.startsWith('**') ? 2 : 1, token.startsWith('**') ? -2 : -1), budget, used, `e-${key}`);
+    const inner = linkPlain(
+      token.slice(token.startsWith('**') ? 2 : 1, token.startsWith('**') ? -2 : -1),
+      budget,
+      used,
+      `e-${key}`,
+      field
+    );
     nodes.push(
       token.startsWith('**') ? (
         <strong key={`strong-${key}`}>{inner}</strong>
@@ -107,7 +125,7 @@ export function GlossaryText({ text, limit = 3 }) {
   }
 
   if (last < text.length) {
-    nodes.push(...linkPlain(text.slice(last), budget, used, 'tail'));
+    nodes.push(...linkPlain(text.slice(last), budget, used, 'tail', field));
   }
 
   return <>{nodes}</>;

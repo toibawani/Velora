@@ -266,7 +266,71 @@ const crystal = () => (
   </g>
 );
 
-const MOTIFS = { arcs, interference, lattice, split, diagonal, network, orbit, tape, helix, crystal };
+const gears = () => (
+  <g>
+    {[
+      { cx: 290, cy: 160, r: 95, teeth: 20 },
+      { cx: 540, cy: 160, r: 66, teeth: 14 },
+      { cx: 700, cy: 215, r: 38, teeth: 9 },
+    ].map((gear, index) => (
+      <g key={index}>
+        <circle cx={gear.cx} cy={gear.cy} r={gear.r} fill="none" strokeWidth="1.2" style={{ opacity: 0.5 - index * 0.08 }} />
+        <circle cx={gear.cx} cy={gear.cy} r={gear.r * 0.2} fill="none" strokeWidth="1.4" style={{ opacity: 0.6 }} />
+        {Array.from({ length: gear.teeth }, (_, i) => {
+          const a = (Math.PI * 2 * i) / gear.teeth;
+          return (
+            <line
+              key={i}
+              x1={gear.cx + Math.cos(a) * gear.r}
+              y1={gear.cy + Math.sin(a) * gear.r}
+              x2={gear.cx + Math.cos(a) * (gear.r + 10)}
+              y2={gear.cy + Math.sin(a) * (gear.r + 10)}
+              strokeWidth="2"
+              style={{ opacity: 0.45 }}
+            />
+          );
+        })}
+      </g>
+    ))}
+  </g>
+);
+
+const strata = () => (
+  <g>
+    {Array.from({ length: 11 }, (_, i) => {
+      const y = 20 + i * 30;
+      return (
+        <path
+          key={i}
+          d={`M0,${y} C180,${y - 12} 320,${y + 14} 500,${y} S820,${y - 10} 1000,${y + 4}`}
+          fill="none"
+          strokeWidth={i % 3 === 0 ? 1.5 : 0.7}
+          style={{ opacity: 0.14 + (i % 4) * 0.08 }}
+        />
+      );
+    })}
+    {Array.from({ length: 26 }, (_, i) => (
+      <circle key={`d${i}`} cx={20 + i * 38} cy={40 + (i % 9) * 32} r={i % 4 === 0 ? 3 : 1.4} style={{ opacity: 0.35 }} />
+    ))}
+  </g>
+);
+
+const field = () => (
+  <g>
+    {Array.from({ length: 34 }, (_, row) =>
+      Array.from({ length: 60 }, (_, col) => {
+        const x = 8 + col * 17;
+        const y = 10 + row * 10;
+        const bend = Math.exp(-(((x - 500) / 210) ** 2) - (((y - 170) / 120) ** 2));
+        return <circle key={`${row}-${col}`} cx={x} cy={y} r={1.1 + bend * 2.2} style={{ opacity: 0.1 + bend * 0.55 }} />;
+      })
+    )}
+    <circle cx="500" cy="170" r="9" fill="none" strokeWidth="1.6" style={{ opacity: 0.8 }} />
+    <ellipse cx="500" cy="170" rx="150" ry="70" fill="none" strokeWidth="0.8" strokeDasharray="5 6" style={{ opacity: 0.4 }} />
+  </g>
+);
+
+const MOTIFS = { arcs, interference, lattice, split, diagonal, network, orbit, tape, helix, crystal, gears, strata, field };
 
 /**
  * Which drawing belongs to which essay. Kept next to the drawings rather than
@@ -292,6 +356,18 @@ export const MOTIF_BY_ID = {
   'turing-halting': 'tape',
   'horizontal-gene-transfer': 'helix',
   'predictive-processing': 'network',
+  'belousov-zhabotinsky': 'interference',
+  chirality: 'split',
+  'haber-bosch': 'lattice',
+  'hubble-tension': 'arcs',
+  'dark-matter': 'field',
+  'cosmological-constant': 'lattice',
+  'antikythera-mechanism': 'gears',
+  'year-536': 'strata',
+  'library-of-alexandria': 'strata',
+  'personal-identity': 'split',
+  'epistemic-injustice': 'network',
+  'is-ought-gap': 'diagonal',
 };
 
 export const motifFor = (id) => MOTIF_BY_ID[id] || 'arcs';

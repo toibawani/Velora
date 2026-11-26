@@ -9,7 +9,7 @@ import {
   getRelatedDossiers,
   searchDossiers,
 } from '../data/dossiers';
-import GlossaryText from '../components/GlossaryText';
+import GlossaryText, { GlossaryFieldProvider } from '../components/GlossaryText';
 import DossierArt, { motifFor } from '../components/DossierArt';
 import '../styles/Dossiers.css';
 
@@ -269,6 +269,7 @@ function DossierReader({ dossier, onBack, onOpen, readIds }) {
           </ol>
         </nav>
 
+        <GlossaryFieldProvider field={dossier.field}>
         <article className="ds-article" ref={articleRef}>
           <header>
             <p className="ds-kicker">
@@ -345,6 +346,7 @@ function DossierReader({ dossier, onBack, onOpen, readIds }) {
             </button>
           </footer>
         </article>
+        </GlossaryFieldProvider>
       </div>
     </main>
   );

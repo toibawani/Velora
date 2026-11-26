@@ -582,8 +582,11 @@
   margin: 0 0 1.25rem;
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
-  overflow-x: auto;
-  white-space: nowrap;
+  /* Long equations used to be one unwrapped monospace line with a hidden
+     scrollbar, which reads as clipped text. Wrapping keeps every symbol on
+     screen; short equations still sit on one line. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .ds-symbols {

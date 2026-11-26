@@ -22,8 +22,13 @@ describe('Velora Minds', () => {
     fireEvent.click(screen.getByRole('button', { name: /Open Albert Einstein/i }));
 
     expect(screen.getByRole('heading', { level: 1, name: 'Albert Einstein' })).toBeInTheDocument();
-    expect(screen.getByText(MIND_BY_ID.einstein.profile.method)).toBeInTheDocument();
-    expect(screen.getByText(MIND_BY_ID.einstein.profile.limits)).toBeInTheDocument();
+    // The profile is rendered through the inline glossary, so its text is split
+    // across term buttons. Assert the whole paragraph's text content instead of
+    // matching a single text node.
+    const paragraphWith = (text) =>
+      screen.getByText((_, node) => node.tagName === 'P' && node.textContent === text);
+    expect(paragraphWith(MIND_BY_ID.einstein.profile.method)).toBeInTheDocument();
+    expect(paragraphWith(MIND_BY_ID.einstein.profile.limits)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Put something to Albert/i })).toBeInTheDocument();
   });
 

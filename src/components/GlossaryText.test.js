@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import GlossaryText from './GlossaryText';
+import GlossaryText, { GlossaryFieldProvider } from './GlossaryText';
 
 /**
  * The contract of the auto-linker: it links real terms, it does not carpet the
@@ -34,6 +34,22 @@ describe('GlossaryText', () => {
   test('leaves words that are not in the glossary alone', () => {
     render(<GlossaryText text="A hologram is not a glossary term in this library." />);
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+
+  test('does not apply a technical sense outside its field', () => {
+    const { rerender } = render(
+      <GlossaryFieldProvider field="History">
+        <GlossaryText text="The measurement and the group were recorded." />
+      </GlossaryFieldProvider>
+    );
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+
+    rerender(
+      <GlossaryFieldProvider field="Physics">
+        <GlossaryText text="The measurement changed the state." />
+      </GlossaryFieldProvider>
+    );
+    expect(screen.getByRole('button', { name: /define measurement/i })).toBeInTheDocument();
   });
 
   test('keeps emphasis while linking inside it', () => {
