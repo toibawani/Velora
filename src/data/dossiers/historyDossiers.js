@@ -133,7 +133,7 @@ export const ANTIKYTHERA_DOSSIER = {
     { label: 'D. J. de Solla Price, "An ancient Greek computer", Scientific American 200, 60 (1959)', url: 'https://doi.org/10.1038/scientificamerican0659-60' },
     { label: 'T. Freeth et al., "Decoding the ancient Greek astronomical calculator known as the Antikythera Mechanism", Nature 444, 587 (2006)', url: 'https://doi.org/10.1038/nature05357' },
     { label: 'T. Freeth et al., "A model of the cosmos in the ancient Greek Antikythera mechanism", Scientific Reports 11, 5821 (2021)', url: 'https://doi.org/10.1038/s41598-021-84310-w' },
-    { label: 'M. T. Wright, "The Antikythera mechanism: a new gearing scheme", Bulletin of the Scientific Instrument Society 85 (2005)', url: 'https://www.scientificinstruments.org/' },
+    { label: 'M. T. Wright, "The Antikythera mechanism: a new gearing scheme", Bulletin of the Scientific Instrument Society 85 (2005), 2–7', url: 'https://web.archive.org/web/2020id_/http://fsoso.online.fr/antikythera/DOCS/Bulletin%20SIS%20June%202005%20New%20Gearing%20Scheme.pdf' },
   ],
   related: ['library-of-alexandria', 'year-536', 'continuum-hypothesis'],
 };
@@ -155,7 +155,7 @@ export const YEAR_536_DOSSIER = {
       kind: 'prose',
       heading: 'The physical evidence',
       body: [
-        'The strongest evidence is not textual. Greenland ice cores contain sulfate layers dated to 536, 540 and 547, the signature of large volcanic eruptions. Tree-ring records from Europe, Siberia and North America show a sharp growth anomaly starting in 536 and lasting for years; some chronologies show the coldest summer in the last two millennia. The pattern is consistent with a stratospheric aerosol veil that reflected sunlight and cooled the surface.',
+        'The strongest evidence is not textual. Greenland ice cores contain sulfate layers dated to 536, 540 and 547, the signature of large volcanic eruptions. Tree-ring records from Europe, Siberia and North America show a sharp growth anomaly starting in 536 and lasting for years; some chronologies rank the following decade among the coldest in the last two millennia. The pattern is consistent with a stratospheric aerosol veil that reflected sunlight and cooled the surface.',
         'The source of the 536 eruption is debated. Candidates include Iceland, North America and a tropical volcano; the sulfate signal is strongest in the northern hemisphere, which points north, but the exact volcano has not been identified. A second eruption around 540 and a third around 547 prolonged the cooling. The cluster is sometimes called the Late Antique Little Ice Age, a term introduced by Büntgen and colleagues in 2016 for the cooler period from 536 to about 660.',
       ],
     },
@@ -208,13 +208,13 @@ export const YEAR_536_DOSSIER = {
       heading: 'The "worst year in history"',
       claim: '"536 was the worst year to be alive, and it caused the Dark Ages."',
       correction:
-        'The phrase comes from a 2018 Atlantic article by Michael McCormick, who was answering a reporter’s question, not stating a measured historical conclusion. The environmental shock is real. The causal story — dim sun, crop failure, famine, plague, collapse of civilisation — is a chain of inferences, and each link is contested. The Justinianic plague’s death toll has been revised downward by some historians, who point to uneven archaeological evidence and to the continuation of tax records and building projects. Some regions suffered severely; others show continuity. "Worst year" is a vivid hook, not a finding.',
+        'The phrase comes from the headline of a 2018 Science news feature by Ann Gibbons, who was quoting the historian Michael McCormick answering her question, not reporting a measured historical conclusion. The environmental shock is real. The causal story — dim sun, crop failure, famine, plague, collapse of civilisation — is a chain of inferences, and each link is contested. The Justinianic plague’s death toll has been revised downward by some historians, who point to uneven archaeological evidence and to the continuation of tax records and building projects. Some regions suffered severely; others show continuity. "Worst year" is a vivid hook, not a finding.',
     },
     {
       kind: 'prose',
       heading: 'How bad was it, really?',
       body: [
-        'The revisionist case, associated with Lee Mordechai and Merle Eisenberg, argues that the plague was not the demographic catastrophe earlier historians assumed. They point out that the evidence for mass mortality is thin and geographically uneven, that many of the textual sources are rhetorical, and that the eastern Roman state continued to function. Their 2019 paper in PNAS touched off a sharp debate, with responses arguing that the revisionists underweight the archaeological and documentary evidence for disruption.',
+        'The revisionist case, associated with Lee Mordechai and Merle Eisenberg, argues that the plague was not the demographic catastrophe earlier historians assumed. They point out that the evidence for mass mortality is thin and geographically uneven, that many of the textual sources are rhetorical, and that the eastern Roman state continued to function. Their 2019 papers, in Past & Present and in PNAS, touched off a sharp debate, with responses arguing that the revisionists underweight the archaeological and documentary evidence for disruption.',
         'The environmental history is on firmer ground than the human history. A 536 eruption is established; multi-year cooling is established; crop failures in some regions are documented. What is not established is a single continental collapse. The most defensible statement is that a cluster of volcanic eruptions and a pandemic arrived within a decade, in a society already stressed by war and fiscal pressure, and that the consequences varied enormously by region. That is less dramatic than "the worst year", and more useful.',
       ],
     },
@@ -240,8 +240,9 @@ export const YEAR_536_DOSSIER = {
   sources: [
     { label: 'Procopius, History of the Wars, Book IV (c. 550), on the dimmed sun', url: 'https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/home.html' },
     { label: 'U. Büntgen et al., "Cooling and societal change during the Late Antique Little Ice Age from 536 to around 660 AD", Nature Geoscience 9, 231 (2016)', url: 'https://doi.org/10.1038/ngeo2652' },
-    { label: 'L. Mordechai and M. Eisenberg, "Rejecting catastrophe: the case of the Justinianic plague", Past & Present 244, 3 (2019)', url: 'https://doi.org/10.1093/pastj/gtz009' },
-    { label: 'M. McCormick, "The worst year to be alive", Science 362, 733 (2018)', url: 'https://doi.org/10.1126/science.362.6416.733' },
+    { label: 'L. Mordechai and M. Eisenberg, "Rejecting catastrophe: the case of the Justinianic plague", Past & Present 244, 3–50 (2019)', url: 'https://doi.org/10.1093/pastj/gtz009' },
+    { label: 'L. Mordechai et al., "The Justinianic Plague: an inconsequential pandemic?", PNAS 116(51), 25546–25554 (2019)', url: 'https://doi.org/10.1073/pnas.1903797116' },
+    { label: 'A. Gibbons, "Eruption made 536 ‘the worst year to be alive’", Science 362(6416), 733–734 (2018); quotes Michael McCormick', url: 'https://doi.org/10.1126/science.362.6416.733' },
   ],
   related: ['antikythera-mechanism', 'library-of-alexandria', 'hubble-tension'],
 };
@@ -346,8 +347,8 @@ export const LIBRARY_OF_ALEXANDRIA_DOSSIER = {
     },
   ],
   sources: [
-    { label: 'D. J. Thompson, "The Library of Alexandria: the myth and the reality", in The Oxford Handbook of Ancient Greek Religion (2015)', url: 'https://academic.oup.com/edinburgh-scholarship-online/book/21256' },
-    { label: 'R. MacLeod (ed.), The Library of Alexandria: Centre of Learning in the Ancient World (I. B. Tauris, 2000)', url: 'https://www.bloomsbury.com/uk/library-of-alexandria-9781850435948/' },
+    { label: 'D. Delia, "From Romance to Rhetoric: The Alexandrian Library in Classical and Islamic Traditions", American Historical Review 97(5), 1449–1467 (1992)', url: 'https://doi.org/10.1086/ahr/97.5.1449' },
+    { label: 'D. Rohmann, "The Destruction of the Serapeum of Alexandria, Its Library, and the Immediate Reactions", Klio 104(1), 334–362 (2022)', url: 'https://doi.org/10.1515/klio-2021-0021' },
     { label: 'Plutarch, Life of Caesar, on the fire in Alexandria', url: 'https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html' },
     { label: 'Ammianus Marcellinus, Res Gestae, on the Serapeum', url: 'https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Ammian/home.html' },
   ],

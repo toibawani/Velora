@@ -290,7 +290,7 @@ export const COSMOLOGICAL_CONSTANT_DOSSIER = {
       heading: 'What a cosmological constant is',
       body: [
         'Einstein introduced the cosmological constant in 1917 as a term in his field equations that could hold a static universe open against gravity. When Hubble showed the universe is expanding, the term became unnecessary, and Einstein reportedly called it his greatest blunder — a remark that may be apocryphal and is in any case unfair, since the term is now essential. In modern language, Λ is an energy density of the vacuum: a constant energy per unit volume that does not dilute as the universe expands.',
-        'That last property is what makes it cosmologically important. Matter density falls as the universe expands; radiation falls faster. A constant vacuum energy does not fall at all, so even a tiny value eventually dominates. The observed dark energy density is about 6 × 10⁻¹⁰ joules per cubic metre, which corresponds to about 10⁻²⁶ kilograms per cubic metre — roughly one proton mass per cubic metre, spread through the entire universe. It is small, but it is not zero, and it is now about 68 per cent of the total energy budget.',
+        'That last property is what makes it cosmologically important. Matter density falls as the universe expands; radiation falls faster. A constant vacuum energy does not fall at all, so even a tiny value eventually dominates. The observed dark energy density is about 6 × 10⁻¹⁰ joules per cubic metre, which corresponds to about 10⁻²⁶ kilograms per cubic metre — roughly six protons’ worth of mass per cubic metre, spread through the entire universe. It is small, but it is not zero, and it is now about 68 per cent of the total energy budget.',
       ],
     },
     {

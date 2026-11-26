@@ -19,14 +19,14 @@ export const BZ_REACTION_DOSSIER = {
   difficulty: 'Advanced',
   minutes: 24,
   opening:
-    'In 1951 Boris Belousov mixed potassium bromate, citric acid and a cerium salt in dilute sulfuric acid and watched the colour of the solution swing between yellow and colourless. The period was about thirty seconds and the oscillation persisted for nearly an hour. He submitted the result to a Soviet journal and was told it was impossible: a closed chemical system must approach equilibrium monotonically, so a reaction that goes back and forth must be an artefact. His paper was rejected twice before it appeared, shortened, in 1959. The effect is real, and the reason it is real is that the beaker was never closed.',
+    'In 1951 Boris Belousov mixed potassium bromate, citric acid and a cerium salt in dilute sulfuric acid and watched the colour of the solution swing between yellow and colourless. The period was a matter of tens of seconds and the oscillation persisted for a long while. He submitted the result to a Soviet journal and was told it was impossible: a closed chemical system must approach equilibrium monotonically, so a reaction that goes back and forth must be an artefact. His paper was rejected twice before it appeared, shortened, in 1959. The effect is real, and the reason it is real is that the beaker was never closed.',
   sections: [
     {
       kind: 'prose',
       heading: 'Why a chemist thought it could not happen',
       body: [
         'The intuition Belousov ran into is a real theorem, correctly applied to the wrong system. A closed system at constant temperature and pressure minimises its Gibbs free energy. It can pass through a maximum on the way down, but it cannot cycle forever, because a cycle would return it to a state it had already left and the free energy would have to be lower both times. A genuinely closed, isothermal reaction that oscillates would violate the second law.',
-        'Belousov’s beaker was not closed in the relevant sense. It was open to the atmosphere, and more importantly it was far from equilibrium: the bromate and malonic acid were fuel, and the reaction was consuming them while dissipating heat. An open system can hold a non-equilibrium steady state, and a steady state can lose stability and give way to a sustained oscillation. Ilya Prigogine later called structures of this kind dissipative structures: ordered patterns maintained by a flow of energy through the system, not by a lowering of entropy inside it.',
+        'Belousov’s beaker was not closed in the relevant sense. It was open to the atmosphere, and more importantly it was far from equilibrium: the bromate and the organic fuel were being consumed, and the reaction was consuming them while dissipating heat. An open system can hold a non-equilibrium steady state, and a steady state can lose stability and give way to a sustained oscillation. Ilya Prigogine later called structures of this kind dissipative structures: ordered patterns maintained by a flow of energy through the system, not by a lowering of entropy inside it.',
       ],
     },
     {
@@ -96,7 +96,7 @@ export const BZ_REACTION_DOSSIER = {
       columns: ['System', 'What oscillates', 'Why it is interesting'],
       rows: [
         ['Belousov–Zhabotinsky', 'Ce³⁺/Ce⁴⁺ ratio; colour and redox potential', 'The original; also supports spiral waves in thin layers'],
-        ['Briggs–Rauscher', 'Iodine concentration; colour swings between amber and deep blue', 'A iodine analogue discovered in 1973; simpler to run in a school lab'],
+        ['Briggs–Rauscher', 'Iodine concentration; colour swings between amber and deep blue', 'An iodine analogue discovered in 1973; simpler to run in a school lab'],
         ['CIMA reaction', 'Colour of a starch–iodine complex', 'Designed by Epstein and others to be a practical laboratory oscillator'],
         ['Oregonator model', 'Two coupled variables x and z', 'Shows that two variables and autocatalysis are enough for oscillation'],
       ],
@@ -130,11 +130,11 @@ export const BZ_REACTION_DOSSIER = {
     },
   ],
   sources: [
-    { label: 'B. P. Belousov, "A periodic reaction and its mechanism", Sbornik Referatov po Radiatsionni Meditsine (1959); the paper that was rejected twice', url: 'https://en.wikipedia.org/wiki/Boris_Belousov' },
+    { label: 'A. Pechenkin, "The Belousov Reaction", in The History of Research on Chemical Periodic Processes (Springer, 2018), 45–63; documents the 1951 discovery and the twice-rejected 1959 paper', url: 'https://doi.org/10.1007/978-3-319-95108-9_4' },
     { label: 'A. N. Zaikin and A. M. Zhabotinsky, "Concentration wave propagation in two-dimensional liquid-phase self-oscillating system", Nature 225, 535 (1970)', url: 'https://doi.org/10.1038/225535b0' },
     { label: 'R. J. Field, E. Körös, R. M. Noyes, "Oscillations in chemical systems II", JACS 94, 8649 (1972)', url: 'https://doi.org/10.1021/ja00780a001' },
     { label: 'A. T. Winfree, "Spiral waves of chemical activity", Science 175, 634 (1972)', url: 'https://doi.org/10.1126/science.175.4022.634' },
-    { label: 'I. R. Epstein and J. A. Pojman, An Introduction to Nonlinear Chemical Dynamics (Oxford, 1998)', url: 'https://global.oup.com/academic/product/an-introduction-to-nonlinear-chemical-dynamics-9780195076707' },
+    { label: 'I. R. Epstein and J. A. Pojman, An Introduction to Nonlinear Chemical Dynamics (Oxford University Press, 1998), ISBN 9780195096705', url: 'https://doi.org/10.1093/oso/9780195096705.001.0001' },
   ],
   related: ['time-crystals', 'arrow-of-time', 'slime-mould'],
 };
@@ -260,9 +260,9 @@ export const CHIRALITY_DOSSIER = {
     },
   ],
   sources: [
-    { label: 'L. Pasteur, "Mémoire sur la relation qui peut exister entre la forme cristalline et la composition chimique", Annales de Chimie et de Physique 24, 442 (1848)', url: 'https://en.wikipedia.org/wiki/Louis_Pasteur' },
+    { label: 'OpenStax Organic Chemistry, "Pasteur’s Discovery of Enantiomers" (2023), on the 1848 sodium ammonium tartrate separation', url: 'https://openstax.org/books/organic-chemistry/pages/5-4-pasteurs-discovery-of-enantiomers' },
     { label: 'K. Soai et al., "Asymmetric autocatalysis and amplification of enantiomeric excess of a chiral molecule", Nature 378, 767 (1995)', url: 'https://doi.org/10.1038/378767a0' },
-    { label: 'N. Vargesson, "Thalidomide-induced teratogenesis: history and mechanisms", Birth Defects Research 105, 140 (2015)', url: 'https://doi.org/10.1002/bdr2.1053' },
+    { label: 'N. Vargesson, "Thalidomide-induced teratogenesis: history and mechanisms", Birth Defects Research Part C 105(2), 140–156 (2015)', url: 'https://doi.org/10.1002/bdrc.21096' },
     { label: 'D. G. Blackmond, "The origin of biological homochirality", Cold Spring Harbor Perspectives in Biology 2, a002147 (2010)', url: 'https://doi.org/10.1101/cshperspect.a002147' },
   ],
   related: ['horizontal-gene-transfer', 'mycorrhizal-networks', 'belousov-zhabotinsky'],

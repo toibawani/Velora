@@ -109,10 +109,10 @@ export const PERSONAL_IDENTITY_DOSSIER = {
     },
   ],
   sources: [
-    { label: 'J. Locke, An Essay Concerning Human Understanding, Book II, Chapter 27 (1690)', url: 'https://enlightenment.supersaturated.com/johnlocke/BOOKIIChapterXXVII.html' },
+    { label: 'J. Locke, An Essay Concerning Human Understanding, Book II, Chapter 27 (1690), Project Gutenberg edition', url: 'https://www.gutenberg.org/ebooks/10615' },
     { label: 'D. Parfit, Reasons and Persons (Oxford, 1984), Part III', url: 'https://global.oup.com/academic/product/reasons-and-persons-9780198249085' },
     { label: 'E. T. Olson, The Human Animal: Personal Identity Without Psychology (Oxford, 1997)', url: 'https://global.oup.com/academic/product/the-human-animal-9780198751519' },
-    { label: 'S. Shoemaker, Self-Knowledge and Self-Identity (Cornell, 1963)', url: 'https://www.cornellpress.cornell.edu/book/9780801404535/self-knowledge-and-self-identity/' },
+    { label: 'S. Shoemaker, Self-Knowledge and Self-Identity (Cornell University Press, 1963)', url: 'https://archive.org/details/selfknowledgesel00shoe' },
   ],
   related: ['epistemic-injustice', 'is-ought-gap', 'predictive-processing'],
 };
