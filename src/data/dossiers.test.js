@@ -33,36 +33,81 @@ describe('the dossier library', () => {
     });
   });
 
-  test('every section has a heading and content of its kind', () => {
+  // Sections are grouped by kind and asserted outside any conditional: a test
+  // that calls expect inside an if branch passes silently when the branch is
+  // never taken, which is how a whole section kind can lose its body.
+  const sectionsOf = (kind) => DOSSIERS.flatMap((dossier) => dossier.sections.filter((section) => section.kind === kind));
+
+  test('every section has a heading', () => {
     DOSSIERS.forEach((dossier) => {
       dossier.sections.forEach((section) => {
         expect(section.heading.length).toBeGreaterThan(4);
-        if (section.kind === 'math') {
-          expect(section.equation).toBeTruthy();
-          expect(section.symbols.length).toBeGreaterThanOrEqual(3);
-          section.symbols.forEach((symbol) => {
-            expect(symbol.symbol).toBeTruthy();
-            expect(symbol.meaning).toBeTruthy();
-          });
-        } else if (section.kind === 'terms') {
-          expect(section.items.length).toBeGreaterThanOrEqual(3);
-        } else if (section.kind === 'table') {
-          expect(section.columns.length).toBeGreaterThanOrEqual(2);
-          section.rows.forEach((row) => expect(row).toHaveLength(section.columns.length));
-        } else if (section.kind === 'misconception') {
-          expect(section.claim).toBeTruthy();
-          expect(section.correction.length).toBeGreaterThan(100);
-        } else if (section.kind === 'questions') {
-          expect(section.items.length).toBeGreaterThanOrEqual(3);
-        } else if (section.kind === 'steps') {
-          expect(section.items.length).toBeGreaterThanOrEqual(3);
-          section.items.forEach((item) => {
-            expect(item.title).toBeTruthy();
-            expect(item.text.length).toBeGreaterThan(40);
-          });
-        } else {
-          expect(section.body.length).toBeGreaterThanOrEqual(1);
-        }
+      });
+    });
+  });
+
+  test('every prose section has at least one paragraph', () => {
+    const prose = DOSSIERS.flatMap((dossier) => dossier.sections.filter((section) => section.kind === 'prose'));
+    expect(prose.length).toBeGreaterThanOrEqual(8);
+    prose.forEach((section) => expect(section.body.length).toBeGreaterThanOrEqual(1));
+  });
+
+  test('every mathematics section explains its symbols', () => {
+    const math = sectionsOf('math');
+    expect(math.length).toBeGreaterThanOrEqual(3);
+    math.forEach((section) => {
+      expect(section.equation).toBeTruthy();
+      expect(section.symbols.length).toBeGreaterThanOrEqual(3);
+      section.symbols.forEach((symbol) => {
+        expect(symbol.symbol).toBeTruthy();
+        expect(symbol.meaning).toBeTruthy();
+      });
+      expect(section.assumptions.length).toBeGreaterThanOrEqual(2);
+    });
+  });
+
+  test('every terms section defines at least three terms', () => {
+    const terms = sectionsOf('terms');
+    expect(terms.length).toBeGreaterThanOrEqual(3);
+    terms.forEach((section) => {
+      expect(section.items.length).toBeGreaterThanOrEqual(3);
+      section.items.forEach((item) => expect(item.definition.length).toBeGreaterThan(40));
+    });
+  });
+
+  test('every table has a rectangle of cells and a note', () => {
+    const tables = sectionsOf('table');
+    expect(tables.length).toBeGreaterThanOrEqual(3);
+    tables.forEach((section) => {
+      expect(section.columns.length).toBeGreaterThanOrEqual(2);
+      section.rows.forEach((row) => expect(row).toHaveLength(section.columns.length));
+      expect(section.note.length).toBeGreaterThan(40);
+    });
+  });
+
+  test('every correction names the claim it corrects', () => {
+    const corrections = sectionsOf('misconception');
+    expect(corrections.length).toBeGreaterThanOrEqual(3);
+    corrections.forEach((section) => {
+      expect(section.claim).toBeTruthy();
+      expect(section.correction.length).toBeGreaterThan(100);
+    });
+  });
+
+  test('every question section asks at least three questions', () => {
+    const questions = sectionsOf('questions');
+    expect(questions.length).toBeGreaterThanOrEqual(3);
+    questions.forEach((section) => expect(section.items.length).toBeGreaterThanOrEqual(3));
+  });
+
+  test('every steps section explains each step', () => {
+    const steps = sectionsOf('steps');
+    expect(steps.length).toBeGreaterThanOrEqual(1);
+    steps.forEach((section) => {
+      expect(section.items.length).toBeGreaterThanOrEqual(3);
+      section.items.forEach((item) => {
+        expect(item.title).toBeTruthy();
+        expect(item.text.length).toBeGreaterThan(40);
       });
     });
   });
