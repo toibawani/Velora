@@ -1,0 +1,205 @@
+/**
+ * Numerical models behind the Lab.
+ *
+ * These are the equations the screens draw. They live here, away from the
+ * components, for one reason: a simulation that cannot be tested is a picture of
+ * a simulation. Everything in this file has a closed-form check or a known
+ * limiting behaviour, and the tests in src/utils/labMath.test.js assert it.
+ *
+ * Units are explicit in the argument names. Energies are in electronvolts,
+ * lengths in nanometres, times in arbitrary units unless stated.
+ */
+
+export const PLANCK_EV_S = 4.135667696e-15; // h in eV·s
+export const HBAR_EV_S = 6.582119569e-16; // ħ in eV·s
+export const ELECTRON_MASS_KG = 9.1093837015e-31;
+export const HBAR_J_S = 1.054571817e-34;
+export const ELEMENTARY_CHARGE = 1.602176634e-19;
+
+/**
+ * Transmission through a rectangular potential barrier, exact for a
+ * one-dimensional, time-independent Schrödinger equation.
+ *
+ * For E > V0 the wavevector inside the barrier is real; for E < V0 it is
+ * imaginary and the transmission decays exponentially with width. Both branches
+ * come from the same matching conditions, and the function switches at E = V0
+ * where T = 1 / (1 + m V0 L² / (2ħ²)).
+ */
+export function barrierTransmission({ energyEv, barrierEv, widthNm, massKg = ELECTRON_MASS_KG }) {
+  const E = Number(energyEv);
+  const V = Number(barrierEv);
+  const L = Math.max(Number(widthNm), 0) * 1e-9;
+  if (!Number.isFinite(E) || !Number.isFinite(V) || !Number.isFinite(L)) return 0;
+  if (L === 0) return 1;
+  // A barrier at or below zero energy is not a barrier; the particle passes.
+  if (V <= 0) return 1;
+
+  const hbar = HBAR_J_S;
+  const m = massKg;
+  const eJ = E * ELEMENTARY_CHARGE;
+  const vJ = V * ELEMENTARY_CHARGE;
+
+  if (Math.abs(eJ - vJ) < 1e-12 * Math.max(vJ, 1e-30)) {
+    // The E = V limit, where k = κ = 0 and the naive formula is 0/0.
+    const alpha = (m * vJ * L * L) / (2 * hbar * hbar);
+    return 1 / (1 + alpha);
+  }
+
+  if (eJ < vJ) {
+    const kappa = Math.sqrt((2 * m * (vJ - eJ)) / (hbar * hbar));
+    const k = Math.sqrt((2 * m * eJ) / (hbar * hbar));
+    const sinh = Math.sinh(kappa * L);
+    const prefactor = ((k * k + kappa * kappa) ** 2 * sinh * sinh) / (4 * k * k * kappa * kappa);
+    return 1 / (1 + prefactor);
+  }
+
+  const k1 = Math.sqrt((2 * m * eJ) / (hbar * hbar));
+  const k2 = Math.sqrt((2 * m * (eJ - vJ)) / (hbar * hbar));
+  const sin = Math.sin(k2 * L);
+  const prefactor = ((k1 * k1 - k2 * k2) ** 2 * sin * sin) / (4 * k1 * k1 * k2 * k2);
+  return 1 / (1 + prefactor);
+}
+
+/** de Broglie wavelength in nanometres for an electron at an energy in eV. */
+export function deBroglieWavelengthNm(energyEv, massKg = ELECTRON_MASS_KG) {
+  const eJ = Math.max(Number(energyEv), 1e-9) * ELEMENTARY_CHARGE;
+  const p = Math.sqrt(2 * massKg * eJ);
+  return (6.62607015e-34 / p) * 1e9;
+}
+
+/**
+ * One classical Runge–Kutta 4 step of the Lorenz system.
+ * dx/dt = σ(y − x), dy/dt = x(ρ − z) − y, dz/dt = xy − βz
+ */
+export function lorenzStep(state, { sigma = 10, rho = 28, beta = 8 / 3 } = {}, dt = 0.005) {
+  const { x, y, z } = state;
+  const f = (s) => ({
+    x: sigma * (s.y - s.x),
+    y: s.x * (rho - s.z) - s.y,
+    z: s.x * s.y - beta * s.z,
+  });
+  const k1 = f({ x, y, z });
+  const k2 = f({ x: x + (dt / 2) * k1.x, y: y + (dt / 2) * k1.y, z: z + (dt / 2) * k1.z });
+  const k3 = f({ x: x + (dt / 2) * k2.x, y: y + (dt / 2) * k2.y, z: z + (dt / 2) * k2.z });
+  const k4 = f({ x: x + dt * k3.x, y: y + dt * k3.y, z: z + dt * k3.z });
+  return {
+    x: x + (dt / 6) * (k1.x + 2 * k2.x + 2 * k3.x + k4.x),
+    y: y + (dt / 6) * (k1.y + 2 * k2.y + 2 * k3.y + k4.y),
+    z: z + (dt / 6) * (k1.z + 2 * k2.z + 2 * k3.z + k4.z),
+  };
+}
+
+/**
+ * Separation growth between two nearby Lorenz trajectories, used as a finite
+ * time estimate of the largest Lyapunov exponent. Positive means divergence.
+ */
+export function lorenzDivergence({ sigma = 10, rho = 28, beta = 8 / 3 } = {}, { steps = 12000, dt = 0.005 } = {}) {
+  let a = { x: 1, y: 1, z: 1 };
+  let b = { x: 1 + 1e-8, y: 1, z: 1 };
+  const separation = (p, q) => Math.hypot(p.x - q.x, p.y - q.y, p.z - q.z);
+  const initial = separation(a, b);
+  let sum = 0;
+  let counted = 0;
+  for (let i = 0; i < steps; i += 1) {
+    a = lorenzStep(a, { sigma, rho, beta }, dt);
+    b = lorenzStep(b, { sigma, rho, beta }, dt);
+    const d = separation(a, b);
+    if (d > 0 && Number.isFinite(d)) {
+      // Renormalise so the two trajectories stay in the linear regime.
+      const scale = initial / d;
+      b = {
+        x: a.x + (b.x - a.x) * scale,
+        y: a.y + (b.y - a.y) * scale,
+        z: a.z + (b.z - a.z) * scale,
+      };
+      sum += Math.log(d / initial);
+      counted += 1;
+    }
+  }
+  if (!counted) return 0;
+  return sum / (counted * dt);
+}
+
+/** The logistic map. The whole of chaos in one line. */
+export const logisticStep = (r, x) => Number(r) * Number(x) * (1 - Number(x));
+
+/**
+ * Bifurcation data: for each r, run the map past its transient and keep the
+ * distinct late values. This is a sweep, so the length is bounded by the caller.
+ */
+export function logisticBifurcation({ rMin = 2.4, rMax = 4, samples = 420, transient = 300, keep = 40 } = {}) {
+  const points = [];
+  for (let i = 0; i < samples; i += 1) {
+    const r = rMin + ((rMax - rMin) * i) / (samples - 1);
+    let x = 0.4;
+    for (let n = 0; n < transient; n += 1) x = logisticStep(r, x);
+    for (let n = 0; n < keep; n += 1) {
+      x = logisticStep(r, x);
+      points.push({ r, x });
+    }
+  }
+  return points;
+}
+
+/**
+ * Survival probability after N ideal projective measurements, for a two-level
+ * system driven at Rabi frequency omega, with total time fixed at N * tau.
+ * P = cos^(2N)(omega tau / 2). At omega tau = 0 this is 1; at N = 1 it is the
+ * ordinary Rabi survival probability.
+ */
+export function zenoSurvival({ omega = 1, tau = 0.2, measurements = 10 } = {}) {
+  const N = Math.max(1, Math.round(Number(measurements)));
+  const w = Number(omega);
+  const t = Math.max(Number(tau), 0);
+  const base = Math.cos((w * t) / 2);
+  const p = base ** (2 * N);
+  return Math.min(1, Math.max(0, p));
+}
+
+/** Total time represented by a Zeno run, so the readout can state it. */
+export const zenoTotalTime = ({ tau = 0.2, measurements = 10 } = {}) =>
+  Math.max(0, Number(tau)) * Math.max(1, Math.round(Number(measurements)));
+
+/**
+ * The honest form of the Zeno comparison: total time is held fixed, so adding
+ * measurements shortens each interval (τ = T/N) rather than extending the
+ * experiment. This is the only version in which survival rises with N, which is
+ * the effect the Zeno name refers to.
+ */
+export const zenoSurvivalAtFixedTime = ({ omega = 1, totalTime = 2, measurements = 10 } = {}) => {
+  const N = Math.max(1, Math.round(Number(measurements)));
+  return zenoSurvival({ omega, tau: Math.max(0, Number(totalTime)) / N, measurements: N });
+};
+
+/**
+ * The Rabi survival probability with no measurement at all. The Zeno plot
+ * shows this as the reference line the measurements are compared against.
+ */
+export const rabiSurvival = ({ omega = 1, time = 2 } = {}) =>
+  Math.min(1, Math.max(0, Math.cos((Number(omega) * Number(time)) / 2) ** 2));
+
+/**
+ * Shannon entropy of a binary distribution, in bits. Used by the Landauer
+ * readout on the information panel, where the point is that one bit of
+ * uncertainty costs k_B T ln 2 when it is erased.
+ */
+export function binaryEntropyBits(p) {
+  const q = Math.min(1, Math.max(0, Number(p)));
+  if (q === 0 || q === 1) return 0;
+  return -(q * Math.log2(q) + (1 - q) * Math.log2(1 - q));
+}
+
+/** Landauer energy for one bit at a temperature in kelvin, in joules. */
+export const landauerEnergy = (temperatureK) => 1.380649e-23 * Number(temperatureK) * Math.LN2;
+
+/**
+ * Kullback–Leibler divergence in bits between two Bernoulli distributions,
+ * clipped so a zero probability gives a finite (large) number rather than
+ * Infinity. The simulation panel uses it to show how far a biased memory is
+ * from the uniform guess it replaces.
+ */
+export function klDivergenceBits(p, q) {
+  const a = Math.min(1 - 1e-9, Math.max(1e-9, Number(p)));
+  const b = Math.min(1 - 1e-9, Math.max(1e-9, Number(q)));
+  return a * Math.log2(a / b) + (1 - a) * Math.log2((1 - a) / (1 - b));
+}

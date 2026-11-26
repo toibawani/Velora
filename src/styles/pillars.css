@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Atlas entry points for the library, the lab and Velora Minds
+   ========================================================================== */
+
+.rh-pillars {
+  margin: 3.5rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-default);
+}
+
+.rh-pillars .rh-shelf-head {
+  max-width: 62ch;
+}
+
+.rh-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1.5rem;
+  background: var(--border-default);
+  border: 1px solid var(--border-default);
+}
+
+.rh-pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+  background: var(--bg-primary);
+  border: none;
+  padding: 1.4rem;
+  color: inherit;
+  cursor: pointer;
+  transition: background 180ms ease;
+  min-height: 210px;
+}
+
+.rh-pillar:hover {
+  background: var(--bg-elevated);
+}
+
+.rh-pillar-number {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--accent-primary);
+}
+
+.rh-pillar strong {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.rh-pillar > span:nth-of-type(2) {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.rh-pillar-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.rh-pillar:hover .rh-pillar-open {
+  color: var(--accent-primary);
+}
+
+.rh-pillar:hover .rh-pillar-open svg {
+  transform: translateX(3px);
+  transition: transform 180ms ease;
+}
+
+@media (max-width: 860px) {
+  .rh-pillar-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rh-pillar {
+    min-height: 0;
+  }
+}

@@ -31,7 +31,9 @@ const JourneyScreen = lazy(() => import('./screens/Journey'));
 const RoadmapScreen = lazy(() => import('./screens/Roadmap'));
 const SettingsScreen = lazy(() => import('./screens/Settings'));
 const NextUpScreen = lazy(() => import('./screens/NextUp'));
-const ConversationBotsScreen = lazy(() => import('./screens/ConversationBots'));
+const DossiersScreen = lazy(() => import('./screens/Dossiers'));
+const LabScreen = lazy(() => import('./screens/Lab'));
+const VeloraMindsScreen = lazy(() => import('./screens/VeloraMinds'));
 const PrivacyScreen = lazy(() => import('./screens/Privacy'));
 const TermsScreen = lazy(() => import('./screens/Terms'));
 
@@ -59,7 +61,9 @@ const ROUTE_LABELS = {
   roadmap: 'Roadmap',
   settings: 'Settings',
   tasks: 'Next up',
-  dialogues: 'Intellectual Dialogues',
+  dossiers: 'Dossiers',
+  lab: 'The Lab',
+  dialogues: 'Velora Minds',
   privacy: 'Privacy',
   terms: 'Terms of Service',
   landing: 'VELORA',
@@ -154,9 +158,12 @@ function App() {
   // Which level a deep read should open on, when the topic that was tapped names
   // one. Null means "open at the top", which is what a generic entry point wants.
   const [deepReadLevel, setDeepReadLevel] = useState(null);
-  const [dialogueFigure, setDialogueFigure] = useState('einstein');
+  // Null means "open the Minds library". Landing on Einstein every time made
+  // the library unreachable except through its own back button: the feature's
+  // front door opened straight into one profile.
+  const [dialogueFigure, setDialogueFigure] = useState(null);
 
-  const openDialogue = (figureId = 'einstein') => {
+  const openDialogue = (figureId = null) => {
     setDialogueFigure(figureId);
     setScreen('dialogues');
   };
@@ -359,11 +366,18 @@ function App() {
           <NextUpScreen setScreen={setScreen} onOpenLesson={openLesson} />
         )}
 
+        {screen === 'dossiers' && user && (
+          <DossiersScreen setScreen={setScreen} />
+        )}
+
+        {screen === 'lab' && user && (
+          <LabScreen setScreen={setScreen} />
+        )}
+
         {screen === 'dialogues' && user && (
-          <ConversationBotsScreen
+          <VeloraMindsScreen
             setScreen={setScreen}
             initialFigureId={dialogueFigure}
-            showToast={showToast}
           />
         )}
 

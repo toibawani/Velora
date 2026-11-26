@@ -37,6 +37,8 @@ import {
   MessageSquareQuote,
   EyeOff,
   FileText,
+  Library,
+  Microscope,
 } from 'lucide-react';
 
 export const SCREENS = [
@@ -55,6 +57,22 @@ export const SCREENS = [
     description: 'Choose a subject and follow your curiosity',
     icon: BookOpen,
     primary: true,
+  },
+  {
+    id: 'dossiers',
+    label: 'Dossiers',
+    drawerLabel: 'Dossiers',
+    description: 'Long-form, sourced essays on unusual results in science and mathematics',
+    icon: Library,
+    primary: false,
+  },
+  {
+    id: 'lab',
+    label: 'Lab',
+    drawerLabel: 'The Lab',
+    description: 'Four numerical experiments with live parameters, equations and stated limits',
+    icon: Microscope,
+    primary: false,
   },
   {
     id: 'dictionary',
@@ -122,9 +140,9 @@ export const SCREENS = [
   },
   {
     id: 'dialogues',
-    label: 'Dialogues',
-    drawerLabel: 'Intellectual Dialogues',
-    description: 'Scripted dialogues with six historical figures, written from their surviving work',
+    label: 'Minds',
+    drawerLabel: 'Velora Minds',
+    description: 'Researched intellectual profiles, with conversations composed from documented positions',
     icon: MessageSquareQuote,
     primary: false,
   },

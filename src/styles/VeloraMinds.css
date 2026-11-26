@@ -1,0 +1,1148 @@
+/* ==========================================================================
+   Velora Minds — profiles, conversation, debates
+   ========================================================================== */
+
+.vm-shell {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+.vm-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem clamp(1.25rem, 4vw, 3rem);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-default);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  color: var(--text-tertiary);
+}
+
+.vm-topbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font: inherit;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  padding: 0.35rem 0;
+}
+
+.vm-topbar button:hover {
+  color: var(--text-primary);
+}
+
+.vm-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3rem) 6rem;
+}
+
+.vm-kicker {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 0.5rem;
+}
+
+/* -- Masthead ------------------------------------------------------------- */
+
+.vm-masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.85fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.vm-masthead h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 1rem;
+}
+
+.vm-masthead h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent-primary);
+}
+
+.vm-lead {
+  max-width: 54ch;
+  margin: 0;
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.vm-honesty {
+  border-left: 2px solid var(--accent-primary);
+  padding-left: 1.25rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.vm-honesty-label {
+  font-size: var(--text-micro) !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-primary) !important;
+  margin-bottom: 0.5rem;
+}
+
+.vm-honesty p {
+  margin: 0 0 0.75rem;
+}
+
+.vm-honesty strong {
+  color: var(--text-primary);
+}
+
+/* -- Theme filter --------------------------------------------------------- */
+
+.vm-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 1.5rem 0 0;
+}
+
+.vm-themes button {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  min-height: 36px;
+}
+
+.vm-themes button span {
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.vm-themes button:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.vm-themes button.active {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.vm-themes button.active span {
+  color: var(--bg-primary);
+  opacity: 0.75;
+}
+
+/* -- Grid ----------------------------------------------------------------- */
+
+.vm-grid {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border-default);
+  border: 1px solid var(--border-default);
+}
+
+.vm-grid > li {
+  background: var(--bg-primary);
+  min-width: 0;
+}
+
+.vm-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.5rem;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.vm-card:hover {
+  background: var(--bg-elevated);
+}
+
+.vm-card-head {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.vm-monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  flex: none;
+  letter-spacing: 0.02em;
+}
+
+.vm-monogram--card {
+  width: 46px;
+  height: 46px;
+  font-size: 1rem;
+}
+
+.vm-monogram--large {
+  width: 110px;
+  height: 110px;
+  font-size: 2.2rem;
+}
+
+.vm-card-ident {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+}
+
+.vm-card-ident strong {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.vm-card-thesis {
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.vm-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+}
+
+/* -- Debates -------------------------------------------------------------- */
+
+.vm-debates {
+  margin-top: 4.5rem;
+}
+
+.vm-section-head {
+  max-width: 62ch;
+  margin-bottom: 1.5rem;
+}
+
+.vm-section-head h2,
+.vm-method h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-heading);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.vm-section-head p:last-child {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.vm-debates ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border-strong);
+}
+
+.vm-debates li {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.vm-debate-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  gap: 1.25rem;
+  align-items: baseline;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1.25rem 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.vm-debate-card:hover {
+  background: var(--bg-elevated);
+}
+
+.vm-debate-names {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.vm-debate-names span {
+  color: var(--accent-primary);
+  font-style: italic;
+  padding: 0 0.2rem;
+}
+
+.vm-debate-card strong {
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
+
+.vm-debate-card > span:nth-of-type(2) {
+  font-family: var(--font-reading);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.vm-debate-open {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* -- Method --------------------------------------------------------------- */
+
+.vm-method {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-default);
+}
+
+.vm-method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: 1.5rem;
+}
+
+.vm-step {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--accent-primary);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.vm-method-grid h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+
+.vm-method-grid p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* -- Figure --------------------------------------------------------------- */
+
+.vm-figure-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-default);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.vm-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  letter-spacing: normal;
+  text-transform: none;
+  cursor: pointer;
+  padding: 0.4rem 0;
+}
+
+.vm-back:hover {
+  color: var(--text-primary);
+}
+
+.vm-figure-head {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: flex-start;
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.vm-figure-head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4rem;
+}
+
+.vm-figure-meta {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: var(--text-tertiary);
+  margin: 0 0 0.9rem;
+}
+
+.vm-figure-meta span {
+  padding: 0 0.35rem;
+}
+
+.vm-thesis {
+  font-family: var(--font-reading);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 56ch;
+  margin: 0 0 1rem;
+}
+
+.vm-theme-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.vm-theme-tags span {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-subtle);
+  padding: 0.2rem 0.45rem;
+}
+
+.vm-figure-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  padding-top: 2rem;
+}
+
+.vm-profile section {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.vm-profile section:first-child {
+  padding-top: 0;
+}
+
+.vm-profile h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0 0 0.6rem;
+}
+
+.vm-profile p {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.vm-works,
+.vm-positions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.vm-works li,
+.vm-positions li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.vm-works strong,
+.vm-positions strong {
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.vm-works span {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+}
+
+.vm-works p,
+.vm-positions p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.vm-positions a {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  align-self: flex-start;
+  overflow-wrap: anywhere;
+}
+
+.vm-positions a:hover {
+  color: var(--accent-primary);
+}
+
+.vm-pairs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+}
+
+.vm-pairs button {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+  padding: 0.15rem 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-align: left;
+}
+
+.vm-pairs button:hover {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+/* -- Conversation --------------------------------------------------------- */
+
+.vm-conversation {
+  position: sticky;
+  top: 4.5rem;
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  padding: 1.5rem;
+}
+
+.vm-conversation-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.vm-conversation-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+}
+
+.vm-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  cursor: pointer;
+  padding: 0.2rem;
+  flex: none;
+}
+
+.vm-clear:hover {
+  color: var(--color-error);
+}
+
+.vm-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.vm-modes button {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.55rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.vm-modes button:hover {
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.vm-modes button.active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.vm-mode-note {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  color: var(--text-tertiary);
+  margin: 0 0 1rem;
+}
+
+.vm-starters {
+  margin-bottom: 1rem;
+}
+
+.vm-starters-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0 0 0.5rem;
+}
+
+.vm-starters > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.vm-starters button {
+  text-align: left;
+  background: none;
+  border: none;
+  border-left: 2px solid var(--border-default);
+  padding: 0.35rem 0.6rem;
+  font-family: var(--font-reading);
+  font-size: var(--text-small);
+  line-height: 1.45;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.vm-starters button:hover {
+  border-left-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.vm-transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-height: 460px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+  scrollbar-width: thin;
+}
+
+.vm-message {
+  border-left: 2px solid var(--border-default);
+  padding: 0.25rem 0 0.25rem 0.85rem;
+}
+
+.vm-message--bot {
+  border-left-color: var(--accent-primary);
+}
+
+.vm-message header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 0.35rem;
+}
+
+.vm-message-mode {
+  border: 1px solid var(--border-subtle);
+  padding: 0.05rem 0.35rem;
+  letter-spacing: 0.04em;
+}
+
+.vm-message p {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-reading);
+  font-size: 0.98rem;
+  line-height: 1.62;
+  color: var(--text-primary);
+}
+
+.vm-message--user p {
+  color: var(--text-secondary);
+}
+
+.vm-message-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+}
+
+.vm-position-tag {
+  color: var(--accent-primary);
+  letter-spacing: 0.02em;
+}
+
+.vm-message-foot a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  align-self: flex-start;
+  overflow-wrap: anywhere;
+}
+
+.vm-message-foot a:hover {
+  border-bottom-color: var(--accent-primary);
+}
+
+.vm-message-note {
+  line-height: 1.45;
+}
+
+.vm-composer {
+  margin-top: 1rem;
+  border-top: 1px solid var(--border-default);
+  padding-top: 0.85rem;
+}
+
+.vm-composer textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 76px;
+  border: 1px solid var(--border-default);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+.vm-composer textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.vm-composer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+
+.vm-composer-foot span {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  color: var(--text-tertiary);
+  max-width: 32ch;
+}
+
+.vm-composer-foot button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: 1px solid var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 40px;
+}
+
+.vm-composer-foot button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* -- Debate detail -------------------------------------------------------- */
+
+.vm-debate-head {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--border-strong);
+  max-width: 74ch;
+}
+
+.vm-debate-head h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem;
+}
+
+.vm-debate-question {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.vm-debate-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+  padding: 2rem 0;
+}
+
+.vm-side header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.vm-side header div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.vm-side header button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.vm-side header button:hover {
+  color: var(--accent-primary);
+}
+
+.vm-side header span {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+}
+
+.vm-side h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+}
+
+.vm-side-claim {
+  font-style: italic;
+  color: var(--text-primary) !important;
+}
+
+.vm-side p {
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0 0 0.85rem;
+}
+
+.vm-side-tension {
+  border-left: 2px solid var(--border-strong);
+  padding-left: 0.8rem;
+  font-size: 0.95rem !important;
+}
+
+.vm-side a {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  color: var(--text-tertiary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-wrap: anywhere;
+}
+
+.vm-side a:hover {
+  color: var(--accent-primary);
+}
+
+.vm-debate-divider {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+.vm-debate-divider span {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent-primary);
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.vm-fault {
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent-primary);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.vm-fault h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0 0 0.6rem;
+}
+
+.vm-fault p {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-reading);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.vm-why {
+  font-family: var(--font-sans) !important;
+  font-size: var(--text-small) !important;
+  color: var(--text-secondary);
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-default);
+  margin-bottom: 0 !important;
+}
+
+.vm-debate-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.vm-debate-foot button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  cursor: pointer;
+  min-height: 42px;
+}
+
+.vm-debate-foot button:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/* -- Responsive ----------------------------------------------------------- */
+
+@media (max-width: 1040px) {
+  .vm-masthead {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .vm-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vm-figure-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vm-conversation {
+    position: static;
+  }
+
+  .vm-method-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .vm-debate-card {
+    grid-template-columns: 160px minmax(0, 1fr);
+    row-gap: 0.5rem;
+  }
+
+  .vm-debate-card > span:nth-of-type(2) {
+    grid-column: 2;
+  }
+
+  .vm-debate-open {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .vm-main {
+    padding-top: 1.5rem;
+  }
+
+  .vm-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vm-figure-head {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .vm-monogram--large {
+    width: 78px;
+    height: 78px;
+    font-size: 1.6rem;
+  }
+
+  .vm-debate-card {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1rem 0;
+  }
+
+  .vm-debate-card > span:nth-of-type(2),
+  .vm-debate-open {
+    grid-column: 1;
+  }
+
+  .vm-debate-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .vm-debate-divider {
+    padding-top: 0;
+  }
+
+  .vm-transcript {
+    max-height: none;
+  }
+
+  .vm-conversation {
+    padding: 1.15rem;
+  }
+
+  .vm-composer-foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .vm-composer-foot span {
+    max-width: none;
+  }
+
+  .vm-composer-foot button {
+    justify-content: center;
+  }
+
+  .vm-debate-foot button {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}

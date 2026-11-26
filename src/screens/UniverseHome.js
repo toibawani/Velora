@@ -17,6 +17,7 @@ import {
 import DailyDiagram from '../components/DailyDiagram';
 import ThemeToggle from '../components/ThemeToggle';
 import '../styles/UniverseHome.css';
+import '../styles/pillars.css';
 
 /**
  * Home is two screens, not one long page.
@@ -441,6 +442,52 @@ function UniverseHome({
               </div>
             </article>
           )}
+
+          <section className="rh-pillars" aria-labelledby="rh-pillars-title">
+            <div className="rh-shelf-head">
+              <p className="rh-eyebrow">Three ways in</p>
+              <h2 id="rh-pillars-title">Go deeper than a topic.</h2>
+              <p>
+                A written library of strange results, a laboratory whose numbers come from real
+                equations, and eight thinkers you can argue with.
+              </p>
+            </div>
+            <div className="rh-pillar-grid">
+              <button type="button" className="rh-pillar" onClick={() => setScreen('dossiers')}>
+                <span className="rh-pillar-number">01</span>
+                <strong>Dossiers</strong>
+                <span>
+                  Long-form essays on the Unruh effect, time crystals, Gödel, the wood wide web. Terms
+                  defined, equations unpacked, evidence and disputes labelled.
+                </span>
+                <span className="rh-pillar-open">
+                  Enter the library <ArrowRight size={14} aria-hidden="true" />
+                </span>
+              </button>
+              <button type="button" className="rh-pillar" onClick={() => setScreen('lab')}>
+                <span className="rh-pillar-number">02</span>
+                <strong>The Lab</strong>
+                <span>
+                  Tunnelling, the Lorenz attractor, the logistic map and the quantum Zeno effect. Change
+                  a parameter and the model is recomputed, with its limits stated.
+                </span>
+                <span className="rh-pillar-open">
+                  Run an experiment <ArrowRight size={14} aria-hidden="true" />
+                </span>
+              </button>
+              <button type="button" className="rh-pillar" onClick={() => setScreen('dialogues')}>
+                <span className="rh-pillar-number">03</span>
+                <strong>Velora Minds</strong>
+                <span>
+                  Einstein on time, Nietzsche on morality, Sontag on images. Researched profiles,
+                  sourced positions, and debates that are actually disagreements.
+                </span>
+                <span className="rh-pillar-open">
+                  Start a conversation <ArrowRight size={14} aria-hidden="true" />
+                </span>
+              </button>
+            </div>
+          </section>
 
           <section className="rh-notebook" aria-labelledby="rh-notebook-title">
             <div className="rh-notebook-head">
