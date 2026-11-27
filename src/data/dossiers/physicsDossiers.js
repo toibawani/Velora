@@ -714,6 +714,34 @@ export const ARROW_OF_TIME_DOSSIER = {
       ],
     },
     {
+      kind: 'prose',
+      heading: 'Loschmidt’s objection, stated fairly',
+      body: [
+        'Loschmidt’s objection is not a misunderstanding, and it deserves to be stated in its strongest form. The microscopic laws are reversible: for every trajectory that runs from a low-entropy state to a high-entropy one, there is a trajectory with all velocities reversed that runs from high entropy back to low. If the dynamics alone produced entropy increase, the reversed trajectory would violate the laws. Therefore the increase cannot come from the dynamics alone. Something else has to be doing the work.',
+        'Boltzmann’s answer was that the derivation assumes molecular chaos: the velocities of colliding molecules are uncorrelated before they meet. That assumption is not time-symmetric, because it is imposed on the past and not on the future. The H-theorem therefore proves a conditional result — if the molecules are uncorrelated now, entropy will increase — and the condition is exactly the low-entropy past that the argument was supposed to explain. This is not a refutation of statistical mechanics. It is a precise statement of where the arrow enters: in the boundary condition, not in the equation. The same structure appears in every attempt to derive the arrow, which is why the Past Hypothesis is not an embarrassment but the load-bearing premise.',
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'How improbable is a reversal?',
+      equation: 'P ≈ e^(−ΔS/k_B)',
+      symbols: [
+        { symbol: 'P', meaning: 'The probability of a spontaneous fluctuation that lowers the entropy by ΔS' },
+        { symbol: 'ΔS', meaning: 'The entropy decrease, in joules per kelvin' },
+        { symbol: 'k_B', meaning: 'Boltzmann’s constant, 1.38 × 10⁻²³ J/K, which converts entropy to a count of microstates' },
+        { symbol: 'e', meaning: 'The base of the natural logarithm, because the count of states is exponential in the entropy' },
+      ],
+      body: [
+        'The formula is the Boltzmann factor applied to a whole macroscopic state. A decrease of one joule per kelvin is a change of ΔS/k_B ≈ 7.2 × 10²², so the probability is of order 10^(−3.1 × 10²²): a decimal point followed by more than ten thousand trillion trillion zeros before the first significant digit. For a small system the numbers are less absurd. A single bit of memory has an entropy of k_B ln 2, and the corresponding probability is 1/2, which is why a one-bit fluctuation is unremarkable and a macroscopic one is not.',
+        'The point of writing it this way is that it turns a slogan into an estimate. “Entropy can decrease, but it is unlikely” is true and useless; the formula says how unlikely, and the answer scales exponentially with the size of the system. It also shows why the arrow is not a law: nothing forbids the fluctuation, and the probability is not zero. It is just that the timescale on which a macroscopic reversal would be expected is so much longer than the age of the universe that the distinction between “impossible” and “unimaginably rare” stops doing any work.',
+      ],
+      assumptions: [
+        'The system is in equilibrium apart from the fluctuation, so the Boltzmann factor applies to the whole state.',
+        'Entropy is being counted in microstates, which requires a coarse-graining choice; different choices give different ΔS.',
+        'The estimate is for a spontaneous fluctuation, not for a reversal engineered from outside, which would require work and would not violate the second law.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -826,6 +854,29 @@ export const FALSE_VACUUM_DOSSIER = {
       claim: '"Vacuum decay has been observed in an experiment."',
       correction:
         'It has not. What has been observed is the Higgs boson and the top quark, and what has been calculated is the shape of the potential they imply. Analogue experiments in cold atoms and superconducting circuits have simulated tunnelling between wells, which tests the mathematics of the model, not the vacuum of the real universe. The distinction matters because the claim “the vacuum is metastable” is a extrapolation over eighteen orders of magnitude in energy.',
+    },
+    {
+      kind: 'table',
+      heading: 'Where the numbers in the lifetime estimate come from',
+      columns: ['Input', 'Measured or computed', 'Why it matters'],
+      rows: [
+        ['Higgs mass', 'About 125 GeV', 'Sets the curvature of the potential at the electroweak scale'],
+        ['Top quark mass', 'About 173 GeV', 'Dominates the quantum corrections that push the quartic coupling down at high energy'],
+        ['Strong coupling', 'About 0.118 at the Z mass', 'Enters the same running, at a smaller but not negligible level'],
+        ['Quartic coupling at high scale', 'Computed by running; the sign is the question', 'If it goes negative, the potential has a lower minimum somewhere far away'],
+        ['Instability scale', 'Of order 10¹⁰ to 10¹¹ GeV in the standard calculation', 'The distance to the lower well, which sets the barrier'],
+        ['Planck-scale physics', 'Unknown', 'Threshold corrections could move the result; nobody can compute them without a theory of quantum gravity'],
+      ],
+      note:
+        'The table is the honest form of the claim. Two of the inputs are measured precisely, one is computed by a procedure with a known truncation error, and one is unknown. The conclusion — that the vacuum is metastable — is robust to the first three and hostage to the fourth, which is why the phrase “the universe could end tomorrow” is not a result of the calculation.',
+    },
+    {
+      kind: 'prose',
+      heading: 'What a decay would look like from inside',
+      body: [
+        'A vacuum decay is not an explosion at a point. It is the nucleation of a bubble of the lower-energy phase somewhere in space, and the bubble then expands at nearly the speed of light. Inside the bubble the laws are those of the true vacuum: particles have different masses, and the chemistry that depends on those masses is different. The wall is a region of enormous energy density, and it is moving outward, so there is no warning signal that arrives before it. From inside the false vacuum, the event is a sphere of new physics growing toward you at the fastest speed the laws allow.',
+        'The rate is expressed as a probability per unit volume per unit time, which is why the question “will it happen?” has no answer independent of how much space and time you consider. A rate of one nucleation per cubic metre per 10^100 years is negligible in a laboratory and still not negligible over the entire observable universe for 10^100 years. The anthropic qualification matters for the same reason: observers can only exist in regions that have not decayed, so a long-lived false vacuum is a precondition for anyone being around to measure it, not a piece of luck. None of this makes the calculation testable in the ordinary sense, and that is the honest limit of the subject.',
+      ],
     },
     {
       kind: 'questions',

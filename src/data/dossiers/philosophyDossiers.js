@@ -98,6 +98,36 @@ export const PERSONAL_IDENTITY_DOSSIER = {
       ],
     },
     {
+      kind: 'steps',
+      heading: 'The gradual replacement argument',
+      items: [
+        {
+          title: 'Replace one part',
+          text: 'Swap a single neuron for a silicon device that performs the same input-output function. Nothing observable changes, and no one would say the person has ceased to exist.',
+        },
+        {
+          title: 'Repeat the replacement',
+          text: 'Continue until every neuron has been replaced. Each step is as harmless as the first, and the process is finite, so if identity survives each step it survives all of them.',
+        },
+        {
+          title: 'Look for the threshold',
+          text: 'If identity does not survive, there must be a step at which it is lost. But no step is different in kind from its neighbours, and the argument gives no principled place to put the loss.',
+        },
+        {
+          title: 'Choose what to give up',
+          text: 'Either identity admits of degrees, or the criterion is not the biological material, or the intuition that each step is harmless is wrong. Each option is a real position, and the argument does not choose between them.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'What neuroscience can and cannot settle',
+      body: [
+        'Split-brain patients are the sharpest empirical case. When the corpus callosum is severed, the two hemispheres can be shown to process information independently, and in some experimental setups the patient’s left hand can contradict what the speaking hemisphere reports. The result is unsettling for any view that treats a person as a single unified subject, and it is often cited as evidence that the unity of consciousness is constructed rather than given. It is evidence about the neural basis of unity. It is not evidence about which of the competing criteria of personal identity is correct.',
+        'The distinction matters because the identity question is partly normative. To ask whether the person after the operation is the same person is to ask what we owe them, what promises bind, what punishment is deserved, and what survival means. Neuroscience can tell you that memory, temperament and self-narrative depend on specific systems, and that damage to them changes a person in ways that matter. It cannot tell you whether those changes cross the line that makes the later person a different subject of justice. That line is drawn by a theory of what persons are for, and no scan will draw it for us.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -344,6 +374,36 @@ export const IS_OUGHT_DOSSIER = {
         'John Searle argued in 1964 that a promise generates an obligation by definition: if you promised, you ought to keep it. The argument was widely discussed and widely criticised. The critics pointed out that the conclusion depends on the institution of promising, and that the descriptive premise "you promised" already contains the normative commitment. The debate is a useful case study in how the gap reappears at the level of institutional facts.',
         'Philippa Foot argued that moral evaluation is grounded in human needs and flourishing, so that facts about what humans require can support evaluative conclusions about virtues. Her naturalism is sophisticated, and it does not claim to derive ought from is without any evaluative premise; it claims that the relevant facts are already evaluative because they concern harm and flourishing. Whether that counts as a bridge or a relocation of the gap is exactly the dispute.',
         'The most influential response in the last century has been expressivism, developed by Blackburn and Gibbard. On this view, moral statements express commitments and prescribe actions rather than describe facts, so the is–ought gap is not a gap at all: the two kinds of statement do different jobs. The cost is explaining moral truth, moral progress and the sense in which moral disagreement is about something. That cost is the live research programme.',
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'The form a bridge premise has to take',
+      items: [
+        {
+          title: 'Start with descriptions only',
+          text: 'Every premise describes a fact: what someone did, what a practice is, what a community believes. No premise contains an evaluative term in its own right.',
+        },
+        {
+          title: 'Notice what a valid inference cannot add',
+          text: 'In a valid deductive argument, the conclusion cannot contain vocabulary that is absent from the premises unless that vocabulary is defined in terms of it. A conclusion about obligation therefore has to get the concept of obligation from somewhere.',
+        },
+        {
+          title: 'Look for the hidden premise',
+          text: 'Any argument that reaches an ought from descriptions alone will contain a premise that is not purely descriptive — a bridge principle such as “what causes unnecessary suffering is wrong”. The gap is the demand that this premise be stated rather than smuggled in.',
+        },
+        {
+          title: 'Test the bridge, not the conclusion',
+          text: 'Once the bridge is explicit, it can be argued about. That is the practical value of the gap: it turns a disagreement about a conclusion into a disagreement about a principle that can be stated, defended or rejected.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'Thick concepts, and the strongest reply',
+      body: [
+        'The most serious challenge to a sharp gap comes from thick ethical concepts: coward, cruel, generous, promise, betrayal. These are not thin evaluations like “good”; they describe behaviour and evaluate it at the same time. To call an action cruel is to say something about what was done and something about whether it should have been done. If that is right, then some descriptive premises already contain evaluation, and the gap between is and ought is narrower than the slogan suggests.',
+        'Anscombe, Foot and MacIntyre each pressed this line, and the reply is not that they are wrong about the concepts but that the gap survives in a different place. Granting that “cruel” has descriptive criteria still leaves the question of whether the criteria are action-guiding for this agent in this situation. Searle’s promise argument tried to close the gap by deriving an obligation from the institution of promising — if you promised, you are obligated — and critics replied that the derivation assumes the institution ought to be respected, which is exactly the bridge premise the gap demands. The debate is therefore not about whether facts matter to ethics; it is about whether a fact can, by itself, settle what to do. Forty years on, the most defensible position is that the gap is real as a constraint on arguments and overstated as a metaphysical chasm.',
       ],
     },
     {

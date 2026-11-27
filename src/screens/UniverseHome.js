@@ -449,7 +449,7 @@ function UniverseHome({
               <h2 id="rh-pillars-title">Go deeper than a topic.</h2>
               <p>
                 A written library of strange results, a laboratory whose numbers come from real
-                equations, and eight thinkers you can argue with.
+                equations, and eleven thinkers you can argue with.
               </p>
             </div>
             <div className="rh-pillar-grid">
@@ -457,8 +457,8 @@ function UniverseHome({
                 <span className="rh-pillar-number">01</span>
                 <strong>Dossiers</strong>
                 <span>
-                  Long-form essays on the Unruh effect, time crystals, Gödel, the wood wide web. Terms
-                  defined, equations unpacked, evidence and disputes labelled.
+                  Forty essays, from the Unruh effect to the Voynich manuscript. Terms defined, equations
+                  unpacked, evidence and disputes labelled.
                 </span>
                 <span className="rh-pillar-open">
                   Enter the library <ArrowRight size={14} aria-hidden="true" />
@@ -468,8 +468,9 @@ function UniverseHome({
                 <span className="rh-pillar-number">02</span>
                 <strong>The Lab</strong>
                 <span>
-                  Tunnelling, the Lorenz attractor, the logistic map and the quantum Zeno effect. Change
-                  a parameter and the model is recomputed, with its limits stated.
+                  Tunnelling, the Lorenz attractor, the Oregonator, the logistic map, the Zeno effect and
+                  the Drake estimate. Change a parameter and the model is recomputed, with its limits
+                  stated.
                 </span>
                 <span className="rh-pillar-open">
                   Run an experiment <ArrowRight size={14} aria-hidden="true" />

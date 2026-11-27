@@ -307,6 +307,34 @@ export const P_ADIC_DOSSIER = {
       ],
     },
     {
+      kind: 'math',
+      heading: 'The ultrametric inequality, with numbers',
+      equation: '|x + y|_p ≤ max(|x|_p, |y|_p)',
+      symbols: [
+        { symbol: '|·|_p', meaning: 'The p-adic absolute value: divide out the highest power of p that divides the number' },
+        { symbol: 'x, y', meaning: 'Two rational numbers, or two p-adic numbers once the field is completed' },
+        { symbol: 'max', meaning: 'The larger of the two absolute values, which replaces the sum in the ordinary triangle inequality' },
+        { symbol: 'p', meaning: 'A fixed prime. Changing it changes the metric entirely.' },
+      ],
+      body: [
+        'Take p = 5. The absolute value of 5 is 1/5, of 20 is 1/5, and of 25 is 1/25, because 25 contains two factors of five. The ordinary triangle inequality would allow |5 + 20|_5 to be as large as 1/5 + 1/5 = 2/5. The ultrametric inequality says something much stronger: the sum is no larger than the larger of the two, and here it is 1/25, which is smaller. Equality happens when the two valuations differ; when they are equal, the sum can drop.',
+        'That single change reorganises the geometry. Every triangle is isosceles with the two longer sides equal, every point inside a disc is its centre, and two discs either are disjoint or one contains the other. None of this is a curiosity about notation: it is what makes p-adic analysis look like analysis on a totally disconnected space, and it is why a p-adic series converges when its terms tend to zero, a statement that is false over the reals. The definition of the distance is a choice, and the choice determines which theorems are true.',
+      ],
+      assumptions: [
+        'p is prime. For a composite base the same construction produces zero divisors, and the result is not a field.',
+        'The absolute value is normalised so that |p|_p = 1/p, which fixes the scale of the metric but not its topology.',
+        'Statements about limits and continuity are made in the topology this metric induces, not in the usual one on the rationals.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'Local-global: why p-adic solutions matter',
+      body: [
+        'The reason number theorists care is that a rational solution can be checked one prime at a time. For quadratic forms the Hasse–Minkowski theorem says the check is complete: an equation has a rational solution if and only if it has a real solution and a p-adic solution for every prime p. That is a genuinely powerful reduction, because each local problem is a question about a complete field, and complete fields have tools the rationals do not.',
+        'The principle is not universal, and its failures are as informative as its successes. The Selmer curve 3x³ + 4y³ + 5z³ = 0 has a solution in the reals and in every p-adic field, and no non-trivial rational solution. The local conditions are all satisfied and the global object does not exist, which is the shape of the subject: cohomology and the Brauer group were developed partly to measure exactly how badly the local-global principle fails. The p-adic numbers are not an alternative to the rationals or the reals; they are the local lenses through which a global question is examined, and the interesting theorems are the ones that say when the lenses are enough.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -417,6 +445,36 @@ export const MONTY_HALL_DOSSIER = {
       body: [
         'Monty Hall is a clean example of a general fact: probabilities are relative to a protocol. The same physical setup, with the same doors and the same car, gives different answers depending on how the host decides what to reveal. This is not a quirk of game shows. It is the structure of every statistical inference: the likelihood of the data depends on the sampling rule, and a rule that was never stated cannot be inferred from the data alone.',
         'It is also a lesson in why intuition fails without a model. The “fifty-fifty” answer is correct for a different problem, and the people who give it are not bad at probability; they are answering the question they were asked, which omitted the host’s rule. Once the rule is explicit, the arithmetic is elementary. The difficulty was never the calculation.',
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'The nine cases, written out',
+      items: [
+        {
+          title: 'Fix the contestant’s choice',
+          text: 'Without loss of generality, suppose the contestant picks door 1. Every other case is the same puzzle with the labels permuted, so the probability cannot depend on which door was picked.',
+        },
+        {
+          title: 'Prize behind door 1',
+          text: 'This happens with probability 1/3. The host opens one of the two goat doors, the contestant switches to the other one, and loses. One of the three equally likely prize positions is a loss for switching.',
+        },
+        {
+          title: 'Prize behind door 2',
+          text: 'Also probability 1/3. The host cannot open door 2, because that is the prize, so the host must open door 3. Switching to door 2 wins. This case is a win.',
+        },
+        {
+          title: 'Prize behind door 3',
+          text: 'Probability 1/3, and the mirror of the previous case: the host must open door 2, and switching to door 3 wins. Two of the three prize positions are wins, so switching wins with probability 2/3.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'The hundred-door version is the same argument',
+      body: [
+        'The puzzle is easier to believe with more doors, and the general case can be written down. Suppose there are n doors, the contestant picks one, and the host — who knows where the prize is — opens k of the remaining doors, all of them goats. The initial pick keeps probability 1/n. The remaining probability, (n − 1)/n, is spread evenly over the n − 1 − k doors that are still closed, so each of them has probability (n − 1) / (n(n − 1 − k)). With n = 3 and k = 1 that is 2/3. With n = 100 and k = 98 it is 99/100, which is why the hundred-door version feels obvious: the host has concentrating work to do, and he does it on the door he leaves shut.',
+        'The formula also shows where the intuition goes wrong. The two doors that remain are not symmetric, because one of them was selected by a process that had information and the other was selected by the contestant, who did not. Probability is not a property of a door; it is a property of the procedure that produced the set of doors you are looking at. Change the procedure — let the host open a door at random and sometimes reveal the prize, or let a different host open a door only when the contestant has already won — and the same two doors carry different probabilities. That is why the argument is worth making carefully rather than by asserting that switching is right.',
       ],
     },
     {
