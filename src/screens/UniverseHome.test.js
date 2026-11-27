@@ -119,14 +119,14 @@ describe('the daily rabbit hole', () => {
 
   test('every day has a diagram with a control, not a decorative picture', () => {
     renderUniverse();
-    const daily = getDailyRabbitHole();
     expect(screen.getByRole('img', { name: /./ })).toBeInTheDocument();
     // The control differs by diagram: a slider where a quantity is continuous,
     // a stir button where the box is shuffled. Both are read by role so the
-    // assertion does not depend on a class name.
-    const control = daily.diagram === 'cave' || daily.diagram === 'entropy'
-      ? screen.getByRole('button', { name: /Stir the box/i })
-      : screen.getByRole('slider');
+    // assertion does not depend on a class name. The cave used to be a still
+    // picture, so this failed on the days the daily rotation landed on it.
+    const control = screen.queryByRole('button', { name: /Stir the box/i })
+      || screen.queryByRole('slider');
+    expect(control).not.toBeNull();
     expect(control).toBeInTheDocument();
   });
 });

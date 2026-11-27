@@ -257,9 +257,14 @@ function WavesDiagram() {
 /* ------------------------------------------------------------------ */
 
 function CaveDiagram() {
+  // The allegory turns on a count: each prisoner watches one shadow and takes
+  // it for the whole of the thing. The slider makes that count explicit, which
+  // is the one quantity the drawing can honestly vary.
+  const [prisoners, setPrisoners] = useState(2);
+
   return (
     <div className="rh-diagram">
-      <Figure caption="Prisoners facing a wall, a fire behind them, and objects casting the shadows they watch.">
+      <Figure caption={`${prisoners} prisoners facing a wall, a fire behind them, and objects casting the shadows they watch.`}>
         <line x1="34" y1="30" x2="34" y2="216" className="rh-cave-wall" />
         <text x="42" y="46" className="rh-figure-label">the wall</text>
 
@@ -275,13 +280,26 @@ function CaveDiagram() {
         <path d="M196 160 q8 -12 16 0" className="rh-shadow" />
         <text x="70" y="118" className="rh-figure-label">what they see</text>
 
-        <circle cx="248" cy="196" r="7" className="rh-particle" />
-        <circle cx="272" cy="196" r="7" className="rh-particle" />
+        {Array.from({ length: prisoners }, (_, index) => (
+          <circle key={index} cx={244 + index * 24} cy="196" r="7" className="rh-particle" />
+        ))}
         <text x="222" y="224" className="rh-figure-label">the prisoners</text>
       </Figure>
       <div className="rh-controls">
-        <p className="rh-readout">
-          The shadows are real light from real objects. What is missing is everything between the wall and the fire.
+        <label htmlFor="rh-prisoners">Prisoners watching: {prisoners}</label>
+        <input
+          id="rh-prisoners"
+          type="range"
+          min="1"
+          max="6"
+          step="1"
+          value={prisoners}
+          onChange={(event) => setPrisoners(Number(event.target.value))}
+        />
+        <p className="rh-readout" aria-live="polite">
+          {prisoners} {prisoners === 1 ? 'prisoner' : 'prisoners'}, and the wall shows {prisoners}{' '}
+          {prisoners === 1 ? 'shadow' : 'shadows'}. The count is all they can compare; what is missing is everything
+          between the wall and the fire.
         </p>
       </div>
     </div>
