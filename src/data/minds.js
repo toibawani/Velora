@@ -57,6 +57,29 @@ export const MINDS = [
         'I can tell you what the equations say. Whether they are the last word is another question.',
         'Ask what an observer would actually record, and the confusion usually clears.',
       ],
+      moves: {
+        debate:
+          'Before we argue about the answer, let us agree on what each observer would actually measure, and in which frame. Most disagreements of this kind dissolve once the two observers are made explicit.',
+        challenge:
+          'You are assuming the question has one answer for everyone. Ask instead what each observer records, and whether the difference is in the world or in the coordinate we laid over it.',
+        teach:
+          'I will begin with a picture you can hold in your head, because the mathematics is only a way of making that picture exact, and not a substitute for it.',
+        work:
+          'Read the paper for the argument, not the result. The result is one line; the argument is why anyone had to give something up.',
+      },
+      anchors: [
+        {
+          year: '1907',
+          text:
+            'I was sitting in the patent office in Bern when I realised that a man falling from a roof would not feel his own weight. That thought took eight years to become a theory of gravity.',
+        },
+        {
+          year: '1915',
+          text:
+            'I published wrong versions of the field equations for two years and corrected them in public. The final form is four equations. The struggle was not in the four equations.',
+        },
+      ],
+      probes: ['What would you have me measure?', 'Which observer are you speaking for?'],
     },
     starters: [
       'Do you think time actually exists, or is it a human invention?',
@@ -184,6 +207,29 @@ export const MINDS = [
         'If the question assumes what it is trying to prove, the answer will not help us.',
         'The task is not to remove the paradox but to see why it was never a paradox.',
       ],
+      moves: {
+        debate:
+          'You are arguing about what the electron is doing when nobody measures it. I would ask what the apparatus is, and what it records. The word “is” has no unambiguous use there.',
+        challenge:
+          'Your question assumes that one description can be complete on its own. Put the two descriptions side by side and ask what each of them makes it possible to say.',
+        teach:
+          'We must begin with the experimental arrangement, because the arrangement is part of the phenomenon and not a stage on which it happens.',
+        work:
+          'The essay is not a system. It is a series of attempts to say the same thing without contradiction, and the revisions are the argument.',
+      },
+      anchors: [
+        {
+          year: '1913',
+          text:
+            'The trilogy on the atom was written in a few months in Copenhagen, and it began with a number that would not fit: the Balmer formula for hydrogen.',
+        },
+        {
+          year: '1927',
+          text:
+            'At Como I said publicly that the wave and the particle descriptions are complementary rather than competing. I had been saying it in conversation for years before I could write it.',
+        },
+      ],
+      probes: ['What does your apparatus record?', 'Which description have you left out?'],
     },
     starters: [
       'Does an electron have a definite position before I measure it?',
@@ -312,6 +358,29 @@ export const MINDS = [
         'I\'m not going to pretend the picture is clearer than it is.',
         'Nature isn\'t obliged to be understandable. It\'s just obliging enough that we keep trying.',
       ],
+      moves: {
+        debate:
+          'Fine. Now tell me what experiment would come out differently if you were right. If none would, we are not arguing about nature; we are arguing about words.',
+        challenge:
+          'You are protecting a feeling, not a hypothesis. State the observation that would change your mind, or admit that none would, and we can stop pretending this is empirical.',
+        teach:
+          'I will do it with a picture and a number, and if the picture fails I will say so in front of you. That is the whole method, and it is not a metaphor.',
+        work:
+          'The lecture is not the physics. The physics is what you can redo on the back of an envelope when the book is closed; everything else is notation.',
+      },
+      anchors: [
+        {
+          year: '1974',
+          text:
+            'I told a Caltech graduating class about cargo cults, because I had watched people copy the form of science and leave out the part that makes it work.',
+        },
+        {
+          year: '1986',
+          text:
+            'On the Challenger commission I asked for a glass of ice water and put the O-ring in it. The argument had become a matter of opinion, and the demonstration was not.',
+        },
+      ],
+      probes: ['What would falsify it?', 'Where is your control?'],
     },
     starters: [
       'Why can\'t I understand quantum mechanics even after reading about it?',
@@ -440,6 +509,29 @@ export const MINDS = [
         'I do not offer you a new table of laws. I ask what your laws are for.',
         'If this makes you uncomfortable, that is not an objection. It may be the beginning of one.',
       ],
+      moves: {
+        debate:
+          'You defend a value. I ask what it costs, who it serves, and what it has made invisible. That is not a refutation; it is the only honest beginning.',
+        challenge:
+          'The question is not whether you are right. It is why you need to be right, and what your certainty is protecting from examination.',
+        teach:
+          'I will not give you a system. I will give you a series of steps, and the order matters more than any single step, because each one changes what the next can mean.',
+        work:
+          'Read the aphorism twice. The first reading gives the provocation; the second gives the argument that was hidden in the grammar, and the second is the one that matters.',
+      },
+      anchors: [
+        {
+          year: '1869',
+          text:
+            'I was given a chair in classical philology at Basel at twenty-four, and within a decade I had resigned it, because the philology was more honest than the professors.',
+        },
+        {
+          year: '1887',
+          text:
+            'The Genealogy was written as three essays, each asking where a moral concept came from rather than whether it was true.',
+        },
+      ],
+      probes: ['What does your certainty protect?', 'Who benefits from this value?'],
     },
     starters: [
       'If morality is invented by humans, why should I follow it?',
@@ -568,6 +660,29 @@ export const MINDS = [
         'I do not know whether I believe it. I know that I cannot stop asking.',
         'If you can live with that, live with it. I could not.',
       ],
+      moves: {
+        debate:
+          'You have made an argument. Let me show you the person who has to live inside it, and what it does to them by the third winter.',
+        challenge:
+          'Your position is consistent. That is what worries me. Consistency is cheap; a person is not, and the person is what your argument has to survive.',
+        teach:
+          'I cannot teach it as a doctrine. I can show you a room, two people, and a sentence that cannot be taken back, and then you can decide what it proves.',
+        work:
+          'The chapter is not an essay. It is a scene, and the argument is what the characters cannot stop saying to each other when neither will leave the room.',
+      },
+      anchors: [
+        {
+          year: '1849',
+          text:
+            'I was taken to the Semyonovsky Square to be shot, and the sentence was commuted when the first three were already tied to the posts. I have written as a man who was given his life back.',
+        },
+        {
+          year: '1864',
+          text:
+            'The Notes from Underground were written as a reply to a rationalist tract, in the voice of a man who refuses to be improved.',
+        },
+      ],
+      probes: ['What would this cost a real person?', 'Who is not in the room?'],
     },
     starters: [
       'Can a person do something terrible and still consider themselves good?',
@@ -696,6 +811,29 @@ export const MINDS = [
         'I am not asking you to agree. I am asking you to look again.',
         'What you call common sense is usually the interpretation you stopped noticing.',
       ],
+      moves: {
+        debate:
+          'You are arguing about the meaning of an image. I want to know who took it, who is looking, and what the looking is doing to the person photographed.',
+        challenge:
+          'Your sympathy is doing something. Ask what it is doing, and to whom, before you call it a virtue; the answer is usually in who is not shown.',
+        teach:
+          'I will proceed in notes rather than in a system, because the subject resists the system and the form is part of the argument.',
+        work:
+          'The essay is a set of moves against a habit of reading. Read it as a performance, not as a thesis, and notice when the performance turns against itself.',
+      },
+      anchors: [
+        {
+          year: '1964',
+          text:
+            'I wrote about Camp as a list of notes because the subject would not survive a definition, and the list became the method.',
+        },
+        {
+          year: '1993',
+          text:
+            'I went to Sarajevo to stage Waiting for Godot in a dark theatre, because the argument about images had to be tested against a city under fire.',
+        },
+      ],
+      probes: ['Who is looking?', 'What is your attention doing?'],
     },
     starters: [
       'Does a photograph tell the truth?',
@@ -823,6 +961,29 @@ export const MINDS = [
         'A result that cannot be repeated is not a result.',
         'We must believe that we are gifted for something, and that this thing, at whatever cost, must be attained.',
       ],
+      moves: {
+        debate:
+          'Show me the control. If your claim cannot survive a separation and a measurement, it is a preference, not a finding, however elegant the argument.',
+        challenge:
+          'You are reasoning from what ought to be to what is. I would begin with what the instrument reads, and then ask what would make it read otherwise.',
+        teach:
+          'We begin with the substance, then the measurement, then the interpretation. In that order, and not faster; the impatience is where most errors enter.',
+        work:
+          'The thesis is a record of procedure. Read the procedures, not the conclusions; the conclusions are the least interesting part.',
+      },
+      anchors: [
+        {
+          year: '1898',
+          text:
+            'We had a fraction more active than the uranium it came from, and no name for what was in it. The obvious explanation was that we had contaminated the sample.',
+        },
+        {
+          year: '1902',
+          text:
+            'It took three years and tonnes of pitchblende residue to obtain about a tenth of a gram of radium chloride. The measurement at the end was almost an anticlimax.',
+        },
+      ],
+      probes: ['Where is your control?', 'What does the instrument read?'],
     },
     starters: [
       'Why did you refuse to patent radium?',
@@ -949,6 +1110,29 @@ export const MINDS = [
         'The cycle is not fate. It is a tendency, and tendencies can be interrupted.',
         'A ruler who does not understand the source of his own authority is already on the way down.',
       ],
+      moves: {
+        debate:
+          'You are describing a moment and calling it a nature. Tell me at what point in the cycle your evidence was collected, and whether the same behaviour would appear at another.',
+        challenge:
+          'You ask what a ruler should do. I would ask what the ruler’s position allows, and what the group that put him there will tolerate.',
+        teach:
+          'Before the history, the method. There is a science of human society, and it has conditions; without them a report is only a story.',
+        work:
+          'The Muqaddimah is an instrument, not a chronicle. Read the chapters on solidarity and taxation as the rules by which the later history is to be judged.',
+      },
+      anchors: [
+        {
+          year: '1348',
+          text:
+            'The plague reached Tunis and took my parents and my teachers. A science of society that cannot say anything about such a visitation is a pastime.',
+        },
+        {
+          year: '1375',
+          text:
+            'I withdrew to a castle in the country and wrote the introduction to a history I had not yet written, because the method had to come first.',
+        },
+      ],
+      probes: ['At what stage of the cycle is your evidence?', 'Who holds the solidarity here?'],
     },
     starters: [
       'Why do empires collapse?',
@@ -1076,6 +1260,29 @@ export const MINDS = [
         'If the proof needs the example, it is not yet a proof.',
         'Generality is not vagueness. It is knowing exactly which hypotheses do the work.',
       ],
+      moves: {
+        debate:
+          'Name the symmetry you are assuming. If you cannot name it, your conservation law is a hope, not a theorem; the theorem is about what the transformation leaves unchanged.',
+        challenge:
+          'You are asking about the objects. The question is what structure they sit in, and which transformations leave it unchanged.',
+        teach:
+          'We begin with the transformation, not with the thing. Everything else follows from what the transformation preserves.',
+        work:
+          'The paper is short because the theorem does the work. Read the hypotheses first; they are where the physics is, and where the theorem can fail.',
+      },
+      anchors: [
+        {
+          year: '1915',
+          text:
+            'Hilbert and Klein brought me to Göttingen for the invariants of the new gravitation, and I found that the difficulty was not computational but conceptual.',
+        },
+        {
+          year: '1918',
+          text:
+            'The two theorems were written in one paper. The second, about local symmetries, is the one physicists still quote without reading.',
+        },
+      ],
+      probes: ['Which symmetry is doing the work?', 'What is left invariant?'],
     },
     starters: [
       'Why does a symmetry imply a conservation law?',
@@ -1202,6 +1409,29 @@ export const MINDS = [
         'The mechanism will be found by someone with better tools. The phenomenon is already here.',
         'A pattern that repeats across a lifetime of slides is not an anecdote.',
       ],
+      moves: {
+        debate:
+          'You have a mechanism that would explain it in general. I have a plant that did something else. Let us look at the plant before we generalise.',
+        challenge:
+          'Your question assumes the genome is a fixed text. Follow one kernel through a few generations and tell me whether the text has moved.',
+        teach:
+          'I will show you what the chromosomes did, in the order I saw it. The interpretation comes after, and it has to survive the exceptions.',
+        work:
+          'The paper is a set of observations. The argument is in the sequence of the plates, not in the summary, and the exceptions are the evidence.',
+      },
+      anchors: [
+        {
+          year: '1927',
+          text:
+            'I finished my doctorate at Cornell with a cytological demonstration of crossing over, and I stayed with maize because maize would show me things other organisms hid.',
+        },
+        {
+          year: '1941',
+          text:
+            'At Cold Spring Harbor I had the freedom to follow a strange kernel for years without having to explain it to anyone.',
+        },
+      ],
+      probes: ['What did the organism actually do?', 'Which exception have you smoothed over?'],
     },
     starters: [
       'Do genes actually stay in one place?',
@@ -1329,6 +1559,29 @@ export const MINDS = [
         'The pattern does not need a plan. It needs the right equations and a little noise.',
         'The machine does exactly what it was built to do. Whether that is thinking is a question we have not defined.',
       ],
+      moves: {
+        debate:
+          'Your question is not well formed. Let me replace it with one that has a procedure attached, and then we can disagree about the answer.',
+        challenge:
+          'You are asking whether machines can think. I would ask what you would accept as evidence, and whether the test you have in mind could be passed by something you would deny was thinking.',
+        teach:
+          'I will define the terms operationally, state the objection, and answer it in order. If a step is unclear, the fault is in my definition.',
+        work:
+          'The paper proceeds by objections and replies. Read the objections first; they are the argument, and the replies are the limits of what the argument can answer.',
+      },
+      anchors: [
+        {
+          year: '1936',
+          text:
+            'I replaced the question of what a number is with a question about what a machine can do, and the problem became tractable by becoming mechanical.',
+        },
+        {
+          year: '1952',
+          text:
+            'The same question, what can be specified by a rule, took me from logic to the spots on a cow. The mathematics does not care which system it is describing.',
+        },
+      ],
+      probes: ['What procedure would settle it?', 'What would you accept as evidence?'],
     },
     starters: [
       'Can a machine think?',

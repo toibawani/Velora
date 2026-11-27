@@ -330,7 +330,7 @@ function Conversation({ mind, mode, setMode }) {
           placeholder={`Ask about ${mind.positions[0].title.toLowerCase()}…`}
         />
         <div className="vm-composer-foot">
-          <span>Shift + Enter for a new line. Replies are composed from documented positions, not generated.</span>
+          <span>Shift + Enter for a new line. Replies are composed from documented positions, the figure’s characteristic moves, and a dated case from their life — not generated.</span>
           <button type="submit" aria-label="Send question" disabled={!input.trim()}>
             <Send size={15} aria-hidden="true" /> Send
           </button>

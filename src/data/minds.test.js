@@ -35,6 +35,21 @@ describe('the Minds library', () => {
     });
   });
 
+  test('every figure has its own moves, dated anchors and probes', () => {
+    MINDS.forEach((mind) => {
+      ['debate', 'challenge', 'teach', 'work'].forEach((mode) => {
+        expect(mind.voice.moves[mode].length).toBeGreaterThan(110);
+      });
+      expect(mind.voice.anchors).toHaveLength(2);
+      mind.voice.anchors.forEach((anchor) => {
+        expect(anchor.year).toMatch(/^\d{4}$/);
+        expect(anchor.text.length).toBeGreaterThan(80);
+      });
+      expect(mind.voice.probes.length).toBeGreaterThanOrEqual(2);
+      expect(new Set(mind.voice.probes).size).toBe(mind.voice.probes.length);
+    });
+  });
+
   test('the voices are actually different from one another', () => {
     const registers = MINDS.map((mind) => mind.voice.register);
     expect(new Set(registers).size).toBe(MINDS.length);

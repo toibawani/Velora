@@ -161,6 +161,14 @@ export function composeReply({ mindId, mode = 'ask', query, history = [] }) {
 
   const opener = pick(mind.voice.openers, turn);
   const closer = pick(mind.voice.closers, turn + 1);
+  const move = mind.voice.moves?.[mode] || null;
+
+  // A dated case from the figure's own life, used on the first two turns of a
+  // conversation. It is what makes a reply sound like this person rather than a
+  // position with a name attached, and it is drawn from the researched profile,
+  // never invented in the engine.
+  const anchor = turn < 2 ? mind.voice.anchors?.[turn] : null;
+  const anchorLine = anchor ? `A case I keep returning to — ${anchor.year}: ${anchor.text}` : null;
 
   const attribution = matched
     ? `I am drawing on the position below, from ${chosen.citation.label}.`
@@ -175,54 +183,74 @@ export function composeReply({ mindId, mode = 'ask', query, history = [] }) {
   if (mode === 'debate') {
     text = [
       `${opener} You have stated a view. Let me put the strongest objection to it.`,
+      move,
       ...(caveat ? [caveat] : []),
+      anchorLine,
       `${chosen.claim}`,
       `${chosen.argument}`,
       `Now defend your premise. ${chosen.tension}`,
       closer,
-    ].join('\n\n');
+    ]
+      .filter(Boolean)
+      .join('\n\n');
     note = 'Debate mode: the reply argues from the position rather than summarising it. The tension at the end is the part the position itself has not resolved.';
   } else if (mode === 'teach') {
     text = [
       `${opener}`,
+      move,
       ...(caveat ? [caveat] : []),
+      anchorLine,
       `First, the claim, stated plainly: ${chosen.claim}`,
       `Second, why it follows: ${chosen.argument}`,
       `Third, where it runs into trouble: ${chosen.tension}`,
       closer,
-    ].join('\n\n');
+    ]
+      .filter(Boolean)
+      .join('\n\n');
     note = 'Teach mode: claim, derivation, and limit. The third step is not an afterthought; it is what distinguishes an argument from a slogan.';
   } else if (mode === 'challenge') {
     text = [
       `${opener} The assumption in your question is doing more work than you think.`,
+      move,
       ...(caveat ? [caveat] : []),
-      `You are treating this as a question about ${chosen.title.toLowerCase()}. ${chosen.claim}`,
+      anchorLine,
+      `The position that bears on it is the one I call “${chosen.title}”. ${chosen.claim}`,
       `${chosen.argument}`,
       `If that is right, then the thing you are protecting may be the thing that needs to be given up. ${chosen.tension}`,
       closer,
-    ].join('\n\n');
+    ]
+      .filter(Boolean)
+      .join('\n\n');
     note = 'Challenge mode: the reply locates a premise and follows it. It is not a verdict on you; it is an argument you can answer.';
   } else if (mode === 'work') {
     const work = mind.works[0];
     text = [
       `${opener}`,
+      move,
       ...(caveat ? [caveat] : []),
+      anchorLine,
       `The argument is developed in ${work.title} (${work.year}). ${work.note}`,
       `${chosen.claim}`,
       `${chosen.argument}`,
       `What the work leaves open: ${chosen.tension}`,
       closer,
-    ].join('\n\n');
+    ]
+      .filter(Boolean)
+      .join('\n\n');
     note = 'Work mode: the position is placed in the text it comes from, with the part that remains unresolved.';
   } else {
     text = [
       `${opener}`,
+      move,
       ...(caveat ? [caveat] : []),
+      anchorLine,
       chosen.claim,
       chosen.argument,
       `Where this runs into difficulty: ${chosen.tension}`,
       closer,
-    ].join('\n\n');
+    ]
+      .filter(Boolean)
+      .join('\n\n');
     note = 'Ask mode: the claim, its argument, and the tension the position itself acknowledges.';
   }
 
@@ -234,7 +262,7 @@ export function composeReply({ mindId, mode = 'ask', query, history = [] }) {
     matched,
     note,
     attribution,
-    followUp: `A question to take further: ${followUpFor(chosen)}`,
+    followUp: `A question to take further: ${pick(mind.voice.probes || [followUpFor(chosen)], turn)}`,
   };
 }
 
