@@ -8,6 +8,8 @@ import {
   logisticStep,
   lorenzDivergence,
   lorenzStep,
+  OREGONATOR_DEFAULTS,
+  oregonatorRun,
   rabiSurvival,
   zenoSurvival,
 } from '../utils/labMath';
@@ -567,6 +569,304 @@ function LorenzLab() {
 }
 
 /* -------------------------------------------------------------------------
+   The oscillating reaction
+   ------------------------------------------------------------------------- */
+
+const OSCILLATOR_DEFAULTS = { ...OREGONATOR_DEFAULTS, running: true };
+const OSCILLATOR_DURATION = 40;
+
+function OscillatorLab() {
+  const [params, setParams] = useState(OSCILLATOR_DEFAULTS);
+
+  // The trajectory is integrated once per parameter set, then replayed. The
+  // animation never invents intermediate chemistry: the moving playhead reads
+  // out a computed solution, and the phase portrait is that same solution.
+  const run = useMemo(
+    () =>
+      oregonatorRun({
+        f: params.f,
+        eps: params.eps,
+        q: params.q,
+        duration: OSCILLATOR_DURATION,
+      }),
+    [params.f, params.eps, params.q]
+  );
+
+  const canvasRef = useRef(null);
+  const playhead = useRef(0);
+  const last = useRef(0);
+
+  useEffect(() => {
+    playhead.current = 0;
+  }, [run]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+    let raf = 0;
+
+    const render = () => {
+      const parent = canvas.parentElement;
+      const width = parent ? parent.clientWidth : 720;
+      const height = parent ? Math.max(280, Math.round(width * 0.54)) : 340;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) {
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+      }
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+
+      const paper = token('--bg-elevated', '#fbf6ec');
+      const ink = token('--text-primary', '#1a1410');
+      const accent = token('--accent-primary', '#a33b1f');
+      const subdued = token('--text-tertiary', '#8a7a68');
+
+      ctx.fillStyle = paper;
+      ctx.fillRect(0, 0, width, height);
+
+      const pad = { l: 46, r: 16, t: 28, b: 40 };
+      const timeW = width * 0.58;
+      const phaseX = pad.l + timeW + 34;
+      const phaseW = Math.max(90, width - phaseX - pad.r);
+      const plotH = height - pad.t - pad.b;
+
+      const xFor = (t) => pad.l + (Math.min(t, OSCILLATOR_DURATION) / OSCILLATOR_DURATION) * timeW;
+      const yFor = (value) => pad.t + plotH - Math.min(1, Math.max(0, value)) * plotH;
+
+      // Frame and grid for the time series.
+      ctx.strokeStyle = subdued;
+      ctx.globalAlpha = 0.45;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad.l, pad.t);
+      ctx.lineTo(pad.l, pad.t + plotH);
+      ctx.lineTo(pad.l + timeW, pad.t + plotH);
+      ctx.stroke();
+      ctx.globalAlpha = 0.22;
+      ctx.setLineDash([2, 5]);
+      [0.25, 0.5, 0.75].forEach((value) => {
+        ctx.beginPath();
+        ctx.moveTo(pad.l, yFor(value));
+        ctx.lineTo(pad.l + timeW, yFor(value));
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+
+      // x, the autocatalyst.
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      run.samples.forEach((point, i) => {
+        const x = xFor(point.t);
+        const y = yFor(point.x);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      // z, the oxidised catalyst, drawn in the ember accent.
+      ctx.strokeStyle = accent;
+      ctx.globalAlpha = 0.9;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      run.samples.forEach((point, i) => {
+        const x = xFor(point.t);
+        const y = yFor(point.z);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // The playhead and the two current values.
+      const head = run.samples[Math.min(run.samples.length - 1, Math.round((playhead.current / OSCILLATOR_DURATION) * (run.samples.length - 1)))];
+      const hx = xFor(playhead.current);
+      ctx.strokeStyle = accent;
+      ctx.globalAlpha = 0.55;
+      ctx.beginPath();
+      ctx.moveTo(hx, pad.t);
+      ctx.lineTo(hx, pad.t + plotH);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      if (head) {
+        ctx.fillStyle = ink;
+        ctx.beginPath();
+        ctx.arc(hx, yFor(head.x), 3.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = accent;
+        ctx.beginPath();
+        ctx.arc(hx, yFor(head.z), 3.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Phase portrait: the same trajectory, x against z.
+      const px = (value) => phaseX + Math.min(1, Math.max(0, value)) * phaseW;
+      const pz = (value) => pad.t + plotH - Math.min(1, Math.max(0, value)) * plotH;
+
+      ctx.strokeStyle = subdued;
+      ctx.globalAlpha = 0.4;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(phaseX, pad.t);
+      ctx.lineTo(phaseX, pad.t + plotH);
+      ctx.lineTo(phaseX + phaseW, pad.t + plotH);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      ctx.strokeStyle = ink;
+      ctx.globalAlpha = 0.28;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      run.samples.forEach((point, i) => {
+        const x = px(point.x);
+        const y = pz(point.z);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      if (head) {
+        ctx.fillStyle = accent;
+        ctx.beginPath();
+        ctx.arc(px(head.x), pz(head.z), 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = subdued;
+      ctx.font = '11px "Source Sans 3", sans-serif';
+      ctx.fillText('x = HBrO₂', pad.l, 16);
+      ctx.fillStyle = accent;
+      ctx.fillText('z = Ce⁴⁺', pad.l + 78, 16);
+      ctx.fillStyle = subdued;
+      ctx.fillText('0', pad.l - 12, yFor(0) + 4);
+      ctx.fillText('1', pad.l - 12, yFor(1) + 4);
+      ctx.fillText('τ →', pad.l + timeW - 16, pad.t + plotH + 24);
+      ctx.fillText(String(OSCILLATOR_DURATION), pad.l + timeW - 12, pad.t + plotH + 36);
+      ctx.fillText('x', phaseX + phaseW - 10, pad.t + plotH + 24);
+      ctx.fillText('z', phaseX - 16, pad.t + 12);
+      ctx.fillText('phase portrait', phaseX, pad.t + plotH + 36);
+    };
+
+    const loop = (time) => {
+      if (time - last.current > 32) {
+        last.current = time;
+        if (params.running) {
+          playhead.current = (playhead.current + 0.19) % OSCILLATOR_DURATION;
+        }
+        render();
+      }
+      raf = requestAnimationFrame(loop);
+    };
+
+    render();
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [run, params.running]);
+
+  return (
+    <Experiment
+      number={3}
+      field="Nonlinear chemistry"
+      title="The beaker that will not settle"
+      question="Two coupled equations with no randomness produce a concentration that swings back and forth. Where does the cycle come from, and what makes it stop?"
+      controls={
+        <>
+          <Slider
+            label="f (stoichiometric factor)"
+            value={params.f}
+            min={0.4}
+            max={2.8}
+            step={0.02}
+            onChange={(f) => setParams((prev) => ({ ...prev, f }))}
+            note="How much bromide one turnover of the catalyst produces. At these values of ε and q the oscillatory window is roughly 0.5 to 2.4."
+          />
+          <Slider
+            label="ε (time-scale ratio)"
+            value={params.eps}
+            min={0.005}
+            max={0.08}
+            step={0.001}
+            onChange={(eps) => setParams((prev) => ({ ...prev, eps }))}
+            note="The ratio of the fast autocatalyst dynamics to the slow catalyst dynamics. Smaller ε sharpens the spike and makes the equations stiffer."
+          />
+          <Slider
+            label="q (bromide inhibition)"
+            value={params.q}
+            min={0.0005}
+            max={0.008}
+            step={0.0005}
+            onChange={(q) => setParams((prev) => ({ ...prev, q }))}
+            note="The scaled threshold at which bromide stops suppressing the autocatalysis. It shifts the switch point rather than the period."
+          />
+          <div className="lab-inline-actions">
+            <button
+              type="button"
+              className="lab-toggle"
+              onClick={() => setParams((prev) => ({ ...prev, running: !prev.running }))}
+            >
+              {params.running ? <Pause size={13} aria-hidden="true" /> : <Play size={13} aria-hidden="true" />}
+              {params.running ? 'Pause' : 'Run'}
+            </button>
+          </div>
+        </>
+      }
+      readout={
+        run.diverged ? (
+          <>
+            The integrator left the physical range at these settings, so the readout is withheld.
+            <span className="lab-readout-sub">
+              This is a limitation of the two-variable model at extreme parameters, not a chemical result.
+              Move ε or f back toward the middle of their ranges.
+            </span>
+          </>
+        ) : run.oscillating ? (
+          <>
+            Sustained oscillation, period <span className="lab-big">{run.period.toFixed(1)}</span> τ.
+            <span className="lab-readout-sub">
+              The autocatalyst x swings between {run.min.toFixed(3)} and {run.max.toFixed(3)}; the catalyst z
+              follows the same cycle with a lag. The period is measured from upward crossings of the mean in the
+              second half of a {OSCILLATOR_DURATION} τ run.
+            </span>
+          </>
+        ) : (
+          <>
+            No sustained oscillation here: the model settles at x ={' '}
+            <span className="lab-big">{run.final.x.toFixed(3)}</span>, z = {run.final.z.toFixed(3)}.
+            <span className="lab-readout-sub">
+              The fixed point is stable at these parameters, so a perturbation decays instead of growing into a
+              cycle. Move f toward 1 to recover the oscillation; the two failures are different: too little
+              bromide production leaves the catalyst oxidised, too much leaves it reduced.
+            </span>
+          </>
+        )
+      }
+      equation="ε dx/dτ = x(1 − x) − f z (x − q)/(x + q),   dz/dτ = x − z"
+      symbols={[
+        { symbol: 'x', meaning: 'Scaled concentration of the autocatalytic species HBrO₂', unit: 'dimensionless' },
+        { symbol: 'z', meaning: 'Scaled concentration of the oxidised catalyst Ce⁴⁺', unit: 'dimensionless' },
+        { symbol: 'τ', meaning: 'Dimensionless time, scaled by the reaction rates', unit: 'dimensionless' },
+        { symbol: 'ε', meaning: 'Ratio of the fast bromide dynamics to the slow catalyst dynamics', unit: 'dimensionless' },
+        { symbol: 'f', meaning: 'Stoichiometric factor: how much bromide one catalyst turnover produces', unit: 'dimensionless' },
+        { symbol: 'q', meaning: 'Scaled rate constant for the bromide inhibition step', unit: 'dimensionless' },
+      ]}
+      notice="The trace is a relaxation oscillation, not a sine wave. x jumps up, saturates near 1 and collapses; z follows with a lag set by dz/dτ = x − z. Across most of the window the period stays near 4 τ, because the slow catalyst equation controls the timing while ε controls the sharpness of the jump. The phase portrait shows why: the orbit hugs one slow branch, leaves it at a fold, and jumps to the other."
+      challenge="Start at f = 1 and watch the cycle. Raise f to 2.6 and the oscillation dies at a low steady state; drop f to 0.4 and it dies at a high one. Sweep slowly to find both edges. Then halve ε and watch the spike sharpen while the period barely moves."
+      limits="Two variables, well mixed, constant parameters. The real Belousov–Zhabotinsky reaction has dozens of species, an induction period, gas bubbles and a fuel supply that runs out; here the oscillation is sustained forever because nothing is consumed. Spatial target patterns and spirals are not modelled, and neither is the yellow-to-clear colour change: z is the fraction of oxidised catalyst, not a colour. The parameters are scaled, not molar, so these numbers are not a recipe."
+      onReset={() => setParams(OSCILLATOR_DEFAULTS)}
+    >
+      <canvas ref={canvasRef} role="img" aria-label="Oregonator time series and phase portrait" />
+    </Experiment>
+  );
+}
+
+/* -------------------------------------------------------------------------
    Bifurcation
    ------------------------------------------------------------------------- */
 
@@ -677,7 +977,7 @@ function BifurcationLab() {
 
   return (
     <Experiment
-      number={3}
+      number={4}
       field="Chaos"
       title="The logistic map, end to end"
       question="One line — x next = r × x × (1 − x) — produces a fixed point, then an oscillation, then a cascade of doublings, then chaos. Where does order actually end?"
@@ -826,7 +1126,7 @@ function ZenoLab() {
 
   return (
     <Experiment
-      number={4}
+      number={5}
       field="Measurement"
       title="The quantum Zeno effect"
       question="Ask a two-level system the same question often enough and it can be held in place. How many measurements does it take, and what does the survival curve actually look like?"
@@ -907,7 +1207,7 @@ export default function SimulationLab({ onBack, onOpenClassic }) {
     <div className="lab-shell">
       <header className="lab-masthead">
         <div>
-          <p className="lab-kicker">Four numerical experiments</p>
+          <p className="lab-kicker">Five numerical experiments</p>
           <h1>The Lab</h1>
           <p className="lab-lead">
             Every panel below solves a model. Change a parameter and the numbers are recomputed from the
@@ -918,8 +1218,9 @@ export default function SimulationLab({ onBack, onOpenClassic }) {
         <div className="lab-masthead-side">
           <p>
             <strong>Deterministic, not decorative.</strong> The tunnelling panel solves the rectangular-barrier
-            matching conditions. The Lorenz panel integrates with fourth-order Runge–Kutta. The bifurcation panel
-            iterates the map 340 times per column. The Zeno panel evaluates the projective-measurement product.
+            matching conditions. The Lorenz and Oregonator panels integrate with fourth-order Runge–Kutta, with
+            the reaction step tied to ε because those equations are stiff. The bifurcation panel iterates the map
+            340 times per column. The Zeno panel evaluates the projective-measurement product.
           </p>
           {onOpenClassic && (
             <button type="button" className="lab-classic-link" onClick={onOpenClassic}>
@@ -931,6 +1232,7 @@ export default function SimulationLab({ onBack, onOpenClassic }) {
 
       <TunnellingLab />
       <LorenzLab />
+      <OscillatorLab />
       <BifurcationLab />
       <ZenoLab />
 

@@ -402,9 +402,162 @@ export const PREDICTIVE_PROCESSING_DOSSIER = {
   related: ['slime-mould', 'godel-incompleteness', 'monty-hall'],
 };
 
+export const CRISPR_DOSSIER = {
+  id: 'crispr',
+  title: 'The Immune System That Became a Scalpel',
+  standfirst:
+    'Bacteria keep pieces of the viruses that infect them and use the memory to cut the same virus apart next time. A decade after the mechanism was demonstrated, the same trick was editing human genomes.',
+  field: 'Biology',
+  lenses: ['Life', 'Meaning'],
+  status: 'Established mechanism; therapeutic use is early and contested',
+  difficulty: 'Intermediate',
+  minutes: 24,
+  opening:
+    'In 2005 Francisco Mojica and colleagues noticed that the spacers between the short repeated sequences in bacterial genomes matched the DNA of viruses and plasmids. In 2007 Rodolphe Barrangou and colleagues showed that the yogurt bacterium Streptococcus thermophilus uses those spacers to survive phage infection: survivors had acquired a new spacer, and the spacer matched the phage that had attacked them. In 2012 Martin Jinek, Jennifer Doudna, Emmanuelle Charpentier and colleagues showed that one protein, Cas9, could be aimed at a chosen DNA sequence by a short RNA and would cut it in a test tube. By 2013 the system was editing human cells. In 2020 Doudna and Charpentier received the Nobel Prize in Chemistry.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'A memory written into a genome',
+      body: [
+        'The CRISPR array is a library of past infections. Each spacer is a fragment of foreign DNA, inserted at one end of the array after an encounter with a phage or plasmid, and transcribed along with the repeats. The RNA is processed into short guide molecules, and a Cas protein loaded with one of them patrols the cell. If the guide matches incoming DNA, the protein cuts it. The memory is inherited: a cell that survives passes the array to its descendants, so the lineage is protected against a virus its ancestor met.',
+        'Two details make the system work without destroying the cell’s own genome. The guide pairs with a protospacer, and the protein also requires a short neighbouring motif, the PAM, which is absent next to the spacer in the array itself. That asymmetry is the difference between a memory and an autoimmune disease. The other detail is the cut: Cas9 uses two nuclease domains, HNH and RuvC, to sever both strands, leaving a blunt end three bases upstream of the PAM. The cell then repairs the break, and the repair is where editing becomes possible and where it becomes unpredictable.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of CRISPR',
+      items: [
+        {
+          term: 'CRISPR',
+          definition:
+            'A family of repeated DNA sequences in bacteria and archaea, separated by spacers copied from viruses. The array is a heritable record of past infections.',
+        },
+        {
+          term: 'Cas9',
+          definition:
+            'The nuclease of the CRISPR system. Guided by an RNA matching a target, it cuts both DNA strands three bases upstream of a short motif.',
+        },
+        {
+          term: 'Guide RNA',
+          definition:
+            'The short RNA that specifies a CRISPR target by base pairing. In the laboratory the natural two-RNA system is usually fused into a single guide.',
+        },
+        {
+          term: 'PAM',
+          definition:
+            'The protospacer adjacent motif: a short sequence next to the target that Cas9 must recognise before cutting. For the common Streptococcus pyogenes Cas9 it is NGG.',
+        },
+        {
+          term: 'Protospacer',
+          definition:
+            'The sequence in an invading genome that matches a CRISPR spacer, and therefore the sequence the guide RNA is aimed at.',
+        },
+        {
+          term: 'Bacteriophage',
+          definition:
+            'A virus that infects bacteria. Phages are the pressure that CRISPR arrays evolved to resist, and they are also the source of the spacers.',
+        },
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'How an edit is actually made',
+      items: [
+        {
+          title: 'Choose a target next to a PAM',
+          text: 'The guide must match the intended site, and the site must be followed by the PAM the Cas protein recognises. A target without a PAM cannot be cut, however well the guide matches.',
+        },
+        {
+          title: 'Load the guide into Cas9',
+          text: 'The guide RNA and the protein form a complex that searches DNA for a PAM, then checks the guide against the adjacent sequence. Mismatches, especially near the PAM, reduce the chance of a cut.',
+        },
+        {
+          title: 'Cut both strands',
+          text: 'Cas9 cuts the target three bases upstream of the PAM. The break is blunt, and the cell treats it as damage that has to be repaired before the chromosome can be copied.',
+        },
+        {
+          title: 'Let the cell choose a repair pathway',
+          text: 'Non-homologous end joining glues the ends back together and often leaves a small insertion or deletion, which can knock a gene out. Homology-directed repair copies a supplied template and can write a precise change.',
+        },
+        {
+          title: 'Verify the result, not the intention',
+          text: 'Sequencing the target site, and the predicted off-target sites, is the only way to know what happened. A cut is not an edit until the repair has been read.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'How specific is a twenty-base address?',
+      equation: 'E = 2G · 4⁻ⁿ · (1/16),   n = 20, G = 3.1 × 10⁹ bp',
+      symbols: [
+        { symbol: 'E', meaning: 'Expected number of exact guide matches in the genome, counting both strands', unit: 'sites' },
+        { symbol: 'G', meaning: 'Size of the human genome in base pairs', unit: 'bp' },
+        { symbol: 'n', meaning: 'Length of the guide sequence that pairs with the target', unit: 'bases' },
+        { symbol: '4⁻ⁿ', meaning: 'Chance that a given site matches a specific n-base sequence, assuming equal base frequencies', unit: 'probability' },
+        { symbol: '1/16', meaning: 'Chance that a given site carries the two-base NGG PAM for Streptococcus pyogenes Cas9', unit: 'probability' },
+      ],
+      body: [
+        'With n = 20, 4⁻²⁰ is about 9.1 × 10⁻¹³. Multiplying by 6.2 × 10⁹ base positions on two strands and by 1/16 gives about 0.0004: an exact twenty-base match is expected roughly once in every 2,500 human genomes. That sounds reassuring, and it is also the wrong number to be reassured by. The relevant question is not how often a perfect match occurs but how often a near-match occurs, because Cas9 can cut a site with one or two mismatches, particularly if they are far from the PAM.',
+        'The arithmetic explains why guide design is a search problem rather than a recipe. Short guides are more likely to have near-matches; longer guides are more specific but can be less efficient. The genome is not random, so the uniform-base calculation is an order-of-magnitude estimate, not a guarantee. It is still useful, because it shows that specificity is bought with length and lost with mismatches, and that both have to be measured rather than assumed.',
+      ],
+      assumptions: [
+        'Bases are treated as equally frequent and independent, which is false in regions with biased composition such as centromeres.',
+        'Only exact matches are counted; the safety-relevant near-matches require a separate, empirically calibrated search.',
+        'One PAM orientation and one guide length are assumed; different Cas proteins recognise different motifs and cut at different distances.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The toolbox, and what each tool still cannot do',
+      columns: ['Tool', 'What it changes', 'What it leaves unresolved'],
+      rows: [
+        ['Cas9 nuclease', 'Cuts DNA at a guide-directed site; repair produces indels or a templated change', 'The outcome depends on the cell’s repair choice, so the same cut can give different edits'],
+        ['Base editor', 'Converts one base into another chemically, without a double-strand break', 'Cannot insert or delete sequence, and the editable window is narrow'],
+        ['Prime editor', 'Writes a new sequence using a reverse transcriptase guided by an extended RNA', 'Less efficient than Cas9 in many cells, and still limited by delivery and PAM'],
+        ['Cas12a', 'Cuts with a staggered break and uses a single guide RNA', 'Recognises a different, T-rich PAM, so the targetable sites are a different set'],
+      ],
+      note:
+        'The table is about capabilities, not approval. A tool that can make a change in a dish is not a therapy; delivery to the right tissue, immune response, durability and cost decide whether it becomes one.',
+    },
+    {
+      kind: 'prose',
+      heading: 'The ethics arrived before the medicine',
+      body: [
+        'In November 2018 He Jiankui announced that he had edited the CCR5 gene in human embryos and implanted them; twin girls were born, and he was sentenced to three years in prison in 2019. The scientific objections were not only that the edit was premature. CCR5 is not a gene whose disruption is known to be safe, the embryos were mosaics, and the consent process was inadequate. The deeper objection was that the change would be inherited by every cell of those children and by their descendants, which makes the experiment irreversible in a way that somatic gene therapy is not. Most countries prohibit clinical germline editing for exactly that reason.',
+        'Somatic editing is a different proposition. In late 2023 a CRISPR therapy for sickle cell disease and beta thalassaemia was approved in Britain, and the sickle cell indication was approved in the United States. The cells are removed, edited outside the body and returned, so the change stays in the patient. It is a genuine success and a narrow one: the treatment is demanding, expensive, and aimed at a disease whose burden falls heavily on people with the least access to it. The ethical question has moved from whether editing can work to who will be able to afford it.',
+      ],
+    },
+    {
+      kind: 'misconception',
+      heading: 'Precision is not the same as control',
+      claim: '"CRISPR is a precise pair of scissors: it changes exactly the letter you choose."',
+      correction:
+        'A guide RNA specifies a address, not an outcome. Cas9 cuts both strands, and the cell then chooses among repair pathways: end joining can delete or insert bases, templated repair can copy a supplied sequence, and some breaks are repaired perfectly, leaving no edit at all. The same experiment can produce different alleles in different cells, which is why germline editing raises the additional problem of mosaicism. Base editors and prime editors reduce the dependence on the cell’s repair choice, but they have their own constraints and are not universal. Calling the system precise describes its targeting; it does not describe its result.',
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If a cut can be repaired perfectly, how should an editing experiment report efficiency: cutting, editing, or the intended allele?',
+        'Should a therapy that edits somatic cells be regulated differently from one that edits embryos? Why, exactly?',
+        'What would it take to make a CRISPR therapy accessible at the scale of a common disease rather than a rare one?',
+        'Is a heritable edit ever justified by the prevention of a severe disease, and who would have to consent?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'F. J. M. Mojica et al., "Intervening sequences of regularly spaced prokaryotic repeats derive from foreign genetic elements", Journal of Molecular Evolution 60, 174–182 (2005)', url: 'https://doi.org/10.1007/s00239-004-0046-3' },
+    { label: 'R. Barrangou et al., "CRISPR provides acquired resistance against viruses in prokaryotes", Science 315, 1709–1712 (2007)', url: 'https://doi.org/10.1126/science.1138140' },
+    { label: 'M. Jinek et al., "A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity", Science 337, 816–821 (2012)', url: 'https://doi.org/10.1126/science.1225829' },
+    { label: 'J. A. Doudna and E. Charpentier, "The new frontier of genome engineering with CRISPR-Cas9", Science 346, 1258096 (2014)', url: 'https://doi.org/10.1126/science.1258096' },
+  ],
+  related: ['horizontal-gene-transfer', 'chirality', 'predictive-processing'],
+};
+
 export const LIFE_DOSSIERS = [
   SLIME_MOULD_DOSSIER,
   MYCORRHIZAL_DOSSIER,
   HORIZONTAL_TRANSFER_DOSSIER,
   PREDICTIVE_PROCESSING_DOSSIER,
+  CRISPR_DOSSIER,
 ];

@@ -942,6 +942,150 @@ export const SPIN_ICE_DOSSIER = {
   related: ['time-crystals', 'casimir-effect', 'mycorrhizal-networks'],
 };
 
+export const SUPERCONDUCTIVITY_DOSSIER = {
+  id: 'superconductivity',
+  title: 'The Resistance That Vanishes',
+  standfirst:
+    'Cool mercury below 4.2 kelvin and its resistance does not fall to a small value; it falls to zero. The state that does this is not a perfect conductor, and the difference took twenty-two years to establish.',
+  field: 'Physics',
+  lenses: ['Matter', 'Reality'],
+  status: 'Established theory for conventional superconductors; the cuprates remain unexplained',
+  difficulty: 'Advanced',
+  minutes: 25,
+  opening:
+    'On 8 April 1911 Heike Kamerlingh Onnes cooled mercury in liquid helium and watched its electrical resistance disappear. He had liquefied helium three years earlier, and the low temperature was the whole trick: at about 4.2 kelvin the metal stopped resisting. For twenty-two years the effect could be measured but not explained. Then in 1933 Walther Meissner and Robert Ochsenfeld found that a superconductor also expels magnetic field from its interior. A perfect conductor would do the opposite: it would trap whatever field passed through it while it cooled. The expulsion showed that superconductivity is a thermodynamic phase, not merely a transport accident.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'Zero is not a small number',
+      body: [
+        'A supercurrent can circulate in a ring for years without measurable decay. That is not because the resistance is tiny; it is because the current is carried by a collective state with no dissipative channel available at low energy. The distinction matters practically. Magnetic resonance imaging uses superconducting coils because a resistive coil of the same field would boil off its cryogen; SQUID magnetometers use Josephson junctions to measure fields a hundred billion times weaker than the Earth’s. Neither works by making resistance small.',
+        'It also matters conceptually. If superconductivity were only zero resistance, it would be a property of the electrons’ motion, and one could imagine a material with resistance arbitrarily close to zero. The Meissner effect rules that out. A superconductor is a different phase with a different equilibrium response to a field, and the transition between the phases is sharp in the way that melting is sharp. The order parameter is a quantum wavefunction with a definite phase, shared by all the pairs.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'What a perfect conductor would do instead',
+      body: [
+        'Take a perfect conductor, cool it in zero field, then apply a field. Faraday’s law says the induced currents will oppose the change, so the field stays out. Now cool it in a field instead. The field was there before the transition, and nothing in the laws of resistance says it must leave; a perfect conductor would keep it. A superconductor cooled in a field expels it anyway. That is the Meissner–Ochsenfeld effect, and it is the experiment that tells you the state is not just a conductor with zero resistance.',
+        'The London brothers described the response in 1935 with two equations relating current to field, and the equations predict that the field does not vanish abruptly at the surface: it decays over a length called the penetration depth. For niobium that length is tens of nanometres, which is why the effect looks like perfect expulsion in a macroscopic sample and is not one at the surface. Type-II superconductors go further: above a lower critical field they let the field in as quantised vortices while the material between the vortices stays superconducting. That is the state used in the magnets that make MRI possible.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of the superconducting state',
+      items: [
+        {
+          term: 'Superconductivity',
+          definition:
+            'A phase in which a material carries current with exactly zero resistance and expels magnetic field from its interior. It is a thermodynamic phase, not merely a very good conductor.',
+        },
+        {
+          term: 'Cooper pair',
+          definition:
+            'Two electrons of opposite momentum and spin, bound by an attraction mediated by lattice vibrations. Pairs behave collectively as bosons and condense into one quantum state.',
+        },
+        {
+          term: 'Meissner effect',
+          definition:
+            'The expulsion of magnetic field from a superconductor as it cools below its critical temperature. A merely perfect conductor would trap the field instead.',
+        },
+        {
+          term: 'Energy gap',
+          definition:
+            'A range of energies no excitation may occupy. In a superconductor the gap is the energy needed to break a pair, so single electrons cannot scatter without paying it.',
+        },
+        {
+          term: 'Flux quantum',
+          definition:
+            'The smallest magnetic flux a superconducting loop can enclose, Φ₀ = h/2e ≈ 2.07 × 10⁻¹⁵ Wb. The 2e is the charge of a Cooper pair, which is why the value is evidence for pairing.',
+        },
+        {
+          term: 'Phonon',
+          definition:
+            'A quantised lattice vibration. In a conventional metal it mediates the effective attraction between electrons that makes superconductivity possible.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'Two numbers that define the state',
+      equation: 'λ_L = √(m / (μ₀ n_s e²)),   Φ₀ = h / 2e ≈ 2.07 × 10⁻¹⁵ Wb',
+      symbols: [
+        { symbol: 'λ_L', meaning: 'London penetration depth: how far a static field reaches into the superconductor', unit: 'm' },
+        { symbol: 'm', meaning: 'Electron mass', unit: 'kg' },
+        { symbol: 'μ₀', meaning: 'Vacuum permeability', unit: 'H/m' },
+        { symbol: 'n_s', meaning: 'Density of superconducting carriers, not of all conduction electrons', unit: 'm⁻³' },
+        { symbol: 'e', meaning: 'Elementary charge', unit: 'C' },
+        { symbol: 'Φ₀', meaning: 'Magnetic flux quantum, the unit in which flux through a superconducting loop is quantised', unit: 'Wb' },
+      ],
+      body: [
+        'The first equation is the London result, and it already contains the reason the effect is quantum. The penetration depth depends on n_s, the density of carriers that have condensed; it is not a property of the metal’s ordinary conductivity. As temperature rises toward the critical value, pairs break, n_s falls, and the field reaches further in. The second equation is more striking: flux through a loop comes in units of h/2e, not h/e. The factor of two was measured in 1961, four years after BCS, and it was direct evidence that the carriers are pairs.',
+        'The two equations are independent probes of the same condensate. Penetration depth measures its stiffness against a field; flux quantisation measures its topology. A theory that explained zero resistance but not these two numbers would not be a theory of the phase.',
+      ],
+      assumptions: [
+        'The London equations assume a local response and a static or low-frequency field; at high frequencies the response becomes frequency-dependent and the simple form fails.',
+        'The two-fluid model treats n_s as a function of temperature, which is a phenomenological approximation rather than a microscopic derivation.',
+        'The formulas describe isotropic, conventional superconductors; the layered cuprates are anisotropic and their penetration depth depends on direction.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'BCS: phonons glue electrons together',
+      body: [
+        'Two electrons repel each other. In a metal, however, an electron distorts the positive lattice as it moves, and a second electron can be attracted by that distortion. The attraction is weak and retarded, and in 1956 Leon Cooper showed that it lowers the energy of a pair with opposite momenta and opposite spins, no matter how weak the coupling. In 1957 John Bardeen, Cooper and Robert Schrieffer turned that into a theory of the whole condensate.',
+        'The evidence for phonons was already there. In 1950, two groups found that the critical temperature of mercury isotopes scales as M^−1/2, where M is the ionic mass: heavier ions vibrate more slowly, and the attraction weakens. BCS reproduced that isotope effect and predicted an energy gap. Breaking a pair costs 2Δ, and at weak coupling the theory gives 2Δ = 3.53 k_B T_c. Tunnelling measurements confirmed the gap and its temperature dependence. The pairs are not small molecules: their coherence length is tens to hundreds of nanometres in a conventional metal, so millions of pairs overlap, which is why the state has a single phase.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'Families of superconductor, and what each one forced',
+      columns: ['Family', 'Example', 'Critical temperature', 'Why it matters'],
+      rows: [
+        ['Elements', 'Mercury', '4.2 K', 'The original discovery; low enough to require liquid helium'],
+        ['A15 compounds', 'Nb₃Sn', 'about 18 K', 'Made high-field superconducting magnets practical'],
+        ['Magnesium diboride', 'MgB₂', '39 K', 'A conventional phonon mechanism at an unexpectedly high temperature'],
+        ['Cuprates', 'YBa₂Cu₃O₇', 'about 92 K', 'Above liquid nitrogen, and still without an accepted theory'],
+        ['Hydrides under pressure', 'H₃S, LaH₁₀', 'about 203 K, 250 K', 'Highest confirmed values, but only at pressures of roughly 150–170 GPa'],
+      ],
+      note:
+        'Critical temperatures are quoted at ambient pressure unless stated. The hydride entries are experiments in diamond anvil cells, not materials that exist as usable wires, and the pressures involved are thousands of times atmospheric.',
+    },
+    {
+      kind: 'prose',
+      heading: 'The high-temperature problem',
+      body: [
+        'In 1986 Georg Bednorz and Alex Müller found superconductivity near 35 K in a layered barium–lanthanum–copper oxide. The following year yttrium barium copper oxide pushed the transition above 90 K, past the boiling point of liquid nitrogen, and the field changed scale: nitrogen is far cheaper and simpler to handle than helium. But the theory did not follow. The cuprates are anisotropic, their pairs appear to have d-wave symmetry rather than the isotropic s-wave of BCS, and above the transition there is a pseudogap regime that nobody has agreed how to describe. After nearly four decades there is still no accepted microscopic theory of the cuprates.',
+        'The hydrides are a different kind of progress. Hydrogen-rich compounds under megabar pressures have reached about 203 K in hydrogen sulfide and about 250 K in lanthanum hydride. Those are real measurements, and they are also a long way from a technology: the samples are microscopic, the pressures are destructive, and the claims in the field have been unstable. A 2020 report of superconductivity at 15 °C in a carbon–sulfur–hydrogen compound at 267 GPa was retracted in 2022, and a 2023 claim of near-ambient superconductivity in nitrogen-doped lutetium hydride was retracted later that year. The retractions are part of the record, not an embarrassment to be edited out.',
+      ],
+    },
+    {
+      kind: 'misconception',
+      heading: 'Two claims that sound like the same claim',
+      claim: '"A superconductor is just a perfect conductor, and room-temperature superconductors have already been made."',
+      correction:
+        'The first half is false because of the Meissner effect: a perfect conductor would trap magnetic flux, while a superconductor expels it, and the difference is a thermodynamic phase transition. The second half is a category error about what has been achieved. Superconductivity above 200 K exists only under pressures of more than a hundred gigapascals, in samples measured in a diamond anvil cell. The widely publicised room-temperature claims of the 2020s were retracted. That does not make the field a failure; it makes it a field where the difference between a measurement and a press release has to be checked.',
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'Why does a phase with zero resistance need a separate order parameter, when zero resistance already sounds like a complete description?',
+        'If the pairing in cuprates is not phonon-mediated, what is doing the mediating, and what experiment would settle it?',
+        'Is a material that superconducts only at 150 GPa a discovery about materials or about pressure?',
+        'What would a room-temperature superconductor change, and what would it not change, about the electrical grid?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'H. Kamerlingh Onnes, "Investigations into the properties of substances at low temperatures", Nobel Lecture (1913)', url: 'https://www.nobelprize.org/prizes/physics/1913/onnes/lecture/' },
+    { label: 'W. Meissner and R. Ochsenfeld, "Ein neuer Effekt bei Eintritt der Supraleitfähigkeit", Naturwissenschaften 21, 787–788 (1933)', url: 'https://doi.org/10.1007/BF01504252' },
+    { label: 'J. Bardeen, L. N. Cooper and J. R. Schrieffer, "Theory of Superconductivity", Physical Review 108, 1175 (1957)', url: 'https://doi.org/10.1103/PhysRev.108.1175' },
+    { label: 'J. G. Bednorz and K. A. Müller, "Possible high Tc superconductivity in the Ba−La−Cu−O system", Zeitschrift für Physik B 64, 189–193 (1986)', url: 'https://doi.org/10.1007/BF01303701' },
+  ],
+  related: ['spin-ice', 'quantum-zeno', 'landauer-principle'],
+};
+
 export const PHYSICS_DOSSIERS = [
   UNRUH_DOSSIER,
   CASIMIR_DOSSIER,
@@ -951,4 +1095,5 @@ export const PHYSICS_DOSSIERS = [
   ARROW_OF_TIME_DOSSIER,
   FALSE_VACUUM_DOSSIER,
   SPIN_ICE_DOSSIER,
+  SUPERCONDUCTIVITY_DOSSIER,
 ];

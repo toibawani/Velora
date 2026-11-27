@@ -368,6 +368,10 @@ export const MOTIF_BY_ID = {
   'personal-identity': 'split',
   'epistemic-injustice': 'network',
   'is-ought-gap': 'diagonal',
+  'monstrous-moonshine': 'lattice',
+  superconductivity: 'field',
+  crispr: 'helix',
+  'rosetta-stone': 'strata',
 };
 
 export const motifFor = (id) => MOTIF_BY_ID[id] || 'arcs';

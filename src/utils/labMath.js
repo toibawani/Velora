@@ -178,6 +178,121 @@ export const zenoSurvivalAtFixedTime = ({ omega = 1, totalTime = 2, measurements
 export const rabiSurvival = ({ omega = 1, time = 2 } = {}) =>
   Math.min(1, Math.max(0, Math.cos((Number(omega) * Number(time)) / 2) ** 2));
 
+/* -------------------------------------------------------------------------
+   The oscillating reaction
+   ------------------------------------------------------------------------- */
+
+/**
+ * The Oregonator's scaled parameters. These are the values at which the
+ * two-variable reduction has a stable limit cycle: f = 1, eps = 0.02, q = 0.002.
+ * They are dimensionless; they are not molar concentrations and not a recipe.
+ */
+export const OREGONATOR_DEFAULTS = { f: 1, eps: 0.02, q: 0.002 };
+
+/**
+ * One classical Runge-Kutta 4 step of the Oregonator:
+ *   eps dx/dt = x(1 - x) - f z (x - q)/(x + q),   dz/dt = x - z
+ *
+ * eps is small, so this system is stiff: the caller must keep dt proportional
+ * to eps or the integration leaves the physical range. oregonatorRun does that.
+ */
+export function oregonatorStep(state, { f = 1, eps = 0.02, q = 0.002 } = {}, dt = 4e-4) {
+  const F = Number(f);
+  const E = Math.max(Number(eps), 1e-6);
+  const Q = Math.max(Number(q), 1e-9);
+  const { x, z } = state;
+
+  const derivative = (s) => ({
+    x: (s.x * (1 - s.x) - (F * s.z * (s.x - Q)) / Math.max(s.x + Q, 1e-9)) / E,
+    z: s.x - s.z,
+  });
+
+  const k1 = derivative({ x, z });
+  const k2 = derivative({ x: x + (dt / 2) * k1.x, z: z + (dt / 2) * k1.z });
+  const k3 = derivative({ x: x + (dt / 2) * k2.x, z: z + (dt / 2) * k2.z });
+  const k4 = derivative({ x: x + dt * k3.x, z: z + dt * k3.z });
+
+  return {
+    x: x + (dt / 6) * (k1.x + 2 * k2.x + 2 * k3.x + k4.x),
+    z: z + (dt / 6) * (k1.z + 2 * k2.z + 2 * k3.z + k4.z),
+  };
+}
+
+/**
+ * Integrates the Oregonator and reports what the trajectory does. The step is
+ * tied to eps because the model is stiff; samples are subsampled for drawing,
+ * while the period is measured from every integration step in the late window.
+ *
+ * The period is the mean interval between upward crossings of the window's mean
+ * x, which is robust for a relaxation oscillation and meaningless for a fixed
+ * point. oscillating is false when the late amplitude is negligible.
+ */
+export function oregonatorRun({
+  f = 1,
+  eps = 0.02,
+  q = 0.002,
+  duration = 40,
+  dt,
+  sampleLimit = 900,
+} = {}) {
+  const E = Math.min(0.2, Math.max(Number(eps) || 0.02, 1e-4));
+  const stable = E * 0.02;
+  const stepDt = Math.max(1e-6, Math.min(Number(dt) || stable, stable));
+  const steps = Math.min(600000, Math.max(400, Math.round(Math.max(1, Number(duration)) / stepDt)));
+  const span = steps * stepDt;
+  const keepEvery = Math.max(1, Math.floor(steps / sampleLimit));
+  const windowStart = Math.floor(steps * 0.6);
+
+  let state = { x: 0.1, z: 0.1 };
+  const samples = [{ t: 0, x: state.x, z: state.z }];
+  const late = [];
+  let diverged = false;
+
+  for (let i = 1; i <= steps; i += 1) {
+    const next = oregonatorStep(state, { f, eps: E, q }, stepDt);
+    if (!Number.isFinite(next.x) || !Number.isFinite(next.z) || next.x < -10 || next.x > 10) {
+      diverged = true;
+      break;
+    }
+    state = next;
+    if (i >= windowStart) late.push(state.x);
+    if (i % keepEvery === 0) samples.push({ t: i * stepDt, x: state.x, z: state.z });
+  }
+
+  let min = Infinity;
+  let max = -Infinity;
+  let sum = 0;
+  late.forEach((value) => {
+    if (value < min) min = value;
+    if (value > max) max = value;
+    sum += value;
+  });
+  const mean = late.length ? sum / late.length : state.x;
+
+  let crossings = 0;
+  for (let i = 1; i < late.length; i += 1) {
+    if (late[i - 1] < mean && late[i] >= mean) crossings += 1;
+  }
+
+  const windowSpan = (late.length * stepDt) || 1;
+  const period = crossings > 0 ? windowSpan / crossings : null;
+  const amplitude = Number.isFinite(max - min) ? max - min : 0;
+
+  return {
+    samples,
+    period,
+    min: Number.isFinite(min) ? min : state.x,
+    max: Number.isFinite(max) ? max : state.x,
+    mean,
+    amplitude,
+    final: state,
+    oscillating: !diverged && period !== null && amplitude > 0.02,
+    diverged,
+    span,
+    dt: stepDt,
+  };
+}
+
 /**
  * Shannon entropy of a binary distribution, in bits. Used by the Landauer
  * readout on the information panel, where the point is that one bit of

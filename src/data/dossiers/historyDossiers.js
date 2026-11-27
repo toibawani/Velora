@@ -355,8 +355,150 @@ export const LIBRARY_OF_ALEXANDRIA_DOSSIER = {
   related: ['antikythera-mechanism', 'year-536', 'turing-halting'],
 };
 
+export const ROSETTA_DOSSIER = {
+  id: 'rosetta-stone',
+  title: 'The Stone That Taught Itself to Be Read',
+  standfirst:
+    'A fragment of a priestly decree in three scripts, two of them unreadable. The Greek was the way in, and the mistake that delayed decipherment was assuming that pictures must stand for things.',
+  field: 'History',
+  lenses: ['Origins', 'Meaning'],
+  status: 'Decipherment is settled history; the reading of Egyptian texts continues',
+  difficulty: 'Intermediate',
+  minutes: 22,
+  opening:
+    'In July 1799 French soldiers rebuilding a fort at Rashid, the port the Greeks called Rosetta, pulled a broken slab out of the rubble. It carried three scripts: hieroglyphs, demotic and Greek. The Greek could be read. The decree was passed by a synod of priests at Memphis on 27 March 196 BC, on the first anniversary of the coronation of Ptolemy V, and copies were set up in temples across Egypt. The stone is the lower part of a larger stela, and its hieroglyphic section is the most damaged. What made it valuable was not its content, which is a routine list of royal honours, but the fact that the same content existed in a script nobody could read and a language everybody could.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'A decree, not a dictionary',
+      body: [
+        'The text is a decree of the Egyptian priesthood, not a grammar lesson. It records honours granted to Ptolemy V in return for benefits to the temples, and it was carved in three versions so that it could be read by priests, by administrators and by Greek-speaking officials. The three versions are not word-for-word translations; they are parallel formulations of the same political act. That matters for the decipherment, because a parallel text supplies meanings, not a codebook: it tells you what the unknown signs are about, not what each sign says.',
+        'The stone itself is a fragment. It measures about 112 by 76 centimetres and weighs roughly three-quarters of a tonne; the top is missing, so the hieroglyphic text is incomplete, and the surviving portion is not enough to reconstruct the whole decree on its own. Its importance is therefore double: it is a key, and it is a damaged copy of a text that exists in better condition elsewhere. The key mattered more than the copy.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of decipherment',
+      items: [
+        {
+          term: 'Stela',
+          definition:
+            'An upright stone slab carrying an inscription or relief, set up in public or in a temple. The Rosetta Stone is the broken lower part of one.',
+        },
+        {
+          term: 'Hieroglyph',
+          definition:
+            'A sign of the ancient Egyptian script. The signs mix logograms, phonograms and determinatives, which is why early scholars wrongly assumed each one stood for a whole idea.',
+        },
+        {
+          term: 'Demotic',
+          definition:
+            'The cursive Egyptian script used for everyday documents in the later periods. It was the script Young and Champollion could attack first, because it was less pictorial.',
+        },
+        {
+          term: 'Cartouche',
+          definition:
+            'An oval ring drawn around a group of hieroglyphs, marking a royal name. Recognising that the names inside could be read phonetically was the decisive step.',
+        },
+        {
+          term: 'Trilingual inscription',
+          definition:
+            'A text carved in three scripts or languages, which can supply a parallel key. The Rosetta Stone is the most famous example, but not the only one.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'The hypothesis that blocked the way',
+      body: [
+        'For most of the eighteenth century the learned consensus was that hieroglyphs were symbolic: a picture of a hawk meant a god, a picture of a bee meant a king, and the script was a philosophical code rather than a writing system. That assumption made the Rosetta Stone nearly useless, because a symbolic script has no phonetic values to recover from a parallel text. Athanasius Kircher produced elaborate readings that were essentially allegory. William Warburton argued that the signs were a deliberate priestly concealment. Neither could be tested against a new inscription, which is the tell that a decipherment has not happened.',
+        'The way through was phonetic. Thomas Young worked on the demotic section and identified the groups inside cartouches as royal names, and he assigned sound values to several signs. Champollion went further because he knew Coptic, the last stage of the Egyptian language, and he treated the script as a mixture: some signs were pictures of things, some stood for sounds, and some classified the word that followed. The hypothesis predicted that the same signs would recur in the same names on other monuments. When Champollion read the names of Ramesses and Thutmose at Abu Simbel in 1828, the prediction held, and the script stopped being a cipher and became a language.',
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'How the code was actually broken',
+      items: [
+        {
+          title: 'Copy the three texts exactly',
+          text: 'The first task was epigraphy: accurate copies of the signs, with their positions and repetitions, because a decipherment is only as good as the transcription it tests.',
+        },
+        {
+          title: 'Use the known language as an anchor',
+          text: 'The Greek version gave the decree’s meaning and, more usefully, the names of the king and the priests. Those names were the likely content of the cartouches.',
+        },
+        {
+          title: 'Look for repeated groups',
+          text: 'A name that appears in the Greek and in a cartouche should produce a repeated pattern of signs. Young and Champollion compared the patterns across the stone and across other monuments.',
+        },
+        {
+          title: 'Guess sounds, then test them elsewhere',
+          text: 'Assigning a phonetic value to one sign is a hypothesis. It becomes knowledge when the same value reads a different name on a different object correctly, which is what the Abu Simbel inscriptions supplied.',
+        },
+        {
+          title: 'Build the grammar, not just the alphabet',
+          text: 'A list of sound values is not a reading of a language. Champollion’s later grammar and dictionary turned the alphabet into a discipline, and that work outlived the excitement of 1822.',
+        },
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'Three scripts, three different kinds of help',
+      columns: ['Script', 'What it is', 'What it supplied'],
+      rows: [
+        ['Hieroglyphic', 'Monumental script mixing logograms, phonograms and determinatives', 'The target of the decipherment; the top of the stone is broken, so only part survives'],
+        ['Demotic', 'Cursive Egyptian script used for administration and everyday texts', 'The first foothold: Young and Champollion could isolate names and repeated groups'],
+        ['Greek', 'The administrative language of Ptolemaic Egypt', 'The meaning of the decree and the royal names used to test phonetic guesses'],
+      ],
+      note:
+        'A parallel text is a constraint, not a solution. The Greek fixes what the decree says; it does not say which hieroglyph is which, and the same is true of every bilingual key from the decipherment of cuneiform to the decoding of Linear B.',
+    },
+    {
+      kind: 'prose',
+      heading: 'The stone is not the whole story',
+      body: [
+        'Champollion did not read Egyptian from the Rosetta Stone alone. The Philae obelisk supplied a cartouche of Cleopatra that could be compared with the Ptolemy cartouche on the stone, and the Abu Simbel inscriptions supplied native royal names that were not in the Greek parallel text at all. Those names were the real test: a decipherment that worked only on Greek names could be a clever trick, while one that read Ramesses had recovered the script.',
+        'The later work was less dramatic and more important. Champollion published a précis of the system in 1824, a grammar in 1836 and a dictionary in 1841; he died in 1832, before the last two appeared. Egyptian had been written for more than three thousand years and had been unreadable for about fifteen hundred. The recovery took a generation of scholars, not a single afternoon, and it depended on inscriptions that had nothing to do with the stone.',
+      ],
+    },
+    {
+      kind: 'misconception',
+      heading: 'The flash of insight that was not a flash',
+      claim: '"Champollion looked at the Rosetta Stone and solved hieroglyphs in a single moment in 1822."',
+      correction:
+        'The date is real but the story is compressed. Champollion had been working on Egyptian writing for more than a decade, and the 1822 letter to Dacier announced a specific result: hieroglyphs could be phonetic, at least for foreign names. That was the breakthrough, but it was not the whole script. The grammar and dictionary came later, and Thomas Young had already done essential work on the demotic text and on cartouches. The popular image of a lone genius fainting after a flash of insight turns a collaborative, decade-long argument with evidence into a myth, and the myth makes decipherment look like luck rather than method.',
+    },
+    {
+      kind: 'prose',
+      heading: 'What a key can and cannot do',
+      body: [
+        'The Rosetta Stone is a useful case because it separates two things that are often conflated: translation and decipherment. Translation assumes you know what the signs are and asks what the sentences mean. Decipherment assumes you know what the text means and asks what the signs are. A bilingual text gives you the first for free and the second not at all. The intellectual work is the hypothesis that the unknown script is a writing system of a particular kind, and the willingness to test that hypothesis against new inscriptions.',
+        'That is why the story still matters outside Egyptology. Every decipherment, from cuneiform to Linear B to the Maya script, has the same shape: a known text, a guessed structure, and a prediction that can fail. The stone did not teach itself to be read. It supplied a constraint strong enough that a correct hypothesis could be recognised, which is a different and more interesting thing.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'Why did the assumption that hieroglyphs were purely symbolic survive so long, when the cartouches were obviously names?',
+        'What made the Abu Simbel inscriptions a better test than the Rosetta Stone itself?',
+        'Is a bilingual text necessary for decipherment, or can statistical structure alone recover a script?',
+        'What would count as evidence that a proposed decipherment is wrong rather than merely unpoetic?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'British Museum, "Eureka! Finding the key to ancient Egypt" (2022), on the Rosetta Stone and Champollion’s 1822 letter', url: 'https://www.britishmuseum.org/blog/eureka-finding-key-ancient-egypt' },
+    { label: 'British Museum, "How Egyptian hieroglyphs were decoded: a timeline to decipherment"', url: 'https://www.britishmuseum.org/exhibitions/hieroglyphs-unlocking-ancient-egypt/egyptian-hieroglyphs-decipherment-timeline' },
+    { label: 'Bibliothèque nationale de France, "En 1822, Champollion perce le secret des hiéroglyphes"', url: 'https://essentiels.bnf.fr/fr/article/1fa13963-21a8-4e08-950a-05f6515b7d34-1822-champollion-perce-secret-hieroglyphes' },
+    { label: 'British Museum, "The Rosetta Stone: everything you need to know" (2017)', url: 'https://www.britishmuseum.org/blog/everything-you-ever-wanted-know-about-rosetta-stone' },
+  ],
+  related: ['library-of-alexandria', 'antikythera-mechanism', 'epistemic-injustice'],
+};
+
 export const HISTORY_DOSSIERS = [
   ANTIKYTHERA_DOSSIER,
   YEAR_536_DOSSIER,
   LIBRARY_OF_ALEXANDRIA_DOSSIER,
+  ROSETTA_DOSSIER,
 ];

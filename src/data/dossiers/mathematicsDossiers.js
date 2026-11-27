@@ -668,6 +668,142 @@ export const TURING_DOSSIER = {
   related: ['godel-incompleteness', 'continuum-hypothesis', 'landauer-principle'],
 };
 
+export const MOONSHINE_DOSSIER = {
+  id: 'monstrous-moonshine',
+  title: 'The Function That Knew About a Group',
+  standfirst:
+    'A modular function studied since the nineteenth century has coefficients that count the dimensions of representations of the largest sporadic simple group. The coincidence was so absurd that Conway called it moonshine.',
+  field: 'Mathematics',
+  lenses: ['Infinity', 'Reality'],
+  status: 'A theorem since 1992; the wider moonshine landscape is still expanding',
+  difficulty: 'Advanced',
+  minutes: 26,
+  opening:
+    'In November 1978 John McKay was looking at the Fourier expansion of the j-invariant, a function of a complex variable that classifies elliptic curves. Its coefficients begin 1, 196884, 21493760, 864299970. The first interesting one is one more than 196,883, and 196,883 is the dimension of the smallest non-trivial irreducible representation of the Monster, the largest of the 26 sporadic simple groups. There was no known reason for a function of a complex variable to know anything about a finite group with roughly 8 × 10⁵³ elements. McKay sent the observation to John Conway, who called the emerging subject moonshine, meaning something between a miracle and a delusion.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'A coincidence with the wrong kind of reputation',
+      body: [
+        'The Monster was not discovered by looking at modular functions. Bernd Fischer and Robert Griess predicted it in the early 1970s from the character tables of smaller groups, and Griess constructed it in 1982 as a group of symmetries of a 196,884-dimensional commutative algebra. It has 194 conjugacy classes, its order is divisible by exactly 15 primes, and the smallest non-trivial representation in which it can act is 196,883-dimensional. Those numbers are not arbitrary: they are forced by the group structure, and they were computed before anyone connected them to number theory.',
+        'The j-invariant is equally canonical. It is the simplest modular function, invariant under the modular group up to a shift, and its Fourier coefficients are integers with a long history in number theory. McKay noticed that 196,884 = 196,883 + 1. The natural next question is whether the rest of the expansion decomposes the same way, and that question is what turned a numerological curiosity into a programme. Conway and Norton checked the first few coefficients and found that the answer was yes, but the pattern was richer than a sum of dimensions: it seemed to hold separately for every conjugacy class of the Monster, not only for the identity.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of moonshine',
+      items: [
+        {
+          term: 'Monster group',
+          definition:
+            'The largest sporadic simple group, with about 8.08 × 10⁵³ elements and 194 conjugacy classes. Its smallest non-trivial irreducible representation has dimension 196,883.',
+        },
+        {
+          term: 'Modular form',
+          definition:
+            'A function on the upper half-plane that transforms in a fixed way under the modular group, so its values are tied to lattices. Its Fourier coefficients often carry arithmetic information.',
+        },
+        {
+          term: 'j-invariant',
+          definition:
+            'The modular function that classifies elliptic curves up to isomorphism. Its expansion begins q⁻¹ + 744 + 196,884q + …, and those coefficients are where moonshine was first noticed.',
+        },
+        {
+          term: 'Irreducible representation',
+          definition:
+            'A representation of a group with no invariant subspaces, so it cannot be split into smaller pieces. Its dimension is the size of the matrices through which the group acts.',
+        },
+        {
+          term: 'Vertex operator algebra',
+          definition:
+            'An algebraic structure whose elements act on a space of states as fields depending on a complex parameter. It is the language in which the Monster action on the moonshine module is stated.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'What Conway and Norton actually conjectured',
+      body: [
+        'The conjecture was not that 196,884 has a cute decomposition. For each element g of the Monster, Conway and Norton assigned a series T_g(τ), built from the trace of g acting on each representation, with coefficients that are characters rather than dimensions. Setting g to the identity recovers the j-invariant. For every other g, the claim was that T_g is a Hauptmodul for a genus-zero subgroup of the modular group: a specific kind of modular function with a pole of order one at a cusp and no other poles.',
+        'That is a much stronger statement than a numerical coincidence. It predicts infinitely many coefficients for 194 series, each with an arithmetic structure, and it predicts which modular groups occur. A pattern that survives that many constraints is either a deep theorem or a conspiracy of extraordinary size. The Conway–Norton paper listed the groups, the first coefficients and the conjectures; it did not prove them. The proof came thirteen years later, and it did not come from finite group theory.',
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The expansion, and the first decompositions',
+      equation: 'j(τ) = q⁻¹ + 744 + 196884q + 21493760q² + 864299970q³ + …,   q = e^{2πiτ}',
+      symbols: [
+        { symbol: 'τ', meaning: 'A point in the upper half-plane, the half-period ratio of an elliptic curve', unit: 'dimensionless' },
+        { symbol: 'q', meaning: 'The nome e^{2πiτ}; the expansion converges because |q| < 1 in the upper half-plane', unit: 'dimensionless' },
+        { symbol: '196884q', meaning: 'The first non-trivial Fourier coefficient, equal to 196,883 + 1', unit: 'integer' },
+        { symbol: '196883', meaning: 'The dimension of the smallest non-trivial irreducible representation of the Monster', unit: 'dimension' },
+        { symbol: '744', meaning: 'The constant term, fixed by the normalisation of j', unit: 'integer' },
+      ],
+      body: [
+        'The first coefficient is the whole story in miniature. A representation of dimension 196,883 plus the trivial representation of dimension 1 gives 196,884. The next coefficient needs three pieces, and the one after that needs five. The dimensions available to the Monster are sparse and enormous, so the decompositions are tightly constrained: there is usually only one way to write the coefficient as a non-negative combination of them.',
+        'The equation is written with q, which is conventional but hides the analytic content. j is invariant under τ → τ + 1 and transforms under τ → −1/τ, so it is a function on the quotient of the upper half-plane by the modular group. Its Fourier coefficients are therefore not free: they are the coefficients of a modular form, and the representations of the Monster are being used to explain them one by one.',
+      ],
+      assumptions: [
+        'The expansion is taken in the upper half-plane, where |q| < 1, so the series converges; on the boundary it does not.',
+        'Characters of the Monster are integers for the identity element, but for other elements they are algebraic integers, which is why the general conjecture needs more than non-negative counting.',
+        'A decomposition of one coefficient is evidence, not proof: the theorem is that the whole infinite family of series is modular, not that the first few numbers fit.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'Three coefficients, and what they are made of',
+      columns: ['Coefficient of j', 'Decomposition in Monster dimensions', 'What the identity element sees'],
+      rows: [
+        ['196,884', '196,883 + 1', 'The smallest non-trivial representation plus the trivial one'],
+        ['21,493,760', '21,296,876 + 196,883 + 1', 'Three irreducible pieces, one of them the smallest'],
+        ['864,299,970', '842,609,326 + 21,296,876 + 2 × 196,883 + 2 × 1', 'Five pieces; the multiplicities are not all one'],
+      ],
+      note:
+        'The decompositions are of the coefficients of j itself, which is the McKay–Thompson series for the identity. The Conway–Norton conjecture says that the same kind of statement holds for every one of the 194 conjugacy classes, with characters replacing dimensions.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Borcherds and the algebra underneath',
+      body: [
+        'The proof came from a direction nobody expected. In 1984 Igor Frenkel, James Lepowsky and Arne Meurman constructed an infinite-dimensional graded vector space, now called the moonshine module, on which the Monster acts. Its graded dimensions are exactly the coefficients of j. That construction turned the numerical pattern into a structure: the question became why that structure is a vertex operator algebra with the right modular properties.',
+        'Richard Borcherds answered it in 1992. He built a Lie algebra from the moonshine module, showed that its denominator identity reproduces the McKay–Thompson series, and proved that the resulting functions are modular. The method introduced generalised Kac–Moody algebras and won him the Fields Medal in 1998. The proof is not a derivation of the Monster from number theory, and it is not a derivation of number theory from the Monster. It exhibits a single object in which both are visible.',
+      ],
+    },
+    {
+      kind: 'misconception',
+      heading: 'Two ways to overread the coincidence',
+      claim: '"Moonshine is numerology: two lists of numbers happen to agree. Or else it proves that the universe is built from the Monster."',
+      correction:
+        'The first half is false because the agreement is not a finite coincidence. The Conway–Norton conjectures fixed 194 infinite series and the modular groups they belong to, and Borcherds proved the whole family; a pattern with that many independent predictions is a theorem. The second half is also false, in a subtler way. Moonshine appears in conformal field theory and in string compactifications with particular symmetry, and those models are mathematically legitimate. But a model in which the Monster acts is not evidence that nature uses it, any more than a model of a fluid proves that the fluid is a computer. The mathematics is real; the metaphysical claim is an extra step that the theorem does not take.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why the pattern-spotting was the science',
+      body: [
+        'Moonshine has since grown branches. Mathieu moonshine, noticed in 2010 in the elliptic genus of a K3 surface, relates the largest Mathieu group to a mock modular form. Umbral moonshine, developed from 2013, attaches a similar structure to each of the 23 Niemeier lattices. None of these was predicted by the original theorem; each began with somebody staring at a table of coefficients and asking why.',
+        'That is the methodological point the story makes. The Monster and j were both well understood before 1978, and the connection between them was invisible until someone compared two numbers that had no business being adjacent. The subsequent work was rigorous, but the discovery was not: it was an act of noticing, followed by the decision to take an absurd pattern seriously enough to test it. Mathematics is often described as deduction from axioms, and it is, but the axioms do not tell you which two tables to put side by side.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'What would have counted as evidence that the 196,884 match was a coincidence rather than a clue?',
+        'Why should a finite group act on an infinite-dimensional algebra whose graded dimensions are a modular function?',
+        'Does a proof that exhibits a structure explain the coincidence, or only relocate it?',
+        'What other pairs of tables in mathematics might be related by a pattern nobody has compared yet?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'J. H. Conway and S. P. Norton, "Monstrous Moonshine", Bulletin of the London Mathematical Society 11(3), 308–339 (1979)', url: 'https://doi.org/10.1112/blms/11.3.308' },
+    { label: 'R. E. Borcherds, "Monstrous moonshine and monstrous Lie superalgebras", Inventiones Mathematicae 109, 405–444 (1992)', url: 'https://doi.org/10.1007/BF01232032' },
+    { label: 'R. E. Borcherds, "Vertex algebras, Kac-Moody algebras, and the Monster", PNAS 83(10), 3068–3071 (1986)', url: 'https://doi.org/10.1073/pnas.83.10.3068' },
+    { label: 'T. Gannon, "Monstrous moonshine: the first twenty-five years", Bulletin of the London Mathematical Society 38(1), 1–33 (2006)', url: 'https://doi.org/10.1112/S0024609305018217' },
+  ],
+  related: ['banach-tarski', 'godel-incompleteness', 'time-crystals'],
+};
+
 export const MATHEMATICS_DOSSIERS = [
   BANACH_TARSKI_DOSSIER,
   GODEL_DOSSIER,
@@ -675,4 +811,5 @@ export const MATHEMATICS_DOSSIERS = [
   MONTY_HALL_DOSSIER,
   CONTINUUM_DOSSIER,
   TURING_DOSSIER,
+  MOONSHINE_DOSSIER,
 ];

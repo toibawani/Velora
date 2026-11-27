@@ -230,6 +230,56 @@ export const DOSSIER_GLOSSARY = [
   term('information', 'Information', 'In Shannon’s sense, a measure of how much a message reduces uncertainty, not of meaning. One bit is the information gained by resolving a fair coin flip.', ['bit', 'entropy']),
   term('erasure', 'Information', 'An operation that resets a memory to a standard state, destroying the information it held. It is the operation Landauer’s principle prices.', ['Landauer’s principle', 'bit']),
   term('qubit', 'Information', 'A two-state quantum system used as a unit of quantum information. Unlike a bit, it can be in a superposition, and its state cannot be copied arbitrarily.', ['superposition', 'bit']),
+
+  // -- Moonshine: groups and modular functions -----------------------------
+  term('Monster group', 'Mathematics', 'The largest sporadic simple group, with about 8.08 × 10⁵³ elements and 194 conjugacy classes. Its smallest non-trivial irreducible representation has dimension 196,883.', ['sporadic group', 'irreducible representation']),
+  term('simple group', 'Mathematics', 'A group with no normal subgroups other than the trivial one and the group itself. Finite simple groups are the indivisible pieces from which finite groups are built.'),
+  term('sporadic group', 'Mathematics', 'One of the 26 finite simple groups that belong to no infinite family. The Monster is the largest of them.', ['Monster group', 'simple group']),
+  term('modular form', 'Mathematics', 'A function on the upper half-plane that transforms in a fixed way under the modular group, so its values are tied to lattices. Its Fourier coefficients often carry arithmetic information.', ['j-invariant']),
+  term('j-invariant', 'Mathematics', 'The modular function that classifies elliptic curves up to isomorphism. Its expansion begins q⁻¹ + 744 + 196,884q + …, and those coefficients are where moonshine was noticed.', ['modular form', 'moonshine']),
+  term('moonshine', 'Mathematics', 'The correspondence between modular functions and representations of sporadic groups. Conway coined the word because the idea seemed absurd; Borcherds proved the main conjecture in 1992.', ['Monster group', 'modular form']),
+  term('irreducible representation', 'Mathematics', 'A representation of a group with no invariant subspaces, so it cannot be split into smaller pieces. Its dimension is the size of the matrices through which the group acts.'),
+  term('Fourier coefficient', 'Mathematics', 'The number multiplying one term of a Fourier series. For a modular form these coefficients often count something, which is why a match between two lists of them is evidence of a real connection.', ['modular form']),
+  term('vertex operator algebra', 'Mathematics', 'An algebraic structure whose elements act on a space of states as fields depending on a complex parameter. It is the language in which the Monster action on the moonshine module is stated.', ['moonshine', 'conformal field theory']),
+  term('conformal field theory', 'Physics', 'A quantum field theory invariant under changes of scale and angle. Its states organise into representations of a symmetry algebra, and a particular two-dimensional theory carries the Monster.', ['vertex operator algebra']),
+
+  // -- Superconductivity ---------------------------------------------------
+  term('superconductivity', 'Physics', 'A phase in which a material carries current with exactly zero resistance and expels magnetic field from its interior. It is a thermodynamic phase, not merely a very good conductor.', ['Cooper pair', 'Meissner effect']),
+  term('Cooper pair', 'Physics', 'Two electrons of opposite momentum and spin, bound by an attraction mediated by lattice vibrations. Pairs behave collectively as bosons and condense into one quantum state.', ['phonon', 'BCS theory']),
+  term('BCS theory', 'Physics', 'The 1957 theory in which phonon-mediated attraction forms Cooper pairs and opens an energy gap at the Fermi surface. It explains conventional superconductors, not the cuprates.', ['Cooper pair', 'energy gap']),
+  term('phonon', 'Physics', 'A quantised lattice vibration. In a conventional metal it mediates the effective attraction between electrons that makes superconductivity possible.', ['Cooper pair']),
+  term('Meissner effect', 'Physics', 'The expulsion of magnetic field from a superconductor as it cools below its critical temperature. A merely perfect conductor would trap the field instead.', ['superconductivity', 'critical temperature']),
+  term('critical temperature', 'Physics', 'The temperature below which a material enters the superconducting phase. Above it the same material is an ordinary conductor with finite resistance.', ['superconductivity']),
+  term('energy gap', 'Physics', 'A range of energies that no excitation may occupy. In a superconductor the gap is the energy needed to break a Cooper pair, so single electrons cannot scatter without paying it.', ['BCS theory', 'Cooper pair']),
+  term('flux quantum', 'Physics', 'The smallest magnetic flux a superconducting loop can enclose, Φ₀ = h/2e ≈ 2.07 × 10⁻¹⁵ Wb. The 2e is the charge of a Cooper pair, which is why the value is evidence for pairing.', ['Cooper pair']),
+  term('Josephson junction', 'Physics', 'A thin insulating barrier between two superconductors, through which pairs tunnel and a current can flow without voltage. It is the basis of the SQUID magnetometer.', ['quantum tunnelling', 'flux quantum']),
+  term('type-II superconductor', 'Physics', 'A superconductor that lets magnetic field enter as quantised vortices above a lower critical field while the material between them stays resistanceless. Most high-field magnets use this kind.', ['flux quantum', 'Meissner effect']),
+  term('high-temperature superconductor', 'Physics', 'A material that superconducts far above the roughly 30 K ceiling of conventional metals, typically a layered copper oxide. High is relative: the best cuprates work below 140 K.', ['superconductivity', 'critical temperature']),
+  term('penetration depth', 'Physics', 'The distance over which a magnetic field decays inside a superconductor. It is set by the density of paired electrons and grows as the pairs are broken.', ['Meissner effect']),
+
+  // -- CRISPR --------------------------------------------------------------
+  term('CRISPR', 'Biology', 'A family of repeated DNA sequences in bacteria and archaea, separated by spacers copied from viruses. The array is a heritable record of past infections.', ['Cas9', 'bacteriophage']),
+  term('Cas9', 'Biology', 'The nuclease of the CRISPR system. Guided by an RNA matching a target, it cuts both DNA strands three bases upstream of a short neighbouring motif.', ['CRISPR', 'guide RNA', 'PAM']),
+  term('guide RNA', 'Biology', 'The short RNA that specifies a CRISPR target by base pairing. In the laboratory the natural two-RNA system is usually fused into a single guide.', ['Cas9', 'CRISPR']),
+  term('PAM', 'Biology', 'The protospacer adjacent motif: a short sequence next to the target that Cas9 must recognise before cutting. For the common Streptococcus pyogenes Cas9 it is NGG.', ['Cas9', 'protospacer'], ['protospacer adjacent motif']),
+  term('protospacer', 'Biology', 'The sequence in an invading genome that matches a CRISPR spacer, and therefore the sequence the guide RNA is aimed at.', ['CRISPR', 'PAM']),
+  term('bacteriophage', 'Biology', 'A virus that infects bacteria. Phages are the pressure that CRISPR arrays evolved to resist, and they are also the source of the spacers.', ['CRISPR']),
+  term('double-strand break', 'Biology', 'A cut through both strands of DNA. The cell repairs it by joining the ends, often imperfectly, or by copying a template; CRISPR editing depends on which repair runs.', ['Cas9', 'non-homologous end joining']),
+  term('non-homologous end joining', 'Biology', 'The repair pathway that glues broken DNA ends back together without a template. It is fast and error-prone, which is why it produces insertions and deletions.', ['double-strand break'], ['NHEJ']),
+  term('homology-directed repair', 'Biology', 'Template-based repair of a DNA break, used by cells in some phases of the cell cycle. It allows a precise change if a suitable template is supplied.', ['double-strand break'], ['HDR']),
+  term('off-target effect', 'Biology', 'An unintended edit at a site that resembles the intended target. It is the central safety question for therapeutic gene editing.', ['guide RNA']),
+  term('germline', 'Biology', 'The cells whose DNA is passed to offspring. Editing them changes every cell of a future person, which is why clinical germline editing is prohibited in most countries.', ['CRISPR']),
+  term('base editing', 'Biology', 'A CRISPR-derived method that chemically converts one DNA base into another without making a double-strand break. It can change a single letter but not insert or delete sequence.', ['CRISPR', 'double-strand break']),
+
+  // -- The Rosetta Stone ---------------------------------------------------
+  term('Rosetta Stone', 'History', 'A fragment of a Ptolemaic decree carved in 196 BC in hieroglyphic, demotic and Greek. Its parallel text gave Champollion the foothold for reading hieroglyphs.', ['hieroglyph', 'demotic']),
+  term('hieroglyph', 'History', 'A sign of the ancient Egyptian script. The signs mix logograms, phonograms and determinatives, which is why early scholars wrongly assumed each one stood for a whole idea.', ['demotic', 'cartouche']),
+  term('demotic', 'History', 'The cursive Egyptian script used for everyday documents in the later periods. It was the script Young and Champollion could attack first, because it was less pictorial.', ['hieroglyph']),
+  term('cartouche', 'History', 'An oval ring drawn around a group of hieroglyphs, marking a royal name. Recognising that the names inside could be read phonetically was the decisive step.', ['hieroglyph', 'decipherment']),
+  term('stela', 'History', 'An upright stone slab carrying an inscription or relief, set up in public or in a temple. The Rosetta Stone is the broken lower part of one.', ['Rosetta Stone'], ['stele']),
+  term('decipherment', 'History', 'The recovery of the signs and rules of a writing system from its surviving texts. It is not translation: the language may be known while the script is not.', ['hieroglyph', 'philology']),
+  term('trilingual inscription', 'History', 'A text carved in three scripts or languages, which can supply a parallel key. The Rosetta Stone is the most famous example, but not the only one.', ['Rosetta Stone']),
+  term('Coptic', 'History', 'The last stage of the Egyptian language, written in a Greek-derived alphabet and still used liturgically. Champollion used it to recover the sounds behind the hieroglyphs.', ['hieroglyph', 'decipherment']),
 ];
 
 /**

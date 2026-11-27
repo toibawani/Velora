@@ -7,6 +7,8 @@ import {
   logisticStep,
   lorenzDivergence,
   lorenzStep,
+  oregonatorRun,
+  oregonatorStep,
   rabiSurvival,
   zenoSurvival,
   zenoSurvivalAtFixedTime,
@@ -158,6 +160,53 @@ describe('Zeno survival', () => {
 
   test('the unmeasured reference starts at one', () => {
     expect(rabiSurvival({ omega: 2, time: 0 })).toBe(1);
+  });
+});
+
+describe('the Oregonator', () => {
+  test('one small step stays finite and inside a sensible range', () => {
+    const next = oregonatorStep({ x: 0.1, z: 0.1 }, { f: 1, eps: 0.02, q: 0.002 }, 1e-4);
+    expect(Number.isFinite(next.x)).toBe(true);
+    expect(Number.isFinite(next.z)).toBe(true);
+    expect(next.x).toBeGreaterThanOrEqual(0);
+    expect(next.x).toBeLessThan(1.2);
+  });
+
+  test('a zero q does not divide by zero', () => {
+    const next = oregonatorStep({ x: 0.1, z: 0.1 }, { f: 1, eps: 0.02, q: 0 }, 1e-4);
+    expect(Number.isFinite(next.x)).toBe(true);
+    expect(Number.isFinite(next.z)).toBe(true);
+  });
+
+  test('the default parameters give a sustained relaxation oscillation', () => {
+    const run = oregonatorRun({ f: 1, eps: 0.02, q: 0.002, duration: 30 });
+    expect(run.diverged).toBe(false);
+    expect(run.oscillating).toBe(true);
+    expect(run.period).toBeGreaterThan(3);
+    expect(run.period).toBeLessThan(6);
+    expect(run.amplitude).toBeGreaterThan(0.5);
+    expect(run.max).toBeLessThanOrEqual(1.05);
+    expect(run.min).toBeGreaterThanOrEqual(0);
+  });
+
+  test('the samples are monotonic in time and bounded by the sample limit', () => {
+    const run = oregonatorRun({ duration: 40, sampleLimit: 200 });
+    expect(run.samples.length).toBeLessThanOrEqual(201);
+    for (let i = 1; i < run.samples.length; i += 1) {
+      expect(run.samples[i].t).toBeGreaterThan(run.samples[i - 1].t);
+    }
+  });
+
+  test('a large stoichiometric factor kills the oscillation at a low steady state', () => {
+    const run = oregonatorRun({ f: 2.6, eps: 0.02, q: 0.002, duration: 30 });
+    expect(run.oscillating).toBe(false);
+    expect(run.final.x).toBeLessThan(0.05);
+  });
+
+  test('a small stoichiometric factor kills it at a high steady state', () => {
+    const run = oregonatorRun({ f: 0.4, eps: 0.02, q: 0.002, duration: 30 });
+    expect(run.oscillating).toBe(false);
+    expect(run.final.x).toBeGreaterThan(0.4);
   });
 });
 
