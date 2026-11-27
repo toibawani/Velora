@@ -144,7 +144,7 @@ function Library({ onOpen, onDebate }) {
             <span className="vm-step">01</span>
             <h3>The question is matched to documented positions</h3>
             <p>
-              Each figure has four documented positions, each with its own vocabulary. The engine scores your
+              Each figure has five documented positions, each with its own vocabulary. The engine scores your
               words against those vocabularies and selects the closest. It does not generate free text.
             </p>
           </div>

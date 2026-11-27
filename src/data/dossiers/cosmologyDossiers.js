@@ -374,6 +374,48 @@ export const COSMOLOGICAL_CONSTANT_DOSSIER = {
       ],
     },
     {
+      kind: 'table',
+      heading: 'The numbers behind 10¹²²',
+      columns: ['Quantity', 'Value', 'Where it comes from'],
+      rows: [
+        ['Hubble constant', '67.4 ± 0.5 km/s per Mpc', 'Planck 2018, TT,TE,EE+lowE+lensing'],
+        ['Critical density', '8.5 × 10⁻²⁷ kg/m³', '3H₀²/(8πG), computed from the row above'],
+        ['Dark energy fraction', 'Ω_Λ = 0.6889 ± 0.0056', 'Planck 2018, flat ΛCDM'],
+        ['Dark energy density', '5.9 × 10⁻²⁷ kg/m³ ≈ 5.3 × 10⁻¹⁰ J/m³', 'The two rows above, multiplied'],
+        ['Λ in inverse metres squared', '1.1 × 10⁻⁵² m⁻²', '8πGρ_Λ/c²'],
+        ['Planck density', '4.6 × 10¹¹³ J/m³', 'c⁵/(ħG²)'],
+        ['Ratio', '≈ 1.1 × 10⁻¹²³', 'ρ_Λ divided by the Planck density'],
+      ],
+      note:
+        'The mismatch is quoted as 10¹²⁰, 10¹²² or 10¹²³ depending on which cutoff and which density are compared. The exponent is the point; the digit is bookkeeping. Every number in the first five rows is measured, and every one of them is known to better than ten per cent.',
+    },
+    {
+      kind: 'steps',
+      heading: 'How the 122 is assembled',
+      items: [
+        {
+          title: 'Measure the expansion rate',
+          text: 'The Planck satellite fits the acoustic peaks of the cosmic microwave background and returns H₀ = 67.4 km/s per Mpc, which is 2.18 × 10⁻¹⁸ per second. This is the one input that comes from outside the model.',
+        },
+        {
+          title: 'Compute the density that would close the universe',
+          text: 'The critical density is ρ_c = 3H₀²/(8πG), which gives 8.5 × 10⁻²⁷ kilograms per cubic metre. A universe at exactly this density is spatially flat, and the microwave background says ours is flat to within a fraction of a per cent.',
+        },
+        {
+          title: 'Weigh the dark energy',
+          text: 'The fit puts 68.9 per cent of the critical density in dark energy, giving 5.9 × 10⁻²⁷ kilograms per cubic metre, or 5.3 × 10⁻¹⁰ joules per cubic metre once multiplied by c². This is the number that any theory of the vacuum has to reproduce.',
+        },
+        {
+          title: 'Turn the density back into Λ',
+          text: 'Inverting the relation gives Λ = 8πGρ_Λ/c² ≈ 1.1 × 10⁻⁵² inverse square metres. In Planck units, where lengths are measured in units of 1.6 × 10⁻³⁵ metres, this is 2.9 × 10⁻¹²².',
+        },
+        {
+          title: 'Compare with the density of the vacuum at the Planck scale',
+          text: 'The Planck density is c⁵/(ħG²) ≈ 4.6 × 10¹¹³ joules per cubic metre. Dividing the measured dark energy density by it gives about 1.1 × 10⁻¹²³. That division is the whole of the fine-tuning problem: no known mechanism makes the numerator small, and no known mechanism makes the denominator irrelevant.',
+        },
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -389,6 +431,7 @@ export const COSMOLOGICAL_CONSTANT_DOSSIER = {
     { label: 'S. Perlmutter et al., "Measurements of Ω and Λ from 42 high-redshift supernovae", ApJ 517, 565 (1999)', url: 'https://arxiv.org/abs/astro-ph/9812133' },
     { label: 'S. Weinberg, "The cosmological constant problem", Reviews of Modern Physics 61, 1 (1989)', url: 'https://doi.org/10.1103/RevModPhys.61.1' },
     { label: 'DESI Collaboration, "DESI 2024 VI: cosmological constraints from the measurements of baryon acoustic oscillations", JCAP (2025)', url: 'https://arxiv.org/abs/2404.03002' },
+    { label: 'Planck Collaboration, "Planck 2018 results VI: cosmological parameters", A&A 641, A6 (2020)', url: 'https://doi.org/10.1051/0004-6361/201833910' },
   ],
   related: ['hubble-tension', 'false-vacuum', 'arrow-of-time'],
 };

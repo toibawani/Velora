@@ -369,6 +369,32 @@ export const HABER_BOSCH_DOSSIER = {
       ],
     },
     {
+      kind: 'table',
+      heading: 'A plant, in numbers',
+      columns: ['Quantity', 'Typical value', 'Why it is that number'],
+      rows: [
+        ['Feed ratio', 'H₂ : N₂ = 3 : 1', 'Stoichiometry of the reaction; surplus nitrogen would waste compression energy'],
+        ['Pressure', '150–250 bar', 'Four gas molecules become two, so pressure shifts the equilibrium toward ammonia'],
+        ['Bed temperature', '400–500 °C', 'Hot enough for a useful rate on iron, cool enough to keep a usable equilibrium conversion'],
+        ['Conversion per pass', '15–20 per cent', 'The equilibrium limit at those conditions; the rest of the gas is recycled'],
+        ['Catalyst', 'Iron with K₂O, Al₂O₃ and CaO promoters', 'The promoters raise activity and slow the sintering of the iron particles'],
+        ['World production', 'About 150 million tonnes a year', 'Roughly half the nitrogen atoms in the human food supply'],
+        ['Energy share', '1–2 per cent of global primary energy', 'Compression and steam reforming dominate the consumption'],
+        ['Ammonia recovery', 'Cooled and condensed; unreacted gas returned', 'Ammonia liquefies far above the boiling points of N₂ and H₂ at loop pressure'],
+      ],
+      note:
+        'The values are ranges because plants differ in pressure, catalyst and heat recovery. The 15–20 per cent figure is per pass, not overall: with a closed recycle loop the great majority of the gas is eventually converted, which is why a modest equilibrium constant is enough to run a very large industry.',
+    },
+    {
+      kind: 'prose',
+      heading: 'The carbon arithmetic',
+      body: [
+        'Most ammonia begins as natural gas. Steam reforming gives hydrogen and carbon monoxide, the water-gas shift turns the carbon monoxide into more hydrogen and carbon dioxide, and the carbon dioxide is vented or captured. The penalty is about 1.6 to 1.8 tonnes of CO₂ per tonne of ammonia for a modern plant without capture. At 150 million tonnes of ammonia a year, that is roughly 240 to 270 million tonnes of CO₂. It is under one per cent of the roughly 37 billion tonnes the world emits, but it is comparable to the entire emissions of a mid-sized industrial country, and it is concentrated in a handful of processes that are easy to point at.',
+        'The other half of the climate cost is on the farm. Nitrogen that the crop does not take up is worked on by soil bacteria, and some of it escapes as nitrous oxide, whose hundred-year warming potential is about 270 times that of carbon dioxide. Fertiliser also leaches as nitrate into rivers and coasts. The Haber–Bosch reactor itself is comparatively clean: its waste product is heat, and a well-run plant recovers much of it to preheat the feed. The emissions are mostly upstream in the hydrogen and downstream in the field, which is why the process is criticised and the reactor is not.',
+        'Green ammonia changes the hydrogen source, not the synthesis loop. Electrolysis needs about 50 kilowatt-hours per kilogram of hydrogen, and a tonne of ammonia contains about 178 kilograms of hydrogen, so the electricity bill is around 9 megawatt-hours per tonne of ammonia before compression and the reactor. That number, more than any catalyst, sets the price of the green route: it is why green ammonia is discussed where electricity is cheap and the sun or the wind is abundant, and why it is not yet the default anywhere.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -384,6 +410,7 @@ export const HABER_BOSCH_DOSSIER = {
     { label: 'C. Bosch, "The development of the ammonia synthesis", Nobel Lecture (1932)', url: 'https://www.nobelprize.org/prizes/chemistry/1931/bosch/lecture/' },
     { label: 'J. W. Erisman et al., "How a century of ammonia synthesis changed the world", Nature Geoscience 1, 636 (2008)', url: 'https://doi.org/10.1038/ngeo325' },
     { label: 'V. Smil, Enriching the Earth: Fritz Haber, Carl Bosch, and the Transformation of World Food Production (MIT Press, 2001)', url: 'https://mitpress.mit.edu/9780262693134/enriching-the-earth/' },
+    { label: 'M. Appl, "Ammonia", Ullmann’s Encyclopedia of Industrial Chemistry (Wiley, 2006)', url: 'https://doi.org/10.1002/14356007.a02_143.pub2' },
   ],
   related: ['horizontal-gene-transfer', 'mycorrhizal-networks', 'belousov-zhabotinsky'],
 };

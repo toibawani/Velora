@@ -125,6 +125,21 @@ export const MINDS = [
         tension:
           'This is the least testable thing I wrote, and it should be read as reflection rather than physics. It also sits awkwardly beside the claim that physics aims at a description of reality: if the comprehensibility of nature is a mystery, it is not clear what work the word "reality" is doing. I never resolved that, and I am not sure it can be resolved.',
       },
+      {
+        id: 'geometry-is-experimental',
+        themes: ['geometry', 'space', 'measurement', 'convention', 'empirical', 'rod', 'poincare'],
+        title: 'Geometry is an experimental science',
+        claim:
+          'Whether space is Euclidean is not settled by mathematics. It is settled by measuring rods and light rays.',
+        argument:
+          'Mathematics offers many geometries, all internally consistent. Which one describes the world is a physical question. If I measure a large triangle with rigid rods and the angles do not add to two right angles, then the geometry of the space in which those rods live is not Euclidean, unless I allow the rods to change length for no physical reason. That is why the general theory treats the metric as a physical field, determined by matter, rather than as a fixed background. Geometry and physics become one subject: the metric is what clocks and rods measure, and its equation of motion is the field equation. The choice of coordinates is free; the curvature is not.',
+        citation: {
+          label: 'A. Einstein, "Geometry and Experience" (1921), in Sidelights on Relativity (1922)',
+          url: 'https://archive.org/details/sidelightsonrela00eins',
+        },
+        tension:
+          'The argument assumes rigid rods and ideal clocks, and in general relativity their behaviour is itself part of the geometry. Poincare’s conventionalism is not so much refuted as relocated: once the metric is dynamical, the coordinates are conventional but the curvature is a fact. The claim is true of the metric and misleading as a slogan about "space".',
+      },
     ],
     pairsWith: ['bohr', 'feynman'],
   },
@@ -236,6 +251,21 @@ export const MINDS = [
         },
         tension:
           'This is the position most often turned into a caricature, in both directions. It does not require consciousness, and it does not deny that there is a world. But it does leave the metaphysics thin: if all properties are relational, what is the relatum? Bohr\'s answer was to refuse the question, and that refusal is either the deepest thing about his philosophy or its central evasion, depending on whom you ask.',
+      },
+      {
+        id: 'light-and-life',
+        themes: ['life', 'biology', 'mechanism', 'vitalism', 'purpose', 'complementarity', 'organism'],
+        title: 'Life is not exhausted by mechanism',
+        claim:
+          'A fully mechanical account of an organism would destroy the phenomenon it set out to explain, so biology must use a complementary description.',
+        argument:
+          'The physicist describes a living thing as a set of parts under controlled conditions. But the conditions that make the parts analysable are close to the conditions under which the organism is no longer alive. There is no contradiction here, any more than there is between the wave and particle descriptions. The two accounts answer different questions and cannot be combined into a single picture without losing one of them. This is not vitalism: I reject the idea of a special life force. It is a claim about the logic of the concept. "Life" functions like "measurement": it marks the boundary of a description rather than naming an object inside it.',
+        citation: {
+          label: 'N. Bohr, "Light and Life", Nature 131, 421 (1933)',
+          url: 'https://doi.org/10.1038/131421a0',
+        },
+        tension:
+          'The analogy is suggestive and was never made precise, and molecular biology has repeatedly dissolved boundaries that looked principled. "Complementarity" can become a licence for giving up on mechanism, which Bohr did not intend but could not prevent. The essay is better read as a warning about what a mechanistic explanation leaves out than as a research programme.',
       },
     ],
     pairsWith: ['einstein', 'feynman'],
@@ -350,6 +380,21 @@ export const MINDS = [
         tension:
           'This is a defence of curiosity from a man whose work was funded by a military project and whose most famous public role was investigating a disaster. The claim is not that science is free of consequences. It is that the value of understanding cannot be reduced to a return on investment, and that a society which only funds the return will lose the understanding.',
       },
+      {
+        id: 'science-cannot-settle-values',
+        themes: ['ethics', 'value', 'ought', 'science', 'meaning', 'religion', 'decide', 'responsibility'],
+        title: 'Science cannot tell you what to do with what it finds',
+        claim:
+          'Scientific knowledge is compatible with any ethical stance. It can tell you the consequences of an action; it cannot tell you whether the action is right.',
+        argument:
+          'The sciences describe what happens. From a description you cannot deduce an obligation without adding a premise about what is worth wanting, and that premise is not a finding of physics. This is not a gap that more research will close; it is a difference in the kind of question. Science can show that a policy will kill a million people, and it can show that a bridge will fall. The judgement that killing is wrong is not in either calculation. That is why the same physics serves a hospital and a weapons programme, and why a scientist cannot claim authority about the ends to which the work is put.',
+        citation: {
+          label: 'R. Feynman, "The Relation of Science and Religion" (1956), Caltech archives',
+          url: 'https://calteches.library.caltech.edu/49/2/Religion.htm',
+        },
+        tension:
+          'The position can be read as quietism: if science cannot settle values, scientists need not answer for the uses of their work. I did not accept that inference, and spoke about the Bomb and about honesty in ways that make the separation of facts and values compatible with a strong personal ethic. The argument also understates how much empirical knowledge shapes which values are feasible.',
+      },
     ],
     pairsWith: ['einstein', 'bohr'],
   },
@@ -462,6 +507,21 @@ export const MINDS = [
         },
         tension:
           'This is the idea most easily recruited for reactionary politics, and Nietzsche\'s own contempt for the state and for nationalism does not fully inoculate him. The notion of "higher" people has no criterion that does not beg the question, and the absence of a political theory leaves the position exposed. He would have said that was the point — that a philosophy which supplies a programme has stopped being philosophy. It is not an adequate defence.',
+      },
+      {
+        id: 'truth-as-metaphor',
+        themes: ['truth', 'language', 'metaphor', 'convention', 'science', 'knowledge', 'word'],
+        title: 'Truth is a mobile army of metaphors',
+        claim:
+          'What we call truth is a settled convention about which metaphors are allowed to count as literal.',
+        argument:
+          'A nerve stimulus is translated into an image, the image into a sound, the sound into a concept. At each step something is lost, and what survives is not a copy of the thing but a shorthand that lets us act. A word becomes "true" when enough people have agreed to forget the metaphor and treat the shorthand as the thing itself. Science is not exempt. Its laws are generalisations that work, and their authority comes from their usefulness and their social enforcement, not from correspondence to a world described without human interests. The drive to truth is a drive to a stable shared fiction.',
+        citation: {
+          label: 'F. Nietzsche, "On Truth and Lies in a Nonmoral Sense" (1873), eKGWB edition',
+          url: 'https://www.nietzschesource.org/#eKGWB/NF-1873',
+        },
+        tension:
+          'The essay is early, rhetorical and self-undermining: if every truth is a convention, so is the claim that every truth is a convention. My later work is more careful, treating knowledge as perspective-bound rather than arbitrary, which is weaker and more defensible. The useful residue is the suspicion of reified abstractions, not a licence to treat evidence as optional.',
       },
     ],
     pairsWith: ['dostoevsky', 'ibn-khaldun'],
@@ -576,6 +636,21 @@ export const MINDS = [
         tension:
           'This can become an argument against institutions and for private charity, which is politically convenient and empirically weak: individual attention does not scale, and the neighbour you can love is not the only person who needs help. Dostoevsky\'s distrust of programmes is a moral insight, not a theory of justice.',
       },
+      {
+        id: 'grand-inquisitor',
+        themes: ['freedom', 'happiness', 'authority', 'miracle', 'bread', 'church', 'obedience', 'suffering'],
+        title: 'People will trade freedom for bread and certainty',
+        claim:
+          'The Grand Inquisitor argues that most people cannot bear the freedom Christ gave them, and will hand it to anyone who offers miracles, mystery and authority.',
+        argument:
+          'The poem puts the case against Christ in the mouth of the Inquisitor. Christ refused the three temptations, bread and miracle and dominion, and in doing so gave humanity a freedom it did not ask for and cannot carry. The Church corrects the error by taking the burden back: it feeds, it rules, it supplies mystery, and it lets people be happy. The Inquisitor is not a hypocrite. He is a philanthropist of the ordinary, and that is what makes the chapter unanswerable in its own terms. The case for freedom has to be made against someone who is kind.',
+        citation: {
+          label: 'F. Dostoevsky, The Brothers Karamazov, Book V, chapter 5 (1880)',
+          url: 'https://archive.org/details/brotherskaramazo00dost',
+        },
+        tension:
+          'The Inquisitor is a character, and the novel does not simply endorse him. The poem is set against Alyosha’s silence and Zosima’s teaching, and reading the chapter as the author’s argument turns a polyphonic novel into a tract. It is a position the book contains, not the position the book holds.',
+      },
     ],
     pairsWith: ['nietzsche', 'sontag'],
   },
@@ -689,6 +764,21 @@ export const MINDS = [
         tension:
           'Camp as she defined it is a sensibility of the 1960s urban gay avant-garde, and the concept has been flattened by later use into "so bad it is good". She also later distanced herself from the aestheticism of the period. The claim that style is thought is true and hard to argue against precisely because it is so general; the interesting work is in the particular case.',
       },
+      {
+        id: 'images-need-politics',
+        themes: ['photography', 'suffering', 'witness', 'politics', 'image', 'compassion', 'war'],
+        title: 'A photograph of suffering does not by itself create solidarity',
+        claim:
+          'Images of atrocity can inform and shock, but they cannot supply the analysis that would tell you what to do. Without a politics they become a commodity of feeling.',
+        argument:
+          'A photograph is a slice of the visible world selected by someone with a frame, a caption and an audience. It can show that something happened. It cannot show why, who is responsible, or what would stop it. Repeated exposure dulls rather than mobilises: the image that outrages on Monday becomes the background of Tuesday. The claim is not that images are useless. It is that they need a political account to become action, and that the feeling of having been moved is not the same as having understood.',
+        citation: {
+          label: 'S. Sontag, Regarding the Pain of Others (Farrar, Straus and Giroux, 2003)',
+          url: 'https://archive.org/details/regardingpainofo00sont',
+        },
+        tension:
+          'The argument risks making politics a precondition for caring, which absolves the viewer who has no programme. I kept returning to photographs as evidence that cannot be dismissed, and the later writing is less confident that analysis can be separated from the image. The strongest version is a warning about the limits of spectatorship, not a case for looking away.',
+      },
     ],
     pairsWith: ['dostoevsky', 'nietzsche'],
   },
@@ -801,6 +891,21 @@ export const MINDS = [
         tension:
           'This is a position she lived rather than argued, and it is not fully consistent. She worked with radium in unsafe conditions for decades and did not warn others adequately. The distinction between foreseeable use and political responsibility is genuinely hard, and her own practice shows it.',
       },
+      {
+        id: 'radioactivity-is-atomic',
+        themes: ['radioactivity', 'atom', 'chemistry', 'transmutation', 'element', 'physics', 'decay'],
+        title: 'Radioactivity is a property of the atom',
+        claim:
+          'The radiation from uranium and radium is not a chemical reaction and cannot be explained by molecules. It comes from the atom itself, which means the atom is not indivisible.',
+        argument:
+          'The activity of a uranium compound depends on how much uranium it contains, not on its chemical form, its temperature or its state of combination. That is not how chemical reactions behave. If the effect survives every chemical transformation, it belongs to the element rather than to the compound. Radium behaves the same way, and its activity is millions of times stronger. The consequence is that the atom has internal structure and can change: radioactive decay produces a different element. Chemistry had treated the atom as the unit that does not change. The new phenomenon showed that it does.',
+        citation: {
+          label: 'M. Curie, "Radium and the New Concepts in Chemistry", Nobel Lecture (1911)',
+          url: 'https://www.nobelprize.org/prizes/chemistry/1911/marie-curie/lecture/',
+        },
+        tension:
+          'The claim was resisted because it sounded like alchemy, and I was cautious about transmutation until the evidence was overwhelming. That radioactivity is atomic is right, but it does not identify the mechanism; that had to wait for Rutherford and Soddy, and then for the nucleus. It is a case where a chemical fact forced a revision in physics.',
+      },
     ],
     pairsWith: ['feynman', 'einstein'],
   },
@@ -912,6 +1017,21 @@ export const MINDS = [
         tension:
           'The contrast is too clean. Nomadic societies are not uniformly hardy, and cities are not uniformly decadent; the history of technology is largely a history of cities solving problems that supposedly required hardship. The useful part is the warning about hidden dependence, not the moral contrast between desert and city.',
       },
+      {
+        id: 'taxation-and-decline',
+        themes: ['tax', 'revenue', 'state', 'decline', 'incentive', 'economy', 'dynasty', 'burden'],
+        title: 'Heavy taxation is both a symptom and a cause of decline',
+        claim:
+          'A new dynasty taxes lightly because it needs little and rules by solidarity. A mature one taxes heavily because its costs have grown, and the burden accelerates the decline it is trying to arrest.',
+        argument:
+          'At the founding, the ruler shares the hardship of the group that put him there, expenditure is modest, and the producers are left with enough to keep producing. As the dynasty settles, administration expands, luxury becomes a fixed cost, and soldiers must be paid. Revenue is raised by adding levies, and each levy reduces the incentive to work the land or trade. The yield falls even as the rate rises, so the state takes more from a smaller base and the cycle tightens. The agent of decline is not the wicked ruler but the ordinary logic of a budget that has outgrown its base.',
+        citation: {
+          label: 'Ibn Khaldun, The Muqaddimah, chapter 3, on taxation and the stages of dynasties (1377)',
+          url: 'https://www.muslimphilosophy.com/ik/Muqaddimah/',
+        },
+        tension:
+          'The model is drawn from the Maghreb and cannot be applied mechanically to states with central banks, progressive taxation and public debt. It also assumes a fixed agrarian base. What survives is the interaction of legitimacy, expenditure and incentives, not a law that high taxes always destroy a state.',
+      },
     ],
     pairsWith: ['nietzsche', 'sontag'],
   },
@@ -927,13 +1047,13 @@ export const MINDS = [
       'A conservation law is not a separate fact about nature; it is what a symmetry looks like when it is written down. And algebra is the study of the structures that survive a change of names.',
     profile: {
       formation:
-        'Born in Erlangen, the daughter of the mathematician Max Noether. Women could not matriculate normally in Bavaria, so she audited lectures with her father\u2019s permission and sat examinations in Göttingen and Erlangen, where she received a doctorate in 1907. She worked without pay at the Mathematical Institute in Erlangen, then moved to Göttingen in 1915 at the invitation of Hilbert and Klein, who wanted her for the general relativity work.',
+        'Born in Erlangen, the daughter of the mathematician Max Noether. Women could not matriculate normally in Bavaria, so she audited lectures with her father’s permission and sat examinations in Göttingen and Erlangen, where she received a doctorate in 1907. She worked without pay at the Mathematical Institute in Erlangen, then moved to Göttingen in 1915 at the invitation of Hilbert and Klein, who wanted her for the general relativity work.',
       method:
         'She began from invariants: what stays the same when something else is allowed to change. From there she moved to structures — groups, rings, ideals, modules — and insisted that a proof should depend only on the properties that matter, so the same argument would work wherever those properties occur. Her lectures were famous for being difficult and for being about the argument rather than the examples.',
       development:
         'The two Noether theorems of 1918 connected symmetries of an action to conservation laws: the first gives conserved quantities for global symmetries, the second constrains the identities that local symmetries impose. She then rebuilt ideal theory in ring-theoretic terms (1921), extended it to orders and algebraic number fields, and worked on non-commutative algebras and representation theory in the 1920s. Her students and collaborators, including van der Waerden and Grete Hermann, carried the structural style into algebra across Europe.',
       limits:
-        'The abstract style can conceal where an argument depends on a finiteness or commutativity condition, and her own published output is smaller than her influence because much of it went into lectures and students\u2019 theses. She never completed the book on algebra she planned. Her work was also shaped by the Göttingen school\u2019s priorities: the programme is powerful inside algebra and field theory, and it says less about analysis or geometry than its admirers sometimes claim.',
+        'The abstract style can conceal where an argument depends on a finiteness or commutativity condition, and her own published output is smaller than her influence because much of it went into lectures and students’ theses. She never completed the book on algebra she planned. Her work was also shaped by the Göttingen school’s priorities: the programme is powerful inside algebra and field theory, and it says less about analysis or geometry than its admirers sometimes claim.',
     },
     works: [
       { title: 'Invariante Variationsprobleme', year: '1918', note: 'The two theorems connecting symmetries of an action to conservation laws and to local identities.' },
@@ -1014,15 +1134,30 @@ export const MINDS = [
         themes: ['woman', 'exclusion', 'teach', 'university', 'credit', 'recognition', 'institution', 'position'],
         title: 'The institution judged the position, not the work',
         claim:
-          'For years Noether lectured at Göttingen under Hilbert\u2019s name, without a salary or a title, because the university would not appoint a woman. The arrangement was not a formality; it determined who was allowed to be an author of the school she built.',
+          'For years Noether lectured at Göttingen under Hilbert’s name, without a salary or a title, because the university would not appoint a woman. The arrangement was not a formality; it determined who was allowed to be an author of the school she built.',
         argument:
-          'Hilbert had her hired to work on general relativity in 1915, but the faculty refused a habilitation on the grounds that she was a woman. She lectured, formally as Hilbert\u2019s assistant, and students enrolled in his courses to hear her. She was finally granted the right to teach in 1919, and a paid position only in 1922. In 1933 the Nazi government dismissed her, along with other Jewish academics, and she emigrated to Bryn Mawr, where she died two years later after an operation. The point is not that her colleagues were uniformly hostile; Hilbert and Klein fought for her. The point is that the institution could accept her mathematics while refusing her the standing that would have made the mathematics hers in the record.',
+          'Hilbert had her hired to work on general relativity in 1915, but the faculty refused a habilitation on the grounds that she was a woman. She lectured, formally as Hilbert’s assistant, and students enrolled in his courses to hear her. She was finally granted the right to teach in 1919, and a paid position only in 1922. In 1933 the Nazi government dismissed her, along with other Jewish academics, and she emigrated to Bryn Mawr, where she died two years later after an operation. The point is not that her colleagues were uniformly hostile; Hilbert and Klein fought for her. The point is that the institution could accept her mathematics while refusing her the standing that would have made the mathematics hers in the record.',
         citation: {
-          label: 'J. J. O\u2019Connor and E. F. Robertson, "Emmy Noether", MacTutor History of Mathematics Archive',
+          label: 'J. J. O’Connor and E. F. Robertson, "Emmy Noether", MacTutor History of Mathematics Archive',
           url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Noether_Emmy/',
         },
         tension:
           'The story is sometimes told as a simple case of a genius ignored, which understates how much support she had and overstates how complete the exclusion was. She had powerful advocates, an international network of students, and a reputation that crossed borders. What she did not have, for most of her career, was a salary, a title, or the ordinary institutional standing that would have made her position secure.',
+      },
+      {
+        id: 'second-theorem',
+        themes: ['symmetry', 'local', 'gauge', 'conservation', 'identity', 'energy', 'relativity', 'bianchi'],
+        title: 'Local symmetries give identities, not conserved quantities',
+        claim:
+          'A global symmetry yields a conserved current. A local symmetry yields a differential identity that the field equations satisfy automatically, and that is a different kind of statement.',
+        argument:
+          'The distinction is the content of the second theorem. If a symmetry transformation can be chosen differently at every point, the action cannot depend on the gauge variables arbitrarily, so the field equations are not independent: they satisfy a relation. In general relativity the local symmetry of coordinate changes gives the contracted Bianchi identity, and that identity says the divergence of the energy-momentum tensor vanishes. This is why energy in an expanding universe is not a globally conserved quantity. The theorem gives a local conservation law, not a global one, and the difference is not a technicality.',
+        citation: {
+          label: 'E. Noether, "Invariant variation problems", trans. M. A. Tavel, Transport Theory and Statistical Physics 1, 186 (1971)',
+          url: 'https://doi.org/10.1080/00411457108231446',
+        },
+        tension:
+          'The result is often flattened into "symmetry means conservation", which is the first theorem and not the second. The second theorem is also easily overread: it constrains the form of the equations, and it does not tell you that a particular solution has no energy, only that the notion requires care. The physics is in the identity, not in the slogan.',
       },
     ],
     pairsWith: ['einstein', 'curie'],
@@ -1135,6 +1270,21 @@ export const MINDS = [
         tension:
           'Correcting the legend can swing too far the other way. She did work for decades without the recognition that her discovery warranted, she did face the ordinary sexism of academic science, and the delay in general acceptance was real. The point is not that she was treated fairly; it is that the story is more interesting when the mechanism of neglect is described accurately.',
       },
+      {
+        id: 'nucleolus-organiser',
+        themes: ['chromosome', 'nucleolus', 'gene', 'organisation', 'maize', 'cell', 'mapping', 'locus'],
+        title: 'A chromosome region can organise a structure',
+        claim:
+          'The nucleolus is not a fixed organelle produced by the cell in general. It is organised by a particular chromosomal region, and its size tracks the number of those regions.',
+        argument:
+          'By following a chromosomal element in maize through crosses, I could show that the nucleolus is associated with a specific region, and that changing the number of copies changes the size of the nucleolus. The structure is not a free-floating organelle. It is a visible consequence of a particular piece of the genome. This was one of the first demonstrations that a cellular structure can be traced to a chromosomal locus, and it made the chromosome a physical object with parts that do things rather than a passive carrier of traits.',
+        citation: {
+          label: 'B. McClintock, "The relation of a particular chromosomal element to the development of the nucleoli in Zea mays", Z. Zellforsch. 21, 294 (1934)',
+          url: 'https://doi.org/10.1007/BF00374060',
+        },
+        tension:
+          'The nucleolus is now understood as a condensate built around ribosomal RNA transcription, so "organised by a region" is true but incomplete: the region encodes the RNA and the structure emerges from the chemistry. The finding is a landmark in mapping, not an explanation of the mechanism, and it depended on maize genetics, which limited how quickly it generalised.',
+      },
     ],
     pairsWith: ['curie', 'noether'],
   },
@@ -1150,7 +1300,7 @@ export const MINDS = [
       'A machine is whatever a finite table of rules can do. Everything else — intelligence, thinking, even the shapes of living things — has to be asked as a question about what such a system can produce.',
     profile: {
       formation:
-        'Schooled at Sherborne, then King\u2019s College, Cambridge, where he read mathematics and wrote on probability and on the Gaussian error function. He spent 1936 at Princeton after the computable-numbers paper, and returned to England to work on cryptanalysis at Bletchley Park from 1939.',
+        'Schooled at Sherborne, then King’s College, Cambridge, where he read mathematics and wrote on probability and on the Gaussian error function. He spent 1936 at Princeton after the computable-numbers paper, and returned to England to work on cryptanalysis at Bletchley Park from 1939.',
       method:
         'Reduce a vague question to a precise machine, then ask what the machine can and cannot do. He preferred a definition he could operate on to a philosophical dispute he could not, and he treated a negative result as informative: if no machine can decide a question, that is a theorem about the question, not a failure of effort.',
       development:
@@ -1224,7 +1374,7 @@ export const MINDS = [
         claim:
           'Two chemicals that react and diffuse at different rates can turn a uniform tissue into spots and stripes. The pattern is a property of the equations, not of a plan stored somewhere.',
         argument:
-          'The mechanism is instability, not instruction. Take two substances: one activates its own production and also produces an inhibitor, and let the inhibitor diffuse faster than the activator. A uniform state can be unstable to small disturbances, because a local peak of activator grows while its inhibitor spreads out and suppresses the neighbours. The result is a regular spacing set by the ratio of the diffusion rates. The wavelength is not encoded in any cell; it is a consequence of the interaction. The same idea explains why a zebra\u2019s stripes have a characteristic spacing and why a developing limb can produce digits at regular intervals.',
+          'The mechanism is instability, not instruction. Take two substances: one activates its own production and also produces an inhibitor, and let the inhibitor diffuse faster than the activator. A uniform state can be unstable to small disturbances, because a local peak of activator grows while its inhibitor spreads out and suppresses the neighbours. The result is a regular spacing set by the ratio of the diffusion rates. The wavelength is not encoded in any cell; it is a consequence of the interaction. The same idea explains why a zebra’s stripes have a characteristic spacing and why a developing limb can produce digits at regular intervals.',
         citation: {
           label: 'A. M. Turing, "The chemical basis of morphogenesis", Phil. Trans. R. Soc. B 237, 37 (1952)',
           url: 'https://doi.org/10.1098/rstb.1952.0012',
@@ -1245,7 +1395,22 @@ export const MINDS = [
           url: 'https://doi.org/10.1093/mind/LIX.236.433',
         },
         tension:
-          'Turing\u2019s own response was that a discrete machine can approximate a continuous system as closely as we like, so the distinction does not matter for the test. That is true for approximation and false for explanation: an approximation of a brain is not an account of how the brain works. The imitation game can survive that gap; a theory of mind cannot.',
+          'Turing’s own response was that a discrete machine can approximate a continuous system as closely as we like, so the distinction does not matter for the test. That is true for approximation and false for explanation: an approximation of a brain is not an account of how the brain works. The imitation game can survive that gap; a theory of mind cannot.',
+      },
+      {
+        id: 'oracle-machines',
+        themes: ['oracle', 'uncomputable', 'logic', 'ordinal', 'mathematics', 'proof', 'machine', 'undecidable'],
+        title: 'Mathematics can be studied by adding an uncomputable oracle',
+        claim:
+          'Instead of giving up when a problem is undecidable, add an oracle that answers it and study what the enlarged system can prove.',
+        argument:
+          'The halting problem shows that no single machine decides everything. But a mathematician does not work with one fixed formal system. Proofs are extended by new principles when a question resists the old ones. The oracle machine makes that informal move precise: give the machine a black box that answers a question it cannot decide, and ask what becomes provable with that help. Iterating the construction through the countable ordinals produces a hierarchy of systems, each stronger than the last. The point is not that the oracle exists. It is that "unprovable in this system" is a relative statement, and the hierarchy measures the relativity.',
+        citation: {
+          label: 'A. M. Turing, "Systems of logic based on ordinals", Proc. London Math. Soc. 45, 161 (1939)',
+          url: 'https://doi.org/10.1112/plms/s2-45.1.161',
+        },
+        tension:
+          'The construction is a tool for proof theory, not a claim that human mathematicians have an oracle. The ordinals involved are not computable, so the hierarchy cannot be surveyed from outside. It is also easy to mistake the result for a solution to the halting problem: an oracle answers the question by assumption, which is exactly what a proof cannot do.',
       },
     ],
     pairsWith: ['einstein', 'noether'],

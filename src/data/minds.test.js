@@ -16,7 +16,7 @@ describe('the Minds library', () => {
     expect(new Set(MINDS.map((mind) => mind.id)).size).toBe(11);
   });
 
-  test('every profile has the four research sections and a source for each position', () => {
+  test('every profile has the four research sections and five sourced positions', () => {
     MINDS.forEach((mind) => {
       expect(mind.dates).toMatch(/\d/);
       expect(mind.thesis.length).toBeGreaterThan(50);
@@ -24,7 +24,7 @@ describe('the Minds library', () => {
         expect(mind.profile[key].length).toBeGreaterThan(120);
       });
       expect(mind.works.length).toBeGreaterThanOrEqual(3);
-      expect(mind.positions.length).toBeGreaterThanOrEqual(4);
+      expect(mind.positions.length).toBeGreaterThanOrEqual(5);
       mind.positions.forEach((position) => {
         expect(position.claim.length).toBeGreaterThan(40);
         expect(position.argument.length).toBeGreaterThan(200);

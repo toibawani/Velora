@@ -377,6 +377,39 @@ export const ZENO_DOSSIER = {
       ],
     },
     {
+      kind: 'math',
+      heading: 'The suppression, worked for three values of N',
+      equation: 'P(N) = cos^{2N}(ΩT / 2N),   with ΩT = 1 radian',
+      symbols: [
+        { symbol: 'P(N)', meaning: 'Probability of finding the system still in its initial state', unit: 'dimensionless, 0 to 1' },
+        { symbol: 'ΩT', meaning: 'How far the system would rotate in the total time if it were never measured', unit: 'radians' },
+        { symbol: 'N', meaning: 'Number of equally spaced measurements', unit: 'dimensionless' },
+        { symbol: 'τ = T/N', meaning: 'Time between measurements', unit: 's' },
+      ],
+      body: [
+        'Fix the total time so that an uninterrupted system would rotate through one radian, ΩT = 1. Left alone, it survives with probability cos²(0.5) = 0.770. Divide the same interval into ten measurements and each interval is a tenth as long: P = cos²⁰(0.05) = 0.975. Divide it into a hundred and P = cos²⁰⁰(0.005) = 0.9975. The short-time approximation 1 − (ΩT)²/(4N) gives 0.75, 0.975 and 0.9975 — accurate once N is more than a few, and visibly wrong at N = 1.',
+        'Read the table the other way and the effect looks less magical. Each measurement is a projection, and a projection discards the phase accumulated since the last one. The system is not frozen in any absolute sense; it is repeatedly returned to the state it started in. The price is the disturbance of the measurement itself, which is why the idealisation of a silent, instantaneous projection carries so much of the argument. A real pulse both projects and drives, and the two cannot be separated in the laboratory.',
+      ],
+      assumptions: [
+        'The total rotation ΩT is fixed at one radian while N varies; changing T changes the comparison.',
+        'The measurements are ideal projections, instantaneous and error-free, which no real experiment achieves.',
+        'The two-level approximation holds between measurements; a system with a dense spectrum behaves differently and can show the opposite effect.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The same total time, divided differently',
+      columns: ['Measurements N', 'Interval τ', 'Survival probability', 'What it looks like'],
+      rows: [
+        ['1', 'T', '0.770', 'Ordinary Rabi oscillation, uninterrupted'],
+        ['10', 'T/10', '0.975', 'Most of the population held in place'],
+        ['100', 'T/100', '0.9975', 'Nearly frozen'],
+        ['1,000', 'T/1,000', '0.99975', 'The Zeno limit, approached'],
+      ],
+      note:
+        'Computed from cos^{2N}(ΩT/2N) with ΩT = 1. At N = 1,000 the gap between measurements is a thousandth of the rotation time, which is why real demonstrations need fast pulses and why the measurement apparatus, not the quantum system, becomes the limiting technology.',
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [

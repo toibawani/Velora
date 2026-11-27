@@ -485,6 +485,30 @@ export const PREDICTIVE_PROCESSING_DOSSIER = {
       ],
     },
     {
+      kind: 'table',
+      heading: 'The numbers a model has to fit',
+      columns: ['Quantity', 'Measured value', 'What it constrains'],
+      rows: [
+        ['Mismatch negativity latency', 'About 100–250 ms after a deviant sound', 'How many cortical stages a prediction passes through before an error is reported'],
+        ['Repetition suppression', 'Often 20–50 per cent less response to a repeated stimulus', 'The gain applied to predicted input; a strong prior should shrink the error signal'],
+        ['Gamma band', 'Roughly 30–80 Hz', 'Proposed carrier of prediction error in superficial pyramidal cells'],
+        ['Beta band', 'Roughly 15–30 Hz', 'Proposed carrier of predictions from deep layers'],
+        ['Cortical neurons', 'About 16 billion, of 86 billion in the whole brain', 'The scale at which any generative model has to run'],
+        ['Brain power', 'About 20 watts', 'The energy budget for whatever inference the brain performs'],
+      ],
+      note:
+        'The first two rows are robust findings that any account of perception must explain. The third and fourth are the specific laminar proposal of Bastos and colleagues, and they are the part of the theory most vulnerable to being wrong. The last two rows are the constraint that makes the framework attractive: 20 watts is not much for a system that does this.',
+    },
+    {
+      kind: 'prose',
+      heading: 'What would count as a numerical prediction',
+      body: [
+        'A framework that says the brain minimises free energy can accommodate almost any result after the fact. A predictive-coding model that says this synapse carries precision, and here is the gain it should apply, can be wrong in a way an experiment can detect. The difference between the two is the numbers: latency, gain, laminar layer, frequency band.',
+        'The most concrete current proposal places prediction errors in the superficial pyramidal cells and predictions in the deep layers, with beta oscillations carrying predictions downward and gamma carrying errors upward. That is a claim about anatomy, frequency and direction at once, and it can be tested with laminar electrodes that record the same cortical column at different depths while a prediction is violated. The evidence so far is suggestive rather than decisive: the same laminar pattern is compatible with other accounts of cortical processing, and the frequency bands overlap with attention and motor rhythms that have nothing to do with prediction.',
+        'What would settle it is a measurement that ties all three together in one preparation: a manipulation that changes a specific prediction, a recording that shows the error signal in the predicted layer at the predicted frequency, and a behavioural consequence that follows from the size of the signal. Until then the honest description is that the theory has a plausible implementation and no decisive test. That is not a criticism of the framework. It is a description of where the science is, and it is the same description that applies to most of cognitive neuroscience.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -500,6 +524,9 @@ export const PREDICTIVE_PROCESSING_DOSSIER = {
     { label: 'K. Friston, "The free-energy principle: a unified brain theory?", Nature Reviews Neuroscience 11, 127 (2010)', url: 'https://doi.org/10.1038/nrn2787' },
     { label: 'A. Clark, Surfing Uncertainty: Prediction, Action, and the Embodied Mind (Oxford, 2016)', url: 'https://global.oup.com/academic/product/surfing-uncertainty-9780190217013' },
     { label: 'M. Litwin and J. Miłkowski, "Unification by fiat: arrested development of predictive processing", Cognitive Science 44, e12867 (2020)', url: 'https://doi.org/10.1111/cogs.12867' },
+    { label: 'A. M. Bastos et al., "Canonical microcircuits for predictive coding", Neuron 76, 695 (2012)', url: 'https://doi.org/10.1016/j.neuron.2012.10.038' },
+    { label: 'K. Grill-Spector, R. Henson, A. Martin, "Repetition and the brain: neural models of stimulus-specific effects", Trends in Cognitive Sciences 10, 14 (2006)', url: 'https://doi.org/10.1016/j.tics.2005.11.006' },
+    { label: 'F. A. C. Azevedo et al., "Equal numbers of neuronal and nonneuronal cells make the human brain an isometrically scaled-up primate brain", J. Comp. Neurol. 513, 532 (2009)', url: 'https://doi.org/10.1002/cne.21974' },
   ],
   related: ['slime-mould', 'godel-incompleteness', 'monty-hall'],
 };
