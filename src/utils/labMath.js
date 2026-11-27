@@ -318,3 +318,45 @@ export function klDivergenceBits(p, q) {
   const b = Math.min(1 - 1e-9, Math.max(1e-9, Number(q)));
   return a * Math.log2(a / b) + (1 - a) * Math.log2((1 - a) / (1 - b));
 }
+
+/**
+ * The Drake estimate, with the factors named the way the panel labels them.
+ *
+ * This is not a measurement and the function does not pretend to be one: it
+ * multiplies six numbers, four of which have never been measured, and returns
+ * the expected number of detectable civilisations in the galaxy. It returns 0
+ * for a negative or non-finite factor rather than a NaN, because the panel has
+ * to render something when a slider is dragged to an edge.
+ */
+export const DRAKE_DEFAULTS = {
+  starRate: 1.5,
+  habitablePerStar: 0.2,
+  lifeFraction: 0.1,
+  intelligenceFraction: 0.01,
+  technologyFraction: 0.1,
+  lifetimeYears: 1000,
+};
+
+export function drakeNumber({
+  starRate = DRAKE_DEFAULTS.starRate,
+  habitablePerStar = DRAKE_DEFAULTS.habitablePerStar,
+  lifeFraction = DRAKE_DEFAULTS.lifeFraction,
+  intelligenceFraction = DRAKE_DEFAULTS.intelligenceFraction,
+  technologyFraction = DRAKE_DEFAULTS.technologyFraction,
+  lifetimeYears = DRAKE_DEFAULTS.lifetimeYears,
+} = {}) {
+  const factors = [starRate, habitablePerStar, lifeFraction, intelligenceFraction, technologyFraction, lifetimeYears];
+  if (factors.some((value) => !Number.isFinite(Number(value)) || Number(value) < 0)) return 0;
+  return factors.reduce((product, value) => product * Number(value), 1);
+}
+
+/**
+ * The chance that a galaxy with expectation n holds no other civilisation,
+ * under a Poisson model. This is the honest reading of the Drake product: the
+ * expectation is small, and a small expectation still leaves most skies empty.
+ */
+export const emptySkyProbability = (n) => {
+  const value = Number(n);
+  if (!Number.isFinite(value) || value < 0) return 0;
+  return Math.exp(-value);
+};

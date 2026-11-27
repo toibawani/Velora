@@ -227,6 +227,47 @@ export const YEAR_536_DOSSIER = {
       ],
     },
     {
+      kind: 'steps',
+      heading: 'How the cause was pinned down',
+      items: [
+        {
+          title: 'Read the rings',
+          text: 'Tree-ring series from Europe and North America show unusually narrow growth in 536 and the following years. A narrow ring means a short or cold growing season, and the same pattern across continents rules out a local weather event.',
+        },
+        {
+          title: 'Find the sulfate',
+          text: 'Ice cores from Greenland and Antarctica preserve annual layers of snowfall. Layers dated to 536 and 540 contain sulfate spikes that can only come from a large volcanic injection of sulfur dioxide into the stratosphere.',
+        },
+        {
+          title: 'Fingerprint the source',
+          text: 'The isotopic composition of the sulfur, and the tephra particles trapped with it, can be matched to a volcanic province. The 536 and 540 events appear to be two separate eruptions, in different hemispheres and possibly different years.',
+        },
+        {
+          title: 'Run the climate forward',
+          text: 'Aerosol forcing is fed into a climate model and the simulated cooling is compared with the tree-ring and historical record. The match is good enough to establish the mechanism, and not precise enough to name the mountain.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The arithmetic of a dimmed sun',
+      equation: 'ΔF ≈ −k · τ,   k ≈ 25 W m⁻² per unit aerosol optical depth',
+      symbols: [
+        { symbol: 'ΔF', meaning: 'The change in global mean radiative forcing at the top of the atmosphere', unit: 'W/m²' },
+        { symbol: 'k', meaning: 'An empirical proportionality between stratospheric aerosol optical depth and forcing, derived from volcanic events and satellite data', unit: 'W m⁻² per unit AOD' },
+        { symbol: 'τ', meaning: 'Aerosol optical depth: how much sunlight the stratospheric haze removes from the direct beam', unit: 'dimensionless' },
+      ],
+      body: [
+        'A stratospheric aerosol layer does two things at once. It backscatters incoming sunlight, which cools the surface, and it absorbs some outgoing infrared, which warms the lower stratosphere. The scattering dominates, so the net forcing is negative. For moderate layers the forcing is roughly linear in optical depth, with a coefficient of order 25 watts per square metre per unit optical depth; the exact value depends on the aerosol size distribution and on how much the layer also affects clouds.',
+        'The formula is useful because it shows the size of the effect without pretending to precision. An optical depth of 0.1 gives about −2.5 W/m², which is a small global forcing; 0.5 gives about −12 W/m², which is larger than the forcing from doubling carbon dioxide in the opposite direction. The estimates for 536 sit in the lower part of that range, which is why the summer failed in some regions and not everywhere. The point of the calculation is that a haze you could not see was enough to shorten a growing season across two continents.',
+      ],
+      assumptions: [
+        'The relationship is linear, which holds for moderate optical depths and breaks down for very thick layers.',
+        'The forcing is a global mean; regional cooling can be much larger, especially in the northern hemisphere after a northern eruption.',
+        'The aerosol is confined to the stratosphere and persists for one to three years, which is what makes the effect last beyond a single season.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -333,6 +374,36 @@ export const LIBRARY_OF_ALEXANDRIA_DOSSIER = {
       body: [
         'The single-fire story is useful. It gives a clear villain, a clear event and a clear moral: knowledge is fragile, and fanaticism destroys it. It also flatters the present: we are the ones who would have saved the library. The real history is less satisfying, because it has no villain and no single moment. It is a story about budgets, copying, patronage and decay, and those are harder to turn into a poster.',
         'There is also a scholarly tradition of scepticism about the numbers. The library’s size, its destruction and its cultural significance have all been inflated by repetition. That does not make the institution unimportant. It makes it a case study in how historical memory works: a real place, a real loss, and a story that has been shaped by everyone who needed it to mean something.',
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'How a scroll library was actually run',
+      items: [
+        {
+          title: 'Acquire by copying',
+          text: 'There was no book trade that could supply a collection of this size. Texts arrived as loans from other cities, as purchases, or as seizures; the library copied them, kept the copy and often returned the original. Acquisition was a diplomatic operation as much as a scholarly one.',
+        },
+        {
+          title: 'Catalogue the holdings',
+          text: 'The Pinakes of Callimachus listed authors by genre, with biographical notes and first lines, so a reader could find a work without walking the shelves. It is the earliest library catalogue we know of, and it is the reason the collection could be used rather than merely owned.',
+        },
+        {
+          title: 'Edit the texts',
+          text: 'Scrolls accumulated copying errors, interpolations and competing versions. The scholars of the Mouseion compared manuscripts, marked lines as suspect and produced standard editions. Much of what survives as ancient literature passed through that editorial work.',
+        },
+        {
+          title: 'Shelve by genre',
+          text: 'The collection was divided by subject: epic, tragedy, comedy, history, medicine, law. A reader who wanted a play did not need to know the author first. The arrangement is a claim about what kinds of writing exist, and it outlasted the building.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'The Mouseion was not the library',
+      body: [
+        'The two are usually collapsed into one, and the difference matters. The Mouseion was a research institution: a community of salaried scholars, supported by the Ptolemies, with a shared dining hall and a duty to teach and to produce scholarship. The library was the collection those scholars used. A modern university has both, and the words are still confused, but the ancient arrangement was explicit about the connection: the books existed to support the work, and the work was paid for by a court that wanted prestige.',
+        'That patronage is the part the myth leaves out. The Ptolemies were competing with the Attalids of Pergamon for the title of the greatest Greek city, and a library was a monument as much as a laboratory. Scholars were recruited, sometimes by offering them more than a rival would pay, and sometimes by less polite means. The institution that produced the Pinakes and the standard editions of Homer was also an instrument of dynastic politics, and the same court that funded it could exile a scholar who offended it.',
       ],
     },
     {

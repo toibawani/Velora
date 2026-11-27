@@ -45,7 +45,7 @@ function Library({ onOpen, onDebate }) {
             Velora <em>Minds</em>
           </h1>
           <p className="vm-lead">
-            Ten thinkers, each with a researched profile: how they formed, how they argued, what they
+            Eleven thinkers, each with a researched profile: how they formed, how they argued, what they
             actually wrote, and where their own positions break down. You can put a question to them, ask
             them to teach, or make them argue.
           </p>

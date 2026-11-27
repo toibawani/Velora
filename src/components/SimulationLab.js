@@ -4,6 +4,9 @@ import { Pause, Play, RotateCcw } from 'lucide-react';
 import {
   barrierTransmission,
   deBroglieWavelengthNm,
+  DRAKE_DEFAULTS,
+  drakeNumber,
+  emptySkyProbability,
   logisticBifurcation,
   logisticStep,
   lorenzDivergence,
@@ -18,7 +21,7 @@ import '../styles/SimulationLab.css';
 /**
  * The Lab.
  *
- * Four numerical experiments, each built on src/utils/labMath.js. The rule for
+ * Six numerical experiments, each built on src/utils/labMath.js. The rule for
  * this file is that every number on screen is produced by the model rather than
  * drawn to look plausible, and every panel states the model's limits.
  */
@@ -70,13 +73,13 @@ function useCanvas(draw, deps) {
   return ref;
 }
 
-function Slider({ label, value, min, max, step, unit, onChange, note }) {
+function Slider({ label, value, min, max, step, unit, display, onChange, note }) {
   return (
     <label className="lab-control">
       <span className="lab-control-head">
         <span>{label}</span>
         <strong>
-          {value}
+          {display || value}
           {unit ? <span className="lab-unit"> {unit}</span> : null}
         </strong>
       </span>
@@ -100,6 +103,7 @@ Slider.propTypes = {
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
   unit: PropTypes.string,
+  display: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   note: PropTypes.string,
 };
@@ -1202,12 +1206,248 @@ function ZenoLab() {
    The screen body
    ------------------------------------------------------------------------- */
 
+/* -------------------------------------------------------------------------
+   The Silence
+   ------------------------------------------------------------------------- */
+
+const SILENCE_DEFAULTS = {
+  starRate: DRAKE_DEFAULTS.starRate,
+  habitablePerStar: DRAKE_DEFAULTS.habitablePerStar,
+  lifeExp: Math.log10(DRAKE_DEFAULTS.lifeFraction),
+  intelligenceExp: Math.log10(DRAKE_DEFAULTS.intelligenceFraction),
+  technologyExp: Math.log10(DRAKE_DEFAULTS.technologyFraction),
+  lifetimeExp: Math.log10(DRAKE_DEFAULTS.lifetimeYears),
+};
+
+const LOG_SPAN = 6;
+const powerOfTen = (exponent) => 10 ** exponent;
+
+const formatCount = (value) => {
+  if (!Number.isFinite(value)) return '—';
+  if (value === 0) return '0';
+  if (value >= 0.01 && value < 1000) return value.toFixed(value < 1 ? 3 : 1);
+  return value.toExponential(2);
+};
+
+const formatYears = (value) => {
+  if (value >= 1e6) return `${(value / 1e6).toFixed(1)} million yr`;
+  if (value >= 1e3) return `${(value / 1e3).toFixed(1)} thousand yr`;
+  return `${Math.round(value)} yr`;
+};
+
+function SilenceLab() {
+  const [state, setState] = useState(SILENCE_DEFAULTS);
+
+  const params = useMemo(
+    () => ({
+      starRate: state.starRate,
+      habitablePerStar: state.habitablePerStar,
+      lifeFraction: powerOfTen(state.lifeExp),
+      intelligenceFraction: powerOfTen(state.intelligenceExp),
+      technologyFraction: powerOfTen(state.technologyExp),
+      lifetimeYears: powerOfTen(state.lifetimeExp),
+    }),
+    [state]
+  );
+
+  const n = drakeNumber(params);
+  const empty = emptySkyProbability(n);
+
+  const draw = useCallback(
+    (ctx, width, height) => {
+      const paper = token('--bg-elevated', '#fbf6ec');
+      const ink = token('--text-primary', '#1a1410');
+      const accent = token('--accent-primary', '#a33b1f');
+      const subdued = token('--text-tertiary', '#8a7a68');
+
+      ctx.fillStyle = paper;
+      ctx.fillRect(0, 0, width, height);
+
+      const pad = 22;
+      const x = (value) =>
+        pad + ((Math.max(-LOG_SPAN, Math.min(LOG_SPAN, value)) + LOG_SPAN) / (2 * LOG_SPAN)) * (width - 2 * pad);
+
+      const barY = Math.round(height * 0.32);
+      ctx.strokeStyle = subdued;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad, barY);
+      ctx.lineTo(width - pad, barY);
+      ctx.stroke();
+
+      for (let e = -LOG_SPAN; e <= LOG_SPAN; e += 1) {
+        const tx = x(e);
+        const major = e % 3 === 0;
+        ctx.beginPath();
+        ctx.moveTo(tx, barY - (major ? 7 : 3));
+        ctx.lineTo(tx, barY + (major ? 7 : 3));
+        ctx.stroke();
+        if (major) {
+          ctx.fillStyle = subdued;
+          ctx.font = '10px ui-monospace, monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(`1e${e}`, tx, barY - 14);
+        }
+      }
+
+      const logN = n > 0 ? Math.log10(n) : -LOG_SPAN - 1;
+      const markerX = x(logN);
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.arc(markerX, barY, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = accent;
+      ctx.beginPath();
+      ctx.moveTo(markerX, barY + 7);
+      ctx.lineTo(markerX, barY + 24);
+      ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.font = '600 11px ui-monospace, monospace';
+      ctx.fillText(`N = ${formatCount(n)}`, Math.min(width - pad - 36, Math.max(pad + 36, markerX)), barY + 40);
+
+      const curveTop = Math.round(height * 0.6);
+      const curveBottom = height - 30;
+      ctx.strokeStyle = subdued;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pad, curveBottom);
+      ctx.lineTo(width - pad, curveBottom);
+      ctx.stroke();
+
+      ctx.strokeStyle = accent;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      for (let i = 0; i <= 120; i += 1) {
+        const logValue = -LOG_SPAN + (i / 120) * 2 * LOG_SPAN;
+        const px = x(logValue);
+        const py = curveBottom - emptySkyProbability(powerOfTen(logValue)) * (curveBottom - curveTop);
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+
+      ctx.fillStyle = ink;
+      ctx.beginPath();
+      ctx.arc(markerX, curveBottom - empty * (curveBottom - curveTop), 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = subdued;
+      ctx.font = '10px ui-monospace, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('chance the sky is empty, e^−N', pad, curveTop - 10);
+      ctx.textAlign = 'right';
+      ctx.fillText('expected civilisations, log scale', width - pad, barY - 30);
+    },
+    [n, empty]
+  );
+
+  const canvasRef = useCanvas(draw, [draw]);
+
+  const set = (key) => (value) => setState((prev) => ({ ...prev, [key]: value }));
+
+  return (
+    <Experiment
+      number={6}
+      field="Cosmology"
+      title="The Silence"
+      question="If the galaxy is full of planets, why is the sky quiet? Multiply the factors that are supposed to produce civilisations, then read the chance that the answer is that nobody else is there."
+      controls={
+        <>
+          <Slider
+            label="R* (stars formed per year)"
+            value={state.starRate}
+            min={0.5}
+            max={3}
+            step={0.1}
+            onChange={set('starRate')}
+            note="The Milky Way forms a few stars per year. This one is measured, which is why it is the least controversial slider here."
+          />
+          <Slider
+            label="n_e (habitable planets per star)"
+            value={state.habitablePerStar}
+            min={0.05}
+            max={1}
+            step={0.01}
+            onChange={set('habitablePerStar')}
+            note="The number of rocky planets per star in the temperate zone. Kepler data support values of this order, though “habitable” is a modelling choice as much as a measurement."
+          />
+          <Slider
+            label="f_l (fraction where life appears)"
+            value={state.lifeExp}
+            min={-4}
+            max={0}
+            step={0.1}
+            display={`${(powerOfTen(state.lifeExp) * 100).toFixed(2)}%`}
+            onChange={set('lifeExp')}
+            note="Never measured. One sample, this planet. The slider covers four orders of magnitude because that is the honest width of our ignorance."
+          />
+          <Slider
+            label="f_i (fraction where intelligence evolves)"
+            value={state.intelligenceExp}
+            min={-4}
+            max={0}
+            step={0.1}
+            display={`${(powerOfTen(state.intelligenceExp) * 100).toFixed(2)}%`}
+            onChange={set('intelligenceExp')}
+            note="Also never measured. Life on Earth took roughly three billion years to produce something that asks this question, which is one data point, not a rate."
+          />
+          <Slider
+            label="f_c (fraction that becomes detectable)"
+            value={state.technologyExp}
+            min={-4}
+            max={0}
+            step={0.1}
+            display={`${(powerOfTen(state.technologyExp) * 100).toFixed(2)}%`}
+            onChange={set('technologyExp')}
+            note="Technology that leaks detectable signals. A civilisation that never radiates or builds is invisible to this estimate, whatever its other achievements."
+          />
+          <Slider
+            label="L (years detectable)"
+            value={state.lifetimeExp}
+            min={1}
+            max={7}
+            step={0.1}
+            display={formatYears(powerOfTen(state.lifetimeExp))}
+            onChange={set('lifetimeExp')}
+            note="How long a civilisation stays detectable. Radio astronomy is about a century old, so any value here is a guess about the future."
+          />
+        </>
+      }
+      readout={
+        <>
+          <span className="lab-big">{formatCount(n)}</span> expected detectable civilisations in the galaxy.
+          <span className="lab-readout-sub">
+            A Poisson model with this expectation leaves the sky empty with probability{' '}
+            {(empty * 100).toFixed(empty > 0.999 ? 2 : 1)} per cent. A small expectation is not a guarantee of company:
+            most draws from a distribution with mean 0.03 produce nothing at all.
+          </span>
+        </>
+      }
+      equation="N = R* × n_e × f_l × f_i × f_c × L,    P(no other) = e^(−N)"
+      symbols={[
+        { symbol: 'N', meaning: 'The expected number of detectable civilisations in the galaxy now', unit: 'count' },
+        { symbol: 'R*', meaning: 'The rate at which stars form in the galaxy', unit: 'stars per year' },
+        { symbol: 'n_e', meaning: 'The average number of habitable planets per star', unit: 'planets' },
+        { symbol: 'f_l, f_i, f_c', meaning: 'The fractions where life appears, evolves intelligence, and becomes detectable', unit: 'dimensionless' },
+        { symbol: 'L', meaning: 'The average time a civilisation remains detectable', unit: 'years' },
+        { symbol: 'e^(−N)', meaning: 'The probability that a Poisson process with mean N produces no other civilisation', unit: 'probability' },
+      ]}
+      notice="The product is an expectation, not a census. Four of the six factors have never been measured, and multiplying unknowns does not turn them into knowledge: the same equation supports a crowded galaxy and an empty one. The curve shows why. At N = 3 the sky is empty five per cent of the time; at N = 0.03 it is empty ninety-seven per cent of the time. The silence is surprising only if you assume the product is large, and nothing in the data forces that."
+      challenge="Start at the defaults. Raise L until the sky is almost certainly inhabited, then drop f_i by two orders of magnitude and watch it empty again. The point is not that one setting is right. It is how little the answer costs to change."
+      limits="The factors are treated as independent, which they probably are not, and as constant over the galaxy’s history, which they certainly are not. The estimate ignores beaming, timing, and whether a civilisation would choose to be detectable. P(no other) assumes a Poisson distribution, which is a modelling choice: a galaxy where civilisations cluster would give different odds at the same N. R* and n_e are the only factors with real measurements behind them."
+      onReset={() => setState(SILENCE_DEFAULTS)}
+    >
+      <canvas ref={canvasRef} role="img" aria-label="Drake expectation on a logarithmic scale, and the probability of an empty sky" />
+    </Experiment>
+  );
+}
+
 export default function SimulationLab({ onBack, onOpenClassic }) {
   return (
     <div className="lab-shell">
       <header className="lab-masthead">
         <div>
-          <p className="lab-kicker">Five numerical experiments</p>
+          <p className="lab-kicker">Six numerical experiments</p>
           <h1>The Lab</h1>
           <p className="lab-lead">
             Every panel below solves a model. Change a parameter and the numbers are recomputed from the
@@ -1220,7 +1460,9 @@ export default function SimulationLab({ onBack, onOpenClassic }) {
             <strong>Deterministic, not decorative.</strong> The tunnelling panel solves the rectangular-barrier
             matching conditions. The Lorenz and Oregonator panels integrate with fourth-order Runge–Kutta, with
             the reaction step tied to ε because those equations are stiff. The bifurcation panel iterates the map
-            340 times per column. The Zeno panel evaluates the projective-measurement product.
+            340 times per column.             The Zeno panel evaluates the projective-measurement product. The silence panel multiplies the Drake factors
+            and reads the chance of an empty sky from a Poisson distribution, with the unmeasured factors on sliders so
+            their width is visible.
           </p>
           {onOpenClassic && (
             <button type="button" className="lab-classic-link" onClick={onOpenClassic}>
@@ -1235,6 +1477,7 @@ export default function SimulationLab({ onBack, onOpenClassic }) {
       <OscillatorLab />
       <BifurcationLab />
       <ZenoLab />
+      <SilenceLab />
 
       <footer className="lab-footer">
         <button type="button" onClick={onBack}>

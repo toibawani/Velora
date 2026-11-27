@@ -77,6 +77,48 @@ export const SLIME_MOULD_DOSSIER = {
       ],
     },
     {
+      kind: 'steps',
+      heading: 'The maze experiment, repeated',
+      items: [
+        {
+          title: 'Lay out the problem',
+          text: 'A plastic maze is cut with two routes to a food source, one short and one long. Oat flakes are placed at both ends, and the maze is inoculated with a fragment of a plasmodium or with spores.',
+        },
+        {
+          title: 'Let the network fill the maze',
+          text: 'The organism explores by extending a fan of tubes. It reaches both food sources, so every route in the maze is colonised, including the long one.',
+        },
+        {
+          title: 'Withdraw from the long route',
+          text: 'As nutrient flows through the network, tubes that carry more flow widen and tubes that carry less contract. The long route carries less, so it is pruned away while the short route is reinforced.',
+        },
+        {
+          title: 'Check what is left',
+          text: 'The remaining tube connects the two food sources by the shortest path. The result is repeatable, and it is produced by local flow rules with no representation of the maze anywhere in the organism.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'A rule for how a tube decides to shrink',
+      equation: 'dD_ij/dt = f(|Q_ij|) − D_ij,   f increasing',
+      symbols: [
+        { symbol: 'D_ij', meaning: 'The radius (or conductance) of the tube connecting nodes i and j' },
+        { symbol: 'Q_ij', meaning: 'The flow through that tube, set by the pressure differences and the conductances of the whole network' },
+        { symbol: 'f', meaning: 'An increasing function of the absolute flow: a tube that carries more flow is reinforced' },
+        { symbol: 't', meaning: 'Time in the model, which stands for the hours over which the organism reorganises' },
+      ],
+      body: [
+        'The rule is deliberately local. Each tube responds only to the flow passing through it: more flow makes it wider, less flow makes it narrower, and the shrinking term is what prevents every tube from growing without limit. The flows themselves are global, because they are determined by the conductance network as a whole, and that coupling is the whole trick. Tero and colleagues used a rule of this form to reproduce the Tokyo rail network from a map of the stations, and the resulting network was comparable to the real one on measures of length, efficiency and fault tolerance.',
+        'The equations do not know what a maze is. They know about flow and tube width, and the shortest path emerges because the longer route carries less flow and is therefore pruned. That is the sense in which the organism solves the problem without a solver: the solution is a fixed point of a local adaptation rule, not the output of a plan. It also explains the failure mode. Change the food distribution and the network settles somewhere else, which may be efficient for the new conditions and useless for the old ones.',
+      ],
+      assumptions: [
+        'The organism is treated as a network of pipes with a fixed topology; real plasmodia add and remove tubes as they explore.',
+        'Flow is assumed to reach a steady state faster than the tube radii change, so the two processes can be separated in time.',
+        'The adaptation function is a simplification of the real biochemistry. It reproduces the behaviour, not the mechanism.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
@@ -163,6 +205,36 @@ export const MYCORRHIZAL_DOSSIER = {
       body: [
         'The wood wide web is a useful case study in how a scientific finding becomes a cultural story. The original papers were careful. The press coverage was not. By the time the idea reached documentaries and children\'s books, a measured claim about carbon flux had become a claim about trees caring for their children. The correction is not a retreat from wonder. The measured version is stranger: a forest is a market in which plants and fungi bargain, cheat, and occasionally cooperate, and the bargaining is conducted by chemistry rather than by intention.',
         'There is also a practical stake. Forest management and carbon accounting increasingly rely on claims about underground networks. If the networks are described as cooperative carbon sinks, policy may follow. Getting the ecology right is not just a matter of narrative hygiene; it determines what interventions make sense.',
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'How the symbiosis is assembled',
+      items: [
+        {
+          title: 'The spore wakes',
+          text: 'A fungal spore germinates in the soil and grows a short hypha. It can grow for a while on its own stored reserves, but it needs a plant root before those run out.',
+        },
+        {
+          title: 'The partners signal',
+          text: 'The root releases strigolactones, and the fungus releases lipochitooligosaccharides and other signals. Each partner is responding to a molecule the other produced, which is why the dialogue can be studied in the laboratory without the plant.',
+        },
+        {
+          title: 'The fungus enters the root',
+          text: 'A hypha forms an appressorium on the root surface and grows into the cortex. In arbuscular mycorrhizas it branches inside a cell into a tree-shaped arbuscule, surrounded by a plant membrane, and that is where the exchange happens.',
+        },
+        {
+          title: 'The exchange begins',
+          text: 'The fungus supplies phosphorus and nitrogen from the soil; the plant supplies sugars and lipids. The relationship is not charity in either direction: both partners regulate the exchange, and a partner that does not pay can be cut off.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'What would count as evidence for a message',
+      body: [
+        'The claim that trees send warnings through a fungal network needs more than a transfer of molecules. It needs a signal that is produced by one plant, moved through the fungus, received by another, and shown to change the receiver’s behaviour in a way that benefits it. Each link in that chain has to be demonstrated separately, and several of them are hard to demonstrate in soil.',
+        'A carbon tracer moving from one tree to another is not enough, because the fungus has its own carbon economy and may be moving its own reserves. A change in a neighbouring plant’s chemistry is not enough, because the neighbour may be responding to the same soil conditions. The strongest experiments use labelled isotopes, physical barriers that allow hyphae but not roots to cross, and genetic manipulation of the fungal partner. Few studies have all three, which is why the review literature has become more careful than the popular accounts, and why the correction is not a debunking: the symbiosis is real and important, and the messaging story is the part that outran the evidence.',
       ],
     },
     {

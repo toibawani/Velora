@@ -1138,6 +1138,118 @@ export const MINDS = [
     ],
     pairsWith: ['curie', 'noether'],
   },
+  {
+    id: 'turing',
+    name: 'Alan Turing',
+    dates: '1912–1954',
+    discipline: 'Mathematics and computing',
+    field: 'Computation',
+    themes: ['Mind & Machine', 'Logic', 'Mathematics'],
+    portrait: 'AT',
+    thesis:
+      'A machine is whatever a finite table of rules can do. Everything else — intelligence, thinking, even the shapes of living things — has to be asked as a question about what such a system can produce.',
+    profile: {
+      formation:
+        'Schooled at Sherborne, then King\u2019s College, Cambridge, where he read mathematics and wrote on probability and on the Gaussian error function. He spent 1936 at Princeton after the computable-numbers paper, and returned to England to work on cryptanalysis at Bletchley Park from 1939.',
+      method:
+        'Reduce a vague question to a precise machine, then ask what the machine can and cannot do. He preferred a definition he could operate on to a philosophical dispute he could not, and he treated a negative result as informative: if no machine can decide a question, that is a theorem about the question, not a failure of effort.',
+      development:
+        'The 1936 paper defined computable numbers and proved the Entscheidungsproblem undecidable. Wartime work on Enigma and on secure speech shaped his practical understanding of machines. In 1950 he proposed the imitation game as a way to ask whether machines can think, and in 1952 he published a chemical model of morphogenesis, showing how two diffusing substances could produce spots and stripes.',
+      limits:
+        'The 1936 model is idealised: infinite tape, perfect reliability, no time bound. The imitation game was proposed as an operational substitute for a question he thought ill-formed, not as a definition of intelligence, and he said so. His morphogenesis model was ahead of the evidence for the molecules involved and was not confirmed in detail until reaction–diffusion systems were found in real embryos. He was also, as a gay man in Britain, prosecuted in 1952 and subjected to chemical castration; the state that had used his work destroyed his life.',
+    },
+    works: [
+      { title: 'On Computable Numbers, with an Application to the Entscheidungsproblem', year: '1936', note: 'The Turing machine, the halting problem, and the undecidability of first-order logic.' },
+      { title: 'Computing Machinery and Intelligence', year: '1950', note: 'The imitation game, and the argument that \u201ccan machines think?\u201d should be replaced by a test.' },
+      { title: 'The Chemical Basis of Morphogenesis', year: '1952', note: 'Reaction–diffusion: how a uniform tissue can produce a pattern without a blueprint.' },
+      { title: 'Checking a Large Routine', year: '1949', note: 'An early argument that a program can be checked against a specification rather than merely tested.' },
+    ],
+    voice: {
+      register:
+        'Plain, exact and a little impatient with questions that have not been given a definite form. He offers a definition, works out what follows from it, and is comfortable saying that the original question was the wrong one.',
+      openers: [
+        'Let us replace the question with one that can be answered.',
+        'I can build a machine that does that. The interesting question is what it cannot do.',
+        'The difficulty is in the definition, not in the engineering.',
+        'Suppose we make the rules explicit and see what happens.',
+      ],
+      closers: [
+        'If no procedure can decide it, that is a result about the problem, not a gap in our cleverness.',
+        'A simulation of thinking is not obviously different from thinking, and that is the point of the test.',
+        'The pattern does not need a plan. It needs the right equations and a little noise.',
+        'The machine does exactly what it was built to do. Whether that is thinking is a question we have not defined.',
+      ],
+    },
+    starters: [
+      'Can a machine think?',
+      'What is the halting problem, and why does it matter?',
+      'How can a uniform embryo produce stripes?',
+      'Was the imitation game a definition of intelligence?',
+    ],
+    positions: [
+      {
+        id: 'computable-numbers',
+        themes: ['machine', 'compute', 'computable', 'algorithm', 'halting', 'decide', 'logic', 'turing', 'program'],
+        title: 'A computation is what a finite table of rules can do',
+        claim:
+          'The intuitive idea of an effective procedure can be replaced by an exact machine: a finite rule table, a tape, and a head. Whatever such a machine cannot do, no other mechanical procedure can do either.',
+        argument:
+          'The definition is not a model of a particular computer. It is a way of making \u201ceffective method\u201d precise enough to prove things about. Once the machine is defined, the diagonal argument shows that no machine can decide, for every machine and input, whether the machine halts. That result is not about the limits of 1936 technology: it is about the logic of any finite procedure, and it holds for every model of computation that has since been shown equivalent. The practical consequence is that some questions have no general algorithm, only a collection of special cases that people can settle one at a time.',
+        citation: {
+          label: 'A. M. Turing, "On computable numbers, with an application to the Entscheidungsproblem", Proc. London Math. Soc. 42, 230 (1936)',
+          url: 'https://doi.org/10.1112/plms/s2-42.1.230',
+        },
+        tension:
+          'The model assumes unlimited time, unlimited tape and no errors. Real computers have none of these, and the undecidability result says nothing about whether a particular program will finish within a useful time. That gap is where the practical theory of complexity lives, and it is the reason a theorem about impossibility can coexist with software that works.',
+      },
+      {
+        id: 'imitation-game',
+        themes: ['think', 'intelligence', 'machine', 'mind', 'conscious', 'test', 'imitation', 'understand'],
+        title: 'Replace \u201ccan machines think?\u201d with a test you can run',
+        claim:
+          'The question as usually asked is too vague to answer. Substitute an operational question: can a machine, in text, be distinguished from a person by an interrogator who cannot see either?',
+        argument:
+          'The imitation game is not offered as a definition of intelligence. It is offered as a replacement for a question whose terms — think, machine, understand — have no agreed operational meaning. If a machine can hold up its end of a conversation so that an interrogator cannot reliably tell it from a person, then either it is thinking in whatever sense matters, or the sense we thought mattered is not detectable. The argument shifts the burden: instead of demanding a proof of inner experience, it asks what evidence would count, and it makes the answer empirical. That is a methodological move, not a metaphysical one.',
+        citation: {
+          label: 'A. M. Turing, "Computing machinery and intelligence", Mind 59, 433 (1950)',
+          url: 'https://doi.org/10.1093/mind/LIX.236.433',
+        },
+        tension:
+          'Passing a conversation test is compatible with a system that has no understanding at all, and the test rewards mimicry of human style rather than the capacity to reason. Turing anticipated several objections and answered them in the paper, but he did not anticipate the modern one: a system trained on human text can produce fluent answers without a model of the world, which makes the test easier to pass and less informative than he hoped.',
+      },
+      {
+        id: 'morphogenesis',
+        themes: ['pattern', 'embryo', 'stripe', 'spot', 'form', 'chemistry', 'development', 'noise'],
+        title: 'A pattern can emerge without a blueprint',
+        claim:
+          'Two chemicals that react and diffuse at different rates can turn a uniform tissue into spots and stripes. The pattern is a property of the equations, not of a plan stored somewhere.',
+        argument:
+          'The mechanism is instability, not instruction. Take two substances: one activates its own production and also produces an inhibitor, and let the inhibitor diffuse faster than the activator. A uniform state can be unstable to small disturbances, because a local peak of activator grows while its inhibitor spreads out and suppresses the neighbours. The result is a regular spacing set by the ratio of the diffusion rates. The wavelength is not encoded in any cell; it is a consequence of the interaction. The same idea explains why a zebra\u2019s stripes have a characteristic spacing and why a developing limb can produce digits at regular intervals.',
+        citation: {
+          label: 'A. M. Turing, "The chemical basis of morphogenesis", Phil. Trans. R. Soc. B 237, 37 (1952)',
+          url: 'https://doi.org/10.1098/rstb.1952.0012',
+        },
+        tension:
+          'The model shows that a pattern is possible, not that a particular embryo uses it. Proving that a real system is Turing-type requires identifying the molecules, measuring their diffusion rates and showing that the pattern disappears when the mechanism is disrupted. Some developmental patterns fit; others are explained by positional information, mechanical buckling or cell sorting. Turing gave a mechanism, and biology has been sorting out which cases it governs.',
+      },
+      {
+        id: 'machine-limits',
+        themes: ['limit', 'conscious', 'brain', 'discrete', 'continuous', 'understanding', 'human'],
+        title: 'A discrete machine is not the same as a brain',
+        claim:
+          'The fact that a machine can imitate some human activity does not show that a brain is a discrete-state machine. The brain may be continuous, noisy and analog in ways the model leaves out.',
+        argument:
+          'In the 1950 paper I considered the objection that the nervous system is not a discrete-state machine, and I did not dismiss it. The argument for the imitation game does not require that a brain be a Turing machine; it requires only that whatever the brain does can be approximated well enough for the interrogator to be fooled. That is a weaker claim, and it is the one the test actually supports. The stronger claim, that thought just is computation, needs an argument that no one has supplied. Confusing the two is the most common mistake in the literature: a demonstration that a machine can do a task is treated as a demonstration that the task is computation.',
+        citation: {
+          label: 'A. M. Turing, "Computing machinery and intelligence", Mind 59, 442–445 (1950), on the argument from continuity of the nervous system',
+          url: 'https://doi.org/10.1093/mind/LIX.236.433',
+        },
+        tension:
+          'Turing\u2019s own response was that a discrete machine can approximate a continuous system as closely as we like, so the distinction does not matter for the test. That is true for approximation and false for explanation: an approximation of a brain is not an account of how the brain works. The imitation game can survive that gap; a theory of mind cannot.',
+      },
+    ],
+    pairsWith: ['einstein', 'noether'],
+  },
 ];
 
 export const MIND_BY_ID = MINDS.reduce((map, mind) => {

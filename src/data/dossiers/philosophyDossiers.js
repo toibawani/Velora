@@ -208,6 +208,36 @@ export const EPISTEMIC_INJUSTICE_DOSSIER = {
       ],
     },
     {
+      kind: 'steps',
+      heading: 'How a credibility deficit does its damage',
+      items: [
+        {
+          title: 'A judgement is made',
+          text: 'A hearer assigns credibility to a speaker, often quickly and without deliberation. The judgement is supposed to track evidence about reliability, but it also tracks accent, gender, race, class and the confidence of the speaker.',
+        },
+        {
+          title: 'The testimony is discounted',
+          text: 'A speaker who is judged less credible has to say more, provide more evidence, or repeat the claim to be believed. The discount is applied to the message because of who is speaking, not because of what is known about the subject.',
+        },
+        {
+          title: 'The knowledge is not recorded',
+          text: 'If the claim is not believed, it does not enter the record. Medical symptoms go untreated, workplace problems go unreported, and the shared picture of the world becomes less accurate. The harm is distributed, not only suffered by the speaker.',
+        },
+        {
+          title: 'The gap becomes structural',
+          text: 'When a group is systematically discounted, the concepts needed to describe its experience may never be developed. That is the hermeneutical form of the injustice: not a rejected claim, but an experience that has no available name.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'The evidence is empirical as well as conceptual',
+      body: [
+        'Fricker’s argument is philosophical, but it makes predictions that can be tested. If credibility judgements track identity rather than reliability, then equally reliable speakers should be believed differently depending on who they are, and the difference should show up in settings where the stakes are high. Studies of pain treatment, hiring, peer review and classroom participation have looked for exactly that pattern, and the pattern appears across several of them.',
+        'The inference from those studies is not that every individual hearer is prejudiced. It is that the distribution of credibility is skewed in ways that individual good intentions do not correct, because the judgements are fast, socially shared and reinforced by institutions. That is why the remedies Fricker and others propose are institutional as well as personal: calibration of credibility, deliberately seeking out testimony that is being discounted, and building concepts and vocabulary for experiences that the dominant framework has no place for. The philosophical claim earns its keep by explaining why well-meaning people can participate in a pattern they would reject if they saw it stated plainly.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [

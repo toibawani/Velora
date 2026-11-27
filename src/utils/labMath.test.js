@@ -1,6 +1,9 @@
 import {
   barrierTransmission,
   binaryEntropyBits,
+  DRAKE_DEFAULTS,
+  drakeNumber,
+  emptySkyProbability,
   deBroglieWavelengthNm,
   landauerEnergy,
   logisticBifurcation,
@@ -226,5 +229,70 @@ describe('information bounds', () => {
 
   test('the cost is zero at absolute zero', () => {
     expect(landauerEnergy(0)).toBe(0);
+  });
+});
+
+describe('the Drake estimate', () => {
+  test('all factors at one give an expectation of one', () => {
+    expect(
+      drakeNumber({
+        starRate: 1,
+        habitablePerStar: 1,
+        lifeFraction: 1,
+        intelligenceFraction: 1,
+        technologyFraction: 1,
+        lifetimeYears: 1,
+      })
+    ).toBe(1);
+  });
+
+  test('the shipped defaults give a small expectation, not a crowded galaxy', () => {
+    const n = drakeNumber(DRAKE_DEFAULTS);
+    expect(n).toBeCloseTo(0.03, 10);
+    expect(n).toBeGreaterThan(0);
+    expect(n).toBeLessThan(1);
+  });
+
+  test('doubling the lifetime doubles the expectation', () => {
+    const base = drakeNumber({ ...DRAKE_DEFAULTS, lifetimeYears: 500 });
+    const doubled = drakeNumber({ ...DRAKE_DEFAULTS, lifetimeYears: 1000 });
+    expect(doubled).toBeCloseTo(base * 2, 12);
+  });
+
+  test('a negative or non-finite factor returns zero rather than NaN', () => {
+    expect(drakeNumber({ ...DRAKE_DEFAULTS, lifeFraction: -1 })).toBe(0);
+    expect(drakeNumber({ ...DRAKE_DEFAULTS, lifetimeYears: NaN })).toBe(0);
+  });
+
+  test('a zero factor empties the galaxy', () => {
+    const n = drakeNumber({ ...DRAKE_DEFAULTS, intelligenceFraction: 0 });
+    expect(n).toBe(0);
+    expect(emptySkyProbability(n)).toBe(1);
+  });
+});
+
+describe('the empty-sky probability', () => {
+  test('an expectation of zero leaves no room for anyone else', () => {
+    expect(emptySkyProbability(0)).toBe(1);
+  });
+
+  test('one expected civilisation gives roughly 37 per cent', () => {
+    expect(emptySkyProbability(1)).toBeCloseTo(Math.exp(-1), 12);
+    expect(emptySkyProbability(1)).toBeCloseTo(0.367879, 6);
+  });
+
+  test('it decreases as the expectation grows and stays inside [0, 1]', () => {
+    let previous = 2;
+    [0, 0.1, 0.5, 1, 3, 10].forEach((n) => {
+      const p = emptySkyProbability(n);
+      expect(p).toBeLessThan(previous);
+      expect(p).toBeGreaterThanOrEqual(0);
+      expect(p).toBeLessThanOrEqual(1);
+      previous = p;
+    });
+  });
+
+  test('a negative expectation is treated as no information rather than as a probability', () => {
+    expect(emptySkyProbability(-2)).toBe(0);
   });
 });

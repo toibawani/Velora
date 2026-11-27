@@ -533,6 +533,28 @@ export const CONTINUUM_DOSSIER = {
       ],
     },
     {
+      kind: 'table',
+      heading: 'What different axiom systems decide',
+      columns: ['System', 'What it says about 2^ℵ₀', 'What it costs'],
+      rows: [
+        ['ZFC', 'Neither CH nor its negation is provable', 'The question is independent, not open in the ordinary sense'],
+        ['ZFC + CH', 'The continuum is the first uncountable cardinal', 'Excludes some naturally arising models, such as those from forcing'],
+        ['ZFC + ¬CH', 'There is at least one cardinal between ℵ₀ and the continuum', 'Says nothing about how many such cardinals there are'],
+        ['ZFC + V = L', 'CH is true, and there is a definable well-ordering of the reals', 'Rules out measurable cardinals and most large-cardinal hypotheses'],
+        ['ZFC + large cardinals', 'CH remains independent; the continuum can be made very large', 'Adds consistency strength but does not settle the value'],
+      ],
+      note:
+        'The table is the reason the question is described as a choice of universe rather than a fact about sets. Each row is a consistent theory, assuming the larger systems are consistent, and each describes a different collection of sets. None of them is refuted by the others.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why set theorists still argue about it',
+      body: [
+        'If CH is independent, one response is deflationary: the question has no answer, and we should stop asking. That response is harder to hold than it looks, because independence results are themselves mathematical theorems, and they tell you about the strength of the axioms rather than about the world. Set theorists have responded in two broad ways. One is to look for new axioms, especially large-cardinal axioms and principles such as the Proper Forcing Axiom, that decide many questions and are supported by a variety of evidence: their consequences are coherent, they settle statements that seemed arbitrary, and they fit a picture of the universe as rich and wide.',
+        'The other response is the multiverse view associated with Joel David Hamkins: there is no single universe of sets, and statements independent of ZFC are like statements about groups that hold in some groups and not others. On that view, asking whether CH is true is like asking whether a group is abelian. The debate is not settled, and it is not obviously the kind of debate that can be settled by a proof, because what is at issue is which axioms count as describing the intended subject.',
+      ],
+    },
+    {
       kind: 'questions',
       heading: 'Questions worth sitting with',
       items: [
