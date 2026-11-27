@@ -337,8 +337,134 @@ export const IS_OUGHT_DOSSIER = {
   related: ['personal-identity', 'epistemic-injustice', 'godel-incompleteness'],
 };
 
+export const REPUGNANT_CONCLUSION_DOSSIER = {
+  id: 'repugnant-conclusion',
+  title: 'The Repugnant Conclusion',
+  standfirst:
+    'If a world of ten billion happy people is good, then a much larger world of people whose lives are barely worth living is better, provided there are enough of them. The argument is short, the conclusion is repellent, and every escape has a price.',
+  field: 'Philosophy',
+  lenses: ['Meaning', 'Infinity'],
+  status: 'Open problem in population ethics; no agreed solution',
+  difficulty: 'Advanced',
+  minutes: 22,
+  opening:
+    'Derek Parfit published the argument in 1984, in the part of Reasons and Persons that he rewrote more than once and still called the hardest thing he had done. Compare two worlds. World A has ten billion people with lives that are very good. World Z has an enormous population, many times larger, whose lives are just worth living: no suffering that outweighs the good, but nothing much to celebrate either. If what matters is the total amount of well-being, then for a large enough population Z is better than A. Parfit called this the repugnant conclusion, and it has resisted forty years of attempts to avoid it.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'The argument in four steps',
+      body: [
+        'The first step is mere addition. Take world A and add a second group of people whose lives are good but not as good as the first group\u2019s. The result, A+, contains more total well-being and no one is worse off, so A+ seems at least as good as A. The second step is that A+ can be rearranged, without changing anyone\u2019s welfare, into a world B with a larger population and a slightly lower average. The third step repeats the move: add more people, lower the average a little, and the total keeps rising as long as each added life is worth living. The fourth step is transitivity. If A+ is at least as good as A, and B is better than A+, and so on, then Z is better than A.',
+        'Each step looks harmless. The conclusion is not. It says that a world packed with lives of minimal quality is better than a world of flourishing people, as long as the numbers are large enough. Notice what the argument does not assume: it does not assume that more people is always better, and it does not assume that quantity is the only good. It assumes that adding a life worth living is not bad, that a world with more total well-being is better when no one is worse off, and that better-than is transitive. Those three assumptions are difficult to deny one at a time.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of comparing worlds',
+      items: [
+        {
+          term: 'Population ethics',
+          definition:
+            'The part of moral philosophy that compares outcomes with different numbers of people, including people who do not yet exist. It has to say whether bringing someone into existence can be good or bad for them.',
+        },
+        {
+          term: 'Total view',
+          definition:
+            'The view that the value of an outcome is the sum of the well-being of everyone who exists in it. It implies the repugnant conclusion when added lives are worth living.',
+        },
+        {
+          term: 'Average view',
+          definition:
+            'The view that what matters is average well-being, not the total. It avoids the repugnant conclusion but implies that adding happy people can be bad because it lowers the average.',
+        },
+        {
+          term: 'Mere addition',
+          definition:
+            'Adding people whose lives are worth living, without making anyone else worse off. The mere addition paradox is that a world with more such people can seem both better and worse than the original.',
+        },
+        {
+          term: 'Critical level',
+          definition:
+            'A threshold of well-being below which adding a life counts as a cost rather than a benefit. A critical-level view avoids the repugnant conclusion by refusing to count lives below the threshold as positive.',
+        },
+        {
+          term: 'Person-affecting view',
+          definition:
+            'A view on which an outcome can only be better or worse if it is better or worse for some particular person. It struggles with choices that determine who exists at all.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The arithmetic that makes the conclusion hard to escape',
+      equation: 'V = N × (w − c)',
+      symbols: [
+        { symbol: 'V', meaning: 'The value of the world on a simple totalist or critical-level accounting' },
+        { symbol: 'N', meaning: 'The number of people who exist, which can be increased by adding lives' },
+        { symbol: 'w', meaning: 'The average well-being of those people, on a scale where zero is neutral and negative is a life not worth living' },
+        { symbol: 'c', meaning: 'A critical level: the well-being below which a life counts as a cost. The total view sets c = 0' },
+      ],
+      body: [
+        'On the total view, c = 0 and value is just population times average welfare. Take A with ten billion people at 100 units, and Z with a million times as many people at 1 unit. A is worth 10¹² units; Z is worth 10¹⁸. No amount of distaste changes the multiplication. Raising the critical level to c = 0.5 does not rescue A either: Z is still worth 5 × 10¹⁷, because the population multiplier is doing all the work.',
+        'To block the conclusion you need a value function in which adding lives eventually stops adding value, or in which a loss of quality cannot be compensated by any increase in quantity. That is a lexical view: some goods are not tradeable against others at any exchange rate. Lexical views can avoid the repugnant conclusion, and they bring their own problems, because they must explain why a tiny change in quality can flip the ranking while a huge change in number cannot. The arithmetic is simple; the axiology that would licence a different answer is not.',
+      ],
+      assumptions: [
+        'Well-being is being treated as measurable and comparable between people, which is itself a substantial assumption.',
+        'The comparison holds population fixed except for the added lives. Real choices usually change who exists and how well, at the same time.',
+        'The value function is welfarist: it depends only on the welfare of individuals, not on equality, autonomy, culture or anything else.'
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The escape routes, and what each one costs',
+      columns: ['View', 'How it avoids the conclusion', 'The cost'],
+      rows: [
+        ['Total view', 'It does not; it implies the conclusion', 'The conclusion itself'],
+        ['Average view', 'Values average welfare, so a larger population does not help', 'Adding happy people can be bad, and the view can favour extinction over a large mediocre population'],
+        ['Critical level', 'Ignores well-being below a threshold', 'Can imply the very repugnant conclusion: many bad lives may be required to enable a few good ones'],
+        ['Person-affecting', 'Only benefits and harms to existing people count', 'Cannot compare outcomes that bring different people into existence, which is most long-run choices'],
+        ['Lexical / perfectionist', 'Quality cannot be traded against quantity at any rate', 'Must explain why a tiny quality difference outweighs any number of lives'],
+      ],
+      note:
+        'The table is the argument. Each row buys an escape from Parfit\u2019s conclusion by accepting something else that is hard to defend. Arrhenius proved that no welfarist theory can satisfy a small set of conditions that each look independently plausible, which is why the problem is described as an impossibility result rather than a puzzle awaiting a clever fix.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'What the argument is and is not saying',
+      claim: '"The repugnant conclusion is a recommendation: it says we should maximise the number of people."',
+      correction:
+        'It is a reductio, not a policy. Parfit used it to show that the total view, which is the natural way to think about improving the world, leads somewhere he found unacceptable. He did not endorse the conclusion, and he spent decades looking for a theory that avoided it without abandoning the idea that adding a life worth living is a good thing. The second misunderstanding is that the argument depends on science fiction. It does not. Decisions about family size, migration, animal agriculture and climate policy all change how many beings exist and how well they live, so the question of how to compare those outcomes is already inside ordinary moral reasoning.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why it matters outside the seminar',
+      body: [
+        'The most immediate application is to choices that affect future generations. Climate policy changes the number of people who will exist and the quality of their lives, and the two effects point in different directions. A discount rate that treats distant lives as worth less can make almost any present sacrifice look irrational; a totalist view can make present sacrifice look obligatory regardless of who bears it. Population ethics is the place where those intuitions are made explicit enough to argue about.',
+        'The second application is to extinction. If the total view is right, the loss of humanity is bad because of the well-being that would have existed, not because the people who would have existed are somehow harmed. That distinction matters for how we justify preventing extinction, and it is why some philosophers have looked for a view on which extinction is bad for a different reason. None of these debates has produced a consensus. What has been produced is a much clearer map of which intuitions cost what, and that is the kind of progress philosophy can honestly claim.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'Is a life that is barely worth living a benefit to the person who lives it, and can that person coherently regret existing?',
+        'Could you accept the repugnant conclusion if the alternative were a view that made adding happy people bad?',
+        'Does the argument depend on comparing well-being between people, and what happens if that comparison is only rough?',
+        'If every escape costs something, is the right response to pick the least bad cost, or to deny that the question has a single answer?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'D. Parfit, Reasons and Persons (Oxford University Press, 1984), part IV and the mere addition paradox', url: 'https://doi.org/10.1093/019824908X.001.0001' },
+    { label: 'G. Arrhenius, "The Repugnant Conclusion", Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/repugnant-conclusion/' },
+    { label: 'M. Huemer, "In defence of repugnance", Mind 117, 899 (2008)', url: 'https://doi.org/10.1093/mind/fzn079' },
+  ],
+  related: ['is-ought-gap', 'personal-identity', 'epistemic-injustice'],
+};
+
 export const PHILOSOPHY_DOSSIERS = [
   PERSONAL_IDENTITY_DOSSIER,
   EPISTEMIC_INJUSTICE_DOSSIER,
   IS_OUGHT_DOSSIER,
+  REPUGNANT_CONCLUSION_DOSSIER,
 ];

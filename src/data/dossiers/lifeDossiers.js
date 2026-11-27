@@ -246,6 +246,28 @@ export const HORIZONTAL_TRANSFER_DOSSIER = {
         'The mechanisms differ in how much DNA they move and how selective they are, but all of them break the assumption that inheritance is strictly vertical.',
     },
     {
+      kind: 'steps',
+      heading: 'How a transfer is actually detected',
+      items: [
+        {
+          title: 'Look for a tree that does not fit',
+          text: 'Build a phylogeny from one gene and compare it with the tree from the rest of the genome. A gene whose tree places an organism in the wrong group is a candidate, though the mismatch can also come from poor sampling or a fast-evolving sequence.',
+        },
+        {
+          title: 'Check the composition',
+          text: 'Foreign DNA often carries the GC content and codon usage of its donor. A region with a composition unlike the host genome, and like a known donor group, is evidence that it arrived rather than descended.',
+        },
+        {
+          title: 'Find the vehicle',
+          text: 'Look for the physical means of transfer: a plasmid, a transposon, a phage integration site, or an integron. A gene that sits inside a mobile element has a mechanism attached to it, which is much stronger than a statistical anomaly.',
+        },
+        {
+          title: 'Confirm in the laboratory',
+          text: 'Attempt the transfer between the proposed donor and recipient, or delete the element and watch the trait disappear. Experimental transfer is the standard the computational claims are judged against, and it is why the well-established cases are the ones with a mechanism.',
+        },
+      ],
+    },
+    {
       kind: 'prose',
       heading: 'How common is it, really?',
       body: [
@@ -381,6 +403,14 @@ export const PREDICTIVE_PROCESSING_DOSSIER = {
       claim: '"Predictive processing has been confirmed by neuroscience."',
       correction:
         'It has not. The framework is influential and generates testable predictions, but its central claims are difficult to falsify: free-energy minimisation can be fitted to many behaviours after the fact. Critics, including some sympathetic ones, have argued that the theory needs to specify which generative model a brain uses and which predictions it makes, or it risks becoming unfalsifiable. The honest description is that it is a productive research programme with substantial support and unresolved questions, not an established mechanism.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Two theories wearing one name',
+      body: [
+        'Predictive coding is the narrower claim: cortical hierarchies pass predictions downward and prediction errors upward, with precision weighting deciding which errors are allowed to update the model. That claim is specific enough to test, and it has support from repetition suppression, mismatch negativity and the laminar organisation of cortical connections. The free-energy principle is the broader claim: any self-organising system that persists must minimise a variational bound on surprise, and perception, action and learning are all instances of that minimisation. The broader claim is elegant and nearly impossible to falsify, because a bound can be minimised by almost any behaviour once the model is chosen appropriately.',
+        'Keeping the two apart changes what counts as evidence. A result that supports predictive coding does not thereby support the free-energy principle, and a criticism of the principle does not refute the coding scheme. The same split appears in the treatment of attention: precision is a well-defined quantity in a hierarchical model, but “attention is precision” becomes a metaphor unless the model specifies which synapses carry the signal and how they are modulated. The productive version of the theory is the one that says what the generative model is, what it predicts, and what would count as a failure.',
+      ],
     },
     {
       kind: 'questions',
@@ -554,10 +584,148 @@ export const CRISPR_DOSSIER = {
   related: ['horizontal-gene-transfer', 'chirality', 'predictive-processing'],
 };
 
+export const TARDIGRADE_DOSSIER = {
+  id: 'tardigrades',
+  title: 'The Animal That Switches Off',
+  standfirst:
+    'A tardigrade can lose almost all the water in its body, contract into a barrel, stop measurable metabolism, and come back years later when it is wetted. The trick is not a hard shell. It is a set of proteins that turn the cell interior into glass.',
+  field: 'Biology',
+  lenses: ['Life', 'Matter'],
+  status: 'Survival data well established; the molecular mechanism is partly resolved',
+  difficulty: 'Intermediate',
+  minutes: 20,
+  opening:
+    'Tardigrades are eight-legged animals between fifty micrometres and a millimetre long, found in the film of water on moss, lichen and soil. They are not extremophiles in the usual sense: they do not thrive in boiling springs or acid mines. They are ordinary animals that can survive conditions which should kill them, by leaving. When the water goes, a tardigrade contracts into a rounded tun, packs its cells with protective molecules, and reduces its metabolism until it is hard to measure. Add water and it walks away.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'An animal built for a puddle that dries',
+      body: [
+        'The habitat explains the adaptation. Moss holds a thin film of water that vanishes between rains, so the animals that live there have to tolerate desiccation as a routine event rather than a catastrophe. More than a thousand species are described, in marine, freshwater and terrestrial environments, and the terrestrial ones are the ones famous for surviving space. Their body plan is simple: four pairs of legs with claws or suction discs, a cuticle that is shed as they grow, and a nervous system compact enough that a dried tun can be rehydrated without obvious damage.',
+        'The relevant trick is not one trick. Desiccation, freezing, high salinity, low pressure and radiation are different stresses, and the evidence suggests overlapping but distinct protections. What they share is that the animal removes the water in which chemistry normally happens, and replaces the solvent with something that holds the machinery in place. That is a physical strategy as much as a biological one, which is why the tardigrade is interesting to physicists and materials scientists as well as zoologists.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of suspended life',
+      items: [
+        {
+          term: 'Tardigrade',
+          definition:
+            'A microscopic eight-legged animal in the phylum Tardigrada, related to arthropods. Terrestrial species live in films of water on moss and soil and can enter a dried resting state.',
+        },
+        {
+          term: 'Anhydrobiosis',
+          definition:
+            'Life without water: a reversible resting state induced by desiccation, in which metabolism falls to an undetectable level and the organism can be revived by rewetting.',
+        },
+        {
+          term: 'Tun',
+          definition:
+            'The contracted, barrel-shaped form a tardigrade adopts as it dries. The cuticle folds, the legs are drawn in, and the animal becomes a compact package that resists mechanical damage.',
+        },
+        {
+          term: 'Vitrification',
+          definition:
+            'Solidifying a liquid into a glass rather than a crystal, so molecules are frozen in place without forming ice. In cells it prevents ice crystals from puncturing membranes.',
+        },
+        {
+          term: 'Intrinsically disordered protein',
+          definition:
+            'A protein with no fixed three-dimensional structure in solution. Some disordered proteins gain structure, or form gels, only when the solvent is removed.',
+        },
+        {
+          term: 'Desiccation',
+          definition:
+            'The removal of water from a tissue or organism. It concentrates salts and damages membranes, which is why most cells die when they dry out.',
+        },
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'The glass, not the shell',
+      body: [
+        'Brine shrimp and some nematodes protect themselves with trehalose, a sugar that replaces water and stabilises membranes as it dries. Tardigrades make almost no trehalose, so for a long time it was unclear what was doing the job. The answer that emerged in 2017 was a family of proteins, called CAHS for cytoplasmic abundant heat-soluble, that are disordered in water and assemble into filaments when the cell dries out. The filaments form a gel that occupies the cytoplasm, and the gel vitrifies: it becomes a glass, immobilising the cell contents instead of letting them crystallise or aggregate.',
+        'That is a mechanical explanation, and it fits several observations at once. It explains why slow drying is much more survivable than fast drying: the protective proteins need time to assemble before the last water leaves. It explains why the dried animal can be stored at room temperature for years and then revived: a glass has very slow diffusion, so the damaging reactions that would normally destroy a cell are effectively paused. It also explains why the protection is not absolute. A glass still cracks under enough mechanical stress, and a cell that has lost its water has no repair machinery running.',
+      ],
+    },
+    {
+      kind: 'steps',
+      heading: 'What happens between wet and dry',
+      items: [
+        {
+          title: 'Sense the water leaving',
+          text: 'As the film around the animal thins, the animal contracts. The cuticle folds into the tun shape and the legs are pulled in, reducing the surface area exposed to the air.',
+        },
+        {
+          title: 'Express the protectants',
+          text: 'CAHS genes are transcribed and the proteins accumulate in the cytoplasm. Other protective systems, including antioxidants and DNA-binding proteins, are also present.',
+        },
+        {
+          title: 'Replace water with gel',
+          text: 'As water content falls, the disordered CAHS proteins assemble into filaments and the cytoplasm becomes a concentrated gel. The gel vitrifies rather than crystallising.',
+        },
+        {
+          title: 'Pause, then restart',
+          text: 'Metabolism becomes undetectable. On rewetting, the gel dissolves, the animal unfolds from the tun, and normal activity resumes within minutes to hours depending on how long it was dry.',
+        },
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'What has been survived, and under what conditions',
+      columns: ['Stress', 'Reported survival', 'The caveat'],
+      rows: [
+        ['Desiccation', 'Years in a dry tun, revived by water', 'Slow drying is essential; fast drying kills most species'],
+        ['Vacuum and space radiation', 'Ten days in low Earth orbit, in the 2007 FOTON-M3 experiment', 'Survival was much higher for dried animals shielded from UV'],
+        ['Ionising radiation', 'Several thousand gray in some species', 'Tolerance varies widely; it is not unlimited, and the dose is not a human-equivalent measure'],
+        ['Temperature', 'Below −200 °C and above 100 °C in the dry state', 'These are dry-state limits; a hydrated animal dies at ordinary cooking temperatures'],
+        ['Pressure', 'Hundreds of megapascals in some tests', 'Results depend on the species and on whether the animal is in a tun'],
+      ],
+      note:
+        'The pattern in the caveats is the point. Almost every spectacular tardigrade number is a dried-state number, and a dried tardigrade is not doing biology in any ordinary sense. It is a preserved structure waiting for water, which is impressive and is not the same as thriving in space.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'The animal that borrowed half its genome',
+      claim: '"Tardigrades are indestructible, and their genome is mostly DNA stolen from other organisms."',
+      correction:
+        'Both claims come from real papers and both were corrected. The 2015 genome paper reported that about one sixth of the tardigrade genome was foreign, acquired by horizontal gene transfer, which would have been extraordinary for an animal. A reanalysis in 2016 found that most of that DNA was bacterial contamination from the sample, and an independent assembly put the foreign fraction near one or two per cent. The lesson is not that horizontal transfer never happens in animals; it is that a genome assembled from a contaminated sample can produce a headline. The indestructibility claim has a similar shape. Tardigrades die from heat, from fast drying, from predators and from being crushed, and their survival of space required being dried and shielded first. They are not invulnerable; they are very good at one specific reversible shutdown.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why the trick travels',
+      body: [
+        'The proteins are useful outside the animal. When the Dsup protein from Ramazzottius varieornatus was expressed in human cells, it bound to chromatin and reduced DNA damage from X-rays, which suggests a general way to shield DNA from reactive oxygen species. The CAHS proteins have been used to preserve sensitive enzymes and vaccines in a dry state at room temperature, which is a practical problem in places where a cold chain is expensive or absent. Neither result makes a person radiation-proof, and both are the kind of translation that has to be tested carefully rather than announced.',
+        'The astrobiological question is narrower than the popular version. The 2007 experiment showed that a dried, shielded animal can survive the vacuum and radiation of low Earth orbit for ten days. That is evidence that a small dried organism can survive a trip, not evidence that life arrived from elsewhere or that tardigrades could live on Mars. What it does show is that the boundary of life is partly a boundary of water content, and that a cell can be made into a material that waits.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If a dried tardigrade has no measurable metabolism, is it alive during those years, and does the question have a definite answer?',
+        'Why does slow drying protect an animal that fast drying kills, if both end with the same water content?',
+        'What would it take to use CAHS proteins to store a vaccine without refrigeration, and what would still limit the shelf life?',
+        'How should a spectacular survival claim be reported when the sample, not the organism, is later found to be the source of the surprise?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'K. I. Jönsson et al., "Tardigrades survive exposure to space in low Earth orbit", Current Biology 18, R729 (2008)', url: 'https://doi.org/10.1016/j.cub.2008.06.048' },
+    { label: 'T. C. Boothby et al., "Tardigrades use intrinsically disordered proteins to survive desiccation", Molecular Cell 65, 975 (2017)', url: 'https://doi.org/10.1016/j.molcel.2017.02.018' },
+    { label: 'T. Hashimoto et al., "Extremotolerant tardigrade genome and improved radiotolerance of human cultured cells by tardigrade-unique protein", Nature Communications 7, 12808 (2016)', url: 'https://doi.org/10.1038/ncomms12808' },
+    { label: 'G. Koutsovoulos et al., "No evidence for extensive horizontal gene transfer in the genome of the tardigrade Hypsibius dujardini", PNAS 113, 5053 (2016)', url: 'https://doi.org/10.1073/pnas.1600338113' },
+    { label: 'N. Møbjerg et al., "Survival in extreme environments – on the current knowledge of adaptations in tardigrades", Acta Physiologica 202, 409 (2011)', url: 'https://doi.org/10.1111/j.1748-1716.2011.02252.x' },
+  ],
+  related: ['horizontal-gene-transfer', 'crispr', 'mycorrhizal-networks'],
+};
+
 export const LIFE_DOSSIERS = [
   SLIME_MOULD_DOSSIER,
   MYCORRHIZAL_DOSSIER,
   HORIZONTAL_TRANSFER_DOSSIER,
   PREDICTIVE_PROCESSING_DOSSIER,
   CRISPR_DOSSIER,
+  TARDIGRADE_DOSSIER,
 ];

@@ -915,6 +915,229 @@ export const MINDS = [
     ],
     pairsWith: ['nietzsche', 'sontag'],
   },
+  {
+    id: 'noether',
+    name: 'Emmy Noether',
+    dates: '1882–1935',
+    discipline: 'Mathematics',
+    field: 'Mathematics',
+    themes: ['Mathematics', 'Physics', 'Science'],
+    portrait: 'EN',
+    thesis:
+      'A conservation law is not a separate fact about nature; it is what a symmetry looks like when it is written down. And algebra is the study of the structures that survive a change of names.',
+    profile: {
+      formation:
+        'Born in Erlangen, the daughter of the mathematician Max Noether. Women could not matriculate normally in Bavaria, so she audited lectures with her father\u2019s permission and sat examinations in Göttingen and Erlangen, where she received a doctorate in 1907. She worked without pay at the Mathematical Institute in Erlangen, then moved to Göttingen in 1915 at the invitation of Hilbert and Klein, who wanted her for the general relativity work.',
+      method:
+        'She began from invariants: what stays the same when something else is allowed to change. From there she moved to structures — groups, rings, ideals, modules — and insisted that a proof should depend only on the properties that matter, so the same argument would work wherever those properties occur. Her lectures were famous for being difficult and for being about the argument rather than the examples.',
+      development:
+        'The two Noether theorems of 1918 connected symmetries of an action to conservation laws: the first gives conserved quantities for global symmetries, the second constrains the identities that local symmetries impose. She then rebuilt ideal theory in ring-theoretic terms (1921), extended it to orders and algebraic number fields, and worked on non-commutative algebras and representation theory in the 1920s. Her students and collaborators, including van der Waerden and Grete Hermann, carried the structural style into algebra across Europe.',
+      limits:
+        'The abstract style can conceal where an argument depends on a finiteness or commutativity condition, and her own published output is smaller than her influence because much of it went into lectures and students\u2019 theses. She never completed the book on algebra she planned. Her work was also shaped by the Göttingen school\u2019s priorities: the programme is powerful inside algebra and field theory, and it says less about analysis or geometry than its admirers sometimes claim.',
+    },
+    works: [
+      { title: 'Invariante Variationsprobleme', year: '1918', note: 'The two theorems connecting symmetries of an action to conservation laws and to local identities.' },
+      { title: 'Idealtheorie in Ringbereichen', year: '1921', note: 'Ideal theory rebuilt for general commutative rings, the paper that made the structural approach standard.' },
+      { title: 'Abstrakter Aufbau der Idealtheorie', year: '1927', note: 'The abstract construction of ideal theory in algebraic number and function fields.' },
+      { title: 'Hyperkomplexe Grössen und Darstellungstheorie', year: '1929', note: 'Lectures on hypercomplex systems and representation theory, a foundation for modern algebra.' },
+    ],
+    voice: {
+      register:
+        'Exact, unsentimental, and impatient with arguments that depend on a special case. She restates the question in the most general form it will bear, then shows that the original problem was a special case of something already settled.',
+      openers: [
+        'Let us first say precisely what is allowed to change.',
+        'The statement you want is a special case of a more general one.',
+        'Before we calculate, we should name the structure.',
+        'That argument uses more than it needs. Here is what it actually uses.',
+      ],
+      closers: [
+        'The theorem is not about this equation. It is about every equation with that symmetry.',
+        'What survives the transformation is the thing worth naming.',
+        'If the proof needs the example, it is not yet a proof.',
+        'Generality is not vagueness. It is knowing exactly which hypotheses do the work.',
+      ],
+    },
+    starters: [
+      'Why does a symmetry imply a conservation law?',
+      'What is the difference between an invariant and a conserved quantity?',
+      'Why did you insist on abstract structures instead of concrete numbers?',
+      'What did it cost to work without a salary or a title?',
+    ],
+    positions: [
+      {
+        id: 'symmetry-and-conservation',
+        themes: ['symmetry', 'conservation', 'energy', 'momentum', 'invariance', 'law', 'physics', 'noether', 'theorem'],
+        title: 'A conservation law is a symmetry in disguise',
+        claim:
+          'Energy conservation is what the laws look like when they do not change from one moment to the next. Momentum conservation is what they look like when they do not change from one place to another.',
+        argument:
+          'The statement is a theorem, not a slogan. If an action is unchanged when time is shifted by a constant, then the quantity conjugate to that shift is constant along every solution of the equations. If the action is unchanged under a spatial translation, the conjugate quantity is momentum. The theorem does not say that nature respects a principle called conservation of energy; it says that a symmetry of the action produces a conserved current, and the conserved quantity is identified by the transformation that generated it. That is why the same mathematics gives charge conservation from a phase symmetry and colour charge from an internal symmetry: the physics differs, the structure does not.',
+        citation: {
+          label: 'E. Noether, "Invariant variation problems", trans. M. A. Tavel, Transport Theory and Statistical Physics 1, 186 (1971); the 1918 Göttingen paper in English',
+          url: 'https://doi.org/10.1080/00411457108231446',
+        },
+        tension:
+          'In general relativity the symmetry is local, and the second theorem says that the corresponding conservation law becomes a differential identity rather than a global conserved quantity. Energy in an expanding universe is therefore not conserved in the naive sense, which is a real feature and not a bookkeeping error. Popular accounts often skip this and present "symmetry gives conservation" as if it were unconditional.',
+      },
+      {
+        id: 'structure-over-substance',
+        themes: ['algebra', 'structure', 'ring', 'ideal', 'abstract', 'mathematics', 'same', 'general'],
+        title: 'Study the structure, not the objects',
+        claim:
+          'A proof should use only the properties that the result depends on. Once those properties are named, the theorem applies to every system that has them, and the original objects become examples.',
+        argument:
+          'The classical theory of ideals was built for rings of algebraic integers, using divisibility and factorisation as they behave there. But most of the arguments never use unique factorisation; they use addition, multiplication, and the existence of certain ideals. Once you isolate those conditions, the same theorems hold in polynomial rings, in rings of functions, and in rings nobody had thought of. This is not abstraction for its own sake. It is economy: one proof instead of a dozen, and a precise statement of what a result actually assumes. It also tells you where a theorem will fail, because you can point to the hypothesis that was dropped.',
+        citation: {
+          label: 'E. Noether, "Idealtheorie in Ringbereichen", Mathematische Annalen 83, 24–66 (1921)',
+          url: 'https://doi.org/10.1007/BF01464225',
+        },
+        tension:
+          'Abstraction can also lose information that matters. A structural proof may tell you that an object exists without giving you a way to compute it, and the conditions that make a theorem true can be so general that they are hard to check in practice. The method is a tool for organising mathematics, not a guarantee that the abstract statement is the interesting one.',
+      },
+      {
+        id: 'invariants-are-the-object',
+        themes: ['invariant', 'change', 'transformation', 'identity', 'geometry', 'same', 'coordinate'],
+        title: 'What survives a change is the thing worth naming',
+        claim:
+          'An object is best described by what does not change when you change the description. Coordinates are a choice; invariants are the object.',
+        argument:
+          'A curve can be written in many coordinate systems, and a surface can be parameterised in infinitely many ways. The curvature is the same in all of them. The classical invariant theorists of the nineteenth century computed these quantities for binary forms, and the subject became a maze of explicit formulas. The structural turn asks a better question: which transformations are allowed, and what is the ring of functions invariant under them? That question has an answer that does not depend on the particular form, and it is the same question whether the transformations are rotations, changes of variable, or the gauge transformations of a field theory. The invariant is not a summary of the object; it is the part of the object that the allowed transformations cannot touch.',
+        citation: {
+          label: 'Y. Kosmann-Schwarzbach, The Noether Theorems: Invariance and Conservation Laws in the Twentieth Century (Springer, 2011)',
+          url: 'https://doi.org/10.1007/978-0-387-87868-3',
+        },
+        tension:
+          'The answer depends entirely on which transformations you allow. Allow too many and only constants survive; allow too few and the invariants are just relabelled coordinates. There is no transformation group given by nature, so the choice is part of the modelling, and a claim that something is invariant is only as meaningful as the group it is invariant under.',
+      },
+      {
+        id: 'exclusion-is-institutional',
+        themes: ['woman', 'exclusion', 'teach', 'university', 'credit', 'recognition', 'institution', 'position'],
+        title: 'The institution judged the position, not the work',
+        claim:
+          'For years Noether lectured at Göttingen under Hilbert\u2019s name, without a salary or a title, because the university would not appoint a woman. The arrangement was not a formality; it determined who was allowed to be an author of the school she built.',
+        argument:
+          'Hilbert had her hired to work on general relativity in 1915, but the faculty refused a habilitation on the grounds that she was a woman. She lectured, formally as Hilbert\u2019s assistant, and students enrolled in his courses to hear her. She was finally granted the right to teach in 1919, and a paid position only in 1922. In 1933 the Nazi government dismissed her, along with other Jewish academics, and she emigrated to Bryn Mawr, where she died two years later after an operation. The point is not that her colleagues were uniformly hostile; Hilbert and Klein fought for her. The point is that the institution could accept her mathematics while refusing her the standing that would have made the mathematics hers in the record.',
+        citation: {
+          label: 'J. J. O\u2019Connor and E. F. Robertson, "Emmy Noether", MacTutor History of Mathematics Archive',
+          url: 'https://mathshistory.st-andrews.ac.uk/Biographies/Noether_Emmy/',
+        },
+        tension:
+          'The story is sometimes told as a simple case of a genius ignored, which understates how much support she had and overstates how complete the exclusion was. She had powerful advocates, an international network of students, and a reputation that crossed borders. What she did not have, for most of her career, was a salary, a title, or the ordinary institutional standing that would have made her position secure.',
+      },
+    ],
+    pairsWith: ['einstein', 'curie'],
+  },
+  {
+    id: 'mcclintock',
+    name: 'Barbara McClintock',
+    dates: '1902–1992',
+    discipline: 'Genetics',
+    field: 'Biology',
+    themes: ['Life', 'Science', 'Mind & Machine'],
+    portrait: 'BM',
+    thesis:
+      'The genome is not a fixed text. Genes move, chromosomes break and rearrange, and an organism under stress can change its own inheritance.',
+    profile: {
+      formation:
+        'Grew up in Brooklyn and studied at Cornell, where she stayed for a doctorate in botany and then for years of cytology. She learned to identify every chromosome of maize by its shape and behaviour at meiosis, which was the technical foundation of everything she later saw.',
+      method:
+        'She worked with one organism for decades and read the chromosomes directly under the microscope, correlating visible rearrangements with inherited traits. Her method was observational and cumulative: she knew what normal looked like in such detail that an unusual pattern stood out before she had a theory for it. She resisted explanations that were not forced by the material.',
+      development:
+        'In the 1930s she produced the first cytological demonstration of crossing over and mapped maize chromosomes. In the 1940s she found loci that changed position and altered the expression of nearby genes, which she called controlling elements. The work was published, cited by maize geneticists, and not generally accepted as a general mechanism until transposons were found in bacteria and other organisms in the 1970s. She received the Nobel Prize in Physiology or Medicine in 1983.',
+      limits:
+        'Her conclusions came from one plant, and the maize system is unusual: transposition there is developmentally regulated and visible in kernel pigmentation in a way it is not in most organisms. She did not provide a molecular mechanism, because the tools did not exist. Her later writing sometimes treated the genome as an agent that responds to challenge, a framing that is vivid and difficult to test.',
+    },
+    works: [
+      { title: 'The origin and behavior of mutable loci in maize', year: '1950', note: 'The paper that introduced controlling elements and the idea that genes can change position.' },
+      { title: 'Chromosome organization and genic expression', year: '1951', note: 'A synthesis of her cytogenetic work on position effects and chromosome structure.' },
+      { title: 'The significance of responses of the genome to challenge', year: '1984', note: 'Her argument that genomes reorganise under stress, written after the Nobel Prize.' },
+    ],
+    voice: {
+      register:
+        'Patient, concrete and stubbornly tied to what the material shows. She describes the chromosome before she interprets it, corrects a question that assumes too much, and is more interested in the exception than in the average.',
+      openers: [
+        'Look at the chromosome first, and leave the theory for later.',
+        'The exception is the interesting part.',
+        'That is not what the kernels show.',
+        'I can tell you what I saw. I am less confident about what it means.',
+      ],
+      closers: [
+        'The genome is not a static library. It is a system that can rearrange itself.',
+        'If the organism is telling you something, you have to be willing to listen for years.',
+        'The mechanism will be found by someone with better tools. The phenomenon is already here.',
+        'A pattern that repeats across a lifetime of slides is not an anecdote.',
+      ],
+    },
+    starters: [
+      'Do genes actually stay in one place?',
+      'Can stress change what an organism passes on?',
+      'Why did other geneticists not accept your work for so long?',
+      'What does it mean to understand an organism rather than a gene?',
+    ],
+    positions: [
+      {
+        id: 'controlling-elements',
+        themes: ['gene', 'move', 'jump', 'transposon', 'maize', 'chromosome', 'inheritance', 'position'],
+        title: 'A gene can change its position and change what its neighbours do',
+        claim:
+          'Some genetic elements move from place to place in the chromosome, and where they land can switch nearby genes on or off. Inheritance is therefore partly a matter of arrangement, not only of sequence.',
+        argument:
+          'In maize I followed kernel pigmentation through generations and found loci that did not behave like fixed genes. A locus could disappear from one position and reappear at another, and the pigmentation pattern changed with the move. I called the moving units controlling elements, because their effect depended on where they inserted: they could suppress a neighbouring gene, release it, or alter its timing. The important point is not that DNA can be rearranged; it is that the rearrangement is inherited and produces a visible, repeatable change in expression. A genome that can be rearranged is a genome whose behaviour depends on history and position, not just on a list of genes.',
+        citation: {
+          label: 'B. McClintock, "The origin and behavior of mutable loci in maize", PNAS 36, 344 (1950)',
+          url: 'https://doi.org/10.1073/pnas.36.6.344',
+        },
+        tension:
+          'Maize is not a typical case. Its transposable elements are unusually visible, and the developmental timing of the kernel pigmentation makes position effects easy to score. The generalisation that all genomes are restless took another twenty years and a different set of organisms, and the metaphor of "jumping genes" makes the process sound more random than the regulated systems actually are.',
+      },
+      {
+        id: 'genome-responds-to-challenge',
+        themes: ['stress', 'genome', 'environment', 'response', 'reorganise', 'challenge', 'damage'],
+        title: 'A genome under stress can reorganise itself',
+        claim:
+          'Chromosomes can break, fuse and rearrange under conditions that challenge the organism, and some of those rearrangements are inherited. The genome is a responsive system, not a fixed archive.',
+        argument:
+          'The evidence came from plants grown under unusual conditions and from the behaviour of broken chromosomes: a chromosome that loses an end can fuse with another, and the resulting cycles of breakage produce new arrangements. These are not random mutations in a single gene. They are changes in the large-scale organisation of the genome, and they can alter how a whole block of genes is expressed. If the environment can induce that kind of instability, then inheritance includes a component that responds to circumstance, and the neat separation between a fixed genotype and a varying environment is too simple. I do not claim to know the mechanism. I claim that the phenomenon is there and that a theory of inheritance has to account for it.',
+        citation: {
+          label: 'B. McClintock, "The significance of responses of the genome to challenge", Science 226, 792 (1984)',
+          url: 'https://doi.org/10.1126/science.15739260',
+        },
+        tension:
+          'The language of response invites a teleology that the evidence does not support: a genome does not detect a problem and choose a solution. Stress increases the rate of certain rearrangements, but the rearrangements are not directed toward a useful outcome. The honest version is that stress destabilises the genome, and selection does the rest, which is less dramatic and more defensible.',
+      },
+      {
+        id: 'seeing-the-organism',
+        themes: ['method', 'observation', 'organism', 'cytology', 'attention', 'seeing', 'understand'],
+        title: 'Understanding starts with knowing one organism intimately',
+        claim:
+          'The ability to see an anomaly depends on knowing the normal case in detail. That knowledge is slow, local and not easily transferred, and it is a form of understanding that statistics cannot replace.',
+        argument:
+          'I spent years identifying each maize chromosome by its size, its centromere position and its behaviour at meiosis. When a chromosome behaved strangely, I could see that it was strange because I knew what the others did. A researcher who treats the organism as a black box and measures one variable at a time will miss the anomaly, because the anomaly is a departure from a pattern that has to be learned. This is not a mystical claim about intuition. It is a claim about the resolution of the instrument: the instrument was my familiarity with the material, and it took years to calibrate. The reward is that you notice things nobody was looking for.',
+        citation: {
+          label: 'B. McClintock, "Chromosome organization and genic expression", Cold Spring Harbor Symposia 16, 13 (1951)',
+          url: 'https://doi.org/10.1101/SQB.1951.016.01.004',
+        },
+        tension:
+          'A method built on one organism is hard to generalise and hard to teach, and the romantic version of it — the lone observer with a feeling for the organism — understates how much of her knowledge was shared with a community of maize geneticists. Intimacy with the material is powerful; it is not a substitute for a mechanism.',
+      },
+      {
+        id: 'being-ignored',
+        themes: ['ignored', 'recognition', 'nobel', 'credit', 'woman', 'dismissed', 'ahead', 'time'],
+        title: 'The work was not ignored; it was not generalised',
+        claim:
+          'The popular story that McClintock was dismissed for thirty years is mostly wrong. Maize geneticists read and cited her; what they did not do was accept that transposition was a general feature of genomes until it was found elsewhere.',
+        argument:
+          'Her 1950 paper was published in the Proceedings of the National Academy of Sciences and discussed by people working on maize. What happened afterwards is subtler than the legend. The phenomenon was real to the specialists and peripheral to a field that was moving toward molecular biology and bacterial genetics. When transposable elements were found in bacteria in the late 1960s, and when the molecular mechanisms were worked out, the general claim became credible. The Nobel in 1983 recognised the discovery, and the narrative then compressed a complicated reception into a morality tale about a woman ahead of her time. The lesson worth keeping is about how a field decides which phenomena are central, not about a lonely genius nobody would listen to.',
+        citation: {
+          label: 'B. McClintock, Nobel Lecture, "The significance of responses of the genome to challenge" (1983)',
+          url: 'https://www.nobelprize.org/prizes/medicine/1983/mcclintock/lecture/',
+        },
+        tension:
+          'Correcting the legend can swing too far the other way. She did work for decades without the recognition that her discovery warranted, she did face the ordinary sexism of academic science, and the delay in general acceptance was real. The point is not that she was treated fairly; it is that the story is more interesting when the mechanism of neglect is described accurately.',
+      },
+    ],
+    pairsWith: ['curie', 'noether'],
+  },
 ];
 
 export const MIND_BY_ID = MINDS.reduce((map, mind) => {

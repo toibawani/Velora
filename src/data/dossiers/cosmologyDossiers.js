@@ -393,8 +393,141 @@ export const COSMOLOGICAL_CONSTANT_DOSSIER = {
   related: ['hubble-tension', 'false-vacuum', 'arrow-of-time'],
 };
 
+export const FERMI_DOSSIER = {
+  id: 'fermi-paradox',
+  title: 'The Silence',
+  standfirst:
+    'The galaxy is old enough that a civilisation with slow ships could have crossed it many times over. We see no sign that anyone has. The gap between those two sentences is the Fermi paradox, and it is a gap in our priors rather than in our telescopes.',
+  field: 'Cosmology',
+  lenses: ['Origins', 'Mind & Machine'],
+  status: 'Open; the Drake equation is a framework, not a measurement',
+  difficulty: 'Intermediate',
+  minutes: 22,
+  opening:
+    'The story is usually told as a lunch at Los Alamos in 1950. Enrico Fermi, Edward Teller and others were talking about flying saucers and interstellar travel, and Fermi asked the question that became a name: where is everybody? The force of it is arithmetic. The Milky Way is about ten billion years old. Even at a thousandth of the speed of light, a civilisation could cross it in a hundred million years, and a robotic probe that copies itself could do it faster. If technological life were common, the galaxy should show it. It does not.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'An argument from absence, with unmeasured premises',
+      body: [
+        'The paradox is not the observation. The observation is that we have found no evidence of extraterrestrial technology: no signals, no artefacts, no atmospheric signatures, no structures that cannot be explained naturally. The paradox is the tension between that observation and the expectation that life and intelligence are common. Remove the expectation and the observation is unsurprising. Strengthen the expectation and the observation becomes a crisis. Everything interesting about the problem lives in that expectation, which is why the argument is really about the unknown factors in the Drake equation.',
+        'The strongest empirical constraint is not the absence of radio signals. It is the absence of visitation or settlement. A single civilisation that builds self-replicating probes could cover the galaxy in a time short compared with the galaxy\u2019s age, and the probes would not need to be crewed or cheap. So the absence of any such presence is evidence, though not proof, that either interstellar expansion is much harder than it looks, or technological civilisations are rare, or they do not last long enough to expand.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of the silence',
+      items: [
+        {
+          term: 'Drake equation',
+          definition:
+            'A product of factors estimating the number of communicating civilisations in the galaxy. It is a way of organising ignorance, not a measurement, because several factors have never been measured.',
+        },
+        {
+          term: 'Great Filter',
+          definition:
+            'A step in the history from simple chemistry to a spacefaring civilisation that is so improbable that it explains the silence. The filter can be behind us or ahead of us, and which one it is matters enormously.',
+        },
+        {
+          term: 'Biosignature',
+          definition:
+            'A feature of a planet\u2019s atmosphere or surface that indicates life, such as oxygen and methane together in amounts that cannot be maintained abiotically.',
+        },
+        {
+          term: 'Technosignature',
+          definition:
+            'Evidence of technology rather than mere life: radio or optical signals, industrial pollutants, waste heat, or structures that no natural process produces.',
+        },
+        {
+          term: 'Von Neumann probe',
+          definition:
+            'A self-replicating machine that could spread through a galaxy without returning home. Its feasibility is an engineering question, and its absence is one of the strongest constraints on the prevalence of expanding civilisations.',
+        },
+        {
+          term: 'Panspermia',
+          definition:
+            'The hypothesis that life travels between worlds on meteorites or dust. It can explain a shared origin for life, but it does not explain how life began.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The Drake equation, and why it cannot settle the question',
+      equation: 'N = R* × f_p × n_e × f_l × f_i × f_c × L',
+      symbols: [
+        { symbol: 'N', meaning: 'The number of civilisations in the galaxy whose signals could be detected now' },
+        { symbol: 'R*', meaning: 'The average rate of star formation in the galaxy, in stars per year' },
+        { symbol: 'f_p', meaning: 'The fraction of stars with planetary systems' },
+        { symbol: 'n_e', meaning: 'The average number of planets per system that could support life' },
+        { symbol: 'f_l', meaning: 'The fraction of those planets on which life actually appears' },
+        { symbol: 'f_i', meaning: 'The fraction of life-bearing planets on which intelligent life evolves' },
+        { symbol: 'f_c', meaning: 'The fraction of intelligent species that develop detectable technology' },
+        { symbol: 'L', meaning: 'The average lifetime of such a civilisation, in years, which sets how many are detectable at once' },
+      ],
+      body: [
+        'The first three factors are now measured well enough to be interesting. Star formation is a few stars per year; most stars have planets; a substantial fraction of those planets sit in the temperate zone. The last four are not measured at all. f_l has a sample size of one, f_i and f_c have a sample size of one, and L is a guess about the future of a civilisation we have never observed. Multiplying four unknowns gives a number whose uncertainty spans many orders of magnitude, which is why the same equation can be used to argue for a crowded galaxy and an empty one.',
+        'Sandberg, Drexler and Ord made that uncertainty the point in 2018. Instead of picking central values, they sampled each factor over a range spanning several orders of magnitude and looked at the distribution of N. They found roughly a thirty per cent probability that there is no other technological civilisation in the observable universe, and a distribution broad enough that the expected number is dominated by rare, extreme values. The lesson is not that we are probably alone. It is that a calculation with four unmeasured factors cannot tell you that we are probably not.',
+      ],
+      assumptions: [
+        'The factors are treated as independent, which they probably are not: the emergence of life and the emergence of intelligence may share a requirement.',
+        'A civilisation is counted only if it produces a signal we could detect, which excludes quiet or short-lived civilisations by definition.',
+        'The galaxy is treated as a single well-mixed population, which ignores the possibility that civilisations rise and fall at different times and places.'
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The proposed resolutions, and the evidence each would need',
+      columns: ['Resolution', 'The claim', 'What would test it'],
+      rows: [
+        ['Rare Earth', 'Complex life needs a conjunction of conditions that is very unlikely', 'Atmospheric studies of many temperate rocky planets, looking for biosignatures'],
+        ['Early filter', 'The origin of life, or of eukaryotes, is the improbable step', 'Evidence of independent origins of life in the solar system, or a convincing chemistry for abiogenesis'],
+        ['Late filter', 'Intelligence or technology is the improbable step', 'A better sample of evolved biospheres, which requires finding any life elsewhere'],
+        ['Short lifetimes', 'Civilisations appear but do not last long enough to be seen', 'Nothing direct; it is a claim about a future we cannot observe'],
+        ['They are quiet', 'Civilisations exist but do not broadcast or expand', 'A signal, or a technosignature such as industrial pollution in an atmosphere'],
+        ['We are first', 'The galaxy is young enough that nobody has preceded us', 'A census of biosignatures across a range of stellar ages'],
+      ],
+      note:
+        'The rows are not equally respectable. Rare Earth and the filter hypotheses are empirical claims that new telescopes could support or undermine. Short lifetimes and the quiet-civilisation hypotheses are claims about behaviour, and behaviour is not observable from a distance unless it leaves a physical trace. That asymmetry is why the biosignature search is the most informative programme in the field.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'What the silence does not prove',
+      claim: '"The Fermi paradox proves that we are alone, or that aliens are hiding from us."',
+      correction:
+        'It proves neither. An argument from absence is only as strong as the expectation it denies, and the expectation rests on factors nobody has measured. The silence is consistent with a galaxy in which microbial life is common and technological life is vanishingly rare, with one in which civilisations arise but collapse quickly, and with one in which they exist and leave no trace we can recognise. It is also consistent with our searches being young, narrow and underfunded: the search space of frequencies, times and directions is enormous, and we have sampled a small part of it for a few decades. The correct conclusion is narrower and more useful: if technological civilisations were both common and long-lived, we should have seen something by now, so at least one of those two assumptions is probably false.',
+    },
+    {
+      kind: 'prose',
+      heading: 'What would actually change the argument',
+      body: [
+        'A biosignature would change it more than a signal would. A signal is a single event that could be a hoax, an artefact or a misunderstanding; a confirmed biosignature on a nearby planet would establish that life is not a one-off, which would raise f_l from a guess to a measurement. If life turned out to be common, the filter would move to the later steps, and the silence would become a statement about intelligence or longevity rather than about chemistry. If life turned out to be rare, the opposite happens.',
+        'The other change would be a technosignature with no natural explanation: an atmosphere out of chemical equilibrium in a way only industry produces, or waste heat from a structure. Neither has been found. Until one is, the honest description of the field is that we have one sample of life, one sample of technology, and a very large galaxy. The paradox is a prompt to measure, not a result about the universe, and the measurements that matter are being built now.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If a self-replicating probe is physically possible, why has no civilisation built one that we can see?',
+        'Does the absence of signals tell us more about the galaxy or about the sensitivity of our searches?',
+        'Would confirmed microbial life elsewhere make the silence more or less puzzling?',
+        'Is the Great Filter more likely to be behind us or ahead of us, and what follows for how we should act?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'M. H. Hart, "An explanation for the absence of extraterrestrials on Earth", Quarterly Journal of the Royal Astronomical Society 16, 128 (1975)', url: 'https://ui.adsabs.harvard.edu/abs/1975QJRAS..16..128H/abstract' },
+    { label: 'F. J. Tipler, "Extraterrestrial intelligent beings do not exist", Quarterly Journal of the Royal Astronomical Society 21, 267 (1980)', url: 'https://ui.adsabs.harvard.edu/abs/1980QJRAS..21..267T/abstract' },
+    { label: 'A. Sandberg, E. Drexler, T. Ord, "Dissolving the Fermi paradox", arXiv:1806.02404 (2018)', url: 'https://arxiv.org/abs/1806.02404' },
+    { label: 'T. Westby and C. J. Conselice, "The astrobiological Copernican weak and strong limits for intelligent life", Astrophysical Journal 896, 58 (2020)', url: 'https://doi.org/10.3847/1538-4357/ab8225' },
+    { label: 'R. Hanson, "The Great Filter — Are we almost past it?" (1998)', url: 'https://mason.gmu.edu/~rhanson/greatfilter.html' },
+  ],
+  related: ['dark-matter', 'arrow-of-time', 'hubble-tension'],
+};
+
 export const COSMOLOGY_DOSSIERS = [
   HUBBLE_TENSION_DOSSIER,
   DARK_MATTER_DOSSIER,
   COSMOLOGICAL_CONSTANT_DOSSIER,
+  FERMI_DOSSIER,
 ];

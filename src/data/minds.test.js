@@ -11,9 +11,9 @@ import {
 } from './mindsEngine';
 
 describe('the Minds library', () => {
-  test('has eight researched figures', () => {
-    expect(MINDS).toHaveLength(8);
-    expect(new Set(MINDS.map((mind) => mind.id)).size).toBe(8);
+  test('has ten researched figures', () => {
+    expect(MINDS).toHaveLength(10);
+    expect(new Set(MINDS.map((mind) => mind.id)).size).toBe(10);
   });
 
   test('every profile has the four research sections and a source for each position', () => {

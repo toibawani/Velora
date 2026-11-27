@@ -600,6 +600,26 @@ export const TURING_DOSSIER = {
       ],
     },
     {
+      kind: 'math',
+      heading: 'The halting function, and the program built to break it',
+      equation: 'H(e, x) = 1 if program e halts on input x, and 0 otherwise',
+      symbols: [
+        { symbol: 'H', meaning: 'A hypothetical total function that decides halting for every program and input' },
+        { symbol: 'e', meaning: 'The index of a program in a fixed enumeration of all programs' },
+        { symbol: 'x', meaning: 'The input, itself encoded as a number, so programs can be given programs as input' },
+        { symbol: '1, 0', meaning: 'The two answers: halts, or does not halt' },
+      ],
+      body: [
+        'Assume H exists and is computable. Build a new program D that takes an index e, calls H(e, e), and then does the opposite: if H says the program halts on its own index, D loops forever; if H says it does not halt, D stops immediately. Now ask what H(D, D) returns. If it returns 1, D halts on D, but by construction D loops whenever H says it halts. If it returns 0, D does not halt, but by construction D stops whenever H says it does not. Either answer is wrong, so no such H can exist.',
+        'The argument is not a trick about self-reference; it is a counting argument wearing a program as a disguise. There are more functions from programs to answers than there are programs to compute them, and the diagonal construction exhibits a function left over. That is why the result survives every change of machine model, and why Rice’s theorem extends it from halting to any non-trivial property of what a program computes. The only assumption that can be given up is that H is total and computable; giving it up is what practical program analysis does when it returns “maybe” instead of an answer.',
+      ],
+      assumptions: [
+        'Programs can be enumerated and encoded as inputs, so a program can be run on its own description. This is the universality that makes a general-purpose computer possible.',
+        'H is required to terminate with a correct answer on every input. A procedure that sometimes runs forever is not a decision procedure.',
+        'The machine model is fixed in advance, so “program” has a precise meaning. The result holds for any model with the same computational power.',
+      ],
+    },
+    {
       kind: 'steps',
       heading: 'The diagonal argument, step by step',
       items: [
@@ -804,6 +824,156 @@ export const MOONSHINE_DOSSIER = {
   related: ['banach-tarski', 'godel-incompleteness', 'time-crystals'],
 };
 
+export const BUSY_BEAVER_DOSSIER = {
+  id: 'busy-beaver',
+  title: 'The Largest Number Anyone Can Name',
+  standfirst:
+    'Give a Turing machine a fixed number of states and ask how long it can run before it stops. The answer grows faster than any function a computer can calculate, and the first five values were only settled after decades of work.',
+  field: 'Mathematics',
+  lenses: ['Infinity', 'Logic', 'Mind & Machine'],
+  status: 'Established theory; the five-state value was proved in 2024, six states remain open',
+  difficulty: 'Advanced',
+  minutes: 23,
+  opening:
+    'In 1962 the mathematician Tibor Radó posed a competition that looks like a joke. Take a Turing machine with n states and two tape symbols. Start it on a blank tape. Among all the machines that eventually halt, which one runs the longest? Call that maximum BB(n). The first values are small enough to check by hand: 1, 6, 21, 107. The fifth is 47,176,870, and it took until 2024 to prove. The sixth is unknown, and the reasons it is unknown are the reasons the halting problem is undecidable.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'A game with a fixed board and no ceiling',
+      body: [
+        'A Turing machine is the simplest useful model of a computer: a tape divided into cells, a head that reads and writes one symbol at a time, and a finite table of rules saying what to do in each state. With two symbols and n states there are finitely many such machines, so in principle you can list them all. Some halt, some never do, and among those that halt some run far longer than others. BB(n) is the longest run among the halters.',
+        'The definition separates two questions that are easy to confuse. Deciding whether a particular machine halts is the halting problem, and it is undecidable in general. Computing BB(n) is a different question about a single number, and for small n it has a definite answer that people have found. What makes the function remarkable is that knowing BB(n) for every n would solve the halting problem outright: run any n-state machine for BB(n) steps, and if it has not stopped by then, it never will.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of a very long computation',
+      items: [
+        {
+          term: 'Turing machine',
+          definition:
+            'An abstract computer consisting of an infinite tape, a read/write head and a finite table of rules. Anything a present-day computer can compute, a Turing machine can compute.',
+        },
+        {
+          term: 'Halting problem',
+          definition:
+            'The problem of deciding, for an arbitrary program and input, whether the program eventually stops. Turing proved in 1936 that no algorithm can decide it for all cases.',
+        },
+        {
+          term: 'Busy beaver function',
+          definition:
+            'The maximum number of steps a halting n-state, two-symbol Turing machine can run from a blank tape. It grows faster than any computable function.',
+        },
+        {
+          term: 'Computable function',
+          definition:
+            'A function whose value can be produced by a finite procedure that always terminates. The busy beaver function is not one of them, which is what makes it useful as a measuring stick.',
+        },
+        {
+          term: 'Chaitin’s omega',
+          definition:
+            'The probability that a randomly chosen program halts. It is a well-defined real number that encodes the halting problem, and its binary digits are not computable.',
+        },
+        {
+          term: 'Formal verification',
+          definition:
+            'Checking a proof with a computer, so that every step is derived from axioms by a fixed rule. The five-state busy beaver result was verified this way rather than accepted on inspection.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'The definition, and why it cannot be computed',
+      equation: 'BB(n) = max { steps(M) : M is an n-state machine that halts on a blank tape }',
+      symbols: [
+        { symbol: 'BB(n)', meaning: 'The busy beaver value for n states: a single finite number for each n' },
+        { symbol: 'n', meaning: 'The number of states in the machine\u2019s rule table, which bounds its complexity' },
+        { symbol: 'M', meaning: 'A deterministic Turing machine with a two-symbol tape, started on an all-blank tape' },
+        { symbol: 'steps(M)', meaning: 'The number of head movements before M halts, defined only when M halts' },
+        { symbol: 'max', meaning: 'The largest value over all machines in the set; machines that never halt are excluded' },
+      ],
+      body: [
+        'Suppose BB were computable. Then a program could take n, compute BB(n), and then simulate any n-state machine for exactly BB(n) steps. If the machine had not halted by then, it never would. That decides the halting problem for every machine, which Turing proved impossible. So BB is not computable, and the failure is not a lack of cleverness: no algorithm of any kind can do it for all n.',
+        'The growth is the other half of the story. BB dominates every computable function: for any computable f, there is an n beyond which BB(n) > f(n). The proof is a diagonal argument. If some computable f dominated BB, you could build a machine that computes f(n), then writes that many 1s and halts; for large n it would run longer than BB(n), which is a contradiction. This is why BB is used as a calibration for what a formal system can prove. A theory that could prove the value of BB(n) for every n would prove that certain machines halt or do not, and there are machines whose behaviour is independent of the theory.',
+      ],
+      assumptions: [
+        'The machines are deterministic, use two symbols, and start from a blank tape. Changing any of these changes the sequence.',
+        'Only halting machines are counted. A machine that runs forever is not a busy beaver, however long it runs before the tape runs out of patience.',
+        'BB counts steps; a variant, usually written Σ, counts the number of 1s left on the tape. The two sequences are related but not identical.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The known values, and what each one cost',
+      columns: ['States', 'BB(n) steps', 'How it was settled'],
+      rows: [
+        ['1', '1', 'By hand; the machine either halts immediately or loops'],
+        ['2', '6', 'By hand; a short case analysis'],
+        ['3', '21', 'Lin and Rado, by computer, 1965'],
+        ['4', '107', 'Brady, 1983, with a published case analysis'],
+        ['5', '47,176,870', 'The bbchallenge collaboration, 2024, with a machine-checked proof'],
+        ['6', 'unknown', 'Open; lower bounds are already astronomical'],
+      ],
+      note:
+        'The jump from 107 to 47 million is the point. The function is not growing like a polynomial or an exponential; it is growing in the way that makes the halting problem hard. Each additional state multiplies the number of possible machines by a large factor, and the machines that survive the easy filters are the ones whose behaviour is hardest to rule out.',
+    },
+    {
+      kind: 'steps',
+      heading: 'How a value like 47,176,870 gets proved',
+      items: [
+        {
+          title: 'Enumerate the machines',
+          text: 'List every rule table with five states and two symbols, quotienting by symmetries that produce the same behaviour. The count runs to tens of millions, which is large but finite.',
+        },
+        {
+          title: 'Run the ones that stop quickly',
+          text: 'Simulate each machine with a step limit. Machines that halt below the limit are recorded; machines that loop in an obvious cycle are discarded. What remains is the hard residue.',
+        },
+        {
+          title: 'Decide the residue',
+          text: 'For each surviving machine, prove that it never halts, using defined deciders: repeating configurations, closed loops, and reductions to smaller proven cases. A single unproved machine blocks the whole value.',
+        },
+        {
+          title: 'Check the champion',
+          text: 'One machine is left as the longest halter. Run it to its final step and confirm the count, then formalise the entire argument in a proof assistant so that no case was missed by hand.',
+        },
+      ],
+    },
+    {
+      kind: 'misconception',
+      heading: 'Uncomputable does not mean unknowable',
+      claim: '"If the busy beaver function is uncomputable, then nobody can ever know any of its values."',
+      correction:
+        'Every individual BB(n) is a definite finite number, and five of them are known exactly. What is impossible is a single algorithm that returns BB(n) for arbitrary n. The distinction matters because it is the same distinction as in the halting problem: no program decides halting for every input, yet people prove that particular programs halt all the time. Uncomputability is a statement about a uniform procedure, not a ban on knowledge. The second common error is the reverse: treating BB(5) as a curiosity about a big number. The number is the receipt; the achievement is the proof that every other five-state machine either halts sooner or never halts at all.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why a number nobody can compute is useful',
+      body: [
+        'The busy beaver function is a yardstick for proof strength. If a formal system can prove that a particular machine halts, it can prove a lower bound on BB(n); if it can prove that a machine never halts, it can rule out a candidate. Machines whose behaviour is independent of the system therefore mark the exact edge of what the system can settle. That is a concrete, finite way to exhibit Gödelian incompleteness, without the self-referential sentence that makes the incompleteness theorem so easy to state and so hard to feel.',
+        'It is also a benchmark for the tools. The five-state proof is a landmark because it is one of the largest combinatorial proofs ever checked by machine, and because it required human insight to find the deciders that closed the last cases. Radó called the machines busy beavers as a joke about how much work they do before stopping. The joke has aged well: the function is now a standard example of the uncomputable, a competition, and a test case for the question of which mathematical facts a computer can be made to certify.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If BB(6) is a definite number, what would it take to prove its value, and is that a limit of computing power or of mathematics?',
+        'Why does the function grow faster than every computable function, when each individual value is produced by a finite computation?',
+        'What does it mean for a machine\u2019s halting to be independent of a formal system, and can such a machine be built explicitly?',
+        'Is a proof that no case was missed worth more than a proof that the champion runs 47 million steps?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'T. Radó, "On non-computable functions", Bell System Technical Journal 41, 877 (1962)', url: 'https://doi.org/10.1002/j.1538-7305.1962.tb00480.x' },
+    { label: 'S. Lin and T. Radó, "Computer studies of Turing machine problems", Journal of the ACM 12, 196 (1965)', url: 'https://doi.org/10.1145/321264.321270' },
+    { label: 'The bbchallenge Collaboration, "The fifth busy beaver", arXiv:2407.02463 (2024)', url: 'https://arxiv.org/abs/2407.02463' },
+    { label: 'S. Aaronson, "Who can name the bigger number?" (1999), on fast-growing functions and the halting problem', url: 'https://www.scottaaronson.com/writings/bignumbers.html' },
+  ],
+  related: ['turing-halting', 'godel-incompleteness', 'continuum-hypothesis'],
+};
+
 export const MATHEMATICS_DOSSIERS = [
   BANACH_TARSKI_DOSSIER,
   GODEL_DOSSIER,
@@ -812,4 +982,5 @@ export const MATHEMATICS_DOSSIERS = [
   CONTINUUM_DOSSIER,
   TURING_DOSSIER,
   MOONSHINE_DOSSIER,
+  BUSY_BEAVER_DOSSIER,
 ];

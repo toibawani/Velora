@@ -496,9 +496,136 @@ export const ROSETTA_DOSSIER = {
   related: ['library-of-alexandria', 'antikythera-mechanism', 'epistemic-injustice'],
 };
 
+export const VOYNICH_DOSSIER = {
+  id: 'voynich-manuscript',
+  title: 'The Book Nobody Can Read',
+  standfirst:
+    'A 240-page manuscript on vellum, written in an unknown script and illustrated with plants that do not exist, has resisted every decipherment for a century. Its statistics look like a language. Its content does not look like anything else.',
+  field: 'History',
+  lenses: ['Origins', 'Logic'],
+  status: 'Undeciphered; the vellum is dated to the early fifteenth century',
+  difficulty: 'Intermediate',
+  minutes: 22,
+  opening:
+    'The book is small enough to hold, about the size of a paperback, and it is full of things that are not quite right. The plants have stems that merge into other stems, roots that turn into animals, and leaves arranged in ways no botanist recognises. The text runs left to right in a script of roughly two dozen glyphs, in paragraphs and in wheels, with no obvious punctuation and no corrections. In 1912 the antiquarian Wilfrid Voynich bought it in Italy and spent the rest of his life trying to read it. Nobody has succeeded since.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'The object itself',
+      body: [
+        'The manuscript is held at the Beinecke Rare Book and Manuscript Library at Yale, catalogued as MS 408. It has about 240 pages, some of them foldouts, written on vellum. A radiocarbon dating carried out at the University of Arizona in 2009 put the parchment between 1404 and 1438, which makes the book older than Voynich thought and rules out the simplest forgery story, that he made it himself in the early twentieth century from modern materials.',
+        'The illustrations divide the book into sections that scholars still use as labels. There is a herbal section of plants, largely unidentifiable or chimerical. There is an astronomical section with circular diagrams and zodiac symbols. There is a section of small figures bathing in pools connected by pipes, often called balneological. There is a pharmaceutical section of jars and roots, and a recipe section of short paragraphs marked with stars. The sections are coherent enough that the book looks like a real treatise with a subject, not a random collection of pages.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of an unreadable book',
+      items: [
+        {
+          term: 'Vellum',
+          definition:
+            'Parchment made from calfskin. It is durable and expensive, and its collagen can be radiocarbon dated, which is how the Voynich manuscript\u2019s parchment was placed in the early fifteenth century.',
+        },
+        {
+          term: 'Radiocarbon dating',
+          definition:
+            'Estimating the age of organic material from the decay of carbon-14. It dates the death of the animal that supplied the skin, not the moment the ink was applied.',
+        },
+        {
+          term: 'Cryptanalysis',
+          definition:
+            'The systematic attempt to break a cipher or recover a plaintext without the key. It relies on statistical regularities, known plaintext, and assumptions about how the text was produced.',
+        },
+        {
+          term: 'Cipher',
+          definition:
+            'A method of transforming text so that it cannot be read without a key. A cipher preserves the information of the original; a hoax does not have an original at all.',
+        },
+        {
+          term: 'Zipf’s law',
+          definition:
+            'The observation that in a natural-language text the frequency of a word is roughly inversely proportional to its rank. Deviations from it are a clue about whether a text is language, code or nonsense.',
+        },
+        {
+          term: 'Provenance',
+          definition:
+            'The documented history of an object\u2019s ownership. A provenance chain can support authenticity, and a gap in it can hide a forgery.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'What the statistics can and cannot show',
+      equation: 'H = − Σ p_i log₂ p_i',
+      symbols: [
+        { symbol: 'H', meaning: 'The Shannon entropy of the text, in bits per symbol. It measures how much choice each character represents.' },
+        { symbol: 'p_i', meaning: 'The relative frequency of the i-th glyph, estimated from the whole manuscript' },
+        { symbol: 'log₂', meaning: 'The base-two logarithm, so the result is in bits' },
+        { symbol: 'Σ', meaning: 'The sum over every distinct glyph in the alphabet' },
+      ],
+      body: [
+        'A first-order entropy calculation treats each glyph as independent. On that measure the Voynich text is unusually low, around two bits per character, compared with roughly four for ordinary English prose. Low entropy means the next character is more predictable than it should be, which is a strange property for a cipher: a good cipher flattens the distribution toward uniform, raising entropy, not lowering it. That is one reason a simple substitution cipher has been ruled out.',
+        'The more informative measure is conditional entropy: how predictable a glyph is given the preceding ones. Here the text behaves like a language, with strong short-range dependencies. Work by Montemurro and Zanette in 2013 went further and looked at how words cluster across the manuscript. They found that the text has topical structure: words that occur together in one section tend to occur together elsewhere, in a way that resembles the semantic organisation of a natural-language document. That is evidence the text carries meaning, not proof of what the meaning is. A statistical pattern can be produced by a hoax that was generated with similar rules, and no statistical test can tell you which one you are holding.',
+      ],
+      assumptions: [
+        'The glyphs are transcribed consistently. Different transliterations split or merge characters differently, which changes every statistic computed from them.',
+        'The text is treated as a single sample. If the manuscript contains two or more languages or hands, pooling them distorts the frequencies.',
+        'Statistical structure is evidence of structure, not of meaning. A generative process can imitate the statistics of language without being one.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'The main hypotheses, and what each has to explain',
+      columns: ['Hypothesis', 'What it predicts', 'The difficulty'],
+      rows: [
+        ['A cipher', 'A keyed transformation of a real text in a known language', 'The low entropy and the odd word structure do not match a simple substitution; no proposed key has produced readable text'],
+        ['An unknown natural language', 'A real language written in an invented or unfamiliar script', 'No candidate language has been matched, and the illustrations do not point to a known region'],
+        ['A shorthand or abbreviation system', 'A compressed record that was never meant to be read as prose', 'Shorthand systems of the period are known, but none matches the glyph inventory'],
+        ['A constructed language', 'A designed system with its own grammar and vocabulary', 'Possible, but there is no external key and no documented author'],
+        ['A hoax', 'Generated text with no meaning, designed to look valuable', 'The vellum is genuinely medieval, the ink and pigments are consistent with the period, and the statistical structure is richer than random'],
+      ],
+      note:
+        'The hoax row is the one most often overstated in both directions. A fifteenth-century hoax is entirely possible, and Gordon Rugg has shown that a Cardan grille can generate language-like text quickly. But showing that a hoax was possible is not showing that this book is one, and the topical structure found in 2013 is awkward for the simplest hoax models.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'The decipherment that is always announced',
+      claim: '"The Voynich manuscript has been decoded: it is Hebrew, or proto-Romance, or an Aztec herbal."',
+      correction:
+        'Claims of this kind appear every few years and share a failure mode. They offer a key that produces a few suggestive words, but they do not produce a translation that predicts what the next page should say, and they do not survive being applied by someone else. A real decipherment has the shape of Champollion\u2019s: it names a known language, it explains the script\u2019s behaviour, it makes checkable predictions about signs not used in the sample, and other scholars can apply it. By that standard the Voynich manuscript is undeciphered. The honest statement is not that nobody has tried; it is that no proposal has met the test that would make it knowledge rather than an anecdote.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Who owned it, and why that matters',
+      body: [
+        'The provenance is patchy but not empty. A faded signature on the first page reads Jacobus Horcicky de Tepenecz, a Bohemian apothecary and court official who died in 1622. A letter attributed to Johannes Marcus Marci, dated 1665 or 1666, says the book had belonged to the Emperor Rudolf II, who supposedly paid 600 ducats for it, and that Marci was sending it to the Jesuit scholar Athanasius Kircher in Rome. The 600-ducat story comes only from that letter and cannot be checked. The book then passed through the Collegio Romano, and after the suppression of the Jesuits it went to the Villa Mondragone, where Voynich bought it in 1912 along with other manuscripts.',
+        'The provenance matters because it constrains the forgery hypothesis. A forgery would have to have been made before the book entered the Roman college, or by someone with access to medieval vellum and the skills to imitate fifteenth-century pigments. That is possible. It is also a much more demanding claim than the popular version, in which Voynich is supposed to have fabricated the whole thing in his London shop. The radiocarbon date does not settle the question of the text, but it does move the forgery, if there was one, back into the period when the book was supposedly written.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'What would a successful decipherment have to predict that the current proposals do not?',
+        'If the text is meaningful, why does its entropy sit below that of ordinary prose?',
+        'Could a fifteenth-century hoax have produced topical structure across 240 pages, and what would it take to test that?',
+        'Does the book need to be readable for it to be valuable as a historical object?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'Beinecke Rare Book and Manuscript Library, Yale University, "Voynich Manuscript (MS 408)", digitised facsimile', url: 'https://beinecke.library.yale.edu/collections/highlights/voynich-manuscript' },
+    { label: 'M. Montemurro and D. Zanette, "Keywords and co-occurrence patterns in the Voynich manuscript: an information-theoretic analysis", PLoS ONE 8, e66344 (2013)', url: 'https://doi.org/10.1371/journal.pone.0066344' },
+    { label: 'S. Reddy and K. Knight, "What we know about the Voynich manuscript", Proceedings of the 5th ACL Workshop on Language Technology for Cultural Heritage (2011)', url: 'https://aclanthology.org/W11-1209/' },
+    { label: 'R. S. Davis, The Voynich Manuscript (Yale University Press, 2016), facsimile and essays on provenance and dating', url: 'https://yalebooks.yale.edu/book/9780300217230/the-voynich-manuscript/' },
+  ],
+  related: ['rosetta-stone', 'library-of-alexandria', 'antikythera-mechanism'],
+};
+
 export const HISTORY_DOSSIERS = [
   ANTIKYTHERA_DOSSIER,
   YEAR_536_DOSSIER,
   LIBRARY_OF_ALEXANDRIA_DOSSIER,
   ROSETTA_DOSSIER,
+  VOYNICH_DOSSIER,
 ];

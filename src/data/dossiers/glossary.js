@@ -280,6 +280,70 @@ export const DOSSIER_GLOSSARY = [
   term('decipherment', 'History', 'The recovery of the signs and rules of a writing system from its surviving texts. It is not translation: the language may be known while the script is not.', ['hieroglyph', 'philology']),
   term('trilingual inscription', 'History', 'A text carved in three scripts or languages, which can supply a parallel key. The Rosetta Stone is the most famous example, but not the only one.', ['Rosetta Stone']),
   term('Coptic', 'History', 'The last stage of the Egyptian language, written in a Greek-derived alphabet and still used liturgically. Champollion used it to recover the sounds behind the hieroglyphs.', ['hieroglyph', 'decipherment']),
+
+  // -- Bubbles, glass and very long computations ---------------------------
+  term('cavitation', 'Physics', 'The formation and collapse of gas or vapour bubbles in a liquid when the local pressure falls. The collapse concentrates energy and is the mechanism behind sonoluminescence and propeller erosion.', ['inertial cavitation']),
+  term('inertial cavitation', 'Physics', 'A bubble collapse driven by the inward momentum of the surrounding liquid. The liquid overshoots equilibrium and compresses the gas far harder than the applied pressure would.', ['cavitation']),
+  term('adiabatic compression', 'Physics', 'Compression fast enough that heat cannot escape during it, so the work raises the gas temperature. It is why a nanosecond bubble collapse can be extremely hot.', ['inertial cavitation']),
+  term('bremsstrahlung', 'Physics', 'Radiation emitted when a charged particle is slowed by another charge. It gives a continuous spectrum and is one candidate for the light from a collapsing bubble.', ['plasma']),
+  term('plasma', 'Physics', 'A gas in which a large fraction of atoms are ionised, so it contains free electrons and ions. It conducts electricity and emits both a continuum and line radiation.', ['bremsstrahlung']),
+  term('sonochemistry', 'Physics', 'Chemistry driven by cavitation. The collapse breaks molecules apart and produces radicals that would not form in the bulk liquid at ordinary temperature.', ['cavitation']),
+  term('standing wave', 'Physics', 'A wave that oscillates in place, with fixed nodes and antinodes, formed when a wave reflects and interferes with itself. It is what holds a bubble in an acoustic trap.', ['interference']),
+  term('blackbody radiation', 'Physics', 'The spectrum emitted by an object in thermal equilibrium, which depends only on its temperature. A fit to it is how the bubble\u2019s temperature is estimated, though other processes can mimic the shape.', ['plasma']),
+  term('residual entropy', 'Physics', 'Entropy that remains at zero temperature because the system has many degenerate arrangements rather than one. Ice and spin ice both have it.', ['entropy']),
+  term('Dirac string', 'Physics', 'The line of flipped moments that connects a pair of magnetic monopoles in spin ice. Its energy grows with length, which is why the pair is bound unless the string tension is small.', ['magnetic monopole', 'spin ice']),
+  term('Coulomb phase', 'Physics', 'A state whose correlations fall off like those of a Coulomb gas, with no long-range order. Spin ice enters one, which is why its defects behave as magnetic charges.', ['spin ice', 'quasiparticle']),
+  term('pyrochlore lattice', 'Physics', 'A structure of corner-sharing tetrahedra. The geometry frustrates magnetic interactions and is the lattice of the classic spin-ice materials.', ['frustration', 'spin ice']),
+  term('glass transition', 'Physics', 'The change from a liquid to a disordered solid as it is cooled or concentrated, without crystallisation. The material becomes rigid while its molecules stay disordered.', ['vitrification']),
+  term('vitrification', 'Biology', 'Solidifying a liquid into a glass instead of a crystal, so molecules are immobilised without ice forming. Tardigrades use it to preserve their cells while dry.', ['glass transition', 'anhydrobiosis']),
+  term('ionising radiation', 'Physics', 'Radiation with enough energy to remove electrons from atoms, including X-rays, gamma rays and energetic particles. Its effect on tissue is measured as an absorbed dose in gray.', ['gray']),
+  term('gray', 'Physics', 'The SI unit of absorbed radiation dose, one joule per kilogram. It measures energy deposited, not biological harm, which is why a dose in gray is not directly comparable between organisms.', ['ionising radiation']),
+
+  // -- The busy beaver and the limits of decision --------------------------
+  term('busy beaver function', 'Computation', 'The maximum number of steps a halting n-state, two-symbol Turing machine can run from a blank tape. It grows faster than any computable function.', ['Turing machine', 'halting problem']),
+  term('computable function', 'Computation', 'A function whose value a finite procedure can produce for every input. The busy beaver function is not computable, which is what makes it a yardstick for proof strength.', ['halting problem']),
+  term('formal verification', 'Computation', 'Checking a proof or program against axioms with a machine, so every step is derived by a fixed rule. It catches cases a human proof can overlook.', ['formal system']),
+  term('diagonal argument', 'Logic', 'A construction that builds an object differing from every member of a listed collection at its own index. It underlies Cantor\u2019s theorem, Gödel\u2019s proof and the halting problem.', ['diagonal lemma', 'halting problem']),
+
+  // -- Tardigrades and suspended life --------------------------------------
+  term('tardigrade', 'Biology', 'A microscopic eight-legged animal of the phylum Tardigrada. Terrestrial species live in films of water on moss and can enter a dried resting state.', ['anhydrobiosis']),
+  term('anhydrobiosis', 'Biology', 'Life without water: a reversible state induced by drying in which metabolism becomes undetectable and the organism revives when rewetted.', ['desiccation', 'tun']),
+  term('cryptobiosis', 'Biology', 'A state in which an organism suspends its metabolism in response to a hostile environment. Anhydrobiosis, freezing tolerance and oxygen deprivation are forms of it.', ['anhydrobiosis']),
+  term('tun', 'Biology', 'The contracted, barrel-shaped form a tardigrade takes as it dries, with legs drawn in and the cuticle folded. It is the physical package that survives storage.', ['anhydrobiosis', 'tardigrade']),
+  term('desiccation', 'Biology', 'The removal of water from a cell or organism. It concentrates salts and damages membranes, which is why most cells die as they dry.', ['anhydrobiosis']),
+  term('intrinsically disordered protein', 'Biology', 'A protein with no fixed three-dimensional structure in solution. Some disordered proteins assemble into filaments or gels only when the solvent is removed.', ['tardigrade']),
+  term('extremophile', 'Biology', 'An organism that lives in conditions hostile to most life, such as extreme heat, salt or radiation. Tardigrades are better described as desiccation-tolerant than as extremophiles.', ['tardigrade']),
+
+  // -- The Voynich manuscript ---------------------------------------------
+  term('vellum', 'History', 'Parchment made from calfskin. It is durable and expensive, and its collagen can be radiocarbon dated, which is how the Voynich manuscript\u2019s parchment was placed in the fifteenth century.', ['codex', 'radiocarbon dating']),
+  term('radiocarbon dating', 'History', 'Estimating the age of organic material from the decay of carbon-14. It dates the death of the organism that supplied the material, not the moment the writing was added.', ['vellum', 'provenance']),
+  term('cryptanalysis', 'History', 'The attempt to recover a plaintext or a key without authorisation, using statistics, known text and assumptions about how the message was made.', ['cipher']),
+  term('cipher', 'History', 'A method of transforming text so it cannot be read without a key. A cipher preserves the information of the original, unlike a hoax, which has no original.', ['cryptanalysis']),
+  term('Zipf’s law', 'History', 'The observation that in a natural-language text a word\u2019s frequency is roughly inversely proportional to its rank. Departures from it are a clue about whether a text is language, code or nonsense.', ['entropy'], ["Zipf's law"]),
+  term('glyph', 'History', 'A single written sign in a script. Counting and classifying glyphs is the first step in describing an unknown writing system.', ['palaeography']),
+  term('palaeography', 'History', 'The study of old handwriting and scripts: how letters were formed, how a hand changed over time, and where a manuscript was probably written.', ['vellum']),
+
+  // -- Population ethics ---------------------------------------------------
+  term('population ethics', 'Philosophy', 'The part of moral philosophy that compares outcomes with different numbers of people, including people who do not yet exist.', ['total view', 'mere addition']),
+  term('total view', 'Philosophy', 'The view that an outcome\u2019s value is the sum of everyone\u2019s well-being. It implies the repugnant conclusion when added lives are worth living.', ['average view', 'population ethics']),
+  term('average view', 'Philosophy', 'The view that average well-being is what matters, not the total. It avoids the repugnant conclusion but can make adding happy people bad.', ['total view', 'critical level']),
+  term('mere addition', 'Philosophy', 'Adding people whose lives are worth living without making anyone worse off. The mere addition paradox is that the result can seem both better and worse than the original.', ['total view']),
+  term('critical level', 'Philosophy', 'A threshold of well-being below which adding a life counts as a cost rather than a benefit. Critical-level views block the repugnant conclusion at a price.', ['total view', 'average view']),
+  term('person-affecting view', 'Philosophy', 'A view on which an outcome can be better or worse only if it is better or worse for some particular person. It struggles when the choice determines who exists.', ['population ethics']),
+  term('welfarism', 'Philosophy', 'The view that the value of an outcome depends only on the well-being of the individuals in it, not on equality, freedom or other goods.', ['total view', 'axiology']),
+  term('axiology', 'Philosophy', 'The theory of what makes outcomes good or bad, as distinct from the theory of what we ought to do. Population ethics is a branch of axiology.', ['welfarism']),
+  term('lexical priority', 'Philosophy', 'A ranking in which one good always outweighs another, however small the difference in the first and however large the difference in the second. It is one escape from the repugnant conclusion.', ['axiology']),
+  term('transitivity', 'Logic', 'The property that if A is better than B and B is better than C, then A is better than C. Population arguments rely on it, and denying it is expensive.', ['axiology']),
+
+  // -- The silence ---------------------------------------------------------
+  term('Drake equation', 'Cosmology', 'A product of factors estimating the number of detectable civilisations in the galaxy. It organises ignorance rather than measuring anything, because several factors are unmeasured.', ['technosignature']),
+  term('Great Filter', 'Cosmology', 'A step between simple chemistry and a spacefaring civilisation that is so improbable it explains the silence. It may lie behind us or ahead of us.', ['Drake equation', 'technosignature']),
+  term('biosignature', 'Cosmology', 'A feature of a planet that indicates life, such as oxygen and methane together in amounts no abiotic process can maintain.', ['technosignature']),
+  term('technosignature', 'Cosmology', 'Evidence of technology rather than mere life: signals, industrial pollutants, waste heat, or structures no natural process produces.', ['biosignature', 'Drake equation']),
+  term('von Neumann probe', 'Cosmology', 'A self-replicating machine that could spread through a galaxy without returning home. Its absence is a strong constraint on expanding civilisations.', ['Great Filter']),
+  term('panspermia', 'Cosmology', 'The hypothesis that life travels between worlds on meteorites or dust. It can explain a shared origin but not how life began.', ['biosignature']),
+  term('habitable zone', 'Cosmology', 'The range of orbits around a star where a planet could hold liquid water on its surface. It is a necessary condition at best, not evidence of life.', ['biosignature']),
+  term('Kardashev scale', 'Cosmology', 'A ranking of civilisations by the energy they command, from a planet\u2019s supply to a galaxy\u2019s. It is a classification scheme, not a measurement of anything observed.', ['technosignature']),
 ];
 
 /**

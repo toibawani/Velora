@@ -895,11 +895,40 @@ export const SPIN_ICE_DOSSIER = {
       ],
     },
     {
+      kind: 'math',
+      heading: 'Counting the configurations: Pauling’s residual entropy',
+      equation: 'S = N k_B ln W,   W = (3/2)^N',
+      symbols: [
+        { symbol: 'S', meaning: 'The residual entropy of the disordered state at zero temperature' },
+        { symbol: 'N', meaning: 'The number of water molecules, each of which is the centre of one tetrahedron of bonds' },
+        { symbol: 'k_B', meaning: 'Boltzmann’s constant, which converts a count of arrangements into an entropy' },
+        { symbol: 'W', meaning: 'The number of arrangements consistent with the ice rule' },
+        { symbol: '3/2', meaning: 'The factor per molecule that comes from six allowed arrangements out of sixteen, multiplied by the four bond directions' },
+      ],
+      body: [
+        'There are 2N hydrogen bonds in a crystal of N water molecules, because each bond is shared between two molecules. If each bond pointed independently, there would be 2^(2N) arrangements. Only six of the sixteen arrangements around a tetrahedron satisfy the rule that exactly two bonds point in, so the allowed fraction is 6/16 = 3/8 per molecule. Multiplying the two counts gives W = 2^(2N) × (3/8)^N = (3/2)^N.',
+        'Pauling’s estimate gives S = N k_B ln(3/2), about 0.805 calories per mole per kelvin. The measured residual entropy of ice, from heat-capacity data, is about 0.82. The agreement is good enough to be convincing and not so exact that it hides the approximation: the derivation assumes neighbouring tetrahedra are independent, which they are not, because they share bonds. What matters is that a purely combinatorial argument about a local rule predicts a thermodynamic quantity. In spin ice the same counting applies to magnetic moments, and the measured residual entropy is the evidence that the ice rule is obeyed by the collective state rather than imposed by the crystal structure alone.',
+      ],
+      assumptions: [
+        'Bond directions are treated as independent, which is an approximation: a shared bond constrains two tetrahedra at once.',
+        'The disorder is frozen, so the state is one of the counted arrangements rather than a thermal average over them.',
+        'The entropy is quoted per molecule, so the comparison with the measured molar entropy is direct.',
+      ],
+    },
+    {
       kind: 'prose',
       heading: 'A defect that acts like a charge',
       body: [
         'Start with a perfectly obeying “two in, two out” tetrahedron. Flip one moment, and two adjacent tetrahedra now have three in and one out, or one in and three out. Those two tetrahedra are defects in the ice rule, and they are created together. The key observation, made by Castelnovo, Moessner and Sondhi in 2008, is that these defects behave exactly like a pair of opposite magnetic charges: they attract, they can be separated, and in a magnetic field they drift apart.',
         'They are not fundamental particles. They are emergent quasiparticles, made of many coordinated atomic moments. But the mathematics that describes them is the mathematics of monopoles, including a Coulomb interaction and a magnetic “current” when they move. Neutron scattering experiments in 2009 saw the signature: pinch-point patterns in reciprocal space, which are the fingerprint of a Coulomb phase with deconfined monopoles.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'What it costs to move a monopole',
+      body: [
+        'Creating a pair of defects costs energy, and separating them costs more, because the two tetrahedra that break the ice rule must be connected by a string of flipped moments. That string is called a Dirac string, and its energy grows with its length unless the material screens it. In an ordinary magnet the string tension would be so large that the pair could never separate, and the monopoles would be confined. In spin ice the tension is unusually small, which is why the defects can be treated as independent particles over measurable distances.',
+        'The dynamics are strange in a way that follows from the same picture. A monopole does not drift through a continuum; it hops when a neighbouring moment flips, and each hop moves the end of the string. The result is a magnetic current with a diffusion constant and a response to an applied field that can be measured. Neutron scattering sees the string as a diffuse signal, and the 2009 experiments found the pinch-point pattern that a Coulomb phase predicts. The monopoles are collective, but their collective behaviour is described by the same equations as a plasma of charged particles, which is the sense in which the emergence is real rather than a metaphor.',
       ],
     },
     {
@@ -938,6 +967,7 @@ export const SPIN_ICE_DOSSIER = {
     { label: 'M. J. Harris et al., "A new pyrochlore magnet with a spin-ice ground state", Physical Review Letters 79, 2554 (1997)', url: 'https://doi.org/10.1103/PhysRevLett.79.2554' },
     { label: 'C. Castelnovo, R. Moessner, S. L. Sondhi, "Magnetic monopoles in spin ice", Nature 451, 42 (2008)', url: 'https://doi.org/10.1038/nature06433' },
     { label: 'D. J. P. Morris et al., "Dirac strings and magnetic monopoles in the spin ice Dy₂Ti₂O₇", Science 326, 411 (2009)', url: 'https://doi.org/10.1126/science.1178868' },
+    { label: 'L. D. C. Jaubert and P. C. W. Holdsworth, "Signature of magnetic monopole and Dirac string dynamics in spin ice", Nature Physics 5, 258 (2009)', url: 'https://doi.org/10.1038/nphys1227' },
   ],
   related: ['time-crystals', 'casimir-effect', 'mycorrhizal-networks'],
 };
@@ -1086,6 +1116,141 @@ export const SUPERCONDUCTIVITY_DOSSIER = {
   related: ['spin-ice', 'quantum-zeno', 'landauer-principle'],
 };
 
+export const SONOLUMINESCENCE_DOSSIER = {
+  id: 'sonoluminescence',
+  title: 'The Bubble That Runs Hotter Than the Sun',
+  standfirst:
+    'A single bubble of air, held still in a flask of water by a sound wave, collapses forty thousand times a second and emits a flash of light lasting less than a hundred picoseconds. The flash is real, reproducible and still not fully explained.',
+  field: 'Physics',
+  lenses: ['Matter', 'Reality'],
+  status: 'Observed and reproducible; the emission mechanism is disputed',
+  difficulty: 'Advanced',
+  minutes: 21,
+  opening:
+    'In 1989 Felipe Gaitan, working in Lawrence Crum’s acoustics laboratory, trapped a single bubble of air in a flask of water by driving the water with a standing sound wave. The bubble sat still near the middle of the flask, pulsing in time with the sound. When the drive was turned up, the pulses became violent and a point of blue-white light appeared in the water, flashing once per cycle, tens of thousands of times a second, for hours. No laser, no spark, no electrodes: sound, water and air.',
+  sections: [
+    {
+      kind: 'prose',
+      heading: 'A bubble that cannot escape',
+      body: [
+        'The trap is acoustic. A standing wave in the flask has pressure nodes and antinodes, and a gas bubble is pushed toward the antinode by the radiation pressure of the sound. Drive the water at 20 to 40 kilohertz and the trapped bubble is forced to oscillate: it expands on the low-pressure half of the cycle and collapses on the high-pressure half. The oscillation is not passive. The collapse is inertial, meaning the inward motion of the water carries so much momentum that the bubble overshoots its equilibrium radius and is compressed far harder than the pressure alone would suggest.',
+        'The numbers are what make the effect strange. A bubble with an ambient radius of a few micrometres collapses to a fraction of that size in a few nanoseconds, and the collapse is so nearly spherical that the light comes from a region smaller than the original bubble. The flash lasts between about ten and a hundred picoseconds, and it repeats on every cycle with a timing jitter of tens of picoseconds. The bubble can remain stable for hours, which is why the effect can be studied at all rather than merely photographed once.',
+      ],
+    },
+    {
+      kind: 'terms',
+      heading: 'The vocabulary of a collapsing bubble',
+      items: [
+        {
+          term: 'Cavitation',
+          definition:
+            'The formation and collapse of vapour or gas bubbles in a liquid, usually because the local pressure has dropped below the vapour pressure. It is the mechanism behind both sonoluminescence and the erosion of ship propellers.',
+        },
+        {
+          term: 'Inertial cavitation',
+          definition:
+            'A collapse driven by the inertia of the surrounding liquid rather than by the applied pressure alone. The liquid rushes inward, overshoots, and compresses the gas violently.',
+        },
+        {
+          term: 'Adiabatic compression',
+          definition:
+            'Compression fast enough that heat cannot escape during it. The work done on the gas raises its temperature instead of leaking into the liquid, which is why a nanosecond collapse can be so hot.',
+        },
+        {
+          term: 'Bremsstrahlung',
+          definition:
+            'Radiation emitted when a charged particle is decelerated by another charge. It is one of the candidate mechanisms for the flash, and it produces a continuous spectrum rather than sharp lines.',
+        },
+        {
+          term: 'Plasma',
+          definition:
+            'A gas in which a significant fraction of atoms are ionised, so it contains free electrons and ions. A plasma emits a continuous spectrum and line radiation, and its presence in the bubble is argued over.',
+        },
+        {
+          term: 'Sonochemistry',
+          definition:
+            'Chemistry driven by cavitation. The collapse concentrates energy so sharply that it breaks molecules apart, producing radicals that would not form in the bulk liquid at room temperature.',
+        },
+      ],
+    },
+    {
+      kind: 'math',
+      heading: 'How hot does a simple adiabatic collapse get?',
+      equation: 'T_max ≈ T_0 (R_0 / R_min)^{3(γ − 1)}',
+      symbols: [
+        { symbol: 'T_0', meaning: 'The temperature of the gas before the collapse, close to the water temperature', unit: 'kelvin' },
+        { symbol: 'R_0', meaning: 'The ambient bubble radius, set by the amount of gas trapped in it', unit: 'micrometres' },
+        { symbol: 'R_min', meaning: 'The minimum radius reached at the end of the collapse', unit: 'micrometres' },
+        { symbol: 'γ', meaning: 'The ratio of specific heats of the gas; about 1.4 for air, higher for a monatomic gas such as argon', unit: 'dimensionless' },
+        { symbol: '3(γ − 1)', meaning: 'The exponent that turns a volume ratio into a temperature ratio for an adiabatic process', unit: 'dimensionless' },
+      ],
+      body: [
+        'For an ideal gas compressed adiabatically, temperature and volume are related by T V^{γ−1} = constant. Since volume goes as the cube of radius, the temperature ratio is the radius ratio raised to 3(γ − 1). Put in an ambient radius of 4.5 micrometres, a minimum radius of 0.5 micrometres and γ = 1.4, and the ratio is 9, raised to 1.2, which is about 14. Starting from 293 kelvin, that gives roughly 4,000 kelvin.',
+        'That is hot — hotter than the surface of most stars’ photospheres — but it is not hot enough. Fits to the observed spectrum give temperatures of order 10,000 to 20,000 kelvin, and the emission lines of OH and of excited argon imply a similar range. The gap between 4,000 and 15,000 kelvin is the honest centre of the subject. Closing it requires something the spherical adiabatic estimate leaves out: a converging shock wave inside the collapsing bubble, viscous heating in the gas, a non-uniform temperature profile with a hot core and a cooler shell, or a brief plasma state. Each of those is a model, and the models still disagree about which dominates.',
+      ],
+      assumptions: [
+        'The gas inside the bubble is ideal and the compression is adiabatic, so no heat escapes to the water during the nanoseconds of collapse.',
+        'The collapse stays spherical. In reality the bubble can develop surface instabilities, and a non-spherical collapse concentrates energy differently.',
+        'The bubble contains air. Changing the dissolved gas changes the result: a little argon makes the flash much brighter, which is itself a clue about the emission mechanism.',
+      ],
+    },
+    {
+      kind: 'prose',
+      heading: 'What the flash actually looks like',
+      body: [
+        'The light is faint, of order a millionth of a joule per flash, and it is broad. A blackbody at about 10,000 to 20,000 kelvin fits the continuum reasonably well in some experiments, which is why the popular account calls the bubble a tiny star. But the fit is not unique: bremsstrahlung from a partially ionised gas, radiative recombination, and emission from excited neutral species can all produce a broad continuum, and they predict different behaviour as the drive pressure or the dissolved gas is changed.',
+        'The argon result is the strongest single clue. Dissolve a small amount of a noble gas in the water and the flash becomes far brighter; argon and xenon work better than helium or neon. A noble gas is chemically inert and has a high ionisation energy, so its presence should not matter to ordinary chemistry. It matters if the emission comes from excited or ionised atoms in the bubble, which points toward a plasma or a strongly ionised shell rather than a simple hot ideal gas. The 2005 measurements of plasma formation during single-bubble cavitation pushed the argument further: the emission was consistent with a plasma at temperatures of order 15,000 kelvin, with electron densities high enough to broaden the lines.',
+      ],
+    },
+    {
+      kind: 'table',
+      heading: 'What is measured, and what is inferred',
+      columns: ['Quantity', 'How it is obtained', 'What it does not settle'],
+      rows: [
+        ['Flash duration', 'Time-correlated single-photon counting; tens of picoseconds', 'Whether the emitter is one region or several'],
+        ['Bubble radius over time', 'Mie scattering of a laser probe', 'The temperature inside, which is not directly visible'],
+        ['Spectrum', 'Grating spectrometer and photomultiplier', 'Blackbody, bremsstrahlung and line emission can fit similar continua'],
+        ['Temperature', 'Fit to the continuum, or ratios of emission lines', 'Depends on the model chosen to interpret the fit'],
+        ['Gas dependence', 'Vary the dissolved noble gas', 'Shows the gas participates, not which excited state emits'],
+      ],
+      note:
+        'The table is the reason the dispute has lasted: every quantity that can be measured cleanly is a property of the bubble as a whole, while the argument is about what happens in the last nanosecond at the centre. The inference is doing the work, and different inferences survive the same data.',
+    },
+    {
+      kind: 'misconception',
+      heading: 'The tabletop star, and the fusion claim',
+      claim: '"Sonoluminescence is a star in a glass: the bubble reaches fusion temperatures and could be a power source."',
+      correction:
+        'The measured temperatures are of order 10,000 to 20,000 kelvin, which is hot enough to ionise a gas and not remotely hot enough for deuterium fusion, which needs temperatures of order a hundred million kelvin. In 2002 a team reported evidence of deuterium–deuterium fusion in acoustic cavitation. The result was not reproduced by other groups, the original data were disputed, and the episode is now a case study in how a spectacular claim can outrun its evidence. The honest statement is narrower and still remarkable: a sound wave in water can heat a bubble to the temperature of a stellar surface, repeatedly, on a bench. That is worth studying without turning it into a reactor.',
+    },
+    {
+      kind: 'prose',
+      heading: 'Why a flash of light is worth the argument',
+      body: [
+        'The practical reason is erosion. The same collapse that emits light also produces a shock wave and reactive radicals, and it is what pits propeller blades, pump impellers and turbine runners. Understanding the energy concentration is the difference between designing around cavitation and replacing the part. Sonochemistry uses the effect deliberately: the radicals formed in a collapse can drive reactions that ordinary heating would not, including the destruction of persistent pollutants in water.',
+        'The scientific reason is that the bubble is a laboratory for extreme conditions that does not require a laser or a shock facility. It is also a clean test of a general question: how much can a system concentrate energy through a purely mechanical instability? The collapse is described by the Rayleigh–Plesset equation, which is a ordinary differential equation for the bubble radius, and the light is a probe of what that equation does when the radius approaches zero. The fact that the equation predicts a violent collapse but not the observed temperature is exactly the kind of gap that keeps a small subject alive for decades.',
+      ],
+    },
+    {
+      kind: 'questions',
+      heading: 'Questions worth sitting with',
+      items: [
+        'If the adiabatic estimate gives 4,000 kelvin and the spectrum gives 15,000, which assumption should be given up first?',
+        'Why does adding a chemically inert noble gas change the brightness of the flash?',
+        'Is the light emitted by a hot gas, a plasma, or a shock front, and what experiment would separate them?',
+        'Can a phenomenon be reproducible for thirty years and still lack an agreed mechanism without that counting as a failure of physics?',
+      ],
+    },
+  ],
+  sources: [
+    { label: 'D. F. Gaitan, L. A. Crum, C. C. Roy, "Sonoluminescence and bubble dynamics for a single, stable, cavitation bubble", JASA 91, 3166 (1992)', url: 'https://doi.org/10.1121/1.402855' },
+    { label: 'M. P. Brenner, S. Hilgenfeldt, D. Lohse, "Single-bubble sonoluminescence", Reviews of Modern Physics 74, 425 (2002)', url: 'https://doi.org/10.1103/RevModPhys.74.425' },
+    { label: 'S. J. Putterman and K. R. Weninger, "Sonoluminescence: how bubbles turn sound into light", Annual Review of Fluid Mechanics 32, 445 (2000)', url: 'https://doi.org/10.1146/annurev.fluid.32.1.445' },
+    { label: 'D. J. Flannigan and K. S. Suslick, "Plasma formation and temperature measurement during single-bubble cavitation", Nature 434, 52 (2005)', url: 'https://doi.org/10.1038/nature03361' },
+  ],
+  related: ['casimir-effect', 'belousov-zhabotinsky', 'superconductivity'],
+};
+
 export const PHYSICS_DOSSIERS = [
   UNRUH_DOSSIER,
   CASIMIR_DOSSIER,
@@ -1096,4 +1261,5 @@ export const PHYSICS_DOSSIERS = [
   FALSE_VACUUM_DOSSIER,
   SPIN_ICE_DOSSIER,
   SUPERCONDUCTIVITY_DOSSIER,
+  SONOLUMINESCENCE_DOSSIER,
 ];

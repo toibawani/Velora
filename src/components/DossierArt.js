@@ -372,6 +372,12 @@ export const MOTIF_BY_ID = {
   superconductivity: 'field',
   crispr: 'helix',
   'rosetta-stone': 'strata',
+  sonoluminescence: 'interference',
+  'busy-beaver': 'tape',
+  tardigrades: 'crystal',
+  'voynich-manuscript': 'strata',
+  'repugnant-conclusion': 'split',
+  'fermi-paradox': 'field',
 };
 
 export const motifFor = (id) => MOTIF_BY_ID[id] || 'arcs';
